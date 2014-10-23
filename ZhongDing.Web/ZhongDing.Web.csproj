@@ -2611,7 +2611,6 @@
     <Content Include="Images\core\sort_desc.png" />
     <Content Include="packages.config" />
     <Content Include="Content\icons\16\Thumbs.db" />
-    <Content Include="Content\icons\32\Thumbs.db" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\zd.base.browserDetect.js" />
     <Content Include="Scripts\zd.base.extension.js" />
@@ -2795,7 +2794,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
