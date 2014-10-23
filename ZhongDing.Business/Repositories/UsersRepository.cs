@@ -1,0 +1,43 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ZhongDing.Business.IRepositories;
+using ZhongDing.Domain.Models;
+
+namespace ZhongDing.Business.Repositories
+{
+    public class UsersRepository : BaseRepository<Users>, IUsersRepository
+    {
+        #region Keep it Singleton
+
+        private static readonly UsersRepository instance = new UsersRepository();
+
+        public static UsersRepository Instance
+        {
+            get
+            {
+                return instance;
+            }
+        }
+
+        #endregion
+
+        public Users GetByProviderUserKey(Guid providerUserKey)
+        {
+            return this.BaseList().Where(x => x.AspnetUserID.HasValue && x.AspnetUserID == providerUserKey).FirstOrDefault();
+        }
+
+        public string GetUserNameByID(int userID)
+        {
+            var query = (from u in DB.Users
+                         join au in DB.aspnet_Users on u.AspnetUserID equals au.UserId
+                         join am in DB.aspnet_Membership on au.UserId equals am.UserId
+                         where u.UserID == userID && u.IsDeleted == false && am.IsApproved
+                         select au.UserName).FirstOrDefault();
+
+            return query;
+        }
+    }
+}

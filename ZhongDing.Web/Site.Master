@@ -1,0 +1,271 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="ZhongDing.Web.SiteMaster" %>
+
+<%@ Register TagPrefix="uc" TagName="Header" Src="~/UserControls/UCHeader.ascx" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <meta charset="utf-8" />
+    <title></title>
+    <asp:PlaceHolder runat="server">
+        <%--<%: Scripts.Render("~/bundles/modernizr") %>--%>
+    </asp:PlaceHolder>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <link href="Content/Site.css" rel="stylesheet" />
+
+    <!-- Required Stylesheets -->
+    <link href="Content/reset.css" rel="stylesheet" />
+    <link href="Content/text.css" rel="stylesheet" />
+    <link href="Content/fluid.css" rel="stylesheet" />
+
+    <link href="Content/mws.style.css" rel="stylesheet" />
+    <link href="Content/icons/icons.css" rel="stylesheet" />
+
+    <!-- Theme Stylesheet -->
+    <link href="Content/mws.theme.css" rel="stylesheet" />
+
+    <%--<script type="text/javascript" src="Scripts/themer.js"></script>--%>
+
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+
+    <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
+</head>
+<body>
+    <form runat="server">
+        <telerik:RadScriptManager runat="server" ID="radScriptManager">
+            <Scripts>
+                <asp:ScriptReference Path="~/Scripts/jquery-2.1.1.min.js" />
+                <asp:ScriptReference Path="~/Scripts/mws.js" />
+                <asp:ScriptReference Path="~/Scripts/zd.base.js" />
+                <asp:ScriptReference Path="~/Scripts/zd.base.extension.js" />
+                <asp:ScriptReference Path="~/Scripts/zd.base.browserDetect.js" />
+                <asp:ScriptReference Path="~/Scripts/zd.jquery.extend.js" />
+            </Scripts>
+        </telerik:RadScriptManager>
+
+        <telerik:RadSkinManager runat="server" ID="radSkinManager" Skin="Silk">
+            <TargetControls>
+                <telerik:TargetControl ControlsToApplySkin="RadAjaxLoadingPanel" Skin="Metro" />
+            </TargetControls>
+        </telerik:RadSkinManager>
+
+        <telerik:RadAjaxLoadingPanel runat="server" ID="radAjaxLoadingPanel" />
+
+        <div id="main-wrapper">
+            <uc:Header runat="server" ID="ucHeader" />
+            <!-- Main Wrapper -->
+            <div id="mws-wrapper">
+
+                <!-- Necessary markup, do not remove -->
+                <div id="mws-sidebar-stitch"></div>
+                <div id="mws-sidebar-bg"></div>
+
+                <!-- Sidebar Wrapper -->
+                <div id="mws-sidebar">
+
+                    <!-- Main Navigation -->
+                    <div id="mws-navigation">
+                        <ul>
+                            <li data-level="1" data-menuitemid="1"><a href="javascript:void(0);" onclick="redirectToPage('Home.aspx');" class="mws-i-24 i-home">首页</a></li>
+                            <li data-level="1" data-menuitemid="2"><a href="#" class="mws-i-24 i-file-cabinet">基本信息管理</a>
+                                <ul>
+                                    <li data-level="2" data-menuitemid="3"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/CompanyManagement.aspx');">帐套管理</a></li>
+                                    <li data-level="2"><a href="#">银行帐号管理</a></li>
+                                    <li data-level="2"><a href="#">供应商管理</a></li>
+                                    <li data-level="2"><a href="#">客户管理</a></li>
+                                    <li data-level="2"><a href="#">配送公司管理</a></li>
+                                    <li data-level="2"><a href="#">大包客户协议管理</a></li>
+                                    <li data-level="2"><a href="#">商业客户流向管理</a></li>
+                                    <li data-level="2"><a href="#">部门销售计划及提成策略</a></li>
+                                </ul>
+                            </li>
+                            <li data-level="1"><a href="#" class="mws-i-24 i-price-tags">货品管理</a>
+                                <ul class="hide">
+                                    <li data-level="2"><a href="#">货品管理</a></li>
+                                    <li data-level="2"><a href="#">货品价格管理</a></li>
+                                    <li data-level="2"><a href="#">仓库管理</a></li>
+                                    <li data-level="2"><a href="#">库存货品信息</a></li>
+                                </ul>
+
+                            </li>
+                            <li data-level="1"><a href="#" class="mws-i-24 i-group">人事管理</a>
+                                <ul class="hide">
+                                    <li data-level="2"><a href="#">部门管理</a></li>
+                                    <li data-level="2"><a href="#">员工管理</a></li>
+                                    <li data-level="2"><a href="#">权限管理</a></li>
+                                    <li data-level="2"><a href="#">报销类型管理</a></li>
+                                </ul>
+                            </li>
+                            <li data-level="1"><a href="calendar.html" class="mws-i-24 i-clipboard-1">固定资产管理</a></li>
+
+                            <li data-level="1"><a href="table.html" class="mws-i-24 i-box-incoming">采购订单管理</a>
+                                <ul class="hide">
+                                    <li data-level="2"><a href="#">采购订单</a></li>
+                                    <li data-level="2"><a href="#">入库单</a></li>
+                                    <li data-level="2"><a href="#">物流费用管理</a></li>
+                                </ul>
+                            </li>
+                            <li data-level="1"><a href="table.html" class="mws-i-24 i-box-outgoing">销售订单管理</a>
+                                <ul class="hide">
+                                    <li data-level="2"><a href="#">客户订单</a></li>
+                                    <li data-level="2"><a href="#">出库单</a></li>
+                                    <li data-level="2"><a href="#">大包配送订单</a></li>
+                                    <li data-level="2"><a href="#">大包出库单</a></li>
+                                    <li data-level="2"><a href="#">担保收款</a></li>
+                                    <li data-level="2"><a href="#">物流费用管理</a></li>
+                                </ul>
+                            </li>
+                            <li data-level="1">
+                                <a href="#" class="mws-i-24 i-link">数据导入</a>
+                                <ul class="hide">
+                                    <li data-level="2"><a href="form_layouts.html">商业客户销售流向</a></li>
+                                    <li data-level="2"><a href="form_elements.html">配送公司流向</a></li>
+                                    <li data-level="2"><a href="form_elements.html">配送公司库存数据</a></li>
+                                    <li data-level="2"><a href="form_elements.html">采购订单导入</a></li>
+                                    <li data-level="2"><a href="form_elements.html">收货入库单导入</a></li>
+                                    <li data-level="2"><a href="form_elements.html">客户订单导入</a></li>
+                                    <li data-level="2"><a href="form_elements.html">出库单导入</a></li>
+                                    <li data-level="2"><a href="form_elements.html">大包订单导入</a></li>
+                                    <li data-level="2"><a href="form_elements.html">大包出库单导入</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </div>
+                    <!-- End Navigation -->
+                </div>
+
+                <!-- Container Wrapper -->
+                <div id="mws-container" class="clearfix">
+                    <asp:ContentPlaceHolder runat="server" ID="MainContent" />
+                </div>
+                <!-- End Main Wrapper -->
+            </div>
+            <!-- End Main Wrapper -->
+        </div>
+
+        <style type="text/css">
+            .RadGrid_Silk
+            {
+            }
+
+                .RadGrid_Silk .rgHeader
+                {
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                }
+
+                    .RadGrid_Silk .rgHeader a
+                    {
+                        font-size: 12px;
+                        color: #323232;
+                        font-family: 'Microsoft Yahei',Arial,Helvetica,sans-serif,'微软雅黑';
+                        font-weight: normal;
+                    }
+
+                .RadGrid_Silk .rgCommandCell
+                {
+                    padding-top: 5px;
+                    padding-bottom: 5px;
+                }
+
+                .RadGrid_Silk .rgPager
+                {
+                    background-color: #444444;
+                }
+
+                .RadGrid_Silk td.rgPagerCell
+                {
+                    border: none;
+                    color: #ffffff;
+                }
+
+                .RadGrid_Silk .rgInfoPart, .RadGrid_Silk .rgInfoPart strong
+                {
+                    color: #ffffff;
+                }
+        </style>
+
+        <telerik:RadCodeBlock runat="server" ID="mainCodeBlock">
+
+            <script type="text/javascript">
+
+                var loadingPanel;//加载遮罩层
+                var menuItemID;
+
+                $(document).ready(function () {
+
+                    //BrowserDetect.init();
+
+                    menuItemID = "<%=this.MenuItemID %>";
+
+                    var curMenu = $("div#mws-navigation ul li[data-menuitemid='" + menuItemID + "']");
+
+                    if (curMenu) {
+
+                        //顶级菜单项
+                        if (curMenu.attr("data-level") == "1") {
+
+                            if (curMenu.next("ul").size() === 0) {
+                                curMenu.addClass("active");
+                            }
+
+                        }//子菜单项
+                        else {
+
+                            curMenu.addClass("active-sub-nav");;
+
+                            var curRootMenu = curMenu.parent().parent();
+
+                            $("div#mws-navigation ul li[data-level='1']").each(function (i, e) {
+                                $(this).removeClass("active");
+                            });
+
+                            curRootMenu.addClass("active");
+
+                            $("div#mws-navigation ul li[data-level='1'] ul").each(function (index, e) {
+                                $(this).hide();
+                            });
+
+                            var ulChilds = curRootMenu.find("ul");
+
+                            if (ulChilds.size() !== 0) {
+                                ulChilds.show();
+                            }
+                        }
+                    }
+
+                    loadingPanel = $find("<%= radAjaxLoadingPanel.ClientID %>");
+
+                });
+
+                //扩展jQuery，增加getRootPath函数
+                (function ($) {
+                    $.extend({
+                        getRootPath: function () {
+                            var rootPath = "<%= this.BaseUrl %>";
+                            return rootPath;
+                        }
+                    })
+                })(jQuery);
+
+                function redirectToPage(url) {
+                    $.showLoading();
+
+                    if (url.indexOf("http:") >= 0 || url.indexOf("https:") >= 0)
+                        window.location.href = url;
+                    else
+                        window.location.href = $.getRootPath() + url;
+                }
+            </script>
+
+            <asp:ContentPlaceHolder ID="scriptContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </telerik:RadCodeBlock>
+
+    </form>
+</body>
+</html>

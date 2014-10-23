@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="85e6c93c719943c78d71edfd0be34866" Name="Diagram1">
+        <EntityTypeShape EntityType="DbModel.aspnet_Membership" Width="1.5" PointX="3.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbModel.aspnet_Roles" Width="1.5" PointX="5.75" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbModel.aspnet_Users" Width="1.5" PointX="1.5" PointY="22" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbModel.BankAccount" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbModel.Company" Width="1.5" PointX="3.75" PointY="20.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbModel.Department" Width="1.5" PointX="3.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbModel.Product" Width="1.5" PointX="6" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbModel.ProductCategory" Width="1.5" PointX="3.75" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbModel.ProductSpecification" Width="1.5" PointX="8.25" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbModel.Supplier" Width="1.5" PointX="0.75" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbModel.SupplierBankAccount" Width="1.5" PointX="3" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbModel.SupplierCertificateFile" Width="1.5" PointX="3" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbModel.SupplierContract" Width="1.5" PointX="10.5" PointY="9.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbModel.SupplierContractFile" Width="1.5" PointX="12.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbModel.SupplierTaskAssignment" Width="1.5" PointX="15.75" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbModel.UnitOfMeasurement" Width="1.5" PointX="6" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="DbModel.UserBonus" Width="1.5" PointX="8.75" PointY="2.625" IsExpanded="true" />
+        <AssociationConnector Association="DbModel.FK__aspnet_Me__UserI__10566F31" ManuallyRouted="false" />
+        <AssociationConnector Association="DbModel.FK_BankAccount_Company" ManuallyRouted="false" />
+        <AssociationConnector Association="DbModel.FK_SupplierBankAccount_BankAccount" ManuallyRouted="false" />
+        <AssociationConnector Association="DbModel.FK_Product_Company" ManuallyRouted="false" />
+        <AssociationConnector Association="DbModel.FK_Product_Department" ManuallyRouted="false" />
+        <AssociationConnector Association="DbModel.FK_Product_ProductCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="DbModel.FK_Product_Supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="DbModel.FK_ProductSpecification_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="DbModel.FK_SupplierContract_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="DbModel.FK_ProductSpecification_UnitOfMeasurement" ManuallyRouted="false" />
+        <AssociationConnector Association="DbModel.FK_SupplierContract_ProductSpecification" ManuallyRouted="false" />
+        <AssociationConnector Association="DbModel.FK_SupplierBankAccount_Supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="DbModel.FK_SupplierCertificateFile_Supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="DbModel.FK_SupplierContract_Supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="DbModel.FK_SupplierTaskAssignment_Supplier" ManuallyRouted="false" />
+        <AssociationConnector Association="DbModel.FK_SupplierContractFile_SupplierContract" ManuallyRouted="false" />
+        <AssociationConnector Association="DbModel.FK_SupplierTaskAssignment_SupplierContract" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="DbModel.Users" Width="1.5" PointX="1.5" PointY="15.75" />
+        <AssociationConnector Association="DbModel.FK_Users_aspnet_Users" />
+        <AssociationConnector Association="DbModel.FK_Department_Users" />
+        <EntityTypeShape EntityType="DbModel.AccountType" Width="1.5" PointX="1.5" PointY="26.25" />
+        <EntityTypeShape EntityType="DbModel.OwnerType" Width="1.5" PointX="0.75" PointY="6" />
+        <AssociationConnector Association="DbModel.FK_BankAccount_AccountType" />
+        <AssociationConnector Association="DbModel.FK_BankAccount_OwnerType" />
+        <AssociationConnector Association="DbModel.FK_SupplierCertificateFile_OwnerType" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

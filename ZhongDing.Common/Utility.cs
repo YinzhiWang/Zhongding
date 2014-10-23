@@ -1,0 +1,296 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Net.Mail;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using System.Web;
+using Microsoft.Practices.EnterpriseLibrary.Logging;
+using Newtonsoft.Json;
+using ZhongDing.Common.Enums;
+
+namespace ZhongDing.Common
+{
+    /// <summary>
+    /// Class Utility
+    /// </summary>
+    public static partial class Utility
+    {
+        /// <summary>
+        /// Jsons the seralize.
+        /// </summary>
+        /// <param name="srcObj">The SRC obj.</param>
+        /// <returns>System.String.</returns>
+        public static string JsonSeralize(object srcObj)
+        {
+            return JsonConvert.SerializeObject(srcObj);
+        }
+
+        /// <summary>
+        /// Jsons the deserialize object.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="src">The SRC.</param>
+        /// <returns>``0.</returns>
+        public static T JsonDeserializeObject<T>(string src)
+        {
+            return JsonConvert.DeserializeObject<T>(src);
+        }
+
+        /// <summary>
+        /// Writes the exception log.
+        /// </summary>
+        /// <param name="exp">The exp.</param>
+        public static void WriteExceptionLog(Exception exp, LogEventType logEventType = LogEventType.Business)
+        {
+            List<string> categories = new List<string>();
+            categories.Add(LogCategory.Exception.ToString());
+
+            IDictionary<string, object> extentProp = new Dictionary<string, object>();
+            extentProp.Add("OccurTimeOnClient", DateTime.UtcNow.ToLocalDateTime().ToString());
+            extentProp.Add("ServerTime", DateTime.Now.ToString());
+
+            if (HttpContext.Current != null
+                && HttpContext.Current.Request != null)
+            {
+                extentProp.Add("SourceUrl", HttpContext.Current.Request.Url);
+                extentProp.Add("ClientIP", HttpContext.Current.Request.UserHostAddress);
+            }
+
+            if (exp.InnerException != null)
+            {
+                exp = exp.InnerException;
+            }
+
+            extentProp.Add("StackTrace", exp.StackTrace);
+            extentProp.Add("TargetSite", exp.TargetSite);
+
+            WriteLog(exp.Source, exp.Message, categories, (int)logEventType, extentProp);
+        }
+
+        /// <summary>
+        /// Writes the trace.
+        /// </summary>
+        /// <param name="msg">The MSG.</param>
+        public static void WriteTrace(string msg)
+        {
+            Microsoft.Practices.EnterpriseLibrary.Logging.Logger.Write(msg, "General");
+        }
+
+        /// <summary>
+        /// Writes the log.
+        /// </summary>
+        /// <param name="title">The title.</param>
+        /// <param name="msg">The MSG.</param>
+        /// <param name="categories">The categories.</param>
+        /// <param name="eventId">The event id.</param>
+        /// <param name="extendProp">The extend prop.</param>
+        public static void WriteLog(string title, string msg, ICollection<string> categories, int eventId, IDictionary<string, object> extendProp)
+        {
+            LogEntry lEntry = new LogEntry();
+            lEntry.Categories = categories;
+            lEntry.Message = msg;
+            lEntry.Title = title;
+            lEntry.EventId = eventId;
+            lEntry.ExtendedProperties = extendProp;
+
+            Microsoft.Practices.EnterpriseLibrary.Logging.Logger.Write(lEntry);
+
+        }
+
+        /// <summary>
+        /// Prefixes url with "http://" if it does not already begin with "http".
+        /// </summary>
+        /// <param name="url"></param>
+        /// <returns></returns>
+        public static string PrefixUrlWithHttpIfNecessary(string url)
+        {
+
+            if (!string.IsNullOrEmpty(url))
+            {
+
+                if (!url.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+                {
+
+                    url = string.Format("http://{0}", url);
+
+                }
+
+            }
+
+            return url;
+
+        }
+
+        /// <summary>
+        /// Gets the date diff.
+        /// </summary>
+        /// <param name="startDate">The start date.</param>
+        /// <param name="endDate">The end date.</param>
+        /// <param name="diffType">Type of the diff.</param>
+        /// <returns>System.Int32.</returns>
+        public static int GetDateDiff(DateTime startDate, DateTime endDate, DateDiffType diffType = DateDiffType.Day)
+        {
+            TimeSpan timeSpan = endDate - startDate;
+            switch (diffType)
+            {
+                case DateDiffType.Day:
+                    return timeSpan.Days;
+                case DateDiffType.Hour:
+                    return timeSpan.Hours;
+                case DateDiffType.Minute:
+                    return timeSpan.Minutes;
+                default:
+                    return timeSpan.Days;
+            }
+        }
+
+
+        /// <summary>
+        /// Cuts the string.
+        /// </summary>
+        /// <param name="originalStr">The original STR.</param>
+        /// <param name="cutLength">Length of the cut.</param>
+        /// <param name="isContainEllipses">if set to <c>true</c> [is contain ellipses].</param>
+        /// <returns>System.String.</returns>
+        public static string CutString(string originalStr, int cutLength, bool isContainEllipses = false)
+        {
+            string cutStr = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(originalStr))
+            {
+                if (originalStr.Length > cutLength)
+                    cutStr = originalStr.Substring(0, cutLength);
+                else
+                    cutStr = originalStr;
+            }
+
+            if (isContainEllipses
+                && !string.IsNullOrWhiteSpace(cutStr))
+            {
+                cutStr += "...";
+            }
+
+            return cutStr;
+        }
+
+        /// <summary>
+        /// Deletes the file.
+        /// </summary>
+        /// <param name="filePath">The file path.</param>
+        /// <param name="isContainMapPath">if set to <c>true</c> [is contain map path].</param>
+        /// <returns><c>true</c> if XXXX, <c>false</c> otherwise</returns>
+        public static bool DeleteFile(string filePath, bool isContainMapPath = false)
+        {
+            bool isDeleted = false;
+
+            if (!string.IsNullOrEmpty(filePath))
+            {
+                if (!isContainMapPath)
+                {
+                    if (!filePath.StartsWith("~"))
+                        filePath = "~" + filePath;
+
+                    filePath = HttpContext.Current.Server.MapPath(filePath);
+                }
+
+                if (File.Exists(filePath))
+                {
+                    File.Delete(filePath);
+
+                    isDeleted = true;
+                }
+            }
+
+            return isDeleted;
+
+        }
+
+        /// <summary>
+        /// Clears the HTML tags.
+        /// </summary>
+        /// <param name="strHtml">The STR HTML.</param>
+        /// <returns>System.String.</returns>
+        public static string ClearHTMLTags(string strHtml)
+        {
+            string[] Regexs ={
+                        @"<script[^>]*?>.*?</script>",
+                        @"<(\/\s*)?!?((\w+:)?\w+)(\w+(\s*=?\s*(([""'])(\\[""'tbnr]|[^\7])*?\7|\w+)|.{0})|\s)*?(\/\s*)?>",
+                        @"([\r\n])[\s]+",
+                        @"&(quot|#34);",
+                        @"&(amp|#38);",
+                        @"&(lt|#60);",
+                        @"&(gt|#62);",
+                        @"&(nbsp|#160);",
+                        @"&(iexcl|#161);",
+                        @"&(cent|#162);",
+                        @"&(pound|#163);",
+                        @"&(copy|#169);",
+                        @"&#(\d+);",
+                        @"-->",
+                        @"<!--.*\n"};
+
+            string[] Replaces ={
+                            "",
+                            "",
+                            " ",
+                            "\"",
+                            "&",
+                            "<",
+                            ">",
+                            " ",
+                            "\xa1", //chr(161),
+                            "\xa2", //chr(162),
+                            "\xa3", //chr(163),
+                            "\xa9", //chr(169),
+                            "",
+                            "\r\n",
+                            ""};
+
+            string s = strHtml;
+            for (int i = 0; i < Regexs.Length; i++)
+            {
+                s = new Regex(Regexs[i], RegexOptions.Multiline | RegexOptions.IgnoreCase).Replace(s, Replaces[i]);
+            }
+            s.Replace("<", "");
+            s.Replace(">", "");
+            s.Replace("\r\n", " ");
+            return s;
+        }
+
+        /// <summary>
+        /// Gets the network IP address.
+        /// </summary>
+        /// <returns>System.String.</returns>
+        public static string GetNetworkIPAddress()
+        {
+            string sNetWorkIP = string.Empty;
+
+            try
+            {
+                HttpRequest request = HttpContext.Current.Request;
+
+                if (request.ServerVariables["http_VIA"] != null)
+                {
+                    if (request.ServerVariables["http_X_FORWARDED_FOR"] != null)
+                    {
+                        sNetWorkIP = request.ServerVariables["http_X_FORWARDED_FOR"].ToString().Split(',')[0].Trim();
+                    }
+                }
+                else
+                {
+                    sNetWorkIP = request.UserHostAddress;
+                }
+            }
+            catch (Exception exp)
+            {
+                WriteExceptionLog(exp);
+            }
+
+            return sNetWorkIP;
+        }
+    }
+}
