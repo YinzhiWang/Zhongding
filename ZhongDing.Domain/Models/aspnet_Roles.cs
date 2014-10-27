@@ -15,6 +15,11 @@ namespace ZhongDing.Domain.Models
     [Serializable]
     public partial class aspnet_Roles : IEntityExtendedProperty
     {
+        public aspnet_Roles()
+        {
+            this.Roles = new HashSet<Roles>();
+        }
+    
         public System.Guid ApplicationId { get; set; }
         public System.Guid RoleId { get; set; }
         public string RoleName { get; set; }
@@ -30,5 +35,7 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedOn { get { return false; } }
     	public bool HasColumnLastModifiedBy { get { return false; } }
     
+    
+        public virtual ICollection<Roles> Roles { get; set; }
     }
 }

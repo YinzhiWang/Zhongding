@@ -29,6 +29,18 @@ namespace ZhongDing.Business.Repositories
             return this.BaseList().Where(x => x.AspnetUserID.HasValue && x.AspnetUserID == providerUserKey).FirstOrDefault();
         }
 
+        public Users GetByUserName(string userName)
+        {
+            var query = (from u in DB.Users
+                         join au in DB.aspnet_Users on u.AspnetUserID equals au.UserId
+                         join am in DB.aspnet_Membership on au.UserId equals am.UserId
+                         where u.IsDeleted == false
+                         && au.UserName.ToLower().Equals(userName.ToLower())
+                         select u).FirstOrDefault();
+
+            return query;
+        }
+
         public string GetUserNameByID(int userID)
         {
             var query = (from u in DB.Users

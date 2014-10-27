@@ -17,12 +17,12 @@
             </div>
             <div id="mws-user-functions">
                 <div id="mws-username">
-                    Hello, 覃桂华
+                    您好, <%=this.CurrentUser.FullName %>
                 </div>
                 <ul>
                     <li><a href="#">修改个人信息</a></li>
                     <li><a href="#">修改密码</a></li>
-                    <li><a href="index-2.html">退出</a></li>
+                    <li><a runat="server" id="linkLogout" href="~/Account/Logout.aspx">退出</a></li>
                 </ul>
             </div>
         </div>

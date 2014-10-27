@@ -12,7 +12,7 @@ using ZhongDing.Domain.UISearchObjects;
 
 namespace ZhongDing.Web.Views.Basics
 {
-    public partial class CompanyManagement : System.Web.UI.Page
+    public partial class CompanyManagement : BasePage
     {
         #region Members
 

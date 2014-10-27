@@ -11,6 +11,8 @@ namespace ZhongDing.Business.IRepositories
     {
         Users GetByProviderUserKey(Guid providerUserKey);
 
+        Users GetByUserName(string userName);
+
         string GetUserNameByID(int userID);
     }
 }

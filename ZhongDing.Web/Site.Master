@@ -37,18 +37,19 @@
     <form runat="server">
         <telerik:RadScriptManager runat="server" ID="radScriptManager">
             <Scripts>
-                <asp:ScriptReference Path="~/Scripts/jquery-2.1.1.min.js" />
-                <asp:ScriptReference Path="~/Scripts/mws.js" />
+                <asp:ScriptReference Path="~/Scripts/jquery-1.11.1.min.js" />
                 <asp:ScriptReference Path="~/Scripts/zd.base.js" />
                 <asp:ScriptReference Path="~/Scripts/zd.base.extension.js" />
                 <asp:ScriptReference Path="~/Scripts/zd.base.browserDetect.js" />
                 <asp:ScriptReference Path="~/Scripts/zd.jquery.extend.js" />
+                <asp:ScriptReference Path="~/Scripts/mws.js" />
+
             </Scripts>
         </telerik:RadScriptManager>
 
         <telerik:RadSkinManager runat="server" ID="radSkinManager" Skin="Silk">
             <TargetControls>
-                <telerik:TargetControl ControlsToApplySkin="RadAjaxLoadingPanel" Skin="Metro" />
+                <telerik:TargetControl ControlsToApplySkin="RadAjaxLoadingPanel" Skin="Sitefinity" />
             </TargetControls>
         </telerik:RadSkinManager>
 

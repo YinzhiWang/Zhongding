@@ -101,6 +101,9 @@
     <Compile Include="Models\ProductSpecification.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Roles.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Supplier.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>

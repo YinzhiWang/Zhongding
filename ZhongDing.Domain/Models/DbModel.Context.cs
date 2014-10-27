@@ -26,7 +26,6 @@ namespace ZhongDing.Domain.Models
         }
     
         public DbSet<aspnet_Membership> aspnet_Membership { get; set; }
-        public DbSet<aspnet_Roles> aspnet_Roles { get; set; }
         public DbSet<aspnet_Users> aspnet_Users { get; set; }
         public DbSet<BankAccount> BankAccount { get; set; }
         public DbSet<Company> Company { get; set; }
@@ -45,5 +44,7 @@ namespace ZhongDing.Domain.Models
         public DbSet<Users> Users { get; set; }
         public DbSet<AccountType> AccountType { get; set; }
         public DbSet<OwnerType> OwnerType { get; set; }
+        public DbSet<aspnet_Roles> aspnet_Roles { get; set; }
+        public DbSet<Roles> Roles { get; set; }
     }
 }

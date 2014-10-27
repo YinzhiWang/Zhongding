@@ -263,7 +263,7 @@ input[type="checkbox"].input-validation-error
 {
     color: #e80c4d;
     font-weight: bold;
-    font-size: 1.1em;
+    font-size: 12px;
 }
 
 .validation-summary-valid
@@ -1300,4 +1300,3 @@ img
 {
     min-height: 200px;
 }
-

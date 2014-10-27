@@ -1,42 +1,113 @@
-﻿<%@ Page Title="Log in" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="ZhongDing.Web.Account.Login" %>
-<%@ Register Src="~/Account/OpenAuthProviders.ascx" TagPrefix="uc" TagName="OpenAuthProviders" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="ZhongDing.Web.Account.Login" %>
 
-<asp:Content runat="server" ID="BodyContent" ContentPlaceHolderID="MainContent">
-    <hgroup class="title">
-        <h1><%: Title %>.</h1>
-    </hgroup>
-    <section id="loginForm">
-        <h2>Use a local account to log in.</h2>
-        <asp:Login runat="server" ViewStateMode="Disabled" RenderOuterTable="false">
-            <LayoutTemplate>
-                <p class="validation-summary-errors">
-                    <asp:Literal runat="server" ID="FailureText" />
-                </p>
-                <fieldset>
-                    <legend>Log in Form</legend>
-                    <ol>
-                        <li>
-                            <asp:Label runat="server" AssociatedControlID="UserName">User name</asp:Label>
-                            <asp:TextBox runat="server" ID="UserName" />
-                            <asp:RequiredFieldValidator runat="server" ControlToValidate="UserName" CssClass="field-validation-error" ErrorMessage="The user name field is required." />
-                        </li>
-                        <li>
-                            <asp:Label runat="server" AssociatedControlID="Password">Password</asp:Label>
-                            <asp:TextBox runat="server" ID="Password" TextMode="Password" />
-                            <asp:RequiredFieldValidator runat="server" ControlToValidate="Password" CssClass="field-validation-error" ErrorMessage="The password field is required." />
-                        </li>
-                        <li>
-                            <asp:CheckBox runat="server" ID="RememberMe" />
-                            <asp:Label runat="server" AssociatedControlID="RememberMe" CssClass="checkbox">Remember me?</asp:Label>
-                        </li>
-                    </ol>
-                    <asp:Button runat="server" CommandName="Login" Text="Log in" />
-                </fieldset>
-            </LayoutTemplate>
-        </asp:Login>
-        <p>
-            <asp:HyperLink runat="server" ID="RegisterHyperLink" ViewStateMode="Disabled">Register</asp:HyperLink>
-            if you don't have an account.
-        </p>
-    </section>
-</asp:Content>
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>登录 - 众鼎医药咨询信息系统</title>
+    <link href="../Content/Site.css" rel="stylesheet" />
+    <link href="../Content/reset.css" rel="stylesheet" />
+    <link href="../Content/text.css" rel="stylesheet" />
+    <link href="../Content/core/core.css" rel="stylesheet" />
+    <link href="../Content/core/login.css" rel="stylesheet" />
+    <link href="../Content/icons/icons.css" rel="stylesheet" />
+    <link href="../Content/mws.style.css" rel="stylesheet" />
+    <style>
+        /*adjust the form height for ie7*/
+        body form
+        {
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="mws-login">
+        <h1>用户登录</h1>
+        <div class="mws-login-lock">
+            <img src="../Content/icons/24/locked-2.png" alt="" />
+        </div>
+        <div id="mws-login-form">
+            <form id="loginForm" runat="server" class="mws-form">
+                <div class="validate-message-wrapper">
+                    <asp:ValidationSummary ID="vsLogin" runat="server" ValidationGroup="vgLogin" DisplayMode="BulletList" HeaderText="请更正以下错误:" CssClass="validation-summary-errors" />
+                </div>
+                <div class="mws-form-row">
+                    <div class="mws-form-item large">
+                        <asp:TextBox ID="txtUserName" runat="server" CssClass="mws-login-username mws-textinput" MaxLength="200"></asp:TextBox>
+                    </div>
+                </div>
+                <div class="mws-form-row">
+                    <div class="mws-form-item large">
+                        <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" CssClass="mws-login-password mws-textinput" MaxLength="100"></asp:TextBox>
+                    </div>
+                </div>
+                <div class="mws-form-row">
+                    <asp:Button ID="btnLogin" runat="server" Text="登  录" CssClass="mws-button green mws-login-button" ValidationGroup="vgLogin" CausesValidation="true" OnClick="btnLogin_Click" />
+                </div>
+
+                <asp:HiddenField ID="hdnErrorMsg" runat="server" />
+                <asp:HiddenField ID="hdnErrorMsgPwd" runat="server" />
+            </form>
+        </div>
+    </div>
+
+    <script src="../Scripts/jquery.js"></script>
+    <script src="../Scripts/jquery.placeholder.min.js"></script>
+    <script src="../Scripts/jquery.validate.min.js"></script>
+    <script src="../Scripts/zd.base.extension.js"></script>
+    <script src="../Scripts/zd.base.browserDetect.js"></script>
+
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            BrowserDetect.init();
+
+            var txtUserName = $("#<%= txtUserName.ClientID%>");
+            var txtPassword = $("#<%= txtPassword.ClientID%>");
+
+            if (txtUserName)
+                txtUserName.attr("placeholder", "用户名/邮箱");
+
+            if (txtPassword)
+                txtPassword.attr("placeholder", "密码");
+
+            if (BrowserDetect.browser == "Explorer") {
+                //IE8-则设置input宽度
+                if (BrowserDetect.version < 8) {
+                    txtUserName.css({ width: "245px" });
+                    txtPassword.css({ width: "245px" });
+                }
+
+                if (BrowserDetect.version < 10) {
+                    $('input').placeholder();
+                }
+            }
+
+            var loginForm = $("#<%=loginForm.ClientID%>");
+
+            // validate signup form on keyup and submit
+            loginForm.validate({
+                rules: {
+                    txtUserName: "required",
+                    txtPassword: "required"
+                },
+                messages: {
+                    txtUserName: "请输入您的用户名",
+                    txtPassword: "请输入您的密码"
+                }
+            });
+
+            //debugger;
+            var hdnErrorMsg = $("#<%= hdnErrorMsg.ClientID%>");
+            if (!hdnErrorMsg.val().isNullOrEmpty())
+                txtUserName.after("<label class=\"error\" id=\"txtUserName-error\" for=\"txtUserName\">" + hdnErrorMsg.val() + "</label>");
+
+            var hdnErrorMsgPWD = $("#<%= hdnErrorMsgPwd.ClientID%>");
+            if (!hdnErrorMsgPWD.val().isNullOrEmpty())
+                txtPassword.after("<label class=\"error\" id=\"txtPassword-error\" for=\"txtPassword\">" + hdnErrorMsgPWD.val() + "</label>");
+        });
+
+    </script>
+</body>
+</html>

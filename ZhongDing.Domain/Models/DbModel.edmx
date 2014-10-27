@@ -17,6 +17,7 @@
           <EntitySet Name="Product" EntityType="DbModel.Store.Product" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ProductCategory" EntityType="DbModel.Store.ProductCategory" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ProductSpecification" EntityType="DbModel.Store.ProductSpecification" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Roles" EntityType="DbModel.Store.Roles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Supplier" EntityType="DbModel.Store.Supplier" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierBankAccount" EntityType="DbModel.Store.SupplierBankAccount" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierCertificateFile" EntityType="DbModel.Store.SupplierCertificateFile" store:Type="Tables" Schema="dbo" />
@@ -69,6 +70,10 @@
           <AssociationSet Name="FK_ProductSpecification_UnitOfMeasurement" Association="DbModel.Store.FK_ProductSpecification_UnitOfMeasurement">
             <End Role="UnitOfMeasurement" EntitySet="UnitOfMeasurement" />
             <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Roles_aspnet_Roles" Association="DbModel.Store.FK_Roles_aspnet_Roles">
+            <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
+            <End Role="Roles" EntitySet="Roles" />
           </AssociationSet>
           <AssociationSet Name="FK_SupplierBankAccount_BankAccount" Association="DbModel.Store.FK_SupplierBankAccount_BankAccount">
             <End Role="BankAccount" EntitySet="BankAccount" />
@@ -265,6 +270,21 @@
           <Property Name="UnitOfMeasurementID" Type="int" />
           <Property Name="NumberInSmallPackage" Type="int" />
           <Property Name="NumberInLargePackage" Type="int" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedOn" Type="datetime" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="AspnetRoleID" Type="uniqueidentifier" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsSystemDefault" Type="bit" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="DeletedOn" Type="datetime" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
@@ -564,6 +584,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Roles_aspnet_Roles">
+          <End Role="aspnet_Roles" Type="DbModel.Store.aspnet_Roles" Multiplicity="0..1" />
+          <End Role="Roles" Type="DbModel.Store.Roles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Roles">
+              <PropertyRef Name="AspnetRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SupplierBankAccount_BankAccount">
           <End Role="BankAccount" Type="DbModel.Store.BankAccount" Multiplicity="0..1" />
           <End Role="SupplierBankAccount" Type="DbModel.Store.SupplierBankAccount" Multiplicity="*" />
@@ -702,7 +734,6 @@
       <Schema Namespace="DbModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="DbModelContainer" p1:LazyLoadingEnabled="true">
           <EntitySet Name="aspnet_Membership" EntityType="DbModel.aspnet_Membership" />
-          <EntitySet Name="aspnet_Roles" EntityType="DbModel.aspnet_Roles" />
           <EntitySet Name="aspnet_Users" EntityType="DbModel.aspnet_Users" />
           <EntitySet Name="BankAccount" EntityType="DbModel.BankAccount" />
           <EntitySet Name="Company" EntityType="DbModel.Company" />
@@ -809,6 +840,12 @@
             <End Role="OwnerType" EntitySet="OwnerType" />
             <End Role="SupplierCertificateFile" EntitySet="SupplierCertificateFile" />
           </AssociationSet>
+          <EntitySet Name="aspnet_Roles" EntityType="DbModel.aspnet_Roles" />
+          <EntitySet Name="Roles" EntityType="DbModel.Roles" />
+          <AssociationSet Name="FK_Roles_aspnet_Roles" Association="DbModel.FK_Roles_aspnet_Roles">
+            <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
+            <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="aspnet_Membership">
           <Key>
@@ -836,16 +873,6 @@
           <Property Name="FailedPasswordAnswerAttemptWindowStart" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Comment" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <NavigationProperty Name="aspnet_Users" Relationship="DbModel.FK__aspnet_Me__UserI__10566F31" FromRole="aspnet_Membership" ToRole="aspnet_Users" />
-        </EntityType>
-        <EntityType Name="aspnet_Roles">
-          <Key>
-            <PropertyRef Name="RoleId" />
-          </Key>
-          <Property Name="ApplicationId" Type="Guid" Nullable="false" />
-          <Property Name="RoleId" Type="Guid" Nullable="false" />
-          <Property Name="RoleName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
-          <Property Name="LoweredRoleName" Type="String" Nullable="false" MaxLength="256" Unicode="true" FixedLength="false" />
-          <Property Name="Description" Type="String" MaxLength="256" Unicode="true" FixedLength="false" />
         </EntityType>
         <EntityType Name="aspnet_Users">
           <Key>
@@ -1435,6 +1462,45 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="aspnet_Roles">
+          <Key>
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Type="Guid" Name="ApplicationId" Nullable="false" />
+          <Property Type="Guid" Name="RoleId" Nullable="false" />
+          <Property Type="String" Name="RoleName" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LoweredRoleName" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Description" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Roles" Relationship="DbModel.FK_Roles_aspnet_Roles" FromRole="aspnet_Roles" ToRole="Roles" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Type="Int32" Name="RoleID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Guid" Name="AspnetRoleID" />
+          <Property Type="String" Name="RoleName" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsSystemDefault" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="DeletedOn" Precision="3" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="aspnet_Roles" Relationship="DbModel.FK_Roles_aspnet_Roles" FromRole="Roles" ToRole="aspnet_Roles" />
+        </EntityType>
+        <Association Name="FK_Roles_aspnet_Roles">
+          <End Type="DbModel.aspnet_Roles" Role="aspnet_Roles" Multiplicity="0..1" />
+          <End Type="DbModel.Roles" Role="Roles" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="aspnet_Roles">
+              <PropertyRef Name="RoleId" />
+            </Principal>
+            <Dependent Role="Roles">
+              <PropertyRef Name="AspnetRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1465,17 +1531,6 @@
                 <ScalarProperty Name="FailedPasswordAnswerAttemptCount" ColumnName="FailedPasswordAnswerAttemptCount" />
                 <ScalarProperty Name="FailedPasswordAnswerAttemptWindowStart" ColumnName="FailedPasswordAnswerAttemptWindowStart" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="aspnet_Roles">
-            <EntityTypeMapping TypeName="DbModel.aspnet_Roles">
-              <MappingFragment StoreEntitySet="aspnet_Roles">
-                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
-                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
-                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-                <ScalarProperty Name="LoweredRoleName" ColumnName="LoweredRoleName" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1775,6 +1830,33 @@
               <MappingFragment StoreEntitySet="OwnerType">
                 <ScalarProperty Name="OwnerTypeName" ColumnName="OwnerTypeName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="aspnet_Roles">
+            <EntityTypeMapping TypeName="DbModel.aspnet_Roles">
+              <MappingFragment StoreEntitySet="aspnet_Roles">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="LoweredRoleName" ColumnName="LoweredRoleName" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+                <ScalarProperty Name="ApplicationId" ColumnName="ApplicationId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="DbModel.Roles">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsSystemDefault" ColumnName="IsSystemDefault" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+                <ScalarProperty Name="AspnetRoleID" ColumnName="AspnetRoleID" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
