@@ -31,24 +31,6 @@ namespace ZhongDing.Web {
         protected global::Telerik.Web.UI.RadScriptManager radScriptManager;
         
         /// <summary>
-        /// radSkinManager control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadSkinManager radSkinManager;
-        
-        /// <summary>
-        /// radAjaxLoadingPanel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadAjaxLoadingPanel radAjaxLoadingPanel;
-        
-        /// <summary>
         /// ucHeader control.
         /// </summary>
         /// <remarks>
@@ -83,5 +65,32 @@ namespace ZhongDing.Web {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.ContentPlaceHolder scriptContent;
+        
+        /// <summary>
+        /// radSkinManager control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadSkinManager radSkinManager;
+        
+        /// <summary>
+        /// radAjaxLoadingPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadAjaxLoadingPanel radAjaxLoadingPanel;
+        
+        /// <summary>
+        /// radNotification control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadNotification radNotification;
     }
 }

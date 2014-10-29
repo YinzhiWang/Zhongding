@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Telerik.Web.UI;
 
 namespace ZhongDing.Web
 {
@@ -25,6 +26,17 @@ namespace ZhongDing.Web
             set
             {
                 _MenuItemID = value;
+            }
+        }
+
+        /// <summary>
+        /// 公用的提示控件
+        /// </summary>
+        public RadNotification BaseNotification
+        {
+            get
+            {
+                return this.radNotification;
             }
         }
 

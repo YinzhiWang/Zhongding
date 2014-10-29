@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Telerik.Web.UI;
 using ZhongDing.Business.IRepositories;
 using ZhongDing.Business.Repositories;
 using ZhongDing.Business.Repositories.Reports;
@@ -116,7 +117,18 @@ namespace ZhongDing.Web.Views.Basics
 
         protected void rgCompanies_DeleteCommand(object sender, Telerik.Web.UI.GridCommandEventArgs e)
         {
+            GridEditableItem editableItem = e.Item as GridEditableItem;
 
+            String sid = editableItem.GetDataKeyValue("ID").ToString();
+
+            int id = 0;
+            if (int.TryParse(sid, out id))
+            {
+                PageCompanyRepository.DeleteByID(id);
+                PageCompanyRepository.Save();
+            }
+
+            rgCompanies.Rebind();
         }
 
         protected void rgCompanies_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)

@@ -13,6 +13,15 @@ namespace ZhongDing.Web.Views.Basics {
     public partial class CompanyMaintenance {
         
         /// <summary>
+        /// vsMaintenance control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.ValidationSummary vsMaintenance;
+        
+        /// <summary>
         /// txtCompanyCode control.
         /// </summary>
         /// <remarks>
@@ -29,6 +38,24 @@ namespace ZhongDing.Web.Views.Basics {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox txtCompanyName;
+        
+        /// <summary>
+        /// rfvCompanyName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCompanyName;
+        
+        /// <summary>
+        /// cvCompanyName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cvCompanyName;
         
         /// <summary>
         /// txtProviderTexRatio control.

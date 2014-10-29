@@ -9,7 +9,7 @@ using ZhongDing.Domain.UISearchObjects;
 
 namespace ZhongDing.Business.IRepositories
 {
-    public interface ICompanyRepository : IBaseRepository<Company>
+    public interface ICompanyRepository : IBaseRepository<Company>, IAutoSerialNo
     {
         /// <summary>
         /// 获取UI List，不分页
@@ -25,5 +25,6 @@ namespace ZhongDing.Business.IRepositories
         /// <param name="totalRecords">The total records.</param>
         /// <returns>IList{UICompany}.</returns>
         IList<UICompany> GetUIList(UISearchCompany uiSearchObj, out int totalRecords);
+
     }
 }

@@ -111,6 +111,9 @@ namespace ZhongDing.Business.Repositories
             return uiCompanyList;
         }
 
-
+        public int GetMaxEntityID()
+        {
+            return this.DB.Company.Max(x => x.ID);
+        }
     }
 }

@@ -292,5 +292,49 @@ namespace ZhongDing.Common
 
             return sNetWorkIP;
         }
+
+        /// <summary>
+        /// 格式化利率: 0.10被格式化为10
+        /// </summary>
+        /// <param name="dbRate">数据库里保存的利率(decimal).</param>
+        /// <returns>System.Nullable{System.Double}.</returns>
+        public static double? FormatRate(decimal? dbRate)
+        {
+            double? formattedRate = null;
+
+            if (dbRate.HasValue)
+                formattedRate = (double?)dbRate.Value * 100;
+
+            return formattedRate;
+        }
+
+        /// <summary>
+        /// 生成自动编号
+        /// </summary>
+        /// <param name="maxEntityID">最大实体ID.</param>
+        /// <param name="prefix">编号前缀.</param>
+        /// <param name="suffix">编号后缀.</param>
+        /// <returns>生成的自动编号.</returns>
+        public static string GenerateAutoSerialNo(int? maxEntityID, string prefix = "", string suffix = "")
+        {
+            string serialNo = string.Empty;
+
+            int curEntityID = (maxEntityID.HasValue && maxEntityID >= 0) ? (maxEntityID.Value + 1) : 1;
+
+            if (curEntityID < 10)
+                serialNo = "00" + curEntityID.ToString();
+            else if (curEntityID >= 10 && curEntityID < 100)
+                serialNo = "0" + curEntityID.ToString();
+            else
+                serialNo = curEntityID.ToString();
+
+            if (!string.IsNullOrEmpty(prefix))
+                serialNo = prefix + serialNo;
+
+            if (!string.IsNullOrEmpty(suffix))
+                serialNo += suffix;
+
+            return serialNo;
+        }
     }
 }

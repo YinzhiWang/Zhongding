@@ -53,7 +53,7 @@
                         </td>
                     </tr>
                 </table>
-                <telerik:RadGrid ID="rgCompanies" runat="server" PageSize="20"
+                <telerik:RadGrid ID="rgCompanies" runat="server" PageSize="10"
                     AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
                     MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="100%" ShowHeader="true"
                     OnNeedDataSource="rgCompanies_NeedDataSource" OnDeleteCommand="rgCompanies_DeleteCommand"
@@ -91,7 +91,7 @@
                             <telerik:GridBoundColumn UniqueName="CreatedOn" HeaderText="创建时间" DataField="CreatedOn" DataFormatString="{0:yyyy/MM/dd}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="LastModifiedBy" HeaderText="修改人" DataField="LastModifiedBy">
+                            <%--<telerik:GridBoundColumn UniqueName="LastModifiedBy" HeaderText="修改人" DataField="LastModifiedBy">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="LastModifiedOn" HeaderText="修改时间" DataField="LastModifiedOn" DataFormatString="{0:yyyy/MM/dd}">
@@ -103,7 +103,7 @@
                                     <a href="javascript:void(0)" onclick="redirectToMaintenancePage(<%#DataBinder.Eval(Container.DataItem,"ID")%>); return false;">
                                         <u>查看</u></a>
                                 </ItemTemplate>
-                            </telerik:GridTemplateColumn>
+                            </telerik:GridTemplateColumn>--%>
                             <telerik:GridTemplateColumn UniqueName="Edit">
                                 <ItemStyle HorizontalAlign="Center" Width="30" />
                                 <ItemTemplate>
@@ -118,7 +118,7 @@
                                         <u>审核</u></a>
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>--%>
-                            <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除当前的选项吗？" />
+                            <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
                         </Columns>
                         <CommandItemTemplate>
                             <table class="width100-percent">

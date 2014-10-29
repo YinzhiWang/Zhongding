@@ -47,14 +47,6 @@
             </Scripts>
         </telerik:RadScriptManager>
 
-        <telerik:RadSkinManager runat="server" ID="radSkinManager" Skin="Silk">
-            <TargetControls>
-                <telerik:TargetControl ControlsToApplySkin="RadAjaxLoadingPanel" Skin="Sitefinity" />
-            </TargetControls>
-        </telerik:RadSkinManager>
-
-        <telerik:RadAjaxLoadingPanel runat="server" ID="radAjaxLoadingPanel" />
-
         <div id="main-wrapper">
             <uc:Header runat="server" ID="ucHeader" />
             <!-- Main Wrapper -->
@@ -188,6 +180,20 @@
                 {
                     color: #ffffff;
                 }
+
+            .RadNotification .rnContentIconClip
+            {
+                position: relative;
+            }
+
+            .RadNotification .rnContent
+            {
+                padding-top: 5px;
+                font-family: inherit;
+                font-size: 14px;
+                font-weight: 600;
+                color: #323232;
+            }
         </style>
 
         <telerik:RadCodeBlock runat="server" ID="mainCodeBlock">
@@ -267,6 +273,19 @@
             </asp:ContentPlaceHolder>
         </telerik:RadCodeBlock>
 
+        <telerik:RadSkinManager runat="server" ID="radSkinManager" Skin="Silk">
+            <TargetControls>
+                <telerik:TargetControl ControlsToApplySkin="RadAjaxLoadingPanel" Skin="Sitefinity" />
+            </TargetControls>
+        </telerik:RadSkinManager>
+
+        <telerik:RadAjaxLoadingPanel runat="server" ID="radAjaxLoadingPanel" />
+
+        <telerik:RadNotification ID="radNotification" runat="server" EnableRoundedCorners="true"
+            AutoCloseDelay="200" Skin="Silk" Animation="Fade" EnableShadow="true" Title="提示"
+            TitleIcon="none" Opacity="95" Position="Center" ContentIcon="~/Content/icons/32/tick.png"
+            Width="300" Height="100">
+        </telerik:RadNotification>
     </form>
 </body>
 </html>
