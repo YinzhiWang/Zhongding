@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace ZhongDing.Web
 {
-    public partial class Home : System.Web.UI.Page
+    public partial class Home : BasePage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
