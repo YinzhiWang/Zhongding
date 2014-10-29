@@ -1,5 +1,5 @@
 ﻿
----- Start--- 10/25/2014 -- by lihong 初始化membership datas
+---- Start--- 10/25/2014 -- 初始化membership datas--by lihong
 set xact_abort on
 go
 
@@ -62,3 +62,23 @@ go
 
 commit transaction
 go
+
+----end--- 10/25/2014 -- 初始化membership datas -- by lihong 
+
+
+---- start --- 10/29/2014 -- 初始化账套数据 -- by lihong 
+SET NUMERIC_ROUNDABORT OFF
+GO
+SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+
+BEGIN TRANSACTION
+SET IDENTITY_INSERT [dbo].[Company] ON
+INSERT INTO [dbo].[Company] ([ID], [CompanyCode], [CompanyName], [CreatedOn], [CreatedBy]) VALUES (1, N'ZT001', N'英特康', GETDATE(), 1)
+INSERT INTO [dbo].[Company] ([ID], [CompanyCode], [CompanyName], [CreatedOn], [CreatedBy]) VALUES (2, N'ZT002', N'万国康', GETDATE(), 1)
+SET IDENTITY_INSERT [dbo].[Company] OFF
+COMMIT TRANSACTION
+
+GO
+
+---- end ---- 10/29/2014 -- 初始化账套数据 -- by lihong 
