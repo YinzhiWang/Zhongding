@@ -336,5 +336,58 @@ namespace ZhongDing.Common
 
             return serialNo;
         }
+
+        /// <summary>
+        /// 遮罩帐号
+        /// </summary>
+        /// <param name="originalStr">The original STR.</param>
+        /// <returns>System.String.</returns>
+        public static string MaskAccount(string originalStr)
+        {
+            string maskedStr = string.Empty;
+
+            if (!string.IsNullOrEmpty(originalStr))
+            {
+                if (originalStr.Length >= 8)
+                    maskedStr = originalStr.Substring(0, 4) + "****" + originalStr.Substring(originalStr.Length - 4);
+                else if (originalStr.Length >= 4)
+                    maskedStr = "****" + originalStr.Substring(originalStr.Length - 4);
+                else
+                    maskedStr = "****" + originalStr;
+            }
+
+            return maskedStr;
+        }
+
+
+        /// <summary>
+        /// 是否有效的帐号
+        /// </summary>
+        /// <param name="accountNumber">The account number.</param>
+        /// <returns><c>true</c> if [is valid account number] [the specified account number]; otherwise, <c>false</c>.</returns>
+        public static bool IsValidAccountNumber(string accountNumber)
+        {
+            bool isValidAccountNumber = true;
+
+            if (!string.IsNullOrEmpty(accountNumber))
+            {
+                accountNumber = accountNumber.Replace("-", "");
+
+                char firstChar = Convert.ToChar(accountNumber.Substring(0, 1));
+
+                int repeatCount = 0;
+
+                foreach (char curChar in accountNumber.ToCharArray())
+                {
+                    if (curChar.Equals(firstChar))
+                        repeatCount++;
+                }
+
+                if (repeatCount == accountNumber.Length)
+                    isValidAccountNumber = false;
+            }
+
+            return isValidAccountNumber;
+        }
     }
 }

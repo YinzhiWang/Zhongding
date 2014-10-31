@@ -27,6 +27,7 @@ namespace ZhongDing.Domain.Models
         public string Account { get; set; }
         public Nullable<int> AccountTypeID { get; set; }
         public Nullable<int> OwnerTypeID { get; set; }
+        public string Comments { get; set; }
         public bool IsDeleted { get; set; }
         public Nullable<System.DateTime> DeletedOn { get; set; }
         public System.DateTime CreatedOn { get; set; }
@@ -44,9 +45,9 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual Company Company { get; set; }
-        public virtual ICollection<SupplierBankAccount> SupplierBankAccount { get; set; }
         public virtual AccountType AccountType { get; set; }
+        public virtual Company Company { get; set; }
         public virtual OwnerType OwnerType { get; set; }
+        public virtual ICollection<SupplierBankAccount> SupplierBankAccount { get; set; }
     }
 }

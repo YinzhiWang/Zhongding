@@ -28,7 +28,10 @@
                         <div class="mws-form-row">
                             <label>帐套名称</label>
                             <div class="mws-form-item small">
-                                <telerik:RadTextBox runat="server" ID="txtCompanyName" CssClass="mws-textinput" Width="40%"></telerik:RadTextBox>
+                                <telerik:RadTextBox runat="server" ID="txtCompanyName" CssClass="mws-textinput" Width="40%" MaxLength="100"></telerik:RadTextBox>
+                                <telerik:RadToolTip ID="rttCompanyName" runat="server" TargetControlID="txtCompanyName" ShowEvent="OnClick"
+                                    Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
+                                </telerik:RadToolTip>
                                 <asp:RequiredFieldValidator ID="rfvCompanyName" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="txtCompanyName"
                                     ErrorMessage="账套名称必填" Text="*" CssClass="field-validation-error">
                                 </asp:RequiredFieldValidator>
@@ -130,13 +133,6 @@
                 else
                     txtClientTaxDeductionRatio.disable();
             }
-        }
-
-        function onConfirmDelete() {
-            if (confirm("确认删除该条数据吗？")) {
-                return true;
-            }
-            return false;
         }
 
         function onClientHidden(sender, args) {

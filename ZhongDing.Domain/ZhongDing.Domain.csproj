@@ -132,8 +132,11 @@
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIObjects\UIAccountType.cs" />
+    <Compile Include="UIObjects\UIBankAccount.cs" />
     <Compile Include="UIObjects\UIBase.cs" />
     <Compile Include="UIObjects\UICompany.cs" />
+    <Compile Include="UISearchObjects\UISearchBankAccount.cs" />
     <Compile Include="UISearchObjects\UISearchBase.cs" />
     <Compile Include="UISearchObjects\UISearchCompany.cs" />
   </ItemGroup>

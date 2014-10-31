@@ -142,5 +142,32 @@ namespace System
 
         }
 
+        /// <summary>
+        /// 剪切字符串
+        /// </summary>
+        /// <param name="srcString">源字符串.</param>
+        /// <param name="cutLength">剪切长度.</param>
+        /// <param name="containsEllipsis">是否包含省略号，默认：true</param>
+        /// <returns>System.String.</returns>
+        public static string CutString(this string srcString, int cutLength, bool containsEllipsis = true)
+        {
+            string cutStr = string.Empty;
+
+            if (!string.IsNullOrWhiteSpace(srcString))
+            {
+                if (srcString.Length > cutLength)
+                {
+                    cutStr = srcString.Substring(0, cutLength);
+
+                    if (containsEllipsis)
+                        cutStr += "...";
+                }
+                else
+                    cutStr = srcString;
+            }
+
+            return cutStr;
+        }
+
     }
 }

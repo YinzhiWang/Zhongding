@@ -10,7 +10,7 @@
 namespace ZhongDing.Web.Views.Basics {
     
     
-    public partial class CompanyMaintenance {
+    public partial class BankAccountMaintenance {
         
         /// <summary>
         /// vsMaintenance control.
@@ -22,94 +22,157 @@ namespace ZhongDing.Web.Views.Basics {
         protected global::System.Web.UI.WebControls.ValidationSummary vsMaintenance;
         
         /// <summary>
-        /// txtCompanyCode control.
+        /// txtAccountName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtCompanyCode;
+        protected global::Telerik.Web.UI.RadTextBox txtAccountName;
         
         /// <summary>
-        /// txtCompanyName control.
+        /// rttAccountName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtCompanyName;
+        protected global::Telerik.Web.UI.RadToolTip rttAccountName;
         
         /// <summary>
-        /// rttCompanyName control.
+        /// rfvAccountName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadToolTip rttCompanyName;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvAccountName;
         
         /// <summary>
-        /// rfvCompanyName control.
+        /// txtBankBranchName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCompanyName;
+        protected global::Telerik.Web.UI.RadTextBox txtBankBranchName;
         
         /// <summary>
-        /// cvCompanyName control.
+        /// rttBankBranchName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator cvCompanyName;
+        protected global::Telerik.Web.UI.RadToolTip rttBankBranchName;
         
         /// <summary>
-        /// txtProviderTexRatio control.
+        /// rfvBankBranchName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox txtProviderTexRatio;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvBankBranchName;
         
         /// <summary>
-        /// txtClientTaxHighRatio control.
+        /// txtAccount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox txtClientTaxHighRatio;
+        protected global::Telerik.Web.UI.RadTextBox txtAccount;
         
         /// <summary>
-        /// txtClientTaxLowRatio control.
+        /// rttAccount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox txtClientTaxLowRatio;
+        protected global::Telerik.Web.UI.RadToolTip rttAccount;
         
         /// <summary>
-        /// txtClientTaxDeductionRatio control.
+        /// rfvAccount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox txtClientTaxDeductionRatio;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvAccount;
         
         /// <summary>
-        /// cbxEnableTaxDeduction control.
+        /// revAccount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton cbxEnableTaxDeduction;
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revAccount;
+        
+        /// <summary>
+        /// cvAccount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cvAccount;
+        
+        /// <summary>
+        /// ddlAccountType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDropDownList ddlAccountType;
+        
+        /// <summary>
+        /// rttAccountType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadToolTip rttAccountType;
+        
+        /// <summary>
+        /// rfvAccountType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvAccountType;
+        
+        /// <summary>
+        /// comboxCompany control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox comboxCompany;
+        
+        /// <summary>
+        /// cvCompany control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cvCompany;
+        
+        /// <summary>
+        /// txtComments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtComments;
         
         /// <summary>
         /// btnSave control.

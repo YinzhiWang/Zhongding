@@ -14,6 +14,7 @@ namespace ZhongDing.Web
     public class BasePage : Page
     {
         #region 属性
+
         private SiteUser _CurrentUser;
 
         /// <summary>

@@ -2615,6 +2615,8 @@
     <Content Include="Scripts\WebForms\WebUIValidation.js" />
     <Content Include="UserControls\UCHeader.ascx" />
     <Content Include="ViewSwitcher.ascx" />
+    <Content Include="Views\Basics\BankAccountMaintenance.aspx" />
+    <Content Include="Views\Basics\BankAccountManagement.aspx" />
     <Content Include="Views\Basics\CompanyMaintenance.aspx" />
     <Content Include="Views\Basics\CompanyManagement.aspx" />
     <Content Include="Web.config" />
@@ -2645,6 +2647,16 @@
     </Compile>
     <Compile Include="Account\Logout.aspx.designer.cs">
       <DependentUpon>Logout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\RadGrid.Main.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RadGrid.Main.resx</DependentUpon>
+    </Compile>
+    <Compile Include="App_GlobalResources\RadGrid.Main.zh-CN.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RadGrid.Main.zh-CN.resx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\AuthConfig.cs" />
@@ -2713,6 +2725,20 @@
     <Compile Include="ViewSwitcher.ascx.designer.cs">
       <DependentUpon>ViewSwitcher.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Basics\BankAccountMaintenance.aspx.cs">
+      <DependentUpon>BankAccountMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\BankAccountMaintenance.aspx.designer.cs">
+      <DependentUpon>BankAccountMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\BankAccountManagement.aspx.cs">
+      <DependentUpon>BankAccountManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\BankAccountManagement.aspx.designer.cs">
+      <DependentUpon>BankAccountManagement.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Basics\CompanyMaintenance.aspx.cs">
       <DependentUpon>CompanyMaintenance.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2728,7 +2754,12 @@
       <DependentUpon>CompanyManagement.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="App_GlobalResources\RadGrid.Main.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadGrid.Main.designer.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Account\Web.config" />
     <Content Include="Site.Master" />
@@ -2746,6 +2777,12 @@
       <Project>{aceeac6f-29eb-469f-b4f5-4ed9e7b2fc32}</Project>
       <Name>ZhongDing.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_GlobalResources\RadGrid.Main.zh-CN.resx">
+      <Generator>GlobalResourceProxyGenerator</Generator>
+      <LastGenOutput>RadGrid.Main.zh-CN.designer.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

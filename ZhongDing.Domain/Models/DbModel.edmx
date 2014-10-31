@@ -186,6 +186,7 @@
           <Property Name="Account" Type="nvarchar" MaxLength="50" />
           <Property Name="AccountTypeID" Type="int" />
           <Property Name="OwnerTypeID" Type="int" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="DeletedOn" Type="datetime" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
@@ -735,7 +736,6 @@
         <EntityContainer Name="DbModelContainer" p1:LazyLoadingEnabled="true">
           <EntitySet Name="aspnet_Membership" EntityType="DbModel.aspnet_Membership" />
           <EntitySet Name="aspnet_Users" EntityType="DbModel.aspnet_Users" />
-          <EntitySet Name="BankAccount" EntityType="DbModel.BankAccount" />
           <EntitySet Name="Company" EntityType="DbModel.Company" />
           <EntitySet Name="Department" EntityType="DbModel.Department" />
           <EntitySet Name="Product" EntityType="DbModel.Product" />
@@ -752,14 +752,6 @@
           <AssociationSet Name="FK__aspnet_Me__UserI__10566F31" Association="DbModel.FK__aspnet_Me__UserI__10566F31">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BankAccount_Company" Association="DbModel.FK_BankAccount_Company">
-            <End Role="Company" EntitySet="Company" />
-            <End Role="BankAccount" EntitySet="BankAccount" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SupplierBankAccount_BankAccount" Association="DbModel.FK_SupplierBankAccount_BankAccount">
-            <End Role="BankAccount" EntitySet="BankAccount" />
-            <End Role="SupplierBankAccount" EntitySet="SupplierBankAccount" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Company" Association="DbModel.FK_Product_Company">
             <End Role="Company" EntitySet="Company" />
@@ -828,14 +820,6 @@
           </AssociationSet>
           <EntitySet Name="AccountType" EntityType="DbModel.AccountType" />
           <EntitySet Name="OwnerType" EntityType="DbModel.OwnerType" />
-          <AssociationSet Name="FK_BankAccount_AccountType" Association="DbModel.FK_BankAccount_AccountType">
-            <End Role="AccountType" EntitySet="AccountType" />
-            <End Role="BankAccount" EntitySet="BankAccount" />
-          </AssociationSet>
-          <AssociationSet Name="FK_BankAccount_OwnerType" Association="DbModel.FK_BankAccount_OwnerType">
-            <End Role="OwnerType" EntitySet="OwnerType" />
-            <End Role="BankAccount" EntitySet="BankAccount" />
-          </AssociationSet>
           <AssociationSet Name="FK_SupplierCertificateFile_OwnerType" Association="DbModel.FK_SupplierCertificateFile_OwnerType">
             <End Role="OwnerType" EntitySet="OwnerType" />
             <End Role="SupplierCertificateFile" EntitySet="SupplierCertificateFile" />
@@ -845,6 +829,23 @@
           <AssociationSet Name="FK_Roles_aspnet_Roles" Association="DbModel.FK_Roles_aspnet_Roles">
             <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
             <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <EntitySet Name="BankAccount" EntityType="DbModel.BankAccount" />
+          <AssociationSet Name="FK_BankAccount_AccountType" Association="DbModel.FK_BankAccount_AccountType">
+            <End Role="AccountType" EntitySet="AccountType" />
+            <End Role="BankAccount" EntitySet="BankAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BankAccount_Company" Association="DbModel.FK_BankAccount_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="BankAccount" EntitySet="BankAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BankAccount_OwnerType" Association="DbModel.FK_BankAccount_OwnerType">
+            <End Role="OwnerType" EntitySet="OwnerType" />
+            <End Role="BankAccount" EntitySet="BankAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierBankAccount_BankAccount" Association="DbModel.FK_SupplierBankAccount_BankAccount">
+            <End Role="BankAccount" EntitySet="BankAccount" />
+            <End Role="SupplierBankAccount" EntitySet="SupplierBankAccount" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="aspnet_Membership">
@@ -888,28 +889,6 @@
           <NavigationProperty Name="aspnet_Membership" Relationship="DbModel.FK__aspnet_Me__UserI__10566F31" FromRole="aspnet_Users" ToRole="aspnet_Membership" />
           <NavigationProperty Name="Users" Relationship="DbModel.FK_Users_aspnet_Users" FromRole="aspnet_Users" ToRole="Users" />
         </EntityType>
-        <EntityType Name="BankAccount">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
-          <Property Name="CompanyID" Type="Int32" />
-          <Property Name="AccountName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
-          <Property Name="BankBranchName" Type="String" MaxLength="255" Unicode="true" FixedLength="false" />
-          <Property Name="Account" Type="String" MaxLength="50" Unicode="true" FixedLength="false" />
-          <Property Name="AccountTypeID" Type="Int32" />
-          <Property Name="OwnerTypeID" Type="Int32" />
-          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
-          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
-          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CreatedBy" Type="Int32" />
-          <Property Name="LastModifiedOn" Type="DateTime" Precision="3" />
-          <Property Name="LastModifiedBy" Type="Int32" />
-          <NavigationProperty Name="Company" Relationship="DbModel.FK_BankAccount_Company" FromRole="BankAccount" ToRole="Company" />
-          <NavigationProperty Name="SupplierBankAccount" Relationship="DbModel.FK_SupplierBankAccount_BankAccount" FromRole="BankAccount" ToRole="SupplierBankAccount" />
-          <NavigationProperty Name="AccountType" Relationship="DbModel.FK_BankAccount_AccountType" FromRole="BankAccount" ToRole="AccountType" />
-          <NavigationProperty Name="OwnerType" Relationship="DbModel.FK_BankAccount_OwnerType" FromRole="BankAccount" ToRole="OwnerType" />
-        </EntityType>
         <EntityType Name="Company">
           <Key>
             <PropertyRef Name="ID" />
@@ -928,8 +907,8 @@
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="LastModifiedOn" Type="DateTime" Precision="3" />
           <Property Name="LastModifiedBy" Type="Int32" />
-          <NavigationProperty Name="BankAccount" Relationship="DbModel.FK_BankAccount_Company" FromRole="Company" ToRole="BankAccount" />
           <NavigationProperty Name="Product" Relationship="DbModel.FK_Product_Company" FromRole="Company" ToRole="Product" />
+          <NavigationProperty Name="BankAccount" Relationship="DbModel.FK_BankAccount_Company" FromRole="Company" ToRole="BankAccount" />
         </EntityType>
         <EntityType Name="Department">
           <Key>
@@ -1040,8 +1019,8 @@
           <Property Name="CreatedBy" Type="Int32" />
           <Property Name="LastModifiedOn" Type="DateTime" Precision="3" />
           <Property Name="LastModifiedBy" Type="Int32" />
-          <NavigationProperty Name="BankAccount" Relationship="DbModel.FK_SupplierBankAccount_BankAccount" FromRole="SupplierBankAccount" ToRole="BankAccount" />
           <NavigationProperty Name="Supplier" Relationship="DbModel.FK_SupplierBankAccount_Supplier" FromRole="SupplierBankAccount" ToRole="Supplier" />
+          <NavigationProperty Name="BankAccount" Relationship="DbModel.FK_SupplierBankAccount_BankAccount" FromRole="SupplierBankAccount" ToRole="BankAccount" />
         </EntityType>
         <EntityType Name="SupplierCertificateFile">
           <Key>
@@ -1163,30 +1142,6 @@
             </Principal>
             <Dependent Role="aspnet_Membership">
               <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BankAccount_Company">
-          <End Role="Company" Type="DbModel.Company" Multiplicity="0..1" />
-          <End Role="BankAccount" Type="DbModel.BankAccount" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Company">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="BankAccount">
-              <PropertyRef Name="CompanyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SupplierBankAccount_BankAccount">
-          <End Role="BankAccount" Type="DbModel.BankAccount" Multiplicity="0..1" />
-          <End Role="SupplierBankAccount" Type="DbModel.SupplierBankAccount" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="BankAccount">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="SupplierBankAccount">
-              <PropertyRef Name="BankAccountID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1423,33 +1378,9 @@
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="OwnerTypeName" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="BankAccount" Relationship="DbModel.FK_BankAccount_OwnerType" FromRole="OwnerType" ToRole="BankAccount" />
           <NavigationProperty Name="SupplierCertificateFile" Relationship="DbModel.FK_SupplierCertificateFile_OwnerType" FromRole="OwnerType" ToRole="SupplierCertificateFile" />
+          <NavigationProperty Name="BankAccount" Relationship="DbModel.FK_BankAccount_OwnerType" FromRole="OwnerType" ToRole="BankAccount" />
         </EntityType>
-        <Association Name="FK_BankAccount_AccountType">
-          <End Type="DbModel.AccountType" Role="AccountType" Multiplicity="0..1" />
-          <End Type="DbModel.BankAccount" Role="BankAccount" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AccountType">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="BankAccount">
-              <PropertyRef Name="AccountTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_BankAccount_OwnerType">
-          <End Type="DbModel.OwnerType" Role="OwnerType" Multiplicity="0..1" />
-          <End Type="DbModel.BankAccount" Role="BankAccount" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OwnerType">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="BankAccount">
-              <PropertyRef Name="OwnerTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SupplierCertificateFile_OwnerType">
           <End Type="DbModel.OwnerType" Role="OwnerType" Multiplicity="0..1" />
           <End Type="DbModel.SupplierCertificateFile" Role="SupplierCertificateFile" Multiplicity="*" />
@@ -1501,6 +1432,77 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="BankAccount">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="CompanyID" />
+          <Property Type="String" Name="AccountName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="BankBranchName" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Account" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="AccountTypeID" />
+          <Property Type="Int32" Name="OwnerTypeID" />
+          <Property Type="String" Name="Comments" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="DeletedOn" Precision="3" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="AccountType" Relationship="DbModel.FK_BankAccount_AccountType" FromRole="BankAccount" ToRole="AccountType" />
+          <NavigationProperty Name="Company" Relationship="DbModel.FK_BankAccount_Company" FromRole="BankAccount" ToRole="Company" />
+          <NavigationProperty Name="OwnerType" Relationship="DbModel.FK_BankAccount_OwnerType" FromRole="BankAccount" ToRole="OwnerType" />
+          <NavigationProperty Name="SupplierBankAccount" Relationship="DbModel.FK_SupplierBankAccount_BankAccount" FromRole="BankAccount" ToRole="SupplierBankAccount" />
+        </EntityType>
+        <Association Name="FK_BankAccount_AccountType">
+          <End Type="DbModel.AccountType" Role="AccountType" Multiplicity="0..1" />
+          <End Type="DbModel.BankAccount" Role="BankAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AccountType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BankAccount">
+              <PropertyRef Name="AccountTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BankAccount_Company">
+          <End Type="DbModel.Company" Role="Company" Multiplicity="0..1" />
+          <End Type="DbModel.BankAccount" Role="BankAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BankAccount">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BankAccount_OwnerType">
+          <End Type="DbModel.OwnerType" Role="OwnerType" Multiplicity="0..1" />
+          <End Type="DbModel.BankAccount" Role="BankAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OwnerType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="BankAccount">
+              <PropertyRef Name="OwnerTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierBankAccount_BankAccount">
+          <End Type="DbModel.BankAccount" Role="BankAccount" Multiplicity="0..1" />
+          <End Type="DbModel.SupplierBankAccount" Role="SupplierBankAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BankAccount">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierBankAccount">
+              <PropertyRef Name="BankAccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1544,25 +1546,6 @@
                 <ScalarProperty Name="MobileAlias" ColumnName="MobileAlias" />
                 <ScalarProperty Name="IsAnonymous" ColumnName="IsAnonymous" />
                 <ScalarProperty Name="LastActivityDate" ColumnName="LastActivityDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="BankAccount">
-            <EntityTypeMapping TypeName="DbModel.BankAccount">
-              <MappingFragment StoreEntitySet="BankAccount">
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
-                <ScalarProperty Name="BankBranchName" ColumnName="BankBranchName" />
-                <ScalarProperty Name="Account" ColumnName="Account" />
-                <ScalarProperty Name="AccountTypeID" ColumnName="AccountTypeID" />
-                <ScalarProperty Name="OwnerTypeID" ColumnName="OwnerTypeID" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1857,6 +1840,26 @@
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
                 <ScalarProperty Name="AspnetRoleID" ColumnName="AspnetRoleID" />
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BankAccount">
+            <EntityTypeMapping TypeName="DbModel.BankAccount">
+              <MappingFragment StoreEntitySet="BankAccount">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="OwnerTypeID" ColumnName="OwnerTypeID" />
+                <ScalarProperty Name="AccountTypeID" ColumnName="AccountTypeID" />
+                <ScalarProperty Name="Account" ColumnName="Account" />
+                <ScalarProperty Name="BankBranchName" ColumnName="BankBranchName" />
+                <ScalarProperty Name="AccountName" ColumnName="AccountName" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

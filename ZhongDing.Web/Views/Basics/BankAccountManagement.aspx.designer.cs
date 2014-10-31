@@ -10,133 +10,106 @@
 namespace ZhongDing.Web.Views.Basics {
     
     
-    public partial class CompanyMaintenance {
+    public partial class BankAccountManagement {
         
         /// <summary>
-        /// vsMaintenance control.
+        /// loadingPanel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ValidationSummary vsMaintenance;
+        protected global::Telerik.Web.UI.RadAjaxLoadingPanel loadingPanel;
         
         /// <summary>
-        /// txtCompanyCode control.
+        /// RadAjaxManager1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtCompanyCode;
+        protected global::Telerik.Web.UI.RadAjaxManager RadAjaxManager1;
         
         /// <summary>
-        /// txtCompanyName control.
+        /// tblSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtCompanyName;
+        protected global::System.Web.UI.HtmlControls.HtmlTable tblSearch;
         
         /// <summary>
-        /// rttCompanyName control.
+        /// txtAccountName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadToolTip rttCompanyName;
+        protected global::Telerik.Web.UI.RadTextBox txtAccountName;
         
         /// <summary>
-        /// rfvCompanyName control.
+        /// txtBankBranchName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCompanyName;
+        protected global::Telerik.Web.UI.RadTextBox txtBankBranchName;
         
         /// <summary>
-        /// cvCompanyName control.
+        /// txtAccount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator cvCompanyName;
+        protected global::Telerik.Web.UI.RadTextBox txtAccount;
         
         /// <summary>
-        /// txtProviderTexRatio control.
+        /// ddlAccountType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox txtProviderTexRatio;
+        protected global::Telerik.Web.UI.RadDropDownList ddlAccountType;
         
         /// <summary>
-        /// txtClientTaxHighRatio control.
+        /// comboxCompany control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox txtClientTaxHighRatio;
+        protected global::Telerik.Web.UI.RadComboBox comboxCompany;
         
         /// <summary>
-        /// txtClientTaxLowRatio control.
+        /// btnSearch control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox txtClientTaxLowRatio;
+        protected global::System.Web.UI.WebControls.Button btnSearch;
         
         /// <summary>
-        /// txtClientTaxDeductionRatio control.
+        /// btnReset control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox txtClientTaxDeductionRatio;
+        protected global::System.Web.UI.WebControls.Button btnReset;
         
         /// <summary>
-        /// cbxEnableTaxDeduction control.
+        /// rgBankAccounts control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton cbxEnableTaxDeduction;
-        
-        /// <summary>
-        /// btnSave control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSave;
-        
-        /// <summary>
-        /// btnDelete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDelete;
-        
-        /// <summary>
-        /// btnCancel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancel;
+        protected global::Telerik.Web.UI.RadGrid rgBankAccounts;
         
         /// <summary>
         /// Master property.

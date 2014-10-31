@@ -40,5 +40,12 @@ namespace ZhongDing.Domain.UIObjects
         /// </summary>
         /// <value>The last modified by.</value>
         public string LastModifiedBy { get; set; }
+
+        /// <summary>
+        /// 备注
+        /// </summary>
+        /// <value>The comments.</value>
+        public string Comments { get; set; }
+
     }
 }

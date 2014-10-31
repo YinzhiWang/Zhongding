@@ -17,8 +17,8 @@ namespace ZhongDing.Domain.Models
     {
         public OwnerType()
         {
-            this.BankAccount = new HashSet<BankAccount>();
             this.SupplierCertificateFile = new HashSet<SupplierCertificateFile>();
+            this.BankAccount = new HashSet<BankAccount>();
         }
     
         public int ID { get; set; }
@@ -34,7 +34,7 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return false; } }
     
     
-        public virtual ICollection<BankAccount> BankAccount { get; set; }
         public virtual ICollection<SupplierCertificateFile> SupplierCertificateFile { get; set; }
+        public virtual ICollection<BankAccount> BankAccount { get; set; }
     }
 }
