@@ -3,6 +3,7 @@
     [SupplierID]             INT             NULL,
     [ProductID]              INT             NULL,
     [ProductSpecificationID] INT             NULL,
+    [ContractCode]           NVARCHAR (50)   NULL,
     [UnitPrice]              DECIMAL (18, 8) NULL,
     [IsNeedTaskAssignment]   BIT             NULL,
     [ExpirationDate]         DATETIME        NULL,
@@ -17,4 +18,6 @@
     CONSTRAINT [FK_SupplierContract_ProductSpecification] FOREIGN KEY ([ProductSpecificationID]) REFERENCES [dbo].[ProductSpecification] ([ID]),
     CONSTRAINT [FK_SupplierContract_Supplier] FOREIGN KEY ([SupplierID]) REFERENCES [dbo].[Supplier] ([ID])
 );
+
+
 

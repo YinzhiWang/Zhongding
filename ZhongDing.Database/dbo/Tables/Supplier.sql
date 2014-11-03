@@ -9,6 +9,7 @@
     [ContactAddress] NVARCHAR (255) NULL,
     [Fax]            NVARCHAR (20)  NULL,
     [PostalCode]     NVARCHAR (10)  NULL,
+    [IsProducer]     BIT            CONSTRAINT [DF_Supplier_IsProducer] DEFAULT ((0)) NOT NULL,
     [IsDeleted]      BIT            CONSTRAINT [DF_Supplier_IsDeleted] DEFAULT ((0)) NOT NULL,
     [DeletedOn]      DATETIME       NULL,
     [CreatedOn]      DATETIME       CONSTRAINT [DF_Supplier_CreatedOn] DEFAULT (getdate()) NOT NULL,
@@ -17,4 +18,6 @@
     [LastModifiedBy] INT            NULL,
     CONSTRAINT [PK_Supplier] PRIMARY KEY CLUSTERED ([ID] ASC)
 );
+
+
 
