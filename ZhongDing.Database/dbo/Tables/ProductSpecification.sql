@@ -6,7 +6,6 @@
     [NumberInSmallPackage] INT           NULL,
     [NumberInLargePackage] INT           NULL,
     [IsDeleted]            BIT           CONSTRAINT [DF_ProductSpecification_IsDeleted] DEFAULT ((0)) NOT NULL,
-    [DeletedOn]            DATETIME      NULL,
     [CreatedOn]            DATETIME      CONSTRAINT [DF_ProductSpecification_CreatedOn] DEFAULT (getdate()) NOT NULL,
     [CreatedBy]            INT           NULL,
     [LastModifiedOn]       DATETIME      NULL,
@@ -15,4 +14,6 @@
     CONSTRAINT [FK_ProductSpecification_Product] FOREIGN KEY ([ProductID]) REFERENCES [dbo].[Product] ([ID]),
     CONSTRAINT [FK_ProductSpecification_UnitOfMeasurement] FOREIGN KEY ([UnitOfMeasurementID]) REFERENCES [dbo].[UnitOfMeasurement] ([ID])
 );
+
+
 

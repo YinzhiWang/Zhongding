@@ -192,6 +192,12 @@ INSERT INTO [dbo].[SaleType] ([ID], [SaleType]) VALUES (1, N'高价')
 INSERT INTO [dbo].[SaleType] ([ID], [SaleType]) VALUES (2, N'低价')
 SET IDENTITY_INSERT [dbo].[SaleType] OFF
 
+SET IDENTITY_INSERT [dbo].[ProductCategory] ON
+INSERT INTO [dbo].[ProductCategory] ([ID], [CategoryName]) VALUES (1, N'基药')
+INSERT INTO [dbo].[ProductCategory] ([ID], [CategoryName]) VALUES (2, N'招商')
+INSERT INTO [dbo].[ProductCategory] ([ID], [CategoryName]) VALUES (3, N'混合')
+SET IDENTITY_INSERT [dbo].[ProductCategory] OFF
+
 COMMIT TRANSACTION
 
 ---- end ---- 11/6/2014 -- 初始化CertificateType, SaleType数据 -- by Yinzhi 

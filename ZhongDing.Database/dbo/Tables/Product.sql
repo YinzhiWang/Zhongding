@@ -8,8 +8,8 @@
     [CompanyID]              INT            NULL,
     [DepartmentID]           INT            NULL,
     [SafetyStock]            INT            NULL,
+    [ValidDays]              INT            NULL,
     [IsDeleted]              BIT            CONSTRAINT [DF_Product_IsDeleted] DEFAULT ((0)) NOT NULL,
-    [DeletedOn]              DATETIME       NULL,
     [CreatedOn]              DATETIME       CONSTRAINT [DF_Product_CreatedOn] DEFAULT (getdate()) NOT NULL,
     [CreatedBy]              INT            NULL,
     [LastModifiedOn]         DATETIME       NULL,
@@ -20,4 +20,6 @@
     CONSTRAINT [FK_Product_ProductCategory] FOREIGN KEY ([CategoryID]) REFERENCES [dbo].[ProductCategory] ([ID]),
     CONSTRAINT [FK_Product_Supplier] FOREIGN KEY ([SupplierID]) REFERENCES [dbo].[Supplier] ([ID])
 );
+
+
 
