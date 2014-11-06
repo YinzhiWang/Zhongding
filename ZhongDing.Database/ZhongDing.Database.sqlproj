@@ -323,6 +323,13 @@
     <Build Include="dbo\Tables\ClientCompany.sql" />
     <Build Include="dbo\Tables\CertificateType.sql" />
     <Build Include="dbo\Tables\Certificate.sql" />
+    <Build Include="dbo\Tables\ProductHighPrice.sql" />
+    <Build Include="dbo\Tables\ProductDBPolicyPrice.sql" />
+    <Build Include="dbo\Tables\ProductCertificate.sql" />
+    <Build Include="dbo\Tables\ProductBasicPrice.sql" />
+    <Build Include="dbo\Tables\ClientInfoContact.sql" />
+    <Build Include="dbo\Tables\ClientInfoBankAccount.sql" />
+    <Build Include="dbo\Tables\ClientInfo.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />
