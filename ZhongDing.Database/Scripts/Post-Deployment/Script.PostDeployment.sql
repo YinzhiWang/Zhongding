@@ -108,3 +108,90 @@ COMMIT TRANSACTION
 
 ---- end ---- 10/31/2014 -- 初始化所有者类型和帐号类型数据 -- by lihong 
 
+
+---- start --- 10/31/2014 -- 初始化所有者类型和帐号类型数据 -- by lihong 
+SET NUMERIC_ROUNDABORT OFF
+GO
+SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+
+BEGIN TRANSACTION
+SET IDENTITY_INSERT [dbo].[OwnerType] ON
+INSERT INTO [dbo].[OwnerType] ([ID], [OwnerTypeName]) VALUES (1, N'账套')
+INSERT INTO [dbo].[OwnerType] ([ID], [OwnerTypeName]) VALUES (2, N'供应商')
+INSERT INTO [dbo].[OwnerType] ([ID], [OwnerTypeName]) VALUES (3, N'客户')
+INSERT INTO [dbo].[OwnerType] ([ID], [OwnerTypeName]) VALUES (4, N'生产企业')
+INSERT INTO [dbo].[OwnerType] ([ID], [OwnerTypeName]) VALUES (5, N'货品')
+SET IDENTITY_INSERT [dbo].[OwnerType] OFF
+
+SET IDENTITY_INSERT [dbo].[AccountType] ON
+INSERT INTO [dbo].[AccountType] ([ID], [AccountTypeName]) VALUES (1, N'公司')
+INSERT INTO [dbo].[AccountType] ([ID], [AccountTypeName]) VALUES (2, N'私人')
+SET IDENTITY_INSERT [dbo].[AccountType] OFF
+
+COMMIT TRANSACTION
+
+---- end ---- 10/31/2014 -- 初始化所有者类型和帐号类型数据 -- by lihong 
+
+
+---- start --- 11/06/2014 -- 初始化CertificateType, SaleType数据 -- by Yinzhi 
+SET NUMERIC_ROUNDABORT OFF
+GO
+SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+
+BEGIN TRANSACTION
+SET IDENTITY_INSERT [dbo].[CertificateType] ON
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (1, N'企业法人营业执照',2)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (2, N'药品经营许可证',2)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (3, N'药品经营质量管理规范认证证书',2)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (4, N'组织机构代码证',2)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (5, N'变更与记录',2)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (6, N'税务登记证',2)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (7, N'开户许可证',2)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (8, N'企业质量体系调查表',2)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (9, N'开票资料',2)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (10, N'法人委托书',2)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (11, N'委托我司委托书',2)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (12, N'质量保证协议书',2)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (13, N'购销合同',2)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (14, N'出库单原件样式',2)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (15, N'印章印模',2)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (16, N'税票样式',2)
+
+
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (17, N'企业法人营业执照',4)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (18, N'药品生产许可证',4)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (19, N'变更与记录',4)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (20, N'药品GMP证书',4)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (21, N'组织机构代码证',4)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (22, N'税务登记证',4)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (23, N'开户许可证',4)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (24, N'企业质量体系调查表',4)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (25, N'质量保证协议书',4)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (26, N'开票资料',4)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (27, N'法人委托书',4)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (28, N'委托供货商委托书',4)
+
+
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (29, N'药品有效期',5)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (30, N'药品注册批件',5)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (31, N'药品再注册批件',5)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (32, N'质量标准',5)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (33, N'物价批文',5)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (34, N'省检报告',5)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (35, N'商标注册证',5)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (36, N'中国商品条码系统成员证书',5)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (37, N'药品批准文号',5)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (38, N'说明书，样盒',5)
+
+SET IDENTITY_INSERT [dbo].[CertificateType] OFF
+
+SET IDENTITY_INSERT [dbo].[SaleType] ON
+INSERT INTO [dbo].[SaleType] ([ID], [SaleType]) VALUES (1, N'高价')
+INSERT INTO [dbo].[SaleType] ([ID], [SaleType]) VALUES (2, N'低价')
+SET IDENTITY_INSERT [dbo].[SaleType] OFF
+
+COMMIT TRANSACTION
+
+---- end ---- 11/6/2014 -- 初始化CertificateType, SaleType数据 -- by Yinzhi 
