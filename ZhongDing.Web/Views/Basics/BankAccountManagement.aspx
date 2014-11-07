@@ -89,10 +89,6 @@
                             <telerik:GridBoundColumn UniqueName="AccountType" HeaderText="类别" DataField="AccountType">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="CompanyName" HeaderText="所属账套" DataField="CompanyName">
-                                <ItemStyle HorizontalAlign="Left" />
-                            </telerik:GridBoundColumn>
-
                             <telerik:GridTemplateColumn UniqueName="Comment" HeaderText="备注" DataField="Comment" SortExpression="Comment">
                                 <ItemStyle HorizontalAlign="Left" Width="30%" />
                                 <ItemTemplate>
