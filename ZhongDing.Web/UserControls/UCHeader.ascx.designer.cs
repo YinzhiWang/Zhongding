@@ -13,6 +13,15 @@ namespace ZhongDing.Web.UserControls {
     public partial class UCHeader {
         
         /// <summary>
+        /// userAvatar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlImage userAvatar;
+        
+        /// <summary>
         /// linkLogout control.
         /// </summary>
         /// <remarks>

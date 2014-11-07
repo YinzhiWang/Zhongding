@@ -13,7 +13,7 @@
         <!-- User Functions -->
         <div id="mws-user-info" class="mws-inset">
             <div id="mws-user-photo">
-                <img src="example/profile.jpg" alt="User Photo" />
+                <img runat="server" id="userAvatar" src="~/Images/defaultAvatar.gif" alt="User Photo" />
             </div>
             <div id="mws-user-functions">
                 <div id="mws-username">

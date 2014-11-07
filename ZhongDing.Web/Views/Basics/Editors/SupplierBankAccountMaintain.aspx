@@ -41,7 +41,7 @@
                     <div class="mws-form-row">
                         <label>账号</label>
                         <div class="mws-form-item small">
-                            <telerik:RadTextBox runat="server" ID="txtAccount" InputType="Number" CssClass="mws-textinput" Width="40%" MaxLength="24">
+                            <telerik:RadTextBox runat="server" ID="txtAccount" InputType="Number" ShowButton="false" CssClass="mws-textinput" Width="40%" MaxLength="24">
                             </telerik:RadTextBox>
                             <telerik:RadToolTip ID="rttAccount" runat="server" TargetControlID="txtAccount" ShowEvent="OnClick"
                                 Position="MiddleRight" RelativeTo="Element" Text="帐号为16-19位数字，或如下格式:0000-0000-0000-[4-7位数字]" AutoCloseDelay="0">
@@ -79,6 +79,8 @@
         function closeWindow(needRebindGrid) {
 
             var oWin = $.getRadWindow();
+
+            debugger;
 
             if (oWin) {
 

@@ -30,6 +30,11 @@ namespace ZhongDing.Common
         /// </summary>
         public static readonly string GOTTEN_DESC_NONHAVE = "无";
 
+        /// <summary>
+        /// 默认用户头像
+        /// </summary>
+        public static readonly string DEFAULT_USER_AVATAR = "~/Images/defaultAvatar.gif";
+
 
         #region System Security
 
@@ -69,13 +74,23 @@ namespace ZhongDing.Common
             public static readonly string TITLE_ERROR = "错误";
 
             /// <summary>
-            /// ContentIcon：成功的
+            /// ContentIcon：成功的Icon
             /// </summary>
             public static readonly string CONTENT_ICON_SUCCESS = "~/Content/icons/32/tick.png";
             /// <summary>
             /// ContentIcon：错误的
             /// </summary>
             public static readonly string CONTENT_ICON_ERROR = "~/Content/icons/32/cross.png";
+
+            /// <summary>
+            /// 提示消息：保存成功，窗口将自动关闭
+            /// </summary>
+            public static readonly string MSG_SUCCESS_SAEVED = "保存成功，窗口将自动关闭";
+
+            /// <summary>
+            /// 提示消息：参数错误，窗口将自动关闭
+            /// </summary>
+            public static readonly string MSG_PARAMETER_ERROR = "参数错误，窗口将自动关闭";
 
         }
 

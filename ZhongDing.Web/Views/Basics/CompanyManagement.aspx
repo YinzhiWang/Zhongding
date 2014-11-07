@@ -70,7 +70,7 @@
                             <telerik:GridBoundColumn UniqueName="CompanyName" HeaderText="账套名称" DataField="CompanyName">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="ProviderTexRatio" HeaderText="供应商返点率" DataField="ProviderTexRatio" DataFormatString="{0:P2}">
+                            <%--<telerik:GridBoundColumn UniqueName="ProviderTexRatio" HeaderText="供应商返点率" DataField="ProviderTexRatio" DataFormatString="{0:P2}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="ClientTaxHighRatio" HeaderText="客户返点率(高开)" DataField="ClientTaxHighRatio" DataFormatString="{0:P2}">
@@ -91,7 +91,7 @@
                             <telerik:GridBoundColumn UniqueName="CreatedOn" HeaderText="创建时间" DataField="CreatedOn" DataFormatString="{0:yyyy/MM/dd}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <%--<telerik:GridBoundColumn UniqueName="LastModifiedBy" HeaderText="修改人" DataField="LastModifiedBy">
+                            <telerik:GridBoundColumn UniqueName="LastModifiedBy" HeaderText="修改人" DataField="LastModifiedBy">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="LastModifiedOn" HeaderText="修改时间" DataField="LastModifiedOn" DataFormatString="{0:yyyy/MM/dd}">

@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="证照维护" Language="C#" MasterPageFile="~/Site.Window.Master" AutoEventWireup="true" CodeBehind="CertificateMaintain.aspx.cs" Inherits="ZhongDing.Web.Views.Basics.Editors.CertificateMaintain" %>
 
+<%@ MasterType VirtualPath="~/Site.Window.Master" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -19,10 +20,10 @@
                             <telerik:RadComboBox runat="server" ID="rcbxCertificateType" Filter="Contains" Height="160px" EmptyMessage="--请选择--">
                             </telerik:RadComboBox>
                             <telerik:RadToolTip ID="rttCertificateType" runat="server" TargetControlID="rcbxCertificateType" ShowEvent="OnClick"
-                                Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
+                                Position="MiddleRight" RelativeTo="Element" Text="该项是必选项" AutoCloseDelay="0">
                             </telerik:RadToolTip>
                             <asp:RequiredFieldValidator ID="rfvCertificateType" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="rcbxCertificateType"
-                                ErrorMessage="户名必填" Text="*" CssClass="field-validation-error">
+                                ErrorMessage="请选择证照类型" Text="*" CssClass="field-validation-error">
                             </asp:RequiredFieldValidator>
                             <telerik:RadButton runat="server" ID="cbxIsGotten" ButtonType="ToggleButton" ToggleType="CheckBox" AutoPostBack="false" Text="有/无？"></telerik:RadButton>
                         </div>
@@ -30,31 +31,37 @@
                     <div class="mws-form-row">
                         <label>有效期</label>
                         <div class="mws-form-item small">
-                            
-                            <telerik:RadToolTip ID="rttBankBranchName" runat="server" TargetControlID="txtBankBranchName" ShowEvent="OnClick"
-                                Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
-                            </telerik:RadToolTip>
-                            <asp:RequiredFieldValidator ID="rfvBankBranchName" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="txtBankBranchName"
-                                ErrorMessage="开户行必填" Text="*" CssClass="field-validation-error">
+                            <telerik:RadDatePicker ID="rdpEffectiveFrom" runat="server"
+                                Calendar-EnableShadows="true" Calendar-FastNavigationSettings-CancelButtonCaption="取消"
+                                Calendar-FastNavigationSettings-OkButtonCaption="确定" Calendar-FastNavigationSettings-TodayButtonCaption="今天"
+                                Calendar-FirstDayOfWeek="Monday">
+                            </telerik:RadDatePicker>
+                            <asp:RequiredFieldValidator ID="rfvEffectiveFrom" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="rdpEffectiveFrom"
+                                ErrorMessage="有效期开始日期必填" Text="*" CssClass="field-validation-error">
                             </asp:RequiredFieldValidator>
+                            至&nbsp;&nbsp;
+                            <telerik:RadDatePicker ID="rdpEffectiveTo" runat="server"
+                                Calendar-EnableShadows="true" Calendar-FastNavigationSettings-CancelButtonCaption="取消"
+                                Calendar-FastNavigationSettings-OkButtonCaption="确定" Calendar-FastNavigationSettings-TodayButtonCaption="今天"
+                                Calendar-FirstDayOfWeek="Monday">
+                            </telerik:RadDatePicker>
+                            <asp:RequiredFieldValidator ID="rfvEffectiveTo" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="rdpEffectiveTo"
+                                ErrorMessage="有效期结束日期必填" Text="*" CssClass="field-validation-error">
+                            </asp:RequiredFieldValidator>
+                            <asp:CustomValidator ID="cvEffectiveDate" runat="server" ValidationGroup="vgMaintenance" Text="*" CssClass="field-validation-error"
+                                OnServerValidate="cvCompany_ServerValidate" ErrorMessage="开始日期不能大于结束日期"></asp:CustomValidator>
                         </div>
                     </div>
                     <div class="mws-form-row">
-                        <label>账号</label>
+                        <label>是否提醒</label>
                         <div class="mws-form-item small">
-                            <telerik:RadTextBox runat="server" ID="txtAccount" InputType="Number" CssClass="mws-textinput" Width="40%" MaxLength="24">
-                            </telerik:RadTextBox>
-                            <telerik:RadToolTip ID="rttAccount" runat="server" TargetControlID="txtAccount" ShowEvent="OnClick"
-                                Position="MiddleRight" RelativeTo="Element" Text="帐号为16-19位数字，或如下格式:0000-0000-0000-[4-7位数字]" AutoCloseDelay="0">
-                            </telerik:RadToolTip>
-                            <asp:RequiredFieldValidator ID="rfvAccount" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="txtAccount"
-                                ErrorMessage="帐号必填" Text="*" CssClass="field-validation-error">
-                            </asp:RequiredFieldValidator>
-                            <asp:RegularExpressionValidator ID="revAccount" runat="server" ValidationGroup="vgMaintenance"
-                                ControlToValidate="txtAccount" ErrorMessage="帐号格式不正确，请重新输入" CssClass="field-validation-error"
-                                ValidationExpression="^\d{16,19}$|^\d{6}[- ]\d{10,13}$|^\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{4,7}$" Text="*"></asp:RegularExpressionValidator>
-                            <asp:CustomValidator ID="cvAccount" runat="server" ControlToValidate="txtAccount" ValidationGroup="vgMaintenance" OnServerValidate="cvAccount_ServerValidate"
-                                Text="*" CssClass="field-validation-error" ErrorMessage="帐号无效，请重新输入"></asp:CustomValidator>
+                            <telerik:RadButton runat="server" ID="cbxIsNeedAlert" ButtonType="ToggleButton" ToggleType="CheckBox" AutoPostBack="false" OnClientCheckedChanged="onCheckedChanged"></telerik:RadButton>
+                            <div id="divAlertDays" class="hide">
+                                <label>提醒期限</label>
+                                <telerik:RadNumericTextBox ID="txtAlertBeforeDays" runat="server" Width="60" Type="Number" NumberFormat-GroupSeparator="" NumberFormat-DecimalDigits="0" MinValue="0"></telerik:RadNumericTextBox>
+                                <asp:CustomValidator ID="cvAlertBeforeDays" runat="server" ValidationGroup="vgMaintenance" Text="*" CssClass="field-validation-error" ErrorMessage="提醒期限必填"></asp:CustomValidator>
+                                &nbsp;&nbsp;天
+                            </div>
                         </div>
                     </div>
                     <div class="mws-form-row">
@@ -74,9 +81,43 @@
             </div>
         </div>
     </div>
+    <asp:HiddenField ID="hdnGridClientID" runat="server" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContent" runat="server">
     <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var cbxIsNeedAlert = $find("<%= cbxIsNeedAlert.ClientID %>");
+
+            if (cbxIsNeedAlert) {
+
+                var divAlertDays = $("#divAlertDays");
+
+                var isNeedAlert = cbxIsNeedAlert.get_checked();
+
+                if (isNeedAlert == true)
+                    divAlertDays.show();
+                else
+                    divAlertDays.hide();
+            }
+        });
+
+        function onCheckedChanged(e) {
+
+            var isChecked = e.get_checked();
+
+            var divAlertDays = $("#divAlertDays");
+
+            if (divAlertDays) {
+                if (isChecked === true)
+                    divAlertDays.show();
+                else
+                    divAlertDays.hide();
+            }
+        }
+
+
         function closeWindow(needRebindGrid) {
 
             var oWin = $.getRadWindow();
@@ -86,7 +127,16 @@
                 if (needRebindGrid) {
 
                     var browserWindow = oWin.get_browserWindow();
-                    browserWindow.gridBankAccount.get_masterTableView().rebind();
+
+                    var gridClientID = $("#<%= hdnGridClientID.ClientID%>").val();
+
+                    if (!gridClientID.isNullOrEmpty()) {
+                        var refreshGrid = browserWindow.$find(gridClientID);
+
+                        if (refreshGrid) {
+                            refreshGrid.get_masterTableView().rebind();
+                        }
+                    }
                 }
 
                 var isDestroyOnClose = oWin.get_destroyOnClose();

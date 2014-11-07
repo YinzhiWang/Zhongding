@@ -178,6 +178,7 @@
     <Compile Include="UIObjects\UIBankAccount.cs" />
     <Compile Include="UIObjects\UIBase.cs" />
     <Compile Include="UIObjects\UICertificate.cs" />
+    <Compile Include="UIObjects\UICertificateType.cs" />
     <Compile Include="UIObjects\UICompany.cs" />
     <Compile Include="UIObjects\UISupplier.cs" />
     <Compile Include="UIObjects\UISupplierBankAccount.cs" />

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZhongDing.Business.IRepositories;
 using ZhongDing.Common;
+using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
@@ -38,10 +39,24 @@ namespace ZhongDing.Business.Repositories
                     whereFuncs.Add(x => x.Account.Contains(uiSearchObj.Account));
 
                 if (uiSearchObj.AccountTypeID > 0)
-                    whereFuncs.Add(x => x.AccountTypeID == uiSearchObj.AccountTypeID);
+                {
+                    switch (uiSearchObj.AccountTypeID)
+                    {
+                        case (int)EAccountType.Company:
+                            if (uiSearchObj.CompanyID > 0)
+                                whereFuncs.Add(x => x.CompanyID == uiSearchObj.CompanyID);
+                            break;
 
-                if (uiSearchObj.CompanyID > 0)
-                    whereFuncs.Add(x => x.CompanyID == uiSearchObj.CompanyID);
+                        case (int)EAccountType.Personal:
+                            whereFuncs.Add(x => x.AccountTypeID == uiSearchObj.AccountTypeID);
+                            break;
+                    }
+                }
+                else
+                {
+                    if (uiSearchObj.CompanyID > 0)
+                        whereFuncs.Add(x => x.CompanyID == uiSearchObj.CompanyID || x.AccountTypeID == (int)EAccountType.Personal);
+                }
             }
 
             query = GetList(whereFuncs);
@@ -114,10 +129,24 @@ namespace ZhongDing.Business.Repositories
                     whereFuncs.Add(x => x.Account.Contains(uiSearchObj.Account));
 
                 if (uiSearchObj.AccountTypeID > 0)
-                    whereFuncs.Add(x => x.AccountTypeID == uiSearchObj.AccountTypeID);
+                {
+                    switch (uiSearchObj.AccountTypeID)
+                    {
+                        case (int)EAccountType.Company:
+                            if (uiSearchObj.CompanyID > 0)
+                                whereFuncs.Add(x => x.CompanyID == uiSearchObj.CompanyID);
+                            break;
 
-                if (uiSearchObj.CompanyID > 0)
-                    whereFuncs.Add(x => x.CompanyID == uiSearchObj.CompanyID);
+                        case (int)EAccountType.Personal:
+                            whereFuncs.Add(x => x.AccountTypeID == uiSearchObj.AccountTypeID);
+                            break;
+                    }
+                }
+                else
+                {
+                    if (uiSearchObj.CompanyID > 0)
+                        whereFuncs.Add(x => x.CompanyID == uiSearchObj.CompanyID || x.AccountTypeID == (int)EAccountType.Personal);
+                }
             }
 
             query = GetList(pageIndex, pageSize, whereFuncs, out total);

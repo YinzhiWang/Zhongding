@@ -79,7 +79,10 @@ namespace ZhongDing.Web.Views.Basics
                 }
             }
             else
+            {
+                btnDelete.Visible = false;
                 txtCompanyCode.Text = Utility.GenerateAutoSerialNo(PageCompanyRepository.GetMaxEntityID(), PREFIX_OF_COMPANYCODE);
+            }
         }
 
         protected void btnSave_Click(object sender, EventArgs e)

@@ -49,14 +49,23 @@
                                 <telerik:RadTextBox runat="server" ID="txtAccount" InputType="Number" CssClass="mws-textinput" Width="40%" MaxLength="24">
                                 </telerik:RadTextBox>
                                 <telerik:RadToolTip ID="rttAccount" runat="server" TargetControlID="txtAccount" ShowEvent="OnClick"
-                                    Position="MiddleRight" RelativeTo="Element" Text="帐号为16-19位数字，或如下格式:0000-0000-0000-[4-7位数字]" AutoCloseDelay="0">
+                                    Position="MiddleRight" RelativeTo="Element" AutoCloseDelay="0">
+                                    <div>
+                                        <p>帐号为16-19位数字，或如下格式:</p>
+                                        <ol style="margin-left:20px">
+                                            <li>0000 0000 0000 [4-7位数字]</li>
+                                            <li>0000-0000-0000-[4-7位数字]</li>
+                                            <li>0000 0000 0000 0000 000</li>
+                                            <li>0000-0000-0000-0000-000</li>
+                                        </ol>
+                                    </div>
                                 </telerik:RadToolTip>
                                 <asp:RequiredFieldValidator ID="rfvAccount" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="txtAccount"
                                     ErrorMessage="帐号必填" Text="*" CssClass="field-validation-error">
                                 </asp:RequiredFieldValidator>
                                 <asp:RegularExpressionValidator ID="revAccount" runat="server" ValidationGroup="vgMaintenance"
                                     ControlToValidate="txtAccount" ErrorMessage="帐号格式不正确，请重新输入" CssClass="field-validation-error"
-                                    ValidationExpression="^\d{16,19}$|^\d{6}[- ]\d{10,13}$|^\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{4,7}$" Text="*"></asp:RegularExpressionValidator>
+                                    ValidationExpression="^\d{16,19}$|^\d{6}[- ]\d{10,13}$|^\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{4,7}$|^\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{3}$" Text="*"></asp:RegularExpressionValidator>
                                 <asp:CustomValidator ID="cvAccount" runat="server" ControlToValidate="txtAccount" ValidationGroup="vgMaintenance" OnServerValidate="cvAccount_ServerValidate"
                                     Text="*" CssClass="field-validation-error" ErrorMessage="帐号无效，请重新输入"></asp:CustomValidator>
                             </div>

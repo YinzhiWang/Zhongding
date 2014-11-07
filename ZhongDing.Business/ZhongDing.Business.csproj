@@ -55,10 +55,12 @@
     <Compile Include="IRepositories\IAutoSerialNo.cs" />
     <Compile Include="IRepositories\IBankAccountRepository.cs" />
     <Compile Include="IRepositories\IBaseRepository.cs" />
+    <Compile Include="IRepositories\ICertificateTypeRepository.cs" />
     <Compile Include="IRepositories\ICompanyRepository.cs" />
     <Compile Include="IRepositories\IOwnerTypeRepository.cs" />
     <Compile Include="IRepositories\IReportRepository.cs" />
     <Compile Include="IRepositories\ISupplierBankAccountRepository.cs" />
+    <Compile Include="IRepositories\ISupplierCertificateRepository.cs" />
     <Compile Include="IRepositories\ISupplierRepository.cs" />
     <Compile Include="IRepositories\IUnitOfWork.cs" />
     <Compile Include="IRepositories\IUsersRepository.cs" />
@@ -68,10 +70,12 @@
     <Compile Include="Repositories\BaseRepository.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Repositories\CertificateTypeRepository.cs" />
     <Compile Include="Repositories\CompanyRepository.cs" />
     <Compile Include="Repositories\OwnerTypeRepository.cs" />
     <Compile Include="Repositories\Reports\ReportRepository.cs" />
     <Compile Include="Repositories\SupplierBankAccountRepository.cs" />
+    <Compile Include="Repositories\SupplierCertificateRepository.cs" />
     <Compile Include="Repositories\SupplierRepository.cs" />
     <Compile Include="Repositories\UnitOfWork.cs" />
     <Compile Include="Repositories\UsersRepository.cs" />

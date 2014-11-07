@@ -148,12 +148,14 @@
 
                 .RadGrid_Silk .rgHeader
                 {
+                    color: #333333;
                     padding-top: 10px;
                     padding-bottom: 10px;
                 }
 
                     .RadGrid_Silk .rgHeader a
                     {
+                        color: #333333;
                         font-size: 13px;
                         font-family: 'Microsoft Yahei',Arial,Helvetica,sans-serif,'微软雅黑';
                         font-weight: normal;

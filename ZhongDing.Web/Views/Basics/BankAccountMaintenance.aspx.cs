@@ -119,6 +119,8 @@ namespace ZhongDing.Web.Views.Basics
                     txtComment.Text = bankAccount.Comment;
                 }
             }
+            else
+                btnDelete.Visible = false;
         }
 
         #endregion

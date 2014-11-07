@@ -46,23 +46,20 @@
                         <td class="middle-td">
                             <telerik:RadTextBox runat="server" ID="txtBankBranchName" MaxLength="100"></telerik:RadTextBox>
                         </td>
-                        <th class="width60 middle-td right-td">帐号：</th>
-                        <td class="middle-td leftpadding10">
-                            <telerik:RadTextBox runat="server" ID="txtAccount" MaxLength="100"></telerik:RadTextBox>
-                        </td>
+                        <td></td>
                     </tr>
                     <tr class="height40">
+
                         <th class="width40 middle-td">类别：
                         </th>
                         <td class="middle-td">
                             <telerik:RadDropDownList runat="server" ID="ddlAccountType" DefaultMessage="--请选择--"></telerik:RadDropDownList>
                         </td>
-                        <th class="middle-td right-td">账套：</th>
+                        <th class="width60 middle-td right-td">帐号：</th>
                         <td class="middle-td">
-                            <telerik:RadComboBox runat="server" ID="comboxCompany" Filter="Contains" Height="160px" EmptyMessage="--请选择--">
-                            </telerik:RadComboBox>
+                            <telerik:RadTextBox runat="server" ID="txtAccount" MaxLength="100"></telerik:RadTextBox>
                         </td>
-                        <td class="middle-td leftpadding20" colspan="2">
+                        <td class="middle-td leftpadding20">
                             <asp:Button ID="btnSearch" runat="server" Text="查询" CssClass="mws-button green" OnClick="btnSearch_Click" />
                             &nbsp;&nbsp;
                             <asp:Button ID="btnReset" runat="server" Text="重置" CssClass="mws-button orange" OnClick="btnReset_Click" />
@@ -87,7 +84,7 @@
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="Account" HeaderText="帐号" DataField="Account">
-                                <ItemStyle HorizontalAlign="Left" />
+                                <ItemStyle HorizontalAlign="Left" Width="180" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="AccountType" HeaderText="类别" DataField="AccountType">
                                 <ItemStyle HorizontalAlign="Left" />
@@ -97,22 +94,22 @@
                             </telerik:GridBoundColumn>
 
                             <telerik:GridTemplateColumn UniqueName="Comment" HeaderText="备注" DataField="Comment" SortExpression="Comment">
-                                <ItemStyle HorizontalAlign="Left" Width="20%" />
+                                <ItemStyle HorizontalAlign="Left" Width="30%" />
                                 <ItemTemplate>
                                     <span title="<%#DataBinder.Eval(Container.DataItem,"Comment")%>">
                                         <%#DataBinder.Eval(Container.DataItem,"Comment")!=null
-                                        ?DataBinder.Eval(Container.DataItem,"Comment").ToString().CutString(12)
+                                        ?DataBinder.Eval(Container.DataItem,"Comment").ToString().CutString(20)
                                         :string.Empty%>
                                     </span>
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>
-                            <telerik:GridBoundColumn UniqueName="CreatedBy" HeaderText="创建人" DataField="CreatedBy">
+                            <%--<telerik:GridBoundColumn UniqueName="CreatedBy" HeaderText="创建人" DataField="CreatedBy">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="CreatedOn" HeaderText="创建时间" DataField="CreatedOn" DataFormatString="{0:yyyy/MM/dd}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <%--<telerik:GridBoundColumn UniqueName="LastModifiedBy" HeaderText="修改人" DataField="LastModifiedBy">
+                            <telerik:GridBoundColumn UniqueName="LastModifiedBy" HeaderText="修改人" DataField="LastModifiedBy">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="LastModifiedOn" HeaderText="修改时间" DataField="LastModifiedOn" DataFormatString="{0:yyyy/MM/dd}">

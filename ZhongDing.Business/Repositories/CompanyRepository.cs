@@ -43,7 +43,7 @@ namespace ZhongDing.Business.Repositories
                                  from tcu in tempCU.DefaultIfEmpty()
                                  join mu in this.DB.Users on q.LastModifiedBy equals mu.UserID into tempMU
                                  from tmu in tempMU.DefaultIfEmpty()
-                                 orderby q.CreatedOn descending
+                                 //orderby q.CreatedOn descending
                                  select new UICompany()
                                  {
                                      ID = q.ID,
@@ -96,7 +96,7 @@ namespace ZhongDing.Business.Repositories
                                  from tcu in tempCU.DefaultIfEmpty()
                                  join mu in this.DB.Users on q.LastModifiedBy equals mu.UserID into tempMU
                                  from tmu in tempMU.DefaultIfEmpty()
-                                 orderby q.CreatedOn descending
+                                 //orderby q.CreatedOn descending
                                  select new UICompany()
                                  {
                                      ID = q.ID,

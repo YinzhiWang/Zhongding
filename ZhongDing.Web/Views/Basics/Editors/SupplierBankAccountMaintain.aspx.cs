@@ -68,7 +68,7 @@ namespace ZhongDing.Web.Views.Basics.Editors
             {
                 this.Master.BaseNotification.OnClientHidden = "onError";
                 this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
-                this.Master.BaseNotification.Show("参数错误，窗口将自动关闭");
+                this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_PARAMETER_ERROR);
 
                 return;
             }
@@ -154,7 +154,7 @@ namespace ZhongDing.Web.Views.Basics.Editors
             PageSupplierRepository.Save();
 
             this.Master.BaseNotification.OnClientHidden = "onClientHidden";
-            this.Master.BaseNotification.Show("保存成功，窗口将自动关闭");
+            this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SAEVED);
         }
 
         protected void cvAccount_ServerValidate(object source, ServerValidateEventArgs args)

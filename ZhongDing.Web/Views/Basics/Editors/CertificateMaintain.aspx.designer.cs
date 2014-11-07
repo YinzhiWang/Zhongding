@@ -58,67 +58,76 @@ namespace ZhongDing.Web.Views.Basics.Editors {
         protected global::Telerik.Web.UI.RadButton cbxIsGotten;
         
         /// <summary>
-        /// rttBankBranchName control.
+        /// rdpEffectiveFrom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadToolTip rttBankBranchName;
+        protected global::Telerik.Web.UI.RadDatePicker rdpEffectiveFrom;
         
         /// <summary>
-        /// rfvBankBranchName control.
+        /// rfvEffectiveFrom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvBankBranchName;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvEffectiveFrom;
         
         /// <summary>
-        /// txtAccount control.
+        /// rdpEffectiveTo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtAccount;
+        protected global::Telerik.Web.UI.RadDatePicker rdpEffectiveTo;
         
         /// <summary>
-        /// rttAccount control.
+        /// rfvEffectiveTo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadToolTip rttAccount;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvEffectiveTo;
         
         /// <summary>
-        /// rfvAccount control.
+        /// cvEffectiveDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvAccount;
+        protected global::System.Web.UI.WebControls.CustomValidator cvEffectiveDate;
         
         /// <summary>
-        /// revAccount control.
+        /// cbxIsNeedAlert control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator revAccount;
+        protected global::Telerik.Web.UI.RadButton cbxIsNeedAlert;
         
         /// <summary>
-        /// cvAccount control.
+        /// txtAlertBeforeDays control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator cvAccount;
+        protected global::Telerik.Web.UI.RadNumericTextBox txtAlertBeforeDays;
+        
+        /// <summary>
+        /// cvAlertBeforeDays control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cvAlertBeforeDays;
         
         /// <summary>
         /// txtComment control.
@@ -146,5 +155,26 @@ namespace ZhongDing.Web.Views.Basics.Editors {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCancel;
+        
+        /// <summary>
+        /// hdnGridClientID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnGridClientID;
+        
+        /// <summary>
+        /// Master property.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated property.
+        /// </remarks>
+        public new ZhongDing.Web.Site_Window Master {
+            get {
+                return ((ZhongDing.Web.Site_Window)(base.Master));
+            }
+        }
     }
 }

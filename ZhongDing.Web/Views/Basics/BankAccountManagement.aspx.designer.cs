@@ -58,15 +58,6 @@ namespace ZhongDing.Web.Views.Basics {
         protected global::Telerik.Web.UI.RadTextBox txtBankBranchName;
         
         /// <summary>
-        /// txtAccount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtAccount;
-        
-        /// <summary>
         /// ddlAccountType control.
         /// </summary>
         /// <remarks>
@@ -76,13 +67,13 @@ namespace ZhongDing.Web.Views.Basics {
         protected global::Telerik.Web.UI.RadDropDownList ddlAccountType;
         
         /// <summary>
-        /// comboxCompany control.
+        /// txtAccount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox comboxCompany;
+        protected global::Telerik.Web.UI.RadTextBox txtAccount;
         
         /// <summary>
         /// btnSearch control.

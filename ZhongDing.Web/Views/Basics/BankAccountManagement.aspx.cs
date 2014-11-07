@@ -65,7 +65,6 @@ namespace ZhongDing.Web.Views.Basics
             if (!IsPostBack)
             {
                 BindAccountTypes();
-                BindCompanies();
             }
 
         }
@@ -84,19 +83,6 @@ namespace ZhongDing.Web.Views.Basics
             ddlAccountType.Items.Insert(0, new DropDownListItem() { });
         }
 
-        private void BindCompanies()
-        {
-            var accountTypes = PageCompanyRepository.GetUIListForDLL();
-
-            comboxCompany.DataSource = accountTypes;
-            comboxCompany.DataTextField = "CompanyName";
-            comboxCompany.DataValueField = "ID";
-            comboxCompany.DataBind();
-
-            comboxCompany.DefaultItem.Text = "--请选择--";
-            comboxCompany.DefaultItem.Value = "";
-        }
-
         private void BindBankAccounts(bool isNeedRebind)
         {
             UISearchBankAccount uiSearchObj = new UISearchBankAccount()
@@ -104,14 +90,11 @@ namespace ZhongDing.Web.Views.Basics
                 AccountName = txtAccountName.Text.Trim(),
                 BankBranchName = txtBankBranchName.Text.Trim(),
                 Account = txtAccount.Text.Trim(),
-                IsNeedMaskedAccount = true
+                CompanyID = CurrentUser.CompanyID
             };
 
             if (!string.IsNullOrEmpty(ddlAccountType.SelectedValue))
                 uiSearchObj.AccountTypeID = Convert.ToInt32(ddlAccountType.SelectedValue);
-
-            if (!string.IsNullOrEmpty(comboxCompany.SelectedValue))
-                uiSearchObj.CompanyID = Convert.ToInt32(comboxCompany.SelectedValue);
 
             int totalRecords;
 
@@ -178,7 +161,6 @@ namespace ZhongDing.Web.Views.Basics
             txtAccount.Text = string.Empty;
 
             ddlAccountType.ClearSelection();
-            comboxCompany.ClearSelection();
 
             BindBankAccounts(true);
         }

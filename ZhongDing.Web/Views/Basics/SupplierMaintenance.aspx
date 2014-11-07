@@ -150,12 +150,6 @@
                                                             </span>
                                                         </ItemTemplate>
                                                     </telerik:GridTemplateColumn>
-                                                    <telerik:GridBoundColumn UniqueName="CreatedBy" HeaderText="创建人" DataField="CreatedBy" ReadOnly="true">
-                                                        <ItemStyle HorizontalAlign="Left" />
-                                                    </telerik:GridBoundColumn>
-                                                    <telerik:GridBoundColumn UniqueName="CreatedOn" HeaderText="创建时间" DataField="CreatedOn" DataFormatString="{0:yyyy/MM/dd}" ReadOnly="true">
-                                                        <ItemStyle HorizontalAlign="Left" />
-                                                    </telerik:GridBoundColumn>
                                                     <telerik:GridTemplateColumn UniqueName="Edit">
                                                         <ItemStyle HorizontalAlign="Center" Width="30" />
                                                         <ItemTemplate>
@@ -262,16 +256,10 @@
                                                                     </span>
                                                                 </ItemTemplate>
                                                             </telerik:GridTemplateColumn>
-                                                            <telerik:GridBoundColumn UniqueName="CreatedBy" HeaderText="创建人" DataField="CreatedBy" ReadOnly="true">
-                                                                <ItemStyle HorizontalAlign="Left" />
-                                                            </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn UniqueName="CreatedOn" HeaderText="创建时间" DataField="CreatedOn" DataFormatString="{0:yyyy/MM/dd}" ReadOnly="true">
-                                                                <ItemStyle HorizontalAlign="Left" />
-                                                            </telerik:GridBoundColumn>
                                                             <telerik:GridTemplateColumn UniqueName="Edit">
                                                                 <ItemStyle HorizontalAlign="Center" Width="30" />
                                                                 <ItemTemplate>
-                                                                    <a href="javascript:void(0);" onclick="openCertificateWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>, EOwnerTypes.Producer)">
+                                                                    <a href="javascript:void(0);" onclick="openCertificateWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>, EOwnerTypes.Producer, gridClientIDs.gridProducerCertificates);">
                                                                         <u>编辑</u></a>
                                                                 </ItemTemplate>
                                                             </telerik:GridTemplateColumn>
@@ -284,8 +272,8 @@
                                                                 <tr>
                                                                     <td>
                                                                         <asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
-                                                                            <input type="button" class="rgAdd" onclick="openCertificateWindow(-1, EOwnerTypes.Producer); return false;" />
-                                                                            <a href="javascript:void(0)" onclick="openCertificateWindow(-1, EOwnerTypes.Producer); return false;">添加</a>
+                                                                            <input type="button" class="rgAdd" onclick="openCertificateWindow(-1, EOwnerTypes.Producer, gridClientIDs.gridProducerCertificates); return false;" />
+                                                                            <a href="javascript:void(0)" onclick="openCertificateWindow(-1, EOwnerTypes.Producer, gridClientIDs.gridProducerCertificates); return false;">添加</a>
                                                                         </asp:Panel>
                                                                     </td>
                                                                     <td class="right-td rightpadding10">
@@ -358,16 +346,10 @@
                                                                     </span>
                                                                 </ItemTemplate>
                                                             </telerik:GridTemplateColumn>
-                                                            <telerik:GridBoundColumn UniqueName="CreatedBy" HeaderText="创建人" DataField="CreatedBy" ReadOnly="true">
-                                                                <ItemStyle HorizontalAlign="Left" />
-                                                            </telerik:GridBoundColumn>
-                                                            <telerik:GridBoundColumn UniqueName="CreatedOn" HeaderText="创建时间" DataField="CreatedOn" DataFormatString="{0:yyyy/MM/dd}" ReadOnly="true">
-                                                                <ItemStyle HorizontalAlign="Left" />
-                                                            </telerik:GridBoundColumn>
                                                             <telerik:GridTemplateColumn UniqueName="Edit">
                                                                 <ItemStyle HorizontalAlign="Center" Width="30" />
                                                                 <ItemTemplate>
-                                                                    <a href="javascript:void(0);" onclick="openCertificateWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>, EOwnerTypes.Supplier)">
+                                                                    <a href="javascript:void(0);" onclick="openCertificateWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>, EOwnerTypes.Supplier, gridClientIDs.gridSupplierCertificates)">
                                                                         <u>编辑</u></a>
                                                                 </ItemTemplate>
                                                             </telerik:GridTemplateColumn>
@@ -380,8 +362,8 @@
                                                                 <tr>
                                                                     <td>
                                                                         <asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
-                                                                            <input type="button" class="rgAdd" onclick="openCertificateWindow(-1, EOwnerTypes.Supplier); return false;" />
-                                                                            <a href="javascript:void(0)" onclick="openCertificateWindow(-1, EOwnerTypes.Supplier); return false;">添加</a>
+                                                                            <input type="button" class="rgAdd" onclick="openCertificateWindow(-1, EOwnerTypes.Supplier, gridClientIDs.gridSupplierCertificates); return false;" />
+                                                                            <a href="javascript:void(0)" onclick="openCertificateWindow(-1, EOwnerTypes.Supplier, gridClientIDs.gridSupplierCertificates); return false;">添加</a>
                                                                         </asp:Panel>
                                                                     </td>
                                                                     <td class="right-td rightpadding10">
@@ -422,7 +404,6 @@
         </div>
     </div>
     <style>
-
         .RadTabStrip_Default .rtsLI, .RadTabStrip_Default .rtsLink
         {
             color: #323232;
@@ -439,6 +420,11 @@
         var gridProducerCertificates = null;
         var gridSupplierCertificates = null;
 
+        var gridClientIDs = {
+            gridBankAccount: "<%= rgBankAccounts.ClientID %>",
+            gridProducerCertificates: "<%= rgProducerCertificates.ClientID %>",
+            gridSupplierCertificates: "<%= rgSupplierCertificates.ClientID %>"
+        };
 
         function GetsBankAccountGridObject(sender, eventArgs) {
             gridBankAccount = sender;
@@ -503,13 +489,13 @@
             $.openRadWindow(targetUrl, "winSupplierBankAccount", true, 800, 380);
         }
 
-        function openCertificateWindow(id, ownerTypeID) {
+        function openCertificateWindow(id, ownerTypeID, gridClientID) {
             $.showLoading();
 
             var targetUrl = $.getRootPath() + "Views/Basics/Editors/CertificateMaintain.aspx?EntityID=" + id
-                + "&SupplierID=" + supplierID + "&OwnerTypeID=" + ownerTypeID;
+                + "&SupplierID=" + supplierID + "&OwnerTypeID=" + ownerTypeID + "&GridClientID=" + gridClientID;
 
-            $.openRadWindow(targetUrl, "winCertificate", true, 800, 380);
+            $.openRadWindow(targetUrl, "winCertificate", true, 800, 500);
         }
 
         $(document).ready(function () {

@@ -2572,6 +2572,7 @@
     <Content Include="Images\core\sort.png" />
     <Content Include="Images\core\sort_asc.png" />
     <Content Include="Images\core\sort_desc.png" />
+    <Content Include="Images\defaultAvatar.gif" />
     <Content Include="packages.config" />
     <Content Include="Content\icons\16\Thumbs.db" />
     <Content Include="HttpHandle\AsyncBusinessHandler.ashx" />
