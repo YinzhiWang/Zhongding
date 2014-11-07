@@ -74,7 +74,7 @@ namespace ZhongDing.Business.Repositories
                                   from tot in tempOT.DefaultIfEmpty()
                                   join c in this.DB.Company on q.CompanyID equals c.ID into tempC
                                   from tc in tempC.DefaultIfEmpty()
-                                  orderby q.CreatedOn descending
+                                  //orderby q.CreatedOn descending
                                   select new UIBankAccount()
                                   {
                                       ID = q.ID,
@@ -164,7 +164,7 @@ namespace ZhongDing.Business.Repositories
                                   from tot in tempOT.DefaultIfEmpty()
                                   join c in this.DB.Company on q.CompanyID equals c.ID into tempC
                                   from tc in tempC.DefaultIfEmpty()
-                                  orderby q.CreatedOn descending
+                                  //orderby q.CreatedOn descending
                                   select new UIBankAccount()
                                   {
                                       ID = q.ID,

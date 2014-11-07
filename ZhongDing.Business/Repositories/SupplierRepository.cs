@@ -49,7 +49,7 @@ namespace ZhongDing.Business.Repositories
                                   from tcu in tempCU.DefaultIfEmpty()
                                   join mu in DB.Users on q.CreatedBy equals mu.UserID into tempMU
                                   from tmu in tempMU.DefaultIfEmpty()
-                                  orderby q.CreatedOn descending
+                                  //orderby q.CreatedOn descending
                                   select new UISupplier()
                                   {
                                       ID = q.ID,
@@ -105,7 +105,7 @@ namespace ZhongDing.Business.Repositories
                                   from tcu in tempCU.DefaultIfEmpty()
                                   join mu in DB.Users on q.CreatedBy equals mu.UserID into tempMU
                                   from tmu in tempMU.DefaultIfEmpty()
-                                  orderby q.CreatedOn descending
+                                  //orderby q.CreatedOn descending
                                   select new UISupplier()
                                   {
                                       ID = q.ID,
@@ -147,7 +147,7 @@ namespace ZhongDing.Business.Repositories
                                   from tcu in tempCU.DefaultIfEmpty()
                                   join mu in DB.Users on sba.LastModifiedBy equals mu.UserID into tempMU
                                   from tmu in tempMU.DefaultIfEmpty()
-                                  orderby sba.CreatedOn descending
+                                  //orderby sba.CreatedOn descending
                                   select new UISupplierBankAccount()
                                   {
                                       ID = sba.ID,
@@ -183,7 +183,7 @@ namespace ZhongDing.Business.Repositories
                                   from tcu in tempCU.DefaultIfEmpty()
                                   join mu in DB.Users on sc.LastModifiedBy equals mu.UserID into tempMU
                                   from tmu in tempMU.DefaultIfEmpty()
-                                  orderby sc.CreatedOn descending
+                                  //orderby sc.CreatedOn descending
                                   select new UISupplierCertificate()
                                   {
                                       ID = sc.ID,
