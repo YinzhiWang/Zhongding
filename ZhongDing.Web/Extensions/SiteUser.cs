@@ -33,7 +33,7 @@ namespace ZhongDing.Web.Extensions
 
                     //测试代码，发布时需要删除
 
-                    this.CompanyID = 1;
+                    //this.CompanyID = 1;
                 }
             }
         }
