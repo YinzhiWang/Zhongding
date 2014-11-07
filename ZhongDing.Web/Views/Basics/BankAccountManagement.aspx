@@ -96,12 +96,12 @@
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
 
-                            <telerik:GridTemplateColumn UniqueName="Comments" HeaderText="备注" DataField="Comments" SortExpression="Comments">
+                            <telerik:GridTemplateColumn UniqueName="Comment" HeaderText="备注" DataField="Comment" SortExpression="Comment">
                                 <ItemStyle HorizontalAlign="Left" Width="20%" />
                                 <ItemTemplate>
-                                    <span title="<%#DataBinder.Eval(Container.DataItem,"Comments")%>">
-                                        <%#DataBinder.Eval(Container.DataItem,"Comments")!=null
-                                        ?DataBinder.Eval(Container.DataItem,"Comments").ToString().CutString(12)
+                                    <span title="<%#DataBinder.Eval(Container.DataItem,"Comment")%>">
+                                        <%#DataBinder.Eval(Container.DataItem,"Comment")!=null
+                                        ?DataBinder.Eval(Container.DataItem,"Comment").ToString().CutString(12)
                                         :string.Empty%>
                                     </span>
                                 </ItemTemplate>

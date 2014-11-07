@@ -68,6 +68,27 @@
     <Compile Include="Models\BankAccount.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Certificate.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CertificateType.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClientCompany.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClientInfo.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClientInfoBankAccount.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClientInfoContact.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClientUser.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Company.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -89,13 +110,28 @@
     <Compile Include="Models\Department.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DistributionCompany.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\OwnerType.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Product.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProductBasicPrice.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProductCategory.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductCertificate.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductDBPolicyPrice.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProductHighPrice.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ProductSpecification.cs">
@@ -104,13 +140,16 @@
     <Compile Include="Models\Roles.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SaleType.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Supplier.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SupplierBankAccount.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SupplierCertificateFile.cs">
+    <Compile Include="Models\SupplierCertificate.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SupplierContract.cs">
@@ -131,14 +170,22 @@
     <Compile Include="Models\Users.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Warehouse.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIObjects\UIAccountType.cs" />
     <Compile Include="UIObjects\UIBankAccount.cs" />
     <Compile Include="UIObjects\UIBase.cs" />
+    <Compile Include="UIObjects\UICertificate.cs" />
     <Compile Include="UIObjects\UICompany.cs" />
+    <Compile Include="UIObjects\UISupplier.cs" />
+    <Compile Include="UIObjects\UISupplierBankAccount.cs" />
+    <Compile Include="UIObjects\UISupplierCertificate.cs" />
     <Compile Include="UISearchObjects\UISearchBankAccount.cs" />
     <Compile Include="UISearchObjects\UISearchBase.cs" />
     <Compile Include="UISearchObjects\UISearchCompany.cs" />
+    <Compile Include="UISearchObjects\UISearchSupplier.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

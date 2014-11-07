@@ -43,6 +43,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AspNet.ScriptManager.jQuery">
+      <HintPath>..\packages\AspNet.ScriptManager.jQuery.1.11.1\lib\net45\AspNet.ScriptManager.jQuery.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
@@ -2572,6 +2575,9 @@
     <Content Include="packages.config" />
     <Content Include="Content\icons\16\Thumbs.db" />
     <Content Include="HttpHandle\AsyncBusinessHandler.ashx" />
+    <Content Include="Views\Basics\Editors\CertificateMaintain.aspx" />
+    <Content Include="Views\Basics\Editors\SupplierBankAccountMaintain.aspx" />
+    <Content Include="WebServices\SupplierWS.asmx" />
     <None Include="Scripts\jquery-1.11.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\jquery-1.11.1.min.js" />
@@ -2619,13 +2625,17 @@
     <Content Include="Views\Basics\BankAccountManagement.aspx" />
     <Content Include="Views\Basics\CompanyMaintenance.aspx" />
     <Content Include="Views\Basics\CompanyManagement.aspx" />
+    <Content Include="Views\Basics\SupplierMaintenance.aspx" />
+    <Content Include="Views\Basics\SupplierManagement.aspx" />
     <Content Include="Web.config" />
     <Content Include="Bundle.config" />
+    <Content Include="WebServices\Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\jquery-1.11.1.min.map" />
     <None Include="Scripts\_references.js" />
     <Content Include="Site.Mobile.Master" />
+    <Content Include="Site.Window.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -2675,6 +2685,7 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\AjaxRequestData.cs" />
     <Compile Include="Extensions\PageEnhance.cs" />
     <Compile Include="Extensions\WebUtility.cs" />
     <Compile Include="Extensions\ZDMembershipUser.cs" />
@@ -2710,6 +2721,13 @@
     </Compile>
     <Compile Include="Site.Mobile.Master.designer.cs">
       <DependentUpon>Site.Mobile.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Site.Window.Master.cs">
+      <DependentUpon>Site.Window.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Site.Window.Master.designer.cs">
+      <DependentUpon>Site.Window.Master</DependentUpon>
     </Compile>
     <Compile Include="UserControls\UCHeader.ascx.cs">
       <DependentUpon>UCHeader.ascx</DependentUpon>
@@ -2753,6 +2771,38 @@
     <Compile Include="Views\Basics\CompanyManagement.aspx.designer.cs">
       <DependentUpon>CompanyManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Basics\Editors\CertificateMaintain.aspx.cs">
+      <DependentUpon>CertificateMaintain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\Editors\CertificateMaintain.aspx.designer.cs">
+      <DependentUpon>CertificateMaintain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\Editors\SupplierBankAccountMaintain.aspx.cs">
+      <DependentUpon>SupplierBankAccountMaintain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\Editors\SupplierBankAccountMaintain.aspx.designer.cs">
+      <DependentUpon>SupplierBankAccountMaintain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\SupplierMaintenance.aspx.cs">
+      <DependentUpon>SupplierMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\SupplierMaintenance.aspx.designer.cs">
+      <DependentUpon>SupplierMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\SupplierManagement.aspx.cs">
+      <DependentUpon>SupplierManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\SupplierManagement.aspx.designer.cs">
+      <DependentUpon>SupplierManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="WebServices\SupplierWS.asmx.cs">
+      <DependentUpon>SupplierWS.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_GlobalResources\RadGrid.Main.resx">
@@ -2784,6 +2834,7 @@
       <LastGenOutput>RadGrid.Main.zh-CN.designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -2807,7 +2858,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -17,11 +17,11 @@ namespace ZhongDing.Domain.Models
     {
         public Supplier()
         {
-            this.Product = new HashSet<Product>();
             this.SupplierBankAccount = new HashSet<SupplierBankAccount>();
-            this.SupplierCertificateFile = new HashSet<SupplierCertificateFile>();
-            this.SupplierContract = new HashSet<SupplierContract>();
             this.SupplierTaskAssignment = new HashSet<SupplierTaskAssignment>();
+            this.SupplierContract = new HashSet<SupplierContract>();
+            this.SupplierCertificate = new HashSet<SupplierCertificate>();
+            this.Product = new HashSet<Product>();
         }
     
         public int ID { get; set; }
@@ -40,6 +40,7 @@ namespace ZhongDing.Domain.Models
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
+        public bool IsProducer { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -51,10 +52,10 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ICollection<Product> Product { get; set; }
         public virtual ICollection<SupplierBankAccount> SupplierBankAccount { get; set; }
-        public virtual ICollection<SupplierCertificateFile> SupplierCertificateFile { get; set; }
-        public virtual ICollection<SupplierContract> SupplierContract { get; set; }
         public virtual ICollection<SupplierTaskAssignment> SupplierTaskAssignment { get; set; }
+        public virtual ICollection<SupplierContract> SupplierContract { get; set; }
+        public virtual ICollection<SupplierCertificate> SupplierCertificate { get; set; }
+        public virtual ICollection<Product> Product { get; set; }
     }
 }

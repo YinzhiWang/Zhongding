@@ -577,7 +577,7 @@ namespace ZhongDing.Business.Repositories
                                 entry.CurrentValues[ENTITY_PROPERTY_CREATEDBY] = this.ContextUserID;
 
                             if (entry.CurrentValues.PropertyNames.Contains(ENTITY_PROPERTY_CREATEDON))
-                                entry.CurrentValues[ENTITY_PROPERTY_CREATEDON] = DateTime.UtcNow;
+                                entry.CurrentValues[ENTITY_PROPERTY_CREATEDON] = DateTime.Now;
 
                             break;
 
@@ -586,13 +586,13 @@ namespace ZhongDing.Business.Repositories
                                 entry.CurrentValues[ENTITY_PROPERTY_LASTMODIFIEDBY] = this.ContextUserID;
 
                             if (entry.CurrentValues.PropertyNames.Contains(ENTITY_PROPERTY_LASTMODIFIEDON))
-                                entry.CurrentValues[ENTITY_PROPERTY_LASTMODIFIEDON] = DateTime.UtcNow;
+                                entry.CurrentValues[ENTITY_PROPERTY_LASTMODIFIEDON] = DateTime.Now;
 
                             break;
 
                         case EntityState.Deleted:
                             if (entry.CurrentValues.PropertyNames.Contains(ENTITY_PROPERTY_DELETEDON))
-                                entry.CurrentValues[ENTITY_PROPERTY_DELETEDON] = DateTime.UtcNow;
+                                entry.CurrentValues[ENTITY_PROPERTY_DELETEDON] = DateTime.Now;
 
                             break;
                     }
@@ -618,13 +618,13 @@ namespace ZhongDing.Business.Repositories
                         entry.CurrentValues[ENTITY_PROPERTY_LASTMODIFIEDBY] = this.ContextUserID;
 
                     if (entry.CurrentValues.PropertyNames.Contains(ENTITY_PROPERTY_LASTMODIFIEDON))
-                        entry.CurrentValues[ENTITY_PROPERTY_LASTMODIFIEDON] = DateTime.UtcNow;
+                        entry.CurrentValues[ENTITY_PROPERTY_LASTMODIFIEDON] = DateTime.Now;
 
                     if (entry.CurrentValues.PropertyNames.Contains(ENTITY_PROPERTY_ISDELETED))
                         entry.CurrentValues[ENTITY_PROPERTY_ISDELETED] = true;
 
                     if (entry.CurrentValues.PropertyNames.Contains(ENTITY_PROPERTY_DELETEDON))
-                        entry.CurrentValues[ENTITY_PROPERTY_DELETEDON] = DateTime.UtcNow;
+                        entry.CurrentValues[ENTITY_PROPERTY_DELETEDON] = DateTime.Now;
                 }
 
             }
@@ -650,13 +650,13 @@ namespace ZhongDing.Business.Repositories
                         entry.CurrentValues[ENTITY_PROPERTY_LASTMODIFIEDBY] = this.ContextUserID;
 
                     if (entry.CurrentValues.PropertyNames.Contains(ENTITY_PROPERTY_LASTMODIFIEDON))
-                        entry.CurrentValues[ENTITY_PROPERTY_LASTMODIFIEDON] = DateTime.UtcNow;
+                        entry.CurrentValues[ENTITY_PROPERTY_LASTMODIFIEDON] = DateTime.Now;
 
                     if (entry.CurrentValues.PropertyNames.Contains(ENTITY_PROPERTY_ISDELETED))
                         entry.CurrentValues[ENTITY_PROPERTY_ISDELETED] = true;
 
                     if (entry.CurrentValues.PropertyNames.Contains(ENTITY_PROPERTY_DELETEDON))
-                        entry.CurrentValues[ENTITY_PROPERTY_DELETEDON] = DateTime.UtcNow;
+                        entry.CurrentValues[ENTITY_PROPERTY_DELETEDON] = DateTime.Now;
                 }
 
             }

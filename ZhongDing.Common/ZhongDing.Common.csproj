@@ -65,6 +65,7 @@
     <Compile Include="Enums\DateDiffType.cs" />
     <Compile Include="Enums\DateInterval.cs" />
     <Compile Include="Enums\EAccountType.cs" />
+    <Compile Include="Enums\EAjaxActionType.cs" />
     <Compile Include="Enums\EOwnerType.cs" />
     <Compile Include="Enums\LogCategory.cs" />
     <Compile Include="Enums\LogEventType.cs" />

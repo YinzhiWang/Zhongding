@@ -25,6 +25,7 @@ namespace ZhongDing.Domain.Models
         public Nullable<int> SupplierID { get; set; }
         public Nullable<int> ProductID { get; set; }
         public Nullable<int> ProductSpecificationID { get; set; }
+        public string ContractCode { get; set; }
         public Nullable<decimal> UnitPrice { get; set; }
         public Nullable<bool> IsNeedTaskAssignment { get; set; }
         public Nullable<System.DateTime> ExpirationDate { get; set; }
@@ -45,10 +46,10 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual Product Product { get; set; }
-        public virtual ProductSpecification ProductSpecification { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual ICollection<SupplierContractFile> SupplierContractFile { get; set; }
         public virtual ICollection<SupplierTaskAssignment> SupplierTaskAssignment { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual ProductSpecification ProductSpecification { get; set; }
     }
 }

@@ -50,7 +50,7 @@ namespace ZhongDing.Common
             categories.Add(LogCategory.Exception.ToString());
 
             IDictionary<string, object> extentProp = new Dictionary<string, object>();
-            extentProp.Add("OccurTimeOnClient", DateTime.UtcNow.ToLocalDateTime().ToString());
+            extentProp.Add("OccurTimeOnClient", DateTime.Now.ToLocalDateTime().ToString());
             extentProp.Add("ServerTime", DateTime.Now.ToString());
 
             if (HttpContext.Current != null

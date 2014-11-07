@@ -45,7 +45,7 @@ namespace ZhongDing.Domain.UIObjects
         /// 备注
         /// </summary>
         /// <value>The comments.</value>
-        public string Comments { get; set; }
+        public string Comment { get; set; }
 
     }
 }

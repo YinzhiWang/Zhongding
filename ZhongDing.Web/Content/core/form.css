@@ -93,6 +93,7 @@
 
 .mws-form .mws-form-item.small select, 
 .mws-form .mws-form-item.small textarea
+/*.mws-form .mws-form-item.small .mws-textinput*/
 {
 	width:40%;
 }

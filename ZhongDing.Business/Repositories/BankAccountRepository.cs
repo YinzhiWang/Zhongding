@@ -48,27 +48,48 @@ namespace ZhongDing.Business.Repositories
 
             if (query != null)
             {
-                uiBankAccounts = query.ToList().Select(x => new UIBankAccount()
+                uiBankAccounts = (from q in query
+                                  join cu in this.DB.Users on q.CreatedBy equals cu.UserID into tempCU
+                                  from tcu in tempCU.DefaultIfEmpty()
+                                  join mu in this.DB.Users on q.LastModifiedBy equals mu.UserID into tempMU
+                                  from tmu in tempMU.DefaultIfEmpty()
+                                  join at in this.DB.AccountType on q.AccountTypeID equals at.ID into tempAT
+                                  from tat in tempAT.DefaultIfEmpty()
+                                  join ot in this.DB.OwnerType on q.OwnerTypeID equals ot.ID into tempOT
+                                  from tot in tempOT.DefaultIfEmpty()
+                                  join c in this.DB.Company on q.CompanyID equals c.ID into tempC
+                                  from tc in tempC.DefaultIfEmpty()
+                                  orderby q.CreatedOn descending
+                                  select new UIBankAccount()
+                                  {
+                                      ID = q.ID,
+                                      AccountName = q.AccountName,
+                                      BankBranchName = q.BankBranchName,
+                                      Account = q.Account,
+                                      AccountType = tat == null ? string.Empty : tat.AccountTypeName,
+                                      OwnerType = tot == null ? string.Empty : tot.OwnerTypeName,
+                                      CompanyName = tc == null ? string.Empty : tc.CompanyName,
+                                      Comment = q.Comment,
+                                      CreatedOn = q.CreatedOn,
+                                      CreatedBy = tcu == null ? string.Empty : tcu.UserName,
+                                      LastModifiedOn = q.LastModifiedOn,
+                                      LastModifiedBy = tmu == null ? string.Empty : tmu.UserName
+                                  }).ToList();
+
+                if (uiSearchObj != null
+                    && uiSearchObj.IsNeedMaskedAccount)
                 {
-                    ID = x.ID,
-                    AccountName = x.AccountName,
-                    BankBranchName = x.BankBranchName,
-                    Account = uiSearchObj.IsNeedMaskedAccount ? Utility.MaskAccount(x.Account) : x.Account,
-                    AccountType = x.AccountType == null ? string.Empty : x.AccountType.AccountTypeName,
-                    OwnerType = x.OwnerType == null ? string.Empty : x.OwnerType.OwnerTypeName,
-                    CompanyName = x.Company == null ? string.Empty : x.Company.CompanyName,
-                    Comments = x.Comments,
-                    CreatedOn = x.CreatedOn,
-                    CreatedBy = x.CreatedBy.HasValue ? UsersRepository.Instance.GetUserNameByID(x.CreatedBy.Value) : string.Empty,
-                    LastModifiedOn = x.LastModifiedOn,
-                    LastModifiedBy = x.LastModifiedBy.HasValue ? UsersRepository.Instance.GetUserNameByID(x.LastModifiedBy.Value) : string.Empty,
-                }).ToList();
+                    foreach (var bankAccount in uiBankAccounts)
+                    {
+                        bankAccount.Account = Utility.MaskAccount(bankAccount.Account);
+                    }
+                }
             }
 
             return uiBankAccounts;
         }
 
-        public IList<UIBankAccount> GetUIList(UISearchBankAccount uiSearchObj, out int totalRecords)
+        public IList<UIBankAccount> GetUIList(UISearchBankAccount uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
         {
             IList<UIBankAccount> uiBankAccounts = new List<UIBankAccount>();
 
@@ -97,32 +118,48 @@ namespace ZhongDing.Business.Repositories
 
                 if (uiSearchObj.CompanyID > 0)
                     whereFuncs.Add(x => x.CompanyID == uiSearchObj.CompanyID);
-
-                if (uiSearchObj.IsNeedPaging)
-                    query = GetList(uiSearchObj.PageIndex, uiSearchObj.PageSize, whereFuncs, out total);
-                else
-                    query = GetList(whereFuncs);
             }
-            else
-                query = GetList(whereFuncs);
+
+            query = GetList(pageIndex, pageSize, whereFuncs, out total);
 
             if (query != null)
             {
-                uiBankAccounts = query.ToList().Select(x => new UIBankAccount()
+                uiBankAccounts = (from q in query
+                                  join cu in this.DB.Users on q.CreatedBy equals cu.UserID into tempCU
+                                  from tcu in tempCU.DefaultIfEmpty()
+                                  join mu in this.DB.Users on q.LastModifiedBy equals mu.UserID into tempMU
+                                  from tmu in tempMU.DefaultIfEmpty()
+                                  join at in this.DB.AccountType on q.AccountTypeID equals at.ID into tempAT
+                                  from tat in tempAT.DefaultIfEmpty()
+                                  join ot in this.DB.OwnerType on q.OwnerTypeID equals ot.ID into tempOT
+                                  from tot in tempOT.DefaultIfEmpty()
+                                  join c in this.DB.Company on q.CompanyID equals c.ID into tempC
+                                  from tc in tempC.DefaultIfEmpty()
+                                  orderby q.CreatedOn descending
+                                  select new UIBankAccount()
+                                  {
+                                      ID = q.ID,
+                                      AccountName = q.AccountName,
+                                      BankBranchName = q.BankBranchName,
+                                      Account = q.Account,
+                                      AccountType = tat == null ? string.Empty : tat.AccountTypeName,
+                                      OwnerType = tot == null ? string.Empty : tot.OwnerTypeName,
+                                      CompanyName = tc == null ? string.Empty : tc.CompanyName,
+                                      Comment = q.Comment,
+                                      CreatedOn = q.CreatedOn,
+                                      CreatedBy = tcu == null ? string.Empty : tcu.UserName,
+                                      LastModifiedOn = q.LastModifiedOn,
+                                      LastModifiedBy = tmu == null ? string.Empty : tmu.UserName
+                                  }).ToList();
+
+                if (uiSearchObj != null
+                    && uiSearchObj.IsNeedMaskedAccount)
                 {
-                    ID = x.ID,
-                    AccountName = x.AccountName,
-                    BankBranchName = x.BankBranchName,
-                    Account = uiSearchObj.IsNeedMaskedAccount ? Utility.MaskAccount(x.Account) : x.Account,
-                    AccountType = x.AccountType == null ? string.Empty : x.AccountType.AccountTypeName,
-                    OwnerType = x.OwnerType == null ? string.Empty : x.OwnerType.OwnerTypeName,
-                    CompanyName = x.Company == null ? string.Empty : x.Company.CompanyName,
-                    Comments = x.Comments,
-                    CreatedOn = x.CreatedOn,
-                    CreatedBy = x.CreatedBy.HasValue ? UsersRepository.Instance.GetUserNameByID(x.CreatedBy.Value) : string.Empty,
-                    LastModifiedOn = x.LastModifiedOn,
-                    LastModifiedBy = x.LastModifiedBy.HasValue ? UsersRepository.Instance.GetUserNameByID(x.LastModifiedBy.Value) : string.Empty,
-                }).ToList();
+                    foreach (var bankAccount in uiBankAccounts)
+                    {
+                        bankAccount.Account = Utility.MaskAccount(bankAccount.Account);
+                    }
+                }
             }
 
             totalRecords = total;

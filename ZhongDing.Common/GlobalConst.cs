@@ -16,6 +16,21 @@ namespace ZhongDing.Common
         /// </summary>
         public static readonly int INVALID_INT = -1;
 
+        /// <summary>
+        /// 系统母版页主标题
+        /// </summary>
+        public static readonly string WEBSITE_MASTER_PAGE_MAIN_TITLE = "众鼎医药咨询信息系统";
+
+        /// <summary>
+        /// 是否有某种证照：有
+        /// </summary>
+        public static readonly string GOTTEN_DESC_HAVE = "有";
+        /// <summary>
+        /// 是否有某种证照：无
+        /// </summary>
+        public static readonly string GOTTEN_DESC_NONHAVE = "无";
+
+
         #region System Security
 
         /// <summary>
@@ -37,6 +52,33 @@ namespace ZhongDing.Common
         /// 系统管理员默认用户名ID
         /// </summary>
         public static readonly int DEFAULT_SYSTEM_ADMIN_USERID = 1;
+
+        #endregion
+
+        #region Rad Notification提示框 属性设置
+
+        public class NotificationSettings
+        {
+            /// <summary>
+            /// Title:提示
+            /// </summary>
+            public static readonly string TITLE_SUCCESS = "提示";
+            /// <summary>
+            /// Title:错误
+            /// </summary>
+            public static readonly string TITLE_ERROR = "错误";
+
+            /// <summary>
+            /// ContentIcon：成功的
+            /// </summary>
+            public static readonly string CONTENT_ICON_SUCCESS = "~/Content/icons/32/tick.png";
+            /// <summary>
+            /// ContentIcon：错误的
+            /// </summary>
+            public static readonly string CONTENT_ICON_ERROR = "~/Content/icons/32/cross.png";
+
+        }
+
 
         #endregion
     }

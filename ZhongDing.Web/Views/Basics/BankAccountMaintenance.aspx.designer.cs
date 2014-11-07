@@ -148,31 +148,13 @@ namespace ZhongDing.Web.Views.Basics {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvAccountType;
         
         /// <summary>
-        /// comboxCompany control.
+        /// txtComment control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox comboxCompany;
-        
-        /// <summary>
-        /// cvCompany control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator cvCompany;
-        
-        /// <summary>
-        /// txtComments control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtComments;
+        protected global::Telerik.Web.UI.RadTextBox txtComment;
         
         /// <summary>
         /// btnSave control.

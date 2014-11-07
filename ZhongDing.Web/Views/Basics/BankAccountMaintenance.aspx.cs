@@ -84,8 +84,6 @@ namespace ZhongDing.Web.Views.Basics
             {
                 BindAccountTypes();
 
-                BindCompanies();
-
                 LoadBankAccount();
             }
         }
@@ -100,19 +98,6 @@ namespace ZhongDing.Web.Views.Basics
             ddlAccountType.DataTextField = "AccountTypeName";
             ddlAccountType.DataValueField = "ID";
             ddlAccountType.DataBind();
-        }
-
-        private void BindCompanies()
-        {
-            var accountTypes = PageCompanyRepository.GetUIList();
-
-            comboxCompany.DataSource = accountTypes;
-            comboxCompany.DataTextField = "CompanyName";
-            comboxCompany.DataValueField = "ID";
-            comboxCompany.DataBind();
-
-            comboxCompany.DefaultItem.Text = "--请选择--";
-            comboxCompany.DefaultItem.Value = "";
         }
 
         private void LoadBankAccount()
@@ -131,10 +116,7 @@ namespace ZhongDing.Web.Views.Basics
                     if (bankAccount.AccountTypeID.HasValue && bankAccount.AccountTypeID > 0)
                         ddlAccountType.SelectedValue = bankAccount.AccountTypeID.ToString();
 
-                    if (bankAccount.CompanyID.HasValue && bankAccount.CompanyID > 0)
-                        comboxCompany.SelectedValue = bankAccount.CompanyID.ToString();
-
-                    txtComments.Text = bankAccount.Comments;
+                    txtComment.Text = bankAccount.Comment;
                 }
             }
         }
@@ -145,11 +127,6 @@ namespace ZhongDing.Web.Views.Basics
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(ddlAccountType.SelectedValue)
-                && ddlAccountType.SelectedValue.Equals(((int)EAccountType.Company).ToString())
-                && string.IsNullOrEmpty(comboxCompany.SelectedValue))
-                cvCompany.IsValid = false;
-
             if (!IsValid) return;
 
             BankAccount bankAccount = null;
@@ -176,11 +153,12 @@ namespace ZhongDing.Web.Views.Basics
                 if (!string.IsNullOrEmpty(ddlAccountType.SelectedValue))
                     bankAccount.AccountTypeID = Convert.ToInt32(ddlAccountType.SelectedValue);
 
-                if (bankAccount.AccountTypeID == (int)EAccountType.Company
-                    && !string.IsNullOrEmpty(comboxCompany.SelectedValue))
-                    bankAccount.CompanyID = Convert.ToInt32(comboxCompany.SelectedValue);
+                if (bankAccount.AccountTypeID == (int)EAccountType.Company)
+                    bankAccount.CompanyID = CurrentUser.CompanyID;
+                else
+                    bankAccount.CompanyID = null;
 
-                bankAccount.Comments = txtComments.Text.Trim();
+                bankAccount.Comment = txtComment.Text.Trim();
 
                 PageBankAccountRepository.Save();
 

@@ -68,7 +68,7 @@
                                 <ul>
                                     <li data-level="2" data-menuitemid="3"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/CompanyManagement.aspx');">帐套管理</a></li>
                                     <li data-level="2" data-menuitemid="4"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/BankAccountManagement.aspx');">银行帐号管理</a></li>
-                                    <li data-level="2"><a href="#">供应商管理</a></li>
+                                    <li data-level="2" data-menuitemid="5"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/SupplierManagement.aspx');">供应商管理</a></li>
                                     <li data-level="2"><a href="#">客户管理</a></li>
                                     <li data-level="2"><a href="#">配送公司管理</a></li>
                                     <li data-level="2"><a href="#">大包客户协议管理</a></li>
@@ -181,6 +181,13 @@
                     color: #ffffff;
                 }
 
+            .RadWindow_Silk .rwTable .rwTitlebarControls em
+            {
+                font-size: 13px;
+                font-weight: 600;
+                text-shadow: 0 0 6px rgba(128, 128,128, 0.5);
+            }
+
             .RadNotification .rnContentIconClip
             {
                 position: relative;
@@ -274,6 +281,12 @@
                     }
                     return false;
                 }
+
+                function OnClientBeforeShow(sender, eventArgs) {
+                    sender.center();
+                    //$.hideLoading();
+                }
+
             </script>
 
             <asp:ContentPlaceHolder ID="scriptContent" runat="server">
@@ -286,13 +299,43 @@
             </TargetControls>
         </telerik:RadSkinManager>
 
-        <telerik:RadAjaxLoadingPanel runat="server" ID="radAjaxLoadingPanel" />
+        <telerik:RadAjaxLoadingPanel runat="server" ID="radAjaxLoadingPanel" BackgroundPosition="Center" />
 
         <telerik:RadNotification ID="radNotification" runat="server" EnableRoundedCorners="true"
             AutoCloseDelay="300" Skin="Silk" Animation="Fade" EnableShadow="true" Title="提示"
             TitleIcon="none" Opacity="95" Position="Center" ContentIcon="~/Content/icons/32/tick.png"
             Width="300" Height="100">
         </telerik:RadNotification>
+
+        <telerik:RadWindowManager ID="radWindowManager" VisibleStatusbar="false" Width="600" Height="400"
+            ReloadOnShow="true" EnableShadow="true" Overlay="true" Localization-Close="关闭" IconUrl="~/Content/icons/16/edit.png"
+            runat="server" Opacity="100" Behaviors="Close,Move" Modal="true" OnClientBeforeShow="OnClientBeforeShow">
+            <AlertTemplate>
+                <div class="rwDialogPopup radalert">
+                    <div class="rwDialogText">
+                        {1}
+                    </div>
+                    <div style="text-align: right; float: right; padding-top: 5px;">
+                        <a onclick="$find('{0}').close();" class="rwPopupButton" href="javascript:void(0);">
+                            <span class="rwOuterSpan"><span class="rwInnerSpan">确定</span></span>
+                        </a>
+                    </div>
+                </div>
+            </AlertTemplate>
+            <ConfirmTemplate>
+                <div class="rwDialogPopup radconfirm">
+                    <div class="rwDialogText">
+                        {1}
+                    </div>
+                    <div style="text-align: right; float: right; padding-top: 5px;">
+                        <a onclick="$find('{0}').close(true);" class="rwPopupButton" href="javascript:void(0);">
+                            <span class="rwOuterSpan"><span class="rwInnerSpan">确定</span></span></a>
+                        <a onclick="$find('{0}').close(false);" class="rwPopupButton" href="javascript:void(0);">
+                            <span class="rwOuterSpan"><span class="rwInnerSpan">取消</span></span></a>
+                    </div>
+                </div>
+            </ConfirmTemplate>
+        </telerik:RadWindowManager>
     </form>
 </body>
 </html>

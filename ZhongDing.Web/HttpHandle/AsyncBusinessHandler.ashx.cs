@@ -14,6 +14,9 @@ namespace ZhongDing.Web.HttpHandle
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
+
+
+
             context.Response.Write("Hello World");
         }
 

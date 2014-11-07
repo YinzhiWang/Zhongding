@@ -17,8 +17,9 @@ namespace ZhongDing.Domain.Models
     {
         public Company()
         {
-            this.Product = new HashSet<Product>();
             this.BankAccount = new HashSet<BankAccount>();
+            this.Warehouse = new HashSet<Warehouse>();
+            this.Product = new HashSet<Product>();
         }
     
         public int ID { get; set; }
@@ -46,7 +47,8 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ICollection<Product> Product { get; set; }
         public virtual ICollection<BankAccount> BankAccount { get; set; }
+        public virtual ICollection<Warehouse> Warehouse { get; set; }
+        public virtual ICollection<Product> Product { get; set; }
     }
 }

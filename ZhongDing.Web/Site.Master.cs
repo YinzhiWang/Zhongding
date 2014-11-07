@@ -6,13 +6,12 @@ using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
+using ZhongDing.Common;
 
 namespace ZhongDing.Web
 {
     public partial class SiteMaster : MasterPage
     {
-        private const string SYSTEM_NAME = "众鼎医药咨询信息系统";
-
         private int _MenuItemID;
         public int MenuItemID
         {
@@ -40,6 +39,18 @@ namespace ZhongDing.Web
             }
         }
 
+        /// <summary>
+        /// 公用的脚本管理控件
+        /// </summary>
+        /// <value>The base script manager.</value>
+        public RadScriptManager BaseScriptManager
+        {
+            get
+            {
+                return this.radScriptManager;
+            }
+        }
+
         public string BaseUrl
         {
             get
@@ -50,7 +61,9 @@ namespace ZhongDing.Web
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            Page.Title = Page.Title + " - " + SYSTEM_NAME;
+            Page.Title = Page.Title + " - " + GlobalConst.WEBSITE_MASTER_PAGE_MAIN_TITLE;
+
+
         }
     }
 }

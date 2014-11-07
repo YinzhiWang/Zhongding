@@ -38,27 +38,34 @@ namespace ZhongDing.Business.Repositories
 
             if (query != null)
             {
-                uiCompanyList = query.ToList().Select(x => new UICompany()
-                {
-                    ID = x.ID,
-                    CompanyCode = x.CompanyCode,
-                    CompanyName = x.CompanyName,
-                    ProviderTexRatio = x.ProviderTexRatio,
-                    ClientTaxHighRatio = x.ClientTaxHighRatio,
-                    ClientTaxLowRatio = x.ClientTaxLowRatio,
-                    EnableTaxDeduction = x.EnableTaxDeduction,
-                    ClientTaxDeductionRatio = x.ClientTaxDeductionRatio,
-                    CreatedOn = x.CreatedOn,
-                    CreatedBy = x.CreatedBy.HasValue ? UsersRepository.Instance.GetUserNameByID(x.CreatedBy.Value) : string.Empty,
-                    LastModifiedOn = x.LastModifiedOn,
-                    LastModifiedBy = x.LastModifiedBy.HasValue ? UsersRepository.Instance.GetUserNameByID(x.LastModifiedBy.Value) : string.Empty,
-                }).ToList();
+                uiCompanyList = (from q in query
+                                 join cu in this.DB.Users on q.CreatedBy equals cu.UserID into tempCU
+                                 from tcu in tempCU.DefaultIfEmpty()
+                                 join mu in this.DB.Users on q.LastModifiedBy equals mu.UserID into tempMU
+                                 from tmu in tempMU.DefaultIfEmpty()
+                                 orderby q.CreatedOn descending
+                                 select new UICompany()
+                                 {
+                                     ID = q.ID,
+                                     CompanyCode = q.CompanyCode,
+                                     CompanyName = q.CompanyName,
+                                     ProviderTexRatio = q.ProviderTexRatio,
+                                     ClientTaxHighRatio = q.ClientTaxHighRatio,
+                                     ClientTaxLowRatio = q.ClientTaxLowRatio,
+                                     EnableTaxDeduction = q.EnableTaxDeduction,
+                                     ClientTaxDeductionRatio = q.ClientTaxDeductionRatio,
+                                     CreatedOn = q.CreatedOn,
+                                     CreatedBy = tcu == null ? string.Empty : tcu.UserName,
+                                     LastModifiedOn = q.LastModifiedOn,
+                                     LastModifiedBy = tmu == null ? string.Empty : tmu.UserName,
+                                 }).ToList();
+
             }
 
             return uiCompanyList;
         }
 
-        public IList<UICompany> GetUIList(UISearchCompany uiSearchObj, out int totalRecords)
+        public IList<UICompany> GetUIList(UISearchCompany uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
         {
             IList<UICompany> uiCompanyList = new List<UICompany>();
 
@@ -78,32 +85,34 @@ namespace ZhongDing.Business.Repositories
 
                 if (!string.IsNullOrEmpty(uiSearchObj.CompanyName))
                     whereFuncs.Add(x => x.CompanyName.Contains(uiSearchObj.CompanyName));
-
-                if (uiSearchObj.IsNeedPaging)
-                    query = GetList(uiSearchObj.PageIndex, uiSearchObj.PageSize, whereFuncs, out total);
-                else
-                    query = GetList(whereFuncs);
             }
-            else
-                query = GetList(whereFuncs);
+
+            query = GetList(pageIndex, pageSize, whereFuncs, out total);
 
             if (query != null)
             {
-                uiCompanyList = query.ToList().Select(x => new UICompany()
-                {
-                    ID = x.ID,
-                    CompanyCode = x.CompanyCode,
-                    CompanyName = x.CompanyName,
-                    ProviderTexRatio = x.ProviderTexRatio,
-                    ClientTaxHighRatio = x.ClientTaxHighRatio,
-                    ClientTaxLowRatio = x.ClientTaxLowRatio,
-                    EnableTaxDeduction = x.EnableTaxDeduction,
-                    ClientTaxDeductionRatio = x.ClientTaxDeductionRatio,
-                    CreatedOn = x.CreatedOn,
-                    CreatedBy = x.CreatedBy.HasValue ? UsersRepository.Instance.GetUserNameByID(x.CreatedBy.Value) : string.Empty,
-                    LastModifiedOn = x.LastModifiedOn,
-                    LastModifiedBy = x.LastModifiedBy.HasValue ? UsersRepository.Instance.GetUserNameByID(x.LastModifiedBy.Value) : string.Empty,
-                }).ToList();
+                uiCompanyList = (from q in query
+                                 join cu in this.DB.Users on q.CreatedBy equals cu.UserID into tempCU
+                                 from tcu in tempCU.DefaultIfEmpty()
+                                 join mu in this.DB.Users on q.LastModifiedBy equals mu.UserID into tempMU
+                                 from tmu in tempMU.DefaultIfEmpty()
+                                 orderby q.CreatedOn descending
+                                 select new UICompany()
+                                 {
+                                     ID = q.ID,
+                                     CompanyCode = q.CompanyCode,
+                                     CompanyName = q.CompanyName,
+                                     ProviderTexRatio = q.ProviderTexRatio,
+                                     ClientTaxHighRatio = q.ClientTaxHighRatio,
+                                     ClientTaxLowRatio = q.ClientTaxLowRatio,
+                                     EnableTaxDeduction = q.EnableTaxDeduction,
+                                     ClientTaxDeductionRatio = q.ClientTaxDeductionRatio,
+                                     CreatedOn = q.CreatedOn,
+                                     CreatedBy = tcu == null ? string.Empty : tcu.UserName,
+                                     LastModifiedOn = q.LastModifiedOn,
+                                     LastModifiedBy = tmu == null ? string.Empty : tmu.UserName,
+                                 }).ToList();
+
             }
 
             totalRecords = total;
@@ -111,9 +120,17 @@ namespace ZhongDing.Business.Repositories
             return uiCompanyList;
         }
 
-        public int GetMaxEntityID()
+        public int? GetMaxEntityID()
         {
-            return this.DB.Company.Max(x => x.ID);
+            if (this.DB.Company.Count() > 0)
+                return this.DB.Company.Max(x => x.ID);
+            else
+                return null;
+        }
+
+        public IList<UICompany> GetUIListForDLL()
+        {
+            return GetList(x => x.IsDeleted == false).Select(x => new UICompany() { ID = x.ID, CompanyName = x.CompanyName }).ToList();
         }
     }
 }

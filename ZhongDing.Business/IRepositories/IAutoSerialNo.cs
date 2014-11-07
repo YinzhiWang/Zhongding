@@ -15,6 +15,6 @@ namespace ZhongDing.Business.IRepositories
         /// 获取实体的最大主键ID
         /// </summary>
         /// <returns>System.Int32.</returns>
-        int GetMaxEntityID();
+        int? GetMaxEntityID();
     }
 }

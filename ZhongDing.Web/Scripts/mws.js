@@ -2,15 +2,33 @@ $(document).ready(function () {
     /* Core JS Functions */
 
     /* Collapsible Panels */
+    //$(".mws-panel.mws-collapsible .mws-panel-header")
+    //	.append("<div class=\"mws-collapse-button mws-inset\"><span data-collapseid=\"" + $(this).parents(".mws-panel").attr("data-collapseid") + "\"></span></div>")
+    //		.find(".mws-collapse-button span")
+    //			.on("click", function (event) {
+    //			    debugger;
+    //			    $(this).toggleClass("mws-collapsed")
+    //					.parents(".mws-panel")
+    //						.find(".mws-panel-body")
+    //							.slideToggle("fast");
+    //			});
+
     $(".mws-panel.mws-collapsible .mws-panel-header")
-		.append("<div class=\"mws-collapse-button mws-inset\"><span></span></div>")
-			.find(".mws-collapse-button span")
-				.on("click", function (event) {
-				    $(this).toggleClass("mws-collapsed")
-						.parents(".mws-panel")
-							.find(".mws-panel-body")
-								.slideToggle("fast");
-				});
+        .each(function (i, e) {
+
+            var collapseid = $(this).parents(".mws-panel").attr("data-collapseid");
+            var collapseBtnHtml = "<div class=\"mws-collapse-button mws-inset\"><span data-collapseid=\"" + collapseid + "\"></span></div>";
+
+            $(this).append(collapseBtnHtml).find(".mws-collapse-button span")
+                .on("click", function (event) {
+                    //debugger;
+                    $(this).toggleClass("mws-collapsed")
+                        .parents(".mws-panel[data-collapseid='" + $(this).attr("data-collapseid") + "']")
+                            .find(".mws-panel-body")
+                                .slideToggle("fast");
+                });
+        });
+
 
     /* Side dropdown menu */
     $("div#mws-navigation ul li a, div#mws-navigation ul li span")

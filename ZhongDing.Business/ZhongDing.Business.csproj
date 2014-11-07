@@ -58,6 +58,8 @@
     <Compile Include="IRepositories\ICompanyRepository.cs" />
     <Compile Include="IRepositories\IOwnerTypeRepository.cs" />
     <Compile Include="IRepositories\IReportRepository.cs" />
+    <Compile Include="IRepositories\ISupplierBankAccountRepository.cs" />
+    <Compile Include="IRepositories\ISupplierRepository.cs" />
     <Compile Include="IRepositories\IUnitOfWork.cs" />
     <Compile Include="IRepositories\IUsersRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -69,6 +71,8 @@
     <Compile Include="Repositories\CompanyRepository.cs" />
     <Compile Include="Repositories\OwnerTypeRepository.cs" />
     <Compile Include="Repositories\Reports\ReportRepository.cs" />
+    <Compile Include="Repositories\SupplierBankAccountRepository.cs" />
+    <Compile Include="Repositories\SupplierRepository.cs" />
     <Compile Include="Repositories\UnitOfWork.cs" />
     <Compile Include="Repositories\UsersRepository.cs" />
   </ItemGroup>

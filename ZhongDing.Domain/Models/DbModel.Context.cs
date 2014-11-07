@@ -29,13 +29,9 @@ namespace ZhongDing.Domain.Models
         public DbSet<aspnet_Users> aspnet_Users { get; set; }
         public DbSet<Company> Company { get; set; }
         public DbSet<Department> Department { get; set; }
-        public DbSet<Product> Product { get; set; }
         public DbSet<ProductCategory> ProductCategory { get; set; }
-        public DbSet<ProductSpecification> ProductSpecification { get; set; }
         public DbSet<Supplier> Supplier { get; set; }
         public DbSet<SupplierBankAccount> SupplierBankAccount { get; set; }
-        public DbSet<SupplierCertificateFile> SupplierCertificateFile { get; set; }
-        public DbSet<SupplierContract> SupplierContract { get; set; }
         public DbSet<SupplierContractFile> SupplierContractFile { get; set; }
         public DbSet<SupplierTaskAssignment> SupplierTaskAssignment { get; set; }
         public DbSet<UnitOfMeasurement> UnitOfMeasurement { get; set; }
@@ -46,5 +42,23 @@ namespace ZhongDing.Domain.Models
         public DbSet<aspnet_Roles> aspnet_Roles { get; set; }
         public DbSet<Roles> Roles { get; set; }
         public DbSet<BankAccount> BankAccount { get; set; }
+        public DbSet<SupplierContract> SupplierContract { get; set; }
+        public DbSet<Certificate> Certificate { get; set; }
+        public DbSet<CertificateType> CertificateType { get; set; }
+        public DbSet<ClientCompany> ClientCompany { get; set; }
+        public DbSet<DistributionCompany> DistributionCompany { get; set; }
+        public DbSet<SaleType> SaleType { get; set; }
+        public DbSet<SupplierCertificate> SupplierCertificate { get; set; }
+        public DbSet<Warehouse> Warehouse { get; set; }
+        public DbSet<ClientUser> ClientUser { get; set; }
+        public DbSet<Product> Product { get; set; }
+        public DbSet<ProductSpecification> ProductSpecification { get; set; }
+        public DbSet<ClientInfo> ClientInfo { get; set; }
+        public DbSet<ClientInfoBankAccount> ClientInfoBankAccount { get; set; }
+        public DbSet<ClientInfoContact> ClientInfoContact { get; set; }
+        public DbSet<ProductBasicPrice> ProductBasicPrice { get; set; }
+        public DbSet<ProductCertificate> ProductCertificate { get; set; }
+        public DbSet<ProductDBPolicyPrice> ProductDBPolicyPrice { get; set; }
+        public DbSet<ProductHighPrice> ProductHighPrice { get; set; }
     }
 }

@@ -108,32 +108,6 @@ COMMIT TRANSACTION
 
 ---- end ---- 10/31/2014 -- 初始化所有者类型和帐号类型数据 -- by lihong 
 
-
----- start --- 10/31/2014 -- 初始化所有者类型和帐号类型数据 -- by lihong 
-SET NUMERIC_ROUNDABORT OFF
-GO
-SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
-GO
-
-BEGIN TRANSACTION
-SET IDENTITY_INSERT [dbo].[OwnerType] ON
-INSERT INTO [dbo].[OwnerType] ([ID], [OwnerTypeName]) VALUES (1, N'账套')
-INSERT INTO [dbo].[OwnerType] ([ID], [OwnerTypeName]) VALUES (2, N'供应商')
-INSERT INTO [dbo].[OwnerType] ([ID], [OwnerTypeName]) VALUES (3, N'客户')
-INSERT INTO [dbo].[OwnerType] ([ID], [OwnerTypeName]) VALUES (4, N'生产企业')
-INSERT INTO [dbo].[OwnerType] ([ID], [OwnerTypeName]) VALUES (5, N'货品')
-SET IDENTITY_INSERT [dbo].[OwnerType] OFF
-
-SET IDENTITY_INSERT [dbo].[AccountType] ON
-INSERT INTO [dbo].[AccountType] ([ID], [AccountTypeName]) VALUES (1, N'公司')
-INSERT INTO [dbo].[AccountType] ([ID], [AccountTypeName]) VALUES (2, N'私人')
-SET IDENTITY_INSERT [dbo].[AccountType] OFF
-
-COMMIT TRANSACTION
-
----- end ---- 10/31/2014 -- 初始化所有者类型和帐号类型数据 -- by lihong 
-
-
 ---- start --- 11/06/2014 -- 初始化CertificateType, SaleType数据 -- by Yinzhi 
 SET NUMERIC_ROUNDABORT OFF
 GO

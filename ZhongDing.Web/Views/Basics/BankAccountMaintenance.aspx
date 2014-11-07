@@ -64,7 +64,7 @@
                         <div class="mws-form-row">
                             <label>类别</label>
                             <div class="mws-form-item small">
-                                <telerik:RadDropDownList runat="server" ID="ddlAccountType" DefaultMessage="--请选择--" OnClientItemSelected="onAccountTypeItemSelected"></telerik:RadDropDownList>
+                                <telerik:RadDropDownList runat="server" ID="ddlAccountType" DefaultMessage="--请选择--"></telerik:RadDropDownList>
                                 <telerik:RadToolTip ID="rttAccountType" runat="server" TargetControlID="ddlAccountType" ShowEvent="OnClick"
                                     Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
                                 </telerik:RadToolTip>
@@ -73,19 +73,10 @@
                                 </asp:RequiredFieldValidator>
                             </div>
                         </div>
-                        <div class="mws-form-row  hide" id="divBelongToCompany">
-                            <label>所属账套</label>
-                            <div class="mws-form-item small">
-                                <telerik:RadComboBox runat="server" ID="comboxCompany" Filter="Contains" Height="160px" EmptyMessage="--请选择--">
-                                </telerik:RadComboBox>
-                                <asp:CustomValidator ID="cvCompany" runat="server" ControlToValidate="comboxCompany" ValidationGroup="vgMaintenance"
-                                    Text="*" CssClass="field-validation-error" ErrorMessage="请选择所属账套"></asp:CustomValidator>
-                            </div>
-                        </div>
                         <div class="mws-form-row">
                             <label>备注</label>
                             <div class="mws-form-item medium">
-                                <telerik:RadTextBox runat="server" ID="txtComments" Width="90%" MaxLength="1000"
+                                <telerik:RadTextBox runat="server" ID="txtComment" Width="90%" MaxLength="1000"
                                     TextMode="MultiLine" Height="80">
                                 </telerik:RadTextBox>
                             </div>
@@ -114,44 +105,9 @@
     <script type="text/javascript">
         // <![CDATA[
 
-        $(document).ready(function () {
-
-            var ddlAccountType = $find("<%= ddlAccountType.ClientID%>");
-
-            if (ddlAccountType) {
-
-                var selectedItem = ddlAccountType.get_selectedItem();
-
-                if (selectedItem) {
-                    var selectedValue = selectedItem.get_value();
-
-                    if (selectedValue == "1") {
-                        $("#divBelongToCompany").show();
-                    }
-                }
-            }
-        });
-
-        function onAccountTypeItemSelected(sender, eventArgs) {
-
-            if (eventArgs) {
-                var selectedItem = eventArgs.get_item();
-
-                if (selectedItem) {
-                    var selectedValue = selectedItem.get_value();
-
-                    if (selectedValue == "1")
-                        $("#divBelongToCompany").show();
-                    else
-                        $("#divBelongToCompany").hide();
-                }
-            }
-        }
-
         function onClientHidden(sender, args) {
-            redirectToPage("/Views/Basics/BankAccountManagement.aspx");
+            redirectToPage("Views/Basics/BankAccountManagement.aspx");
         }
-
 
         // ]]>
     </script>

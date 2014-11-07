@@ -30,6 +30,6 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 货品
         /// </summary>
-        product
+        Product
     }
 }

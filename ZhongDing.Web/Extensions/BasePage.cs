@@ -34,6 +34,25 @@ namespace ZhongDing.Web
             }
         }
 
+        /// <summary>
+        /// 当前实体ID
+        /// </summary>
+        /// <value>The current entity ID.</value>
+        public int? CurrentEntityID
+        {
+            get
+            {
+                string sEntityID = Request.QueryString["EntityID"];
+
+                int iEntityID;
+
+                if (int.TryParse(sEntityID, out iEntityID))
+                    return iEntityID;
+                else
+                    return null;
+            }
+        }
+
         private IUsersRepository _PageUsersRepository;
         protected IUsersRepository PageUsersRepository
         {
@@ -68,7 +87,8 @@ namespace ZhongDing.Web
         protected override void OnPreInit(EventArgs e)
         {
             if (User.Identity.IsAuthenticated
-                && CurrentUser.UserID > 0)//已登录用户检查用户权限
+                && CurrentUser.UserID > 0
+                && CurrentUser.CompanyID > 0)//已登录用户检查用户权限
             {
                 //string[] userRoles = Roles.GetRolesForUser();
 

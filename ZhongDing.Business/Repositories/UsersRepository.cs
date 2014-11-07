@@ -10,20 +10,6 @@ namespace ZhongDing.Business.Repositories
 {
     public class UsersRepository : BaseRepository<Users>, IUsersRepository
     {
-        #region Keep it Singleton
-
-        private static readonly UsersRepository instance = new UsersRepository();
-
-        public static UsersRepository Instance
-        {
-            get
-            {
-                return instance;
-            }
-        }
-
-        #endregion
-
         public Users GetByProviderUserKey(Guid providerUserKey)
         {
             return this.BaseList().Where(x => x.AspnetUserID.HasValue && x.AspnetUserID == providerUserKey).FirstOrDefault();

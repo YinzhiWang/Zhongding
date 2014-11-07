@@ -72,12 +72,12 @@
 
         showLoading: function () {
             if (top.loadingPanel != null)
-                top.loadingPanel.show("main-wrapper");
+                top.loadingPanel.show("mws-wrapper");
         },
 
         hideLoading: function () {
             if (top.loadingPanel != null)
-                top.loadingPanel.hide("main-wrapper");
+                top.loadingPanel.hide("mws-wrapper");
         },
 
         doAjaxAction: function (handlerFileName, requestData, successCallBack, dataType) {

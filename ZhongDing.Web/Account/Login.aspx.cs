@@ -9,6 +9,7 @@ using ZhongDing.Business.IRepositories;
 using ZhongDing.Business.Repositories;
 using ZhongDing.Common;
 using ZhongDing.Common.Enums;
+using ZhongDing.Web.Extensions;
 
 namespace ZhongDing.Web.Account
 {
@@ -30,10 +31,38 @@ namespace ZhongDing.Web.Account
             }
         }
 
+        private ICompanyRepository _PageCompanyRepository;
+        private ICompanyRepository PageCompanyRepository
+        {
+            get
+            {
+                if (_PageCompanyRepository == null)
+                {
+                    _PageCompanyRepository = new CompanyRepository();
+                }
+                return _PageCompanyRepository;
+            }
+        }
+
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                BindCompany();
+            }
+        }
+
+        private void BindCompany()
+        {
+            var companies = PageCompanyRepository.GetUIListForDLL();
+            ddlCompany.DataSource = companies;
+            ddlCompany.DataTextField = "CompanyName";
+            ddlCompany.DataValueField = "ID";
+            ddlCompany.DataBind();
+
+            ddlCompany.Items.Insert(0, new ListItem() { Text = "账套", Value = "" });
 
         }
 
@@ -41,18 +70,37 @@ namespace ZhongDing.Web.Account
         {
             string userName = txtUserName.Text.Trim();
             string userPassword = txtPassword.Text.Trim();
+            string strCompanyID = ddlCompany.SelectedValue;
 
             if (string.IsNullOrEmpty(userName)
-                || string.IsNullOrEmpty(userPassword))
+                || string.IsNullOrEmpty(userPassword)
+                || string.IsNullOrEmpty(strCompanyID))
             {
                 if (string.IsNullOrEmpty(userName))
                     hdnErrorMsg.Value = "请输入您的用户名";
                 if (string.IsNullOrEmpty(userPassword))
                     hdnErrorMsgPwd.Value = "请输入您的密码";
+                if (string.IsNullOrEmpty(strCompanyID))
+                    hdnErrorMsgCompany.Value = "请选择账套";
+
                 return;
             }
             else
             {
+                //检查账套的有效性
+                int companyID;
+                if (int.TryParse(ddlCompany.SelectedValue, out companyID))
+                {
+                    var company = PageCompanyRepository.GetByID(companyID);
+                    //无效账套
+                    if (company == null)
+                    {
+                        hdnErrorMsgCompany.Value = "无效的账套，请重新选择";
+
+                        return;
+                    }
+                }
+
                 MembershipUser mUser = Membership.GetUser(userName);
 
                 if (mUser == null)//通过Email获取用户
@@ -101,6 +149,8 @@ namespace ZhongDing.Web.Account
                         else //验证成功
                         {
                             FormsAuthentication.SetAuthCookie(userName, false);
+
+                            SiteUser.GetCurrentSiteUser().CompanyID = companyID;
 
                             //PageUserLogRepository.SaveUserLog(user.UserID, "用户：" + mUser.UserName + " 成功登录系统");
 

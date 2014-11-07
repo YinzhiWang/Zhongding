@@ -42,11 +42,18 @@
                     </div>
                 </div>
                 <div class="mws-form-row">
+                    <div class="mws-form-item large">
+                        <asp:DropDownList ID="ddlCompany" CssClass="mws-login-company mws-textinput leftpadding20" runat="server">
+                        </asp:DropDownList>
+                    </div>
+                </div>
+                <div class="mws-form-row">
                     <asp:Button ID="btnLogin" runat="server" Text="登  录" CssClass="mws-button green mws-login-button" ValidationGroup="vgLogin" CausesValidation="true" OnClick="btnLogin_Click" />
                 </div>
 
                 <asp:HiddenField ID="hdnErrorMsg" runat="server" />
                 <asp:HiddenField ID="hdnErrorMsgPwd" runat="server" />
+                <asp:HiddenField ID="hdnErrorMsgCompany" runat="server" />
             </form>
         </div>
     </div>
@@ -65,6 +72,7 @@
 
             var txtUserName = $("#<%= txtUserName.ClientID%>");
             var txtPassword = $("#<%= txtPassword.ClientID%>");
+            var ddlCompany = $("#<%= ddlCompany.ClientID%>");
 
             if (txtUserName)
                 txtUserName.attr("placeholder", "用户名/邮箱");
@@ -90,11 +98,13 @@
             loginForm.validate({
                 rules: {
                     txtUserName: "required",
-                    txtPassword: "required"
+                    txtPassword: "required",
+                    ddlCompany: "required"
                 },
                 messages: {
                     txtUserName: "请输入您的用户名",
-                    txtPassword: "请输入您的密码"
+                    txtPassword: "请输入您的密码",
+                    ddlCompany: "请选择账套"
                 }
             });
 
@@ -106,6 +116,10 @@
             var hdnErrorMsgPWD = $("#<%= hdnErrorMsgPwd.ClientID%>");
             if (!hdnErrorMsgPWD.val().isNullOrEmpty())
                 txtPassword.after("<label class=\"error\" id=\"txtPassword-error\" for=\"txtPassword\">" + hdnErrorMsgPWD.val() + "</label>");
+
+            var hdnErrorMsgCompany = $("#<%= hdnErrorMsgCompany.ClientID%>");
+            if (!hdnErrorMsgCompany.val().isNullOrEmpty())
+                ddlCompany.after("<label class=\"error\" id=\"ddlCompany-error\" for=\"ddlCompany\">" + hdnErrorMsgCompany.val() + "</label>");
         });
 
     </script>

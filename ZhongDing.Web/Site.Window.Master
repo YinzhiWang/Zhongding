@@ -1,0 +1,150 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.Window.master.cs" Inherits="ZhongDing.Web.Site_Window" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- Required Stylesheets -->
+    <link href="Content/Site.css" rel="stylesheet" />
+
+    <link href="Content/reset.css" rel="stylesheet" />
+    <link href="Content/text.css" rel="stylesheet" />
+    <link href="Content/fluid.css" rel="stylesheet" />
+
+    <link href="Content/mws.style.css" rel="stylesheet" />
+    <link href="Content/icons/icons.css" rel="stylesheet" />
+
+    <!-- Theme Stylesheet -->
+    <link href="Content/mws.theme.css" rel="stylesheet" />
+
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+    <meta name="viewport" content="width=device-width" />
+
+    <asp:ContentPlaceHolder runat="server" ID="HeadContent" />
+</head>
+<body>
+    <form id="form1" runat="server">
+        <telerik:RadScriptManager runat="server" ID="radScriptManager">
+            <Scripts>
+                <asp:ScriptReference Path="~/Scripts/jquery-1.11.1.min.js" />
+                <asp:ScriptReference Path="~/Scripts/zd.base.js" />
+                <asp:ScriptReference Path="~/Scripts/zd.base.extension.js" />
+                <asp:ScriptReference Path="~/Scripts/zd.base.browserDetect.js" />
+                <asp:ScriptReference Path="~/Scripts/zd.jquery.extend.js" />
+                <asp:ScriptReference Path="~/Scripts/mws.js" />
+
+            </Scripts>
+        </telerik:RadScriptManager>
+
+        <!-- Container Wrapper -->
+        <div class="width100-percent toppadding10">
+            <asp:ContentPlaceHolder runat="server" ID="MainContent" />
+        </div>
+
+        <style type="text/css">
+
+            .RadNotification .rnContentIconClip
+            {
+                position: relative;
+            }
+
+            .RadNotification .rnContent
+            {
+                padding-top: 5px;
+                font-family: inherit;
+                font-size: 14px;
+                font-weight: 600;
+                color: #323232;
+            }
+        </style>
+
+        <telerik:RadCodeBlock runat="server" ID="mainCodeBlock">
+            <script type="text/javascript">
+                //扩展jQuery，增加getRootPath函数
+                (function ($) {
+                    $.extend({
+                        getRootPath: function () {
+                            var rootPath = "<%= this.BaseUrl %>";
+                            return rootPath;
+                        }
+                    })
+                })(jQuery);
+
+                $(document).ready(function () {
+
+                    $.hideLoading();
+
+                });
+
+                function redirectToPage(url) {
+                    $.showLoading();
+
+                    if (url.indexOf("http:") >= 0 || url.indexOf("https:") >= 0)
+                        window.location.href = url;
+                    else
+                        window.location.href = $.getRootPath() + url;
+                }
+
+                function onConfirmDelete() {
+                    if (confirm("确认删除该条数据吗？")) {
+                        return true;
+                    }
+                    return false;
+                }
+
+                function OnClientBeforeShow(sender, eventArgs) {
+                    sender.center();
+                }
+            </script>
+            <asp:ContentPlaceHolder ID="scriptContent" runat="server">
+            </asp:ContentPlaceHolder>
+        </telerik:RadCodeBlock>
+
+        <telerik:RadSkinManager runat="server" ID="radSkinManager" Skin="Silk">
+            <TargetControls>
+                <telerik:TargetControl ControlsToApplySkin="RadAjaxLoadingPanel" Skin="Sitefinity" />
+            </TargetControls>
+        </telerik:RadSkinManager>
+
+        <telerik:RadAjaxLoadingPanel runat="server" ID="radAjaxLoadingPanel" BackgroundPosition="Center" />
+
+        <telerik:RadNotification ID="radNotification" runat="server" EnableRoundedCorners="true"
+            AutoCloseDelay="300" Skin="Silk" Animation="Fade" EnableShadow="true" Title="提示"
+            TitleIcon="none" Opacity="95" Position="Center" ContentIcon="~/Content/icons/32/tick.png"
+            Width="300" Height="100">
+        </telerik:RadNotification>
+
+        <%--<telerik:RadWindowManager ID="radWindowManager" VisibleStatusbar="false" Width="600" Height="400"
+            ReloadOnShow="true" EnableShadow="true" Overlay="true"
+            runat="server" Opacity="100" Behaviors="Close,Move" Modal="true" OnClientBeforeShow="OnClientBeforeShow">
+            <AlertTemplate>
+                <div class="rwDialogPopup radalert">
+                    <div class="rwDialogText">
+                        {1}
+                    </div>
+                    <div style="text-align: right; float: right; padding-top: 5px;">
+                        <a onclick="$find('{0}').close();" class="rwPopupButton" href="javascript:void(0);">
+                            <span class="rwOuterSpan"><span class="rwInnerSpan">确定</span></span>
+                        </a>
+                    </div>
+                </div>
+            </AlertTemplate>
+            <ConfirmTemplate>
+                <div class="rwDialogPopup radconfirm">
+                    <div class="rwDialogText">
+                        {1}
+                    </div>
+                    <div style="text-align: right; float: right; padding-top: 5px;">
+                        <a onclick="$find('{0}').close(true);" class="rwPopupButton" href="javascript:void(0);">
+                            <span class="rwOuterSpan"><span class="rwInnerSpan">确定</span></span></a>
+                        <a onclick="$find('{0}').close(false);" class="rwPopupButton" href="javascript:void(0);">
+                            <span class="rwOuterSpan"><span class="rwInnerSpan">取消</span></span></a>
+                    </div>
+                </div>
+            </ConfirmTemplate>
+        </telerik:RadWindowManager>--%>
+    </form>
+</body>
+</html>

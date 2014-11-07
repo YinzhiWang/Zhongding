@@ -20,8 +20,8 @@ namespace ZhongDing.Web.Extensions
 
             IDictionary<string, object> extentProp = new Dictionary<string, object>();
 
-            extentProp.Add("OccurTimeOnClient", DateTime.UtcNow.ToLocalDateTime().ToString());
-            extentProp.Add("ServerTime", DateTime.UtcNow.ToString());
+            extentProp.Add("OccurTimeOnClient", DateTime.Now.ToLocalDateTime().ToString());
+            extentProp.Add("ServerTime", DateTime.Now.ToString());
             extentProp.Add("SourceUrl", HttpContext.Current.Request.Url);
 
             if (currentUser != null)

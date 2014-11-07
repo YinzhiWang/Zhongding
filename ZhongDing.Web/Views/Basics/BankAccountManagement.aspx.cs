@@ -86,7 +86,7 @@ namespace ZhongDing.Web.Views.Basics
 
         private void BindCompanies()
         {
-            var accountTypes = PageCompanyRepository.GetUIList();
+            var accountTypes = PageCompanyRepository.GetUIListForDLL();
 
             comboxCompany.DataSource = accountTypes;
             comboxCompany.DataTextField = "CompanyName";
@@ -104,9 +104,6 @@ namespace ZhongDing.Web.Views.Basics
                 AccountName = txtAccountName.Text.Trim(),
                 BankBranchName = txtBankBranchName.Text.Trim(),
                 Account = txtAccount.Text.Trim(),
-                IsNeedPaging = true,
-                PageIndex = rgBankAccounts.CurrentPageIndex,
-                PageSize = rgBankAccounts.PageSize,
                 IsNeedMaskedAccount = true
             };
 
@@ -118,7 +115,7 @@ namespace ZhongDing.Web.Views.Basics
 
             int totalRecords;
 
-            var companies = PageBankAccountRepository.GetUIList(uiSearchObj, out totalRecords);
+            var companies = PageBankAccountRepository.GetUIList(uiSearchObj, rgBankAccounts.CurrentPageIndex, rgBankAccounts.PageSize, out totalRecords);
 
             rgBankAccounts.VirtualItemCount = totalRecords;
 

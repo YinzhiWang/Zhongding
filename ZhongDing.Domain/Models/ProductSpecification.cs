@@ -18,6 +18,9 @@ namespace ZhongDing.Domain.Models
         public ProductSpecification()
         {
             this.SupplierContract = new HashSet<SupplierContract>();
+            this.ProductBasicPrice = new HashSet<ProductBasicPrice>();
+            this.ProductDBPolicyPrice = new HashSet<ProductDBPolicyPrice>();
+            this.ProductHighPrice = new HashSet<ProductHighPrice>();
         }
     
         public int ID { get; set; }
@@ -27,7 +30,6 @@ namespace ZhongDing.Domain.Models
         public Nullable<int> NumberInSmallPackage { get; set; }
         public Nullable<int> NumberInLargePackage { get; set; }
         public bool IsDeleted { get; set; }
-        public Nullable<System.DateTime> DeletedOn { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
@@ -36,7 +38,7 @@ namespace ZhongDing.Domain.Models
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
     	public bool HasColumnIsDeleted { get { return true; } }
-    	public bool HasColumnDeletedOn { get { return true; } }
+    	public bool HasColumnDeletedOn { get { return false; } }
     	public bool HasColumnCreatedOn { get { return true; } }
     	public bool HasColumnCreatedBy { get { return true; } }
     	public bool HasColumnLastModifiedOn { get { return true; } }
@@ -46,5 +48,8 @@ namespace ZhongDing.Domain.Models
         public virtual Product Product { get; set; }
         public virtual UnitOfMeasurement UnitOfMeasurement { get; set; }
         public virtual ICollection<SupplierContract> SupplierContract { get; set; }
+        public virtual ICollection<ProductBasicPrice> ProductBasicPrice { get; set; }
+        public virtual ICollection<ProductDBPolicyPrice> ProductDBPolicyPrice { get; set; }
+        public virtual ICollection<ProductHighPrice> ProductHighPrice { get; set; }
     }
 }

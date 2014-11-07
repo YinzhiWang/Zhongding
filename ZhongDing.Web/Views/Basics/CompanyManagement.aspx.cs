@@ -88,15 +88,12 @@ namespace ZhongDing.Web.Views.Basics
             UISearchCompany uiSearchObj = new UISearchCompany()
             {
                 CompanyCode = txtCompanyCode.Text.Trim(),
-                CompanyName = txtCompanyName.Text.Trim(),
-                IsNeedPaging = true,
-                PageIndex = rgCompanies.CurrentPageIndex,
-                PageSize = rgCompanies.PageSize
+                CompanyName = txtCompanyName.Text.Trim()
             };
 
             int totalRecords;
 
-            var companies = PageCompanyRepository.GetUIList(uiSearchObj, out totalRecords);
+            var companies = PageCompanyRepository.GetUIList(uiSearchObj, rgCompanies.CurrentPageIndex, rgCompanies.PageSize, out totalRecords);
 
             rgCompanies.VirtualItemCount = totalRecords;
 

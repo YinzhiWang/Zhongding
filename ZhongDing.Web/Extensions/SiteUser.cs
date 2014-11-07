@@ -30,6 +30,10 @@ namespace ZhongDing.Web.Extensions
                     this.Email = mUser.Email;
                     this.FullName = mUser.FullName;
                     this.MobilePhone = mUser.MobilePhone;
+
+                    //测试代码，发布时需要删除
+
+                    this.CompanyID = 1;
                 }
             }
         }
@@ -59,6 +63,26 @@ namespace ZhongDing.Web.Extensions
             set
             {
                 m_currentSession.Add("UserID", value);
+            }
+        }
+
+        /// <summary>
+        /// 账套ID
+        /// </summary>
+        /// <value>The company ID.</value>
+        public int CompanyID
+        {
+            get
+            {
+                if (m_currentSession != null && m_currentSession["CompanyID"] != null)
+                {
+                    return (int)(m_currentSession["CompanyID"]);
+                }
+                return GlobalConst.INVALID_INT;
+            }
+            set
+            {
+                m_currentSession.Add("CompanyID", value);
             }
         }
 
