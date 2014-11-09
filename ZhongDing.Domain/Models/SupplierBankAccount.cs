@@ -19,7 +19,6 @@ namespace ZhongDing.Domain.Models
         public Nullable<int> SupplierID { get; set; }
         public Nullable<int> BankAccountID { get; set; }
         public bool IsDeleted { get; set; }
-        public Nullable<System.DateTime> DeletedOn { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
@@ -28,14 +27,14 @@ namespace ZhongDing.Domain.Models
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
     	public bool HasColumnIsDeleted { get { return true; } }
-    	public bool HasColumnDeletedOn { get { return true; } }
+    	public bool HasColumnDeletedOn { get { return false; } }
     	public bool HasColumnCreatedOn { get { return true; } }
     	public bool HasColumnCreatedBy { get { return true; } }
     	public bool HasColumnLastModifiedOn { get { return true; } }
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual Supplier Supplier { get; set; }
         public virtual BankAccount BankAccount { get; set; }
+        public virtual Supplier Supplier { get; set; }
     }
 }

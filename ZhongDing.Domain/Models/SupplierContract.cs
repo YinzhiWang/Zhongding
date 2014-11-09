@@ -17,8 +17,8 @@ namespace ZhongDing.Domain.Models
     {
         public SupplierContract()
         {
-            this.SupplierContractFile = new HashSet<SupplierContractFile>();
             this.SupplierTaskAssignment = new HashSet<SupplierTaskAssignment>();
+            this.SupplierContractFile = new HashSet<SupplierContractFile>();
         }
     
         public int ID { get; set; }
@@ -30,7 +30,6 @@ namespace ZhongDing.Domain.Models
         public Nullable<bool> IsNeedTaskAssignment { get; set; }
         public Nullable<System.DateTime> ExpirationDate { get; set; }
         public bool IsDeleted { get; set; }
-        public Nullable<System.DateTime> DeletedOn { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
@@ -39,17 +38,17 @@ namespace ZhongDing.Domain.Models
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
     	public bool HasColumnIsDeleted { get { return true; } }
-    	public bool HasColumnDeletedOn { get { return true; } }
+    	public bool HasColumnDeletedOn { get { return false; } }
     	public bool HasColumnCreatedOn { get { return true; } }
     	public bool HasColumnCreatedBy { get { return true; } }
     	public bool HasColumnLastModifiedOn { get { return true; } }
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual Supplier Supplier { get; set; }
-        public virtual ICollection<SupplierContractFile> SupplierContractFile { get; set; }
-        public virtual ICollection<SupplierTaskAssignment> SupplierTaskAssignment { get; set; }
         public virtual Product Product { get; set; }
         public virtual ProductSpecification ProductSpecification { get; set; }
+        public virtual Supplier Supplier { get; set; }
+        public virtual ICollection<SupplierTaskAssignment> SupplierTaskAssignment { get; set; }
+        public virtual ICollection<SupplierContractFile> SupplierContractFile { get; set; }
     }
 }

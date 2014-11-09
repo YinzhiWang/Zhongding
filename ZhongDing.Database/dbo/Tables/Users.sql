@@ -14,7 +14,6 @@
     [OfficeExpense]  MONEY            NULL,
     [BonusPay]       MONEY            NULL,
     [IsDeleted]      BIT              CONSTRAINT [DF_Users_IsDeleted] DEFAULT ((0)) NOT NULL,
-    [DeletedOn]      DATETIME         NULL,
     [CreatedOn]      DATETIME         CONSTRAINT [DF_Users_CreatedOn] DEFAULT (getdate()) NOT NULL,
     [CreatedBy]      INT              NULL,
     [LastModifiedOn] DATETIME         NULL,
@@ -22,6 +21,8 @@
     CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED ([UserID] ASC),
     CONSTRAINT [FK_Users_aspnet_Users] FOREIGN KEY ([AspnetUserID]) REFERENCES [dbo].[aspnet_Users] ([UserId])
 );
+
+
 
 
 

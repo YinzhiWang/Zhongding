@@ -13,7 +13,6 @@ namespace ZhongDing.Web.Views.Basics
 {
     public partial class CompanyMaintenance : System.Web.UI.Page
     {
-        private const string PREFIX_OF_COMPANYCODE = "ZT";
         #region Members
 
         public int? CompanyID
@@ -81,7 +80,8 @@ namespace ZhongDing.Web.Views.Basics
             else
             {
                 btnDelete.Visible = false;
-                txtCompanyCode.Text = Utility.GenerateAutoSerialNo(PageCompanyRepository.GetMaxEntityID(), PREFIX_OF_COMPANYCODE);
+                txtCompanyCode.Text = Utility.GenerateAutoSerialNo(PageCompanyRepository.GetMaxEntityID(),
+                    GlobalConst.EntityAutoSerialNo.SerialNoPrefix.COMPANY);
             }
         }
 
@@ -97,7 +97,9 @@ namespace ZhongDing.Web.Views.Basics
             else
             {
                 company = new Company();
-                company.CompanyCode = Utility.GenerateAutoSerialNo(PageCompanyRepository.GetMaxEntityID(), PREFIX_OF_COMPANYCODE);
+                company.CompanyCode = Utility.GenerateAutoSerialNo(PageCompanyRepository.GetMaxEntityID(),
+                    GlobalConst.EntityAutoSerialNo.SerialNoPrefix.COMPANY);
+
                 PageCompanyRepository.Add(company);
             }
 

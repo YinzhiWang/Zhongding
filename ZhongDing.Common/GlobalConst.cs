@@ -35,6 +35,16 @@ namespace ZhongDing.Common
         /// </summary>
         public static readonly string DEFAULT_USER_AVATAR = "~/Images/defaultAvatar.gif";
 
+        /// <summary>
+        /// 下拉列表控件默认文本字段属性名
+        /// </summary>
+        public static readonly string DEFAULT_DROPDOWN_DATATEXTFIELD = "ItemText";
+
+        /// <summary>
+        /// 下拉列表控件默认值字段属性名
+        /// </summary>
+        public static readonly string DEFAULT_DROPDOWN_DATAVALUEFIELD = "ItemValue";
+
 
         #region System Security
 
@@ -85,7 +95,18 @@ namespace ZhongDing.Common
             /// <summary>
             /// 提示消息：保存成功，窗口将自动关闭
             /// </summary>
-            public static readonly string MSG_SUCCESS_SAEVED = "保存成功，窗口将自动关闭";
+            public static readonly string MSG_SUCCESS_SAEVED_CLOSE_WIN = "保存成功，窗口将自动关闭";
+
+            /// <summary>
+            /// 提示消息：保存成功，页面将自动刷新
+            /// </summary>
+            public static readonly string MSG_SUCCESS_SAEVED_REFRESH = "保存成功，页面将自动刷新";
+
+            /// <summary>
+            /// 提示消息：保存成功，页面将自动跳转
+            /// </summary>
+            public static readonly string MSG_SUCCESS_SAEVED_REDIRECT = "保存成功，页面将自动跳转";
+
 
             /// <summary>
             /// 提示消息：参数错误，窗口将自动关闭
@@ -96,5 +117,38 @@ namespace ZhongDing.Common
 
 
         #endregion
+
+        #region 实体自动编号前缀和后缀
+
+        /// <summary>
+        /// 实体自动编号前后缀
+        /// </summary>
+        public class EntityAutoSerialNo
+        {
+            /// <summary>
+            /// 编号前缀
+            /// </summary>
+            public class SerialNoPrefix
+            {
+                /// <summary>
+                /// 账套编号前缀
+                /// </summary>
+                public static readonly string COMPANY = "ZT";
+
+                /// <summary>
+                /// 供应商编号前缀
+                /// </summary>
+                public static readonly string SUPPLIER = "GYS";
+
+                /// <summary>
+                /// 供应商合同编号前缀
+                /// </summary>
+                public static readonly string SUPPLIER_CONTRACT = "GYSHT";
+            }
+
+        }
+
+        #endregion
+
     }
 }

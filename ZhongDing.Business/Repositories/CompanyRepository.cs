@@ -128,9 +128,29 @@ namespace ZhongDing.Business.Repositories
                 return null;
         }
 
-        public IList<UICompany> GetUIListForDLL()
+        public IList<UIDropdownItem> GetDropdownItems(UISearchDropdownItem uiSearchObj = null)
         {
-            return GetList(x => x.IsDeleted == false).Select(x => new UICompany() { ID = x.ID, CompanyName = x.CompanyName }).ToList();
+            IList<UIDropdownItem> uiDropdownItems = new List<UIDropdownItem>();
+
+            List<Expression<Func<Company, bool>>> whereFuncs = new List<Expression<Func<Company, bool>>>();
+
+            if (uiSearchObj != null)
+            {
+                if (uiSearchObj.ItemValues != null
+                    && uiSearchObj.ItemValues.Count > 0)
+                    whereFuncs.Add(x => uiSearchObj.ItemValues.Contains(x.ID));
+
+                if (!string.IsNullOrEmpty(uiSearchObj.ItemText))
+                    whereFuncs.Add(x => x.CompanyName.Contains(uiSearchObj.ItemText));
+            }
+
+            uiDropdownItems = GetList(whereFuncs).Select(x => new UIDropdownItem()
+            {
+                ItemValue = x.ID,
+                ItemText = x.CompanyName
+            }).ToList();
+
+            return uiDropdownItems;
         }
     }
 }

@@ -8,7 +8,6 @@
     [OwnerTypeID]    INT             NULL,
     [Comment]        NVARCHAR (1000) NULL,
     [IsDeleted]      BIT             CONSTRAINT [DF_BankAccount_IsDeleted] DEFAULT ((0)) NOT NULL,
-    [DeletedOn]      DATETIME        NULL,
     [CreatedOn]      DATETIME        CONSTRAINT [DF_BankAccount_CreatedOn] DEFAULT (getdate()) NOT NULL,
     [CreatedBy]      INT             NULL,
     [LastModifiedOn] DATETIME        NULL,
@@ -18,6 +17,8 @@
     CONSTRAINT [FK_BankAccount_Company] FOREIGN KEY ([CompanyID]) REFERENCES [dbo].[Company] ([ID]),
     CONSTRAINT [FK_BankAccount_OwnerType] FOREIGN KEY ([OwnerTypeID]) REFERENCES [dbo].[OwnerType] ([ID])
 );
+
+
 
 
 

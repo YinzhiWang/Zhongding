@@ -53,6 +53,18 @@ namespace ZhongDing.Web
             }
         }
 
+        /// <summary>
+        /// 需刷新的Grid的ClientID
+        /// </summary>
+        /// <value>The grid client ID.</value>
+        protected string GridClientID
+        {
+            get
+            {
+                return Request.QueryString["GridClientID"];
+            }
+        }
+
         private IUsersRepository _PageUsersRepository;
         protected IUsersRepository PageUsersRepository
         {

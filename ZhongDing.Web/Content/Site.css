@@ -1315,3 +1315,8 @@ img
     margin-top: -1px;
     padding-top: 1px;
 }
+
+.grid-over-row
+{
+    background-color: #d2d2d2;
+}

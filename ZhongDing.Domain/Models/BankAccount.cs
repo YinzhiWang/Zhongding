@@ -17,8 +17,8 @@ namespace ZhongDing.Domain.Models
     {
         public BankAccount()
         {
-            this.SupplierBankAccount = new HashSet<SupplierBankAccount>();
             this.ClientInfoBankAccount = new HashSet<ClientInfoBankAccount>();
+            this.SupplierBankAccount = new HashSet<SupplierBankAccount>();
         }
     
         public int ID { get; set; }
@@ -30,7 +30,6 @@ namespace ZhongDing.Domain.Models
         public Nullable<int> OwnerTypeID { get; set; }
         public string Comment { get; set; }
         public bool IsDeleted { get; set; }
-        public Nullable<System.DateTime> DeletedOn { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
@@ -39,7 +38,7 @@ namespace ZhongDing.Domain.Models
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
     	public bool HasColumnIsDeleted { get { return true; } }
-    	public bool HasColumnDeletedOn { get { return true; } }
+    	public bool HasColumnDeletedOn { get { return false; } }
     	public bool HasColumnCreatedOn { get { return true; } }
     	public bool HasColumnCreatedBy { get { return true; } }
     	public bool HasColumnLastModifiedOn { get { return true; } }
@@ -49,7 +48,7 @@ namespace ZhongDing.Domain.Models
         public virtual AccountType AccountType { get; set; }
         public virtual Company Company { get; set; }
         public virtual OwnerType OwnerType { get; set; }
-        public virtual ICollection<SupplierBankAccount> SupplierBankAccount { get; set; }
         public virtual ICollection<ClientInfoBankAccount> ClientInfoBankAccount { get; set; }
+        public virtual ICollection<SupplierBankAccount> SupplierBankAccount { get; set; }
     }
 }

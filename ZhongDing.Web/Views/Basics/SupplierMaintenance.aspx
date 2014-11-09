@@ -9,6 +9,12 @@
     </telerik:RadAjaxLoadingPanel>
     <telerik:RadAjaxManager runat="server" ID="RadAjaxManager1">
         <AjaxSettings>
+            <telerik:AjaxSetting AjaxControlID="cbxIsProducer">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="divFactoryName" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="divPanelCertificates" LoadingPanelID="loadingPanel" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="rgBankAccounts">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="rgBankAccounts" LoadingPanelID="loadingPanel" />
@@ -24,10 +30,16 @@
                     <telerik:AjaxUpdatedControl ControlID="rgSupplierCertificates" LoadingPanelID="loadingPanel" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="rgContracts">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="rgContracts" LoadingPanelID="loadingPanel" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
         </AjaxSettings>
+        <ClientEvents OnResponseEnd="onResponseEnd" />
     </telerik:RadAjaxManager>
 
-    <div class="container">
+    <div class="container" runat="server" id="divContainer">
 
         <div class="mws-panel grid_full">
             <div class="mws-panel-header">
@@ -61,10 +73,10 @@
                                     ControlToValidate="txtSupplierName" ValidationGroup="vgMaintenance" Display="Dynamic"
                                     Text="*" CssClass="field-validation-error" OnServerValidate="cvSupplierName_ServerValidate">
                                 </asp:CustomValidator>
-                                <telerik:RadButton runat="server" ID="cbxIsProducer" ButtonType="ToggleButton" ToggleType="CheckBox" AutoPostBack="false" Text="是否生产企业？" OnClientCheckedChanged="onCheckedChanged"></telerik:RadButton>
+                                <telerik:RadButton runat="server" ID="cbxIsProducer" ButtonType="ToggleButton" ToggleType="CheckBox" AutoPostBack="true" Text="是否生产企业？" OnCheckedChanged="cbxIsProducer_CheckedChanged"></telerik:RadButton>
                             </div>
                         </div>
-                        <div class="mws-form-row hide" id="row-FactoryName">
+                        <div class="mws-form-row" runat="server" id="divFactoryName" visible="false">
                             <label>生产企业</label>
                             <div class="mws-form-item small">
                                 <telerik:RadTextBox runat="server" ID="txtFactoryName" CssClass="mws-textinput" Width="40%" MaxLength="100"></telerik:RadTextBox>
@@ -78,42 +90,75 @@
                             <div class="float-left width40-percent">
                                 <label>联系人</label>
                                 <div class="mws-form-item">
-                                    <telerik:RadTextBox runat="server" ID="txtContactPerson" CssClass="mws-textinput" MaxLength="100"></telerik:RadTextBox>
+                                    <telerik:RadTextBox runat="server" ID="txtContactPerson" CssClass="mws-textinput" MaxLength="50"></telerik:RadTextBox>
+                                    <telerik:RadToolTip ID="rttContactPerson" runat="server" TargetControlID="txtContactPerson" ShowEvent="OnClick"
+                                        Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
+                                    </telerik:RadToolTip>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1"
+                                        runat="server"
+                                        ErrorMessage="联系人必填"
+                                        ControlToValidate="txtContactPerson"
+                                        Display="Dynamic" CssClass="field-validation-error"
+                                        ValidationGroup="vgMaintenance" Text="*">
+                                    </asp:RequiredFieldValidator>
                                 </div>
                             </div>
                             <div class="float-left">
                                 <label>联系电话</label>
                                 <div class="mws-form-item">
-                                    <telerik:RadTextBox runat="server" ID="txtPhoneNumber" CssClass="mws-textinput" MaxLength="100"></telerik:RadTextBox>
+                                    <telerik:RadTextBox runat="server" ID="txtPhoneNumber" CssClass="mws-textinput" MaxLength="20"></telerik:RadTextBox>
+                                    <telerik:RadToolTip ID="rttPhoneNumber" runat="server" TargetControlID="txtPhoneNumber" ShowEvent="OnClick"
+                                        Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
+                                    </telerik:RadToolTip>
+                                    <asp:RequiredFieldValidator ID="rfvPhoneNumber"
+                                        runat="server"
+                                        ErrorMessage="联系电话必填"
+                                        ControlToValidate="txtPhoneNumber"
+                                        Display="Dynamic" CssClass="field-validation-error"
+                                        ValidationGroup="vgMaintenance" Text="*">
+                                    </asp:RequiredFieldValidator>
+                                    <asp:RegularExpressionValidator ID="revPhoneNumber" runat="server"
+                                        ControlToValidate="txtPhoneNumber"
+                                        ErrorMessage="联系电话格式不正确！"
+                                        ValidationExpression="(\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$"
+                                        CssClass="field-validation-error" Display="Dynamic"
+                                        ValidationGroup="vgMaintenance" Text="*"></asp:RegularExpressionValidator>
                                 </div>
                             </div>
                         </div>
                         <div class="mws-form-row">
                             <label>传真</label>
                             <div class="mws-form-item">
-                                <telerik:RadTextBox runat="server" ID="txtFax" CssClass="mws-textinput" MaxLength="100"></telerik:RadTextBox>
+                                <telerik:RadTextBox runat="server" ID="txtFax" CssClass="mws-textinput" MaxLength="20"></telerik:RadTextBox>
+                                <asp:RegularExpressionValidator ID="revFax" runat="server"
+                                    ControlToValidate="txtFax"
+                                    ErrorMessage="传真格式不正确"
+                                    ValidationExpression="(\d{11})|^((\d{7,8})|(\d{4}|\d{3})-(\d{7,8})|(\d{4}|\d{3})-(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1})|(\d{7,8})-(\d{4}|\d{3}|\d{2}|\d{1}))$"
+                                    CssClass="field-validation-error" Display="Dynamic"
+                                    ValidationGroup="vgMaintenance" Text="*"></asp:RegularExpressionValidator>
                             </div>
                         </div>
                         <div class="mws-form-row">
                             <div class="float-left width40-percent">
                                 <label>地区</label>
                                 <div class="mws-form-item">
-                                    <telerik:RadTextBox runat="server" ID="txtDistrict" CssClass="mws-textinput" MaxLength="100"></telerik:RadTextBox>
+                                    <telerik:RadTextBox runat="server" ID="txtDistrict" CssClass="mws-textinput" MaxLength="50"></telerik:RadTextBox>
                                 </div>
                             </div>
                             <div class="float-left">
                                 <label>邮编</label>
                                 <div class="mws-form-item">
-                                    <telerik:RadTextBox runat="server" ID="txtPostalCode" CssClass="mws-textinput" MaxLength="100"></telerik:RadTextBox>
+                                    <telerik:RadTextBox runat="server" ID="txtPostalCode" CssClass="mws-textinput" MaxLength="10"></telerik:RadTextBox>
                                 </div>
                             </div>
                         </div>
                         <div class="mws-form-row">
                             <label>地址</label>
                             <div class="mws-form-item medium">
-                                <telerik:RadTextBox runat="server" ID="txtContactAddress" CssClass="mws-textinput" Width="100%" MaxLength="100"></telerik:RadTextBox>
+                                <telerik:RadTextBox runat="server" ID="txtContactAddress" CssClass="mws-textinput" Width="100%" MaxLength="255"></telerik:RadTextBox>
                             </div>
                         </div>
+
                         <div class="mws-form-row" runat="server" id="divOtherSections">
                             <div class="mws-panel grid_8 mws-collapsible" data-collapseid="panel-bank-account">
                                 <div class="mws-panel-header">
@@ -122,14 +167,14 @@
                                 <div class="mws-panel-body">
                                     <div class="mws-panel-content">
                                         <telerik:RadGrid ID="rgBankAccounts" runat="server" PageSize="10"
-                                            AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
-                                            MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="100%" ShowHeader="true"
+                                            AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false"
+                                            MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
+                                            ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
                                             OnNeedDataSource="rgBankAccounts_NeedDataSource" OnDeleteCommand="rgBankAccounts_DeleteCommand">
                                             <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
                                                 ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                                                 <Columns>
                                                     <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
-                                                        <ItemStyle HorizontalAlign="Left" Width="50" />
                                                     </telerik:GridBoundColumn>
                                                     <telerik:GridBoundColumn UniqueName="AccountName" HeaderText="户名" DataField="AccountName">
                                                         <ItemStyle HorizontalAlign="Left" />
@@ -159,8 +204,6 @@
                                                     </telerik:GridTemplateColumn>
                                                     <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
                                                 </Columns>
-                                                <CommandItemSettings AddNewRecordText="添加" RefreshText="刷新" />
-
                                                 <CommandItemTemplate>
                                                     <table class="width100-percent">
                                                         <tr>
@@ -171,8 +214,8 @@
                                                                 </asp:Panel>
                                                             </td>
                                                             <td class="right-td rightpadding10">
-                                                                <input type="button" class="rgRefresh" onclick="refreshBankAccountGrid(); return false;" />
-                                                                <a href="javascript:void(0);" onclick="refreshBankAccountGrid(); return false;">刷新</a>
+                                                                <input type="button" class="rgRefresh" onclick="refreshGrid(gridClientIDs.gridBankAccounts); return false;" />
+                                                                <a href="javascript:void(0);" onclick="refreshGrid(gridClientIDs.gridBankAccounts); return false;">刷新</a>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -186,9 +229,6 @@
                                                     PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
                                                     FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
                                             </MasterTableView>
-                                            <ClientSettings>
-                                                <ClientEvents OnGridCreated="GetsBankAccountGridObject" />
-                                            </ClientSettings>
                                         </telerik:RadGrid>
                                     </div>
                                 </div>
@@ -197,13 +237,13 @@
                                 <div class="mws-panel-header">
                                     <span class="mws-i-24 i-creditcard">供应商证照</span>
                                 </div>
-                                <div class="mws-panel-body">
+                                <div class="mws-panel-body" runat="server" id="divPanelCertificates">
                                     <div class="mws-panel-content">
 
                                         <telerik:RadTabStrip ID="tabStripCertificates" runat="server" MultiPageID="multiPageCertificates" Skin="Default">
                                             <Tabs>
-                                                <telerik:RadTab Text="生产企业" PageViewID="pvProducer" Selected="true"></telerik:RadTab>
-                                                <telerik:RadTab Text="供货商" PageViewID="pvSupplier"></telerik:RadTab>
+                                                <telerik:RadTab Text="生产企业" Value="tabProducer" PageViewID="pvProducer" Selected="true"></telerik:RadTab>
+                                                <telerik:RadTab Text="供货商" Value="tabSupplier" PageViewID="pvSupplier"></telerik:RadTab>
                                             </Tabs>
                                         </telerik:RadTabStrip>
                                         <telerik:RadMultiPage ID="multiPageCertificates" runat="server" CssClass="multi-page-wrapper">
@@ -212,15 +252,15 @@
                                                 <telerik:RadGrid ID="rgProducerCertificates" runat="server" PageSize="10"
                                                     AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
                                                     MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
+                                                    ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
                                                     OnNeedDataSource="rgProducerCertificates_NeedDataSource" OnDeleteCommand="rgProducerCertificates_DeleteCommand">
                                                     <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
                                                         ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                                                         <Columns>
                                                             <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
-                                                                <ItemStyle HorizontalAlign="Left" Width="50" />
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn UniqueName="CertificateTypeName" HeaderText="证照类型" DataField="CertificateTypeName">
-                                                                <ItemStyle HorizontalAlign="Left" />
+                                                                <ItemStyle HorizontalAlign="Left" Width="25%" />
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn UniqueName="GottenDescription" HeaderText="有/无" DataField="GottenDescription">
                                                                 <ItemStyle HorizontalAlign="Left" />
@@ -265,8 +305,6 @@
                                                             </telerik:GridTemplateColumn>
                                                             <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
                                                         </Columns>
-                                                        <CommandItemSettings AddNewRecordText="添加" RefreshText="刷新" />
-
                                                         <CommandItemTemplate>
                                                             <table class="width100-percent">
                                                                 <tr>
@@ -277,8 +315,8 @@
                                                                         </asp:Panel>
                                                                     </td>
                                                                     <td class="right-td rightpadding10">
-                                                                        <input type="button" class="rgRefresh" onclick="refreshProducerCertificatesGrid(); return false;" />
-                                                                        <a href="javascript:void(0);" onclick="refreshProducerCertificatesGrid(); return false;">刷新</a>
+                                                                        <input type="button" class="rgRefresh" onclick="refreshGrid(gridClientIDs.gridProducerCertificates); return false;" />
+                                                                        <a href="javascript:void(0);" onclick="refreshGrid(gridClientIDs.gridProducerCertificates); return false;">刷新</a>
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -292,9 +330,6 @@
                                                             PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
                                                             FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
                                                     </MasterTableView>
-                                                    <ClientSettings>
-                                                        <ClientEvents OnGridCreated="GetsProducerCertificatesGridObject" />
-                                                    </ClientSettings>
                                                 </telerik:RadGrid>
                                             </telerik:RadPageView>
                                             <telerik:RadPageView ID="pvSupplier" runat="server">
@@ -302,15 +337,15 @@
                                                 <telerik:RadGrid ID="rgSupplierCertificates" runat="server" PageSize="10"
                                                     AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
                                                     MasterTableView-PagerStyle-AlwaysVisible="true" Width="99.8%" ShowHeader="true"
+                                                    ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
                                                     OnNeedDataSource="rgSupplierCertificates_NeedDataSource" OnDeleteCommand="rgSupplierCertificates_DeleteCommand">
                                                     <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
                                                         ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                                                         <Columns>
                                                             <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
-                                                                <ItemStyle HorizontalAlign="Left" Width="50" />
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn UniqueName="CertificateTypeName" HeaderText="证照类型" DataField="CertificateTypeName">
-                                                                <ItemStyle HorizontalAlign="Left" />
+                                                                <ItemStyle HorizontalAlign="Left" Width="25%" />
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn UniqueName="GottenDescription" HeaderText="有/无" DataField="GottenDescription">
                                                                 <ItemStyle HorizontalAlign="Left" />
@@ -355,8 +390,6 @@
                                                             </telerik:GridTemplateColumn>
                                                             <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
                                                         </Columns>
-                                                        <CommandItemSettings AddNewRecordText="添加" RefreshText="刷新" />
-
                                                         <CommandItemTemplate>
                                                             <table class="width100-percent">
                                                                 <tr>
@@ -367,8 +400,8 @@
                                                                         </asp:Panel>
                                                                     </td>
                                                                     <td class="right-td rightpadding10">
-                                                                        <input type="button" class="rgRefresh" onclick=" refreshSupplierCertificatesGrid(); return false;" />
-                                                                        <a href="javascript:void(0);" onclick="refreshSupplierCertificatesGrid(); return false;">刷新</a>
+                                                                        <input type="button" class="rgRefresh" onclick="refreshGrid(gridClientIDs.gridSupplierCertificates); return false;" />
+                                                                        <a href="javascript:void(0);" onclick="refreshGrid(gridClientIDs.gridSupplierCertificates); return false;">刷新</a>
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -382,12 +415,81 @@
                                                             PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
                                                             FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
                                                     </MasterTableView>
-                                                    <ClientSettings>
-                                                        <ClientEvents OnGridCreated="GetsSupplierCertificatesGridObject" />
-                                                    </ClientSettings>
                                                 </telerik:RadGrid>
                                             </telerik:RadPageView>
                                         </telerik:RadMultiPage>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mws-panel grid_8 mws-collapsible" data-collapseid="panel-certificates">
+                                <div class="mws-panel-header">
+                                    <span class="mws-i-24 i-creditcard">供应商合同</span>
+                                </div>
+                                <div class="mws-panel-body">
+                                    <div class="mws-panel-content">
+                                        <telerik:RadGrid ID="rgContracts" runat="server" PageSize="10"
+                                            AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false"
+                                            MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
+                                            ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
+                                            OnNeedDataSource="rgContracts_NeedDataSource" OnDeleteCommand="rgContracts_DeleteCommand">
+                                            <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
+                                                ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
+                                                <Columns>
+                                                    <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="ContractCode" HeaderText="合同编号" DataField="ContractCode">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="SupplierName" HeaderText="供应商" DataField="SupplierName">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品名称" DataField="ProductName">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="ProductSpecification" HeaderText="规格" DataField="ProductSpecification">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="UnitPrice" HeaderText="单价" DataField="UnitPrice" DataFormatString="{0:C2}">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="ExpirationDate" HeaderText="合同终止日期" DataField="ExpirationDate" DataFormatString="{0:yyyy/MM/dd}">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridTemplateColumn UniqueName="Edit">
+                                                        <ItemStyle HorizontalAlign="Center" Width="30" />
+                                                        <ItemTemplate>
+                                                            <a href="javascript:void(0);" onclick="openContractWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">
+                                                                <u>编辑</u></a>
+                                                        </ItemTemplate>
+                                                    </telerik:GridTemplateColumn>
+                                                    <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
+                                                </Columns>
+                                                <CommandItemTemplate>
+                                                    <table class="width100-percent">
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
+                                                                    <input type="button" class="rgAdd" onclick="openContractWindow(-1); return false;" />
+                                                                    <a href="javascript:void(0)" onclick="openContractWindow(-1); return false;">添加</a>
+                                                                </asp:Panel>
+                                                            </td>
+                                                            <td class="right-td rightpadding10">
+                                                                <input type="button" class="rgRefresh" onclick="refreshGrid(gridClientIDs.gridContracts); return false;" />
+                                                                <a href="javascript:void(0);" onclick="refreshGrid(gridClientIDs.gridContracts); return false;">刷新</a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </CommandItemTemplate>
+                                                <NoRecordsTemplate>
+                                                    没有任何数据
+                                                </NoRecordsTemplate>
+                                                <ItemStyle Height="30" />
+                                                <AlternatingItemStyle BackColor="#f2f2f2" />
+                                                <PagerStyle PagerTextFormat="{4} 第{0}页/共{1}页, 第{2}-{3}条 共{5}条"
+                                                    PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
+                                                    FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
+                                            </MasterTableView>
+                                        </telerik:RadGrid>
                                     </div>
                                 </div>
                             </div>
@@ -402,13 +504,15 @@
                 <asp:HiddenField ID="hdnSupplierID" runat="server" Value="-1" />
             </div>
         </div>
+
+        <style type="text/css">
+            .RadTabStrip_Default .rtsLI, .RadTabStrip_Default .rtsLink
+            {
+                color: #323232;
+            }
+        </style>
     </div>
-    <style>
-        .RadTabStrip_Default .rtsLI, .RadTabStrip_Default .rtsLink
-        {
-            color: #323232;
-        }
-    </style>
+
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContent" runat="server">
     <script src="../../Scripts/WebForms/WebUIValidation.js"></script>
@@ -416,44 +520,18 @@
     <script type="text/javascript">
         var supplierID = -1;
 
-        var gridBankAccount = null;
-        var gridProducerCertificates = null;
-        var gridSupplierCertificates = null;
-
         var gridClientIDs = {
-            gridBankAccount: "<%= rgBankAccounts.ClientID %>",
+            gridBankAccounts: "<%= rgBankAccounts.ClientID %>",
             gridProducerCertificates: "<%= rgProducerCertificates.ClientID %>",
-            gridSupplierCertificates: "<%= rgSupplierCertificates.ClientID %>"
+            gridSupplierCertificates: "<%= rgSupplierCertificates.ClientID %>",
+            gridContracts: "<%= rgContracts.ClientID %>",
         };
 
-        function GetsBankAccountGridObject(sender, eventArgs) {
-            gridBankAccount = sender;
-        }
+        function refreshGrid(gridClientID) {
+            var gridObj = $find(gridClientID);
 
-        function refreshBankAccountGrid() {
-            gridBankAccount.get_masterTableView().rebind();
-        }
-
-        function GetsProducerCertificatesGridObject(sender, eventArgs) {
-            gridProducerCertificates = sender;
-        }
-
-        function refreshSupplierCertificatesGrid() {
-            gridSupplierCertificates.get_masterTableView().rebind();
-        }
-
-        function GetsSupplierCertificatesGridObject(sender, eventArgs) {
-            gridSupplierCertificates = sender;
-        }
-
-        function refreshProducerCertificatesGrid() {
-            gridProducerCertificates.get_masterTableView().rebind();
-        }
-
-
-        function redirectToMaintenancePage(id) {
-            $.showLoading();
-            window.location.href = "BankAccountMaintenance.aspx?BankAccountID=" + id;
+            if (gridObj)
+                gridObj.get_masterTableView().rebind();
         }
 
         function redirectToManagementPage(sender, args) {
@@ -467,24 +545,11 @@
             redirectToPage("Views/Basics/SupplierMaintenance.aspx?SupplierID=" + supplierID);
         }
 
-        function onCheckedChanged(e) {
-            //debugger;
-            var isChecked = e.get_checked();
-
-            var factoryNameRow = $("#row-FactoryName");
-
-            if (factoryNameRow) {
-                if (isChecked === true)
-                    factoryNameRow.show();
-                else
-                    factoryNameRow.hide();
-            }
-        }
-
         function openBankAccountWindow(id) {
             $.showLoading();
 
-            var targetUrl = $.getRootPath() + "Views/Basics/Editors/SupplierBankAccountMaintain.aspx?EntityID=" + id + "&SupplierID=" + supplierID;
+            var targetUrl = $.getRootPath() + "Views/Basics/Editors/SupplierBankAccountMaintain.aspx?EntityID=" + id
+                + "&SupplierID=" + supplierID + "&GridClientID=" + gridClientIDs.gridBankAccounts;
 
             $.openRadWindow(targetUrl, "winSupplierBankAccount", true, 800, 380);
         }
@@ -495,13 +560,28 @@
             var targetUrl = $.getRootPath() + "Views/Basics/Editors/CertificateMaintain.aspx?EntityID=" + id
                 + "&SupplierID=" + supplierID + "&OwnerTypeID=" + ownerTypeID + "&GridClientID=" + gridClientID;
 
-            $.openRadWindow(targetUrl, "winCertificate", true, 800, 500);
+            $.openRadWindow(targetUrl, "winCertificate", true, 800, 400);
         }
 
-        $(document).ready(function () {
+        function openContractWindow(id) {
+            $.showLoading();
 
-            BrowserDetect.init();
+            var targetUrl = $.getRootPath() + "Views/Basics/Editors/SupplierContractMaintain.aspx?EntityID=" + id
+                + "&SupplierID=" + supplierID + "&GridClientID=" + gridClientIDs.gridContracts;
 
+            $.openRadWindow(targetUrl, "winSupplierContract", true, 1000, 600);
+        }
+
+        function onResponseEnd(sender, args) {
+
+            var eventTarget = args.get_eventTarget();
+
+            if (eventTarget && eventTarget.indexOf("cbxIsProducer") >= 0) {
+                resetTabStripCss();
+            }
+        }
+
+        function resetTabStripCss() {
             if (BrowserDetect.browser == "Explorer") {
                 if (BrowserDetect.version > 8) //IE8+
                 {
@@ -511,24 +591,15 @@
                     $(".RadTabStrip_Default .rtsLink").css({ "line-height": "25px" });
                 }
             }
+        }
 
+        $(document).ready(function () {
+
+            BrowserDetect.init();
+
+            resetTabStripCss();
 
             supplierID = $("#<%= hdnSupplierID.ClientID %>").val();
-
-            var cbxIsProducer = $find("<%= cbxIsProducer.ClientID %>");
-
-            if (cbxIsProducer) {
-                var isProducer = cbxIsProducer.get_checked();
-
-                var factoryNameRow = $("#row-FactoryName");
-
-                if (factoryNameRow) {
-                    if (isProducer === true)
-                        factoryNameRow.show();
-                    else
-                        factoryNameRow.hide();
-                }
-            }
 
         });
 

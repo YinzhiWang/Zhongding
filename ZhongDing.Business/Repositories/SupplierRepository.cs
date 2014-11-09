@@ -167,52 +167,5 @@ namespace ZhongDing.Business.Repositories
             return uiBankAccounts;
         }
 
-
-        public IList<UISupplierCertificate> GetCertificates(int? supplierID, int? ownerTypeID)
-        {
-            IList<UISupplierCertificate> uiCertificates = new List<UISupplierCertificate>();
-
-            if (supplierID.HasValue && supplierID > 0)
-            {
-                uiCertificates = (from sc in DB.SupplierCertificate.Where(x => x.IsDeleted == false && x.SupplierID == supplierID)
-                                  join c in DB.Certificate.Where(x => x.OwnerTypeID == ownerTypeID) on sc.CertificateID equals c.ID into tempC
-                                  from tc in tempC.DefaultIfEmpty()
-                                  join ct in DB.CertificateType on tc.CertificateTypeID equals ct.ID into tempCT
-                                  from tct in tempCT.DefaultIfEmpty()
-                                  join cu in DB.Users on sc.CreatedBy equals cu.UserID into tempCU
-                                  from tcu in tempCU.DefaultIfEmpty()
-                                  join mu in DB.Users on sc.LastModifiedBy equals mu.UserID into tempMU
-                                  from tmu in tempMU.DefaultIfEmpty()
-                                  //orderby sc.CreatedOn descending
-                                  select new UISupplierCertificate()
-                                  {
-                                      ID = sc.ID,
-                                      SupplierID = sc.SupplierID,
-                                      CertificateID = sc.CertificateID,
-                                      CertificateTypeName = tct == null ? string.Empty : tct.CertificateType1,
-                                      IsGotten = tc == null ? false : tc.IsGotten,
-                                      GottenDescription = tc == null ? string.Empty
-                                      : (tc.IsGotten.HasValue && tc.IsGotten.Value) ? GlobalConst.GOTTEN_DESC_HAVE : GlobalConst.GOTTEN_DESC_NONHAVE,
-                                      EffectiveFrom = tc == null ? null : tc.EffectiveFrom,
-                                      EffectiveTo = tc == null ? null : tc.EffectiveTo,
-                                      IsNeedAlert = tc == null ? false : tc.IsNeedAlert,
-                                      AlertBeforeDays = tc == null ? 0 : tc.AlertBeforeDays,
-                                      Comment = tc == null ? string.Empty : tc.Comment
-                                  }
-                                 ).ToList();
-
-                foreach (var uiCertificate in uiCertificates)
-                {
-                    if (uiCertificate.EffectiveFrom.HasValue
-                        && uiCertificate.EffectiveTo.HasValue)
-                    {
-                        uiCertificate.EffectiveDateDescription = uiCertificate.EffectiveFrom.ToString("yyyy/MM/dd")
-                            + " - " + uiCertificate.EffectiveTo.ToString("yyyy/MM/dd");
-                    }
-                }
-            }
-
-            return uiCertificates;
-        }
     }
 }

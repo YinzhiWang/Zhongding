@@ -9,7 +9,6 @@
     [AlertBeforeDays]   INT            NULL,
     [Comment]           NVARCHAR (MAX) NULL,
     [IsDeleted]         BIT            CONSTRAINT [DF_SupplierCertificateFile_IsDeleted] DEFAULT ((0)) NOT NULL,
-    [DeletedOn]         DATETIME       NULL,
     [CreatedOn]         DATETIME       CONSTRAINT [DF_SupplierCertificateFile_CreatedOn] DEFAULT (getdate()) NOT NULL,
     [CreatedBy]         INT            NULL,
     [LastModifiedOn]    DATETIME       NULL,
@@ -18,4 +17,6 @@
     CONSTRAINT [FK_Certificate_CertificateType] FOREIGN KEY ([CertificateTypeID]) REFERENCES [dbo].[CertificateType] ([ID]),
     CONSTRAINT [FK_CertificateFile_OwnerType] FOREIGN KEY ([OwnerTypeID]) REFERENCES [dbo].[OwnerType] ([ID])
 );
+
+
 

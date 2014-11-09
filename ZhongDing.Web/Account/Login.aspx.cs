@@ -56,10 +56,10 @@ namespace ZhongDing.Web.Account
 
         private void BindCompany()
         {
-            var companies = PageCompanyRepository.GetUIListForDLL();
+            var companies = PageCompanyRepository.GetDropdownItems();
             ddlCompany.DataSource = companies;
-            ddlCompany.DataTextField = "CompanyName";
-            ddlCompany.DataValueField = "ID";
+            ddlCompany.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+            ddlCompany.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
             ddlCompany.DataBind();
 
             ddlCompany.Items.Insert(0, new ListItem() { Text = "账套", Value = "" });

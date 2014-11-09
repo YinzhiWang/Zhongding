@@ -2576,9 +2576,13 @@
     <Content Include="packages.config" />
     <Content Include="Content\icons\16\Thumbs.db" />
     <Content Include="HttpHandle\AsyncBusinessHandler.ashx" />
+    <Content Include="Views\Basics\Editors\CertificateFileMaintain.aspx" />
     <Content Include="Views\Basics\Editors\CertificateMaintain.aspx" />
     <Content Include="Views\Basics\Editors\SupplierBankAccountMaintain.aspx" />
+    <Content Include="Views\Basics\Editors\SupplierContractMaintain.aspx" />
     <Content Include="WebServices\SupplierWS.asmx" />
+    <Content Include="HttpHandle\AsyncUploadFileHandler.ashx" />
+    <Content Include="HttpHandle\AsyncOperateFileHandler.ashx" />
     <None Include="Scripts\jquery-1.11.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\jquery-1.11.1.min.js" />
@@ -2687,8 +2691,13 @@
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
     <Compile Include="Extensions\AjaxRequestData.cs" />
+    <Compile Include="Extensions\AjaxResponseData.cs" />
+    <Compile Include="Extensions\AsyncUploadedFile.cs" />
+    <Compile Include="Extensions\BaseHttpHandler.cs" />
     <Compile Include="Extensions\PageEnhance.cs" />
     <Compile Include="Extensions\WebUtility.cs" />
+    <Compile Include="Extensions\ZDAsyncUploadConfiguration.cs" />
+    <Compile Include="Extensions\ZDAsyncUploadResult.cs" />
     <Compile Include="Extensions\ZDMembershipUser.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2707,6 +2716,12 @@
     </Compile>
     <Compile Include="HttpHandle\AsyncBusinessHandler.ashx.cs">
       <DependentUpon>AsyncBusinessHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="HttpHandle\AsyncOperateFileHandler.ashx.cs">
+      <DependentUpon>AsyncOperateFileHandler.ashx</DependentUpon>
+    </Compile>
+    <Compile Include="HttpHandle\AsyncUploadFileHandler.ashx.cs">
+      <DependentUpon>AsyncUploadFileHandler.ashx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Site.Master.cs">
@@ -2772,6 +2787,13 @@
     <Compile Include="Views\Basics\CompanyManagement.aspx.designer.cs">
       <DependentUpon>CompanyManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Basics\Editors\CertificateFileMaintain.aspx.cs">
+      <DependentUpon>CertificateFileMaintain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\Editors\CertificateFileMaintain.aspx.designer.cs">
+      <DependentUpon>CertificateFileMaintain.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Basics\Editors\CertificateMaintain.aspx.cs">
       <DependentUpon>CertificateMaintain.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2785,6 +2807,13 @@
     </Compile>
     <Compile Include="Views\Basics\Editors\SupplierBankAccountMaintain.aspx.designer.cs">
       <DependentUpon>SupplierBankAccountMaintain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\Editors\SupplierContractMaintain.aspx.cs">
+      <DependentUpon>SupplierContractMaintain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\Editors\SupplierContractMaintain.aspx.designer.cs">
+      <DependentUpon>SupplierContractMaintain.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Basics\SupplierMaintenance.aspx.cs">
       <DependentUpon>SupplierMaintenance.aspx</DependentUpon>

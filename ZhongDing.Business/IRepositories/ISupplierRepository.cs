@@ -35,13 +35,5 @@ namespace ZhongDing.Business.IRepositories
         /// <returns>IList{UISupplierBankAccount}.</returns>
         IList<UISupplierBankAccount> GetBankAccounts(int? supplierID);
 
-        /// <summary>
-        /// 获取供应商的证照
-        /// </summary>
-        /// <param name="supplierID">供应商ID.</param>
-        /// <param name="ownerTypeID">所有者类型ID.</param>
-        /// <returns>IList{UISupplierCertificate}.</returns>
-        IList<UISupplierCertificate> GetCertificates(int? supplierID, int? ownerTypeID);
-
     }
 }

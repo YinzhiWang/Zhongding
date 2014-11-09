@@ -68,8 +68,9 @@
                 </table>
                 <telerik:RadGrid ID="rgBankAccounts" runat="server" PageSize="10"
                     AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
-                    MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="100%" ShowHeader="true"
+                    MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
                     OnNeedDataSource="rgBankAccounts_NeedDataSource" OnDeleteCommand="rgBankAccounts_DeleteCommand"
+                    ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
                     OnItemCreated="rgBankAccounts_ItemCreated" OnColumnCreated="rgBankAccounts_ColumnCreated" OnItemDataBound="rgBankAccounts_ItemDataBound">
                     <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
                         ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
@@ -187,5 +188,6 @@
             $.showLoading();
             window.location.href = "BankAccountMaintenance.aspx?BankAccountID=" + id;
         }
+
     </script>
 </asp:Content>

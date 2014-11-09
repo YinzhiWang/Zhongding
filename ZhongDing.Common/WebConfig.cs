@@ -21,7 +21,7 @@ namespace ZhongDing.Common
         private const string CONFIGKEY_EMAILBCC = "Email.Bcc";
 
         private const string CONFIGKEY_UPLOADFILEPATH_COMMON = "UploadFilePath.Common";
-        private const string CONFIGKEY_UPLOADFILEPATH_LOANCOMPANY = "UploadFilePath.LoanCompany";
+        private const string CONFIGKEY_UPLOADFILEPATH_SUPPLIER_CONTRACT = "UploadFilePath.SupplierContract";
         private const string CONFIGKEY_UPLOADFILEPATH_GUARANTEECOMPANY = "UploadFilePath.GuaranteeCompany";
         private const string CONFIGKEY_UPLOADFILEPATH_RELATEDCOMPANY = "UploadFilePath.RelatedCompany";
         private const string CONFIGKEY_UPLOADFILEPATH_PRODUCT = "UploadFilePath.Product";
@@ -144,14 +144,13 @@ namespace ZhongDing.Common
         }
 
         /// <summary>
-        /// 小贷公司文件上传路径
+        /// 供应商合同文件上传路径
         /// </summary>
-        /// <value>The upload file path loan company.</value>
-        public static string UploadFilePathLoanCompany
+        public static string UploadFilePathSupplierContract
         {
             get
             {
-                return ConfigurationManager.AppSettings[CONFIGKEY_UPLOADFILEPATH_LOANCOMPANY];
+                return ConfigurationManager.AppSettings[CONFIGKEY_UPLOADFILEPATH_SUPPLIER_CONTRACT];
             }
         }
 

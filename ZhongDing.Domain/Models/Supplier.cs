@@ -17,14 +17,15 @@ namespace ZhongDing.Domain.Models
     {
         public Supplier()
         {
-            this.SupplierBankAccount = new HashSet<SupplierBankAccount>();
-            this.SupplierTaskAssignment = new HashSet<SupplierTaskAssignment>();
-            this.SupplierContract = new HashSet<SupplierContract>();
-            this.SupplierCertificate = new HashSet<SupplierCertificate>();
             this.Product = new HashSet<Product>();
+            this.SupplierBankAccount = new HashSet<SupplierBankAccount>();
+            this.SupplierCertificate = new HashSet<SupplierCertificate>();
+            this.SupplierContract = new HashSet<SupplierContract>();
+            this.SupplierTaskAssignment = new HashSet<SupplierTaskAssignment>();
         }
     
         public int ID { get; set; }
+        public Nullable<int> CompanyID { get; set; }
         public string SupplierCode { get; set; }
         public string SupplierName { get; set; }
         public string District { get; set; }
@@ -34,28 +35,28 @@ namespace ZhongDing.Domain.Models
         public string ContactAddress { get; set; }
         public string Fax { get; set; }
         public string PostalCode { get; set; }
+        public bool IsProducer { get; set; }
         public bool IsDeleted { get; set; }
-        public Nullable<System.DateTime> DeletedOn { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
-        public bool IsProducer { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
     	public bool HasColumnIsDeleted { get { return true; } }
-    	public bool HasColumnDeletedOn { get { return true; } }
+    	public bool HasColumnDeletedOn { get { return false; } }
     	public bool HasColumnCreatedOn { get { return true; } }
     	public bool HasColumnCreatedBy { get { return true; } }
     	public bool HasColumnLastModifiedOn { get { return true; } }
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ICollection<SupplierBankAccount> SupplierBankAccount { get; set; }
-        public virtual ICollection<SupplierTaskAssignment> SupplierTaskAssignment { get; set; }
-        public virtual ICollection<SupplierContract> SupplierContract { get; set; }
-        public virtual ICollection<SupplierCertificate> SupplierCertificate { get; set; }
+        public virtual Company Company { get; set; }
         public virtual ICollection<Product> Product { get; set; }
+        public virtual ICollection<SupplierBankAccount> SupplierBankAccount { get; set; }
+        public virtual ICollection<SupplierCertificate> SupplierCertificate { get; set; }
+        public virtual ICollection<SupplierContract> SupplierContract { get; set; }
+        public virtual ICollection<SupplierTaskAssignment> SupplierTaskAssignment { get; set; }
     }
 }

@@ -11,13 +11,12 @@ using ZhongDing.Common;
 using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UIObjects;
+using ZhongDing.Domain.UISearchObjects;
 
 namespace ZhongDing.Web.Views.Basics
 {
     public partial class SupplierMaintenance : BasePage
     {
-        private const string PREFIX_OF_SUPPLIERCODE = "GYS";
-
         #region Members
 
         public int? SupplierID
@@ -47,6 +46,19 @@ namespace ZhongDing.Web.Views.Basics
             }
         }
 
+
+        private ISupplierCertificateRepository _PageSupplierCertificateRepository;
+        private ISupplierCertificateRepository PageSupplierCertificateRepository
+        {
+            get
+            {
+                if (_PageSupplierCertificateRepository == null)
+                    _PageSupplierCertificateRepository = new SupplierCertificateRepository();
+
+                return _PageSupplierCertificateRepository;
+            }
+        }
+
         private Supplier _PageSupplier;
         private Supplier PageSupplier
         {
@@ -57,6 +69,18 @@ namespace ZhongDing.Web.Views.Basics
                         _PageSupplier = PageSupplierRepository.GetByID(this.SupplierID);
 
                 return _PageSupplier;
+            }
+        }
+
+        private ISupplierContractRepository _PageSupplierContractRepository;
+        private ISupplierContractRepository PageSupplierContractRepository
+        {
+            get
+            {
+                if (_PageSupplierContractRepository == null)
+                    _PageSupplierContractRepository = new SupplierContractRepository();
+
+                return _PageSupplierContractRepository;
             }
         }
 
@@ -79,6 +103,7 @@ namespace ZhongDing.Web.Views.Basics
             }
         }
 
+        #region Private Methods
 
         private void LoadSupplier()
         {
@@ -96,14 +121,124 @@ namespace ZhongDing.Web.Views.Basics
                 txtDistrict.Text = this.PageSupplier.District;
                 txtPostalCode.Text = this.PageSupplier.PostalCode;
                 txtContactAddress.Text = this.PageSupplier.ContactAddress;
+
+                var tabSupplier = tabStripCertificates.FindTabByValue("tabSupplier", true);
+
+                if (this.PageSupplier.IsProducer)
+                {
+                    divFactoryName.Visible = true;
+
+                    if (tabSupplier != null)
+                        tabSupplier.Visible = false;
+                }
+                else
+                {
+                    divFactoryName.Visible = false;
+
+                    if (tabSupplier != null)
+                        tabSupplier.Visible = true;
+                }
+
+
             }
             else
-                txtSupplierCode.Text = Utility.GenerateAutoSerialNo(PageSupplierRepository.GetMaxEntityID(), PREFIX_OF_SUPPLIERCODE);
+                txtSupplierCode.Text = Utility.GenerateAutoSerialNo(PageSupplierRepository.GetMaxEntityID(),
+                    GlobalConst.EntityAutoSerialNo.SerialNoPrefix.SUPPLIER);
         }
+
+        /// <summary>
+        /// 删除证照
+        /// </summary>
+        /// <param name="supplierCertificateID">The supplier certificate ID.</param>
+        private static void DeleteSupplierCertificate(int supplierCertificateID)
+        {
+            using (IUnitOfWork unitOfWork = new UnitOfWork())
+            {
+                DbModelContainer db = unitOfWork.GetDbModel();
+
+                ICertificateRepository certificateRepository = new CertificateRepository();
+                ISupplierCertificateRepository supplierCertificateRepository = new SupplierCertificateRepository();
+
+                certificateRepository.SetDbModel(db);
+                supplierCertificateRepository.SetDbModel(db);
+
+                var supplierCertificate = supplierCertificateRepository.GetByID(supplierCertificateID);
+
+                if (supplierCertificate != null)
+                    certificateRepository.Delete(supplierCertificate.Certificate);
+
+                supplierCertificateRepository.Delete(supplierCertificate);
+
+                unitOfWork.SaveChanges();
+            }
+        }
+
+        #endregion
+
+        #region Events
 
         protected void cvSupplierName_ServerValidate(object source, ServerValidateEventArgs args)
         {
             //args.IsValid = false;
+        }
+
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
+            if (cbxIsProducer.Checked
+                && string.IsNullOrEmpty(txtFactoryName.Text.Trim()))
+                cvFactoryName.IsValid = false;
+
+            if (!IsValid) return;
+
+            Supplier supplier = null;
+
+            if (this.SupplierID.HasValue
+                && this.SupplierID > 0)
+                supplier = PageSupplierRepository.GetByID(this.SupplierID);
+            else
+            {
+                supplier = new Supplier();
+                supplier.SupplierCode = Utility.GenerateAutoSerialNo(PageSupplierRepository.GetMaxEntityID(),
+                    GlobalConst.EntityAutoSerialNo.SerialNoPrefix.SUPPLIER);
+
+                PageSupplierRepository.Add(supplier);
+            }
+
+            if (supplier != null)
+            {
+                supplier.SupplierName = txtSupplierName.Text.Trim();
+
+                supplier.IsProducer = cbxIsProducer.Checked;
+
+                if (cbxIsProducer.Checked)
+                    supplier.FactoryName = txtFactoryName.Text.Trim();
+                else
+                    supplier.FactoryName = string.Empty;
+
+                supplier.ContactPerson = txtContactPerson.Text.Trim();
+                supplier.PhoneNumber = txtPhoneNumber.Text.Trim();
+                supplier.Fax = txtFax.Text.Trim();
+                supplier.District = txtDistrict.Text.Trim();
+                supplier.PostalCode = txtPostalCode.Text.Trim();
+                supplier.ContactAddress = txtContactAddress.Text.Trim();
+
+                PageSupplierRepository.Save();
+
+                hdnSupplierID.Value = supplier.ID.ToString();
+
+                if (this.SupplierID.HasValue
+                    && this.SupplierID > 0)
+                {
+                    this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
+                    this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SAEVED_REDIRECT);
+                }
+                else
+                {
+                    this.Master.BaseNotification.OnClientHidden = "refreshMaintenancePage";
+                    this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SAEVED_REFRESH);
+                }
+            }
+
         }
 
         protected void rgBankAccounts_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -144,80 +279,105 @@ namespace ZhongDing.Web.Views.Basics
             rgBankAccounts.Rebind();
         }
 
-        protected void btnSave_Click(object sender, EventArgs e)
-        {
-            if (cbxIsProducer.Checked
-                && string.IsNullOrEmpty(txtFactoryName.Text.Trim()))
-                cvFactoryName.IsValid = false;
-
-            if (!IsValid) return;
-
-            Supplier supplier = null;
-
-            if (this.SupplierID.HasValue
-                && this.SupplierID > 0)
-                supplier = PageSupplierRepository.GetByID(this.SupplierID);
-            else
-            {
-                supplier = new Supplier();
-                supplier.SupplierCode = Utility.GenerateAutoSerialNo(PageSupplierRepository.GetMaxEntityID(), PREFIX_OF_SUPPLIERCODE);
-
-                PageSupplierRepository.Add(supplier);
-            }
-
-            if (supplier != null)
-            {
-                supplier.SupplierName = txtSupplierName.Text.Trim();
-
-                supplier.IsProducer = cbxIsProducer.Checked;
-
-                if (cbxIsProducer.Checked)
-                    supplier.FactoryName = txtFactoryName.Text.Trim();
-                else
-                    supplier.FactoryName = string.Empty;
-
-                supplier.ContactPerson = txtContactPerson.Text.Trim();
-                supplier.PhoneNumber = txtPhoneNumber.Text.Trim();
-                supplier.Fax = txtFax.Text.Trim();
-                supplier.District = txtDistrict.Text.Trim();
-                supplier.PostalCode = txtPostalCode.Text.Trim();
-                supplier.ContactAddress = txtContactAddress.Text.Trim();
-
-                PageSupplierRepository.Save();
-
-                hdnSupplierID.Value = supplier.ID.ToString();
-
-                if (this.SupplierID.HasValue
-                    && this.SupplierID > 0)
-                {
-                    this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
-                    this.Master.BaseNotification.Show("保存成功，页面将自动跳转");
-                }
-                else
-                {
-                    this.Master.BaseNotification.OnClientHidden = "refreshMaintenancePage";
-                    this.Master.BaseNotification.Show("保存成功，页面将自动刷新");
-                }
-            }
-
-        }
-
         protected void rgProducerCertificates_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            rgProducerCertificates.DataSource = PageSupplierRepository.GetCertificates(this.SupplierID, (int)EOwnerType.Producer);
+            UISearchCertificate uiSearchObj = new UISearchCertificate()
+            {
+                SupplierID = this.SupplierID.Value,
+                OwnerTypeID = (int)EOwnerType.Producer
+            };
+
+            int totalRecords;
+
+            rgProducerCertificates.DataSource = PageSupplierCertificateRepository
+                .GetUIList(uiSearchObj, rgProducerCertificates.CurrentPageIndex, rgProducerCertificates.PageSize, out totalRecords);
+
+            rgProducerCertificates.VirtualItemCount = totalRecords;
         }
 
         protected void rgProducerCertificates_DeleteCommand(object sender, GridCommandEventArgs e)
         {
+            GridEditableItem editableItem = e.Item as GridEditableItem;
 
+            String sid = editableItem.GetDataKeyValue("ID").ToString();
+
+            int id = 0;
+            if (int.TryParse(sid, out id))
+            {
+                DeleteSupplierCertificate(id);
+            }
+
+            rgProducerCertificates.Rebind();
         }
 
         protected void rgSupplierCertificates_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            rgSupplierCertificates.DataSource = PageSupplierRepository.GetCertificates(this.SupplierID, (int)EOwnerType.Supplier);
+            UISearchCertificate uiSearchObj = new UISearchCertificate()
+            {
+                SupplierID = this.SupplierID.Value,
+                OwnerTypeID = (int)EOwnerType.Supplier
+            };
+
+            int totalRecords;
+
+            rgSupplierCertificates.DataSource = PageSupplierCertificateRepository
+                .GetUIList(uiSearchObj, rgSupplierCertificates.CurrentPageIndex, rgSupplierCertificates.PageSize, out totalRecords);
+
+            rgSupplierCertificates.VirtualItemCount = totalRecords;
         }
 
         protected void rgSupplierCertificates_DeleteCommand(object sender, GridCommandEventArgs e)
+        {
+            GridEditableItem editableItem = e.Item as GridEditableItem;
+
+            String sid = editableItem.GetDataKeyValue("ID").ToString();
+
+            int id = 0;
+            if (int.TryParse(sid, out id))
+            {
+                DeleteSupplierCertificate(id);
+            }
+
+            rgSupplierCertificates.Rebind();
+        }
+
+        #endregion
+
+        protected void cbxIsProducer_CheckedChanged(object sender, EventArgs e)
+        {
+            var tabSupplier = tabStripCertificates.FindTabByValue("tabSupplier", true);
+
+            if (cbxIsProducer.Checked)
+            {
+                divFactoryName.Visible = true;
+
+                if (tabSupplier != null)
+                    tabSupplier.Visible = false;
+            }
+            else
+            {
+                divFactoryName.Visible = false;
+
+                if (tabSupplier != null)
+                    tabSupplier.Visible = true;
+            }
+        }
+
+        protected void rgContracts_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            UISearchSupplierContract uiSearchObj = new UISearchSupplierContract()
+            {
+                SupplierID = this.SupplierID.Value
+            };
+
+            int totalRecords;
+
+            rgContracts.DataSource = PageSupplierContractRepository.GetUIList(uiSearchObj, rgContracts.CurrentPageIndex, rgContracts.PageSize, out totalRecords);
+
+            rgContracts.VirtualItemCount = totalRecords;
+        }
+
+        protected void rgContracts_DeleteCommand(object sender, GridCommandEventArgs e)
         {
 
         }

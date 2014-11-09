@@ -44,6 +44,53 @@
         </div>
 
         <style type="text/css">
+            .RadGrid_Silk
+            {
+            }
+
+                .RadGrid_Silk .rgHeader
+                {
+                    color: #333333;
+                    padding-top: 10px;
+                    padding-bottom: 10px;
+                }
+
+                    .RadGrid_Silk .rgHeader a
+                    {
+                        color: #333333;
+                        font-size: 13px;
+                        font-family: 'Microsoft Yahei',Arial,Helvetica,sans-serif,'微软雅黑';
+                        font-weight: normal;
+                    }
+
+                .RadGrid_Silk .rgCommandCell
+                {
+                    padding-top: 5px;
+                    padding-bottom: 5px;
+                }
+
+                .RadGrid_Silk .rgPager
+                {
+                    background-color: #444444;
+                }
+
+                .RadGrid_Silk td.rgPagerCell
+                {
+                    border: none;
+                    color: #ffffff;
+                }
+
+                .RadGrid_Silk .rgInfoPart, .RadGrid_Silk .rgInfoPart strong
+                {
+                    color: #ffffff;
+                }
+
+            .RadWindow_Silk .rwTable .rwTitlebarControls em
+            {
+                font-size: 13px;
+                font-weight: 600;
+                text-shadow: 0 0 6px rgba(128, 128,128, 0.5);
+            }
 
             .RadNotification .rnContentIconClip
             {
@@ -97,6 +144,24 @@
                 function OnClientBeforeShow(sender, eventArgs) {
                     sender.center();
                 }
+
+                function onRowMouseOver(sender, eventArgs) {
+                    eventArgs.get_gridDataItem().addCssClass("grid-over-row");
+
+                    var curRow = $(eventArgs.get_gridDataItem().get_element());
+
+                    if (curRow.hasClass("rgAltRow"))
+                        curRow.css({ "background-color": "" });
+                }
+
+                function onRowMouseOut(sender, eventArgs) {
+                    eventArgs.get_gridDataItem().removeCssClass("grid-over-row");
+
+                    var curRow = $(eventArgs.get_gridDataItem().get_element());
+
+                    if (curRow.hasClass("rgAltRow"))
+                        curRow.css({ "background-color": "#f2f2f2" });
+                }
             </script>
             <asp:ContentPlaceHolder ID="scriptContent" runat="server">
             </asp:ContentPlaceHolder>
@@ -116,8 +181,8 @@
             Width="300" Height="100">
         </telerik:RadNotification>
 
-        <%--<telerik:RadWindowManager ID="radWindowManager" VisibleStatusbar="false" Width="600" Height="400"
-            ReloadOnShow="true" EnableShadow="true" Overlay="true"
+        <telerik:RadWindowManager ID="radWindowManager" VisibleStatusbar="false" Width="600" Height="400"
+            ReloadOnShow="true" EnableShadow="true" Overlay="true" Localization-Close="关闭" IconUrl="~/Content/icons/16/edit.png"
             runat="server" Opacity="100" Behaviors="Close,Move" Modal="true" OnClientBeforeShow="OnClientBeforeShow">
             <AlertTemplate>
                 <div class="rwDialogPopup radalert">
@@ -144,7 +209,7 @@
                     </div>
                 </div>
             </ConfirmTemplate>
-        </telerik:RadWindowManager>--%>
+        </telerik:RadWindowManager>
     </form>
 </body>
 </html>

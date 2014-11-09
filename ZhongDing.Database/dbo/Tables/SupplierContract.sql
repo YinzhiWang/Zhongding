@@ -8,7 +8,6 @@
     [IsNeedTaskAssignment]   BIT             NULL,
     [ExpirationDate]         DATETIME        NULL,
     [IsDeleted]              BIT             CONSTRAINT [DF_SupplierContract_IsDeleted] DEFAULT ((0)) NOT NULL,
-    [DeletedOn]              DATETIME        NULL,
     [CreatedOn]              DATETIME        CONSTRAINT [DF_SupplierContract_CreatedOn] DEFAULT (getdate()) NOT NULL,
     [CreatedBy]              INT             NULL,
     [LastModifiedOn]         DATETIME        NULL,
@@ -18,6 +17,8 @@
     CONSTRAINT [FK_SupplierContract_ProductSpecification] FOREIGN KEY ([ProductSpecificationID]) REFERENCES [dbo].[ProductSpecification] ([ID]),
     CONSTRAINT [FK_SupplierContract_Supplier] FOREIGN KEY ([SupplierID]) REFERENCES [dbo].[Supplier] ([ID])
 );
+
+
 
 
 

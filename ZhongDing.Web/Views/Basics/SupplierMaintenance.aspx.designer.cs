@@ -31,6 +31,15 @@ namespace ZhongDing.Web.Views.Basics {
         protected global::Telerik.Web.UI.RadAjaxManager RadAjaxManager1;
         
         /// <summary>
+        /// divContainer control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divContainer;
+        
+        /// <summary>
         /// vsMaintenance control.
         /// </summary>
         /// <remarks>
@@ -94,6 +103,15 @@ namespace ZhongDing.Web.Views.Basics {
         protected global::Telerik.Web.UI.RadButton cbxIsProducer;
         
         /// <summary>
+        /// divFactoryName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divFactoryName;
+        
+        /// <summary>
         /// txtFactoryName control.
         /// </summary>
         /// <remarks>
@@ -121,6 +139,24 @@ namespace ZhongDing.Web.Views.Basics {
         protected global::Telerik.Web.UI.RadTextBox txtContactPerson;
         
         /// <summary>
+        /// rttContactPerson control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadToolTip rttContactPerson;
+        
+        /// <summary>
+        /// RequiredFieldValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        
+        /// <summary>
         /// txtPhoneNumber control.
         /// </summary>
         /// <remarks>
@@ -130,6 +166,33 @@ namespace ZhongDing.Web.Views.Basics {
         protected global::Telerik.Web.UI.RadTextBox txtPhoneNumber;
         
         /// <summary>
+        /// rttPhoneNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadToolTip rttPhoneNumber;
+        
+        /// <summary>
+        /// rfvPhoneNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvPhoneNumber;
+        
+        /// <summary>
+        /// revPhoneNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revPhoneNumber;
+        
+        /// <summary>
         /// txtFax control.
         /// </summary>
         /// <remarks>
@@ -137,6 +200,15 @@ namespace ZhongDing.Web.Views.Basics {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox txtFax;
+        
+        /// <summary>
+        /// revFax control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RegularExpressionValidator revFax;
         
         /// <summary>
         /// txtDistrict control.
@@ -182,6 +254,15 @@ namespace ZhongDing.Web.Views.Basics {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid rgBankAccounts;
+        
+        /// <summary>
+        /// divPanelCertificates control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPanelCertificates;
         
         /// <summary>
         /// tabStripCertificates control.
@@ -236,6 +317,15 @@ namespace ZhongDing.Web.Views.Basics {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid rgSupplierCertificates;
+        
+        /// <summary>
+        /// rgContracts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid rgContracts;
         
         /// <summary>
         /// btnSave control.

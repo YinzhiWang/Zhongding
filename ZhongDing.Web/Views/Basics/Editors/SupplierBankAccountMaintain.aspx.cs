@@ -75,6 +75,8 @@ namespace ZhongDing.Web.Views.Basics.Editors
 
             if (!IsPostBack)
             {
+                hdnGridClientID.Value = GridClientID;
+
                 LoadBankAccount();
             }
         }
@@ -154,7 +156,7 @@ namespace ZhongDing.Web.Views.Basics.Editors
             PageSupplierRepository.Save();
 
             this.Master.BaseNotification.OnClientHidden = "onClientHidden";
-            this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SAEVED);
+            this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SAEVED_CLOSE_WIN);
         }
 
         protected void cvAccount_ServerValidate(object source, ServerValidateEventArgs args)

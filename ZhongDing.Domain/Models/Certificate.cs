@@ -17,8 +17,8 @@ namespace ZhongDing.Domain.Models
     {
         public Certificate()
         {
-            this.SupplierCertificate = new HashSet<SupplierCertificate>();
             this.ProductCertificate = new HashSet<ProductCertificate>();
+            this.SupplierCertificate = new HashSet<SupplierCertificate>();
         }
     
         public int ID { get; set; }
@@ -31,7 +31,6 @@ namespace ZhongDing.Domain.Models
         public Nullable<int> AlertBeforeDays { get; set; }
         public string Comment { get; set; }
         public bool IsDeleted { get; set; }
-        public Nullable<System.DateTime> DeletedOn { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
@@ -40,7 +39,7 @@ namespace ZhongDing.Domain.Models
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
     	public bool HasColumnIsDeleted { get { return true; } }
-    	public bool HasColumnDeletedOn { get { return true; } }
+    	public bool HasColumnDeletedOn { get { return false; } }
     	public bool HasColumnCreatedOn { get { return true; } }
     	public bool HasColumnCreatedBy { get { return true; } }
     	public bool HasColumnLastModifiedOn { get { return true; } }
@@ -49,7 +48,7 @@ namespace ZhongDing.Domain.Models
     
         public virtual CertificateType CertificateType { get; set; }
         public virtual OwnerType OwnerType { get; set; }
-        public virtual ICollection<SupplierCertificate> SupplierCertificate { get; set; }
         public virtual ICollection<ProductCertificate> ProductCertificate { get; set; }
+        public virtual ICollection<SupplierCertificate> SupplierCertificate { get; set; }
     }
 }

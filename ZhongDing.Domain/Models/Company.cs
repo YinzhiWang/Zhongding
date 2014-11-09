@@ -18,8 +18,9 @@ namespace ZhongDing.Domain.Models
         public Company()
         {
             this.BankAccount = new HashSet<BankAccount>();
-            this.Warehouse = new HashSet<Warehouse>();
             this.Product = new HashSet<Product>();
+            this.Supplier = new HashSet<Supplier>();
+            this.Warehouse = new HashSet<Warehouse>();
         }
     
         public int ID { get; set; }
@@ -31,7 +32,6 @@ namespace ZhongDing.Domain.Models
         public Nullable<bool> EnableTaxDeduction { get; set; }
         public Nullable<decimal> ClientTaxDeductionRatio { get; set; }
         public bool IsDeleted { get; set; }
-        public Nullable<System.DateTime> DeletedOn { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
@@ -40,7 +40,7 @@ namespace ZhongDing.Domain.Models
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
     	public bool HasColumnIsDeleted { get { return true; } }
-    	public bool HasColumnDeletedOn { get { return true; } }
+    	public bool HasColumnDeletedOn { get { return false; } }
     	public bool HasColumnCreatedOn { get { return true; } }
     	public bool HasColumnCreatedBy { get { return true; } }
     	public bool HasColumnLastModifiedOn { get { return true; } }
@@ -48,7 +48,8 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual ICollection<BankAccount> BankAccount { get; set; }
-        public virtual ICollection<Warehouse> Warehouse { get; set; }
         public virtual ICollection<Product> Product { get; set; }
+        public virtual ICollection<Supplier> Supplier { get; set; }
+        public virtual ICollection<Warehouse> Warehouse { get; set; }
     }
 }

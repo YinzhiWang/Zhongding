@@ -4,7 +4,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="mws-panel grid_full">
+    <div class="mws-panel grid_full" style="margin-bottom:10px;">
 
         <div class="mws-panel-body">
             <div class="mws-form">
@@ -58,7 +58,7 @@
                             <telerik:RadButton runat="server" ID="cbxIsNeedAlert" ButtonType="ToggleButton" ToggleType="CheckBox" AutoPostBack="false" OnClientCheckedChanged="onCheckedChanged"></telerik:RadButton>
                             <div id="divAlertDays" class="hide">
                                 <label>提醒期限</label>
-                                <telerik:RadNumericTextBox ID="txtAlertBeforeDays" runat="server" Width="60" Type="Number" NumberFormat-GroupSeparator="" NumberFormat-DecimalDigits="0" MinValue="0"></telerik:RadNumericTextBox>
+                                <telerik:RadNumericTextBox ID="txtAlertBeforeDays" runat="server" Width="60" Type="Number" NumberFormat-GroupSeparator="" NumberFormat-DecimalDigits="0" MinValue="0" MaxValue="2147483647" MaxLength="9"></telerik:RadNumericTextBox>
                                 <asp:CustomValidator ID="cvAlertBeforeDays" runat="server" ValidationGroup="vgMaintenance" Text="*" CssClass="field-validation-error" ErrorMessage="提醒期限必填"></asp:CustomValidator>
                                 &nbsp;&nbsp;天
                             </div>

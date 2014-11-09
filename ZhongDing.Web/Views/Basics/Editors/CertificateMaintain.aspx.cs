@@ -54,14 +54,6 @@ namespace ZhongDing.Web.Views.Basics.Editors
             }
         }
 
-        private string GridClientID
-        {
-            get
-            {
-                return Request.QueryString["GridClientID"];
-            }
-        }
-
         #endregion
 
         #region Members
@@ -124,6 +116,7 @@ namespace ZhongDing.Web.Views.Basics.Editors
 
                 BindCertificateTypes();
 
+                LoadCertificate();
             }
         }
 
@@ -135,6 +128,49 @@ namespace ZhongDing.Web.Views.Basics.Editors
             rcbxCertificateType.DataTextField = "CertificateTypeName";
             rcbxCertificateType.DataValueField = "ID";
             rcbxCertificateType.DataBind();
+        }
+
+        private void LoadCertificate()
+        {
+            EOwnerType ownerType = (EOwnerType)OwnerTypeID.Value;
+
+            switch (ownerType)
+            {
+                case EOwnerType.Supplier:
+                case EOwnerType.Producer:
+                    if (this.SupplierID.HasValue
+                        && this.SupplierID > 0)
+                    {
+                        var supplier = PageSupplierRepository.GetByID(this.SupplierID);
+
+                        if (supplier != null)
+                        {
+                            var certificate = supplier.SupplierCertificate
+                                  .Where(x => x.ID == this.CurrentEntityID)
+                                  .Select(x => x.Certificate).FirstOrDefault();
+
+                            if (certificate != null)
+                            {
+                                if (certificate.CertificateTypeID.HasValue)
+                                    rcbxCertificateType.SelectedValue = certificate.CertificateTypeID.ToString();
+                                cbxIsGotten.Checked = certificate.IsGotten.HasValue ? certificate.IsGotten.Value : false;
+                                rdpEffectiveFrom.SelectedDate = certificate.EffectiveFrom;
+                                rdpEffectiveTo.SelectedDate = certificate.EffectiveTo;
+
+                                cbxIsNeedAlert.Checked = certificate.IsNeedAlert.HasValue ? certificate.IsNeedAlert.Value : false;
+                                txtAlertBeforeDays.Value = (double?)certificate.AlertBeforeDays;
+
+                                txtComment.Text = certificate.Comment;
+                            }
+                        }
+
+                    }
+
+                    break;
+
+                case EOwnerType.Product:
+                    break;
+            }
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
@@ -180,7 +216,12 @@ namespace ZhongDing.Web.Views.Basics.Editors
                         supplierCertificate.Certificate.EffectiveFrom = rdpEffectiveFrom.SelectedDate;
                         supplierCertificate.Certificate.EffectiveTo = rdpEffectiveTo.SelectedDate;
                         supplierCertificate.Certificate.IsNeedAlert = cbxIsNeedAlert.Checked;
-                        supplierCertificate.Certificate.AlertBeforeDays = Convert.ToInt32(txtAlertBeforeDays.Value);
+
+                        if (cbxIsNeedAlert.Checked)
+                            supplierCertificate.Certificate.AlertBeforeDays = Convert.ToInt32(txtAlertBeforeDays.Value);
+                        else
+                            supplierCertificate.Certificate.AlertBeforeDays = null;
+
                         supplierCertificate.Certificate.Comment = txtComment.Text.Trim();
 
                         PageSupplierRepository.Save();
@@ -199,7 +240,7 @@ namespace ZhongDing.Web.Views.Basics.Editors
             if (isSuccessSaved)
             {
                 this.Master.BaseNotification.OnClientHidden = "onClientHidden";
-                this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SAEVED);
+                this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SAEVED_CLOSE_WIN);
             }
         }
 

@@ -286,7 +286,24 @@
 
                 function OnClientBeforeShow(sender, eventArgs) {
                     sender.center();
-                    //$.hideLoading();
+                }
+
+                function onRowMouseOver(sender, eventArgs) {
+                    eventArgs.get_gridDataItem().addCssClass("grid-over-row");
+
+                    var curRow = $(eventArgs.get_gridDataItem().get_element());
+
+                    if (curRow.hasClass("rgAltRow"))
+                        curRow.css({ "background-color": "" });
+                }
+
+                function onRowMouseOut(sender, eventArgs) {
+                    eventArgs.get_gridDataItem().removeCssClass("grid-over-row");
+
+                    var curRow = $(eventArgs.get_gridDataItem().get_element());
+
+                    if (curRow.hasClass("rgAltRow"))
+                        curRow.css({ "background-color": "#f2f2f2" });
                 }
 
             </script>

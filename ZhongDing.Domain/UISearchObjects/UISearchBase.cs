@@ -38,23 +38,5 @@ namespace ZhongDing.Domain.UISearchObjects
         /// <value>The last modified by.</value>
         public int? LastModifiedBy { get; set; }
 
-        /// <summary>
-        /// 是否需要分页
-        /// </summary>
-        /// <value><c>true</c> if this instance is need paging; otherwise, <c>false</c>.</value>
-        public bool IsNeedPaging { get; set; }
-
-        /// <summary>
-        /// 当前页数
-        /// </summary>
-        /// <value>The index of the page.</value>
-        public int PageIndex { get; set; }
-
-        /// <summary>
-        /// 每页条数
-        /// </summary>
-        /// <value>The size of the page.</value>
-        public int PageSize { get; set; }
-
     }
 }

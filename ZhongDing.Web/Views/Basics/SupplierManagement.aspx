@@ -55,7 +55,8 @@
                 </table>
                 <telerik:RadGrid ID="rgSuppliers" runat="server" PageSize="10"
                     AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
-                    MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="100%" ShowHeader="true"
+                    MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
+                    ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
                     OnNeedDataSource="rgSuppliers_NeedDataSource" OnDeleteCommand="rgSuppliers_DeleteCommand"
                     OnItemCreated="rgSuppliers_ItemCreated" OnColumnCreated="rgSuppliers_ColumnCreated" OnItemDataBound="rgSuppliers_ItemDataBound">
                     <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
