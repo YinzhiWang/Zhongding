@@ -330,6 +330,9 @@
     <Build Include="dbo\Tables\ClientInfoContact.sql" />
     <Build Include="dbo\Tables\ClientInfoBankAccount.sql" />
     <Build Include="dbo\Tables\ClientInfo.sql" />
+    <Build Include="dbo\Tables\Hospital.sql" />
+    <Build Include="dbo\Tables\DBContractTaskAssignment.sql" />
+    <Build Include="dbo\Tables\DBContract.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />
