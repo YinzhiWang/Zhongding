@@ -19,8 +19,11 @@
     [LastModifiedOn] DATETIME         NULL,
     [LastModifiedBy] INT              NULL,
     CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED ([UserID] ASC),
-    CONSTRAINT [FK_Users_aspnet_Users] FOREIGN KEY ([AspnetUserID]) REFERENCES [dbo].[aspnet_Users] ([UserId])
+    CONSTRAINT [FK_Users_aspnet_Users] FOREIGN KEY ([AspnetUserID]) REFERENCES [dbo].[aspnet_Users] ([UserId]),
+    CONSTRAINT [FK_Users_Department] FOREIGN KEY ([DepartmentID]) REFERENCES [dbo].[Department] ([ID])
 );
+
+
 
 
 
