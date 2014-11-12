@@ -11,7 +11,6 @@
         <AjaxSettings>
             <telerik:AjaxSetting AjaxControlID="cbxIsProducer">
                 <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="divFactoryName" LoadingPanelID="loadingPanel" />
                     <telerik:AjaxUpdatedControl ControlID="divPanelCertificates" LoadingPanelID="loadingPanel" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
@@ -76,14 +75,13 @@
                                 <telerik:RadButton runat="server" ID="cbxIsProducer" ButtonType="ToggleButton" ToggleType="CheckBox" AutoPostBack="true" Text="是否生产企业？" OnCheckedChanged="cbxIsProducer_CheckedChanged"></telerik:RadButton>
                             </div>
                         </div>
-                        <div class="mws-form-row" runat="server" id="divFactoryName" visible="false">
+                        <div class="mws-form-row">
                             <label>生产企业</label>
                             <div class="mws-form-item small">
                                 <telerik:RadTextBox runat="server" ID="txtFactoryName" CssClass="mws-textinput" Width="40%" MaxLength="100"></telerik:RadTextBox>
-                                <asp:CustomValidator ID="cvFactoryName" runat="server" ErrorMessage="该供应商是生产企业，所以生产企业名必须填写"
-                                    ControlToValidate="txtFactoryName" ValidationGroup="vgMaintenance" Display="Dynamic"
-                                    Text="*" CssClass="field-validation-error">
-                                </asp:CustomValidator>
+                                <asp:RequiredFieldValidator ID="rfvFactoryName" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="txtFactoryName"
+                                    ErrorMessage="生产企业必填" Text="*" CssClass="field-validation-error">
+                                </asp:RequiredFieldValidator>
                             </div>
                         </div>
                         <div class="mws-form-row">
@@ -195,14 +193,14 @@
                                                             </span>
                                                         </ItemTemplate>
                                                     </telerik:GridTemplateColumn>
-                                                    <telerik:GridTemplateColumn UniqueName="Edit">
-                                                        <ItemStyle HorizontalAlign="Center" Width="30" />
+                                                    <telerik:GridTemplateColumn UniqueName="Edit" HeaderStyle-Width="40">
+                                                        <ItemStyle HorizontalAlign="Center" Width="40" />
                                                         <ItemTemplate>
                                                             <a href="javascript:void(0);" onclick="openBankAccountWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">
                                                                 <u>编辑</u></a>
                                                         </ItemTemplate>
                                                     </telerik:GridTemplateColumn>
-                                                    <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
+                                                    <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
                                                 </Columns>
                                                 <CommandItemTemplate>
                                                     <table class="width100-percent">
@@ -266,9 +264,10 @@
                                                                 <ItemStyle HorizontalAlign="Left" />
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn UniqueName="EffectiveDateDescription" HeaderText="有效期" DataField="EffectiveDateDescription">
-                                                                <ItemStyle HorizontalAlign="Left" />
+                                                                <ItemStyle HorizontalAlign="Left" Width="140" />
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridTemplateColumn UniqueName="IsNeedAlert" HeaderText="是否提醒？" DataField="IsNeedAlert" SortExpression="IsNeedAlert">
+                                                            <telerik:GridTemplateColumn UniqueName="IsNeedAlert" HeaderText="是否<br/>提醒" DataField="IsNeedAlert" SortExpression="IsNeedAlert">
+                                                                <ItemStyle HorizontalAlign="Left" Width="40" />
                                                                 <ItemTemplate>
                                                                     <span>
                                                                         <%#DataBinder.Eval(Container.DataItem,"IsNeedAlert")!=null
@@ -277,7 +276,7 @@
                                                                     </span>
                                                                 </ItemTemplate>
                                                             </telerik:GridTemplateColumn>
-                                                            <telerik:GridTemplateColumn UniqueName="AlertBeforeDays" HeaderText="提醒期限" DataField="AlertBeforeDays" SortExpression="AlertBeforeDays">
+                                                            <telerik:GridTemplateColumn UniqueName="AlertBeforeDays" HeaderText="提醒<br/>期限" DataField="AlertBeforeDays" SortExpression="AlertBeforeDays">
                                                                 <ItemTemplate>
                                                                     <span>
                                                                         <%#DataBinder.Eval(Container.DataItem,"AlertBeforeDays")!=null
@@ -296,14 +295,14 @@
                                                                     </span>
                                                                 </ItemTemplate>
                                                             </telerik:GridTemplateColumn>
-                                                            <telerik:GridTemplateColumn UniqueName="Edit">
-                                                                <ItemStyle HorizontalAlign="Center" Width="30" />
+                                                            <telerik:GridTemplateColumn UniqueName="Edit" HeaderStyle-Width="40">
+                                                                <ItemStyle HorizontalAlign="Center" Width="40" />
                                                                 <ItemTemplate>
                                                                     <a href="javascript:void(0);" onclick="openCertificateWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>, EOwnerTypes.Producer, gridClientIDs.gridProducerCertificates);">
                                                                         <u>编辑</u></a>
                                                                 </ItemTemplate>
                                                             </telerik:GridTemplateColumn>
-                                                            <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
+                                                            <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
                                                         </Columns>
                                                         <CommandItemTemplate>
                                                             <table class="width100-percent">
@@ -351,9 +350,10 @@
                                                                 <ItemStyle HorizontalAlign="Left" />
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn UniqueName="EffectiveDateDescription" HeaderText="有效期" DataField="EffectiveDateDescription">
-                                                                <ItemStyle HorizontalAlign="Left" />
+                                                                <ItemStyle HorizontalAlign="Left" Width="140" />
                                                             </telerik:GridBoundColumn>
-                                                            <telerik:GridTemplateColumn UniqueName="IsNeedAlert" HeaderText="是否提醒？" DataField="IsNeedAlert" SortExpression="IsNeedAlert">
+                                                            <telerik:GridTemplateColumn UniqueName="IsNeedAlert" HeaderText="是否<br/>提醒" DataField="IsNeedAlert" SortExpression="IsNeedAlert">
+                                                                <ItemStyle HorizontalAlign="Left" Width="40" />
                                                                 <ItemTemplate>
                                                                     <span>
                                                                         <%#DataBinder.Eval(Container.DataItem,"IsNeedAlert")!=null
@@ -362,7 +362,7 @@
                                                                     </span>
                                                                 </ItemTemplate>
                                                             </telerik:GridTemplateColumn>
-                                                            <telerik:GridTemplateColumn UniqueName="AlertBeforeDays" HeaderText="提醒期限" DataField="AlertBeforeDays" SortExpression="AlertBeforeDays">
+                                                            <telerik:GridTemplateColumn UniqueName="AlertBeforeDays" HeaderText="提醒<br/>期限" DataField="AlertBeforeDays" SortExpression="AlertBeforeDays">
                                                                 <ItemTemplate>
                                                                     <span>
                                                                         <%#DataBinder.Eval(Container.DataItem,"AlertBeforeDays")!=null
@@ -381,14 +381,14 @@
                                                                     </span>
                                                                 </ItemTemplate>
                                                             </telerik:GridTemplateColumn>
-                                                            <telerik:GridTemplateColumn UniqueName="Edit">
-                                                                <ItemStyle HorizontalAlign="Center" Width="30" />
+                                                            <telerik:GridTemplateColumn UniqueName="Edit" HeaderStyle-Width="40">
+                                                                <ItemStyle HorizontalAlign="Center" Width="40" />
                                                                 <ItemTemplate>
                                                                     <a href="javascript:void(0);" onclick="openCertificateWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>, EOwnerTypes.Supplier, gridClientIDs.gridSupplierCertificates)">
                                                                         <u>编辑</u></a>
                                                                 </ItemTemplate>
                                                             </telerik:GridTemplateColumn>
-                                                            <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
+                                                            <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
                                                         </Columns>
                                                         <CommandItemTemplate>
                                                             <table class="width100-percent">
@@ -455,14 +455,14 @@
                                                     <telerik:GridBoundColumn UniqueName="ExpirationDate" HeaderText="合同终止日期" DataField="ExpirationDate" DataFormatString="{0:yyyy/MM/dd}">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
-                                                    <telerik:GridTemplateColumn UniqueName="Edit">
-                                                        <ItemStyle HorizontalAlign="Center" Width="30" />
+                                                    <telerik:GridTemplateColumn UniqueName="Edit" HeaderStyle-Width="40">
+                                                        <ItemStyle HorizontalAlign="Center" Width="40" />
                                                         <ItemTemplate>
                                                             <a href="javascript:void(0);" onclick="openContractWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">
                                                                 <u>编辑</u></a>
                                                         </ItemTemplate>
                                                     </telerik:GridTemplateColumn>
-                                                    <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
+                                                    <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
                                                 </Columns>
                                                 <CommandItemTemplate>
                                                     <table class="width100-percent">

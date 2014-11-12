@@ -153,7 +153,15 @@ namespace ZhongDing.Web.Views.Basics.Editors
                             {
                                 if (certificate.CertificateTypeID.HasValue)
                                     rcbxCertificateType.SelectedValue = certificate.CertificateTypeID.ToString();
-                                cbxIsGotten.Checked = certificate.IsGotten.HasValue ? certificate.IsGotten.Value : false;
+
+                                if (certificate.IsGotten.HasValue)
+                                {
+                                    if (certificate.IsGotten.Value)
+                                        radioIsGotten.Checked = true;
+                                    else
+                                        radioIsNoGotten.Checked = true;
+                                }
+
                                 rdpEffectiveFrom.SelectedDate = certificate.EffectiveFrom;
                                 rdpEffectiveTo.SelectedDate = certificate.EffectiveTo;
 
@@ -175,9 +183,17 @@ namespace ZhongDing.Web.Views.Basics.Editors
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            if (cbxIsNeedAlert.Checked
-                && string.IsNullOrEmpty(txtAlertBeforeDays.Text))
-                cvAlertBeforeDays.IsValid = false;
+            if (cbxIsNeedAlert.Checked)
+            {
+                if (string.IsNullOrEmpty(txtAlertBeforeDays.Text))
+                    cvAlertBeforeDays.IsValid = false;
+
+                if (!rdpEffectiveFrom.SelectedDate.HasValue)
+                    cvRequiredEffectiveFrom.IsValid = false;
+
+                if (!rdpEffectiveTo.SelectedDate.HasValue)
+                    cvRequiredEffectiveTo.IsValid = false;
+            }
 
             if (!IsValid) return;
 
@@ -212,7 +228,12 @@ namespace ZhongDing.Web.Views.Basics.Editors
                         }
 
                         supplierCertificate.Certificate.CertificateTypeID = Convert.ToInt32(rcbxCertificateType.SelectedValue);
-                        supplierCertificate.Certificate.IsGotten = cbxIsGotten.Checked;
+
+                        if (radioIsGotten.Checked)
+                            supplierCertificate.Certificate.IsGotten = true;
+                        else if (radioIsNoGotten.Checked)
+                            supplierCertificate.Certificate.IsGotten = false;
+
                         supplierCertificate.Certificate.EffectiveFrom = rdpEffectiveFrom.SelectedDate;
                         supplierCertificate.Certificate.EffectiveTo = rdpEffectiveTo.SelectedDate;
                         supplierCertificate.Certificate.IsNeedAlert = cbxIsNeedAlert.Checked;

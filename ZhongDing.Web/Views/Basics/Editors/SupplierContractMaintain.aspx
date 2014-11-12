@@ -43,7 +43,10 @@
                         <div class="float-left width50-percent">
                             <label>合同编号</label>
                             <div class="mws-form-item">
-                                <telerik:RadTextBox runat="server" ID="txtContractCode" CssClass="mws-textinput" Width="50%" Enabled="false"></telerik:RadTextBox>
+                                <telerik:RadTextBox runat="server" ID="txtContractCode" CssClass="mws-textinput" Width="50%"></telerik:RadTextBox>
+                                <asp:RequiredFieldValidator ID="rfvContractCode" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="txtContractCode"
+                                    ErrorMessage="合同编号必填" Text="*" CssClass="field-validation-error">
+                                </asp:RequiredFieldValidator>
                             </div>
                         </div>
                         <div class="float-left">
@@ -226,7 +229,7 @@
                                                 <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
                                                 </telerik:GridBoundColumn>
                                                 <telerik:GridBoundColumn UniqueName="FileName" HeaderText="文件名" DataField="FileName">
-                                                    <ItemStyle HorizontalAlign="Left" Width="40%"/>
+                                                    <ItemStyle HorizontalAlign="Left" Width="40%" />
                                                 </telerik:GridBoundColumn>
                                                 <telerik:GridTemplateColumn UniqueName="Comment" HeaderText="备注" DataField="Comment" SortExpression="Comment">
                                                     <ItemStyle HorizontalAlign="Left" Width="35%" />
@@ -239,19 +242,19 @@
                                                     </ItemTemplate>
                                                 </telerik:GridTemplateColumn>
                                                 <telerik:GridTemplateColumn UniqueName="Download">
-                                                    <ItemStyle HorizontalAlign="Center" Width="30" />
+                                                    <ItemStyle HorizontalAlign="Center" Width="40" />
                                                     <ItemTemplate>
                                                         <a href="<%= this.BaseUrl %><%#DataBinder.Eval(Container.DataItem,"FilePath")%>" target="_blank">下载</a>
                                                     </ItemTemplate>
                                                 </telerik:GridTemplateColumn>
                                                 <telerik:GridTemplateColumn UniqueName="Edit">
-                                                    <ItemStyle HorizontalAlign="Center" Width="30" />
+                                                    <ItemStyle HorizontalAlign="Center" Width="40" />
                                                     <ItemTemplate>
                                                         <a href="javascript:void(0);" onclick="openContractFileWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">
                                                             <u>编辑</u></a>
                                                     </ItemTemplate>
                                                 </telerik:GridTemplateColumn>
-                                                <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
+                                                <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
                                             </Columns>
                                             <CommandItemTemplate>
                                                 <table class="width100-percent">

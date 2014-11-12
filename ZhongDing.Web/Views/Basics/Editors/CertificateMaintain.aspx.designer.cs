@@ -49,13 +49,22 @@ namespace ZhongDing.Web.Views.Basics.Editors {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCertificateType;
         
         /// <summary>
-        /// cbxIsGotten control.
+        /// radioIsGotten control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadButton cbxIsGotten;
+        protected global::Telerik.Web.UI.RadButton radioIsGotten;
+        
+        /// <summary>
+        /// radioIsNoGotten control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadButton radioIsNoGotten;
         
         /// <summary>
         /// rdpEffectiveFrom control.
@@ -67,13 +76,13 @@ namespace ZhongDing.Web.Views.Basics.Editors {
         protected global::Telerik.Web.UI.RadDatePicker rdpEffectiveFrom;
         
         /// <summary>
-        /// rfvEffectiveFrom control.
+        /// cvRequiredEffectiveFrom control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvEffectiveFrom;
+        protected global::System.Web.UI.WebControls.CustomValidator cvRequiredEffectiveFrom;
         
         /// <summary>
         /// rdpEffectiveTo control.
@@ -85,13 +94,13 @@ namespace ZhongDing.Web.Views.Basics.Editors {
         protected global::Telerik.Web.UI.RadDatePicker rdpEffectiveTo;
         
         /// <summary>
-        /// rfvEffectiveTo control.
+        /// cvRequiredEffectiveTo control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvEffectiveTo;
+        protected global::System.Web.UI.WebControls.CustomValidator cvRequiredEffectiveTo;
         
         /// <summary>
         /// cvEffectiveDate control.

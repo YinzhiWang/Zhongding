@@ -151,6 +151,9 @@
                     color: #333333;
                     padding-top: 10px;
                     padding-bottom: 10px;
+                    border-left-color: #cccccc;
+                    border-left-width: 1px;
+                    border-left-style: solid;
                 }
 
                     .RadGrid_Silk .rgHeader a
@@ -182,6 +185,18 @@
                 {
                     color: #ffffff;
                 }
+
+                .RadGrid_Silk .rgRow td, .RadGrid_Silk .rgAltRow td, .RadGrid_Silk .rgEditRow td
+                {
+                    border-left-color: #bebebe !important;
+                    border-left-width: 1px;
+                    border-left-style: dotted;
+                }
+
+                    .RadGrid_Silk .rgRow td:first-child, .RadGrid_Silk .rgAltRow td:first-child, .RadGrid_Silk .rgEditRow td:first-child
+                    {
+                        border-left-style: none;
+                    }
 
             .RadWindow_Silk .rwTable .rwTitlebarControls em
             {

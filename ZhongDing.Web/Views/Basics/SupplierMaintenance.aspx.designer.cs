@@ -103,15 +103,6 @@ namespace ZhongDing.Web.Views.Basics {
         protected global::Telerik.Web.UI.RadButton cbxIsProducer;
         
         /// <summary>
-        /// divFactoryName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divFactoryName;
-        
-        /// <summary>
         /// txtFactoryName control.
         /// </summary>
         /// <remarks>
@@ -121,13 +112,13 @@ namespace ZhongDing.Web.Views.Basics {
         protected global::Telerik.Web.UI.RadTextBox txtFactoryName;
         
         /// <summary>
-        /// cvFactoryName control.
+        /// rfvFactoryName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator cvFactoryName;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvFactoryName;
         
         /// <summary>
         /// txtContactPerson control.

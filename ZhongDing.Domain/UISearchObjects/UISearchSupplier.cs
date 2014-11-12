@@ -12,6 +12,12 @@ namespace ZhongDing.Domain.UISearchObjects
     public class UISearchSupplier : UISearchBase
     {
         /// <summary>
+        ///  账套ID
+        /// </summary>
+        /// <value>The company ID.</value>
+        public int CompanyID { get; set; }
+
+        /// <summary>
         /// 供应商编号
         /// </summary>
         /// <value>The supplier code.</value>

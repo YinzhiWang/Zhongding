@@ -126,15 +126,11 @@ namespace ZhongDing.Web.Views.Basics
 
                 if (this.PageSupplier.IsProducer)
                 {
-                    divFactoryName.Visible = true;
-
                     if (tabSupplier != null)
                         tabSupplier.Visible = false;
                 }
                 else
                 {
-                    divFactoryName.Visible = false;
-
                     if (tabSupplier != null)
                         tabSupplier.Visible = true;
                 }
@@ -184,10 +180,6 @@ namespace ZhongDing.Web.Views.Basics
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            if (cbxIsProducer.Checked
-                && string.IsNullOrEmpty(txtFactoryName.Text.Trim()))
-                cvFactoryName.IsValid = false;
-
             if (!IsValid) return;
 
             Supplier supplier = null;
@@ -200,6 +192,8 @@ namespace ZhongDing.Web.Views.Basics
                 supplier = new Supplier();
                 supplier.SupplierCode = Utility.GenerateAutoSerialNo(PageSupplierRepository.GetMaxEntityID(),
                     GlobalConst.EntityAutoSerialNo.SerialNoPrefix.SUPPLIER);
+
+                supplier.CompanyID = CurrentUser.CompanyID;
 
                 PageSupplierRepository.Add(supplier);
             }
@@ -349,15 +343,11 @@ namespace ZhongDing.Web.Views.Basics
 
             if (cbxIsProducer.Checked)
             {
-                divFactoryName.Visible = true;
-
                 if (tabSupplier != null)
                     tabSupplier.Visible = false;
             }
             else
             {
-                divFactoryName.Visible = false;
-
                 if (tabSupplier != null)
                     tabSupplier.Visible = true;
             }
@@ -379,7 +369,40 @@ namespace ZhongDing.Web.Views.Basics
 
         protected void rgContracts_DeleteCommand(object sender, GridCommandEventArgs e)
         {
+            GridEditableItem editableItem = e.Item as GridEditableItem;
 
+            String sid = editableItem.GetDataKeyValue("ID").ToString();
+
+            int id = 0;
+            if (int.TryParse(sid, out id))
+            {
+                using (IUnitOfWork unitOfWork = new UnitOfWork())
+                {
+                    DbModelContainer db = unitOfWork.GetDbModel();
+
+                    ISupplierContractRepository contractRepository = new SupplierContractRepository();
+                    ISupplierContractFileRepository contractFileRepository = new SupplierContractFileRepository();
+
+                    contractRepository.SetDbModel(db);
+                    contractFileRepository.SetDbModel(db);
+
+                    var supplierContract = PageSupplierContractRepository.GetByID(id);
+
+                    if (supplierContract != null)
+                    {
+                        foreach (var contractFile in supplierContract.SupplierContractFile)
+                        {
+                            contractFileRepository.Delete(contractFile);
+                        }
+                    }
+
+                    contractRepository.Delete(supplierContract);
+
+                    unitOfWork.SaveChanges();
+                }
+            }
+
+            rgContracts.Rebind();
         }
     }
 }

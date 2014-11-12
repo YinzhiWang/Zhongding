@@ -58,6 +58,15 @@ namespace ZhongDing.Web.Views.Basics.Editors {
         protected global::Telerik.Web.UI.RadTextBox txtContractCode;
         
         /// <summary>
+        /// rfvContractCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvContractCode;
+        
+        /// <summary>
         /// rdpExpirationDate control.
         /// </summary>
         /// <remarks>

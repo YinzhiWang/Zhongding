@@ -4,7 +4,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <div class="mws-panel grid_full" style="margin-bottom:10px;">
+    <div class="mws-panel grid_full" style="margin-bottom: 10px;">
 
         <div class="mws-panel-body">
             <div class="mws-form">
@@ -17,7 +17,7 @@
                     <div class="mws-form-row">
                         <label>证照类型</label>
                         <div class="mws-form-item small">
-                            <telerik:RadComboBox runat="server" ID="rcbxCertificateType" Filter="Contains" Height="160px" EmptyMessage="--请选择--">
+                            <telerik:RadComboBox runat="server" ID="rcbxCertificateType" AllowCustomText="false" Height="160px" EmptyMessage="--请选择--">
                             </telerik:RadComboBox>
                             <telerik:RadToolTip ID="rttCertificateType" runat="server" TargetControlID="rcbxCertificateType" ShowEvent="OnClick"
                                 Position="MiddleRight" RelativeTo="Element" Text="该项是必选项" AutoCloseDelay="0">
@@ -25,7 +25,8 @@
                             <asp:RequiredFieldValidator ID="rfvCertificateType" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="rcbxCertificateType"
                                 ErrorMessage="请选择证照类型" Text="*" CssClass="field-validation-error">
                             </asp:RequiredFieldValidator>
-                            <telerik:RadButton runat="server" ID="cbxIsGotten" ButtonType="ToggleButton" ToggleType="CheckBox" AutoPostBack="false" Text="有/无？"></telerik:RadButton>
+                            <telerik:RadButton runat="server" ID="radioIsGotten" ButtonType="ToggleButton" ToggleType="Radio" AutoPostBack="false" GroupName="IsGotten" Text="有" Value="true"></telerik:RadButton>
+                            <telerik:RadButton runat="server" ID="radioIsNoGotten" ButtonType="ToggleButton" ToggleType="Radio" AutoPostBack="false" GroupName="IsGotten" Text="无" Value="false"></telerik:RadButton>
                         </div>
                     </div>
                     <div class="mws-form-row">
@@ -36,18 +37,16 @@
                                 Calendar-FastNavigationSettings-OkButtonCaption="确定" Calendar-FastNavigationSettings-TodayButtonCaption="今天"
                                 Calendar-FirstDayOfWeek="Monday">
                             </telerik:RadDatePicker>
-                            <asp:RequiredFieldValidator ID="rfvEffectiveFrom" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="rdpEffectiveFrom"
-                                ErrorMessage="有效期开始日期必填" Text="*" CssClass="field-validation-error">
-                            </asp:RequiredFieldValidator>
+                            <asp:CustomValidator ID="cvRequiredEffectiveFrom" runat="server" ValidationGroup="vgMaintenance" Text="*" CssClass="field-validation-error"
+                                 ErrorMessage="有效期开始日期必填"></asp:CustomValidator>
                             至&nbsp;&nbsp;
                             <telerik:RadDatePicker ID="rdpEffectiveTo" runat="server"
                                 Calendar-EnableShadows="true" Calendar-FastNavigationSettings-CancelButtonCaption="取消"
                                 Calendar-FastNavigationSettings-OkButtonCaption="确定" Calendar-FastNavigationSettings-TodayButtonCaption="今天"
                                 Calendar-FirstDayOfWeek="Monday">
                             </telerik:RadDatePicker>
-                            <asp:RequiredFieldValidator ID="rfvEffectiveTo" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="rdpEffectiveTo"
-                                ErrorMessage="有效期结束日期必填" Text="*" CssClass="field-validation-error">
-                            </asp:RequiredFieldValidator>
+                            <asp:CustomValidator ID="cvRequiredEffectiveTo" runat="server" ValidationGroup="vgMaintenance" Text="*" CssClass="field-validation-error"
+                                 ErrorMessage="有效期结束日期必填"></asp:CustomValidator>
                             <asp:CustomValidator ID="cvEffectiveDate" runat="server" ValidationGroup="vgMaintenance" Text="*" CssClass="field-validation-error"
                                 OnServerValidate="cvCompany_ServerValidate" ErrorMessage="开始日期不能大于结束日期"></asp:CustomValidator>
                         </div>
