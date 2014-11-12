@@ -201,14 +201,8 @@ namespace ZhongDing.Web.Views.Basics
             if (supplier != null)
             {
                 supplier.SupplierName = txtSupplierName.Text.Trim();
-
                 supplier.IsProducer = cbxIsProducer.Checked;
-
-                if (cbxIsProducer.Checked)
-                    supplier.FactoryName = txtFactoryName.Text.Trim();
-                else
-                    supplier.FactoryName = string.Empty;
-
+                supplier.FactoryName = txtFactoryName.Text.Trim();
                 supplier.ContactPerson = txtContactPerson.Text.Trim();
                 supplier.PhoneNumber = txtPhoneNumber.Text.Trim();
                 supplier.Fax = txtFax.Text.Trim();
