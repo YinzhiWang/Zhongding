@@ -13,11 +13,26 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class ClientInfoBankAccount : IEntityExtendedProperty
+    public partial class DBContract : IEntityExtendedProperty
     {
+        public DBContract()
+        {
+            this.Hospital = new HashSet<Hospital>();
+        }
+    
         public int ID { get; set; }
-        public Nullable<int> ClientInfoID { get; set; }
-        public Nullable<int> BankAccountID { get; set; }
+        public string ContractCode { get; set; }
+        public Nullable<int> ClientUserID { get; set; }
+        public Nullable<bool> IsTempContract { get; set; }
+        public Nullable<int> DepartmentID { get; set; }
+        public Nullable<int> InChargeUserID { get; set; }
+        public Nullable<int> ProductID { get; set; }
+        public Nullable<int> ProductSpecificationID { get; set; }
+        public Nullable<double> PromotionExpense { get; set; }
+        public Nullable<System.DateTime> ContractExpDate { get; set; }
+        public Nullable<bool> IsNew { get; set; }
+        public Nullable<int> HospitalTypeID { get; set; }
+        public string Comment { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -34,7 +49,6 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual BankAccount BankAccount { get; set; }
-        public virtual ClientInfo ClientInfo { get; set; }
+        public virtual ICollection<Hospital> Hospital { get; set; }
     }
 }

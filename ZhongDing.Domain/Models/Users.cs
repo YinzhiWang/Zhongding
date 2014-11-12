@@ -52,5 +52,6 @@ namespace ZhongDing.Domain.Models
     
         public virtual aspnet_Users aspnet_Users { get; set; }
         public virtual ICollection<Department> Department { get; set; }
+        public virtual Department Department1 { get; set; }
     }
 }

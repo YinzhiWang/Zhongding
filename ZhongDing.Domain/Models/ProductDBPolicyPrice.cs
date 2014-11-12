@@ -22,8 +22,8 @@ namespace ZhongDing.Domain.Models
         public Nullable<double> FeeRatio { get; set; }
         public Nullable<double> PreferredPrice { get; set; }
         public Nullable<double> PolicyPrice { get; set; }
-        public Nullable<bool> IsDeleted { get; set; }
-        public Nullable<System.DateTime> CreatedOn { get; set; }
+        public bool IsDeleted { get; set; }
+        public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }

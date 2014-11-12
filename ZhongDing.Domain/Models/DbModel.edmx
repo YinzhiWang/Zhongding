@@ -19,6 +19,8 @@
           <EntitySet Name="ClientInfoContact" EntityType="DbModel.Store.ClientInfoContact" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ClientUser" EntityType="DbModel.Store.ClientUser" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Company" EntityType="DbModel.Store.Company" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DBContract" EntityType="DbModel.Store.DBContract" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DBContractTaskAssignment" EntityType="DbModel.Store.DBContractTaskAssignment" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Department" EntityType="DbModel.Store.Department" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DistributionCompany" EntityType="DbModel.Store.DistributionCompany" store:Type="Tables" store:Schema="dbo" store:Name="DistributionCompany">
             <DefiningQuery>SELECT 
@@ -34,6 +36,7 @@
       [DistributionCompany].[LastModifiedBy] AS [LastModifiedBy]
       FROM [dbo].[DistributionCompany] AS [DistributionCompany]</DefiningQuery>
           </EntitySet>
+          <EntitySet Name="Hospital" EntityType="DbModel.Store.Hospital" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="OwnerType" EntityType="DbModel.Store.OwnerType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Product" EntityType="DbModel.Store.Product" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ProductBasicPrice" EntityType="DbModel.Store.ProductBasicPrice" store:Type="Tables" Schema="dbo" />
@@ -105,6 +108,10 @@
           <AssociationSet Name="FK_Department_Users" Association="DbModel.Store.FK_Department_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Hospital_DBContract" Association="DbModel.Store.FK_Hospital_DBContract">
+            <End Role="DBContract" EntitySet="DBContract" />
+            <End Role="Hospital" EntitySet="Hospital" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Company" Association="DbModel.Store.FK_Product_Company">
             <End Role="Company" EntitySet="Company" />
@@ -214,6 +221,10 @@
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="FK_Users_Department" Association="DbModel.Store.FK_Users_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
           <AssociationSet Name="FK_Warehouse_Company" Association="DbModel.Store.FK_Warehouse_Company">
             <End Role="Company" EntitySet="Company" />
             <End Role="Warehouse" EntitySet="Warehouse" />
@@ -221,10 +232,6 @@
           <AssociationSet Name="FK_Warehouse_SaleType" Association="DbModel.Store.FK_Warehouse_SaleType">
             <End Role="SaleType" EntitySet="SaleType" />
             <End Role="Warehouse" EntitySet="Warehouse" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Warehouse_Warehouse" Association="DbModel.Store.FK_Warehouse_Warehouse">
-            <End Role="Warehouse" EntitySet="Warehouse" />
-            <End Role="Warehouse1" EntitySet="Warehouse" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccountType">
@@ -336,8 +343,8 @@
           <Property Name="District" Type="nvarchar" MaxLength="50" />
           <Property Name="Address" Type="nvarchar" MaxLength="255" />
           <Property Name="PostalCode" Type="nvarchar" MaxLength="50" />
-          <Property Name="IsDeleted" Type="bit" />
-          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
@@ -354,8 +361,8 @@
           <Property Name="Fax" Type="nvarchar" MaxLength="50" />
           <Property Name="ReceiverAddress" Type="nvarchar" MaxLength="255" />
           <Property Name="ReceiptAddress" Type="nvarchar" MaxLength="255" />
-          <Property Name="IsDeleted" Type="bit" />
-          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
@@ -368,7 +375,6 @@
           <Property Name="ClientInfoID" Type="int" />
           <Property Name="BankAccountID" Type="int" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
-          <Property Name="DeletedOn" Type="datetime" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
@@ -384,8 +390,8 @@
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="Address" Type="nvarchar" MaxLength="255" />
           <Property Name="Comment" Type="nvarchar" MaxLength="255" />
-          <Property Name="IsDeleted" Type="bit" />
-          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
@@ -396,8 +402,8 @@
           </Key>
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="ClientName" Type="nvarchar" Nullable="false" MaxLength="50" />
-          <Property Name="IsDeleted" Type="bit" />
-          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
@@ -420,6 +426,42 @@
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
         </EntityType>
+        <EntityType Name="DBContract">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ContractCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ClientUserID" Type="int" />
+          <Property Name="IsTempContract" Type="bit" />
+          <Property Name="DepartmentID" Type="int" />
+          <Property Name="InChargeUserID" Type="int" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="ProductSpecificationID" Type="int" />
+          <Property Name="PromotionExpense" Type="float" />
+          <Property Name="ContractExpDate" Type="datetime" />
+          <Property Name="IsNew" Type="bit" />
+          <Property Name="HospitalTypeID" Type="int" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="DBContractTaskAssignment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Month" Type="int" />
+          <Property Name="Numbers" Type="int" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="ID" />
@@ -427,8 +469,8 @@
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="DepartmentName" Type="nvarchar" MaxLength="255" />
           <Property Name="DirectorUserID" Type="int" />
+          <Property Name="DepartmentTypeID" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
-          <Property Name="DeletedOn" Type="datetime" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
@@ -440,14 +482,29 @@
         <EntityType Name="DistributionCompany">
           <Key>
             <PropertyRef Name="Name" />
+            <PropertyRef Name="IsDeleted" />
+            <PropertyRef Name="CreatedOn" />
           </Key>
           <Property Name="ID" Type="int" />
           <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
           <Property Name="ReceiverName" Type="nvarchar" MaxLength="50" />
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="Address" Type="nvarchar" MaxLength="255" />
-          <Property Name="IsDeleted" Type="bit" />
-          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="Hospital">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DBContractID" Type="int" Nullable="false" />
+          <Property Name="HospitalName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
@@ -489,8 +546,8 @@
           <Property Name="ProcurePrice" Type="float" />
           <Property Name="SalePrice" Type="float" />
           <Property Name="Comment" Type="nvarchar" MaxLength="255" />
-          <Property Name="IsDeleted" Type="bit" />
-          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
@@ -509,8 +566,8 @@
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="CertificateID" Type="int" Nullable="false" />
-          <Property Name="IsDeleted" Type="bit" />
-          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
@@ -526,8 +583,8 @@
           <Property Name="FeeRatio" Type="float" />
           <Property Name="PreferredPrice" Type="float" />
           <Property Name="PolicyPrice" Type="float" />
-          <Property Name="IsDeleted" Type="bit" />
-          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
@@ -545,8 +602,8 @@
           <Property Name="SupplierTaxRatio" Type="float" />
           <Property Name="ClientTaxRatio" Type="float" />
           <Property Name="Comment" Type="nvarchar" MaxLength="255" />
-          <Property Name="IsDeleted" Type="bit" />
-          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
@@ -739,16 +796,17 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="CompanyID" Type="int" Nullable="false" />
+          <Property Name="WarehouseCode" Type="nvarchar" MaxLength="50" />
           <Property Name="Name" Type="nvarchar" MaxLength="255" />
           <Property Name="Address" Type="nvarchar" MaxLength="255" />
           <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
           <Property Name="SaleTypeID" Type="int" />
-          <Property Name="IsDeleted" Type="nchar" MaxLength="10" />
-          <Property Name="CreatedOn" Type="datetime" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
-          <Property Name="LastModifiedOn" Type="nchar" MaxLength="10" />
+          <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
         </EntityType>
         <Association Name="FK__aspnet_Me__UserI__10566F31">
@@ -904,6 +962,18 @@
             </Principal>
             <Dependent Role="Department">
               <PropertyRef Name="DirectorUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Hospital_DBContract">
+          <End Role="DBContract" Type="DbModel.Store.DBContract" Multiplicity="1" />
+          <End Role="Hospital" Type="DbModel.Store.Hospital" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DBContract">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Hospital">
+              <PropertyRef Name="DBContractID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1231,6 +1301,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Users_Department">
+          <End Role="Department" Type="DbModel.Store.Department" Multiplicity="0..1" />
+          <End Role="Users" Type="DbModel.Store.Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Warehouse_Company">
           <End Role="Company" Type="DbModel.Store.Company" Multiplicity="1" />
           <End Role="Warehouse" Type="DbModel.Store.Warehouse" Multiplicity="*" />
@@ -1255,18 +1337,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Warehouse_Warehouse">
-          <End Role="Warehouse" Type="DbModel.Store.Warehouse" Multiplicity="1" />
-          <End Role="Warehouse1" Type="DbModel.Store.Warehouse" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Warehouse">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Warehouse1">
-              <PropertyRef Name="ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -1285,8 +1355,11 @@
           <EntitySet Name="ClientInfoContact" EntityType="DbModel.ClientInfoContact" />
           <EntitySet Name="ClientUser" EntityType="DbModel.ClientUser" />
           <EntitySet Name="Company" EntityType="DbModel.Company" />
+          <EntitySet Name="DBContract" EntityType="DbModel.DBContract" />
+          <EntitySet Name="DBContractTaskAssignment" EntityType="DbModel.DBContractTaskAssignment" />
           <EntitySet Name="Department" EntityType="DbModel.Department" />
           <EntitySet Name="DistributionCompany" EntityType="DbModel.DistributionCompany" />
+          <EntitySet Name="Hospital" EntityType="DbModel.Hospital" />
           <EntitySet Name="OwnerType" EntityType="DbModel.OwnerType" />
           <EntitySet Name="Product" EntityType="DbModel.Product" />
           <EntitySet Name="ProductBasicPrice" EntityType="DbModel.ProductBasicPrice" />
@@ -1301,11 +1374,11 @@
           <EntitySet Name="SupplierBankAccount" EntityType="DbModel.SupplierBankAccount" />
           <EntitySet Name="SupplierCertificate" EntityType="DbModel.SupplierCertificate" />
           <EntitySet Name="SupplierContract" EntityType="DbModel.SupplierContract" />
+          <EntitySet Name="SupplierContractFile" EntityType="DbModel.SupplierContractFile" />
           <EntitySet Name="SupplierTaskAssignment" EntityType="DbModel.SupplierTaskAssignment" />
           <EntitySet Name="UnitOfMeasurement" EntityType="DbModel.UnitOfMeasurement" />
           <EntitySet Name="UserBonus" EntityType="DbModel.UserBonus" />
           <EntitySet Name="Users" EntityType="DbModel.Users" />
-          <EntitySet Name="Warehouse" EntityType="DbModel.Warehouse" />
           <AssociationSet Name="FK_BankAccount_AccountType" Association="DbModel.FK_BankAccount_AccountType">
             <End Role="AccountType" EntitySet="AccountType" />
             <End Role="BankAccount" EntitySet="BankAccount" />
@@ -1382,9 +1455,9 @@
             <End Role="Company" EntitySet="Company" />
             <End Role="Supplier" EntitySet="Supplier" />
           </AssociationSet>
-          <AssociationSet Name="FK_Warehouse_Company" Association="DbModel.FK_Warehouse_Company">
-            <End Role="Company" EntitySet="Company" />
-            <End Role="Warehouse" EntitySet="Warehouse" />
+          <AssociationSet Name="FK_Hospital_DBContract" Association="DbModel.FK_Hospital_DBContract">
+            <End Role="DBContract" EntitySet="DBContract" />
+            <End Role="Hospital" EntitySet="Hospital" />
           </AssociationSet>
           <AssociationSet Name="FK_Department_Users" Association="DbModel.FK_Department_Users">
             <End Role="Users" EntitySet="Users" />
@@ -1393,6 +1466,10 @@
           <AssociationSet Name="FK_Product_Department" Association="DbModel.FK_Product_Department">
             <End Role="Department" EntitySet="Department" />
             <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Department" Association="DbModel.FK_Users_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Users" EntitySet="Users" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_ProductCategory" Association="DbModel.FK_Product_ProductCategory">
             <End Role="ProductCategory" EntitySet="ProductCategory" />
@@ -1446,10 +1523,6 @@
             <End Role="ProductSpecification" EntitySet="ProductSpecification" />
             <End Role="SupplierContract" EntitySet="SupplierContract" />
           </AssociationSet>
-          <AssociationSet Name="FK_Warehouse_SaleType" Association="DbModel.FK_Warehouse_SaleType">
-            <End Role="SaleType" EntitySet="SaleType" />
-            <End Role="Warehouse" EntitySet="Warehouse" />
-          </AssociationSet>
           <AssociationSet Name="FK_SupplierBankAccount_Supplier" Association="DbModel.FK_SupplierBankAccount_Supplier">
             <End Role="Supplier" EntitySet="Supplier" />
             <End Role="SupplierBankAccount" EntitySet="SupplierBankAccount" />
@@ -1466,18 +1539,22 @@
             <End Role="Supplier" EntitySet="Supplier" />
             <End Role="SupplierTaskAssignment" EntitySet="SupplierTaskAssignment" />
           </AssociationSet>
+          <AssociationSet Name="FK_SupplierContractFile_SupplierContract" Association="DbModel.FK_SupplierContractFile_SupplierContract">
+            <End Role="SupplierContract" EntitySet="SupplierContract" />
+            <End Role="SupplierContractFile" EntitySet="SupplierContractFile" />
+          </AssociationSet>
           <AssociationSet Name="FK_SupplierTaskAssignment_SupplierContract" Association="DbModel.FK_SupplierTaskAssignment_SupplierContract">
             <End Role="SupplierContract" EntitySet="SupplierContract" />
             <End Role="SupplierTaskAssignment" EntitySet="SupplierTaskAssignment" />
           </AssociationSet>
-          <AssociationSet Name="FK_Warehouse_Warehouse" Association="DbModel.FK_Warehouse_Warehouse">
+          <EntitySet Name="Warehouse" EntityType="DbModel.Warehouse" />
+          <AssociationSet Name="FK_Warehouse_Company" Association="DbModel.FK_Warehouse_Company">
+            <End Role="Company" EntitySet="Company" />
             <End Role="Warehouse" EntitySet="Warehouse" />
-            <End Role="Warehouse1" EntitySet="Warehouse" />
           </AssociationSet>
-          <EntitySet Name="SupplierContractFile" EntityType="DbModel.SupplierContractFile" />
-          <AssociationSet Name="FK_SupplierContractFile_SupplierContract" Association="DbModel.FK_SupplierContractFile_SupplierContract">
-            <End Role="SupplierContract" EntitySet="SupplierContract" />
-            <End Role="SupplierContractFile" EntitySet="SupplierContractFile" />
+          <AssociationSet Name="FK_Warehouse_SaleType" Association="DbModel.FK_Warehouse_SaleType">
+            <End Role="SaleType" EntitySet="SaleType" />
+            <End Role="Warehouse" EntitySet="Warehouse" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccountType">
@@ -1605,8 +1682,8 @@
           <Property Type="String" Name="District" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Address" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="PostalCode" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsDeleted" />
-          <Property Type="DateTime" Name="CreatedOn" Precision="3" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
@@ -1624,8 +1701,8 @@
           <Property Type="String" Name="Fax" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="ReceiverAddress" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="ReceiptAddress" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsDeleted" />
-          <Property Type="DateTime" Name="CreatedOn" Precision="3" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
@@ -1642,7 +1719,6 @@
           <Property Type="Int32" Name="ClientInfoID" />
           <Property Type="Int32" Name="BankAccountID" />
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="DeletedOn" Precision="3" />
           <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
@@ -1660,8 +1736,8 @@
           <Property Type="String" Name="PhoneNumber" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Address" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Comment" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsDeleted" />
-          <Property Type="DateTime" Name="CreatedOn" Precision="3" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
@@ -1673,8 +1749,8 @@
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="ClientName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsDeleted" />
-          <Property Type="DateTime" Name="CreatedOn" Precision="3" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
@@ -1702,6 +1778,43 @@
           <NavigationProperty Name="Supplier" Relationship="DbModel.FK_Supplier_Company" FromRole="Company" ToRole="Supplier" />
           <NavigationProperty Name="Warehouse" Relationship="DbModel.FK_Warehouse_Company" FromRole="Company" ToRole="Warehouse" />
         </EntityType>
+        <EntityType Name="DBContract">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="ContractCode" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ClientUserID" />
+          <Property Type="Boolean" Name="IsTempContract" />
+          <Property Type="Int32" Name="DepartmentID" />
+          <Property Type="Int32" Name="InChargeUserID" />
+          <Property Type="Int32" Name="ProductID" />
+          <Property Type="Int32" Name="ProductSpecificationID" />
+          <Property Type="Double" Name="PromotionExpense" />
+          <Property Type="DateTime" Name="ContractExpDate" Precision="3" />
+          <Property Type="Boolean" Name="IsNew" />
+          <Property Type="Int32" Name="HospitalTypeID" />
+          <Property Type="String" Name="Comment" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Hospital" Relationship="DbModel.FK_Hospital_DBContract" FromRole="DBContract" ToRole="Hospital" />
+        </EntityType>
+        <EntityType Name="DBContractTaskAssignment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="Month" />
+          <Property Type="Int32" Name="Numbers" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+        </EntityType>
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="ID" />
@@ -1709,29 +1822,46 @@
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="String" Name="DepartmentName" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="DirectorUserID" />
+          <Property Type="Int32" Name="DepartmentTypeID" Nullable="false" />
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="DeletedOn" Precision="3" />
           <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="Users" Relationship="DbModel.FK_Department_Users" FromRole="Department" ToRole="Users" />
           <NavigationProperty Name="Product" Relationship="DbModel.FK_Product_Department" FromRole="Department" ToRole="Product" />
+          <NavigationProperty Name="Users1" Relationship="DbModel.FK_Users_Department" FromRole="Department" ToRole="Users" />
         </EntityType>
         <EntityType Name="DistributionCompany">
           <Key>
             <PropertyRef Name="Name" />
+            <PropertyRef Name="IsDeleted" />
+            <PropertyRef Name="CreatedOn" />
           </Key>
           <Property Type="Int32" Name="ID" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="ReceiverName" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="PhoneNumber" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Address" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsDeleted" />
-          <Property Type="DateTime" Name="CreatedOn" Precision="3" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
+        </EntityType>
+        <EntityType Name="Hospital">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DBContractID" Nullable="false" />
+          <Property Type="String" Name="HospitalName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="DBContract" Relationship="DbModel.FK_Hospital_DBContract" FromRole="Hospital" ToRole="DBContract" />
         </EntityType>
         <EntityType Name="OwnerType">
           <Key>
@@ -1783,8 +1913,8 @@
           <Property Type="Double" Name="ProcurePrice" />
           <Property Type="Double" Name="SalePrice" />
           <Property Type="String" Name="Comment" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsDeleted" />
-          <Property Type="DateTime" Name="CreatedOn" Precision="3" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
@@ -1806,8 +1936,8 @@
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="ProductID" Nullable="false" />
           <Property Type="Int32" Name="CertificateID" Nullable="false" />
-          <Property Type="Boolean" Name="IsDeleted" />
-          <Property Type="DateTime" Name="CreatedOn" Precision="3" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
@@ -1825,8 +1955,8 @@
           <Property Type="Double" Name="FeeRatio" />
           <Property Type="Double" Name="PreferredPrice" />
           <Property Type="Double" Name="PolicyPrice" />
-          <Property Type="Boolean" Name="IsDeleted" />
-          <Property Type="DateTime" Name="CreatedOn" Precision="3" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
@@ -1846,8 +1976,8 @@
           <Property Type="Double" Name="SupplierTaxRatio" />
           <Property Type="Double" Name="ClientTaxRatio" />
           <Property Type="String" Name="Comment" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsDeleted" />
-          <Property Type="DateTime" Name="CreatedOn" Precision="3" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
@@ -1977,8 +2107,24 @@
           <NavigationProperty Name="Product" Relationship="DbModel.FK_SupplierContract_Product" FromRole="SupplierContract" ToRole="Product" />
           <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_SupplierContract_ProductSpecification" FromRole="SupplierContract" ToRole="ProductSpecification" />
           <NavigationProperty Name="Supplier" Relationship="DbModel.FK_SupplierContract_Supplier" FromRole="SupplierContract" ToRole="Supplier" />
-          <NavigationProperty Name="SupplierTaskAssignment" Relationship="DbModel.FK_SupplierTaskAssignment_SupplierContract" FromRole="SupplierContract" ToRole="SupplierTaskAssignment" />
           <NavigationProperty Name="SupplierContractFile" Relationship="DbModel.FK_SupplierContractFile_SupplierContract" FromRole="SupplierContract" ToRole="SupplierContractFile" />
+          <NavigationProperty Name="SupplierTaskAssignment" Relationship="DbModel.FK_SupplierTaskAssignment_SupplierContract" FromRole="SupplierContract" ToRole="SupplierTaskAssignment" />
+        </EntityType>
+        <EntityType Name="SupplierContractFile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ContractID" />
+          <Property Type="String" Name="FileName" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FilePath" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Comment" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="SupplierContract" Relationship="DbModel.FK_SupplierContractFile_SupplierContract" FromRole="SupplierContractFile" ToRole="SupplierContract" />
         </EntityType>
         <EntityType Name="SupplierTaskAssignment">
           <Key>
@@ -2050,26 +2196,7 @@
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="aspnet_Users" Relationship="DbModel.FK_Users_aspnet_Users" FromRole="Users" ToRole="aspnet_Users" />
           <NavigationProperty Name="Department" Relationship="DbModel.FK_Department_Users" FromRole="Users" ToRole="Department" />
-        </EntityType>
-        <EntityType Name="Warehouse">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="Int32" Name="CompanyID" Nullable="false" />
-          <Property Type="String" Name="Name" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Address" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Comment" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="SaleTypeID" />
-          <Property Type="String" Name="IsDeleted" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Type="DateTime" Name="CreatedOn" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="String" Name="LastModifiedOn" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="Company" Relationship="DbModel.FK_Warehouse_Company" FromRole="Warehouse" ToRole="Company" />
-          <NavigationProperty Name="SaleType" Relationship="DbModel.FK_Warehouse_SaleType" FromRole="Warehouse" ToRole="SaleType" />
-          <NavigationProperty Name="Warehouse1" Relationship="DbModel.FK_Warehouse_Warehouse" FromRole="Warehouse" ToRole="Warehouse1" />
-          <NavigationProperty Name="Warehouse2" Relationship="DbModel.FK_Warehouse_Warehouse" FromRole="Warehouse1" ToRole="Warehouse" />
+          <NavigationProperty Name="Department1" Relationship="DbModel.FK_Users_Department" FromRole="Users" ToRole="Department" />
         </EntityType>
         <Association Name="FK_BankAccount_AccountType">
           <End Type="DbModel.AccountType" Role="AccountType" Multiplicity="0..1" />
@@ -2299,15 +2426,15 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Warehouse_Company">
-          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
-          <End Type="DbModel.Warehouse" Role="Warehouse" Multiplicity="*" />
+        <Association Name="FK_Hospital_DBContract">
+          <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="1" />
+          <End Type="DbModel.Hospital" Role="Hospital" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Company">
+            <Principal Role="DBContract">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="Warehouse">
-              <PropertyRef Name="CompanyID" />
+            <Dependent Role="Hospital">
+              <PropertyRef Name="DBContractID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2331,6 +2458,18 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="Product">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Department">
+          <End Type="DbModel.Department" Role="Department" Multiplicity="0..1" />
+          <End Type="DbModel.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users">
               <PropertyRef Name="DepartmentID" />
             </Dependent>
           </ReferentialConstraint>
@@ -2491,18 +2630,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Warehouse_SaleType">
-          <End Type="DbModel.SaleType" Role="SaleType" Multiplicity="0..1" />
-          <End Type="DbModel.Warehouse" Role="Warehouse" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SaleType">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Warehouse">
-              <PropertyRef Name="SaleTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SupplierBankAccount_Supplier">
           <End Type="DbModel.Supplier" Role="Supplier" Multiplicity="0..1" />
           <End Type="DbModel.SupplierBankAccount" Role="SupplierBankAccount" Multiplicity="*" />
@@ -2551,6 +2678,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SupplierContractFile_SupplierContract">
+          <End Type="DbModel.SupplierContract" Role="SupplierContract" Multiplicity="0..1" />
+          <End Type="DbModel.SupplierContractFile" Role="SupplierContractFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplierContract">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierContractFile">
+              <PropertyRef Name="ContractID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SupplierTaskAssignment_SupplierContract">
           <End Type="DbModel.SupplierContract" Role="SupplierContract" Multiplicity="0..1" />
           <End Type="DbModel.SupplierTaskAssignment" Role="SupplierTaskAssignment" Multiplicity="*" />
@@ -2563,43 +2702,46 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Warehouse_Warehouse">
-          <End Type="DbModel.Warehouse" Role="Warehouse" Multiplicity="1" />
-          <End Type="DbModel.Warehouse" Role="Warehouse1" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Warehouse">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Warehouse1">
-              <PropertyRef Name="ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="SupplierContractFile">
+        <EntityType Name="Warehouse">
           <Key>
             <PropertyRef Name="ID" />
           </Key>
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="ContractID" />
-          <Property Type="String" Name="FileName" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="FilePath" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="CompanyID" Nullable="false" />
+          <Property Type="String" Name="WarehouseCode" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Name" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Type="String" Name="Comment" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="SaleTypeID" />
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
           <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="SupplierContract" Relationship="DbModel.FK_SupplierContractFile_SupplierContract" FromRole="SupplierContractFile" ToRole="SupplierContract" />
+          <NavigationProperty Name="Company" Relationship="DbModel.FK_Warehouse_Company" FromRole="Warehouse" ToRole="Company" />
+          <NavigationProperty Name="SaleType" Relationship="DbModel.FK_Warehouse_SaleType" FromRole="Warehouse" ToRole="SaleType" />
         </EntityType>
-        <Association Name="FK_SupplierContractFile_SupplierContract">
-          <End Type="DbModel.SupplierContract" Role="SupplierContract" Multiplicity="0..1" />
-          <End Type="DbModel.SupplierContractFile" Role="SupplierContractFile" Multiplicity="*" />
+        <Association Name="FK_Warehouse_Company">
+          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="DbModel.Warehouse" Role="Warehouse" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="SupplierContract">
+            <Principal Role="Company">
               <PropertyRef Name="ID" />
             </Principal>
-            <Dependent Role="SupplierContractFile">
-              <PropertyRef Name="ContractID" />
+            <Dependent Role="Warehouse">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Warehouse_SaleType">
+          <End Type="DbModel.SaleType" Role="SaleType" Multiplicity="0..1" />
+          <End Type="DbModel.Warehouse" Role="Warehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaleType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Warehouse">
+              <PropertyRef Name="SaleTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2758,7 +2900,6 @@
                 <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="BankAccountID" ColumnName="BankAccountID" />
                 <ScalarProperty Name="ClientInfoID" ColumnName="ClientInfoID" />
@@ -2815,6 +2956,44 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DBContract">
+            <EntityTypeMapping TypeName="DbModel.DBContract">
+              <MappingFragment StoreEntitySet="DBContract">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="HospitalTypeID" ColumnName="HospitalTypeID" />
+                <ScalarProperty Name="IsNew" ColumnName="IsNew" />
+                <ScalarProperty Name="ContractExpDate" ColumnName="ContractExpDate" />
+                <ScalarProperty Name="PromotionExpense" ColumnName="PromotionExpense" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="InChargeUserID" ColumnName="InChargeUserID" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="IsTempContract" ColumnName="IsTempContract" />
+                <ScalarProperty Name="ClientUserID" ColumnName="ClientUserID" />
+                <ScalarProperty Name="ContractCode" ColumnName="ContractCode" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DBContractTaskAssignment">
+            <EntityTypeMapping TypeName="DbModel.DBContractTaskAssignment">
+              <MappingFragment StoreEntitySet="DBContractTaskAssignment">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Numbers" ColumnName="Numbers" />
+                <ScalarProperty Name="Month" ColumnName="Month" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Department">
             <EntityTypeMapping TypeName="DbModel.Department">
               <MappingFragment StoreEntitySet="Department">
@@ -2822,8 +3001,8 @@
                 <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="DepartmentTypeID" ColumnName="DepartmentTypeID" />
                 <ScalarProperty Name="DirectorUserID" ColumnName="DirectorUserID" />
                 <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -2842,6 +3021,20 @@
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="ReceiverName" ColumnName="ReceiverName" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hospital">
+            <EntityTypeMapping TypeName="DbModel.Hospital">
+              <MappingFragment StoreEntitySet="Hospital">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="HospitalName" ColumnName="HospitalName" />
+                <ScalarProperty Name="DBContractID" ColumnName="DBContractID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -3062,6 +3255,22 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SupplierContractFile">
+            <EntityTypeMapping TypeName="DbModel.SupplierContractFile">
+              <MappingFragment StoreEntitySet="SupplierContractFile">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="ContractID" ColumnName="ContractID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="SupplierTaskAssignment">
             <EntityTypeMapping TypeName="DbModel.SupplierTaskAssignment">
               <MappingFragment StoreEntitySet="SupplierTaskAssignment">
@@ -3144,23 +3353,8 @@
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="WarehouseCode" ColumnName="WarehouseCode" />
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SupplierContractFile">
-            <EntityTypeMapping TypeName="DbModel.SupplierContractFile">
-              <MappingFragment StoreEntitySet="SupplierContractFile">
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="ContractID" ColumnName="ContractID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

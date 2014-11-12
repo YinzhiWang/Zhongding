@@ -18,13 +18,14 @@ namespace ZhongDing.Domain.Models
         public Department()
         {
             this.Product = new HashSet<Product>();
+            this.Users1 = new HashSet<Users>();
         }
     
         public int ID { get; set; }
         public string DepartmentName { get; set; }
         public Nullable<int> DirectorUserID { get; set; }
+        public int DepartmentTypeID { get; set; }
         public bool IsDeleted { get; set; }
-        public Nullable<System.DateTime> DeletedOn { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
@@ -33,7 +34,7 @@ namespace ZhongDing.Domain.Models
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
     	public bool HasColumnIsDeleted { get { return true; } }
-    	public bool HasColumnDeletedOn { get { return true; } }
+    	public bool HasColumnDeletedOn { get { return false; } }
     	public bool HasColumnCreatedOn { get { return true; } }
     	public bool HasColumnCreatedBy { get { return true; } }
     	public bool HasColumnLastModifiedOn { get { return true; } }
@@ -42,5 +43,6 @@ namespace ZhongDing.Domain.Models
     
         public virtual Users Users { get; set; }
         public virtual ICollection<Product> Product { get; set; }
+        public virtual ICollection<Users> Users1 { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using ZhongDing.Business.IRepositories;
 using ZhongDing.Business.Repositories;
 using ZhongDing.Common;
 using ZhongDing.Common.Enums;
+using ZhongDing.Domain.Models;
 using ZhongDing.Web.Extensions;
 
 namespace ZhongDing.Web.Account
@@ -87,13 +88,14 @@ namespace ZhongDing.Web.Account
             }
             else
             {
+                Company selectedCompany = null;
                 //检查账套的有效性
                 int companyID;
                 if (int.TryParse(ddlCompany.SelectedValue, out companyID))
                 {
-                    var company = PageCompanyRepository.GetByID(companyID);
+                    selectedCompany = PageCompanyRepository.GetByID(companyID);
                     //无效账套
-                    if (company == null)
+                    if (selectedCompany == null)
                     {
                         hdnErrorMsgCompany.Value = "无效的账套，请重新选择";
 
@@ -150,7 +152,10 @@ namespace ZhongDing.Web.Account
                         {
                             FormsAuthentication.SetAuthCookie(userName, false);
 
-                            SiteUser.GetCurrentSiteUser().CompanyID = companyID;
+                            var currentSiteUser = SiteUser.GetCurrentSiteUser();
+
+                            currentSiteUser.CompanyID = companyID;
+                            currentSiteUser.CompanyName = selectedCompany.CompanyName;
 
                             //PageUserLogRepository.SaveUserLog(user.UserID, "用户：" + mUser.UserName + " 成功登录系统");
 

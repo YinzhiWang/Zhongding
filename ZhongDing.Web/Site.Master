@@ -69,19 +69,20 @@
                                     <li data-level="2" data-menuitemid="3"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/CompanyManagement.aspx');">帐套管理</a></li>
                                     <li data-level="2" data-menuitemid="4"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/BankAccountManagement.aspx');">银行帐号管理</a></li>
                                     <li data-level="2" data-menuitemid="5"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/SupplierManagement.aspx');">供应商管理</a></li>
-                                    <li data-level="2"><a href="#">客户管理</a></li>
-                                    <li data-level="2"><a href="#">配送公司管理</a></li>
-                                    <li data-level="2"><a href="#">大包客户协议管理</a></li>
-                                    <li data-level="2"><a href="#">商业客户流向管理</a></li>
-                                    <li data-level="2"><a href="#">部门销售计划及提成策略</a></li>
+                                    <li data-level="2" data-menuitemid="6"><a href="#">商业单位管理</a></li>
+                                    <li data-level="2" data-menuitemid="7"><a href="#">客户管理</a></li>
+                                    <li data-level="2" data-menuitemid="8"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/WarehouseManagement.aspx');">仓库管理</a></li>
+                                    <li data-level="2" data-menuitemid=""><a href="#">配送公司管理</a></li>
+                                    <li data-level="2" data-menuitemid=""><a href="#">大包客户协议管理</a></li>
+                                    <li data-level="2" data-menuitemid=""><a href="#">商业客户流向管理</a></li>
+                                    <li data-level="2" data-menuitemid=""><a href="#">部门销售计划及提成策略</a></li>
                                 </ul>
                             </li>
-                            <li data-level="1"><a href="#" class="mws-i-24 i-price-tags">货品管理</a>
+                            <li data-level="1" data-menuitemid="12"><a href="#" class="mws-i-24 i-price-tags">货品管理</a>
                                 <ul class="hide">
-                                    <li data-level="2"><a href="#">货品管理</a></li>
-                                    <li data-level="2"><a href="#">货品价格管理</a></li>
-                                    <li data-level="2"><a href="#">仓库管理</a></li>
-                                    <li data-level="2"><a href="#">库存货品信息</a></li>
+                                    <li data-level="2" data-menuitemid=""><a href="#">货品管理</a></li>
+                                    <li data-level="2" data-menuitemid=""><a href="#">货品价格管理</a></li>
+                                    <li data-level="2" data-menuitemid=""><a href="#">库存货品信息</a></li>
                                 </ul>
 
                             </li>

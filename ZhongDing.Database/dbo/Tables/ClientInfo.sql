@@ -7,8 +7,8 @@
     [Fax]             NVARCHAR (50)  NULL,
     [ReceiverAddress] NVARCHAR (255) NULL,
     [ReceiptAddress]  NVARCHAR (255) NULL,
-    [IsDeleted]       BIT            NULL,
-    [CreatedOn]       DATETIME       NULL,
+    [IsDeleted]       BIT            CONSTRAINT [DF_ClientInfo_IsDeleted] DEFAULT ((0)) NOT NULL,
+    [CreatedOn]       DATETIME       CONSTRAINT [DF_ClientInfo_CreatedOn] DEFAULT (getdate()) NOT NULL,
     [CreatedBy]       INT            NULL,
     [LastModifiedOn]  DATETIME       NULL,
     [LastModifiedBy]  INT            NULL,
@@ -16,4 +16,6 @@
     CONSTRAINT [FK_ClientInfo_ClientCompany] FOREIGN KEY ([ClientCompanyID]) REFERENCES [dbo].[ClientCompany] ([ID]),
     CONSTRAINT [FK_ClientInfo_ClientUser] FOREIGN KEY ([ClientUserID]) REFERENCES [dbo].[ClientUser] ([ID])
 );
+
+
 

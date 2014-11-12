@@ -107,6 +107,11 @@ namespace ZhongDing.Common
             /// </summary>
             public static readonly string MSG_SUCCESS_SAEVED_REDIRECT = "保存成功，页面将自动跳转";
 
+            /// <summary>
+            /// 提示消息：删除成功，页面将自动跳转
+            /// </summary>
+            public static readonly string MSG_SUCCESS_DELETED_REDIRECT = "删除成功，页面将自动跳转";
+
 
             /// <summary>
             /// 提示消息：参数错误，窗口将自动关闭
@@ -144,6 +149,11 @@ namespace ZhongDing.Common
                 /// 供应商合同编号前缀
                 /// </summary>
                 public static readonly string SUPPLIER_CONTRACT = "GYSHT";
+
+                /// <summary>
+                /// 仓库编号前缀
+                /// </summary>
+                public static readonly string WAREHOUSE  = "CK";
             }
 
         }

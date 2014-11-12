@@ -32,8 +32,8 @@ namespace ZhongDing.Web.Extensions
                     this.MobilePhone = mUser.MobilePhone;
 
                     //测试代码，发布时需要删除
-
                     //this.CompanyID = 1;
+                    //this.CompanyName = "英特康";
                 }
             }
         }
@@ -83,6 +83,26 @@ namespace ZhongDing.Web.Extensions
             set
             {
                 m_currentSession.Add("CompanyID", value);
+            }
+        }
+
+        /// <summary>
+        /// 账套名称
+        /// </summary>
+        /// <value>The company ID.</value>
+        public string CompanyName
+        {
+            get
+            {
+                if (m_currentSession != null && m_currentSession["CompanyName"] != null)
+                {
+                    return m_currentSession["CompanyName"].ToString();
+                }
+                return null;
+            }
+            set
+            {
+                m_currentSession.Add("CompanyName", value);
             }
         }
 

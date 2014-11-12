@@ -38,8 +38,11 @@ namespace ZhongDing.Domain.Models
         public DbSet<ClientInfoContact> ClientInfoContact { get; set; }
         public DbSet<ClientUser> ClientUser { get; set; }
         public DbSet<Company> Company { get; set; }
+        public DbSet<DBContract> DBContract { get; set; }
+        public DbSet<DBContractTaskAssignment> DBContractTaskAssignment { get; set; }
         public DbSet<Department> Department { get; set; }
         public DbSet<DistributionCompany> DistributionCompany { get; set; }
+        public DbSet<Hospital> Hospital { get; set; }
         public DbSet<OwnerType> OwnerType { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<ProductBasicPrice> ProductBasicPrice { get; set; }
@@ -54,11 +57,11 @@ namespace ZhongDing.Domain.Models
         public DbSet<SupplierBankAccount> SupplierBankAccount { get; set; }
         public DbSet<SupplierCertificate> SupplierCertificate { get; set; }
         public DbSet<SupplierContract> SupplierContract { get; set; }
+        public DbSet<SupplierContractFile> SupplierContractFile { get; set; }
         public DbSet<SupplierTaskAssignment> SupplierTaskAssignment { get; set; }
         public DbSet<UnitOfMeasurement> UnitOfMeasurement { get; set; }
         public DbSet<UserBonus> UserBonus { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<Warehouse> Warehouse { get; set; }
-        public DbSet<SupplierContractFile> SupplierContractFile { get; set; }
     }
 }

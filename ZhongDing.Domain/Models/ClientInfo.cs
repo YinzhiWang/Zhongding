@@ -29,8 +29,8 @@ namespace ZhongDing.Domain.Models
         public string Fax { get; set; }
         public string ReceiverAddress { get; set; }
         public string ReceiptAddress { get; set; }
-        public Nullable<bool> IsDeleted { get; set; }
-        public Nullable<System.DateTime> CreatedOn { get; set; }
+        public bool IsDeleted { get; set; }
+        public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }

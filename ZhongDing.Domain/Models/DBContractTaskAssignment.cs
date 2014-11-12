@@ -13,11 +13,11 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class ClientInfoBankAccount : IEntityExtendedProperty
+    public partial class DBContractTaskAssignment : IEntityExtendedProperty
     {
         public int ID { get; set; }
-        public Nullable<int> ClientInfoID { get; set; }
-        public Nullable<int> BankAccountID { get; set; }
+        public Nullable<int> Month { get; set; }
+        public Nullable<int> Numbers { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -33,8 +33,5 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedOn { get { return true; } }
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
-    
-        public virtual BankAccount BankAccount { get; set; }
-        public virtual ClientInfo ClientInfo { get; set; }
     }
 }

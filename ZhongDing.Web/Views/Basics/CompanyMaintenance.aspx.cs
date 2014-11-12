@@ -115,7 +115,7 @@ namespace ZhongDing.Web.Views.Basics
                 PageCompanyRepository.Save();
 
                 this.Master.BaseNotification.OnClientHidden = "onClientHidden";
-                this.Master.BaseNotification.Show("保存成功，页面将自动跳转");
+                this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SAEVED_REDIRECT);
             }
         }
 
@@ -128,7 +128,7 @@ namespace ZhongDing.Web.Views.Basics
                 PageCompanyRepository.Save();
 
                 this.Master.BaseNotification.OnClientHidden = "onClientHidden";
-                this.Master.BaseNotification.Show("删除成功，页面将自动跳转");
+                this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_DELETED_REDIRECT);
             }
         }
 
