@@ -291,7 +291,7 @@ th
 
     th a
     {
-        display: block;
+        /*display: block;*/
         position: relative;
     }
 
