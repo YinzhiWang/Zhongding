@@ -2635,7 +2635,9 @@
     <Content Include="Views\Basics\CompanyManagement.aspx" />
     <Content Include="Views\Basics\SupplierMaintenance.aspx" />
     <Content Include="Views\Basics\SupplierManagement.aspx" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Bundle.config" />
     <Content Include="WebServices\Web.config" />
   </ItemGroup>
@@ -2912,7 +2914,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -333,6 +333,9 @@
     <Build Include="dbo\Tables\Hospital.sql" />
     <Build Include="dbo\Tables\DBContractTaskAssignment.sql" />
     <Build Include="dbo\Tables\DBContract.sql" />
+    <Build Include="dbo\Tables\DeptMarket.sql" />
+    <Build Include="dbo\Tables\DeptDistrict.sql" />
+    <Build Include="dbo\Tables\ClientInfoProductSetting.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

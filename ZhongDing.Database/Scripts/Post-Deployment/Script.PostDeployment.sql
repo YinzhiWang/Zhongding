@@ -175,3 +175,66 @@ SET IDENTITY_INSERT [dbo].[ProductCategory] OFF
 COMMIT TRANSACTION
 
 ---- end ---- 11/6/2014 -- 初始化CertificateType, SaleType数据 -- by Yinzhi 
+
+---- start --- 11/13/2014 -- 初始化DeptDistrict -- by Yinzhi 
+SET NUMERIC_ROUNDABORT OFF
+GO
+SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+
+BEGIN TRANSACTION
+SET IDENTITY_INSERT [dbo].[DeptDistrict] ON
+INSERT INTO [dbo].[DeptDistrict] ([ID], [DepartmentTypeID], [DistrictName]) VALUES (1,1, N'南宁')
+INSERT INTO [dbo].[DeptDistrict] ([ID], [DepartmentTypeID], [DistrictName]) VALUES (2,1, N'柳州')
+INSERT INTO [dbo].[DeptDistrict] ([ID], [DepartmentTypeID], [DistrictName]) VALUES (3,1, N'百色')
+INSERT INTO [dbo].[DeptDistrict] ([ID], [DepartmentTypeID], [DistrictName]) VALUES (4,2, N'桂南')
+INSERT INTO [dbo].[DeptDistrict] ([ID], [DepartmentTypeID], [DistrictName]) VALUES (5,2, N'桂北')
+
+SET IDENTITY_INSERT [dbo].[DeptDistrict] OFF
+
+SET IDENTITY_INSERT [dbo].[DeptMarket] ON
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (1,1, N'南宁')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (2,1, N'崇左')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (3,1, N'百色')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (4,1, N'钦防北')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (5,2, N'柳州')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (6,2, N'来宾')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (7,2, N'河池')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (8,2, N'桂林')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (9,3, N'梧州')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (10,3, N'贺州（除苍梧、岑溪）')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (11,3, N'贵港市区')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (12,3, N'桂平')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (13,3, N'博白')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (14,3, N'北流')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (15,3, N'玉林市区')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (16,3, N'容县')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (17,3, N'兴业')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (18,3, N'陆川')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (19,3, N'岑溪')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (20,3, N'苍梧')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (21,3, N'平南')
+
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (22,4, N'南宁')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (23,4, N'百色')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (24,4, N'钦州')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (25,4, N'防城')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (26,4, N'北海')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (27,4, N'崇左')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (28,4, N'贵港')
+
+
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (29,5, N'柳州')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (30,5, N'来宾')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (31,5, N'桂林')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (32,5, N'河池')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (33,5, N'玉林')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (34,5, N'梧州')
+INSERT INTO [dbo].[DeptMarket] ([ID], [DeptDistrictID], [MarketName]) VALUES (35,5, N'贺州')
+
+SET IDENTITY_INSERT [dbo].[DeptMarket] OFF
+
+
+COMMIT TRANSACTION
+
+---- end ---- 11/13/2014 -- 初始化DeptDistrict -- by Yinzhi 
