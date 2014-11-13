@@ -336,6 +336,9 @@
     <Build Include="dbo\Tables\DeptMarket.sql" />
     <Build Include="dbo\Tables\DeptDistrict.sql" />
     <Build Include="dbo\Tables\ClientInfoProductSetting.sql" />
+    <Build Include="dbo\Tables\DeptProductEvaluation.sql" />
+    <Build Include="dbo\Tables\DeptMarketProduct.sql" />
+    <Build Include="dbo\Tables\DeptMarketDivision.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />
