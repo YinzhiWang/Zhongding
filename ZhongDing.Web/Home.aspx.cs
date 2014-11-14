@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using ZhongDing.Common.Enums;
 
 namespace ZhongDing.Web
 {
@@ -11,7 +12,7 @@ namespace ZhongDing.Web
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.Master.MenuItemID = 1;
+            this.Master.MenuItemID = (int)EMenuItem.Home;
         }
     }
 }

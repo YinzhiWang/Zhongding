@@ -58,6 +58,7 @@
     <Compile Include="IRepositories\ICertificateRepository.cs" />
     <Compile Include="IRepositories\ICertificateTypeRepository.cs" />
     <Compile Include="IRepositories\ICompanyRepository.cs" />
+    <Compile Include="IRepositories\IDistributionCompanyRepository.cs" />
     <Compile Include="IRepositories\IGenerateDropdownItems.cs" />
     <Compile Include="IRepositories\IOwnerTypeRepository.cs" />
     <Compile Include="IRepositories\IProductRepository.cs" />
@@ -82,6 +83,7 @@
     <Compile Include="Repositories\CertificateRepository.cs" />
     <Compile Include="Repositories\CertificateTypeRepository.cs" />
     <Compile Include="Repositories\CompanyRepository.cs" />
+    <Compile Include="Repositories\DistributionCompanyRepository.cs" />
     <Compile Include="Repositories\OwnerTypeRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\ProductSpecificationRepository.cs" />

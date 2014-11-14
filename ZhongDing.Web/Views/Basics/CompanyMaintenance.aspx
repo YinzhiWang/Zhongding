@@ -89,7 +89,7 @@
                     </div>
                     <div class="mws-button-row">
                         <asp:Button ID="btnSave" runat="server" Text="保存" CssClass="mws-button green" CausesValidation="true" ValidationGroup="vgMaintenance" OnClick="btnSave_Click" />
-                        <asp:Button ID="btnDelete" runat="server" Text="删除" CssClass="mws-button green" CausesValidation="false" OnClick="btnDelete_Click" OnClientClick="return onConfirmDelete();" />
+                        <asp:Button ID="btnDelete" runat="server" Text="删除" CssClass="mws-button orange" CausesValidation="false" OnClick="btnDelete_Click" OnClientClick="return onConfirmDelete();" />
                         <asp:Button ID="btnCancel" runat="server" Text="取消" UseSubmitBehavior="false" CssClass="mws-button green" OnClientClick="redirectToPage('Views/Basics/CompanyManagement.aspx');return false;" />
                     </div>
                 </div>

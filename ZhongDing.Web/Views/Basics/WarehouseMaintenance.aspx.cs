@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using ZhongDing.Business.IRepositories;
 using ZhongDing.Business.Repositories;
 using ZhongDing.Common;
+using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
 
 namespace ZhongDing.Web.Views.Basics
@@ -44,7 +45,7 @@ namespace ZhongDing.Web.Views.Basics
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.Master.MenuItemID = 8;
+            this.Master.MenuItemID = (int)EMenuItem.WarehouseManage;
 
             if (!IsPostBack)
             {

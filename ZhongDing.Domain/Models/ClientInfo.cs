@@ -19,6 +19,7 @@ namespace ZhongDing.Domain.Models
         {
             this.ClientInfoBankAccount = new HashSet<ClientInfoBankAccount>();
             this.ClientInfoContact = new HashSet<ClientInfoContact>();
+            this.ClientInfoProductSetting = new HashSet<ClientInfoProductSetting>();
         }
     
         public int ID { get; set; }
@@ -49,5 +50,6 @@ namespace ZhongDing.Domain.Models
         public virtual ClientUser ClientUser { get; set; }
         public virtual ICollection<ClientInfoBankAccount> ClientInfoBankAccount { get; set; }
         public virtual ICollection<ClientInfoContact> ClientInfoContact { get; set; }
+        public virtual ICollection<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
     }
 }

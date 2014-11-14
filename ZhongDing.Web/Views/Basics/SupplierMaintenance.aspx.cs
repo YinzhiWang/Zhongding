@@ -88,7 +88,7 @@ namespace ZhongDing.Web.Views.Basics
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.Master.MenuItemID = 5;
+            this.Master.MenuItemID = (int)EMenuItem.SupplierManage;
 
             //新增时隐藏其他sections
             if (!this.SupplierID.HasValue

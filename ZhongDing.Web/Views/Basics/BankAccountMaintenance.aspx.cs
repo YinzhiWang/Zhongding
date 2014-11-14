@@ -78,7 +78,7 @@ namespace ZhongDing.Web.Views.Basics
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.Master.MenuItemID = 4;
+            this.Master.MenuItemID = (int)EMenuItem.BankAccountManage;
 
             if (!IsPostBack)
             {

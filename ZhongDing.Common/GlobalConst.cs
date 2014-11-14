@@ -154,6 +154,11 @@ namespace ZhongDing.Common
                 /// 仓库编号前缀
                 /// </summary>
                 public static readonly string WAREHOUSE  = "CK";
+
+                /// <summary>
+                /// 配送公司编号前缀
+                /// </summary>
+                public static readonly string  DISTRIBUTION_COMPANY = "PSGS";
             }
 
         }

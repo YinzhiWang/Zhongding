@@ -19,6 +19,7 @@ namespace ZhongDing.Domain.Models
         {
             this.Product = new HashSet<Product>();
             this.Users1 = new HashSet<Users>();
+            this.ClientInfoProductSetting = new HashSet<ClientInfoProductSetting>();
         }
     
         public int ID { get; set; }
@@ -44,5 +45,6 @@ namespace ZhongDing.Domain.Models
         public virtual Users Users { get; set; }
         public virtual ICollection<Product> Product { get; set; }
         public virtual ICollection<Users> Users1 { get; set; }
+        public virtual ICollection<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
     }
 }

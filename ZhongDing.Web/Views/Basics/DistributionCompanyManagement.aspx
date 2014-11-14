@@ -1,4 +1,4 @@
-﻿<%@ Page Title="仓库管理" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="WarehouseManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Basics.WarehouseManagement" %>
+﻿<%@ Page Title="配送公司管理" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DistributionCompanyManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Basics.DistributionCompanyManagement" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 
@@ -12,18 +12,18 @@
             <telerik:AjaxSetting AjaxControlID="btnSearch">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="tblSearch" />
-                    <telerik:AjaxUpdatedControl ControlID="rgWarehouses" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="rgEntities" LoadingPanelID="loadingPanel" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="btnReset">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="tblSearch" />
-                    <telerik:AjaxUpdatedControl ControlID="rgWarehouses" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="rgEntities" LoadingPanelID="loadingPanel" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
-            <telerik:AjaxSetting AjaxControlID="rgWarehouses">
+            <telerik:AjaxSetting AjaxControlID="rgEntities">
                 <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="rgWarehouses" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="rgEntities" LoadingPanelID="loadingPanel" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
         </AjaxSettings>
@@ -33,16 +33,16 @@
     <div class="container">
         <div class="mws-panel grid_8">
             <div class="mws-panel-header">
-                <span class="mws-i-24 i-table-1">仓库管理</span>
+                <span class="mws-i-24 i-table-1">配送公司管理</span>
             </div>
             <div class="mws-panel-body">
                 <table runat="server" id="tblSearch" class="leftmargin10">
                     <tr class="height40">
                         <td class="middle-td">
-                            <telerik:RadTextBox runat="server" ID="txtSerialNo" Label="编号：" LabelWidth="75" MaxLength="50"></telerik:RadTextBox>
+                            <telerik:RadTextBox runat="server" ID="txtSerialNo" Label="编号：" LabelWidth="40" MaxLength="50"></telerik:RadTextBox>
                         </td>
                         <td class="middle-td leftpadding10">
-                            <telerik:RadTextBox runat="server" ID="txtName" Label="名称：" LabelWidth="75" MaxLength="100"></telerik:RadTextBox>
+                            <telerik:RadTextBox runat="server" ID="txtName" Label="名称：" LabelWidth="40" MaxLength="100"></telerik:RadTextBox>
                         </td>
                         <td class="middle-td leftpadding20">
                             <asp:Button ID="btnSearch" runat="server" Text="查询" CssClass="mws-button green" OnClick="btnSearch_Click" />
@@ -52,28 +52,30 @@
                         </td>
                     </tr>
                 </table>
-                <telerik:RadGrid ID="rgWarehouses" runat="server" PageSize="10"
+                <telerik:RadGrid ID="rgEntities" runat="server" PageSize="10"
                     AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
                     MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
                     ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                    OnNeedDataSource="rgWarehouses_NeedDataSource" OnDeleteCommand="rgWarehouses_DeleteCommand"
-                    OnItemCreated="rgWarehouses_ItemCreated" OnColumnCreated="rgWarehouses_ColumnCreated" OnItemDataBound="rgWarehouses_ItemDataBound">
+                    OnNeedDataSource="rgEntities_NeedDataSource" OnDeleteCommand="rgEntities_DeleteCommand"
+                    OnItemCreated="rgEntities_ItemCreated" OnColumnCreated="rgEntities_ColumnCreated" OnItemDataBound="rgEntities_ItemDataBound">
                     <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
                         ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                         <Columns>
                             <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false">
                                 <ItemStyle HorizontalAlign="Left" Width="50" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="WarehouseCode" HeaderText="仓库编号" DataField="WarehouseCode">
+                            <telerik:GridBoundColumn UniqueName="SerialNo" HeaderText="编号" DataField="SerialNo">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="Name" HeaderText="仓库名称" DataField="Name">
+                            <telerik:GridBoundColumn UniqueName="Name" HeaderText="名称" DataField="Name">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="SaleTypeName" HeaderText="仓库类型" DataField="SaleTypeName">
+                            <telerik:GridBoundColumn UniqueName="ReceiverName" HeaderText="收货人" DataField="ReceiverName">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-
+                            <telerik:GridBoundColumn UniqueName="PhoneNumber" HeaderText="收货电话" DataField="PhoneNumber">
+                                <ItemStyle HorizontalAlign="Left" />
+                            </telerik:GridBoundColumn>
                             <telerik:GridTemplateColumn UniqueName="Edit" HeaderStyle-Width="40">
                                 <ItemStyle HorizontalAlign="Center" Width="40" />
                                 <ItemTemplate>
@@ -127,6 +129,7 @@
         </div>
     </div>
 </asp:Content>
+
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContent" runat="server">
     <script type="text/javascript">
         var gridOfRefresh = null;
@@ -141,7 +144,7 @@
 
         function redirectToMaintenancePage(id) {
             $.showLoading();
-            window.location.href = "WarehouseMaintenance.aspx?EntityID=" + id;
+            window.location.href = "DistributionCompanyMaintenance.aspx?EntityID=" + id;
         }
     </script>
 </asp:Content>

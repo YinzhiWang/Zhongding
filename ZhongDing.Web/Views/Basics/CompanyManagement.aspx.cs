@@ -8,6 +8,7 @@ using Telerik.Web.UI;
 using ZhongDing.Business.IRepositories;
 using ZhongDing.Business.Repositories;
 using ZhongDing.Business.Repositories.Reports;
+using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UISearchObjects;
 
@@ -48,7 +49,7 @@ namespace ZhongDing.Web.Views.Basics
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.Master.MenuItemID = 3;
+            this.Master.MenuItemID = (int)EMenuItem.CompanyManage;
 
             //报表测试代码
             //IReportRepository reportRepository = new ReportRepository();

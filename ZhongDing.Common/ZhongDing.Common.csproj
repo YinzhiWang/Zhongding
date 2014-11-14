@@ -66,6 +66,7 @@
     <Compile Include="Enums\DateInterval.cs" />
     <Compile Include="Enums\EAccountType.cs" />
     <Compile Include="Enums\EAjaxActionType.cs" />
+    <Compile Include="Enums\EMenuItem.cs" />
     <Compile Include="Enums\EMonthOfYear.cs" />
     <Compile Include="Enums\EOwnerType.cs" />
     <Compile Include="Enums\LogCategory.cs" />

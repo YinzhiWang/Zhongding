@@ -41,7 +41,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<DBContract> DBContract { get; set; }
         public DbSet<DBContractTaskAssignment> DBContractTaskAssignment { get; set; }
         public DbSet<Department> Department { get; set; }
-        public DbSet<DistributionCompany> DistributionCompany { get; set; }
         public DbSet<Hospital> Hospital { get; set; }
         public DbSet<OwnerType> OwnerType { get; set; }
         public DbSet<Product> Product { get; set; }
@@ -63,5 +62,9 @@ namespace ZhongDing.Domain.Models
         public DbSet<UserBonus> UserBonus { get; set; }
         public DbSet<Users> Users { get; set; }
         public DbSet<Warehouse> Warehouse { get; set; }
+        public DbSet<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
+        public DbSet<DeptDistrict> DeptDistrict { get; set; }
+        public DbSet<DeptMarket> DeptMarket { get; set; }
+        public DbSet<DistributionCompany> DistributionCompany { get; set; }
     }
 }

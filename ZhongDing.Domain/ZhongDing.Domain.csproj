@@ -86,6 +86,9 @@
     <Compile Include="Models\ClientInfoContact.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClientInfoProductSetting.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ClientUser.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -114,6 +117,12 @@
       <DependentUpon>DbModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\Department.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DeptDistrict.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DeptMarket.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DistributionCompany.cs">
@@ -189,6 +198,7 @@
     <Compile Include="UIObjects\UICertificate.cs" />
     <Compile Include="UIObjects\UICertificateType.cs" />
     <Compile Include="UIObjects\UICompany.cs" />
+    <Compile Include="UIObjects\UIDistributionCompany.cs" />
     <Compile Include="UIObjects\UIDropdownItem.cs" />
     <Compile Include="UIObjects\UISupplier.cs" />
     <Compile Include="UIObjects\UISupplierBankAccount.cs" />
@@ -200,6 +210,7 @@
     <Compile Include="UISearchObjects\UISearchBase.cs" />
     <Compile Include="UISearchObjects\UISearchCertificate.cs" />
     <Compile Include="UISearchObjects\UISearchCompany.cs" />
+    <Compile Include="UISearchObjects\UISearchDistributionCompany.cs" />
     <Compile Include="UISearchObjects\UISearchDropdownItem.cs" />
     <Compile Include="UISearchObjects\UISearchSupplier.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierContract.cs" />

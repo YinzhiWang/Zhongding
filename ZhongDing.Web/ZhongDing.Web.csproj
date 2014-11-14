@@ -2577,6 +2577,8 @@
     <Content Include="Content\icons\16\Thumbs.db" />
     <Content Include="HttpHandle\AsyncBusinessHandler.ashx" />
     <Content Include="UserControls\UCCurrentCompany.ascx" />
+    <Content Include="Views\Basics\DistributionCompanyMaintenance.aspx" />
+    <Content Include="Views\Basics\DistributionCompanyManagement.aspx" />
     <Content Include="Views\Basics\Editors\CertificateFileMaintain.aspx" />
     <Content Include="Views\Basics\Editors\CertificateMaintain.aspx" />
     <Content Include="Views\Basics\Editors\SupplierBankAccountMaintain.aspx" />
@@ -2799,6 +2801,20 @@
     <Compile Include="Views\Basics\CompanyManagement.aspx.designer.cs">
       <DependentUpon>CompanyManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Basics\DistributionCompanyMaintenance.aspx.cs">
+      <DependentUpon>DistributionCompanyMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\DistributionCompanyMaintenance.aspx.designer.cs">
+      <DependentUpon>DistributionCompanyMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\DistributionCompanyManagement.aspx.cs">
+      <DependentUpon>DistributionCompanyManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\DistributionCompanyManagement.aspx.designer.cs">
+      <DependentUpon>DistributionCompanyManagement.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Basics\Editors\CertificateFileMaintain.aspx.cs">
       <DependentUpon>CertificateFileMaintain.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2914,7 +2930,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
