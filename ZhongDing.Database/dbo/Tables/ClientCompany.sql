@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[ClientCompany] (
-    [ID]             INT            NOT NULL,
+    [ID]             INT            IDENTITY (1, 1) NOT NULL,
     [Name]           NVARCHAR (50)  NULL,
     [District]       NVARCHAR (50)  NULL,
     [Address]        NVARCHAR (255) NULL,
@@ -11,6 +11,8 @@
     [LastModifiedBy] INT            NULL,
     CONSTRAINT [PK_ClientCompany] PRIMARY KEY CLUSTERED ([ID] ASC)
 );
+
+
 
 
 

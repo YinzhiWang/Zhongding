@@ -2577,10 +2577,16 @@
     <Content Include="Content\icons\16\Thumbs.db" />
     <Content Include="HttpHandle\AsyncBusinessHandler.ashx" />
     <Content Include="UserControls\UCCurrentCompany.ascx" />
+    <Content Include="Views\Basics\ClientCompanyMaintenance.aspx" />
+    <Content Include="Views\Basics\ClientCompanyManagement.aspx" />
+    <Content Include="Views\Basics\ClientInfoMaintenance.aspx" />
+    <Content Include="Views\Basics\ClientInfoManagement.aspx" />
     <Content Include="Views\Basics\DistributionCompanyMaintenance.aspx" />
     <Content Include="Views\Basics\DistributionCompanyManagement.aspx" />
+    <Content Include="Views\Basics\Editors\BankAccountMaintain.aspx" />
     <Content Include="Views\Basics\Editors\CertificateFileMaintain.aspx" />
     <Content Include="Views\Basics\Editors\CertificateMaintain.aspx" />
+    <Content Include="Views\Basics\Editors\ClientInfoContactMaintain.aspx" />
     <Content Include="Views\Basics\Editors\SupplierBankAccountMaintain.aspx" />
     <Content Include="Views\Basics\Editors\SupplierContractMaintain.aspx" />
     <Content Include="Views\Basics\WarehouseMaintenance.aspx" />
@@ -2787,6 +2793,34 @@
     <Compile Include="Views\Basics\BankAccountManagement.aspx.designer.cs">
       <DependentUpon>BankAccountManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Basics\ClientCompanyMaintenance.aspx.cs">
+      <DependentUpon>ClientCompanyMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\ClientCompanyMaintenance.aspx.designer.cs">
+      <DependentUpon>ClientCompanyMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\ClientCompanyManagement.aspx.cs">
+      <DependentUpon>ClientCompanyManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\ClientCompanyManagement.aspx.designer.cs">
+      <DependentUpon>ClientCompanyManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\ClientInfoMaintenance.aspx.cs">
+      <DependentUpon>ClientInfoMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\ClientInfoMaintenance.aspx.designer.cs">
+      <DependentUpon>ClientInfoMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\ClientInfoManagement.aspx.cs">
+      <DependentUpon>ClientInfoManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\ClientInfoManagement.aspx.designer.cs">
+      <DependentUpon>ClientInfoManagement.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Basics\CompanyMaintenance.aspx.cs">
       <DependentUpon>CompanyMaintenance.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2815,6 +2849,13 @@
     <Compile Include="Views\Basics\DistributionCompanyManagement.aspx.designer.cs">
       <DependentUpon>DistributionCompanyManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Basics\Editors\BankAccountMaintain.aspx.cs">
+      <DependentUpon>BankAccountMaintain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\Editors\BankAccountMaintain.aspx.designer.cs">
+      <DependentUpon>BankAccountMaintain.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Basics\Editors\CertificateFileMaintain.aspx.cs">
       <DependentUpon>CertificateFileMaintain.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2828,6 +2869,13 @@
     </Compile>
     <Compile Include="Views\Basics\Editors\CertificateMaintain.aspx.designer.cs">
       <DependentUpon>CertificateMaintain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\Editors\ClientInfoContactMaintain.aspx.cs">
+      <DependentUpon>ClientInfoContactMaintain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\Editors\ClientInfoContactMaintain.aspx.designer.cs">
+      <DependentUpon>ClientInfoContactMaintain.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Basics\Editors\SupplierBankAccountMaintain.aspx.cs">
       <DependentUpon>SupplierBankAccountMaintain.aspx</DependentUpon>
@@ -2930,7 +2978,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

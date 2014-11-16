@@ -149,10 +149,10 @@ namespace ZhongDing.Business.Repositories
                 uiBankAccounts = (from sba in DB.SupplierBankAccount.Where(x => x.IsDeleted == false && x.SupplierID == supplierID)
                                   join ba in DB.BankAccount on sba.BankAccountID equals ba.ID into tempBA
                                   from tba in tempBA.DefaultIfEmpty()
-                                  join cu in DB.Users on sba.CreatedBy equals cu.UserID into tempCU
-                                  from tcu in tempCU.DefaultIfEmpty()
-                                  join mu in DB.Users on sba.LastModifiedBy equals mu.UserID into tempMU
-                                  from tmu in tempMU.DefaultIfEmpty()
+                                  //join cu in DB.Users on sba.CreatedBy equals cu.UserID into tempCU
+                                  //from tcu in tempCU.DefaultIfEmpty()
+                                  //join mu in DB.Users on sba.LastModifiedBy equals mu.UserID into tempMU
+                                  //from tmu in tempMU.DefaultIfEmpty()
                                   //orderby sba.CreatedOn descending
                                   select new UISupplierBankAccount()
                                   {
@@ -163,10 +163,10 @@ namespace ZhongDing.Business.Repositories
                                       BankBranchName = tba == null ? string.Empty : tba.BankBranchName,
                                       Account = tba == null ? string.Empty : tba.Account,
                                       Comment = tba == null ? string.Empty : tba.Comment,
-                                      CreatedOn = sba.CreatedOn,
-                                      CreatedBy = tcu == null ? string.Empty : tcu.UserName,
-                                      LastModifiedOn = sba.LastModifiedOn,
-                                      LastModifiedBy = tmu == null ? string.Empty : tmu.UserName,
+                                      //CreatedOn = sba.CreatedOn,
+                                      //CreatedBy = tcu == null ? string.Empty : tcu.UserName,
+                                      //LastModifiedOn = sba.LastModifiedOn,
+                                      //LastModifiedBy = tmu == null ? string.Empty : tmu.UserName,
                                   }).ToList();
             }
 

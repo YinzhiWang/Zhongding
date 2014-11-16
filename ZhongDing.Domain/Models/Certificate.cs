@@ -18,6 +18,7 @@ namespace ZhongDing.Domain.Models
         public Certificate()
         {
             this.ProductCertificate = new HashSet<ProductCertificate>();
+            this.ClientCompanyCertificate = new HashSet<ClientCompanyCertificate>();
             this.SupplierCertificate = new HashSet<SupplierCertificate>();
         }
     
@@ -49,6 +50,7 @@ namespace ZhongDing.Domain.Models
         public virtual CertificateType CertificateType { get; set; }
         public virtual OwnerType OwnerType { get; set; }
         public virtual ICollection<ProductCertificate> ProductCertificate { get; set; }
+        public virtual ICollection<ClientCompanyCertificate> ClientCompanyCertificate { get; set; }
         public virtual ICollection<SupplierCertificate> SupplierCertificate { get; set; }
     }
 }

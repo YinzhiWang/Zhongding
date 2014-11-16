@@ -252,19 +252,19 @@
                                                     MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
                                                     ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
                                                     OnNeedDataSource="rgProducerCertificates_NeedDataSource" OnDeleteCommand="rgProducerCertificates_DeleteCommand">
-                                                    <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
+                                                    <MasterTableView Width="100%" DataKeyNames="OwnerEntityID" CommandItemDisplay="Top"
                                                         ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                                                         <Columns>
-                                                            <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
+                                                            <telerik:GridBoundColumn UniqueName="OwnerEntityID" HeaderText="OwnerEntityID" DataField="OwnerEntityID" Visible="false" ReadOnly="true">
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn UniqueName="CertificateTypeName" HeaderText="证照类型" DataField="CertificateTypeName">
-                                                                <ItemStyle HorizontalAlign="Left" Width="25%" />
+                                                                <ItemStyle HorizontalAlign="Left" />
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn UniqueName="GottenDescription" HeaderText="有/无" DataField="GottenDescription">
                                                                 <ItemStyle HorizontalAlign="Left" />
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn UniqueName="EffectiveDateDescription" HeaderText="有效期" DataField="EffectiveDateDescription">
-                                                                <ItemStyle HorizontalAlign="Left" Width="140" />
+                                                                <ItemStyle HorizontalAlign="Left" />
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridTemplateColumn UniqueName="IsNeedAlert" HeaderText="是否<br/>提醒" DataField="IsNeedAlert" SortExpression="IsNeedAlert">
                                                                 <ItemStyle HorizontalAlign="Left" Width="40" />
@@ -298,7 +298,7 @@
                                                             <telerik:GridTemplateColumn UniqueName="Edit" HeaderStyle-Width="40">
                                                                 <ItemStyle HorizontalAlign="Center" Width="40" />
                                                                 <ItemTemplate>
-                                                                    <a href="javascript:void(0);" onclick="openCertificateWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>, EOwnerTypes.Producer, gridClientIDs.gridProducerCertificates);">
+                                                                    <a href="javascript:void(0);" onclick="openCertificateWindow(<%#DataBinder.Eval(Container.DataItem,"OwnerEntityID")%>, EOwnerTypes.Producer, gridClientIDs.gridProducerCertificates);">
                                                                         <u>编辑</u></a>
                                                                 </ItemTemplate>
                                                             </telerik:GridTemplateColumn>
@@ -338,19 +338,19 @@
                                                     MasterTableView-PagerStyle-AlwaysVisible="true" Width="99.8%" ShowHeader="true"
                                                     ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
                                                     OnNeedDataSource="rgSupplierCertificates_NeedDataSource" OnDeleteCommand="rgSupplierCertificates_DeleteCommand">
-                                                    <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
+                                                    <MasterTableView Width="100%" DataKeyNames="OwnerEntityID" CommandItemDisplay="Top"
                                                         ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                                                         <Columns>
-                                                            <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
+                                                            <telerik:GridBoundColumn UniqueName="OwnerEntityID" HeaderText="OwnerEntityID" DataField="OwnerEntityID" Visible="false" ReadOnly="true">
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn UniqueName="CertificateTypeName" HeaderText="证照类型" DataField="CertificateTypeName">
-                                                                <ItemStyle HorizontalAlign="Left" Width="25%" />
+                                                                <ItemStyle HorizontalAlign="Left" />
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn UniqueName="GottenDescription" HeaderText="有/无" DataField="GottenDescription">
                                                                 <ItemStyle HorizontalAlign="Left" />
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridBoundColumn UniqueName="EffectiveDateDescription" HeaderText="有效期" DataField="EffectiveDateDescription">
-                                                                <ItemStyle HorizontalAlign="Left" Width="140" />
+                                                                <ItemStyle HorizontalAlign="Left" />
                                                             </telerik:GridBoundColumn>
                                                             <telerik:GridTemplateColumn UniqueName="IsNeedAlert" HeaderText="是否<br/>提醒" DataField="IsNeedAlert" SortExpression="IsNeedAlert">
                                                                 <ItemStyle HorizontalAlign="Left" Width="40" />
@@ -384,7 +384,7 @@
                                                             <telerik:GridTemplateColumn UniqueName="Edit" HeaderStyle-Width="40">
                                                                 <ItemStyle HorizontalAlign="Center" Width="40" />
                                                                 <ItemTemplate>
-                                                                    <a href="javascript:void(0);" onclick="openCertificateWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>, EOwnerTypes.Supplier, gridClientIDs.gridSupplierCertificates)">
+                                                                    <a href="javascript:void(0);" onclick="openCertificateWindow(<%#DataBinder.Eval(Container.DataItem,"OwnerEntityID")%>, EOwnerTypes.Supplier, gridClientIDs.gridSupplierCertificates)">
                                                                         <u>编辑</u></a>
                                                                 </ItemTemplate>
                                                             </telerik:GridTemplateColumn>
@@ -558,7 +558,7 @@
             $.showLoading();
 
             var targetUrl = $.getRootPath() + "Views/Basics/Editors/CertificateMaintain.aspx?EntityID=" + id
-                + "&SupplierID=" + supplierID + "&OwnerTypeID=" + ownerTypeID + "&GridClientID=" + gridClientID;
+                + "&OwnerEntityID=" + supplierID + "&OwnerTypeID=" + ownerTypeID + "&GridClientID=" + gridClientID;
 
             $.openRadWindow(targetUrl, "winCertificate", true, 800, 400);
         }

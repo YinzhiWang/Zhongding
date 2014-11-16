@@ -98,6 +98,11 @@ namespace ZhongDing.Common
             public static readonly string MSG_SUCCESS_SAEVED_CLOSE_WIN = "保存成功，窗口将自动关闭";
 
             /// <summary>
+            /// 提示消息：保存失败，稍后再试，窗口将自动关闭
+            /// </summary>
+            public static readonly string MSG_FAILED_SAEVED_CLOSE_WIN = "保存失败，稍后再试，窗口将自动关闭";
+
+            /// <summary>
             /// 提示消息：保存成功，页面将自动刷新
             /// </summary>
             public static readonly string MSG_SUCCESS_SAEVED_REFRESH = "保存成功，页面将自动刷新";
@@ -111,7 +116,6 @@ namespace ZhongDing.Common
             /// 提示消息：删除成功，页面将自动跳转
             /// </summary>
             public static readonly string MSG_SUCCESS_DELETED_REDIRECT = "删除成功，页面将自动跳转";
-
 
             /// <summary>
             /// 提示消息：参数错误，窗口将自动关闭
@@ -159,6 +163,11 @@ namespace ZhongDing.Common
                 /// 配送公司编号前缀
                 /// </summary>
                 public static readonly string  DISTRIBUTION_COMPANY = "PSGS";
+
+                /// <summary>
+                /// 客户编号前缀
+                /// </summary>
+                public static readonly string CLIENT_INFO = "KH";
             }
 
         }

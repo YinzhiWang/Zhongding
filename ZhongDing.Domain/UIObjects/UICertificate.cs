@@ -8,6 +8,12 @@ namespace ZhongDing.Domain.UIObjects
 {
     public class UICertificate : UIBase
     {
+
+        /// <summary>
+        /// 所有者实体ID
+        /// </summary>
+        public int OwnerEntityID { get; set; }
+        public int CertificateID { get; set; }
         public Nullable<int> CertificateTypeID { get; set; }
         public Nullable<int> OwnerTypeID { get; set; }
         public string CertificateTypeName { get; set; }

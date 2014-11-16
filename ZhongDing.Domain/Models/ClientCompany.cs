@@ -17,6 +17,7 @@ namespace ZhongDing.Domain.Models
     {
         public ClientCompany()
         {
+            this.ClientCompanyCertificate = new HashSet<ClientCompanyCertificate>();
             this.ClientInfo = new HashSet<ClientInfo>();
         }
     
@@ -41,6 +42,7 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
+        public virtual ICollection<ClientCompanyCertificate> ClientCompanyCertificate { get; set; }
         public virtual ICollection<ClientInfo> ClientInfo { get; set; }
     }
 }

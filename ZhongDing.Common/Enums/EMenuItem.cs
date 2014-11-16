@@ -38,7 +38,7 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 客户管理
         /// </summary>
-        ClientManage,
+        ClientInfoManage,
         /// <summary>
         /// 仓库管理
         /// </summary>

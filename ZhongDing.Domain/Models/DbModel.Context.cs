@@ -32,11 +32,8 @@ namespace ZhongDing.Domain.Models
         public DbSet<BankAccount> BankAccount { get; set; }
         public DbSet<Certificate> Certificate { get; set; }
         public DbSet<CertificateType> CertificateType { get; set; }
-        public DbSet<ClientCompany> ClientCompany { get; set; }
-        public DbSet<ClientInfo> ClientInfo { get; set; }
         public DbSet<ClientInfoBankAccount> ClientInfoBankAccount { get; set; }
         public DbSet<ClientInfoContact> ClientInfoContact { get; set; }
-        public DbSet<ClientUser> ClientUser { get; set; }
         public DbSet<Company> Company { get; set; }
         public DbSet<DBContract> DBContract { get; set; }
         public DbSet<DBContractTaskAssignment> DBContractTaskAssignment { get; set; }
@@ -54,7 +51,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<SaleType> SaleType { get; set; }
         public DbSet<Supplier> Supplier { get; set; }
         public DbSet<SupplierBankAccount> SupplierBankAccount { get; set; }
-        public DbSet<SupplierCertificate> SupplierCertificate { get; set; }
         public DbSet<SupplierContract> SupplierContract { get; set; }
         public DbSet<SupplierContractFile> SupplierContractFile { get; set; }
         public DbSet<SupplierTaskAssignment> SupplierTaskAssignment { get; set; }
@@ -66,5 +62,13 @@ namespace ZhongDing.Domain.Models
         public DbSet<DeptDistrict> DeptDistrict { get; set; }
         public DbSet<DeptMarket> DeptMarket { get; set; }
         public DbSet<DistributionCompany> DistributionCompany { get; set; }
+        public DbSet<ClientCompanyCertificate> ClientCompanyCertificate { get; set; }
+        public DbSet<DeptMarketDivision> DeptMarketDivision { get; set; }
+        public DbSet<DeptMarketProduct> DeptMarketProduct { get; set; }
+        public DbSet<DeptProductEvaluation> DeptProductEvaluation { get; set; }
+        public DbSet<SupplierCertificate> SupplierCertificate { get; set; }
+        public DbSet<ClientCompany> ClientCompany { get; set; }
+        public DbSet<ClientUser> ClientUser { get; set; }
+        public DbSet<ClientInfo> ClientInfo { get; set; }
     }
 }

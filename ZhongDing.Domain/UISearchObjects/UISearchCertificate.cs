@@ -8,8 +8,10 @@ namespace ZhongDing.Domain.UISearchObjects
 {
     public class UISearchCertificate : UISearchBase
     {
-        public int SupplierID { get; set; }
+        //public int SupplierID { get; set; }
 
         public int OwnerTypeID { get; set; }
+
+        public int OwnerEntityID { get; set; }
     }
 }

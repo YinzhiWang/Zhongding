@@ -22,7 +22,7 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 客户
         /// </summary>
-        Customer,
+        Client,
         /// <summary>
         /// 生产企业
         /// </summary>

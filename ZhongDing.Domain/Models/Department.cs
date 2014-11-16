@@ -20,6 +20,7 @@ namespace ZhongDing.Domain.Models
             this.Product = new HashSet<Product>();
             this.Users1 = new HashSet<Users>();
             this.ClientInfoProductSetting = new HashSet<ClientInfoProductSetting>();
+            this.DeptProductEvaluation = new HashSet<DeptProductEvaluation>();
         }
     
         public int ID { get; set; }
@@ -31,6 +32,7 @@ namespace ZhongDing.Domain.Models
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
+        public Nullable<int> DeptDistrictID { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -46,5 +48,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<Product> Product { get; set; }
         public virtual ICollection<Users> Users1 { get; set; }
         public virtual ICollection<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
+        public virtual ICollection<DeptProductEvaluation> DeptProductEvaluation { get; set; }
     }
 }

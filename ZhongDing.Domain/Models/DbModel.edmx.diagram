@@ -5,42 +5,38 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="85e6c93c719943c78d71edfd0be34866" Name="Diagram1">
-        <EntityTypeShape EntityType="DbModel.AccountType" Width="1.5" PointX="0.75" PointY="21.5" />
-        <EntityTypeShape EntityType="DbModel.aspnet_Membership" Width="1.5" PointX="3.75" PointY="46.5" />
+        <EntityTypeShape EntityType="DbModel.AccountType" Width="1.5" PointX="0.75" PointY="23.75" />
+        <EntityTypeShape EntityType="DbModel.aspnet_Membership" Width="1.5" PointX="3.75" PointY="48.75" />
         <EntityTypeShape EntityType="DbModel.aspnet_Roles" Width="1.5" PointX="0.75" PointY="1.375" />
-        <EntityTypeShape EntityType="DbModel.aspnet_Users" Width="1.5" PointX="1.5" PointY="46.75" />
-        <EntityTypeShape EntityType="DbModel.BankAccount" Width="1.5" PointX="3" PointY="24.5" />
-        <EntityTypeShape EntityType="DbModel.Certificate" Width="1.5" PointX="5.25" PointY="8.75" />
-        <EntityTypeShape EntityType="DbModel.CertificateType" Width="1.5" PointX="3" PointY="9.875" />
-        <EntityTypeShape EntityType="DbModel.ClientCompany" Width="1.5" PointX="3.75" PointY="16.5" />
-        <EntityTypeShape EntityType="DbModel.ClientInfo" Width="1.5" PointX="6" PointY="17.5" />
-        <EntityTypeShape EntityType="DbModel.ClientInfoBankAccount" Width="1.5" PointX="8.25" PointY="25.25" />
-        <EntityTypeShape EntityType="DbModel.ClientInfoContact" Width="1.5" PointX="8.25" PointY="18" />
-        <EntityTypeShape EntityType="DbModel.ClientUser" Width="1.5" PointX="3.75" PointY="20.25" />
-        <EntityTypeShape EntityType="DbModel.Company" Width="1.5" PointX="0.75" PointY="24.5" />
+        <EntityTypeShape EntityType="DbModel.aspnet_Users" Width="1.5" PointX="1.5" PointY="49" />
+        <EntityTypeShape EntityType="DbModel.BankAccount" Width="1.5" PointX="3" PointY="26.625" />
+        <EntityTypeShape EntityType="DbModel.Certificate" Width="1.5" PointX="5.25" PointY="9.875" />
+        <EntityTypeShape EntityType="DbModel.CertificateType" Width="1.5" PointX="3" PointY="11.25" />
+        <EntityTypeShape EntityType="DbModel.ClientInfoBankAccount" Width="1.5" PointX="8.25" PointY="27.375" />
+        <EntityTypeShape EntityType="DbModel.ClientInfoContact" Width="1.5" PointX="8.25" PointY="20.25" />
+        <EntityTypeShape EntityType="DbModel.Company" Width="1.5" PointX="0.75" PointY="26.75" />
         <EntityTypeShape EntityType="DbModel.DBContract" Width="1.5" PointX="5.75" PointY="1" />
         <EntityTypeShape EntityType="DbModel.DBContractTaskAssignment" Width="1.5" PointX="0.75" PointY="4.75" />
-        <EntityTypeShape EntityType="DbModel.Department" Width="1.5" PointX="3" PointY="34.375" />
+        <EntityTypeShape EntityType="DbModel.Department" Width="1.5" PointX="3" PointY="36.375" />
         <EntityTypeShape EntityType="DbModel.Hospital" Width="1.5" PointX="8" PointY="2" />
-        <EntityTypeShape EntityType="DbModel.OwnerType" Width="1.5" PointX="0.75" PointY="29.875" />
-        <EntityTypeShape EntityType="DbModel.Product" Width="1.5" PointX="5.25" PointY="32" />
-        <EntityTypeShape EntityType="DbModel.ProductBasicPrice" Width="1.5" PointX="10.5" PointY="28.125" />
-        <EntityTypeShape EntityType="DbModel.ProductCategory" Width="1.5" PointX="3" PointY="31.25" />
-        <EntityTypeShape EntityType="DbModel.ProductCertificate" Width="1.5" PointX="7.5" PointY="29.5" />
-        <EntityTypeShape EntityType="DbModel.ProductDBPolicyPrice" Width="1.5" PointX="10.5" PointY="33.125" />
-        <EntityTypeShape EntityType="DbModel.ProductHighPrice" Width="1.5" PointX="7.5" PointY="37.875" />
-        <EntityTypeShape EntityType="DbModel.ProductSpecification" Width="1.5" PointX="10.5" PointY="37.75" />
+        <EntityTypeShape EntityType="DbModel.OwnerType" Width="1.5" PointX="0.75" PointY="32" />
+        <EntityTypeShape EntityType="DbModel.Product" Width="1.5" PointX="5.25" PointY="34.125" />
+        <EntityTypeShape EntityType="DbModel.ProductBasicPrice" Width="1.5" PointX="15.75" PointY="35.5" />
+        <EntityTypeShape EntityType="DbModel.ProductCategory" Width="1.5" PointX="3" PointY="33.5" />
+        <EntityTypeShape EntityType="DbModel.ProductCertificate" Width="1.5" PointX="7.5" PointY="31.75" />
+        <EntityTypeShape EntityType="DbModel.ProductDBPolicyPrice" Width="1.5" PointX="12.75" PointY="35.375" />
+        <EntityTypeShape EntityType="DbModel.ProductHighPrice" Width="1.5" PointX="12.75" PointY="30.125" />
+        <EntityTypeShape EntityType="DbModel.ProductSpecification" Width="1.5" PointX="10.5" PointY="35" />
         <EntityTypeShape EntityType="DbModel.Roles" Width="1.5" PointX="3" PointY="1" />
-        <EntityTypeShape EntityType="DbModel.SaleType" Width="1.5" PointX="3.75" PointY="13.875" />
-        <EntityTypeShape EntityType="DbModel.Supplier" Width="1.5" PointX="3" PointY="40" />
-        <EntityTypeShape EntityType="DbModel.SupplierBankAccount" Width="1.5" PointX="8.25" PointY="33.375" />
-        <EntityTypeShape EntityType="DbModel.SupplierCertificate" Width="1.5" PointX="5.25" PointY="41.125" />
-        <EntityTypeShape EntityType="DbModel.SupplierContract" Width="1.5" PointX="15.75" PointY="36.375" />
-        <EntityTypeShape EntityType="DbModel.SupplierContractFile" Width="1.5" PointX="18" PointY="41.25" />
-        <EntityTypeShape EntityType="DbModel.SupplierTaskAssignment" Width="1.5" PointX="18" PointY="36.125" />
-        <EntityTypeShape EntityType="DbModel.UnitOfMeasurement" Width="1.5" PointX="8.25" PointY="43.125" />
-        <EntityTypeShape EntityType="DbModel.UserBonus" Width="1.5" PointX="7.75" PointY="5.75" />
-        <EntityTypeShape EntityType="DbModel.Users" Width="1.5" PointX="0.75" PointY="33.5" />
+        <EntityTypeShape EntityType="DbModel.SaleType" Width="1.5" PointX="3.75" PointY="16" />
+        <EntityTypeShape EntityType="DbModel.Supplier" Width="1.5" PointX="3" PointY="42.375" />
+        <EntityTypeShape EntityType="DbModel.SupplierBankAccount" Width="1.5" PointX="8.25" PointY="35.75" />
+        <EntityTypeShape EntityType="DbModel.SupplierContract" Width="1.5" PointX="15.75" PointY="39.75" />
+        <EntityTypeShape EntityType="DbModel.SupplierContractFile" Width="1.5" PointX="18" PointY="44.5" />
+        <EntityTypeShape EntityType="DbModel.SupplierTaskAssignment" Width="1.5" PointX="18" PointY="40" />
+        <EntityTypeShape EntityType="DbModel.UnitOfMeasurement" Width="1.5" PointX="8.25" PointY="44.375" />
+        <EntityTypeShape EntityType="DbModel.UserBonus" Width="1.5" PointX="2.75" PointY="4.75" />
+        <EntityTypeShape EntityType="DbModel.Users" Width="1.5" PointX="0.75" PointY="35.75" />
         <AssociationConnector Association="DbModel.FK_BankAccount_AccountType" />
         <AssociationConnector Association="DbModel.FK__aspnet_Me__UserI__10566F31" />
         <AssociationConnector Association="DbModel.FK_Roles_aspnet_Roles" />
@@ -52,12 +48,7 @@
         <AssociationConnector Association="DbModel.FK_Certificate_CertificateType" />
         <AssociationConnector Association="DbModel.FK_CertificateFile_OwnerType" />
         <AssociationConnector Association="DbModel.FK_ProductCertificate_Certificate" />
-        <AssociationConnector Association="DbModel.FK_SupplierCertificate_Certificate" />
         <AssociationConnector Association="DbModel.FK_CertificateType_OwnerType" />
-        <AssociationConnector Association="DbModel.FK_ClientInfo_ClientCompany" />
-        <AssociationConnector Association="DbModel.FK_ClientInfo_ClientUser" />
-        <AssociationConnector Association="DbModel.FK_ClientInfoBankAccount_ClientInfo" />
-        <AssociationConnector Association="DbModel.FK_ClientInfoContact_ClientInfo" />
         <AssociationConnector Association="DbModel.FK_Product_Company" />
         <AssociationConnector Association="DbModel.FK_Supplier_Company" />
         <AssociationConnector Association="DbModel.FK_Hospital_DBContract" />
@@ -78,23 +69,40 @@
         <AssociationConnector Association="DbModel.FK_ProductSpecification_UnitOfMeasurement" />
         <AssociationConnector Association="DbModel.FK_SupplierContract_ProductSpecification" />
         <AssociationConnector Association="DbModel.FK_SupplierBankAccount_Supplier" />
-        <AssociationConnector Association="DbModel.FK_SupplierCertificate_Supplier" />
         <AssociationConnector Association="DbModel.FK_SupplierContract_Supplier" />
         <AssociationConnector Association="DbModel.FK_SupplierTaskAssignment_Supplier" />
         <AssociationConnector Association="DbModel.FK_SupplierContractFile_SupplierContract" />
         <AssociationConnector Association="DbModel.FK_SupplierTaskAssignment_SupplierContract" />
-        <EntityTypeShape EntityType="DbModel.Warehouse" Width="1.5" PointX="6" PointY="24.875" />
+        <EntityTypeShape EntityType="DbModel.Warehouse" Width="1.5" PointX="6" PointY="27" />
         <AssociationConnector Association="DbModel.FK_Warehouse_Company" />
         <AssociationConnector Association="DbModel.FK_Warehouse_SaleType" />
-        <EntityTypeShape EntityType="DbModel.ClientInfoProductSetting" Width="1.5" PointX="12.75" PointY="34.625" />
-        <EntityTypeShape EntityType="DbModel.DeptDistrict" Width="1.5" PointX="2.75" PointY="4.75" />
-        <EntityTypeShape EntityType="DbModel.DeptMarket" Width="1.5" PointX="9.75" PointY="5.75" />
-        <AssociationConnector Association="DbModel.FK_ClientInfoProductSetting_ClientInfo" />
+        <EntityTypeShape EntityType="DbModel.ClientInfoProductSetting" Width="1.5" PointX="12.75" PointY="39.75" />
+        <EntityTypeShape EntityType="DbModel.DeptDistrict" Width="1.5" PointX="4.75" PointY="6.75" />
+        <EntityTypeShape EntityType="DbModel.DeptMarket" Width="1.5" PointX="6.75" PointY="6.75" />
         <AssociationConnector Association="DbModel.FK_ClientInfoProductSetting_Department" />
         <AssociationConnector Association="DbModel.FK_ClientInfoProductSetting_Product" />
         <AssociationConnector Association="DbModel.FK_ClientInfoProductSetting_ProductSpecification" />
-        <EntityTypeShape EntityType="DbModel.DistributionCompany" Width="1.5" PointX="9.75" PointY="8.75" />
-      </Diagram>
+        <EntityTypeShape EntityType="DbModel.DistributionCompany" Width="1.5" PointX="8.75" PointY="5.75" />
+        <EntityTypeShape EntityType="DbModel.ClientCompanyCertificate" Width="1.5" PointX="7.5" PointY="14.375" />
+        <EntityTypeShape EntityType="DbModel.DeptMarketDivision" Width="1.5" PointX="7.75" PointY="9.75" />
+        <EntityTypeShape EntityType="DbModel.DeptMarketProduct" Width="1.5" PointX="9.75" PointY="9.75" />
+        <EntityTypeShape EntityType="DbModel.DeptProductEvaluation" Width="1.5" PointX="7.5" PointY="39.5" />
+        <EntityTypeShape EntityType="DbModel.SupplierCertificate" Width="1.5" PointX="5.25" PointY="43.5" />
+        <AssociationConnector Association="DbModel.FK_ClientCompanyCertificate_Certificate" />
+        <AssociationConnector Association="DbModel.FK_SupplierCertificate_Certificate" />
+        <AssociationConnector Association="DbModel.FK_DeptProductEvaluation_Department" />
+        <AssociationConnector Association="DbModel.FK_DeptProductEvaluation_Product" />
+        <AssociationConnector Association="DbModel.FK_SupplierCertificate_Supplier" />
+        <EntityTypeShape EntityType="DbModel.ClientCompany" Width="1.5" PointX="3.75" PointY="18.625" />
+        <EntityTypeShape EntityType="DbModel.ClientUser" Width="1.5" PointX="3.75" PointY="22.5" />
+        <AssociationConnector Association="DbModel.FK_ClientCompanyCertificate_ClientCompany" />
+        <EntityTypeShape EntityType="DbModel.ClientInfo" Width="1.5" PointX="6" PointY="19.5" />
+        <AssociationConnector Association="DbModel.FK_ClientInfo_ClientCompany" />
+        <AssociationConnector Association="DbModel.FK_ClientInfo_ClientUser" />
+        <AssociationConnector Association="DbModel.FK_ClientInfoBankAccount_ClientInfo" />
+        <AssociationConnector Association="DbModel.FK_ClientInfoContact_ClientInfo" />
+        <AssociationConnector Association="DbModel.FK_ClientInfoProductSetting_ClientInfo" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

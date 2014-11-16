@@ -10,7 +10,7 @@
 var EOwnerTypes = {
     Company: 1,
     Supplier: 2,
-    Customer: 3,
+    Client: 3,
     Producer: 4,
     Product: 5
 }

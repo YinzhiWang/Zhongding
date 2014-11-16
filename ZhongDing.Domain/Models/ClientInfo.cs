@@ -25,6 +25,7 @@ namespace ZhongDing.Domain.Models
         public int ID { get; set; }
         public int ClientUserID { get; set; }
         public int ClientCompanyID { get; set; }
+        public string ClientCode { get; set; }
         public string ReceiverName { get; set; }
         public string PhoneNumber { get; set; }
         public string Fax { get; set; }

@@ -48,7 +48,7 @@
                             <asp:CustomValidator ID="cvRequiredEffectiveTo" runat="server" ValidationGroup="vgMaintenance" Text="*" CssClass="field-validation-error"
                                  ErrorMessage="有效期结束日期必填"></asp:CustomValidator>
                             <asp:CustomValidator ID="cvEffectiveDate" runat="server" ValidationGroup="vgMaintenance" Text="*" CssClass="field-validation-error"
-                                OnServerValidate="cvCompany_ServerValidate" ErrorMessage="开始日期不能大于结束日期"></asp:CustomValidator>
+                                OnServerValidate="cvEffectiveDate_ServerValidate" ErrorMessage="开始日期不能大于结束日期"></asp:CustomValidator>
                         </div>
                     </div>
                     <div class="mws-form-row">

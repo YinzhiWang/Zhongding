@@ -46,29 +46,28 @@ namespace ZhongDing.Web.Views.Basics
             }
         }
 
-
-        private ISupplierCertificateRepository _PageSupplierCertificateRepository;
-        private ISupplierCertificateRepository PageSupplierCertificateRepository
+        private ICertificateRepository _PageCertificateRepository;
+        private ICertificateRepository PageCertificateRepository
         {
             get
             {
-                if (_PageSupplierCertificateRepository == null)
-                    _PageSupplierCertificateRepository = new SupplierCertificateRepository();
+                if (_PageCertificateRepository == null)
+                    _PageCertificateRepository = new CertificateRepository();
 
-                return _PageSupplierCertificateRepository;
+                return _PageCertificateRepository;
             }
         }
 
-        private Supplier _PageSupplier;
-        private Supplier PageSupplier
+        private Supplier _CurrentEntity;
+        private Supplier CurrentEntity
         {
             get
             {
-                if (_PageSupplier == null)
+                if (_CurrentEntity == null)
                     if (this.SupplierID.HasValue && this.SupplierID > 0)
-                        _PageSupplier = PageSupplierRepository.GetByID(this.SupplierID);
+                        _CurrentEntity = PageSupplierRepository.GetByID(this.SupplierID);
 
-                return _PageSupplier;
+                return _CurrentEntity;
             }
         }
 
@@ -91,11 +90,8 @@ namespace ZhongDing.Web.Views.Basics
             this.Master.MenuItemID = (int)EMenuItem.SupplierManage;
 
             //新增时隐藏其他sections
-            if (!this.SupplierID.HasValue
-                || this.SupplierID <= 0)
-            {
+            if (this.CurrentEntity == null)
                 divOtherSections.Visible = false;
-            }
 
             if (!IsPostBack)
             {
@@ -107,24 +103,24 @@ namespace ZhongDing.Web.Views.Basics
 
         private void LoadSupplier()
         {
-            if (this.PageSupplier != null)
+            if (this.CurrentEntity != null)
             {
-                hdnSupplierID.Value = this.PageSupplier.ID.ToString();
+                hdnSupplierID.Value = this.CurrentEntity.ID.ToString();
 
-                txtSupplierCode.Text = this.PageSupplier.SupplierCode;
-                txtSupplierName.Text = this.PageSupplier.SupplierName;
-                cbxIsProducer.Checked = this.PageSupplier.IsProducer;
-                txtFactoryName.Text = this.PageSupplier.FactoryName;
-                txtContactPerson.Text = this.PageSupplier.ContactPerson;
-                txtPhoneNumber.Text = this.PageSupplier.PhoneNumber;
-                txtFax.Text = this.PageSupplier.Fax;
-                txtDistrict.Text = this.PageSupplier.District;
-                txtPostalCode.Text = this.PageSupplier.PostalCode;
-                txtContactAddress.Text = this.PageSupplier.ContactAddress;
+                txtSupplierCode.Text = this.CurrentEntity.SupplierCode;
+                txtSupplierName.Text = this.CurrentEntity.SupplierName;
+                cbxIsProducer.Checked = this.CurrentEntity.IsProducer;
+                txtFactoryName.Text = this.CurrentEntity.FactoryName;
+                txtContactPerson.Text = this.CurrentEntity.ContactPerson;
+                txtPhoneNumber.Text = this.CurrentEntity.PhoneNumber;
+                txtFax.Text = this.CurrentEntity.Fax;
+                txtDistrict.Text = this.CurrentEntity.District;
+                txtPostalCode.Text = this.CurrentEntity.PostalCode;
+                txtContactAddress.Text = this.CurrentEntity.ContactAddress;
 
                 var tabSupplier = tabStripCertificates.FindTabByValue("tabSupplier", true);
 
-                if (this.PageSupplier.IsProducer)
+                if (this.CurrentEntity.IsProducer)
                 {
                     if (tabSupplier != null)
                         tabSupplier.Visible = false;
@@ -271,13 +267,13 @@ namespace ZhongDing.Web.Views.Basics
         {
             UISearchCertificate uiSearchObj = new UISearchCertificate()
             {
-                SupplierID = this.SupplierID.Value,
+                OwnerEntityID = this.SupplierID.Value,
                 OwnerTypeID = (int)EOwnerType.Producer
             };
 
             int totalRecords;
 
-            rgProducerCertificates.DataSource = PageSupplierCertificateRepository
+            rgProducerCertificates.DataSource = PageCertificateRepository
                 .GetUIList(uiSearchObj, rgProducerCertificates.CurrentPageIndex, rgProducerCertificates.PageSize, out totalRecords);
 
             rgProducerCertificates.VirtualItemCount = totalRecords;
@@ -287,7 +283,7 @@ namespace ZhongDing.Web.Views.Basics
         {
             GridEditableItem editableItem = e.Item as GridEditableItem;
 
-            String sid = editableItem.GetDataKeyValue("ID").ToString();
+            String sid = editableItem.GetDataKeyValue("OwnerEntityID").ToString();
 
             int id = 0;
             if (int.TryParse(sid, out id))
@@ -302,13 +298,13 @@ namespace ZhongDing.Web.Views.Basics
         {
             UISearchCertificate uiSearchObj = new UISearchCertificate()
             {
-                SupplierID = this.SupplierID.Value,
+                OwnerEntityID = this.SupplierID.Value,
                 OwnerTypeID = (int)EOwnerType.Supplier
             };
 
             int totalRecords;
 
-            rgSupplierCertificates.DataSource = PageSupplierCertificateRepository
+            rgSupplierCertificates.DataSource = PageCertificateRepository
                 .GetUIList(uiSearchObj, rgSupplierCertificates.CurrentPageIndex, rgSupplierCertificates.PageSize, out totalRecords);
 
             rgSupplierCertificates.VirtualItemCount = totalRecords;
@@ -318,7 +314,7 @@ namespace ZhongDing.Web.Views.Basics
         {
             GridEditableItem editableItem = e.Item as GridEditableItem;
 
-            String sid = editableItem.GetDataKeyValue("ID").ToString();
+            String sid = editableItem.GetDataKeyValue("OwnerEntityID").ToString();
 
             int id = 0;
             if (int.TryParse(sid, out id))

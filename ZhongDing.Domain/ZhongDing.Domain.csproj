@@ -77,6 +77,9 @@
     <Compile Include="Models\ClientCompany.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClientCompanyCertificate.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ClientInfo.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -123,6 +126,15 @@
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DeptMarket.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DeptMarketDivision.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DeptMarketProduct.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DeptProductEvaluation.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DistributionCompany.cs">
@@ -197,6 +209,10 @@
     <Compile Include="UIObjects\UIBase.cs" />
     <Compile Include="UIObjects\UICertificate.cs" />
     <Compile Include="UIObjects\UICertificateType.cs" />
+    <Compile Include="UIObjects\UIClientCompany.cs" />
+    <Compile Include="UIObjects\UIClientInfo.cs" />
+    <Compile Include="UIObjects\UIClientInfoBankAccount.cs" />
+    <Compile Include="UIObjects\UIClientInfoContact.cs" />
     <Compile Include="UIObjects\UICompany.cs" />
     <Compile Include="UIObjects\UIDistributionCompany.cs" />
     <Compile Include="UIObjects\UIDropdownItem.cs" />
@@ -209,6 +225,8 @@
     <Compile Include="UISearchObjects\UISearchBankAccount.cs" />
     <Compile Include="UISearchObjects\UISearchBase.cs" />
     <Compile Include="UISearchObjects\UISearchCertificate.cs" />
+    <Compile Include="UISearchObjects\UISearchClientCompany.cs" />
+    <Compile Include="UISearchObjects\UISearchClientInfo.cs" />
     <Compile Include="UISearchObjects\UISearchCompany.cs" />
     <Compile Include="UISearchObjects\UISearchDistributionCompany.cs" />
     <Compile Include="UISearchObjects\UISearchDropdownItem.cs" />

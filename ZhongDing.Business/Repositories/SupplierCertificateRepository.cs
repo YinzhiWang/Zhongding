@@ -24,8 +24,8 @@ namespace ZhongDing.Business.Repositories
 
             if (uiSearchObj != null)
             {
-                if (uiSearchObj.SupplierID > 0)
-                    whereFuncs.Add(x => x.SupplierID == uiSearchObj.SupplierID);
+                if (uiSearchObj.OwnerEntityID > 0)
+                    whereFuncs.Add(x => x.SupplierID == uiSearchObj.OwnerEntityID);
 
                 if (uiSearchObj.OwnerTypeID > 0)
                     whereFuncs.Add(x => x.Certificate != null && x.Certificate.OwnerTypeID == uiSearchObj.OwnerTypeID);
@@ -86,8 +86,8 @@ namespace ZhongDing.Business.Repositories
 
             if (uiSearchObj != null)
             {
-                if (uiSearchObj.SupplierID > 0)
-                    whereFuncs.Add(x => x.SupplierID == uiSearchObj.SupplierID);
+                if (uiSearchObj.OwnerEntityID > 0)
+                    whereFuncs.Add(x => x.SupplierID == uiSearchObj.OwnerEntityID);
 
                 if (uiSearchObj.OwnerTypeID > 0)
                     whereFuncs.Add(x => x.Certificate != null && x.Certificate.OwnerTypeID == uiSearchObj.OwnerTypeID);

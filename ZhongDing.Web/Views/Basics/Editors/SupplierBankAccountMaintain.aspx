@@ -41,7 +41,7 @@
                     <div class="mws-form-row">
                         <label>账号</label>
                         <div class="mws-form-item small">
-                            <telerik:RadTextBox runat="server" ID="txtAccount" InputType="Number" ShowButton="false" CssClass="mws-textinput" Width="40%" MaxLength="24">
+                            <telerik:RadTextBox runat="server" ID="txtAccount" ShowButton="false" CssClass="mws-textinput" Width="40%" MaxLength="24">
                             </telerik:RadTextBox>
                             <telerik:RadToolTip ID="rttAccount" runat="server" TargetControlID="txtAccount" ShowEvent="OnClick"
                                 Position="MiddleRight" RelativeTo="Element" AutoCloseDelay="0">

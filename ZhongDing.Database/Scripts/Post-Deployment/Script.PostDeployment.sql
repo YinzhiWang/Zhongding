@@ -238,3 +238,30 @@ SET IDENTITY_INSERT [dbo].[DeptMarket] OFF
 COMMIT TRANSACTION
 
 ---- end ---- 11/13/2014 -- 初始化DeptDistrict -- by Yinzhi 
+
+
+---- start --- 10/31/2014 -- 初始化客户证照类型数据 -- by lihong 
+SET NUMERIC_ROUNDABORT OFF
+GO
+SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+
+BEGIN TRANSACTION
+ALTER TABLE [dbo].[CertificateType] DROP CONSTRAINT [FK_CertificateType_OwnerType]
+SET IDENTITY_INSERT [dbo].[CertificateType] ON
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (39, N'企业法人营业执照', 3)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (40, N'药品经营许可证', 3)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (41, N'组织机构代码证', 3)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (42, N'变更与记录', 3)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (43, N'税务登记证', 3)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (44, N'开户许可证', 3)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (45, N'企业质量体系调查表', 3)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (46, N'开票资料', 3)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (47, N'采购委托书', 3)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (48, N'质量保证协议书', 3)
+INSERT INTO [dbo].[CertificateType] ([ID], [CertificateType], [OwnerTypeID]) VALUES (49, N'购销合同', 3)
+SET IDENTITY_INSERT [dbo].[CertificateType] OFF
+ALTER TABLE [dbo].[CertificateType]
+    ADD CONSTRAINT [FK_CertificateType_OwnerType] FOREIGN KEY ([OwnerTypeID]) REFERENCES [dbo].[OwnerType] ([ID])
+COMMIT TRANSACTION
+---- end --- 10/31/2014 -- 初始化客户证照类型数据 -- by lihong 

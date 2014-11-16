@@ -24,6 +24,7 @@ namespace ZhongDing.Domain.Models
             this.ProductSpecification = new HashSet<ProductSpecification>();
             this.SupplierContract = new HashSet<SupplierContract>();
             this.ClientInfoProductSetting = new HashSet<ClientInfoProductSetting>();
+            this.DeptProductEvaluation = new HashSet<DeptProductEvaluation>();
         }
     
         public int ID { get; set; }
@@ -63,5 +64,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<ProductSpecification> ProductSpecification { get; set; }
         public virtual ICollection<SupplierContract> SupplierContract { get; set; }
         public virtual ICollection<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
+        public virtual ICollection<DeptProductEvaluation> DeptProductEvaluation { get; set; }
     }
 }

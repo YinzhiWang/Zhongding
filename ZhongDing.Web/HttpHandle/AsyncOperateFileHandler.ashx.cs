@@ -97,7 +97,7 @@ namespace ZhongDing.Web.HttpHandle
                                     }
 
                                     break;
-                                case EOwnerType.Customer:
+                                case EOwnerType.Client:
                                     break;
                                 case EOwnerType.Producer:
                                     break;

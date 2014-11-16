@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[ClientUser] (
-    [ID]             INT           NOT NULL,
+    [ID]             INT           IDENTITY (1, 1) NOT NULL,
     [ClientName]     NVARCHAR (50) NOT NULL,
     [IsDeleted]      BIT           CONSTRAINT [DF_ClientUser_IsDeleted] DEFAULT ((0)) NOT NULL,
     [CreatedOn]      DATETIME      CONSTRAINT [DF_ClientUser_CreatedOn] DEFAULT (getdate()) NOT NULL,
@@ -8,6 +8,8 @@
     [LastModifiedBy] INT           NULL,
     CONSTRAINT [PK_ClientUser] PRIMARY KEY CLUSTERED ([ID] ASC)
 );
+
+
 
 
 
