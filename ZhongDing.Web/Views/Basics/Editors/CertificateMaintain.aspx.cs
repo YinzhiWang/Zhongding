@@ -117,6 +117,18 @@ namespace ZhongDing.Web.Views.Basics.Editors
                 return _PageClientCompanyCertificateRepository;
             }
         }
+
+        private IProductRepository _PageProductRepository;
+        private IProductRepository PageProductRepository
+        {
+            get
+            {
+                if (_PageProductRepository == null)
+                    _PageProductRepository = new ProductRepository();
+
+                return _PageProductRepository;
+            }
+        }
         #endregion
 
 
@@ -267,6 +279,7 @@ namespace ZhongDing.Web.Views.Basics.Editors
                 //供应商证照（生产企业和供货商）
                 case EOwnerType.Supplier:
                 case EOwnerType.Producer:
+                    #region 供应商证照（生产企业和供货商）
 
                     SupplierCertificate supplierCertificate = null;
 
@@ -311,10 +324,14 @@ namespace ZhongDing.Web.Views.Basics.Editors
                         isSuccessSaved = true;
                     }
 
+                    #endregion
+
                     break;
 
                 //客户商业单位证照
                 case EOwnerType.Client:
+
+                    #region 客户商业单位证照
 
                     ClientCompanyCertificate clientCompanyCertificate = null;
 
@@ -358,10 +375,60 @@ namespace ZhongDing.Web.Views.Basics.Editors
 
                         isSuccessSaved = true;
                     }
+
+                    #endregion
+
                     break;
 
                 //货品证照
                 case EOwnerType.Product:
+
+                    #region 货品证照
+
+                    ProductCertificate productCertificate = null;
+
+                    if (this.OwnerEntityID.HasValue
+                        && this.OwnerEntityID > 0)
+                    {
+                        var product = PageProductRepository.GetByID(this.OwnerEntityID);
+
+                        if (product != null)
+                            productCertificate = product.ProductCertificate
+                                .Where(x => x.ID == this.CurrentEntityID && x.Certificate != null && x.Certificate.OwnerTypeID == this.OwnerTypeID).FirstOrDefault();
+
+                        if (productCertificate == null)
+                        {
+                            Certificate certificate = new Certificate() { OwnerTypeID = this.OwnerTypeID, };
+
+                            productCertificate = new ProductCertificate() { Certificate = certificate };
+
+                            product.ProductCertificate.Add(productCertificate);
+                        }
+
+                        productCertificate.Certificate.CertificateTypeID = Convert.ToInt32(rcbxCertificateType.SelectedValue);
+
+                        if (radioIsGotten.Checked)
+                            productCertificate.Certificate.IsGotten = true;
+                        else if (radioIsNoGotten.Checked)
+                            productCertificate.Certificate.IsGotten = false;
+
+                        productCertificate.Certificate.EffectiveFrom = rdpEffectiveFrom.SelectedDate;
+                        productCertificate.Certificate.EffectiveTo = rdpEffectiveTo.SelectedDate;
+                        productCertificate.Certificate.IsNeedAlert = cbxIsNeedAlert.Checked;
+
+                        if (cbxIsNeedAlert.Checked)
+                            productCertificate.Certificate.AlertBeforeDays = Convert.ToInt32(txtAlertBeforeDays.Value);
+                        else
+                            productCertificate.Certificate.AlertBeforeDays = null;
+
+                        productCertificate.Certificate.Comment = txtComment.Text.Trim();
+
+                        PageProductRepository.Save();
+
+                        isSuccessSaved = true;
+                    }
+
+                    #endregion
 
                     break;
             }

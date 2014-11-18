@@ -11,5 +11,11 @@ namespace ZhongDing.Domain.UIObjects
         public int ItemValue { get; set; }
 
         public string ItemText { get; set; }
+
+        /// <summary>
+        /// 扩展属性
+        /// </summary>
+        /// <value>The extension.</value>
+        public object Extension { get; set; }
     }
 }

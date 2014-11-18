@@ -50,18 +50,6 @@ namespace ZhongDing.Web.Views.Basics.Editors
             }
         }
 
-        private IClientInfoContactRepository _PageClientInfoContactRepository;
-        private IClientInfoContactRepository PageClientInfoContactRepository
-        {
-            get
-            {
-                if (_PageClientInfoContactRepository == null)
-                    _PageClientInfoContactRepository = new ClientInfoContactRepository();
-
-                return _PageClientInfoContactRepository;
-            }
-        }
-
         #endregion
         protected void Page_Load(object sender, EventArgs e)
         {

@@ -78,9 +78,9 @@
                                     <li data-level="2" data-menuitemid=""><a href="#">部门销售计划及提成策略</a></li>
                                 </ul>
                             </li>
-                            <li data-level="1" data-menuitemid="12"><a href="#" class="mws-i-24 i-price-tags">货品管理</a>
+                            <li data-level="1" data-menuitemid="20"><a href="#" class="mws-i-24 i-price-tags">货品管理</a>
                                 <ul class="hide">
-                                    <li data-level="2" data-menuitemid=""><a href="#">货品管理</a></li>
+                                    <li data-level="2" data-menuitemid="21"><a href="javascript:void(0);" onclick="redirectToPage('Views/Products/ProductManagement.aspx');">货品管理</a></li>
                                     <li data-level="2" data-menuitemid=""><a href="#">货品价格管理</a></li>
                                     <li data-level="2" data-menuitemid=""><a href="#">库存货品信息</a></li>
                                 </ul>

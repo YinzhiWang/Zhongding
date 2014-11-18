@@ -2591,6 +2591,9 @@
     <Content Include="Views\Basics\Editors\SupplierContractMaintain.aspx" />
     <Content Include="Views\Basics\WarehouseMaintenance.aspx" />
     <Content Include="Views\Basics\WarehouseManagement.aspx" />
+    <Content Include="Views\Products\Editors\ProductSpecificationMaintain.aspx" />
+    <Content Include="Views\Products\ProductMaintenance.aspx" />
+    <Content Include="Views\Products\ProductManagement.aspx" />
     <Content Include="WebServices\SupplierWS.asmx" />
     <Content Include="HttpHandle\AsyncUploadFileHandler.ashx" />
     <Content Include="HttpHandle\AsyncOperateFileHandler.ashx" />
@@ -2918,6 +2921,27 @@
     </Compile>
     <Compile Include="Views\Basics\WarehouseManagement.aspx.designer.cs">
       <DependentUpon>WarehouseManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Products\Editors\ProductSpecificationMaintain.aspx.cs">
+      <DependentUpon>ProductSpecificationMaintain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Products\Editors\ProductSpecificationMaintain.aspx.designer.cs">
+      <DependentUpon>ProductSpecificationMaintain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Products\ProductMaintenance.aspx.cs">
+      <DependentUpon>ProductMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Products\ProductMaintenance.aspx.designer.cs">
+      <DependentUpon>ProductMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Products\ProductManagement.aspx.cs">
+      <DependentUpon>ProductManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Products\ProductManagement.aspx.designer.cs">
+      <DependentUpon>ProductManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebServices\SupplierWS.asmx.cs">
       <DependentUpon>SupplierWS.asmx</DependentUpon>

@@ -12,7 +12,7 @@ using ZhongDing.Domain.Models;
 
 namespace ZhongDing.Web.Views.Basics
 {
-    public partial class CompanyMaintenance : System.Web.UI.Page
+    public partial class CompanyMaintenance : BasePage
     {
         #region Members
 

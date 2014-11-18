@@ -48,5 +48,15 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         DistributionCompanyManage,
 
+        /// <summary>
+        /// 货品信息管理
+        /// </summary>
+        ProductInfoManage = 20,
+
+        /// <summary>
+        /// 货品管理
+        /// </summary>
+        ProductManage,
+
     }
 }

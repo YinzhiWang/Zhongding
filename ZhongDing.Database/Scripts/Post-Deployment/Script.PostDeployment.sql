@@ -240,7 +240,7 @@ COMMIT TRANSACTION
 ---- end ---- 11/13/2014 -- 初始化DeptDistrict -- by Yinzhi 
 
 
----- start --- 10/31/2014 -- 初始化客户证照类型数据 -- by lihong 
+---- start --- 11/16/2014 -- 初始化客户证照类型数据 -- by lihong 
 SET NUMERIC_ROUNDABORT OFF
 GO
 SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
@@ -264,4 +264,23 @@ SET IDENTITY_INSERT [dbo].[CertificateType] OFF
 ALTER TABLE [dbo].[CertificateType]
     ADD CONSTRAINT [FK_CertificateType_OwnerType] FOREIGN KEY ([OwnerTypeID]) REFERENCES [dbo].[OwnerType] ([ID])
 COMMIT TRANSACTION
----- end --- 10/31/2014 -- 初始化客户证照类型数据 -- by lihong 
+---- end --- 11/16/2014 -- 初始化客户证照类型数据 -- by lihong 
+
+
+---- start --- 11/18/2014 -- 初始化基本单位数据 -- by lihong 
+SET NUMERIC_ROUNDABORT OFF
+GO
+SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+
+BEGIN TRANSACTION
+SET IDENTITY_INSERT [dbo].[UnitOfMeasurement] ON
+INSERT INTO [dbo].[UnitOfMeasurement] ([ID], [UnitName]) VALUES (1, N'支')
+INSERT INTO [dbo].[UnitOfMeasurement] ([ID], [UnitName]) VALUES (2, N'条')
+INSERT INTO [dbo].[UnitOfMeasurement] ([ID], [UnitName]) VALUES (3, N'瓶')
+INSERT INTO [dbo].[UnitOfMeasurement] ([ID], [UnitName]) VALUES (4, N'盒')
+INSERT INTO [dbo].[UnitOfMeasurement] ([ID], [UnitName]) VALUES (5, N'贷')
+SET IDENTITY_INSERT [dbo].[UnitOfMeasurement] OFF
+COMMIT TRANSACTION
+---- end --- 11/18/2014 -- 初始化基本单位数据 -- by lihong 
+

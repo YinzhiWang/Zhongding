@@ -173,5 +173,31 @@ namespace ZhongDing.Business.Repositories
             return uiBankAccounts;
         }
 
+
+        public IList<UIDropdownItem> GetDropdownItems(UISearchDropdownItem uiSearchObj = null)
+        {
+            IList<UIDropdownItem> uiDropdownItems = new List<UIDropdownItem>();
+
+            List<Expression<Func<Supplier, bool>>> whereFuncs = new List<Expression<Func<Supplier, bool>>>();
+
+            if (uiSearchObj != null)
+            {
+                if (uiSearchObj.ItemValues != null
+                    && uiSearchObj.ItemValues.Count > 0)
+                    whereFuncs.Add(x => uiSearchObj.ItemValues.Contains(x.ID));
+
+                if (!string.IsNullOrEmpty(uiSearchObj.ItemText))
+                    whereFuncs.Add(x => x.SupplierName.Contains(uiSearchObj.ItemText));
+            }
+
+            uiDropdownItems = GetList(whereFuncs).Select(x => new UIDropdownItem()
+            {
+                ItemValue = x.ID,
+                ItemText = x.SupplierName,
+                Extension = new { FactoryName = x.FactoryName }
+            }).ToList();
+
+            return uiDropdownItems;
+        }
     }
 }

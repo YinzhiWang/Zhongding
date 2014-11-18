@@ -9,13 +9,13 @@ using ZhongDing.Domain.UISearchObjects;
 
 namespace ZhongDing.Business.IRepositories
 {
-    public interface ISupplierRepository : IBaseRepository<Supplier>, IAutoSerialNo
+    public interface ISupplierRepository : IBaseRepository<Supplier>, IAutoSerialNo, IGenerateDropdownItems
     {
         /// <summary>
         /// 获取UI List，不分页
         /// </summary>
         /// <param name="uiSearchObj">The UI search obj.</param>
-        /// <returns>IList{UICompany}.</returns>
+        /// <returns>IList{UISupplier}.</returns>
         IList<UISupplier> GetUIList(UISearchSupplier uiSearchObj = null);
 
         /// <summary>

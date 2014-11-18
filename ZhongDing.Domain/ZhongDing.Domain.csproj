@@ -216,6 +216,8 @@
     <Compile Include="UIObjects\UICompany.cs" />
     <Compile Include="UIObjects\UIDistributionCompany.cs" />
     <Compile Include="UIObjects\UIDropdownItem.cs" />
+    <Compile Include="UIObjects\UIProduct.cs" />
+    <Compile Include="UIObjects\UIProductSpecification.cs" />
     <Compile Include="UIObjects\UISupplier.cs" />
     <Compile Include="UIObjects\UISupplierBankAccount.cs" />
     <Compile Include="UIObjects\UISupplierCertificate.cs" />
@@ -230,6 +232,8 @@
     <Compile Include="UISearchObjects\UISearchCompany.cs" />
     <Compile Include="UISearchObjects\UISearchDistributionCompany.cs" />
     <Compile Include="UISearchObjects\UISearchDropdownItem.cs" />
+    <Compile Include="UISearchObjects\UISearchProduct.cs" />
+    <Compile Include="UISearchObjects\UISearchProductSpecification.cs" />
     <Compile Include="UISearchObjects\UISearchSupplier.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierContract.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierContractFile.cs" />

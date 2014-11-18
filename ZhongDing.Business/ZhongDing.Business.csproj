@@ -64,9 +64,12 @@
     <Compile Include="IRepositories\IClientInfoRepository.cs" />
     <Compile Include="IRepositories\IClientUserRepository.cs" />
     <Compile Include="IRepositories\ICompanyRepository.cs" />
+    <Compile Include="IRepositories\IDepartmentRepository.cs" />
     <Compile Include="IRepositories\IDistributionCompanyRepository.cs" />
     <Compile Include="IRepositories\IGenerateDropdownItems.cs" />
     <Compile Include="IRepositories\IOwnerTypeRepository.cs" />
+    <Compile Include="IRepositories\IProductCategoryRepository.cs" />
+    <Compile Include="IRepositories\IProductCertificateRepository.cs" />
     <Compile Include="IRepositories\IProductRepository.cs" />
     <Compile Include="IRepositories\IProductSpecificationRepository.cs" />
     <Compile Include="IRepositories\IReportRepository.cs" />
@@ -77,6 +80,7 @@
     <Compile Include="IRepositories\ISupplierContractRepository.cs" />
     <Compile Include="IRepositories\ISupplierRepository.cs" />
     <Compile Include="IRepositories\ISupplierTaskAssignmentRepository.cs" />
+    <Compile Include="IRepositories\IUnitOfMeasurementRepository.cs" />
     <Compile Include="IRepositories\IUnitOfWork.cs" />
     <Compile Include="IRepositories\IUsersRepository.cs" />
     <Compile Include="IRepositories\IWarehouseRepository.cs" />
@@ -95,8 +99,11 @@
     <Compile Include="Repositories\ClientInfoRepository.cs" />
     <Compile Include="Repositories\ClientUserRepository.cs" />
     <Compile Include="Repositories\CompanyRepository.cs" />
+    <Compile Include="Repositories\DepartmentRepository.cs" />
     <Compile Include="Repositories\DistributionCompanyRepository.cs" />
     <Compile Include="Repositories\OwnerTypeRepository.cs" />
+    <Compile Include="Repositories\ProductCategoryRepository.cs" />
+    <Compile Include="Repositories\ProductCertificateRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\ProductSpecificationRepository.cs" />
     <Compile Include="Repositories\Reports\ReportRepository.cs" />
@@ -107,6 +114,7 @@
     <Compile Include="Repositories\SupplierContractRepository.cs" />
     <Compile Include="Repositories\SupplierRepository.cs" />
     <Compile Include="Repositories\SupplierTaskAssignmentRepository.cs" />
+    <Compile Include="Repositories\UnitOfMeasurementRepository.cs" />
     <Compile Include="Repositories\UnitOfWork.cs" />
     <Compile Include="Repositories\UsersRepository.cs" />
     <Compile Include="Repositories\WarehouseRepository.cs" />
