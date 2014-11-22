@@ -36,17 +36,26 @@
                 <span class="mws-i-24 i-table-1">客户管理</span>
             </div>
             <div class="mws-panel-body">
-                <table runat="server" id="tblSearch" class="leftmargin10">
+                <table runat="server" id="tblSearch" class="leftmargin10 width60-percent">
                     <tr class="height40">
+                        <th class="width80 middle-td">客户编号：</th>
                         <td class="middle-td">
-                            <telerik:RadTextBox runat="server" ID="txtSerialNo" Label="编号：" LabelWidth="40" MaxLength="50"></telerik:RadTextBox>
+                            <telerik:RadTextBox runat="server" ID="txtSerialNo" MaxLength="50"></telerik:RadTextBox>
                         </td>
+                        <th class="width80 middle-td right-td">客户名称：</th>
                         <td class="middle-td leftpadding10">
-                            <telerik:RadTextBox runat="server" ID="txtName" Label="名称：" LabelWidth="40" MaxLength="100"></telerik:RadTextBox>
+                            <telerik:RadComboBox runat="server" ID="rcbxClientUser" Filter="Contains"
+                                AllowCustomText="true" Height="160px" EmptyMessage="--请选择--">
+                            </telerik:RadComboBox>
                         </td>
-                        <td class="middle-td leftpadding10">
-                            <span>商业单位：</span>
-                            <telerik:RadComboBox runat="server" ID="rcbxClientCompany" Filter="Contains" Height="160px" EmptyMessage="--请选择--">
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr class="height40">
+                        <th class="width80 middle-td">商业单位：</th>
+                        <td class="middle-td" colspan="3">
+                            <telerik:RadComboBox runat="server" ID="rcbxClientCompany" Height="160px" Width="100%" Filter="Contains"
+                                EmptyMessage="--请选择--" AllowCustomText="true">
                             </telerik:RadComboBox>
                         </td>
                         <td class="middle-td leftpadding20">
@@ -69,10 +78,10 @@
                             <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false">
                                 <ItemStyle HorizontalAlign="Left" Width="50" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="ClientCode" HeaderText="编号" DataField="ClientCode">
+                            <telerik:GridBoundColumn UniqueName="ClientCode" HeaderText="客户编号" DataField="ClientCode">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="ClientName" HeaderText="名称" DataField="ClientName">
+                            <telerik:GridBoundColumn UniqueName="ClientName" HeaderText="客户名称" DataField="ClientName">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="ClientCompany" HeaderText="商业单位" DataField="ClientCompany">
@@ -154,5 +163,76 @@
             $.showLoading();
             window.location.href = "ClientInfoMaintenance.aspx?EntityID=" + id;
         }
+
+        function onCompanyTextChange(sender, eventArgs) {
+            //debugger;
+
+            var filerText = sender.get_text();
+
+            if (!filerText.isNullOrEmpty()) {
+                sender.get_items().forEach(function (e) {
+
+                    if (e.get_text().indexOf(filerText) < 0) {
+                        e.set_visible(false);
+                    }
+                });
+            }
+            else {
+                sender.get_items().forEach(function (e) {
+                    e.set_visible(true);
+                });
+            }
+
+            sender.showDropDown();
+        }
+
+        function onCompanyDDOpening(sender, eventArgs) {
+            //debugger;
+
+            var rcbxcompanyinput = sender.get_inputDomElement();
+
+            $telerik.$(rcbxcompanyinput).on("change", function (e) {
+
+                var items = sender.get_items().toArray();
+
+                var filerText = sender.get_text();
+
+                if (!filerText.isNullOrEmpty()) {
+                    sender.get_items().forEach(function (e) {
+
+                        if (!e.get_value().isNullOrEmpty()
+                            && e.get_text().indexOf(filerText) < 0) {
+                            e.set_visible(false);
+                        }
+                    });
+                }
+                else {
+                    sender.get_items().forEach(function (e) {
+                        e.set_visible(true);
+                    });
+                }
+
+                sender.showDropDown();
+            });
+
+            var items = sender.get_items().toArray();
+
+            var filerText = sender.get_text();
+
+            if (!filerText.isNullOrEmpty()) {
+                sender.get_items().forEach(function (e) {
+
+                    if (e.get_text().indexOf(filerText) < 0) {
+                        e.set_visible(false);
+                    }
+                });
+            }
+            else {
+                sender.get_items().forEach(function (e) {
+                    e.set_visible(true);
+                });
+            }
+        }
+
     </script>
 </asp:Content>

@@ -279,7 +279,7 @@ INSERT INTO [dbo].[UnitOfMeasurement] ([ID], [UnitName]) VALUES (1, N'支')
 INSERT INTO [dbo].[UnitOfMeasurement] ([ID], [UnitName]) VALUES (2, N'条')
 INSERT INTO [dbo].[UnitOfMeasurement] ([ID], [UnitName]) VALUES (3, N'瓶')
 INSERT INTO [dbo].[UnitOfMeasurement] ([ID], [UnitName]) VALUES (4, N'盒')
-INSERT INTO [dbo].[UnitOfMeasurement] ([ID], [UnitName]) VALUES (5, N'贷')
+INSERT INTO [dbo].[UnitOfMeasurement] ([ID], [UnitName]) VALUES (5, N'袋')
 SET IDENTITY_INSERT [dbo].[UnitOfMeasurement] OFF
 COMMIT TRANSACTION
 ---- end --- 11/18/2014 -- 初始化基本单位数据 -- by lihong 

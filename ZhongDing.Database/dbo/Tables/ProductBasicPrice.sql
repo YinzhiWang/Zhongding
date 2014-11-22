@@ -1,9 +1,9 @@
 ﻿CREATE TABLE [dbo].[ProductBasicPrice] (
     [ID]                     INT            IDENTITY (1, 1) NOT NULL,
-    [ProductID]              INT            NULL,
-    [ProductSpecificationID] INT            NULL,
-    [ProcurePrice]           FLOAT (53)     NULL,
-    [SalePrice]              FLOAT (53)     NULL,
+    [ProductID]              INT            NOT NULL,
+    [ProductSpecificationID] INT            NOT NULL,
+    [ProcurePrice]           MONEY          NULL,
+    [SalePrice]              MONEY          NULL,
     [Comment]                NVARCHAR (255) NULL,
     [IsDeleted]              BIT            CONSTRAINT [DF_ProductBasicPrice_IsDeleted] DEFAULT ((0)) NOT NULL,
     [CreatedOn]              DATETIME       CONSTRAINT [DF_ProductBasicPrice_CreatedOn] DEFAULT (getdate()) NOT NULL,
@@ -14,6 +14,10 @@
     CONSTRAINT [FK_ProductBasicPrice_Product] FOREIGN KEY ([ProductID]) REFERENCES [dbo].[Product] ([ID]),
     CONSTRAINT [FK_ProductBasicPrice_ProductSpecification] FOREIGN KEY ([ProductSpecificationID]) REFERENCES [dbo].[ProductSpecification] ([ID])
 );
+
+
+
+
 
 
 

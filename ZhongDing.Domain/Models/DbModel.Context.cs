@@ -41,11 +41,8 @@ namespace ZhongDing.Domain.Models
         public DbSet<Hospital> Hospital { get; set; }
         public DbSet<OwnerType> OwnerType { get; set; }
         public DbSet<Product> Product { get; set; }
-        public DbSet<ProductBasicPrice> ProductBasicPrice { get; set; }
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<ProductCertificate> ProductCertificate { get; set; }
-        public DbSet<ProductDBPolicyPrice> ProductDBPolicyPrice { get; set; }
-        public DbSet<ProductHighPrice> ProductHighPrice { get; set; }
         public DbSet<ProductSpecification> ProductSpecification { get; set; }
         public DbSet<Roles> Roles { get; set; }
         public DbSet<SaleType> SaleType { get; set; }
@@ -70,5 +67,8 @@ namespace ZhongDing.Domain.Models
         public DbSet<ClientCompany> ClientCompany { get; set; }
         public DbSet<ClientUser> ClientUser { get; set; }
         public DbSet<ClientInfo> ClientInfo { get; set; }
+        public DbSet<ProductHighPrice> ProductHighPrice { get; set; }
+        public DbSet<ProductBasicPrice> ProductBasicPrice { get; set; }
+        public DbSet<ProductDBPolicyPrice> ProductDBPolicyPrice { get; set; }
     }
 }

@@ -58,5 +58,10 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         ProductManage,
 
+        /// <summary>
+        /// 货品定价管理
+        /// </summary>
+        ProductPriceManage
+
     }
 }

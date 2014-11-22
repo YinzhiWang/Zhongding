@@ -44,41 +44,40 @@
                             </div>
                         </div>
                         <div class="mws-form-row">
-                            <div class="float-left width40-percent">
-                                <label>客户名称</label>
-                                <div class="mws-form-item">
-                                    <telerik:RadComboBox runat="server" ID="rcbxClientUser" Filter="Contains" AllowCustomText="true"
-                                        MarkFirstMatch="true" Height="160px" EmptyMessage="--请选择--" OnClientBlur="onClientBlur">
-                                    </telerik:RadComboBox>
-                                    <telerik:RadToolTip ID="rttClientName" runat="server" TargetControlID="rcbxClientUser" ShowEvent="OnClick"
-                                        Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
-                                    </telerik:RadToolTip>
-                                    <asp:CustomValidator ID="cvClientName" runat="server" ErrorMessage="请选择或输入客户名称"
-                                        ControlToValidate="rcbxClientUser" ValidationGroup="vgMaintenance" Display="Dynamic"
-                                        Text="*" CssClass="field-validation-error">
-                                    </asp:CustomValidator>
-                                </div>
+                            <label>客户名称</label>
+                            <div class="mws-form-item">
+                                <telerik:RadComboBox runat="server" ID="rcbxClientUser" Filter="Contains" AllowCustomText="true"
+                                    MarkFirstMatch="true" Height="160px" EmptyMessage="--请选择--" OnClientBlur="onClientBlur">
+                                </telerik:RadComboBox>
+                                <telerik:RadToolTip ID="rttClientName" runat="server" TargetControlID="rcbxClientUser" ShowEvent="OnClick"
+                                    Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
+                                </telerik:RadToolTip>
+                                <asp:CustomValidator ID="cvClientName" runat="server" ErrorMessage="请选择或输入客户名称"
+                                    ControlToValidate="rcbxClientUser" ValidationGroup="vgMaintenance" Display="Dynamic"
+                                    Text="*" CssClass="field-validation-error">
+                                </asp:CustomValidator>
                             </div>
-                            <div class="float-left">
-                                <label>商业单位</label>
-                                <div class="mws-form-item">
-                                    <telerik:RadComboBox runat="server" ID="rcbxClientCompany" Filter="Contains" AllowCustomText="false" MarkFirstMatch="true" Height="160px" EmptyMessage="--请选择--">
-                                    </telerik:RadComboBox>
-                                    <telerik:RadToolTip ID="rttClientCompany" runat="server" TargetControlID="rcbxClientCompany" ShowEvent="OnClick"
-                                        Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
-                                    </telerik:RadToolTip>
-                                    <asp:RequiredFieldValidator ID="rfvClientCompany"
-                                        runat="server"
-                                        ErrorMessage="请选择商业单位"
-                                        ControlToValidate="rcbxClientCompany"
-                                        Display="Dynamic" CssClass="field-validation-error"
-                                        ValidationGroup="vgMaintenance" Text="*">
-                                    </asp:RequiredFieldValidator>
-                                    <asp:CustomValidator ID="cvClientCompany" runat="server" ErrorMessage="商业单位不存在，请重新选择"
-                                        ControlToValidate="rcbxClientCompany" ValidationGroup="vgMaintenance" Display="Dynamic"
-                                        Text="*" CssClass="field-validation-error" OnServerValidate="cvClientCompany_ServerValidate">
-                                    </asp:CustomValidator>
-                                </div>
+                        </div>
+                        <div class="mws-form-row">
+                            <label>商业单位</label>
+                            <div class="mws-form-item">
+                                <telerik:RadComboBox runat="server" ID="rcbxClientCompany" Filter="Contains"
+                                    AllowCustomText="false" MarkFirstMatch="true" Height="160px" Width="60%" EmptyMessage="--请选择--">
+                                </telerik:RadComboBox>
+                                <telerik:RadToolTip ID="rttClientCompany" runat="server" TargetControlID="rcbxClientCompany" ShowEvent="OnClick"
+                                    Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
+                                </telerik:RadToolTip>
+                                <asp:RequiredFieldValidator ID="rfvClientCompany"
+                                    runat="server"
+                                    ErrorMessage="请选择商业单位"
+                                    ControlToValidate="rcbxClientCompany"
+                                    Display="Dynamic" CssClass="field-validation-error"
+                                    ValidationGroup="vgMaintenance" Text="*">
+                                </asp:RequiredFieldValidator>
+                                <asp:CustomValidator ID="cvClientCompany" runat="server" ErrorMessage="商业单位不存在，请重新选择"
+                                    ControlToValidate="rcbxClientCompany" ValidationGroup="vgMaintenance" Display="Dynamic"
+                                    Text="*" CssClass="field-validation-error" OnServerValidate="cvClientCompany_ServerValidate">
+                                </asp:CustomValidator>
                             </div>
                         </div>
                         <div class="mws-form-row">
@@ -245,7 +244,7 @@
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
                                                     <telerik:GridBoundColumn UniqueName="Address" HeaderText="地址" DataField="Address">
-                                                        <ItemStyle HorizontalAlign="Left"/>
+                                                        <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
                                                     <telerik:GridTemplateColumn UniqueName="Comment" HeaderText="备注" DataField="Comment" SortExpression="Comment">
                                                         <ItemStyle HorizontalAlign="Left" Width="25%" />

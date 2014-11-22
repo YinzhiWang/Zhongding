@@ -18,9 +18,9 @@ namespace ZhongDing.Domain.Models
         public int ID { get; set; }
         public int ProductID { get; set; }
         public int ProductSpecificationID { get; set; }
-        public Nullable<double> HighPrice { get; set; }
-        public Nullable<double> ActualProcurePrice { get; set; }
-        public Nullable<double> ActualSalePrice { get; set; }
+        public Nullable<decimal> HighPrice { get; set; }
+        public Nullable<decimal> ActualProcurePrice { get; set; }
+        public Nullable<decimal> ActualSalePrice { get; set; }
         public Nullable<double> SupplierTaxRatio { get; set; }
         public Nullable<double> ClientTaxRatio { get; set; }
         public string Comment { get; set; }

@@ -217,6 +217,10 @@
     <Compile Include="UIObjects\UIDistributionCompany.cs" />
     <Compile Include="UIObjects\UIDropdownItem.cs" />
     <Compile Include="UIObjects\UIProduct.cs" />
+    <Compile Include="UIObjects\UIProductBasicPrice.cs" />
+    <Compile Include="UIObjects\UIProductDBPolicyPrice.cs" />
+    <Compile Include="UIObjects\UIProductHighPrice.cs" />
+    <Compile Include="UIObjects\UIProductPrice.cs" />
     <Compile Include="UIObjects\UIProductSpecification.cs" />
     <Compile Include="UIObjects\UISupplier.cs" />
     <Compile Include="UIObjects\UISupplierBankAccount.cs" />

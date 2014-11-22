@@ -89,7 +89,11 @@ namespace ZhongDing.Web.Views.Basics
                     txtPostalCode.Text = clientCompany.PostalCode;
                     txtAddress.Text = clientCompany.Address;
                 }
+                else
+                    btnDelete.Visible = false;
             }
+            else
+                btnDelete.Visible = false;
         }
 
         #endregion

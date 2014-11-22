@@ -17,11 +17,12 @@ namespace ZhongDing.Domain.Models
     {
         public int ID { get; set; }
         public int ProductID { get; set; }
-        public Nullable<int> ProductSpecificationID { get; set; }
-        public Nullable<double> BidPrice { get; set; }
+        public int ProductSpecificationID { get; set; }
+        public Nullable<decimal> BidPrice { get; set; }
         public Nullable<double> FeeRatio { get; set; }
-        public Nullable<double> PreferredPrice { get; set; }
-        public Nullable<double> PolicyPrice { get; set; }
+        public Nullable<decimal> PreferredPrice { get; set; }
+        public Nullable<decimal> PolicyPrice { get; set; }
+        public string Comment { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }

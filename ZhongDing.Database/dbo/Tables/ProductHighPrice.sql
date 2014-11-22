@@ -2,9 +2,9 @@
     [ID]                     INT            IDENTITY (1, 1) NOT NULL,
     [ProductID]              INT            NOT NULL,
     [ProductSpecificationID] INT            NOT NULL,
-    [HighPrice]              FLOAT (53)     NULL,
-    [ActualProcurePrice]     FLOAT (53)     NULL,
-    [ActualSalePrice]        FLOAT (53)     NULL,
+    [HighPrice]              MONEY          NULL,
+    [ActualProcurePrice]     MONEY          NULL,
+    [ActualSalePrice]        MONEY          NULL,
     [SupplierTaxRatio]       FLOAT (53)     NULL,
     [ClientTaxRatio]         FLOAT (53)     NULL,
     [Comment]                NVARCHAR (255) NULL,
@@ -17,6 +17,8 @@
     CONSTRAINT [FK_ProductHighPrice_Product] FOREIGN KEY ([ProductID]) REFERENCES [dbo].[Product] ([ID]),
     CONSTRAINT [FK_ProductHighPrice_ProductSpecification] FOREIGN KEY ([ProductSpecificationID]) REFERENCES [dbo].[ProductSpecification] ([ID])
 );
+
+
 
 
 

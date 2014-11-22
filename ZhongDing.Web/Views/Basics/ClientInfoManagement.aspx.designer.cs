@@ -49,13 +49,13 @@ namespace ZhongDing.Web.Views.Basics {
         protected global::Telerik.Web.UI.RadTextBox txtSerialNo;
         
         /// <summary>
-        /// txtName control.
+        /// rcbxClientUser control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtName;
+        protected global::Telerik.Web.UI.RadComboBox rcbxClientUser;
         
         /// <summary>
         /// rcbxClientCompany control.

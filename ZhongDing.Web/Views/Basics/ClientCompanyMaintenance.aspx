@@ -92,8 +92,8 @@
                                                     <telerik:GridBoundColumn UniqueName="EffectiveDateDescription" HeaderText="有效期" DataField="EffectiveDateDescription">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
-                                                    <telerik:GridTemplateColumn UniqueName="IsNeedAlert" HeaderText="是否<br/>提醒" DataField="IsNeedAlert" SortExpression="IsNeedAlert">
-                                                        <ItemStyle HorizontalAlign="Left" Width="40" />
+                                                    <telerik:GridTemplateColumn UniqueName="IsNeedAlert" HeaderText="是否提醒" DataField="IsNeedAlert" SortExpression="IsNeedAlert">
+                                                        <ItemStyle HorizontalAlign="Left" />
                                                         <ItemTemplate>
                                                             <span>
                                                                 <%#DataBinder.Eval(Container.DataItem,"IsNeedAlert")!=null
@@ -102,7 +102,7 @@
                                                             </span>
                                                         </ItemTemplate>
                                                     </telerik:GridTemplateColumn>
-                                                    <telerik:GridTemplateColumn UniqueName="AlertBeforeDays" HeaderText="提醒<br/>期限" DataField="AlertBeforeDays" SortExpression="AlertBeforeDays">
+                                                    <telerik:GridTemplateColumn UniqueName="AlertBeforeDays" HeaderText="提醒期限" DataField="AlertBeforeDays" SortExpression="AlertBeforeDays">
                                                         <ItemTemplate>
                                                             <span>
                                                                 <%#DataBinder.Eval(Container.DataItem,"AlertBeforeDays")!=null

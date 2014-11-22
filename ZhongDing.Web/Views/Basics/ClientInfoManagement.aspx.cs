@@ -30,6 +30,18 @@ namespace ZhongDing.Web.Views.Basics
             }
         }
 
+        private IClientUserRepository _PageClientUserRepository;
+        private IClientUserRepository PageClientUserRepository
+        {
+            get
+            {
+                if (_PageClientUserRepository == null)
+                    _PageClientUserRepository = new ClientUserRepository();
+
+                return _PageClientUserRepository;
+            }
+        }
+
         private IClientCompanyRepository _PageClientCompanyRepository;
         private IClientCompanyRepository PageClientCompanyRepository
         {
@@ -50,8 +62,21 @@ namespace ZhongDing.Web.Views.Basics
 
             if (!IsPostBack)
             {
+                BindClientUsers();
+
                 BindClientCompanies();
             }
+        }
+
+        private void BindClientUsers()
+        {
+            var clientUsers = PageClientUserRepository.GetDropdownItems();
+            rcbxClientUser.DataSource = clientUsers;
+            rcbxClientUser.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+            rcbxClientUser.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+            rcbxClientUser.DataBind();
+
+            rcbxClientUser.Items.Insert(0, new RadComboBoxItem("", ""));
         }
 
         private void BindClientCompanies()
@@ -61,15 +86,23 @@ namespace ZhongDing.Web.Views.Basics
             rcbxClientCompany.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
             rcbxClientCompany.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
             rcbxClientCompany.DataBind();
+
+            rcbxClientCompany.Items.Insert(0, new RadComboBoxItem("", ""));
         }
 
         private void BindEntities(bool isNeedRebind)
         {
             UISearchClientInfo uiSearchObj = new UISearchClientInfo()
             {
-                ClientCode = txtSerialNo.Text.Trim(),
-                ClientName = txtName.Text.Trim()
+                ClientCode = txtSerialNo.Text.Trim()
             };
+
+            if (!string.IsNullOrEmpty(rcbxClientUser.SelectedValue))
+            {
+                int clientUserID;
+                if (int.TryParse(rcbxClientUser.SelectedValue, out clientUserID))
+                    uiSearchObj.ClientUserID = clientUserID;
+            }
 
             if (!string.IsNullOrEmpty(rcbxClientCompany.SelectedValue))
             {
@@ -169,7 +202,7 @@ namespace ZhongDing.Web.Views.Basics
         protected void btnReset_Click(object sender, EventArgs e)
         {
             txtSerialNo.Text = string.Empty;
-            txtName.Text = string.Empty;
+            rcbxClientUser.ClearSelection();
             rcbxClientCompany.ClearSelection();
 
             BindEntities(true);

@@ -26,6 +26,9 @@ namespace ZhongDing.Business.Repositories
                 if (uiSearchObj.ID > 0)
                     whereFuncs.Add(x => x.ID.Equals(uiSearchObj.ID));
 
+                if (uiSearchObj.ClientUserID > 0)
+                    whereFuncs.Add(x => x.ClientUserID == uiSearchObj.ClientUserID);
+
                 if (uiSearchObj.ClientCompanyID > 0)
                     whereFuncs.Add(x => x.ClientCompanyID == uiSearchObj.ClientCompanyID);
 
@@ -71,6 +74,9 @@ namespace ZhongDing.Business.Repositories
             {
                 if (uiSearchObj.ID > 0)
                     whereFuncs.Add(x => x.ID.Equals(uiSearchObj.ID));
+
+                if (uiSearchObj.ClientUserID > 0)
+                    whereFuncs.Add(x => x.ClientUserID == uiSearchObj.ClientUserID);
 
                 if (uiSearchObj.ClientCompanyID > 0)
                     whereFuncs.Add(x => x.ClientCompanyID == uiSearchObj.ClientCompanyID);

@@ -10,6 +10,7 @@ namespace ZhongDing.Domain.UISearchObjects
     {
         public string ClientCode { get; set; }
         public string ClientName { get; set; }
+        public int ClientUserID { get; set; }
         public int ClientCompanyID { get; set; }
     }
 }

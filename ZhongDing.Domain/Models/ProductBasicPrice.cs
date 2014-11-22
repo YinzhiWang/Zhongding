@@ -16,10 +16,10 @@ namespace ZhongDing.Domain.Models
     public partial class ProductBasicPrice : IEntityExtendedProperty
     {
         public int ID { get; set; }
-        public Nullable<int> ProductID { get; set; }
-        public Nullable<int> ProductSpecificationID { get; set; }
-        public Nullable<double> ProcurePrice { get; set; }
-        public Nullable<double> SalePrice { get; set; }
+        public int ProductID { get; set; }
+        public int ProductSpecificationID { get; set; }
+        public Nullable<decimal> ProcurePrice { get; set; }
+        public Nullable<decimal> SalePrice { get; set; }
         public string Comment { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }

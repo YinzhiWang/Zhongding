@@ -660,10 +660,10 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="ProductID" Type="int" />
-          <Property Name="ProductSpecificationID" Type="int" />
-          <Property Name="ProcurePrice" Type="float" />
-          <Property Name="SalePrice" Type="float" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="ProductSpecificationID" Type="int" Nullable="false" />
+          <Property Name="ProcurePrice" Type="money" />
+          <Property Name="SalePrice" Type="money" />
           <Property Name="Comment" Type="nvarchar" MaxLength="255" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
@@ -697,11 +697,12 @@
           </Key>
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ProductID" Type="int" Nullable="false" />
-          <Property Name="ProductSpecificationID" Type="int" />
-          <Property Name="BidPrice" Type="float" />
+          <Property Name="ProductSpecificationID" Type="int" Nullable="false" />
+          <Property Name="BidPrice" Type="money" />
           <Property Name="FeeRatio" Type="float" />
-          <Property Name="PreferredPrice" Type="float" />
-          <Property Name="PolicyPrice" Type="float" />
+          <Property Name="PreferredPrice" Type="money" />
+          <Property Name="PolicyPrice" Type="money" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
@@ -715,9 +716,9 @@
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="ProductSpecificationID" Type="int" Nullable="false" />
-          <Property Name="HighPrice" Type="float" />
-          <Property Name="ActualProcurePrice" Type="float" />
-          <Property Name="ActualSalePrice" Type="float" />
+          <Property Name="HighPrice" Type="money" />
+          <Property Name="ActualProcurePrice" Type="money" />
+          <Property Name="ActualSalePrice" Type="money" />
           <Property Name="SupplierTaxRatio" Type="float" />
           <Property Name="ClientTaxRatio" Type="float" />
           <Property Name="Comment" Type="nvarchar" MaxLength="255" />
@@ -1241,7 +1242,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductBasicPrice_Product">
-          <End Role="Product" Type="DbModel.Store.Product" Multiplicity="0..1" />
+          <End Role="Product" Type="DbModel.Store.Product" Multiplicity="1" />
           <End Role="ProductBasicPrice" Type="DbModel.Store.ProductBasicPrice" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
@@ -1253,7 +1254,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductBasicPrice_ProductSpecification">
-          <End Role="ProductSpecification" Type="DbModel.Store.ProductSpecification" Multiplicity="0..1" />
+          <End Role="ProductSpecification" Type="DbModel.Store.ProductSpecification" Multiplicity="1" />
           <End Role="ProductBasicPrice" Type="DbModel.Store.ProductBasicPrice" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProductSpecification">
@@ -1301,7 +1302,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ProductDBPolicyPrice_ProductSpecification">
-          <End Role="ProductSpecification" Type="DbModel.Store.ProductSpecification" Multiplicity="0..1" />
+          <End Role="ProductSpecification" Type="DbModel.Store.ProductSpecification" Multiplicity="1" />
           <End Role="ProductDBPolicyPrice" Type="DbModel.Store.ProductDBPolicyPrice" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ProductSpecification">
@@ -1573,11 +1574,8 @@
           <EntitySet Name="Hospital" EntityType="DbModel.Hospital" />
           <EntitySet Name="OwnerType" EntityType="DbModel.OwnerType" />
           <EntitySet Name="Product" EntityType="DbModel.Product" />
-          <EntitySet Name="ProductBasicPrice" EntityType="DbModel.ProductBasicPrice" />
           <EntitySet Name="ProductCategory" EntityType="DbModel.ProductCategory" />
           <EntitySet Name="ProductCertificate" EntityType="DbModel.ProductCertificate" />
-          <EntitySet Name="ProductDBPolicyPrice" EntityType="DbModel.ProductDBPolicyPrice" />
-          <EntitySet Name="ProductHighPrice" EntityType="DbModel.ProductHighPrice" />
           <EntitySet Name="ProductSpecification" EntityType="DbModel.ProductSpecification" />
           <EntitySet Name="Roles" EntityType="DbModel.Roles" />
           <EntitySet Name="SaleType" EntityType="DbModel.SaleType" />
@@ -1669,21 +1667,9 @@
             <End Role="Supplier" EntitySet="Supplier" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
-          <AssociationSet Name="FK_ProductBasicPrice_Product" Association="DbModel.FK_ProductBasicPrice_Product">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="ProductBasicPrice" EntitySet="ProductBasicPrice" />
-          </AssociationSet>
           <AssociationSet Name="FK_ProductCertificate_Product" Association="DbModel.FK_ProductCertificate_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="ProductCertificate" EntitySet="ProductCertificate" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductDBPolicyPrice_Product" Association="DbModel.FK_ProductDBPolicyPrice_Product">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="ProductDBPolicyPrice" EntitySet="ProductDBPolicyPrice" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductHighPrice_Product" Association="DbModel.FK_ProductHighPrice_Product">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="ProductHighPrice" EntitySet="ProductHighPrice" />
           </AssociationSet>
           <AssociationSet Name="FK_ProductSpecification_Product" Association="DbModel.FK_ProductSpecification_Product">
             <End Role="Product" EntitySet="Product" />
@@ -1692,18 +1678,6 @@
           <AssociationSet Name="FK_SupplierContract_Product" Association="DbModel.FK_SupplierContract_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="SupplierContract" EntitySet="SupplierContract" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductBasicPrice_ProductSpecification" Association="DbModel.FK_ProductBasicPrice_ProductSpecification">
-            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
-            <End Role="ProductBasicPrice" EntitySet="ProductBasicPrice" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductDBPolicyPrice_ProductSpecification" Association="DbModel.FK_ProductDBPolicyPrice_ProductSpecification">
-            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
-            <End Role="ProductDBPolicyPrice" EntitySet="ProductDBPolicyPrice" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductHighPrice_ProductSpecification" Association="DbModel.FK_ProductHighPrice_ProductSpecification">
-            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
-            <End Role="ProductHighPrice" EntitySet="ProductHighPrice" />
           </AssociationSet>
           <AssociationSet Name="FK_ProductSpecification_UnitOfMeasurement" Association="DbModel.FK_ProductSpecification_UnitOfMeasurement">
             <End Role="UnitOfMeasurement" EntitySet="UnitOfMeasurement" />
@@ -1809,6 +1783,33 @@
           <AssociationSet Name="FK_ClientInfoProductSetting_ClientInfo" Association="DbModel.FK_ClientInfoProductSetting_ClientInfo">
             <End Role="ClientInfo" EntitySet="ClientInfo" />
             <End Role="ClientInfoProductSetting" EntitySet="ClientInfoProductSetting" />
+          </AssociationSet>
+          <EntitySet Name="ProductHighPrice" EntityType="DbModel.ProductHighPrice" />
+          <AssociationSet Name="FK_ProductHighPrice_Product" Association="DbModel.FK_ProductHighPrice_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductHighPrice" EntitySet="ProductHighPrice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductHighPrice_ProductSpecification" Association="DbModel.FK_ProductHighPrice_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="ProductHighPrice" EntitySet="ProductHighPrice" />
+          </AssociationSet>
+          <EntitySet Name="ProductBasicPrice" EntityType="DbModel.ProductBasicPrice" />
+          <EntitySet Name="ProductDBPolicyPrice" EntityType="DbModel.ProductDBPolicyPrice" />
+          <AssociationSet Name="FK_ProductBasicPrice_Product" Association="DbModel.FK_ProductBasicPrice_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductBasicPrice" EntitySet="ProductBasicPrice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductDBPolicyPrice_Product" Association="DbModel.FK_ProductDBPolicyPrice_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductDBPolicyPrice" EntitySet="ProductDBPolicyPrice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductBasicPrice_ProductSpecification" Association="DbModel.FK_ProductBasicPrice_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="ProductBasicPrice" EntitySet="ProductBasicPrice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductDBPolicyPrice_ProductSpecification" Association="DbModel.FK_ProductDBPolicyPrice_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="ProductDBPolicyPrice" EntitySet="ProductDBPolicyPrice" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
@@ -2086,32 +2087,14 @@
           <NavigationProperty Name="Department" Relationship="DbModel.FK_Product_Department" FromRole="Product" ToRole="Department" />
           <NavigationProperty Name="ProductCategory" Relationship="DbModel.FK_Product_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
           <NavigationProperty Name="Supplier" Relationship="DbModel.FK_Product_Supplier" FromRole="Product" ToRole="Supplier" />
-          <NavigationProperty Name="ProductBasicPrice" Relationship="DbModel.FK_ProductBasicPrice_Product" FromRole="Product" ToRole="ProductBasicPrice" />
           <NavigationProperty Name="ProductCertificate" Relationship="DbModel.FK_ProductCertificate_Product" FromRole="Product" ToRole="ProductCertificate" />
-          <NavigationProperty Name="ProductDBPolicyPrice" Relationship="DbModel.FK_ProductDBPolicyPrice_Product" FromRole="Product" ToRole="ProductDBPolicyPrice" />
-          <NavigationProperty Name="ProductHighPrice" Relationship="DbModel.FK_ProductHighPrice_Product" FromRole="Product" ToRole="ProductHighPrice" />
           <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_ProductSpecification_Product" FromRole="Product" ToRole="ProductSpecification" />
           <NavigationProperty Name="SupplierContract" Relationship="DbModel.FK_SupplierContract_Product" FromRole="Product" ToRole="SupplierContract" />
           <NavigationProperty Name="ClientInfoProductSetting" Relationship="DbModel.FK_ClientInfoProductSetting_Product" FromRole="Product" ToRole="ClientInfoProductSetting" />
           <NavigationProperty Name="DeptProductEvaluation" Relationship="DbModel.FK_DeptProductEvaluation_Product" FromRole="Product" ToRole="DeptProductEvaluation" />
-        </EntityType>
-        <EntityType Name="ProductBasicPrice">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="ProductID" />
-          <Property Type="Int32" Name="ProductSpecificationID" />
-          <Property Type="Double" Name="ProcurePrice" />
-          <Property Type="Double" Name="SalePrice" />
-          <Property Type="String" Name="Comment" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="Product" Relationship="DbModel.FK_ProductBasicPrice_Product" FromRole="ProductBasicPrice" ToRole="Product" />
-          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_ProductBasicPrice_ProductSpecification" FromRole="ProductBasicPrice" ToRole="ProductSpecification" />
+          <NavigationProperty Name="ProductHighPrice" Relationship="DbModel.FK_ProductHighPrice_Product" FromRole="Product" ToRole="ProductHighPrice" />
+          <NavigationProperty Name="ProductBasicPrice" Relationship="DbModel.FK_ProductBasicPrice_Product" FromRole="Product" ToRole="ProductBasicPrice" />
+          <NavigationProperty Name="ProductDBPolicyPrice" Relationship="DbModel.FK_ProductDBPolicyPrice_Product" FromRole="Product" ToRole="ProductDBPolicyPrice" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -2136,46 +2119,6 @@
           <NavigationProperty Name="Certificate" Relationship="DbModel.FK_ProductCertificate_Certificate" FromRole="ProductCertificate" ToRole="Certificate" />
           <NavigationProperty Name="Product" Relationship="DbModel.FK_ProductCertificate_Product" FromRole="ProductCertificate" ToRole="Product" />
         </EntityType>
-        <EntityType Name="ProductDBPolicyPrice">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="ProductID" Nullable="false" />
-          <Property Type="Int32" Name="ProductSpecificationID" />
-          <Property Type="Double" Name="BidPrice" />
-          <Property Type="Double" Name="FeeRatio" />
-          <Property Type="Double" Name="PreferredPrice" />
-          <Property Type="Double" Name="PolicyPrice" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="Product" Relationship="DbModel.FK_ProductDBPolicyPrice_Product" FromRole="ProductDBPolicyPrice" ToRole="Product" />
-          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_ProductDBPolicyPrice_ProductSpecification" FromRole="ProductDBPolicyPrice" ToRole="ProductSpecification" />
-        </EntityType>
-        <EntityType Name="ProductHighPrice">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="ProductID" Nullable="false" />
-          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
-          <Property Type="Double" Name="HighPrice" />
-          <Property Type="Double" Name="ActualProcurePrice" />
-          <Property Type="Double" Name="ActualSalePrice" />
-          <Property Type="Double" Name="SupplierTaxRatio" />
-          <Property Type="Double" Name="ClientTaxRatio" />
-          <Property Type="String" Name="Comment" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="Product" Relationship="DbModel.FK_ProductHighPrice_Product" FromRole="ProductHighPrice" ToRole="Product" />
-          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_ProductHighPrice_ProductSpecification" FromRole="ProductHighPrice" ToRole="ProductSpecification" />
-        </EntityType>
         <EntityType Name="ProductSpecification">
           <Key>
             <PropertyRef Name="ID" />
@@ -2192,12 +2135,12 @@
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="Product" Relationship="DbModel.FK_ProductSpecification_Product" FromRole="ProductSpecification" ToRole="Product" />
-          <NavigationProperty Name="ProductBasicPrice" Relationship="DbModel.FK_ProductBasicPrice_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductBasicPrice" />
-          <NavigationProperty Name="ProductDBPolicyPrice" Relationship="DbModel.FK_ProductDBPolicyPrice_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductDBPolicyPrice" />
-          <NavigationProperty Name="ProductHighPrice" Relationship="DbModel.FK_ProductHighPrice_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductHighPrice" />
           <NavigationProperty Name="UnitOfMeasurement" Relationship="DbModel.FK_ProductSpecification_UnitOfMeasurement" FromRole="ProductSpecification" ToRole="UnitOfMeasurement" />
           <NavigationProperty Name="SupplierContract" Relationship="DbModel.FK_SupplierContract_ProductSpecification" FromRole="ProductSpecification" ToRole="SupplierContract" />
           <NavigationProperty Name="ClientInfoProductSetting" Relationship="DbModel.FK_ClientInfoProductSetting_ProductSpecification" FromRole="ProductSpecification" ToRole="ClientInfoProductSetting" />
+          <NavigationProperty Name="ProductHighPrice" Relationship="DbModel.FK_ProductHighPrice_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductHighPrice" />
+          <NavigationProperty Name="ProductBasicPrice" Relationship="DbModel.FK_ProductBasicPrice_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductBasicPrice" />
+          <NavigationProperty Name="ProductDBPolicyPrice" Relationship="DbModel.FK_ProductDBPolicyPrice_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductDBPolicyPrice" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -2616,18 +2559,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ProductBasicPrice_Product">
-          <End Type="DbModel.Product" Role="Product" Multiplicity="0..1" />
-          <End Type="DbModel.ProductBasicPrice" Role="ProductBasicPrice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ProductBasicPrice">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ProductCertificate_Product">
           <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
           <End Type="DbModel.ProductCertificate" Role="ProductCertificate" Multiplicity="*" />
@@ -2636,30 +2567,6 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="ProductCertificate">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProductDBPolicyPrice_Product">
-          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
-          <End Type="DbModel.ProductDBPolicyPrice" Role="ProductDBPolicyPrice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ProductDBPolicyPrice">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProductHighPrice_Product">
-          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
-          <End Type="DbModel.ProductHighPrice" Role="ProductHighPrice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ProductHighPrice">
               <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
@@ -2685,42 +2592,6 @@
             </Principal>
             <Dependent Role="SupplierContract">
               <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProductBasicPrice_ProductSpecification">
-          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="0..1" />
-          <End Type="DbModel.ProductBasicPrice" Role="ProductBasicPrice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProductSpecification">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ProductBasicPrice">
-              <PropertyRef Name="ProductSpecificationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProductDBPolicyPrice_ProductSpecification">
-          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="0..1" />
-          <End Type="DbModel.ProductDBPolicyPrice" Role="ProductDBPolicyPrice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProductSpecification">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ProductDBPolicyPrice">
-              <PropertyRef Name="ProductSpecificationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProductHighPrice_ProductSpecification">
-          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
-          <End Type="DbModel.ProductHighPrice" Role="ProductHighPrice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProductSpecification">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ProductHighPrice">
-              <PropertyRef Name="ProductSpecificationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3207,6 +3078,137 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ProductHighPrice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
+          <Property Type="Decimal" Name="HighPrice" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="ActualProcurePrice" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="ActualSalePrice" Precision="19" Scale="4" />
+          <Property Type="Double" Name="SupplierTaxRatio" />
+          <Property Type="Double" Name="ClientTaxRatio" />
+          <Property Type="String" Name="Comment" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_ProductHighPrice_Product" FromRole="ProductHighPrice" ToRole="Product" />
+          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_ProductHighPrice_ProductSpecification" FromRole="ProductHighPrice" ToRole="ProductSpecification" />
+        </EntityType>
+        <Association Name="FK_ProductHighPrice_Product">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DbModel.ProductHighPrice" Role="ProductHighPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductHighPrice">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductHighPrice_ProductSpecification">
+          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
+          <End Type="DbModel.ProductHighPrice" Role="ProductHighPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductHighPrice">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProductBasicPrice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
+          <Property Type="Decimal" Name="ProcurePrice" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="SalePrice" Precision="19" Scale="4" />
+          <Property Type="String" Name="Comment" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_ProductBasicPrice_Product" FromRole="ProductBasicPrice" ToRole="Product" />
+          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_ProductBasicPrice_ProductSpecification" FromRole="ProductBasicPrice" ToRole="ProductSpecification" />
+        </EntityType>
+        <EntityType Name="ProductDBPolicyPrice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
+          <Property Type="Decimal" Name="BidPrice" Precision="19" Scale="4" />
+          <Property Type="Double" Name="FeeRatio" />
+          <Property Type="Decimal" Name="PreferredPrice" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="PolicyPrice" Precision="19" Scale="4" />
+          <Property Type="String" Name="Comment" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_ProductDBPolicyPrice_Product" FromRole="ProductDBPolicyPrice" ToRole="Product" />
+          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_ProductDBPolicyPrice_ProductSpecification" FromRole="ProductDBPolicyPrice" ToRole="ProductSpecification" />
+        </EntityType>
+        <Association Name="FK_ProductBasicPrice_Product">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DbModel.ProductBasicPrice" Role="ProductBasicPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductBasicPrice">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductDBPolicyPrice_Product">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DbModel.ProductDBPolicyPrice" Role="ProductDBPolicyPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductDBPolicyPrice">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductBasicPrice_ProductSpecification">
+          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
+          <End Type="DbModel.ProductBasicPrice" Role="ProductBasicPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductBasicPrice">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductDBPolicyPrice_ProductSpecification">
+          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
+          <End Type="DbModel.ProductDBPolicyPrice" Role="ProductDBPolicyPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductDBPolicyPrice">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3467,23 +3469,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ProductBasicPrice">
-            <EntityTypeMapping TypeName="DbModel.ProductBasicPrice">
-              <MappingFragment StoreEntitySet="ProductBasicPrice">
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
-                <ScalarProperty Name="ProcurePrice" ColumnName="ProcurePrice" />
-                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ProductCategory">
             <EntityTypeMapping TypeName="DbModel.ProductCategory">
               <MappingFragment StoreEntitySet="ProductCategory">
@@ -3501,44 +3486,6 @@
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="CertificateID" ColumnName="CertificateID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProductDBPolicyPrice">
-            <EntityTypeMapping TypeName="DbModel.ProductDBPolicyPrice">
-              <MappingFragment StoreEntitySet="ProductDBPolicyPrice">
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="PolicyPrice" ColumnName="PolicyPrice" />
-                <ScalarProperty Name="PreferredPrice" ColumnName="PreferredPrice" />
-                <ScalarProperty Name="FeeRatio" ColumnName="FeeRatio" />
-                <ScalarProperty Name="BidPrice" ColumnName="BidPrice" />
-                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProductHighPrice">
-            <EntityTypeMapping TypeName="DbModel.ProductHighPrice">
-              <MappingFragment StoreEntitySet="ProductHighPrice">
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="ClientTaxRatio" ColumnName="ClientTaxRatio" />
-                <ScalarProperty Name="SupplierTaxRatio" ColumnName="SupplierTaxRatio" />
-                <ScalarProperty Name="ActualSalePrice" ColumnName="ActualSalePrice" />
-                <ScalarProperty Name="ActualProcurePrice" ColumnName="ActualProcurePrice" />
-                <ScalarProperty Name="HighPrice" ColumnName="HighPrice" />
-                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
@@ -3922,6 +3869,62 @@
                 <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
                 <ScalarProperty Name="ClientCompanyID" ColumnName="ClientCompanyID" />
                 <ScalarProperty Name="ClientUserID" ColumnName="ClientUserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductHighPrice">
+            <EntityTypeMapping TypeName="DbModel.ProductHighPrice">
+              <MappingFragment StoreEntitySet="ProductHighPrice">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="ClientTaxRatio" ColumnName="ClientTaxRatio" />
+                <ScalarProperty Name="SupplierTaxRatio" ColumnName="SupplierTaxRatio" />
+                <ScalarProperty Name="ActualSalePrice" ColumnName="ActualSalePrice" />
+                <ScalarProperty Name="ActualProcurePrice" ColumnName="ActualProcurePrice" />
+                <ScalarProperty Name="HighPrice" ColumnName="HighPrice" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductBasicPrice">
+            <EntityTypeMapping TypeName="DbModel.ProductBasicPrice">
+              <MappingFragment StoreEntitySet="ProductBasicPrice">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+                <ScalarProperty Name="ProcurePrice" ColumnName="ProcurePrice" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductDBPolicyPrice">
+            <EntityTypeMapping TypeName="DbModel.ProductDBPolicyPrice">
+              <MappingFragment StoreEntitySet="ProductDBPolicyPrice">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="PolicyPrice" ColumnName="PolicyPrice" />
+                <ScalarProperty Name="PreferredPrice" ColumnName="PreferredPrice" />
+                <ScalarProperty Name="FeeRatio" ColumnName="FeeRatio" />
+                <ScalarProperty Name="BidPrice" ColumnName="BidPrice" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -29,5 +29,6 @@ namespace ZhongDing.Domain.UISearchObjects
         /// </summary>
         /// <value>The item text.</value>
         public string ItemText { get; set; }
+
     }
 }

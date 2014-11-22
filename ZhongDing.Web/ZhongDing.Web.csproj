@@ -2594,6 +2594,7 @@
     <Content Include="Views\Products\Editors\ProductSpecificationMaintain.aspx" />
     <Content Include="Views\Products\ProductMaintenance.aspx" />
     <Content Include="Views\Products\ProductManagement.aspx" />
+    <Content Include="Views\Products\ProductPriceManagement.aspx" />
     <Content Include="WebServices\SupplierWS.asmx" />
     <Content Include="HttpHandle\AsyncUploadFileHandler.ashx" />
     <Content Include="HttpHandle\AsyncOperateFileHandler.ashx" />
@@ -2942,6 +2943,13 @@
     </Compile>
     <Compile Include="Views\Products\ProductManagement.aspx.designer.cs">
       <DependentUpon>ProductManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Products\ProductPriceManagement.aspx.cs">
+      <DependentUpon>ProductPriceManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Products\ProductPriceManagement.aspx.designer.cs">
+      <DependentUpon>ProductPriceManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebServices\SupplierWS.asmx.cs">
       <DependentUpon>SupplierWS.asmx</DependentUpon>

@@ -370,10 +370,17 @@ namespace ZhongDing.Web.Views.Products
                     IProductSpecificationRepository productSpecificationRepository = new ProductSpecificationRepository();
                     IProductCertificateRepository productCertificateRepository = new ProductCertificateRepository();
                     ICertificateRepository certificateRepository = new CertificateRepository();
+                    IProductBasicPriceRepository basicPriceRepository = new ProductBasicPriceRepository();
+                    IProductHighPriceRepository highPriceRepository = new ProductHighPriceRepository();
+                    IProductDBPolicyPriceRepository dBPolicyPriceRepository = new ProductDBPolicyPriceRepository();
+
                     productRepository.SetDbModel(db);
                     productSpecificationRepository.SetDbModel(db);
                     productCertificateRepository.SetDbModel(db);
                     certificateRepository.SetDbModel(db);
+                    basicPriceRepository.SetDbModel(db);
+                    highPriceRepository.SetDbModel(db);
+                    dBPolicyPriceRepository.SetDbModel(db);
 
                     var product = productRepository.GetByID(this.CurrentEntityID);
 
@@ -394,6 +401,24 @@ namespace ZhongDing.Web.Views.Products
 
                                 productCertificateRepository.Delete(productCertificate);
                             }
+                        }
+
+                        foreach (var basicPrice in product.ProductBasicPrice)
+                        {
+                            if (basicPrice != null)
+                                basicPriceRepository.Delete(basicPrice);
+                        }
+
+                        foreach (var highPrice in product.ProductHighPrice)
+                        {
+                            if (highPrice != null)
+                                highPriceRepository.Delete(highPrice);
+                        }
+
+                        foreach (var dBPolicyPrice in product.ProductDBPolicyPrice)
+                        {
+                            if (dBPolicyPrice != null)
+                                dBPolicyPriceRepository.Delete(dBPolicyPrice);
                         }
 
                         productRepository.Delete(product);

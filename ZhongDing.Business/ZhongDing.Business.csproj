@@ -68,8 +68,11 @@
     <Compile Include="IRepositories\IDistributionCompanyRepository.cs" />
     <Compile Include="IRepositories\IGenerateDropdownItems.cs" />
     <Compile Include="IRepositories\IOwnerTypeRepository.cs" />
+    <Compile Include="IRepositories\IProductBasicPriceRepository.cs" />
     <Compile Include="IRepositories\IProductCategoryRepository.cs" />
     <Compile Include="IRepositories\IProductCertificateRepository.cs" />
+    <Compile Include="IRepositories\IProductDBPolicyPriceRepository.cs" />
+    <Compile Include="IRepositories\IProductHighPriceRepository.cs" />
     <Compile Include="IRepositories\IProductRepository.cs" />
     <Compile Include="IRepositories\IProductSpecificationRepository.cs" />
     <Compile Include="IRepositories\IReportRepository.cs" />
@@ -102,8 +105,11 @@
     <Compile Include="Repositories\DepartmentRepository.cs" />
     <Compile Include="Repositories\DistributionCompanyRepository.cs" />
     <Compile Include="Repositories\OwnerTypeRepository.cs" />
+    <Compile Include="Repositories\ProductBasicPriceRepository.cs" />
     <Compile Include="Repositories\ProductCategoryRepository.cs" />
     <Compile Include="Repositories\ProductCertificateRepository.cs" />
+    <Compile Include="Repositories\ProductDBPolicyPriceRepository.cs" />
+    <Compile Include="Repositories\ProductHighPriceRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\ProductSpecificationRepository.cs" />
     <Compile Include="Repositories\Reports\ReportRepository.cs" />
