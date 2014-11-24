@@ -67,7 +67,7 @@
                         <div class="float-left width50-percent">
                             <label>货品</label>
                             <div class="mws-form-item">
-                                <telerik:RadComboBox ID="rcbxProduct" runat="server" Filter="Contains" Height="160px"
+                                <telerik:RadComboBox ID="rcbxProduct" runat="server" Filter="Contains" Height="160px" Width="260"
                                     AutoPostBack="true" EmptyMessage="--请选择--" OnSelectedIndexChanged="rcbxProduct_SelectedIndexChanged">
                                 </telerik:RadComboBox>
                                 <telerik:RadToolTip ID="rttProduct" runat="server" TargetControlID="rcbxProduct" ShowEvent="OnClick"

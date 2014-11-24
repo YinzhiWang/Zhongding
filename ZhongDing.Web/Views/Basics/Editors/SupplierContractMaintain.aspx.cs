@@ -254,6 +254,8 @@ namespace ZhongDing.Web.Views.Basics.Editors
                 ParentItemValue = productID.HasValue ? productID : GlobalConst.INVALID_INT
             };
 
+            rcbxProductSpecification.ClearSelection();
+
             var productSpecifications = PageProductSpecificationRepository.GetDropdownItems(uiSearchObj);
             rcbxProductSpecification.DataSource = productSpecifications;
             rcbxProductSpecification.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
