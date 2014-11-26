@@ -15,6 +15,11 @@ namespace ZhongDing.Domain.Models
     [Serializable]
     public partial class DeptMarketDivision : IEntityExtendedProperty
     {
+        public DeptMarketDivision()
+        {
+            this.DeptMarketProduct = new HashSet<DeptMarketProduct>();
+        }
+    
         public int ID { get; set; }
         public int UserID { get; set; }
         public string MarketID { get; set; }
@@ -33,5 +38,8 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedOn { get { return true; } }
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
+    
+        public virtual Users Users { get; set; }
+        public virtual ICollection<DeptMarketProduct> DeptMarketProduct { get; set; }
     }
 }

@@ -28,5 +28,7 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedOn { get { return false; } }
     	public bool HasColumnLastModifiedBy { get { return false; } }
     
+    
+        public virtual DeptDistrict DeptDistrict { get; set; }
     }
 }

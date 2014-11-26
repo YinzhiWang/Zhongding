@@ -25,6 +25,7 @@ namespace ZhongDing.Domain.Models
             this.ProductHighPrice = new HashSet<ProductHighPrice>();
             this.ProductBasicPrice = new HashSet<ProductBasicPrice>();
             this.ProductDBPolicyPrice = new HashSet<ProductDBPolicyPrice>();
+            this.DeptMarketProduct = new HashSet<DeptMarketProduct>();
         }
     
         public int ID { get; set; }
@@ -54,7 +55,6 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual Company Company { get; set; }
-        public virtual Department Department { get; set; }
         public virtual ProductCategory ProductCategory { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual ICollection<ProductCertificate> ProductCertificate { get; set; }
@@ -65,5 +65,7 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<ProductHighPrice> ProductHighPrice { get; set; }
         public virtual ICollection<ProductBasicPrice> ProductBasicPrice { get; set; }
         public virtual ICollection<ProductDBPolicyPrice> ProductDBPolicyPrice { get; set; }
+        public virtual Department Department { get; set; }
+        public virtual ICollection<DeptMarketProduct> DeptMarketProduct { get; set; }
     }
 }

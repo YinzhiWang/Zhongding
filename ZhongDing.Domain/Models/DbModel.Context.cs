@@ -37,7 +37,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<Company> Company { get; set; }
         public DbSet<DBContract> DBContract { get; set; }
         public DbSet<DBContractTaskAssignment> DBContractTaskAssignment { get; set; }
-        public DbSet<Department> Department { get; set; }
         public DbSet<Hospital> Hospital { get; set; }
         public DbSet<OwnerType> OwnerType { get; set; }
         public DbSet<Product> Product { get; set; }
@@ -57,11 +56,8 @@ namespace ZhongDing.Domain.Models
         public DbSet<Warehouse> Warehouse { get; set; }
         public DbSet<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
         public DbSet<DeptDistrict> DeptDistrict { get; set; }
-        public DbSet<DeptMarket> DeptMarket { get; set; }
         public DbSet<DistributionCompany> DistributionCompany { get; set; }
         public DbSet<ClientCompanyCertificate> ClientCompanyCertificate { get; set; }
-        public DbSet<DeptMarketDivision> DeptMarketDivision { get; set; }
-        public DbSet<DeptMarketProduct> DeptMarketProduct { get; set; }
         public DbSet<DeptProductEvaluation> DeptProductEvaluation { get; set; }
         public DbSet<SupplierCertificate> SupplierCertificate { get; set; }
         public DbSet<ClientCompany> ClientCompany { get; set; }
@@ -70,5 +66,9 @@ namespace ZhongDing.Domain.Models
         public DbSet<ProductHighPrice> ProductHighPrice { get; set; }
         public DbSet<ProductBasicPrice> ProductBasicPrice { get; set; }
         public DbSet<ProductDBPolicyPrice> ProductDBPolicyPrice { get; set; }
+        public DbSet<Department> Department { get; set; }
+        public DbSet<DeptMarketDivision> DeptMarketDivision { get; set; }
+        public DbSet<DeptMarketProduct> DeptMarketProduct { get; set; }
+        public DbSet<DeptMarket> DeptMarket { get; set; }
     }
 }

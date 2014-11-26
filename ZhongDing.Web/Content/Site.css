@@ -1025,9 +1025,19 @@ img
     width: 40%;
 }
 
+.width45-percent
+{
+    width: 45%;
+}
+
 .width50-percent
 {
     width: 50%;
+}
+
+.width55-percent
+{
+    width: 55%;
 }
 
 .width60-percent

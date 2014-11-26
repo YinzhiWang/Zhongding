@@ -123,9 +123,29 @@
             <End Role="ProductSpecification" EntitySet="ProductSpecification" />
             <End Role="ClientInfoProductSetting" EntitySet="ClientInfoProductSetting" />
           </AssociationSet>
+          <AssociationSet Name="FK_Department_DeptDistrict" Association="DbModel.Store.FK_Department_DeptDistrict">
+            <End Role="DeptDistrict" EntitySet="DeptDistrict" />
+            <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
           <AssociationSet Name="FK_Department_Users" Association="DbModel.Store.FK_Department_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeptMarket_DeptDistrict" Association="DbModel.Store.FK_DeptMarket_DeptDistrict">
+            <End Role="DeptDistrict" EntitySet="DeptDistrict" />
+            <End Role="DeptMarket" EntitySet="DeptMarket" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeptMarketDivision_Users" Association="DbModel.Store.FK_DeptMarketDivision_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="DeptMarketDivision" EntitySet="DeptMarketDivision" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeptMarketProduct_DeptMarketDivision" Association="DbModel.Store.FK_DeptMarketProduct_DeptMarketDivision">
+            <End Role="DeptMarketDivision" EntitySet="DeptMarketDivision" />
+            <End Role="DeptMarketProduct" EntitySet="DeptMarketProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeptMarketProduct_Product" Association="DbModel.Store.FK_DeptMarketProduct_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="DeptMarketProduct" EntitySet="DeptMarketProduct" />
           </AssociationSet>
           <AssociationSet Name="FK_DeptProductEvaluation_Department" Association="DbModel.Store.FK_DeptProductEvaluation_Department">
             <End Role="Department" EntitySet="Department" />
@@ -1145,6 +1165,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Department_DeptDistrict">
+          <End Role="DeptDistrict" Type="DbModel.Store.DeptDistrict" Multiplicity="0..1" />
+          <End Role="Department" Type="DbModel.Store.Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeptDistrict">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="DeptDistrictID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Department_Users">
           <End Role="Users" Type="DbModel.Store.Users" Multiplicity="0..1" />
           <End Role="Department" Type="DbModel.Store.Department" Multiplicity="*" />
@@ -1154,6 +1186,54 @@
             </Principal>
             <Dependent Role="Department">
               <PropertyRef Name="DirectorUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeptMarket_DeptDistrict">
+          <End Role="DeptDistrict" Type="DbModel.Store.DeptDistrict" Multiplicity="1" />
+          <End Role="DeptMarket" Type="DbModel.Store.DeptMarket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeptDistrict">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DeptMarket">
+              <PropertyRef Name="DeptDistrictID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeptMarketDivision_Users">
+          <End Role="Users" Type="DbModel.Store.Users" Multiplicity="1" />
+          <End Role="DeptMarketDivision" Type="DbModel.Store.DeptMarketDivision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="DeptMarketDivision">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeptMarketProduct_DeptMarketDivision">
+          <End Role="DeptMarketDivision" Type="DbModel.Store.DeptMarketDivision" Multiplicity="1" />
+          <End Role="DeptMarketProduct" Type="DbModel.Store.DeptMarketProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeptMarketDivision">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DeptMarketProduct">
+              <PropertyRef Name="MarketDivisionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeptMarketProduct_Product">
+          <End Role="Product" Type="DbModel.Store.Product" Multiplicity="1" />
+          <End Role="DeptMarketProduct" Type="DbModel.Store.DeptMarketProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DeptMarketProduct">
+              <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1570,7 +1650,6 @@
           <EntitySet Name="Company" EntityType="DbModel.Company" />
           <EntitySet Name="DBContract" EntityType="DbModel.DBContract" />
           <EntitySet Name="DBContractTaskAssignment" EntityType="DbModel.DBContractTaskAssignment" />
-          <EntitySet Name="Department" EntityType="DbModel.Department" />
           <EntitySet Name="Hospital" EntityType="DbModel.Hospital" />
           <EntitySet Name="OwnerType" EntityType="DbModel.OwnerType" />
           <EntitySet Name="Product" EntityType="DbModel.Product" />
@@ -1647,18 +1726,6 @@
             <End Role="DBContract" EntitySet="DBContract" />
             <End Role="Hospital" EntitySet="Hospital" />
           </AssociationSet>
-          <AssociationSet Name="FK_Department_Users" Association="DbModel.FK_Department_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Department" EntitySet="Department" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Product_Department" Association="DbModel.FK_Product_Department">
-            <End Role="Department" EntitySet="Department" />
-            <End Role="Product" EntitySet="Product" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Users_Department" Association="DbModel.FK_Users_Department">
-            <End Role="Department" EntitySet="Department" />
-            <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
           <AssociationSet Name="FK_Product_ProductCategory" Association="DbModel.FK_Product_ProductCategory">
             <End Role="ProductCategory" EntitySet="ProductCategory" />
             <End Role="Product" EntitySet="Product" />
@@ -1718,11 +1785,6 @@
           </AssociationSet>
           <EntitySet Name="ClientInfoProductSetting" EntityType="DbModel.ClientInfoProductSetting" />
           <EntitySet Name="DeptDistrict" EntityType="DbModel.DeptDistrict" />
-          <EntitySet Name="DeptMarket" EntityType="DbModel.DeptMarket" />
-          <AssociationSet Name="FK_ClientInfoProductSetting_Department" Association="DbModel.FK_ClientInfoProductSetting_Department">
-            <End Role="Department" EntitySet="Department" />
-            <End Role="ClientInfoProductSetting" EntitySet="ClientInfoProductSetting" />
-          </AssociationSet>
           <AssociationSet Name="FK_ClientInfoProductSetting_Product" Association="DbModel.FK_ClientInfoProductSetting_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="ClientInfoProductSetting" EntitySet="ClientInfoProductSetting" />
@@ -1733,8 +1795,6 @@
           </AssociationSet>
           <EntitySet Name="DistributionCompany" EntityType="DbModel.DistributionCompany" />
           <EntitySet Name="ClientCompanyCertificate" EntityType="DbModel.ClientCompanyCertificate" />
-          <EntitySet Name="DeptMarketDivision" EntityType="DbModel.DeptMarketDivision" />
-          <EntitySet Name="DeptMarketProduct" EntityType="DbModel.DeptMarketProduct" />
           <EntitySet Name="DeptProductEvaluation" EntityType="DbModel.DeptProductEvaluation" />
           <EntitySet Name="SupplierCertificate" EntityType="DbModel.SupplierCertificate" />
           <AssociationSet Name="FK_ClientCompanyCertificate_Certificate" Association="DbModel.FK_ClientCompanyCertificate_Certificate">
@@ -1744,10 +1804,6 @@
           <AssociationSet Name="FK_SupplierCertificate_Certificate" Association="DbModel.FK_SupplierCertificate_Certificate">
             <End Role="Certificate" EntitySet="Certificate" />
             <End Role="SupplierCertificate" EntitySet="SupplierCertificate" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DeptProductEvaluation_Department" Association="DbModel.FK_DeptProductEvaluation_Department">
-            <End Role="Department" EntitySet="Department" />
-            <End Role="DeptProductEvaluation" EntitySet="DeptProductEvaluation" />
           </AssociationSet>
           <AssociationSet Name="FK_DeptProductEvaluation_Product" Association="DbModel.FK_DeptProductEvaluation_Product">
             <End Role="Product" EntitySet="Product" />
@@ -1810,6 +1866,50 @@
           <AssociationSet Name="FK_ProductDBPolicyPrice_ProductSpecification" Association="DbModel.FK_ProductDBPolicyPrice_ProductSpecification">
             <End Role="ProductSpecification" EntitySet="ProductSpecification" />
             <End Role="ProductDBPolicyPrice" EntitySet="ProductDBPolicyPrice" />
+          </AssociationSet>
+          <EntitySet Name="Department" EntityType="DbModel.Department" />
+          <AssociationSet Name="FK_ClientInfoProductSetting_Department" Association="DbModel.FK_ClientInfoProductSetting_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="ClientInfoProductSetting" EntitySet="ClientInfoProductSetting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Department_DeptDistrict" Association="DbModel.FK_Department_DeptDistrict">
+            <End Role="DeptDistrict" EntitySet="DeptDistrict" />
+            <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Department_Users" Association="DbModel.FK_Department_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeptProductEvaluation_Department" Association="DbModel.FK_DeptProductEvaluation_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="DeptProductEvaluation" EntitySet="DeptProductEvaluation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_Department" Association="DbModel.FK_Product_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Users_Department" Association="DbModel.FK_Users_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="DeptMarketDivision" EntityType="DbModel.DeptMarketDivision" />
+          <AssociationSet Name="FK_DeptMarketDivision_Users" Association="DbModel.FK_DeptMarketDivision_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="DeptMarketDivision" EntitySet="DeptMarketDivision" />
+          </AssociationSet>
+          <EntitySet Name="DeptMarketProduct" EntityType="DbModel.DeptMarketProduct" />
+          <AssociationSet Name="FK_DeptMarketProduct_DeptMarketDivision" Association="DbModel.FK_DeptMarketProduct_DeptMarketDivision">
+            <End Role="DeptMarketDivision" EntitySet="DeptMarketDivision" />
+            <End Role="DeptMarketProduct" EntitySet="DeptMarketProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeptMarketProduct_Product" Association="DbModel.FK_DeptMarketProduct_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="DeptMarketProduct" EntitySet="DeptMarketProduct" />
+          </AssociationSet>
+          <EntitySet Name="DeptMarket" EntityType="DbModel.DeptMarket" />
+          <AssociationSet Name="FK_DeptMarket_DeptDistrict" Association="DbModel.FK_DeptMarket_DeptDistrict">
+            <End Role="DeptDistrict" EntitySet="DeptDistrict" />
+            <End Role="DeptMarket" EntitySet="DeptMarket" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
@@ -2020,26 +2120,6 @@
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
         </EntityType>
-        <EntityType Name="Department">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="DepartmentName" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="DirectorUserID" />
-          <Property Type="Int32" Name="DepartmentTypeID" Nullable="false" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="Users" Relationship="DbModel.FK_Department_Users" FromRole="Department" ToRole="Users" />
-          <NavigationProperty Name="Product" Relationship="DbModel.FK_Product_Department" FromRole="Department" ToRole="Product" />
-          <NavigationProperty Name="Users1" Relationship="DbModel.FK_Users_Department" FromRole="Department" ToRole="Users" />
-          <NavigationProperty Name="ClientInfoProductSetting" Relationship="DbModel.FK_ClientInfoProductSetting_Department" FromRole="Department" ToRole="ClientInfoProductSetting" />
-          <Property Type="Int32" Name="DeptDistrictID" />
-          <NavigationProperty Name="DeptProductEvaluation" Relationship="DbModel.FK_DeptProductEvaluation_Department" FromRole="Department" ToRole="DeptProductEvaluation" />
-        </EntityType>
         <EntityType Name="Hospital">
           <Key>
             <PropertyRef Name="ID" />
@@ -2084,7 +2164,6 @@
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="Company" Relationship="DbModel.FK_Product_Company" FromRole="Product" ToRole="Company" />
-          <NavigationProperty Name="Department" Relationship="DbModel.FK_Product_Department" FromRole="Product" ToRole="Department" />
           <NavigationProperty Name="ProductCategory" Relationship="DbModel.FK_Product_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
           <NavigationProperty Name="Supplier" Relationship="DbModel.FK_Product_Supplier" FromRole="Product" ToRole="Supplier" />
           <NavigationProperty Name="ProductCertificate" Relationship="DbModel.FK_ProductCertificate_Product" FromRole="Product" ToRole="ProductCertificate" />
@@ -2095,6 +2174,8 @@
           <NavigationProperty Name="ProductHighPrice" Relationship="DbModel.FK_ProductHighPrice_Product" FromRole="Product" ToRole="ProductHighPrice" />
           <NavigationProperty Name="ProductBasicPrice" Relationship="DbModel.FK_ProductBasicPrice_Product" FromRole="Product" ToRole="ProductBasicPrice" />
           <NavigationProperty Name="ProductDBPolicyPrice" Relationship="DbModel.FK_ProductDBPolicyPrice_Product" FromRole="Product" ToRole="ProductDBPolicyPrice" />
+          <NavigationProperty Name="Department" Relationship="DbModel.FK_Product_Department" FromRole="Product" ToRole="Department" />
+          <NavigationProperty Name="DeptMarketProduct" Relationship="DbModel.FK_DeptMarketProduct_Product" FromRole="Product" ToRole="DeptMarketProduct" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -2318,6 +2399,7 @@
           <NavigationProperty Name="aspnet_Users" Relationship="DbModel.FK_Users_aspnet_Users" FromRole="Users" ToRole="aspnet_Users" />
           <NavigationProperty Name="Department" Relationship="DbModel.FK_Department_Users" FromRole="Users" ToRole="Department" />
           <NavigationProperty Name="Department1" Relationship="DbModel.FK_Users_Department" FromRole="Users" ToRole="Department" />
+          <NavigationProperty Name="DeptMarketDivision" Relationship="DbModel.FK_DeptMarketDivision_Users" FromRole="Users" ToRole="DeptMarketDivision" />
         </EntityType>
         <Association Name="FK_BankAccount_AccountType">
           <End Type="DbModel.AccountType" Role="AccountType" Multiplicity="0..1" />
@@ -2496,42 +2578,6 @@
             </Principal>
             <Dependent Role="Hospital">
               <PropertyRef Name="DBContractID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Department_Users">
-          <End Type="DbModel.Users" Role="Users" Multiplicity="0..1" />
-          <End Type="DbModel.Department" Role="Department" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Department">
-              <PropertyRef Name="DirectorUserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Product_Department">
-          <End Type="DbModel.Department" Role="Department" Multiplicity="0..1" />
-          <End Type="DbModel.Product" Role="Product" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Product">
-              <PropertyRef Name="DepartmentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Users_Department">
-          <End Type="DbModel.Department" Role="Department" Multiplicity="0..1" />
-          <End Type="DbModel.Users" Role="Users" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Users">
-              <PropertyRef Name="DepartmentID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2742,10 +2788,10 @@
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="Department" Relationship="DbModel.FK_ClientInfoProductSetting_Department" FromRole="ClientInfoProductSetting" ToRole="Department" />
           <NavigationProperty Name="Product" Relationship="DbModel.FK_ClientInfoProductSetting_Product" FromRole="ClientInfoProductSetting" ToRole="Product" />
           <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_ClientInfoProductSetting_ProductSpecification" FromRole="ClientInfoProductSetting" ToRole="ProductSpecification" />
           <NavigationProperty Name="ClientInfo" Relationship="DbModel.FK_ClientInfoProductSetting_ClientInfo" FromRole="ClientInfoProductSetting" ToRole="ClientInfo" />
+          <NavigationProperty Name="Department" Relationship="DbModel.FK_ClientInfoProductSetting_Department" FromRole="ClientInfoProductSetting" ToRole="Department" />
         </EntityType>
         <EntityType Name="DeptDistrict">
           <Key>
@@ -2754,27 +2800,9 @@
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="DepartmentTypeID" Nullable="false" />
           <Property Type="String" Name="DistrictName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Department" Relationship="DbModel.FK_Department_DeptDistrict" FromRole="DeptDistrict" ToRole="Department" />
+          <NavigationProperty Name="DeptMarket" Relationship="DbModel.FK_DeptMarket_DeptDistrict" FromRole="DeptDistrict" ToRole="DeptMarket" />
         </EntityType>
-        <EntityType Name="DeptMarket">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="DeptDistrictID" Nullable="false" />
-          <Property Type="String" Name="MarketName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <Association Name="FK_ClientInfoProductSetting_Department">
-          <End Type="DbModel.Department" Role="Department" Multiplicity="0..1" />
-          <End Type="DbModel.ClientInfoProductSetting" Role="ClientInfoProductSetting" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ClientInfoProductSetting">
-              <PropertyRef Name="DepartmentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ClientInfoProductSetting_Product">
           <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
           <End Type="DbModel.ClientInfoProductSetting" Role="ClientInfoProductSetting" Multiplicity="*" />
@@ -2830,36 +2858,6 @@
           <NavigationProperty Name="Certificate" Relationship="DbModel.FK_ClientCompanyCertificate_Certificate" FromRole="ClientCompanyCertificate" ToRole="Certificate" />
           <NavigationProperty Name="ClientCompany" Relationship="DbModel.FK_ClientCompanyCertificate_ClientCompany" FromRole="ClientCompanyCertificate" ToRole="ClientCompany" />
         </EntityType>
-        <EntityType Name="DeptMarketDivision">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="UserID" Nullable="false" />
-          <Property Type="String" Name="MarketID" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-        </EntityType>
-        <EntityType Name="DeptMarketProduct">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="MarketDivisionID" Nullable="false" />
-          <Property Type="Int32" Name="ProductID" Nullable="false" />
-          <Property Type="Int32" Name="Q1Task" />
-          <Property Type="Int32" Name="Q2Task" />
-          <Property Type="Int32" Name="Q3Task" />
-          <Property Type="Int32" Name="Q4Task" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-        </EntityType>
         <EntityType Name="DeptProductEvaluation">
           <Key>
             <PropertyRef Name="ID" />
@@ -2874,8 +2872,8 @@
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModfiiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="Department" Relationship="DbModel.FK_DeptProductEvaluation_Department" FromRole="DeptProductEvaluation" ToRole="Department" />
           <NavigationProperty Name="Product" Relationship="DbModel.FK_DeptProductEvaluation_Product" FromRole="DeptProductEvaluation" ToRole="Product" />
+          <NavigationProperty Name="Department" Relationship="DbModel.FK_DeptProductEvaluation_Department" FromRole="DeptProductEvaluation" ToRole="Department" />
         </EntityType>
         <EntityType Name="SupplierCertificate">
           <Key>
@@ -2913,18 +2911,6 @@
             </Principal>
             <Dependent Role="SupplierCertificate">
               <PropertyRef Name="CertificateID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DeptProductEvaluation_Department">
-          <End Type="DbModel.Department" Role="Department" Multiplicity="1" />
-          <End Type="DbModel.DeptProductEvaluation" Role="DeptProductEvaluation" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DeptProductEvaluation">
-              <PropertyRef Name="DepartmentID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3209,6 +3195,190 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="DepartmentName" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="DirectorUserID" />
+          <Property Type="Int32" Name="DepartmentTypeID" Nullable="false" />
+          <Property Type="Int32" Name="DeptDistrictID" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="ClientInfoProductSetting" Relationship="DbModel.FK_ClientInfoProductSetting_Department" FromRole="Department" ToRole="ClientInfoProductSetting" />
+          <NavigationProperty Name="DeptDistrict" Relationship="DbModel.FK_Department_DeptDistrict" FromRole="Department" ToRole="DeptDistrict" />
+          <NavigationProperty Name="Users" Relationship="DbModel.FK_Department_Users" FromRole="Department" ToRole="Users" />
+          <NavigationProperty Name="DeptProductEvaluation" Relationship="DbModel.FK_DeptProductEvaluation_Department" FromRole="Department" ToRole="DeptProductEvaluation" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_Product_Department" FromRole="Department" ToRole="Product" />
+          <NavigationProperty Name="Users1" Relationship="DbModel.FK_Users_Department" FromRole="Department" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_ClientInfoProductSetting_Department">
+          <End Type="DbModel.Department" Role="Department" Multiplicity="0..1" />
+          <End Type="DbModel.ClientInfoProductSetting" Role="ClientInfoProductSetting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientInfoProductSetting">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Department_DeptDistrict">
+          <End Type="DbModel.DeptDistrict" Role="DeptDistrict" Multiplicity="0..1" />
+          <End Type="DbModel.Department" Role="Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeptDistrict">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="DeptDistrictID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Department_Users">
+          <End Type="DbModel.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="DbModel.Department" Role="Department" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Department">
+              <PropertyRef Name="DirectorUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeptProductEvaluation_Department">
+          <End Type="DbModel.Department" Role="Department" Multiplicity="1" />
+          <End Type="DbModel.DeptProductEvaluation" Role="DeptProductEvaluation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DeptProductEvaluation">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_Department">
+          <End Type="DbModel.Department" Role="Department" Multiplicity="0..1" />
+          <End Type="DbModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Users_Department">
+          <End Type="DbModel.Department" Role="Department" Multiplicity="0..1" />
+          <End Type="DbModel.Users" Role="Users" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Users">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DeptMarketDivision">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="String" Name="MarketID" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Users" Relationship="DbModel.FK_DeptMarketDivision_Users" FromRole="DeptMarketDivision" ToRole="Users" />
+          <NavigationProperty Name="DeptMarketProduct" Relationship="DbModel.FK_DeptMarketProduct_DeptMarketDivision" FromRole="DeptMarketDivision" ToRole="DeptMarketProduct" />
+        </EntityType>
+        <Association Name="FK_DeptMarketDivision_Users">
+          <End Type="DbModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="DbModel.DeptMarketDivision" Role="DeptMarketDivision" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="DeptMarketDivision">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DeptMarketProduct">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="MarketDivisionID" Nullable="false" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="Int32" Name="Q1Task" />
+          <Property Type="Int32" Name="Q2Task" />
+          <Property Type="Int32" Name="Q3Task" />
+          <Property Type="Int32" Name="Q4Task" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="DeptMarketDivision" Relationship="DbModel.FK_DeptMarketProduct_DeptMarketDivision" FromRole="DeptMarketProduct" ToRole="DeptMarketDivision" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_DeptMarketProduct_Product" FromRole="DeptMarketProduct" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_DeptMarketProduct_DeptMarketDivision">
+          <End Type="DbModel.DeptMarketDivision" Role="DeptMarketDivision" Multiplicity="1" />
+          <End Type="DbModel.DeptMarketProduct" Role="DeptMarketProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeptMarketDivision">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DeptMarketProduct">
+              <PropertyRef Name="MarketDivisionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeptMarketProduct_Product">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DbModel.DeptMarketProduct" Role="DeptMarketProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DeptMarketProduct">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DeptMarket">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DeptDistrictID" Nullable="false" />
+          <Property Type="String" Name="MarketName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DeptDistrict" Relationship="DbModel.FK_DeptMarket_DeptDistrict" FromRole="DeptMarket" ToRole="DeptDistrict" />
+        </EntityType>
+        <Association Name="FK_DeptMarket_DeptDistrict">
+          <End Type="DbModel.DeptDistrict" Role="DeptDistrict" Multiplicity="1" />
+          <End Type="DbModel.DeptMarket" Role="DeptMarket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeptDistrict">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DeptMarket">
+              <PropertyRef Name="DeptDistrictID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -3406,22 +3576,6 @@
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Numbers" ColumnName="Numbers" />
                 <ScalarProperty Name="Month" ColumnName="Month" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Department">
-            <EntityTypeMapping TypeName="DbModel.Department">
-              <MappingFragment StoreEntitySet="Department">
-                <ScalarProperty Name="DeptDistrictID" ColumnName="DeptDistrictID" />
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="DepartmentTypeID" ColumnName="DepartmentTypeID" />
-                <ScalarProperty Name="DirectorUserID" ColumnName="DirectorUserID" />
-                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -3722,15 +3876,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DeptMarket">
-            <EntityTypeMapping TypeName="DbModel.DeptMarket">
-              <MappingFragment StoreEntitySet="DeptMarket">
-                <ScalarProperty Name="MarketName" ColumnName="MarketName" />
-                <ScalarProperty Name="DeptDistrictID" ColumnName="DeptDistrictID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="DistributionCompany">
             <EntityTypeMapping TypeName="DbModel.DistributionCompany">
               <MappingFragment StoreEntitySet="DistributionCompany">
@@ -3758,38 +3903,6 @@
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="CertificateID" ColumnName="CertificateID" />
                 <ScalarProperty Name="ClientCompanyID" ColumnName="ClientCompanyID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DeptMarketDivision">
-            <EntityTypeMapping TypeName="DbModel.DeptMarketDivision">
-              <MappingFragment StoreEntitySet="DeptMarketDivision">
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="MarketID" ColumnName="MarketID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DeptMarketProduct">
-            <EntityTypeMapping TypeName="DbModel.DeptMarketProduct">
-              <MappingFragment StoreEntitySet="DeptMarketProduct">
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Q4Task" ColumnName="Q4Task" />
-                <ScalarProperty Name="Q3Task" ColumnName="Q3Task" />
-                <ScalarProperty Name="Q2Task" ColumnName="Q2Task" />
-                <ScalarProperty Name="Q1Task" ColumnName="Q1Task" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="MarketDivisionID" ColumnName="MarketDivisionID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -3925,6 +4038,63 @@
                 <ScalarProperty Name="BidPrice" ColumnName="BidPrice" />
                 <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Department">
+            <EntityTypeMapping TypeName="DbModel.Department">
+              <MappingFragment StoreEntitySet="Department">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="DeptDistrictID" ColumnName="DeptDistrictID" />
+                <ScalarProperty Name="DepartmentTypeID" ColumnName="DepartmentTypeID" />
+                <ScalarProperty Name="DirectorUserID" ColumnName="DirectorUserID" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeptMarketDivision">
+            <EntityTypeMapping TypeName="DbModel.DeptMarketDivision">
+              <MappingFragment StoreEntitySet="DeptMarketDivision">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="MarketID" ColumnName="MarketID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeptMarketProduct">
+            <EntityTypeMapping TypeName="DbModel.DeptMarketProduct">
+              <MappingFragment StoreEntitySet="DeptMarketProduct">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Q4Task" ColumnName="Q4Task" />
+                <ScalarProperty Name="Q3Task" ColumnName="Q3Task" />
+                <ScalarProperty Name="Q2Task" ColumnName="Q2Task" />
+                <ScalarProperty Name="Q1Task" ColumnName="Q1Task" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="MarketDivisionID" ColumnName="MarketDivisionID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DeptMarket">
+            <EntityTypeMapping TypeName="DbModel.DeptMarket">
+              <MappingFragment StoreEntitySet="DeptMarket">
+                <ScalarProperty Name="MarketName" ColumnName="MarketName" />
+                <ScalarProperty Name="DeptDistrictID" ColumnName="DeptDistrictID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

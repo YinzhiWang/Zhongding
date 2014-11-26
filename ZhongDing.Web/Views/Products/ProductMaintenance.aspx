@@ -340,7 +340,8 @@
                 </div>
             </div>
         </div>
-        <asp:HiddenField ID="hdnCurrentEntityID" runat="server" Value="-1" />
+    </div>
+    <asp:HiddenField ID="hdnCurrentEntityID" runat="server" Value="-1" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContent" runat="server">
     <script type="text/javascript">

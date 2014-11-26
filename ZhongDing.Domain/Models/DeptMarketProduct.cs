@@ -37,5 +37,8 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedOn { get { return true; } }
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
+    
+        public virtual DeptMarketDivision DeptMarketDivision { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

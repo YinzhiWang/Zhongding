@@ -7,6 +7,9 @@
     [CreatedBy]      INT           NULL,
     [LastModifiedOn] DATETIME      NULL,
     [LastModifiedBy] INT           NULL,
-    CONSTRAINT [PK_DeptMarketDivision] PRIMARY KEY CLUSTERED ([ID] ASC)
+    CONSTRAINT [PK_DeptMarketDivision] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_DeptMarketDivision_Users] FOREIGN KEY ([UserID]) REFERENCES [dbo].[Users] ([UserID])
 );
+
+
 

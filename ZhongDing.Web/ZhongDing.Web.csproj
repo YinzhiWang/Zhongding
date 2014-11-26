@@ -2591,6 +2591,10 @@
     <Content Include="Views\Basics\Editors\SupplierContractMaintain.aspx" />
     <Content Include="Views\Basics\WarehouseMaintenance.aspx" />
     <Content Include="Views\Basics\WarehouseManagement.aspx" />
+    <Content Include="Views\HRM\DepartmentMaintenance.aspx" />
+    <Content Include="Views\HRM\DepartmentManagement.aspx" />
+    <Content Include="Views\HRM\Editors\DeptMarketDivisionMaintain.aspx" />
+    <Content Include="Views\HRM\Editors\DeptProductEvaluationMaintain.aspx" />
     <Content Include="Views\Products\Editors\ProductSpecificationMaintain.aspx" />
     <Content Include="Views\Products\ProductMaintenance.aspx" />
     <Content Include="Views\Products\ProductManagement.aspx" />
@@ -2923,6 +2927,34 @@
     <Compile Include="Views\Basics\WarehouseManagement.aspx.designer.cs">
       <DependentUpon>WarehouseManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\HRM\DepartmentMaintenance.aspx.cs">
+      <DependentUpon>DepartmentMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\HRM\DepartmentMaintenance.aspx.designer.cs">
+      <DependentUpon>DepartmentMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HRM\DepartmentManagement.aspx.cs">
+      <DependentUpon>DepartmentManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\HRM\DepartmentManagement.aspx.designer.cs">
+      <DependentUpon>DepartmentManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HRM\Editors\DeptMarketDivisionMaintain.aspx.cs">
+      <DependentUpon>DeptMarketDivisionMaintain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\HRM\Editors\DeptMarketDivisionMaintain.aspx.designer.cs">
+      <DependentUpon>DeptMarketDivisionMaintain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HRM\Editors\DeptProductEvaluationMaintain.aspx.cs">
+      <DependentUpon>DeptProductEvaluationMaintain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\HRM\Editors\DeptProductEvaluationMaintain.aspx.designer.cs">
+      <DependentUpon>DeptProductEvaluationMaintain.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Products\Editors\ProductSpecificationMaintain.aspx.cs">
       <DependentUpon>ProductSpecificationMaintain.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3010,7 +3042,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

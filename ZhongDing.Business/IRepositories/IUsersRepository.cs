@@ -7,7 +7,7 @@ using ZhongDing.Domain.Models;
 
 namespace ZhongDing.Business.IRepositories
 {
-    public interface IUsersRepository : IBaseRepository<Users>
+    public interface IUsersRepository : IBaseRepository<Users>, IGenerateDropdownItems
     {
         Users GetByProviderUserKey(Guid providerUserKey);
 

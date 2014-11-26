@@ -17,22 +17,22 @@ namespace ZhongDing.Domain.Models
     {
         public Department()
         {
-            this.Product = new HashSet<Product>();
-            this.Users1 = new HashSet<Users>();
             this.ClientInfoProductSetting = new HashSet<ClientInfoProductSetting>();
             this.DeptProductEvaluation = new HashSet<DeptProductEvaluation>();
+            this.Product = new HashSet<Product>();
+            this.Users1 = new HashSet<Users>();
         }
     
         public int ID { get; set; }
         public string DepartmentName { get; set; }
         public Nullable<int> DirectorUserID { get; set; }
         public int DepartmentTypeID { get; set; }
+        public Nullable<int> DeptDistrictID { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
-        public Nullable<int> DeptDistrictID { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -44,10 +44,11 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
+        public virtual ICollection<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
+        public virtual DeptDistrict DeptDistrict { get; set; }
         public virtual Users Users { get; set; }
+        public virtual ICollection<DeptProductEvaluation> DeptProductEvaluation { get; set; }
         public virtual ICollection<Product> Product { get; set; }
         public virtual ICollection<Users> Users1 { get; set; }
-        public virtual ICollection<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
-        public virtual ICollection<DeptProductEvaluation> DeptProductEvaluation { get; set; }
     }
 }

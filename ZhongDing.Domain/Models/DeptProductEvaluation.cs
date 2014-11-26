@@ -36,7 +36,7 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual Department Department { get; set; }
         public virtual Product Product { get; set; }
+        public virtual Department Department { get; set; }
     }
 }

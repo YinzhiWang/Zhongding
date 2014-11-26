@@ -61,7 +61,17 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 货品定价管理
         /// </summary>
-        ProductPriceManage
+        ProductPriceManage,
+
+        /// <summary>
+        /// 人事管理
+        /// </summary>
+        HumanResourceManage = 30,
+
+        /// <summary>
+        /// 部门管理
+        /// </summary>
+        DepartmentManage = 31,
 
     }
 }

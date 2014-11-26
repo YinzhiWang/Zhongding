@@ -10,8 +10,11 @@
     [LastModifiedOn]   DATETIME       NULL,
     [LastModifiedBy]   INT            NULL,
     CONSTRAINT [PK_Department] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_Department_DeptDistrict] FOREIGN KEY ([DeptDistrictID]) REFERENCES [dbo].[DeptDistrict] ([ID]),
     CONSTRAINT [FK_Department_Users] FOREIGN KEY ([DirectorUserID]) REFERENCES [dbo].[Users] ([UserID])
 );
+
+
 
 
 

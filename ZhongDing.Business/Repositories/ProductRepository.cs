@@ -137,6 +137,9 @@ namespace ZhongDing.Business.Repositories
 
                 if (!string.IsNullOrEmpty(uiSearchObj.ItemText))
                     whereFuncs.Add(x => x.ProductName.Contains(uiSearchObj.ItemText));
+
+                if (uiSearchObj.ExtensionEntityID > 0)
+                    whereFuncs.Add(x => x.CategoryID == uiSearchObj.ExtensionEntityID);
             }
 
             uiDropdownItems = GetList(whereFuncs).Select(x => new UIDropdownItem()

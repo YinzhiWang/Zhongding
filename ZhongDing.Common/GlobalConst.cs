@@ -174,5 +174,25 @@ namespace ZhongDing.Common
 
         #endregion
 
+        #region 部门类型
+
+        /// <summary>
+        /// 常量类：部门类型
+        /// </summary>
+        public class DepartmentTypes
+        {
+            /// <summary>
+            /// 基药
+            /// </summary>
+            public static readonly string BASE_MEDICINE = "基药";
+
+            /// <summary>
+            /// 招商
+            /// </summary>
+            public static readonly string BUSINESS_MEDICINE = "招商";
+        }
+
+        #endregion
+
     }
 }

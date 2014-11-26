@@ -30,5 +30,11 @@ namespace ZhongDing.Domain.UISearchObjects
         /// <value>The item text.</value>
         public string ItemText { get; set; }
 
+        /// <summary>
+        /// 其他扩展实体ID
+        /// </summary>
+        /// <value>例如:users表需要根据DepartmentID过滤user.</value>
+        public int ExtensionEntityID { get; set; }
+
     }
 }

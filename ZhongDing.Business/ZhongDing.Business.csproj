@@ -65,6 +65,11 @@
     <Compile Include="IRepositories\IClientUserRepository.cs" />
     <Compile Include="IRepositories\ICompanyRepository.cs" />
     <Compile Include="IRepositories\IDepartmentRepository.cs" />
+    <Compile Include="IRepositories\IDeptDistrictRepository.cs" />
+    <Compile Include="IRepositories\IDeptMarketDivisionRepository.cs" />
+    <Compile Include="IRepositories\IDeptMarketProductRepository.cs" />
+    <Compile Include="IRepositories\IDeptMarketRepository.cs" />
+    <Compile Include="IRepositories\IDeptProductEvaluationRepository.cs" />
     <Compile Include="IRepositories\IDistributionCompanyRepository.cs" />
     <Compile Include="IRepositories\IGenerateDropdownItems.cs" />
     <Compile Include="IRepositories\IOwnerTypeRepository.cs" />
@@ -103,6 +108,11 @@
     <Compile Include="Repositories\ClientUserRepository.cs" />
     <Compile Include="Repositories\CompanyRepository.cs" />
     <Compile Include="Repositories\DepartmentRepository.cs" />
+    <Compile Include="Repositories\DeptDistrictRepository.cs" />
+    <Compile Include="Repositories\DeptMarketDivisionRepository.cs" />
+    <Compile Include="Repositories\DeptMarketProductRepository.cs" />
+    <Compile Include="Repositories\DeptMarketRepository.cs" />
+    <Compile Include="Repositories\DeptProductEvaluationRepository.cs" />
     <Compile Include="Repositories\DistributionCompanyRepository.cs" />
     <Compile Include="Repositories\OwnerTypeRepository.cs" />
     <Compile Include="Repositories\ProductBasicPriceRepository.cs" />
