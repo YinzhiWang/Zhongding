@@ -73,5 +73,10 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         DepartmentManage = 31,
 
+        /// <summary>
+        /// 员工管理
+        /// </summary>
+        EmployeeManage
+
     }
 }

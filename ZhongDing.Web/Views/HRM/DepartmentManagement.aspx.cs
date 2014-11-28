@@ -115,6 +115,8 @@ namespace ZhongDing.Web.Views.HRM
                     }
                 }
             }
+
+            rgEntities.Rebind();
         }
 
         protected void rgEntities_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)

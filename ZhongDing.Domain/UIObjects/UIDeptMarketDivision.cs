@@ -15,5 +15,7 @@ namespace ZhongDing.Domain.UIObjects
         public IEnumerable<int> ProductIDs { get; set; }
 
         public string Products { get; set; }
+
+        public int DepartmentTypeID { get; set; }
     }
 }

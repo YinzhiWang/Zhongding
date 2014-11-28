@@ -2595,6 +2595,8 @@
     <Content Include="Views\HRM\DepartmentManagement.aspx" />
     <Content Include="Views\HRM\Editors\DeptMarketDivisionMaintain.aspx" />
     <Content Include="Views\HRM\Editors\DeptProductEvaluationMaintain.aspx" />
+    <Content Include="Views\HRM\EmployeeMaintenance.aspx" />
+    <Content Include="Views\HRM\EmployeeManagement.aspx" />
     <Content Include="Views\Products\Editors\ProductSpecificationMaintain.aspx" />
     <Content Include="Views\Products\ProductMaintenance.aspx" />
     <Content Include="Views\Products\ProductManagement.aspx" />
@@ -2954,6 +2956,20 @@
     </Compile>
     <Compile Include="Views\HRM\Editors\DeptProductEvaluationMaintain.aspx.designer.cs">
       <DependentUpon>DeptProductEvaluationMaintain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HRM\EmployeeMaintenance.aspx.cs">
+      <DependentUpon>EmployeeMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\HRM\EmployeeMaintenance.aspx.designer.cs">
+      <DependentUpon>EmployeeMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HRM\EmployeeManagement.aspx.cs">
+      <DependentUpon>EmployeeManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\HRM\EmployeeManagement.aspx.designer.cs">
+      <DependentUpon>EmployeeManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Products\Editors\ProductSpecificationMaintain.aspx.cs">
       <DependentUpon>ProductSpecificationMaintain.aspx</DependentUpon>

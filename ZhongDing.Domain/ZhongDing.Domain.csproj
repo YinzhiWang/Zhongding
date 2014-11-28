@@ -230,6 +230,7 @@
     <Compile Include="UIObjects\UISupplierCertificate.cs" />
     <Compile Include="UIObjects\UISupplierContract.cs" />
     <Compile Include="UIObjects\UISupplierContractFile.cs" />
+    <Compile Include="UIObjects\UIUser.cs" />
     <Compile Include="UIObjects\UIWarehouse.cs" />
     <Compile Include="UISearchObjects\UISearchBankAccount.cs" />
     <Compile Include="UISearchObjects\UISearchBase.cs" />
@@ -247,6 +248,7 @@
     <Compile Include="UISearchObjects\UISearchSupplier.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierContract.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierContractFile.cs" />
+    <Compile Include="UISearchObjects\UISearchUser.cs" />
     <Compile Include="UISearchObjects\UISearchWarehouse.cs" />
   </ItemGroup>
   <ItemGroup>

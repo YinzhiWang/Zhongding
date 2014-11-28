@@ -149,7 +149,7 @@ namespace ZhongDing.Web.Views.HRM
                     ddlDepartmentType.SelectedValue = currentEntity.DepartmentTypeID.ToString();
 
                     if (currentEntity.DirectorUserID.HasValue)
-                        rcbxDirectorUser.SelectedValue = currentEntity.DeptDistrictID.ToString();
+                        rcbxDirectorUser.SelectedValue = currentEntity.DirectorUserID.ToString();
 
                     BindDeptDistricts();
 

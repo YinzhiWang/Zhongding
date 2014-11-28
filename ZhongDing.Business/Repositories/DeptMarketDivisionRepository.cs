@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using ZhongDing.Business.IRepositories;
+using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
@@ -36,9 +37,11 @@ namespace ZhongDing.Business.Repositories
             {
                 uiEntities = (from q in query
                               join u in DB.Users on q.UserID equals u.UserID
+                              join dp in DB.Department on u.DepartmentID equals dp.ID
                               select new UIDeptMarketDivision()
                               {
                                   ID = q.ID,
+                                  DepartmentTypeID = dp.DepartmentTypeID,
                                   BusinessManager = u.FullName,
                                   Markets = q.MarketID,
                                   ProductIDs = q.DeptMarketProduct.Where(x => x.IsDeleted == false).Select(x => x.ProductID)
@@ -53,7 +56,10 @@ namespace ZhongDing.Business.Repositories
                         entity.Markets = string.Join(", ", DB.DeptMarket.Where(x => marketIDs.Contains(x.ID)).Select(x => x.MarketName).ToList());
                     }
 
-                    entity.Products = string.Join(", ", DB.Product.Where(x => entity.ProductIDs.Contains(x.ID)).Select(x => x.ProductName).ToList());
+                    if (entity.DepartmentTypeID == (int)EDepartmentType.BaseMedicine)
+                        entity.Products = "基药产品";
+                    else
+                        entity.Products = string.Join(", ", DB.Product.Where(x => entity.ProductIDs.Contains(x.ID)).Select(x => x.ProductName).ToList());
                 }
             }
 
@@ -85,9 +91,11 @@ namespace ZhongDing.Business.Repositories
             {
                 uiEntities = (from q in query
                               join u in DB.Users on q.UserID equals u.UserID
+                              join dp in DB.Department on u.DepartmentID equals dp.ID
                               select new UIDeptMarketDivision()
                               {
                                   ID = q.ID,
+                                  DepartmentTypeID = dp.DepartmentTypeID,
                                   BusinessManager = u.FullName,
                                   Markets = q.MarketID,
                                   ProductIDs = q.DeptMarketProduct.Where(x => x.IsDeleted == false).Select(x => x.ProductID)
@@ -102,7 +110,10 @@ namespace ZhongDing.Business.Repositories
                         entity.Markets = string.Join(", ", DB.DeptMarket.Where(x => marketIDs.Contains(x.ID)).Select(x => x.MarketName).ToList());
                     }
 
-                    entity.Products = string.Join(", ", DB.Product.Where(x => entity.ProductIDs.Contains(x.ID)).Select(x => x.ProductName).ToList());
+                    if (entity.DepartmentTypeID == (int)EDepartmentType.BaseMedicine)
+                        entity.Products = "基药产品";
+                    else
+                        entity.Products = string.Join(", ", DB.Product.Where(x => entity.ProductIDs.Contains(x.ID)).Select(x => x.ProductName).ToList());
                 }
             }
 

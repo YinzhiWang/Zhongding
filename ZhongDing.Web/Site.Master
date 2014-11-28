@@ -89,7 +89,7 @@
                             <li data-level="1" data-menuitemid="30"><a href="#" class="mws-i-24 i-group">人事管理</a>
                                 <ul class="hide">
                                     <li data-level="2" data-menuitemid="31"><a href="javascript:void(0);" onclick="redirectToPage('Views/HRM/DepartmentManagement.aspx');">部门管理</a></li>
-                                    <li data-level="2"><a href="#">员工管理</a></li>
+                                    <li data-level="2" data-menuitemid="32"><a href="javascript:void(0);" onclick="redirectToPage('Views/HRM/EmployeeManagement.aspx');">员工管理</a></li>
                                     <li data-level="2"><a href="#">权限管理</a></li>
                                     <li data-level="2"><a href="#">报销类型管理</a></li>
                                 </ul>
