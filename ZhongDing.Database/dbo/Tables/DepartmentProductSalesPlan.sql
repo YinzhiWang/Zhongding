@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [dbo].[DepartmentProductSalesPlan] (
-    [ID]                  INT        NOT NULL,
-    [DepartmentID]        INT        IDENTITY (1, 1) NOT NULL,
+    [ID]                  INT        IDENTITY (1, 1) NOT NULL,
+    [DepartmentID]        INT        NOT NULL,
     [ProductID]           INT        NOT NULL,
     [IsFixedOfInside]     BIT        NOT NULL,
     [FixedRatioOfInside]  FLOAT (53) NULL,
@@ -15,6 +15,8 @@
     CONSTRAINT [FK_DepartmentProductSalesPlan_Department] FOREIGN KEY ([DepartmentID]) REFERENCES [dbo].[Department] ([ID]),
     CONSTRAINT [FK_DepartmentProductSalesPlan_Product] FOREIGN KEY ([ProductID]) REFERENCES [dbo].[Product] ([ID])
 );
+
+
 
 
 
