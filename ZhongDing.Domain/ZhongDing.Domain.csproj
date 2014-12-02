@@ -214,11 +214,13 @@
     <Compile Include="UIObjects\UIClientInfoBankAccount.cs" />
     <Compile Include="UIObjects\UIClientInfoContact.cs" />
     <Compile Include="UIObjects\UICompany.cs" />
+    <Compile Include="UIObjects\UIDBContract.cs" />
     <Compile Include="UIObjects\UIDepartment.cs" />
     <Compile Include="UIObjects\UIDeptMarketDivision.cs" />
     <Compile Include="UIObjects\UIDeptProductEvaluation.cs" />
     <Compile Include="UIObjects\UIDistributionCompany.cs" />
     <Compile Include="UIObjects\UIDropdownItem.cs" />
+    <Compile Include="UIObjects\UIHospital.cs" />
     <Compile Include="UIObjects\UIProduct.cs" />
     <Compile Include="UIObjects\UIProductBasicPrice.cs" />
     <Compile Include="UIObjects\UIProductDBPolicyPrice.cs" />
@@ -238,11 +240,13 @@
     <Compile Include="UISearchObjects\UISearchClientCompany.cs" />
     <Compile Include="UISearchObjects\UISearchClientInfo.cs" />
     <Compile Include="UISearchObjects\UISearchCompany.cs" />
+    <Compile Include="UISearchObjects\UISearchDBContract.cs" />
     <Compile Include="UISearchObjects\UISearchDepartment.cs" />
     <Compile Include="UISearchObjects\UISearchDeptMarketDivision.cs" />
     <Compile Include="UISearchObjects\UISearchDeptProductEvaluation.cs" />
     <Compile Include="UISearchObjects\UISearchDistributionCompany.cs" />
     <Compile Include="UISearchObjects\UISearchDropdownItem.cs" />
+    <Compile Include="UISearchObjects\UISearchHospital.cs" />
     <Compile Include="UISearchObjects\UISearchProduct.cs" />
     <Compile Include="UISearchObjects\UISearchProductSpecification.cs" />
     <Compile Include="UISearchObjects\UISearchSupplier.cs" />

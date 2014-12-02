@@ -18,6 +18,7 @@ namespace ZhongDing.Domain.Models
         public ClientUser()
         {
             this.ClientInfo = new HashSet<ClientInfo>();
+            this.DBContract = new HashSet<DBContract>();
         }
     
         public int ID { get; set; }
@@ -39,5 +40,6 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual ICollection<ClientInfo> ClientInfo { get; set; }
+        public virtual ICollection<DBContract> DBContract { get; set; }
     }
 }

@@ -251,7 +251,7 @@ namespace ZhongDing.Web.Views.Basics.Editors
         {
             UISearchDropdownItem uiSearchObj = new UISearchDropdownItem()
             {
-                ParentItemValue = productID.HasValue ? productID : GlobalConst.INVALID_INT
+                ExtensionEntityID = productID.HasValue ? productID.Value : GlobalConst.INVALID_INT
             };
 
             rcbxProductSpecification.ClearSelection();
@@ -448,7 +448,7 @@ namespace ZhongDing.Web.Views.Basics.Editors
                             {
                                 SupplierID = this.SupplierID,
                                 YearOfTask = currentYear,
-                                MonthOfTask = (int)EMonthOfYear.June
+                                MonthOfTask = (int)EMonthOfYear.July
                             };
 
                             supplierContract.SupplierTaskAssignment.Add(taskAssignmentMonth7);

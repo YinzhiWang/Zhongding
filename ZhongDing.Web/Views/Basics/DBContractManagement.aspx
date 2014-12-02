@@ -1,4 +1,4 @@
-﻿<%@ Page Title="客户管理" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ClientInfoManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Basics.ClientInfoManagement" %>
+﻿<%@ Page Title="大包客户协议管理" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DBContractManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Basics.DBContractManagement" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 
@@ -33,17 +33,17 @@
     <div class="container">
         <div class="mws-panel grid_8">
             <div class="mws-panel-header">
-                <span class="mws-i-24 i-table-1">客户管理</span>
+                <span class="mws-i-24 i-table-1">大包客户协议管理</span>
             </div>
             <div class="mws-panel-body">
                 <table runat="server" id="tblSearch" class="leftmargin10 width70-percent">
                     <tr class="height40">
-                        <th class="width80 middle-td">客户编号：</th>
+                        <th class="width70 middle-td">协议编号：</th>
                         <td class="middle-td">
-                            <telerik:RadTextBox runat="server" ID="txtSerialNo" MaxLength="50"></telerik:RadTextBox>
+                            <telerik:RadTextBox runat="server" ID="txtContractCode" MaxLength="100"></telerik:RadTextBox>
                         </td>
-                        <th class="width80 middle-td right-td">客户名称：</th>
-                        <td class="middle-td leftpadding10 width40-percent">
+                        <th class="width70 middle-td right-td">客户名称：</th>
+                        <td class="middle-td width35-percent">
                             <telerik:RadComboBox runat="server" ID="rcbxClientUser" Filter="Contains"
                                 AllowCustomText="true" Height="160px" Width="100%" EmptyMessage="--请选择--">
                             </telerik:RadComboBox>
@@ -52,10 +52,14 @@
                         <td></td>
                     </tr>
                     <tr class="height40">
-                        <th class="width80 middle-td">商业单位：</th>
-                        <td class="middle-td" colspan="3">
-                            <telerik:RadComboBox runat="server" ID="rcbxClientCompany" Height="160px" Width="100%" Filter="Contains"
-                                EmptyMessage="--请选择--" AllowCustomText="true">
+                        <th class="width70 middle-td">货品名称：</th>
+                        <td class="middle-td">
+                            <telerik:RadTextBox runat="server" ID="txtProductName" MaxLength="100"></telerik:RadTextBox>
+                        </td>
+                        <th class="width70 middle-td right-td">所属部门：</th>
+                        <td class="middle-td width35-percent">
+                            <telerik:RadComboBox runat="server" ID="rcbxDepartment" Filter="Contains"
+                                AllowCustomText="true" Height="160px" Width="100%" EmptyMessage="--请选择--">
                             </telerik:RadComboBox>
                         </td>
                         <td class="middle-td leftpadding20">
@@ -78,21 +82,57 @@
                             <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false">
                                 <ItemStyle HorizontalAlign="Left" Width="50" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="ClientCode" HeaderText="客户编号" DataField="ClientCode">
+                            <telerik:GridBoundColumn UniqueName="ContractCode" HeaderText="协议编号" DataField="ContractCode">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="ClientName" HeaderText="客户名称" DataField="ClientName">
+                            <telerik:GridBoundColumn UniqueName="ClientUserName" HeaderText="客户名称" DataField="ClientUserName">
+                                <HeaderStyle Width="80" />
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="ClientCompany" HeaderText="商业单位" DataField="ClientCompany">
+                            <telerik:GridBoundColumn UniqueName="DepartmentName" HeaderText="所属部门" DataField="DepartmentName">
+                                <HeaderStyle Width="80" />
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="ReceiverName" HeaderText="收货人" DataField="ReceiverName">
+                            <telerik:GridBoundColumn UniqueName="InChargeUser" HeaderText="业务经理" DataField="InChargeUser">
+                                <HeaderStyle Width="80" />
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="PhoneNumber" HeaderText="收货电话" DataField="PhoneNumber">
+                            <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品名称" DataField="ProductName">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn UniqueName="ProductSpecification" HeaderText="货品规格" DataField="ProductSpecification">
+                                <HeaderStyle Width="80" />
+                                <ItemStyle HorizontalAlign="Left" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn UniqueName="HospitalNames" HeaderText="相关医院" DataField="HospitalNames">
+                                <ItemStyle HorizontalAlign="Left" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridCheckBoxColumn UniqueName="IsTempContract" HeaderText="临时协议？" DataField="IsTempContract">
+                                <HeaderStyle Width="80" />
+                                <ItemStyle HorizontalAlign="Left" />
+                            </telerik:GridCheckBoxColumn>
+                            <telerik:GridBoundColumn UniqueName="ContractExpDate" HeaderText="协议过期日" DataField="ContractExpDate" DataFormatString="{0:yyyy/MM/dd}">
+                                <ItemStyle HorizontalAlign="Left" />
+                            </telerik:GridBoundColumn>
+                            <%--<telerik:GridBoundColumn UniqueName="CreatedBy" HeaderText="创建人" DataField="CreatedBy">
+                                <ItemStyle HorizontalAlign="Left" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn UniqueName="CreatedOn" HeaderText="创建时间" DataField="CreatedOn" DataFormatString="{0:yyyy/MM/dd}">
+                                <ItemStyle HorizontalAlign="Left" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn UniqueName="LastModifiedBy" HeaderText="修改人" DataField="LastModifiedBy">
+                                <ItemStyle HorizontalAlign="Left" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn UniqueName="LastModifiedOn" HeaderText="修改时间" DataField="LastModifiedOn" DataFormatString="{0:yyyy/MM/dd}">
+                                <ItemStyle HorizontalAlign="Left" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridTemplateColumn UniqueName="View">
+                                <ItemStyle HorizontalAlign="Center" Width="30" />
+                                <ItemTemplate>
+                                    <a href="javascript:void(0)" onclick="redirectToMaintenancePage(<%#DataBinder.Eval(Container.DataItem,"ID")%>); return false;">
+                                        <u>查看</u></a>
+                                </ItemTemplate>
+                            </telerik:GridTemplateColumn>--%>
                             <telerik:GridTemplateColumn UniqueName="Edit" HeaderStyle-Width="40">
                                 <ItemStyle HorizontalAlign="Center" Width="40" />
                                 <ItemTemplate>
@@ -146,7 +186,6 @@
         </div>
     </div>
 </asp:Content>
-
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContent" runat="server">
     <script type="text/javascript">
         var gridOfRefresh = null;
@@ -161,78 +200,7 @@
 
         function redirectToMaintenancePage(id) {
             $.showLoading();
-            window.location.href = "ClientInfoMaintenance.aspx?EntityID=" + id;
+            window.location.href = "DBContractMaintenance.aspx?EntityID=" + id;
         }
-
-        function onCompanyTextChange(sender, eventArgs) {
-            //debugger;
-
-            var filerText = sender.get_text();
-
-            if (!filerText.isNullOrEmpty()) {
-                sender.get_items().forEach(function (e) {
-
-                    if (e.get_text().indexOf(filerText) < 0) {
-                        e.set_visible(false);
-                    }
-                });
-            }
-            else {
-                sender.get_items().forEach(function (e) {
-                    e.set_visible(true);
-                });
-            }
-
-            sender.showDropDown();
-        }
-
-        function onCompanyDDOpening(sender, eventArgs) {
-            //debugger;
-
-            var rcbxcompanyinput = sender.get_inputDomElement();
-
-            $telerik.$(rcbxcompanyinput).on("change", function (e) {
-
-                var items = sender.get_items().toArray();
-
-                var filerText = sender.get_text();
-
-                if (!filerText.isNullOrEmpty()) {
-                    sender.get_items().forEach(function (e) {
-
-                        if (!e.get_value().isNullOrEmpty()
-                            && e.get_text().indexOf(filerText) < 0) {
-                            e.set_visible(false);
-                        }
-                    });
-                }
-                else {
-                    sender.get_items().forEach(function (e) {
-                        e.set_visible(true);
-                    });
-                }
-
-                sender.showDropDown();
-            });
-
-            var items = sender.get_items().toArray();
-
-            var filerText = sender.get_text();
-
-            if (!filerText.isNullOrEmpty()) {
-                sender.get_items().forEach(function (e) {
-
-                    if (e.get_text().indexOf(filerText) < 0) {
-                        e.set_visible(false);
-                    }
-                });
-            }
-            else {
-                sender.get_items().forEach(function (e) {
-                    e.set_visible(true);
-                });
-            }
-        }
-
     </script>
 </asp:Content>

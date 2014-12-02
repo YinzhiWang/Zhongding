@@ -168,6 +168,11 @@ namespace ZhongDing.Common
                 /// 客户编号前缀
                 /// </summary>
                 public static readonly string CLIENT_INFO = "KH";
+
+                /// <summary>
+                /// 大包客户协议
+                /// </summary>
+                public static readonly string DB_CONTRACT = "DBKHXY";
             }
 
         }

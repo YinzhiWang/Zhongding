@@ -39,10 +39,10 @@
                 <table runat="server" id="tblSearch" class="leftmargin10">
                     <tr class="height40">
                         <td class="middle-td">
-                            <telerik:RadTextBox runat="server" ID="txtSerialNo" Label="编号：" LabelWidth="75" MaxLength="50"></telerik:RadTextBox>
+                            <telerik:RadTextBox runat="server" ID="txtSerialNo" Label="编号：" LabelWidth="45" MaxLength="50"></telerik:RadTextBox>
                         </td>
-                        <td class="middle-td leftpadding10">
-                            <telerik:RadTextBox runat="server" ID="txtName" Label="名称：" LabelWidth="75" MaxLength="100"></telerik:RadTextBox>
+                        <td class="middle-td leftpadding10 width50-percent">
+                            <telerik:RadTextBox runat="server" ID="txtName" Label="名称：" LabelWidth="15%" Width="100%" MaxLength="100"></telerik:RadTextBox>
                         </td>
                         <td class="middle-td leftpadding20">
                             <asp:Button ID="btnSearch" runat="server" Text="查询" CssClass="mws-button green" OnClick="btnSearch_Click" />

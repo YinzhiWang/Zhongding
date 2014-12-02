@@ -39,11 +39,13 @@
             <div class="mws-panel-body">
                 <table runat="server" id="tblSearch" class="leftmargin10">
                     <tr class="height40">
+                        <th class="width70 middle-td">账套编码：</th>
                         <td class="middle-td">
-                            <telerik:RadTextBox runat="server" ID="txtCompanyCode" Label="账套编码：" MaxLength="50"></telerik:RadTextBox>
+                            <telerik:RadTextBox runat="server" ID="txtCompanyCode" MaxLength="50"></telerik:RadTextBox>
                         </td>
-                        <td class="middle-td leftpadding10">
-                            <telerik:RadTextBox runat="server" ID="txtCompanyName" Label="账套名称：" MaxLength="100"></telerik:RadTextBox>
+                        <th class="width70 middle-td right-td">账套名称：</th>
+                        <td class="middle-td width35-percent">
+                            <telerik:RadTextBox runat="server" ID="txtCompanyName" MaxLength="100" Width="100%"></telerik:RadTextBox>
                         </td>
                         <td class="middle-td leftpadding20">
                             <asp:Button ID="btnSearch" runat="server" Text="查询" CssClass="mws-button green" OnClick="btnSearch_Click" />

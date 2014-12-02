@@ -38,8 +38,8 @@
             <div class="mws-panel-body">
                 <table runat="server" id="tblSearch" class="leftmargin10">
                     <tr class="height40">
-                        <td class="middle-td">
-                            <telerik:RadTextBox runat="server" ID="txtName" Label="名称：" LabelWidth="40" MaxLength="50"></telerik:RadTextBox>
+                        <td class="middle-td width50-percent">
+                            <telerik:RadTextBox runat="server" ID="txtName" Label="名称：" LabelWidth="15%" Width="100%" MaxLength="50"></telerik:RadTextBox>
                         </td>
                         <td class="middle-td leftpadding10">
                             <telerik:RadTextBox runat="server" ID="txtDistrict" Label="地区：" LabelWidth="40" MaxLength="50"></telerik:RadTextBox>

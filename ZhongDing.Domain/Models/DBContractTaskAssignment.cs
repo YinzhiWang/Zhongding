@@ -16,8 +16,10 @@ namespace ZhongDing.Domain.Models
     public partial class DBContractTaskAssignment : IEntityExtendedProperty
     {
         public int ID { get; set; }
-        public Nullable<int> Month { get; set; }
-        public Nullable<int> Numbers { get; set; }
+        public Nullable<int> DBContractID { get; set; }
+        public Nullable<int> YearOfTask { get; set; }
+        public Nullable<int> MonthOfTask { get; set; }
+        public Nullable<int> Quantity { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -33,5 +35,7 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedOn { get { return true; } }
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
+    
+        public virtual DBContract DBContract { get; set; }
     }
 }

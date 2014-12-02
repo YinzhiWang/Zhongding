@@ -49,6 +49,11 @@ namespace ZhongDing.Common.Enums
         DistributionCompanyManage,
 
         /// <summary>
+        /// 大包客户协议管理
+        /// </summary>
+        DBContractManage,
+
+        /// <summary>
         /// 货品信息管理
         /// </summary>
         ProductInfoManage = 20,

@@ -2581,6 +2581,8 @@
     <Content Include="Views\Basics\ClientCompanyManagement.aspx" />
     <Content Include="Views\Basics\ClientInfoMaintenance.aspx" />
     <Content Include="Views\Basics\ClientInfoManagement.aspx" />
+    <Content Include="Views\Basics\DBContractMaintenance.aspx" />
+    <Content Include="Views\Basics\DBContractManagement.aspx" />
     <Content Include="Views\Basics\DistributionCompanyMaintenance.aspx" />
     <Content Include="Views\Basics\DistributionCompanyManagement.aspx" />
     <Content Include="Views\Basics\Editors\BankAccountMaintain.aspx" />
@@ -2845,6 +2847,20 @@
     <Compile Include="Views\Basics\CompanyManagement.aspx.designer.cs">
       <DependentUpon>CompanyManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Basics\DBContractMaintenance.aspx.cs">
+      <DependentUpon>DBContractMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\DBContractMaintenance.aspx.designer.cs">
+      <DependentUpon>DBContractMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\DBContractManagement.aspx.cs">
+      <DependentUpon>DBContractManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\DBContractManagement.aspx.designer.cs">
+      <DependentUpon>DBContractManagement.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Basics\DistributionCompanyMaintenance.aspx.cs">
       <DependentUpon>DistributionCompanyMaintenance.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3058,7 +3074,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

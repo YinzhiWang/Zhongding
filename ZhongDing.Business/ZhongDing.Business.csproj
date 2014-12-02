@@ -64,6 +64,8 @@
     <Compile Include="IRepositories\IClientInfoRepository.cs" />
     <Compile Include="IRepositories\IClientUserRepository.cs" />
     <Compile Include="IRepositories\ICompanyRepository.cs" />
+    <Compile Include="IRepositories\IDBContractRepository.cs" />
+    <Compile Include="IRepositories\IDBContractTaskAssignmentRepository.cs" />
     <Compile Include="IRepositories\IDepartmentRepository.cs" />
     <Compile Include="IRepositories\IDeptDistrictRepository.cs" />
     <Compile Include="IRepositories\IDeptMarketDivisionRepository.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="IRepositories\IDeptProductEvaluationRepository.cs" />
     <Compile Include="IRepositories\IDistributionCompanyRepository.cs" />
     <Compile Include="IRepositories\IGenerateDropdownItems.cs" />
+    <Compile Include="IRepositories\IHospitalRepository.cs" />
     <Compile Include="IRepositories\IOwnerTypeRepository.cs" />
     <Compile Include="IRepositories\IProductBasicPriceRepository.cs" />
     <Compile Include="IRepositories\IProductCategoryRepository.cs" />
@@ -107,6 +110,8 @@
     <Compile Include="Repositories\ClientInfoRepository.cs" />
     <Compile Include="Repositories\ClientUserRepository.cs" />
     <Compile Include="Repositories\CompanyRepository.cs" />
+    <Compile Include="Repositories\DBContractRepository.cs" />
+    <Compile Include="Repositories\DBContractTaskAssignmentRepository.cs" />
     <Compile Include="Repositories\DepartmentRepository.cs" />
     <Compile Include="Repositories\DeptDistrictRepository.cs" />
     <Compile Include="Repositories\DeptMarketDivisionRepository.cs" />
@@ -114,6 +119,7 @@
     <Compile Include="Repositories\DeptMarketRepository.cs" />
     <Compile Include="Repositories\DeptProductEvaluationRepository.cs" />
     <Compile Include="Repositories\DistributionCompanyRepository.cs" />
+    <Compile Include="Repositories\HospitalRepository.cs" />
     <Compile Include="Repositories\OwnerTypeRepository.cs" />
     <Compile Include="Repositories\ProductBasicPriceRepository.cs" />
     <Compile Include="Repositories\ProductCategoryRepository.cs" />
