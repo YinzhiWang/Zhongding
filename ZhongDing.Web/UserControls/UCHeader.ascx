@@ -10,8 +10,17 @@
     <!-- User Area Wrapper -->
     <div id="mws-user-tools" class="clearfix">
 
+        <div id="mws-other-info" class="mws-dropdown-menu">
+            <div class="float-left">
+                <a class="mws-i-24 i-file-cabinet mws-dropdown-trigger"></a>
+            </div>
+            <div id="mws-user-company" title="当前账套">
+                <%=this.CurrentUser.CompanyName %>
+            </div>
+        </div>
         <!-- User Functions -->
         <div id="mws-user-info" class="mws-inset">
+
             <div id="mws-user-photo">
                 <img runat="server" id="userAvatar" src="~/Images/defaultAvatar.gif" alt="User Photo" />
             </div>

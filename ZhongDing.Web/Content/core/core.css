@@ -1,27 +1,22 @@
-html, body
-{
+html, body {
     height: 100%;
     background: url(../../images/core/mws-body-bg.png);
 }
 
-body
-{
+body {
     color: #323232;
     font: 13px/1.5 'Microsoft Yahei',Arial,Helvetica,sans-serif,'微软雅黑';
 }
 
-    body form
-    {
+    body form {
         height: 100%;
     }
 
-div#main-wrapper
-{
+div#main-wrapper {
     height: 100%;
 }
 
-.mws-inset
-{
+.mws-inset {
     background-image: url(../../images/core/mws-inset.png);
     /* CSS 3 */
     -webkit-border-radius: 4px;
@@ -38,8 +33,7 @@ div#main-wrapper
 
 /* Header */
 
-div#mws-header
-{
+div#mws-header {
     background: url(../../images/core/mws-header-bg.png) repeat-x;
     height: 58px;
     border-bottom: 4px solid;
@@ -56,8 +50,7 @@ div#mws-header
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.35);
 }
 
-div#mws-logo-container
-{
+div#mws-logo-container {
     width: 200px;
     height: 58px;
     float: left;
@@ -67,8 +60,7 @@ div#mws-logo-container
     vertical-align: middle;
 }
 
-    div#mws-logo-container #mws-logo-wrap
-    {
+    div#mws-logo-container #mws-logo-wrap {
         width: 180px;
         height: 58px;
         text-align: center;
@@ -76,43 +68,55 @@ div#mws-logo-container
         display: table-cell;
     }
 
-        div#mws-logo-container #mws-logo-wrap img
-        {
+        div#mws-logo-container #mws-logo-wrap img {
             max-width: 100%;
             max-height: 100%;
         }
 
 /* User Tools */
 
-div#mws-user-tools
-{
+div#mws-user-tools {
     float: right;
     padding: 9px 0;
     margin-right: 10px;
 }
 
     div#mws-user-tools .mws-dropdown-menu,
-    div#mws-user-tools #mws-user-info
-    {
+    div#mws-user-tools #mws-user-info,
+    div#mws-user-tools #mws-other-info {
         float: left;
         position: relative;
         margin: 0 6px;
     }
 
-    div#mws-user-tools .mws-dropdown-menu
-    {
+    div#mws-user-tools .mws-dropdown-menu {
         margin-top: 4px;
     }
 
-    div#mws-user-tools #mws-user-info
-    {
+    div#mws-user-tools #mws-other-info {
         display: block;
         height: 32px;
         padding: 4px;
     }
 
-        div#mws-user-tools #mws-user-info #mws-user-photo
-        {
+        div#mws-user-tools #mws-other-info #mws-user-company {
+            height: 28px;
+            float: left;
+            padding: 4px;
+            position: relative;
+            color: #ffffff;
+            font-size: 13px;
+            font-weight: bold;
+            line-height: 28px;
+        }
+
+    div#mws-user-tools #mws-user-info {
+        display: block;
+        height: 32px;
+        padding: 4px;
+    }
+
+        div#mws-user-tools #mws-user-info #mws-user-photo {
             width: 28px;
             height: 28px;
             padding: 2px;
@@ -125,48 +129,43 @@ div#mws-user-tools
             -o-border-radius: 2px;
             -khtml-border-radius: 2px;
             border-radius: 2px;
+            margin-right: 5px;
         }
 
-            div#mws-user-tools #mws-user-info #mws-user-photo img
-            {
+            div#mws-user-tools #mws-user-info #mws-user-photo img {
                 max-width: 100%;
                 max-height: 100%;
             }
 
-        div#mws-user-tools #mws-user-info #mws-user-functions
-        {
-            margin: 0 4px 0 40px;
+        div#mws-user-tools #mws-user-info #mws-user-functions {
+            float: left;
+            padding: 0 4px 0 4px;
             font-size: 12px;
         }
 
             div#mws-user-tools #mws-user-info #mws-user-functions ul,
-            div#mws-user-tools #mws-user-info #mws-user-functions ul li
-            {
+            div#mws-user-tools #mws-user-info #mws-user-functions ul li {
                 margin: 0;
                 list-style: none;
             }
 
-                div#mws-user-tools #mws-user-info #mws-user-functions ul li
-                {
+                div#mws-user-tools #mws-user-info #mws-user-functions ul li {
                     display: inline;
                     margin-right: 4px;
                 }
 
-                    div#mws-user-tools #mws-user-info #mws-user-functions ul li a
-                    {
+                    div#mws-user-tools #mws-user-info #mws-user-functions ul li a {
                         text-decoration: none;
                         color: #ffffff;
                     }
 
-                        div#mws-user-tools #mws-user-info #mws-user-functions ul li a:hover
-                        {
+                        div#mws-user-tools #mws-user-info #mws-user-functions ul li a:hover {
                             text-decoration: underline;
                         }
 
     /* Dropdown Menu */
 
-    div#mws-user-tools .mws-dropdown-menu span.mws-dropdown-notif
-    {
+    div#mws-user-tools .mws-dropdown-menu span.mws-dropdown-notif {
         position: absolute;
         display: block;
         width: 16px;
@@ -186,13 +185,11 @@ div#mws-user-tools
     }
 
     div#mws-user-tools .mws-dropdown-menu a.mws-i-24,
-    div#mws-user-tools .mws-dropdown-menu a.mws-ic
-    {
+    div#mws-user-tools .mws-dropdown-menu a.mws-ic {
         background-position: center center;
     }
 
-    div#mws-user-tools .mws-dropdown-menu a.mws-dropdown-trigger
-    {
+    div#mws-user-tools .mws-dropdown-menu a.mws-dropdown-trigger {
         text-indent: -9999px;
         display: block;
         padding: 0;
@@ -209,8 +206,7 @@ div#mws-user-tools
         border-radius: 4px;
     }
 
-    div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box
-    {
+    div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box {
         display: none;
         position: absolute;
         right: 0;
@@ -229,14 +225,12 @@ div#mws-user-tools
         border-radius: 6px 0 6px 6px;
     }
 
-        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content
-        {
+        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content {
             background: #ffffff;
         }
 
         div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box ul,
-        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box ul li
-        {
+        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box ul li {
             margin: 0;
             list-style: none;
             font-size: 12px;
@@ -244,14 +238,12 @@ div#mws-user-tools
 
         /* Dropdown Styles */
 
-        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content ul.mws-messages li a
-        {
+        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content ul.mws-messages li a {
             padding-left: 32px;
         }
 
         div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content .mws-dropdown-viewall a,
-        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content ul li a
-        {
+        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content ul li a {
             padding: 4px 8px;
             text-decoration: none;
             color: #323232;
@@ -259,75 +251,63 @@ div#mws-user-tools
             border-bottom: 1px solid #d0d0d0;
         }
 
-        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content .mws-dropdown-viewall a
-        {
+        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content .mws-dropdown-viewall a {
             border: 0;
             font-size: 11px;
         }
 
-            div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content .mws-dropdown-viewall a:hover
-            {
+            div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content .mws-dropdown-viewall a:hover {
                 background-color: #d5d5d5;
             }
 
         div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content ul.mws-messages li:hover a,
-        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content ul.mws-notifications li:hover a
-        {
+        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content ul.mws-notifications li:hover a {
             background-color: #d5d5d5 !important;
             border-bottom-color: #bbbbbb;
         }
 
-        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content ul.mws-messages li.read a
-        {
+        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content ul.mws-messages li.read a {
             background: url(../icons/16/email_open.png) no-repeat 8px center;
         }
 
-        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content ul.mws-messages li.unread a
-        {
+        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content ul.mws-messages li.unread a {
             background: url(../icons/16/email.png) no-repeat 8px center #f0f0f0;
         }
 
-        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content ul.mws-notifications li.unread a
-        {
+        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content ul.mws-notifications li.unread a {
             background: #f0f0f0;
         }
 
         div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content ul.mws-messages li .message,
-        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content ul.mws-notifications li .message
-        {
+        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content ul.mws-notifications li .message {
             overflow: hidden;
             display: block;
             white-space: nowrap;
             text-overflow: ellipsis;
         }
 
-        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content ul.mws-messages li .sender
-        {
+        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content ul.mws-messages li .sender {
             font-weight: bold;
         }
 
         div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content ul.mws-messages li .sender,
         div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content ul.mws-messages li .time,
-        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content ul.mws-notifications li .time
-        {
+        div#mws-user-tools .mws-dropdown-menu .mws-dropdown-box .mws-dropdown-content ul.mws-notifications li .time {
             font-size: 0.9em;
             display: block;
         }
 
     /* Toggled */
 
-    div#mws-user-tools .mws-dropdown-menu.toggled
-    {
+    div#mws-user-tools .mws-dropdown-menu.toggled {
         z-index: 2;
     }
 
-        div#mws-user-tools .mws-dropdown-menu.toggled .mws-dropdown-box
-        {
+        div#mws-user-tools .mws-dropdown-menu.toggled .mws-dropdown-box {
             display: block;
         }
 
-        div#mws-user-tools .mws-dropdown-menu.toggled a.mws-dropdown-trigger
-        {
+        div#mws-user-tools .mws-dropdown-menu.toggled a.mws-dropdown-trigger {
             background-color: #323232;
             border-bottom: 0;
             /* CSS 3 */
@@ -340,8 +320,7 @@ div#mws-user-tools
 
 /* Wrapper */
 
-div#mws-wrapper
-{
+div#mws-wrapper {
     height: auto;
     min-height: 100%;
     position: relative;
@@ -350,8 +329,7 @@ div#mws-wrapper
 
 /* Sidebar */
 
-div#mws-sidebar
-{
+div#mws-sidebar {
     width: 200px;
     padding-right: 6px;
     padding-top: 72px;
@@ -361,23 +339,20 @@ div#mws-sidebar
 }
 
 div#mws-sidebar-stitch,
-div#mws-sidebar-bg
-{
+div#mws-sidebar-bg {
     position: absolute;
     top: 0;
     bottom: 0;
 }
 
-div#mws-sidebar-stitch
-{
+div#mws-sidebar-stitch {
     left: 189px;
     width: 17px;
     z-index: 2;
     background: url(../../images/core/mws-sidebar-stitch.png) repeat-y;
 }
 
-div#mws-sidebar-bg
-{
+div#mws-sidebar-bg {
     left: 0;
     z-index: 0;
     width: 200px;
@@ -386,14 +361,12 @@ div#mws-sidebar-bg
 
 /* Search Box */
 
-div#mws-searchbox
-{
+div#mws-searchbox {
     margin: 0 16px 10px 10px;
     padding: 3px;
 }
 
-    div#mws-searchbox .mws-search-input
-    {
+    div#mws-searchbox .mws-search-input {
         background: none;
         padding: 3px;
         width: 135px;
@@ -403,8 +376,7 @@ div#mws-searchbox
         color: #ffffff;
     }
 
-    div#mws-searchbox .mws-search-submit
-    {
+    div#mws-searchbox .mws-search-submit {
         text-indent: -9999px;
         text-transform: capitalize;
         width: 24px;
@@ -425,28 +397,24 @@ div#mws-searchbox
 /* Navigation */
 
 div#mws-navigation ul,
-div#mws-navigation ul li
-{
+div#mws-navigation ul li {
     margin: 0;
     list-style: none;
 }
 
-div#mws-navigation ul
-{
+div#mws-navigation ul {
     border-top: 1px solid #18191d;
     border-bottom: 1px solid #535755;
 }
 
-    div#mws-navigation ul li
-    {
+    div#mws-navigation ul li {
         position: relative;
         border-top: 1px solid #535755;
         border-bottom: 1px solid #18191d;
     }
 
         div#mws-navigation ul li a,
-        div#mws-navigation ul li span
-        {
+        div#mws-navigation ul li span {
             color: #ffffff;
             outline: none;
             display: block;
@@ -459,21 +427,18 @@ div#mws-navigation ul
         }
 
             div#mws-navigation ul li a.mws-ic,
-            div#mws-navigation ul li span.mws-ic
-            {
+            div#mws-navigation ul li span.mws-ic {
                 padding-left: 40px;
                 background-position: 4px center;
             }
 
             div#mws-navigation ul li a.mws-i-24,
-            div#mws-navigation ul li span.mws-i-24
-            {
+            div#mws-navigation ul li span.mws-i-24 {
                 padding-left: 40px;
                 background-position: 8px center;
             }
 
-            div#mws-navigation ul li span.mws-nav-tooltip
-            {
+            div#mws-navigation ul li span.mws-nav-tooltip {
                 position: absolute;
                 line-height: 1;
                 padding: 5px;
@@ -482,8 +447,7 @@ div#mws-navigation ul
                 margin-top: -12px;
             }
 
-        div#mws-navigation ul li ul
-        {
+        div#mws-navigation ul li ul {
             background: url(../../images/core/mws-inset.png);
             border: 0;
             /* CSS 3 */
@@ -494,21 +458,18 @@ div#mws-navigation ul
             box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.5);
         }
 
-            div#mws-navigation ul li ul.closed
-            {
+            div#mws-navigation ul li ul.closed {
                 display: none;
             }
 
-            div#mws-navigation ul li ul li
-            {
+            div#mws-navigation ul li ul li {
                 border: 0;
                 padding: 0;
                 margin: 0;
             }
 
                 div#mws-navigation ul li ul li a,
-                div#mws-navigation ul li ul li span
-                {
+                div#mws-navigation ul li ul li span {
                     display: block;
                     font-size: 12px;
                     padding: 4px 0 4px 40px;
@@ -516,33 +477,28 @@ div#mws-navigation ul
                     text-shadow: none;
                 }
 
-                div#mws-navigation ul li ul li:hover
-                {
+                div#mws-navigation ul li ul li:hover {
                     background: url(../../images/core/mws-sub-nav-bg.png);
                 }
 
-div#mws-navigation .active-sub-nav
-{
+div#mws-navigation .active-sub-nav {
     /*background-color: #c5d52b;*/
     background: url(../../images/core/mws-sub-nav-bg.png);
 }
 
-div#mws-navigation ul li ul li.active-sub-nav a
-{
+div#mws-navigation ul li ul li.active-sub-nav a {
     color: #c5d52b !important;
 }
 
 /* Container */
 
-div#mws-container
-{
+div#mws-container {
     margin-left: 206px;
     padding-top: 100px;
     min-height: 100%;
 }
 
-    div#mws-container .container
-    {
+    div#mws-container .container {
         float: left;
         margin: 0 4%;
     }
@@ -550,8 +506,7 @@ div#mws-container
 
 /* Footer */
 
-div#mws-footer
-{
+div#mws-footer {
     width: 92%;
     margin: 0 4%;
     text-align: center;
