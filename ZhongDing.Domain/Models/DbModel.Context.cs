@@ -70,5 +70,8 @@ namespace ZhongDing.Domain.Models
         public DbSet<DeptMarket> DeptMarket { get; set; }
         public DbSet<DBContract> DBContract { get; set; }
         public DbSet<DBContractTaskAssignment> DBContractTaskAssignment { get; set; }
+        public DbSet<DepartmentProductRecord> DepartmentProductRecord { get; set; }
+        public DbSet<DepartmentProductSalesBonus> DepartmentProductSalesBonus { get; set; }
+        public DbSet<DepartmentProductSalesPlan> DepartmentProductSalesPlan { get; set; }
     }
 }

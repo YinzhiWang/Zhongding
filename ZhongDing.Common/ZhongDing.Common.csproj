@@ -66,11 +66,13 @@
     <Compile Include="Enums\DateInterval.cs" />
     <Compile Include="Enums\EAccountType.cs" />
     <Compile Include="Enums\EAjaxActionType.cs" />
+    <Compile Include="Enums\ECompareOperator.cs" />
     <Compile Include="Enums\EDepartmentType.cs" />
     <Compile Include="Enums\EMenuItem.cs" />
     <Compile Include="Enums\EMonthOfYear.cs" />
     <Compile Include="Enums\EOwnerType.cs" />
     <Compile Include="Enums\EProductCategory.cs" />
+    <Compile Include="Enums\ESalesPlanType.cs" />
     <Compile Include="Enums\LogCategory.cs" />
     <Compile Include="Enums\LogEventType.cs" />
     <Compile Include="GlobalConst.cs" />

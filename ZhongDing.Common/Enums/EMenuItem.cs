@@ -54,6 +54,16 @@ namespace ZhongDing.Common.Enums
         DBContractManage,
 
         /// <summary>
+        /// 商业客户流向管理
+        /// </summary>
+        BusinessClientFlowsManage,
+
+        /// <summary>
+        /// 部门货品销售计划和提成策略管理
+        /// </summary>
+        DeptProductSalesPlanAndBonusManage,
+
+        /// <summary>
         /// 货品信息管理
         /// </summary>
         ProductInfoManage = 20,

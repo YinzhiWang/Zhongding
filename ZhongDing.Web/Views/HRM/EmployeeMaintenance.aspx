@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="EmployeeMaintenance.aspx.cs" Inherits="ZhongDing.Web.Views.HRM.EmployeeMaintenance" %>
+﻿<%@ Page Title="员工维护" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="EmployeeMaintenance.aspx.cs" Inherits="ZhongDing.Web.Views.HRM.EmployeeMaintenance" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 

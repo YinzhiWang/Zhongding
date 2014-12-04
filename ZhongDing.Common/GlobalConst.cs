@@ -157,12 +157,12 @@ namespace ZhongDing.Common
                 /// <summary>
                 /// 仓库编号前缀
                 /// </summary>
-                public static readonly string WAREHOUSE  = "CK";
+                public static readonly string WAREHOUSE = "CK";
 
                 /// <summary>
                 /// 配送公司编号前缀
                 /// </summary>
-                public static readonly string  DISTRIBUTION_COMPANY = "PSGS";
+                public static readonly string DISTRIBUTION_COMPANY = "PSGS";
 
                 /// <summary>
                 /// 客户编号前缀
@@ -195,6 +195,49 @@ namespace ZhongDing.Common
             /// 招商
             /// </summary>
             public static readonly string BUSINESS_MEDICINE = "招商";
+        }
+
+        #endregion
+
+        #region 部门产品销售提成类型
+
+        /// <summary>
+        /// 常量类：部门产品销售提成类型
+        /// </summary>
+        public class DeptProductSalesBonusTypes
+        {
+            /// <summary>
+            /// 固定的
+            /// </summary>
+            public static readonly string FIXED = "固定";
+
+            /// <summary>
+            /// 浮动的
+            /// </summary>
+            public static readonly string FLOATED = "浮动";
+        }
+
+        #endregion
+
+        #region 比较操作类型
+
+        /// <summary>
+        /// 常量类：比较操作类型
+        /// </summary>
+        public class CompareOperatorTypes
+        {
+            /// <summary>
+            /// 大于
+            /// </summary>
+            public static readonly string GREATER_THAN = ">";
+            /// <summary>
+            /// 等于
+            /// </summary>
+            public static readonly string EQUAL_TO = "=";
+            /// <summary>
+            /// 小于
+            /// </summary>
+            public static readonly string LESS_THAN = "<";
         }
 
         #endregion

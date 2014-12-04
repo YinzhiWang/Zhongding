@@ -5,8 +5,8 @@
     [Year]           INT      NOT NULL,
     [Task]           INT      NULL,
     [Actual]         INT      NULL,
-    [IsDeleted]      BIT      NULL,
-    [CreatedOn]      DATETIME NULL,
+    [IsDeleted]      BIT      CONSTRAINT [DF_DepartmentProductRecord_IsDeleted] DEFAULT ((0)) NOT NULL,
+    [CreatedOn]      DATETIME CONSTRAINT [DF_DepartmentProductRecord_CreatedOn] DEFAULT (getdate()) NOT NULL,
     [CreatedBy]      INT      NULL,
     [LastModifiedOn] DATETIME NULL,
     [LastModifiedBy] INT      NULL,
@@ -14,6 +14,8 @@
     CONSTRAINT [FK_DepartmentProductRecord_Department] FOREIGN KEY ([DepartmentID]) REFERENCES [dbo].[Department] ([ID]),
     CONSTRAINT [FK_DepartmentProductRecord_Product] FOREIGN KEY ([ProductID]) REFERENCES [dbo].[Product] ([ID])
 );
+
+
 
 
 

@@ -27,6 +27,8 @@ namespace ZhongDing.Domain.Models
             this.ProductDBPolicyPrice = new HashSet<ProductDBPolicyPrice>();
             this.DeptMarketProduct = new HashSet<DeptMarketProduct>();
             this.DBContract = new HashSet<DBContract>();
+            this.DepartmentProductRecord = new HashSet<DepartmentProductRecord>();
+            this.DepartmentProductSalesPlan = new HashSet<DepartmentProductSalesPlan>();
         }
     
         public int ID { get; set; }
@@ -69,5 +71,7 @@ namespace ZhongDing.Domain.Models
         public virtual Department Department { get; set; }
         public virtual ICollection<DeptMarketProduct> DeptMarketProduct { get; set; }
         public virtual ICollection<DBContract> DBContract { get; set; }
+        public virtual ICollection<DepartmentProductRecord> DepartmentProductRecord { get; set; }
+        public virtual ICollection<DepartmentProductSalesPlan> DepartmentProductSalesPlan { get; set; }
     }
 }

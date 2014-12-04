@@ -2583,12 +2583,15 @@
     <Content Include="Views\Basics\ClientInfoManagement.aspx" />
     <Content Include="Views\Basics\DBContractMaintenance.aspx" />
     <Content Include="Views\Basics\DBContractManagement.aspx" />
+    <Content Include="Views\Basics\DeptProductSalesPlanAndBonusMaintenance.aspx" />
+    <Content Include="Views\Basics\DeptProductSalesPlanAndBonusManagement.aspx" />
     <Content Include="Views\Basics\DistributionCompanyMaintenance.aspx" />
     <Content Include="Views\Basics\DistributionCompanyManagement.aspx" />
     <Content Include="Views\Basics\Editors\BankAccountMaintain.aspx" />
     <Content Include="Views\Basics\Editors\CertificateFileMaintain.aspx" />
     <Content Include="Views\Basics\Editors\CertificateMaintain.aspx" />
     <Content Include="Views\Basics\Editors\ClientInfoContactMaintain.aspx" />
+    <Content Include="Views\Basics\Editors\DeptProductAnnualSalesMaintain.aspx" />
     <Content Include="Views\Basics\Editors\SupplierBankAccountMaintain.aspx" />
     <Content Include="Views\Basics\Editors\SupplierContractMaintain.aspx" />
     <Content Include="Views\Basics\WarehouseMaintenance.aspx" />
@@ -2861,6 +2864,20 @@
     <Compile Include="Views\Basics\DBContractManagement.aspx.designer.cs">
       <DependentUpon>DBContractManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Basics\DeptProductSalesPlanAndBonusMaintenance.aspx.cs">
+      <DependentUpon>DeptProductSalesPlanAndBonusMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\DeptProductSalesPlanAndBonusMaintenance.aspx.designer.cs">
+      <DependentUpon>DeptProductSalesPlanAndBonusMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\DeptProductSalesPlanAndBonusManagement.aspx.cs">
+      <DependentUpon>DeptProductSalesPlanAndBonusManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\DeptProductSalesPlanAndBonusManagement.aspx.designer.cs">
+      <DependentUpon>DeptProductSalesPlanAndBonusManagement.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Basics\DistributionCompanyMaintenance.aspx.cs">
       <DependentUpon>DistributionCompanyMaintenance.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -2902,6 +2919,13 @@
     </Compile>
     <Compile Include="Views\Basics\Editors\ClientInfoContactMaintain.aspx.designer.cs">
       <DependentUpon>ClientInfoContactMaintain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\Editors\DeptProductAnnualSalesMaintain.aspx.cs">
+      <DependentUpon>DeptProductAnnualSalesMaintain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\Editors\DeptProductAnnualSalesMaintain.aspx.designer.cs">
+      <DependentUpon>DeptProductAnnualSalesMaintain.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Basics\Editors\SupplierBankAccountMaintain.aspx.cs">
       <DependentUpon>SupplierBankAccountMaintain.aspx</DependentUpon>

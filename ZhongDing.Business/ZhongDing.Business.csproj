@@ -66,6 +66,9 @@
     <Compile Include="IRepositories\ICompanyRepository.cs" />
     <Compile Include="IRepositories\IDBContractRepository.cs" />
     <Compile Include="IRepositories\IDBContractTaskAssignmentRepository.cs" />
+    <Compile Include="IRepositories\IDeptProductRecordRepository.cs" />
+    <Compile Include="IRepositories\IDeptProductSalesBonusRepository.cs" />
+    <Compile Include="IRepositories\IDeptProductSalesPlanRepository.cs" />
     <Compile Include="IRepositories\IDepartmentRepository.cs" />
     <Compile Include="IRepositories\IDeptDistrictRepository.cs" />
     <Compile Include="IRepositories\IDeptMarketDivisionRepository.cs" />
@@ -112,6 +115,9 @@
     <Compile Include="Repositories\CompanyRepository.cs" />
     <Compile Include="Repositories\DBContractRepository.cs" />
     <Compile Include="Repositories\DBContractTaskAssignmentRepository.cs" />
+    <Compile Include="Repositories\DeptProductRecordRepository.cs" />
+    <Compile Include="Repositories\DeptProductSalesBonusRepository.cs" />
+    <Compile Include="Repositories\DeptProductSalesPlanRepository.cs" />
     <Compile Include="Repositories\DepartmentRepository.cs" />
     <Compile Include="Repositories\DeptDistrictRepository.cs" />
     <Compile Include="Repositories\DeptMarketDivisionRepository.cs" />

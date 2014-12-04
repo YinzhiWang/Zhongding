@@ -24,6 +24,9 @@
           <EntitySet Name="DBContract" EntityType="DbModel.Store.DBContract" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DBContractTaskAssignment" EntityType="DbModel.Store.DBContractTaskAssignment" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Department" EntityType="DbModel.Store.Department" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DepartmentProductRecord" EntityType="DbModel.Store.DepartmentProductRecord" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DepartmentProductSalesBonus" EntityType="DbModel.Store.DepartmentProductSalesBonus" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DepartmentProductSalesPlan" EntityType="DbModel.Store.DepartmentProductSalesPlan" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DeptDistrict" EntityType="DbModel.Store.DeptDistrict" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DeptMarket" EntityType="DbModel.Store.DeptMarket" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DeptMarketDivision" EntityType="DbModel.Store.DeptMarketDivision" store:Type="Tables" Schema="dbo" />
@@ -154,6 +157,26 @@
           <AssociationSet Name="FK_Department_Users" Association="DbModel.Store.FK_Department_Users">
             <End Role="Users" EntitySet="Users" />
             <End Role="Department" EntitySet="Department" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentProductRecord_Department" Association="DbModel.Store.FK_DepartmentProductRecord_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="DepartmentProductRecord" EntitySet="DepartmentProductRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentProductRecord_Product" Association="DbModel.Store.FK_DepartmentProductRecord_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="DepartmentProductRecord" EntitySet="DepartmentProductRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentProductSalesBonus_DepartmentProductSalesPlan" Association="DbModel.Store.FK_DepartmentProductSalesBonus_DepartmentProductSalesPlan">
+            <End Role="DepartmentProductSalesPlan" EntitySet="DepartmentProductSalesPlan" />
+            <End Role="DepartmentProductSalesBonus" EntitySet="DepartmentProductSalesBonus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentProductSalesPlan_Department" Association="DbModel.Store.FK_DepartmentProductSalesPlan_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="DepartmentProductSalesPlan" EntitySet="DepartmentProductSalesPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentProductSalesPlan_Product" Association="DbModel.Store.FK_DepartmentProductSalesPlan_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="DepartmentProductSalesPlan" EntitySet="DepartmentProductSalesPlan" />
           </AssociationSet>
           <AssociationSet Name="FK_DeptMarket_DeptDistrict" Association="DbModel.Store.FK_DeptMarket_DeptDistrict">
             <End Role="DeptDistrict" EntitySet="DeptDistrict" />
@@ -578,6 +601,55 @@
           <Property Name="DirectorUserID" Type="int" />
           <Property Name="DepartmentTypeID" Type="int" Nullable="false" />
           <Property Name="DeptDistrictID" Type="int" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="DepartmentProductRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="Year" Type="int" Nullable="false" />
+          <Property Name="Task" Type="int" />
+          <Property Name="Actual" Type="int" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="DepartmentProductSalesBonus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SalesPlanID" Type="int" Nullable="false" />
+          <Property Name="SalesPlanTypeID" Type="int" Nullable="false" />
+          <Property Name="CompareOperatorID" Type="int" Nullable="false" />
+          <Property Name="SalesPrice" Type="money" />
+          <Property Name="BonusRatio" Type="float" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="DepartmentProductSalesPlan">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="IsFixedOfInside" Type="bit" Nullable="false" />
+          <Property Name="FixedRatioOfInside" Type="float" />
+          <Property Name="IsFixedOfOutside" Type="bit" Nullable="false" />
+          <Property Name="FixedRatioOfOutside" Type="float" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
@@ -1284,6 +1356,66 @@
             </Principal>
             <Dependent Role="Department">
               <PropertyRef Name="DirectorUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentProductRecord_Department">
+          <End Role="Department" Type="DbModel.Store.Department" Multiplicity="1" />
+          <End Role="DepartmentProductRecord" Type="DbModel.Store.DepartmentProductRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DepartmentProductRecord">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentProductRecord_Product">
+          <End Role="Product" Type="DbModel.Store.Product" Multiplicity="1" />
+          <End Role="DepartmentProductRecord" Type="DbModel.Store.DepartmentProductRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DepartmentProductRecord">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentProductSalesBonus_DepartmentProductSalesPlan">
+          <End Role="DepartmentProductSalesPlan" Type="DbModel.Store.DepartmentProductSalesPlan" Multiplicity="1" />
+          <End Role="DepartmentProductSalesBonus" Type="DbModel.Store.DepartmentProductSalesBonus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmentProductSalesPlan">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DepartmentProductSalesBonus">
+              <PropertyRef Name="SalesPlanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentProductSalesPlan_Department">
+          <End Role="Department" Type="DbModel.Store.Department" Multiplicity="1" />
+          <End Role="DepartmentProductSalesPlan" Type="DbModel.Store.DepartmentProductSalesPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DepartmentProductSalesPlan">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentProductSalesPlan_Product">
+          <End Role="Product" Type="DbModel.Store.Product" Multiplicity="1" />
+          <End Role="DepartmentProductSalesPlan" Type="DbModel.Store.DepartmentProductSalesPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DepartmentProductSalesPlan">
+              <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2033,6 +2165,29 @@
             <End Role="DBContract" EntitySet="DBContract" />
             <End Role="Hospital" EntitySet="Hospital" />
           </AssociationSet>
+          <EntitySet Name="DepartmentProductRecord" EntityType="DbModel.DepartmentProductRecord" />
+          <EntitySet Name="DepartmentProductSalesBonus" EntityType="DbModel.DepartmentProductSalesBonus" />
+          <EntitySet Name="DepartmentProductSalesPlan" EntityType="DbModel.DepartmentProductSalesPlan" />
+          <AssociationSet Name="FK_DepartmentProductRecord_Department" Association="DbModel.FK_DepartmentProductRecord_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="DepartmentProductRecord" EntitySet="DepartmentProductRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentProductSalesPlan_Department" Association="DbModel.FK_DepartmentProductSalesPlan_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="DepartmentProductSalesPlan" EntitySet="DepartmentProductSalesPlan" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentProductRecord_Product" Association="DbModel.FK_DepartmentProductRecord_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="DepartmentProductRecord" EntitySet="DepartmentProductRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentProductSalesBonus_DepartmentProductSalesPlan" Association="DbModel.FK_DepartmentProductSalesBonus_DepartmentProductSalesPlan">
+            <End Role="DepartmentProductSalesPlan" EntitySet="DepartmentProductSalesPlan" />
+            <End Role="DepartmentProductSalesBonus" EntitySet="DepartmentProductSalesBonus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DepartmentProductSalesPlan_Product" Association="DbModel.FK_DepartmentProductSalesPlan_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="DepartmentProductSalesPlan" EntitySet="DepartmentProductSalesPlan" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -2262,6 +2417,8 @@
           <NavigationProperty Name="Department" Relationship="DbModel.FK_Product_Department" FromRole="Product" ToRole="Department" />
           <NavigationProperty Name="DeptMarketProduct" Relationship="DbModel.FK_DeptMarketProduct_Product" FromRole="Product" ToRole="DeptMarketProduct" />
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_Product" FromRole="Product" ToRole="DBContract" />
+          <NavigationProperty Name="DepartmentProductRecord" Relationship="DbModel.FK_DepartmentProductRecord_Product" FromRole="Product" ToRole="DepartmentProductRecord" />
+          <NavigationProperty Name="DepartmentProductSalesPlan" Relationship="DbModel.FK_DepartmentProductSalesPlan_Product" FromRole="Product" ToRole="DepartmentProductSalesPlan" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -3293,6 +3450,8 @@
           <NavigationProperty Name="Product" Relationship="DbModel.FK_Product_Department" FromRole="Department" ToRole="Product" />
           <NavigationProperty Name="Users1" Relationship="DbModel.FK_Users_Department" FromRole="Department" ToRole="Users" />
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_Department" FromRole="Department" ToRole="DBContract" />
+          <NavigationProperty Name="DepartmentProductRecord" Relationship="DbModel.FK_DepartmentProductRecord_Department" FromRole="Department" ToRole="DepartmentProductRecord" />
+          <NavigationProperty Name="DepartmentProductSalesPlan" Relationship="DbModel.FK_DepartmentProductSalesPlan_Department" FromRole="Department" ToRole="DepartmentProductSalesPlan" />
         </EntityType>
         <Association Name="FK_ClientInfoProductSetting_Department">
           <End Type="DbModel.Department" Role="Department" Multiplicity="0..1" />
@@ -3584,6 +3743,121 @@
             </Principal>
             <Dependent Role="Hospital">
               <PropertyRef Name="DBContractID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DepartmentProductRecord">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DepartmentID" Nullable="false" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="Int32" Name="Year" Nullable="false" />
+          <Property Type="Int32" Name="Task" />
+          <Property Type="Int32" Name="Actual" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Department" Relationship="DbModel.FK_DepartmentProductRecord_Department" FromRole="DepartmentProductRecord" ToRole="Department" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_DepartmentProductRecord_Product" FromRole="DepartmentProductRecord" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="DepartmentProductSalesBonus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="SalesPlanID" Nullable="false" />
+          <Property Type="Int32" Name="SalesPlanTypeID" Nullable="false" />
+          <Property Type="Int32" Name="CompareOperatorID" Nullable="false" />
+          <Property Type="Decimal" Name="SalesPrice" Precision="19" Scale="4" />
+          <Property Type="Double" Name="BonusRatio" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="DepartmentProductSalesPlan" Relationship="DbModel.FK_DepartmentProductSalesBonus_DepartmentProductSalesPlan" FromRole="DepartmentProductSalesBonus" ToRole="DepartmentProductSalesPlan" />
+        </EntityType>
+        <EntityType Name="DepartmentProductSalesPlan">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DepartmentID" Nullable="false" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="Boolean" Name="IsFixedOfInside" Nullable="false" />
+          <Property Type="Double" Name="FixedRatioOfInside" />
+          <Property Type="Boolean" Name="IsFixedOfOutside" Nullable="false" />
+          <Property Type="Double" Name="FixedRatioOfOutside" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Department" Relationship="DbModel.FK_DepartmentProductSalesPlan_Department" FromRole="DepartmentProductSalesPlan" ToRole="Department" />
+          <NavigationProperty Name="DepartmentProductSalesBonus" Relationship="DbModel.FK_DepartmentProductSalesBonus_DepartmentProductSalesPlan" FromRole="DepartmentProductSalesPlan" ToRole="DepartmentProductSalesBonus" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_DepartmentProductSalesPlan_Product" FromRole="DepartmentProductSalesPlan" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_DepartmentProductRecord_Department">
+          <End Type="DbModel.Department" Role="Department" Multiplicity="1" />
+          <End Type="DbModel.DepartmentProductRecord" Role="DepartmentProductRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DepartmentProductRecord">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentProductSalesPlan_Department">
+          <End Type="DbModel.Department" Role="Department" Multiplicity="1" />
+          <End Type="DbModel.DepartmentProductSalesPlan" Role="DepartmentProductSalesPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DepartmentProductSalesPlan">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentProductRecord_Product">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DbModel.DepartmentProductRecord" Role="DepartmentProductRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DepartmentProductRecord">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentProductSalesBonus_DepartmentProductSalesPlan">
+          <End Type="DbModel.DepartmentProductSalesPlan" Role="DepartmentProductSalesPlan" Multiplicity="1" />
+          <End Type="DbModel.DepartmentProductSalesBonus" Role="DepartmentProductSalesBonus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmentProductSalesPlan">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DepartmentProductSalesBonus">
+              <PropertyRef Name="SalesPlanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DepartmentProductSalesPlan_Product">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DbModel.DepartmentProductSalesPlan" Role="DepartmentProductSalesPlan" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DepartmentProductSalesPlan">
+              <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4305,6 +4579,58 @@
                 <ScalarProperty Name="MonthOfTask" ColumnName="MonthOfTask" />
                 <ScalarProperty Name="YearOfTask" ColumnName="YearOfTask" />
                 <ScalarProperty Name="DBContractID" ColumnName="DBContractID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DepartmentProductRecord">
+            <EntityTypeMapping TypeName="DbModel.DepartmentProductRecord">
+              <MappingFragment StoreEntitySet="DepartmentProductRecord">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Actual" ColumnName="Actual" />
+                <ScalarProperty Name="Task" ColumnName="Task" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DepartmentProductSalesBonus">
+            <EntityTypeMapping TypeName="DbModel.DepartmentProductSalesBonus">
+              <MappingFragment StoreEntitySet="DepartmentProductSalesBonus">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="BonusRatio" ColumnName="BonusRatio" />
+                <ScalarProperty Name="SalesPrice" ColumnName="SalesPrice" />
+                <ScalarProperty Name="CompareOperatorID" ColumnName="CompareOperatorID" />
+                <ScalarProperty Name="SalesPlanTypeID" ColumnName="SalesPlanTypeID" />
+                <ScalarProperty Name="SalesPlanID" ColumnName="SalesPlanID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DepartmentProductSalesPlan">
+            <EntityTypeMapping TypeName="DbModel.DepartmentProductSalesPlan">
+              <MappingFragment StoreEntitySet="DepartmentProductSalesPlan">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="FixedRatioOfOutside" ColumnName="FixedRatioOfOutside" />
+                <ScalarProperty Name="IsFixedOfOutside" ColumnName="IsFixedOfOutside" />
+                <ScalarProperty Name="FixedRatioOfInside" ColumnName="FixedRatioOfInside" />
+                <ScalarProperty Name="IsFixedOfInside" ColumnName="IsFixedOfInside" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
