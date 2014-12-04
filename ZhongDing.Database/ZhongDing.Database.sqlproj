@@ -345,6 +345,13 @@
     <Build Include="dbo\Tables\DepartmentProductRecord.sql" />
     <Build Include="dbo\Tables\DepartmentProductSalesBonus.sql" />
     <Build Include="dbo\Tables\DepartmentProductSalesPlan.sql" />
+    <Build Include="dbo\Tables\WorkflowStepUser.sql" />
+    <Build Include="dbo\Tables\WorkflowStep.sql" />
+    <Build Include="dbo\Tables\Workflow.sql" />
+    <Build Include="dbo\Tables\PaymentType.sql" />
+    <Build Include="dbo\Tables\PaymentStatus.sql" />
+    <Build Include="dbo\Tables\ApplicationPayment.sql" />
+    <Build Include="dbo\Tables\ApplicationNotes.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

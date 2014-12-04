@@ -284,3 +284,67 @@ SET IDENTITY_INSERT [dbo].[UnitOfMeasurement] OFF
 COMMIT TRANSACTION
 ---- end --- 11/18/2014 -- 初始化基本单位数据 -- by lihong 
 
+---- start --- 12/04/2014 -- 初始化工作流数据 -- by Yinzhi 
+SET NUMERIC_ROUNDABORT OFF
+GO
+SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+
+BEGIN TRANSACTION
+SET IDENTITY_INSERT [dbo].[Workflow] ON
+INSERT INTO [dbo].[Workflow] ([ID], [WorkflowName],[IsActive], [IsDeleted]) VALUES (1, N'采购订单',1,0)
+INSERT INTO [dbo].[Workflow] ([ID], [WorkflowName],[IsActive], [IsDeleted]) VALUES (2, N'采购入库单',1,0)
+INSERT INTO [dbo].[Workflow] ([ID], [WorkflowName],[IsActive], [IsDeleted]) VALUES (3, N'大包申请单',1,0)
+INSERT INTO [dbo].[Workflow] ([ID], [WorkflowName],[IsActive], [IsDeleted]) VALUES (4, N'大包配送订单',1,0)
+INSERT INTO [dbo].[Workflow] ([ID], [WorkflowName],[IsActive], [IsDeleted]) VALUES (5, N'大包出库单',1,0)
+SET IDENTITY_INSERT [dbo].[Workflow] OFF
+
+SET IDENTITY_INSERT [dbo].[WorkflowStep] ON
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID],[StepName], [IsDeleted]) VALUES (1,1, N'订单新增',0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID],[StepName], [IsDeleted]) VALUES (2,1, N'订单审核',0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID],[StepName], [IsDeleted]) VALUES (3,1, N'支付信息审核',0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID],[StepName], [IsDeleted]) VALUES (4,1, N'出纳',0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID],[StepName], [IsDeleted]) VALUES (5,1, N'修改订单',0)
+
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID],[StepName], [IsDeleted]) VALUES (6,2, N'入库单新增',0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID],[StepName], [IsDeleted]) VALUES (7,2, N'仓库入库操作',0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID],[StepName], [IsDeleted]) VALUES (8,2, N'修改入库单',0)
+
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID],[StepName], [IsDeleted]) VALUES (9,3, N'大包申请新增',0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID],[StepName], [IsDeleted]) VALUES (10,3, N'行政审核',0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID],[StepName], [IsDeleted]) VALUES (11,3, N'修改大包申请单',0)
+
+
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID],[StepName], [IsDeleted]) VALUES (12,4, N'修改大包配送订单',0)
+
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID],[StepName], [IsDeleted]) VALUES (13,5, N'大包出库单新增',0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID],[StepName], [IsDeleted]) VALUES (14,5, N'仓库出库操作',0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID],[StepName], [IsDeleted]) VALUES (15,5, N'修改出库单',0)
+
+SET IDENTITY_INSERT [dbo].[WorkflowStep] OFF
+
+
+COMMIT TRANSACTION
+---- end --- 12/04/2014 -- 初始化工作流数据 -- by Yinzhi 
+
+
+SET NUMERIC_ROUNDABORT OFF
+GO
+SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+
+BEGIN TRANSACTION
+
+SET IDENTITY_INSERT [dbo].[PaymentType] ON
+INSERT INTO [dbo].[PaymentType] ([ID], [PaymentTypeName]) VALUES (1, N'收入')
+INSERT INTO [dbo].[PaymentType] ([ID], [PaymentTypeName]) VALUES (2, N'支出')
+SET IDENTITY_INSERT [dbo].[PaymentType] OFF
+
+SET IDENTITY_INSERT [dbo].[PaymentStatus] ON
+INSERT INTO [dbo].[PaymentStatus] ([ID], [PaymentStatusName]) VALUES (1, N'待支付')
+INSERT INTO [dbo].[PaymentStatus] ([ID], [PaymentStatusName]) VALUES (2, N'已支付')
+SET IDENTITY_INSERT [dbo].[PaymentStatus] OFF
+
+
+COMMIT TRANSACTION
+
