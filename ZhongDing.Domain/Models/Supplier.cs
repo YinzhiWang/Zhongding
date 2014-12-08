@@ -19,9 +19,9 @@ namespace ZhongDing.Domain.Models
         {
             this.Product = new HashSet<Product>();
             this.SupplierBankAccount = new HashSet<SupplierBankAccount>();
-            this.SupplierContract = new HashSet<SupplierContract>();
             this.SupplierTaskAssignment = new HashSet<SupplierTaskAssignment>();
             this.SupplierCertificate = new HashSet<SupplierCertificate>();
+            this.SupplierContract = new HashSet<SupplierContract>();
         }
     
         public int ID { get; set; }
@@ -55,8 +55,8 @@ namespace ZhongDing.Domain.Models
         public virtual Company Company { get; set; }
         public virtual ICollection<Product> Product { get; set; }
         public virtual ICollection<SupplierBankAccount> SupplierBankAccount { get; set; }
-        public virtual ICollection<SupplierContract> SupplierContract { get; set; }
         public virtual ICollection<SupplierTaskAssignment> SupplierTaskAssignment { get; set; }
         public virtual ICollection<SupplierCertificate> SupplierCertificate { get; set; }
+        public virtual ICollection<SupplierContract> SupplierContract { get; set; }
     }
 }

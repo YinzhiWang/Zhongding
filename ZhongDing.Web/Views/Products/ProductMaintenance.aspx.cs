@@ -140,7 +140,13 @@ namespace ZhongDing.Web.Views.Products
 
         private void BindSuppliers()
         {
-            var suppliers = PageSupplierRepository.GetDropdownItems();
+            var suppliers = PageSupplierRepository.GetDropdownItems(new UISearchDropdownItem
+            {
+                Extension = new UISearchExtension
+                    {
+                        CompanyID = CurrentUser.CompanyID
+                    }
+            });
 
             rcbxSupplier.DataSource = suppliers;
             rcbxSupplier.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;

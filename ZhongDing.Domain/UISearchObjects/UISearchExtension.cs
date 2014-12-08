@@ -9,6 +9,11 @@ namespace ZhongDing.Domain.UISearchObjects
     public class UISearchExtension
     {
         /// <summary>
+        /// 账套ID
+        /// </summary>
+        public int CompanyID { get; set; }
+
+        /// <summary>
         /// 部门ID
         /// </summary>
         public int DepartmentID { get; set; }

@@ -371,7 +371,8 @@ namespace ZhongDing.Common
 
             if (!string.IsNullOrEmpty(accountNumber))
             {
-                accountNumber = accountNumber.Replace("-", "");
+                //去除-和空格
+                accountNumber = accountNumber.Replace("-", "").Replace(" ", "");
 
                 char firstChar = Convert.ToChar(accountNumber.Substring(0, 1));
 

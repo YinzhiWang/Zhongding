@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="mws-form-row">
-                            <div class="float-left width40-percent">
+                            <div class="float-left width50-percent">
                                 <label>货品编号</label>
                                 <div class="mws-form-item small">
                                     <telerik:RadTextBox runat="server" ID="txtProductCode" CssClass="mws-textinput" Width="80%"></telerik:RadTextBox>
@@ -89,11 +89,11 @@
                             </div>
                         </div>
                         <div class="mws-form-row">
-                            <div class="float-left width40-percent">
+                            <div class="float-left width50-percent">
                                 <label>供应商</label>
                                 <div class="mws-form-item">
                                     <telerik:RadComboBox runat="server" ID="rcbxSupplier" Filter="Contains" AllowCustomText="false"
-                                        MarkFirstMatch="true" Height="160px" EmptyMessage="--请选择--"
+                                        MarkFirstMatch="true" Height="160px" Width="95%" EmptyMessage="--请选择--"
                                         OnItemDataBound="rcbxSupplier_ItemDataBound" OnClientSelectedIndexChanged="onClientSelectedSupplier">
                                     </telerik:RadComboBox>
                                     <asp:RequiredFieldValidator ID="rfvSupplier"
@@ -117,7 +117,7 @@
                             </div>
                         </div>
                         <div class="mws-form-row">
-                            <div class="float-left width40-percent">
+                            <div class="float-left width50-percent">
                                 <label>有效期（天）</label>
                                 <div class="mws-form-item">
                                     <telerik:RadNumericTextBox runat="server" ID="txtValidDays" CssClass="mws-textinput" Type="Number" ShowSpinButtons="true"
@@ -135,7 +135,7 @@
                             </div>
                         </div>
                         <div class="mws-form-row">
-                            <div class="float-left width40-percent">
+                            <div class="float-left width50-percent">
                                 <label>成本核算方法</label>
                                 <div class="mws-form-item">
                                     <label>实际计价法</label>
@@ -260,8 +260,8 @@
                                                     <telerik:GridBoundColumn UniqueName="EffectiveDateDescription" HeaderText="有效期" DataField="EffectiveDateDescription">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
-                                                    <telerik:GridTemplateColumn UniqueName="IsNeedAlert" HeaderText="是否<br/>提醒" DataField="IsNeedAlert" SortExpression="IsNeedAlert">
-                                                        <ItemStyle HorizontalAlign="Left" Width="40" />
+                                                    <telerik:GridTemplateColumn UniqueName="IsNeedAlert" HeaderText="是否提醒" DataField="IsNeedAlert" SortExpression="IsNeedAlert">
+                                                        <ItemStyle HorizontalAlign="Left" />
                                                         <ItemTemplate>
                                                             <span>
                                                                 <%#DataBinder.Eval(Container.DataItem,"IsNeedAlert")!=null
@@ -270,7 +270,7 @@
                                                             </span>
                                                         </ItemTemplate>
                                                     </telerik:GridTemplateColumn>
-                                                    <telerik:GridTemplateColumn UniqueName="AlertBeforeDays" HeaderText="提醒<br/>期限" DataField="AlertBeforeDays" SortExpression="AlertBeforeDays">
+                                                    <telerik:GridTemplateColumn UniqueName="AlertBeforeDays" HeaderText="提醒期限" DataField="AlertBeforeDays" SortExpression="AlertBeforeDays">
                                                         <ItemTemplate>
                                                             <span>
                                                                 <%#DataBinder.Eval(Container.DataItem,"AlertBeforeDays")!=null
@@ -292,7 +292,7 @@
                                                     <telerik:GridTemplateColumn UniqueName="Edit" HeaderStyle-Width="40">
                                                         <ItemStyle HorizontalAlign="Center" Width="40" />
                                                         <ItemTemplate>
-                                                            <a href="javascript:void(0);" onclick="openCertificateWindow(<%#DataBinder.Eval(Container.DataItem,"OwnerEntityID")%>, EOwnerTypes.Client, gridClientIDs.gridCertificates);">
+                                                            <a href="javascript:void(0);" onclick="openCertificateWindow(<%#DataBinder.Eval(Container.DataItem,"OwnerEntityID")%>, EOwnerTypes.Product, gridClientIDs.gridCertificates);">
                                                                 <u>编辑</u></a>
                                                         </ItemTemplate>
                                                     </telerik:GridTemplateColumn>

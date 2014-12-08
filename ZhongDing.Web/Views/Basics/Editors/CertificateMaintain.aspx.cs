@@ -168,6 +168,9 @@ namespace ZhongDing.Web.Views.Basics.Editors
 
         private void LoadCertificate()
         {
+
+            Certificate certificate = null;
+
             EOwnerType ownerType = (EOwnerType)OwnerTypeID.Value;
 
             switch (ownerType)
@@ -181,31 +184,9 @@ namespace ZhongDing.Web.Views.Basics.Editors
 
                         if (supplier != null)
                         {
-                            var certificate = supplier.SupplierCertificate
-                                  .Where(x => x.ID == this.CurrentEntityID)
-                                  .Select(x => x.Certificate).FirstOrDefault();
-
-                            if (certificate != null)
-                            {
-                                if (certificate.CertificateTypeID.HasValue)
-                                    rcbxCertificateType.SelectedValue = certificate.CertificateTypeID.ToString();
-
-                                if (certificate.IsGotten.HasValue)
-                                {
-                                    if (certificate.IsGotten.Value)
-                                        radioIsGotten.Checked = true;
-                                    else
-                                        radioIsNoGotten.Checked = true;
-                                }
-
-                                rdpEffectiveFrom.SelectedDate = certificate.EffectiveFrom;
-                                rdpEffectiveTo.SelectedDate = certificate.EffectiveTo;
-
-                                cbxIsNeedAlert.Checked = certificate.IsNeedAlert.HasValue ? certificate.IsNeedAlert.Value : false;
-                                txtAlertBeforeDays.Value = (double?)certificate.AlertBeforeDays;
-
-                                txtComment.Text = certificate.Comment;
-                            }
+                            certificate = supplier.SupplierCertificate
+                                 .Where(x => x.ID == this.CurrentEntityID)
+                                 .Select(x => x.Certificate).FirstOrDefault();
                         }
                     }
 
@@ -219,38 +200,50 @@ namespace ZhongDing.Web.Views.Basics.Editors
 
                         if (clientCompany != null)
                         {
-                            var certificate = clientCompany.ClientCompanyCertificate
+                            certificate = clientCompany.ClientCompanyCertificate
                                   .Where(x => x.ID == this.CurrentEntityID)
                                   .Select(x => x.Certificate).FirstOrDefault();
-
-                            if (certificate != null)
-                            {
-                                if (certificate.CertificateTypeID.HasValue)
-                                    rcbxCertificateType.SelectedValue = certificate.CertificateTypeID.ToString();
-
-                                if (certificate.IsGotten.HasValue)
-                                {
-                                    if (certificate.IsGotten.Value)
-                                        radioIsGotten.Checked = true;
-                                    else
-                                        radioIsNoGotten.Checked = true;
-                                }
-
-                                rdpEffectiveFrom.SelectedDate = certificate.EffectiveFrom;
-                                rdpEffectiveTo.SelectedDate = certificate.EffectiveTo;
-
-                                cbxIsNeedAlert.Checked = certificate.IsNeedAlert.HasValue ? certificate.IsNeedAlert.Value : false;
-                                txtAlertBeforeDays.Value = (double?)certificate.AlertBeforeDays;
-
-                                txtComment.Text = certificate.Comment;
-                            }
                         }
                     }
 
                     break;
 
                 case EOwnerType.Product:
+                    if (this.OwnerEntityID.HasValue
+                        && this.OwnerEntityID > 0)
+                    {
+                        var product = PageProductRepository.GetByID(this.OwnerEntityID);
+
+                        if (product != null)
+                        {
+                            certificate = product.ProductCertificate
+                                  .Where(x => x.ID == this.CurrentEntityID)
+                                  .Select(x => x.Certificate).FirstOrDefault();
+                        }
+                    }
                     break;
+            }
+
+            if (certificate != null)
+            {
+                if (certificate.CertificateTypeID.HasValue)
+                    rcbxCertificateType.SelectedValue = certificate.CertificateTypeID.ToString();
+
+                if (certificate.IsGotten.HasValue)
+                {
+                    if (certificate.IsGotten.Value)
+                        radioIsGotten.Checked = true;
+                    else
+                        radioIsNoGotten.Checked = true;
+                }
+
+                rdpEffectiveFrom.SelectedDate = certificate.EffectiveFrom;
+                rdpEffectiveTo.SelectedDate = certificate.EffectiveTo;
+
+                cbxIsNeedAlert.Checked = certificate.IsNeedAlert.HasValue ? certificate.IsNeedAlert.Value : false;
+                txtAlertBeforeDays.Value = (double?)certificate.AlertBeforeDays;
+
+                txtComment.Text = certificate.Comment;
             }
         }
 

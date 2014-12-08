@@ -1888,8 +1888,6 @@
           <EntitySet Name="SaleType" EntityType="DbModel.SaleType" />
           <EntitySet Name="Supplier" EntityType="DbModel.Supplier" />
           <EntitySet Name="SupplierBankAccount" EntityType="DbModel.SupplierBankAccount" />
-          <EntitySet Name="SupplierContract" EntityType="DbModel.SupplierContract" />
-          <EntitySet Name="SupplierContractFile" EntityType="DbModel.SupplierContractFile" />
           <EntitySet Name="SupplierTaskAssignment" EntityType="DbModel.SupplierTaskAssignment" />
           <EntitySet Name="UnitOfMeasurement" EntityType="DbModel.UnitOfMeasurement" />
           <EntitySet Name="UserBonus" EntityType="DbModel.UserBonus" />
@@ -1966,36 +1964,16 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="ProductSpecification" EntitySet="ProductSpecification" />
           </AssociationSet>
-          <AssociationSet Name="FK_SupplierContract_Product" Association="DbModel.FK_SupplierContract_Product">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="SupplierContract" EntitySet="SupplierContract" />
-          </AssociationSet>
           <AssociationSet Name="FK_ProductSpecification_UnitOfMeasurement" Association="DbModel.FK_ProductSpecification_UnitOfMeasurement">
             <End Role="UnitOfMeasurement" EntitySet="UnitOfMeasurement" />
             <End Role="ProductSpecification" EntitySet="ProductSpecification" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SupplierContract_ProductSpecification" Association="DbModel.FK_SupplierContract_ProductSpecification">
-            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
-            <End Role="SupplierContract" EntitySet="SupplierContract" />
           </AssociationSet>
           <AssociationSet Name="FK_SupplierBankAccount_Supplier" Association="DbModel.FK_SupplierBankAccount_Supplier">
             <End Role="Supplier" EntitySet="Supplier" />
             <End Role="SupplierBankAccount" EntitySet="SupplierBankAccount" />
           </AssociationSet>
-          <AssociationSet Name="FK_SupplierContract_Supplier" Association="DbModel.FK_SupplierContract_Supplier">
-            <End Role="Supplier" EntitySet="Supplier" />
-            <End Role="SupplierContract" EntitySet="SupplierContract" />
-          </AssociationSet>
           <AssociationSet Name="FK_SupplierTaskAssignment_Supplier" Association="DbModel.FK_SupplierTaskAssignment_Supplier">
             <End Role="Supplier" EntitySet="Supplier" />
-            <End Role="SupplierTaskAssignment" EntitySet="SupplierTaskAssignment" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SupplierContractFile_SupplierContract" Association="DbModel.FK_SupplierContractFile_SupplierContract">
-            <End Role="SupplierContract" EntitySet="SupplierContract" />
-            <End Role="SupplierContractFile" EntitySet="SupplierContractFile" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SupplierTaskAssignment_SupplierContract" Association="DbModel.FK_SupplierTaskAssignment_SupplierContract">
-            <End Role="SupplierContract" EntitySet="SupplierContract" />
             <End Role="SupplierTaskAssignment" EntitySet="SupplierTaskAssignment" />
           </AssociationSet>
           <EntitySet Name="Warehouse" EntityType="DbModel.Warehouse" />
@@ -2187,6 +2165,28 @@
           <AssociationSet Name="FK_DepartmentProductSalesPlan_Product" Association="DbModel.FK_DepartmentProductSalesPlan_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="DepartmentProductSalesPlan" EntitySet="DepartmentProductSalesPlan" />
+          </AssociationSet>
+          <EntitySet Name="SupplierContract" EntityType="DbModel.SupplierContract" />
+          <EntitySet Name="SupplierContractFile" EntityType="DbModel.SupplierContractFile" />
+          <AssociationSet Name="FK_SupplierContract_Product" Association="DbModel.FK_SupplierContract_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="SupplierContract" EntitySet="SupplierContract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierContract_ProductSpecification" Association="DbModel.FK_SupplierContract_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="SupplierContract" EntitySet="SupplierContract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierContract_Supplier" Association="DbModel.FK_SupplierContract_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="SupplierContract" EntitySet="SupplierContract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierContractFile_SupplierContract" Association="DbModel.FK_SupplierContractFile_SupplierContract">
+            <End Role="SupplierContract" EntitySet="SupplierContract" />
+            <End Role="SupplierContractFile" EntitySet="SupplierContractFile" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierTaskAssignment_SupplierContract" Association="DbModel.FK_SupplierTaskAssignment_SupplierContract">
+            <End Role="SupplierContract" EntitySet="SupplierContract" />
+            <End Role="SupplierTaskAssignment" EntitySet="SupplierTaskAssignment" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
@@ -2408,7 +2408,6 @@
           <NavigationProperty Name="Supplier" Relationship="DbModel.FK_Product_Supplier" FromRole="Product" ToRole="Supplier" />
           <NavigationProperty Name="ProductCertificate" Relationship="DbModel.FK_ProductCertificate_Product" FromRole="Product" ToRole="ProductCertificate" />
           <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_ProductSpecification_Product" FromRole="Product" ToRole="ProductSpecification" />
-          <NavigationProperty Name="SupplierContract" Relationship="DbModel.FK_SupplierContract_Product" FromRole="Product" ToRole="SupplierContract" />
           <NavigationProperty Name="ClientInfoProductSetting" Relationship="DbModel.FK_ClientInfoProductSetting_Product" FromRole="Product" ToRole="ClientInfoProductSetting" />
           <NavigationProperty Name="DeptProductEvaluation" Relationship="DbModel.FK_DeptProductEvaluation_Product" FromRole="Product" ToRole="DeptProductEvaluation" />
           <NavigationProperty Name="ProductHighPrice" Relationship="DbModel.FK_ProductHighPrice_Product" FromRole="Product" ToRole="ProductHighPrice" />
@@ -2419,6 +2418,7 @@
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_Product" FromRole="Product" ToRole="DBContract" />
           <NavigationProperty Name="DepartmentProductRecord" Relationship="DbModel.FK_DepartmentProductRecord_Product" FromRole="Product" ToRole="DepartmentProductRecord" />
           <NavigationProperty Name="DepartmentProductSalesPlan" Relationship="DbModel.FK_DepartmentProductSalesPlan_Product" FromRole="Product" ToRole="DepartmentProductSalesPlan" />
+          <NavigationProperty Name="SupplierContract" Relationship="DbModel.FK_SupplierContract_Product" FromRole="Product" ToRole="SupplierContract" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -2460,12 +2460,12 @@
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="Product" Relationship="DbModel.FK_ProductSpecification_Product" FromRole="ProductSpecification" ToRole="Product" />
           <NavigationProperty Name="UnitOfMeasurement" Relationship="DbModel.FK_ProductSpecification_UnitOfMeasurement" FromRole="ProductSpecification" ToRole="UnitOfMeasurement" />
-          <NavigationProperty Name="SupplierContract" Relationship="DbModel.FK_SupplierContract_ProductSpecification" FromRole="ProductSpecification" ToRole="SupplierContract" />
           <NavigationProperty Name="ClientInfoProductSetting" Relationship="DbModel.FK_ClientInfoProductSetting_ProductSpecification" FromRole="ProductSpecification" ToRole="ClientInfoProductSetting" />
           <NavigationProperty Name="ProductHighPrice" Relationship="DbModel.FK_ProductHighPrice_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductHighPrice" />
           <NavigationProperty Name="ProductBasicPrice" Relationship="DbModel.FK_ProductBasicPrice_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductBasicPrice" />
           <NavigationProperty Name="ProductDBPolicyPrice" Relationship="DbModel.FK_ProductDBPolicyPrice_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductDBPolicyPrice" />
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_ProductSpecification" FromRole="ProductSpecification" ToRole="DBContract" />
+          <NavigationProperty Name="SupplierContract" Relationship="DbModel.FK_SupplierContract_ProductSpecification" FromRole="ProductSpecification" ToRole="SupplierContract" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -2514,9 +2514,9 @@
           <NavigationProperty Name="Company" Relationship="DbModel.FK_Supplier_Company" FromRole="Supplier" ToRole="Company" />
           <NavigationProperty Name="Product" Relationship="DbModel.FK_Product_Supplier" FromRole="Supplier" ToRole="Product" />
           <NavigationProperty Name="SupplierBankAccount" Relationship="DbModel.FK_SupplierBankAccount_Supplier" FromRole="Supplier" ToRole="SupplierBankAccount" />
-          <NavigationProperty Name="SupplierContract" Relationship="DbModel.FK_SupplierContract_Supplier" FromRole="Supplier" ToRole="SupplierContract" />
           <NavigationProperty Name="SupplierTaskAssignment" Relationship="DbModel.FK_SupplierTaskAssignment_Supplier" FromRole="Supplier" ToRole="SupplierTaskAssignment" />
           <NavigationProperty Name="SupplierCertificate" Relationship="DbModel.FK_SupplierCertificate_Supplier" FromRole="Supplier" ToRole="SupplierCertificate" />
+          <NavigationProperty Name="SupplierContract" Relationship="DbModel.FK_SupplierContract_Supplier" FromRole="Supplier" ToRole="SupplierContract" />
         </EntityType>
         <EntityType Name="SupplierBankAccount">
           <Key>
@@ -2532,45 +2532,6 @@
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="BankAccount" Relationship="DbModel.FK_SupplierBankAccount_BankAccount" FromRole="SupplierBankAccount" ToRole="BankAccount" />
           <NavigationProperty Name="Supplier" Relationship="DbModel.FK_SupplierBankAccount_Supplier" FromRole="SupplierBankAccount" ToRole="Supplier" />
-        </EntityType>
-        <EntityType Name="SupplierContract">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="SupplierID" />
-          <Property Type="Int32" Name="ProductID" />
-          <Property Type="Int32" Name="ProductSpecificationID" />
-          <Property Type="String" Name="ContractCode" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Decimal" Name="UnitPrice" Precision="18" Scale="8" />
-          <Property Type="Boolean" Name="IsNeedTaskAssignment" />
-          <Property Type="DateTime" Name="ExpirationDate" Precision="3" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="Product" Relationship="DbModel.FK_SupplierContract_Product" FromRole="SupplierContract" ToRole="Product" />
-          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_SupplierContract_ProductSpecification" FromRole="SupplierContract" ToRole="ProductSpecification" />
-          <NavigationProperty Name="Supplier" Relationship="DbModel.FK_SupplierContract_Supplier" FromRole="SupplierContract" ToRole="Supplier" />
-          <NavigationProperty Name="SupplierContractFile" Relationship="DbModel.FK_SupplierContractFile_SupplierContract" FromRole="SupplierContract" ToRole="SupplierContractFile" />
-          <NavigationProperty Name="SupplierTaskAssignment" Relationship="DbModel.FK_SupplierTaskAssignment_SupplierContract" FromRole="SupplierContract" ToRole="SupplierTaskAssignment" />
-        </EntityType>
-        <EntityType Name="SupplierContractFile">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="ContractID" />
-          <Property Type="String" Name="FileName" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="FilePath" MaxLength="512" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="Comment" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="SupplierContract" Relationship="DbModel.FK_SupplierContractFile_SupplierContract" FromRole="SupplierContractFile" ToRole="SupplierContract" />
         </EntityType>
         <EntityType Name="SupplierTaskAssignment">
           <Key>
@@ -2862,18 +2823,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SupplierContract_Product">
-          <End Type="DbModel.Product" Role="Product" Multiplicity="0..1" />
-          <End Type="DbModel.SupplierContract" Role="SupplierContract" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="SupplierContract">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ProductSpecification_UnitOfMeasurement">
           <End Type="DbModel.UnitOfMeasurement" Role="UnitOfMeasurement" Multiplicity="0..1" />
           <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="*" />
@@ -2883,18 +2832,6 @@
             </Principal>
             <Dependent Role="ProductSpecification">
               <PropertyRef Name="UnitOfMeasurementID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SupplierContract_ProductSpecification">
-          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="0..1" />
-          <End Type="DbModel.SupplierContract" Role="SupplierContract" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProductSpecification">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="SupplierContract">
-              <PropertyRef Name="ProductSpecificationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2910,18 +2847,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_SupplierContract_Supplier">
-          <End Type="DbModel.Supplier" Role="Supplier" Multiplicity="0..1" />
-          <End Type="DbModel.SupplierContract" Role="SupplierContract" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Supplier">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="SupplierContract">
-              <PropertyRef Name="SupplierID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_SupplierTaskAssignment_Supplier">
           <End Type="DbModel.Supplier" Role="Supplier" Multiplicity="0..1" />
           <End Type="DbModel.SupplierTaskAssignment" Role="SupplierTaskAssignment" Multiplicity="*" />
@@ -2931,30 +2856,6 @@
             </Principal>
             <Dependent Role="SupplierTaskAssignment">
               <PropertyRef Name="SupplierID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SupplierContractFile_SupplierContract">
-          <End Type="DbModel.SupplierContract" Role="SupplierContract" Multiplicity="0..1" />
-          <End Type="DbModel.SupplierContractFile" Role="SupplierContractFile" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SupplierContract">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="SupplierContractFile">
-              <PropertyRef Name="ContractID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SupplierTaskAssignment_SupplierContract">
-          <End Type="DbModel.SupplierContract" Role="SupplierContract" Multiplicity="0..1" />
-          <End Type="DbModel.SupplierTaskAssignment" Role="SupplierTaskAssignment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SupplierContract">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="SupplierTaskAssignment">
-              <PropertyRef Name="ContractID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3861,6 +3762,105 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SupplierContract">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="SupplierID" />
+          <Property Type="Int32" Name="ProductID" />
+          <Property Type="Int32" Name="ProductSpecificationID" />
+          <Property Type="String" Name="ContractCode" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="UnitPrice" Precision="18" Scale="8" />
+          <Property Type="Boolean" Name="IsNeedTaskAssignment" />
+          <Property Type="DateTime" Name="ExpirationDate" Precision="3" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_SupplierContract_Product" FromRole="SupplierContract" ToRole="Product" />
+          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_SupplierContract_ProductSpecification" FromRole="SupplierContract" ToRole="ProductSpecification" />
+          <NavigationProperty Name="Supplier" Relationship="DbModel.FK_SupplierContract_Supplier" FromRole="SupplierContract" ToRole="Supplier" />
+          <NavigationProperty Name="SupplierContractFile" Relationship="DbModel.FK_SupplierContractFile_SupplierContract" FromRole="SupplierContract" ToRole="SupplierContractFile" />
+          <NavigationProperty Name="SupplierTaskAssignment" Relationship="DbModel.FK_SupplierTaskAssignment_SupplierContract" FromRole="SupplierContract" ToRole="SupplierTaskAssignment" />
+        </EntityType>
+        <EntityType Name="SupplierContractFile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ContractID" />
+          <Property Type="String" Name="FileName" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FilePath" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Comment" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="SupplierContract" Relationship="DbModel.FK_SupplierContractFile_SupplierContract" FromRole="SupplierContractFile" ToRole="SupplierContract" />
+        </EntityType>
+        <Association Name="FK_SupplierContract_Product">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="DbModel.SupplierContract" Role="SupplierContract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierContract">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierContract_ProductSpecification">
+          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="0..1" />
+          <End Type="DbModel.SupplierContract" Role="SupplierContract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierContract">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierContract_Supplier">
+          <End Type="DbModel.Supplier" Role="Supplier" Multiplicity="0..1" />
+          <End Type="DbModel.SupplierContract" Role="SupplierContract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierContract">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierContractFile_SupplierContract">
+          <End Type="DbModel.SupplierContract" Role="SupplierContract" Multiplicity="0..1" />
+          <End Type="DbModel.SupplierContractFile" Role="SupplierContractFile" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplierContract">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierContractFile">
+              <PropertyRef Name="ContractID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierTaskAssignment_SupplierContract">
+          <End Type="DbModel.SupplierContract" Role="SupplierContract" Multiplicity="0..1" />
+          <End Type="DbModel.SupplierTaskAssignment" Role="SupplierTaskAssignment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplierContract">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierTaskAssignment">
+              <PropertyRef Name="ContractID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4162,41 +4162,6 @@
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="BankAccountID" ColumnName="BankAccountID" />
                 <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SupplierContract">
-            <EntityTypeMapping TypeName="DbModel.SupplierContract">
-              <MappingFragment StoreEntitySet="SupplierContract">
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-                <ScalarProperty Name="IsNeedTaskAssignment" ColumnName="IsNeedTaskAssignment" />
-                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
-                <ScalarProperty Name="ContractCode" ColumnName="ContractCode" />
-                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="SupplierContractFile">
-            <EntityTypeMapping TypeName="DbModel.SupplierContractFile">
-              <MappingFragment StoreEntitySet="SupplierContractFile">
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="ContractID" ColumnName="ContractID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -4631,6 +4596,41 @@
                 <ScalarProperty Name="IsFixedOfInside" ColumnName="IsFixedOfInside" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplierContract">
+            <EntityTypeMapping TypeName="DbModel.SupplierContract">
+              <MappingFragment StoreEntitySet="SupplierContract">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="IsNeedTaskAssignment" ColumnName="IsNeedTaskAssignment" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="ContractCode" ColumnName="ContractCode" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplierContractFile">
+            <EntityTypeMapping TypeName="DbModel.SupplierContractFile">
+              <MappingFragment StoreEntitySet="SupplierContractFile">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="ContractID" ColumnName="ContractID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

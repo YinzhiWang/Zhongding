@@ -165,8 +165,6 @@ namespace ZhongDing.Web.Views.Basics.Editors
 
             if (!string.IsNullOrEmpty(inputAccountNo))
             {
-                inputAccountNo = inputAccountNo.Replace("-", "");
-
                 if (!Utility.IsValidAccountNumber(inputAccountNo))
                     args.IsValid = false;
             }

@@ -376,7 +376,7 @@ namespace ZhongDing.Web.Views.Basics
                     contractRepository.SetDbModel(db);
                     contractFileRepository.SetDbModel(db);
 
-                    var supplierContract = PageSupplierContractRepository.GetByID(id);
+                    var supplierContract = contractRepository.GetByID(id);
 
                     if (supplierContract != null)
                     {

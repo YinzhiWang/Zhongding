@@ -96,7 +96,7 @@
                             </table>
                             <telerik:RadGrid ID="rgProductBasicPrices" runat="server" PageSize="10"
                                 AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
-                                MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
+                                MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" Height="480" ShowHeader="true"
                                 ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
                                 OnNeedDataSource="rgProductBasicPrices_NeedDataSource" OnBatchEditCommand="rgProductBasicPrices_BatchEditCommand">
                                 <ValidationSettings EnableValidation="true" />
@@ -110,19 +110,25 @@
                                         <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
                                         </telerik:GridBoundColumn>
                                         <telerik:GridBoundColumn UniqueName="ProductCode" HeaderText="货品编号" DataField="ProductCode" ReadOnly="true">
-                                            <ItemStyle HorizontalAlign="Left" Width="120" />
-                                        </telerik:GridBoundColumn>
-                                        <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品名称" DataField="ProductName" ReadOnly="true">
-                                            <ItemStyle HorizontalAlign="Left" Width="280" />
-                                        </telerik:GridBoundColumn>
-                                        <telerik:GridBoundColumn UniqueName="Specification" HeaderText="规格" DataField="Specification" ReadOnly="true">
+                                            <HeaderStyle Width="100" />
                                             <ItemStyle HorizontalAlign="Left" Width="100" />
                                         </telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品名称" DataField="ProductName" ReadOnly="true">
+                                            <HeaderStyle Width="260" />
+                                            <ItemStyle HorizontalAlign="Left" Width="260" />
+                                        </telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn UniqueName="Specification" HeaderText="规格" DataField="Specification" ReadOnly="true">
+                                            <HeaderStyle Width="120" />
+                                            <ItemStyle HorizontalAlign="Left" Width="120" />
+                                        </telerik:GridBoundColumn>
                                         <telerik:GridBoundColumn UniqueName="FactoryName" HeaderText="生产企业" DataField="FactoryName" ReadOnly="true">
-                                            <ItemStyle HorizontalAlign="Left" />
+                                            <HeaderStyle Width="160" />
+                                            <ItemStyle HorizontalAlign="Left" Width="160" />
                                         </telerik:GridBoundColumn>
                                         <telerik:GridTemplateColumn UniqueName="ProcurePrice" HeaderText="采购单价" DataField="ProcurePrice"
-                                            SortExpression="ProcurePrice" HeaderStyle-Width="100">
+                                            SortExpression="ProcurePrice">
+                                            <HeaderStyle Width="100" />
+                                            <ItemStyle HorizontalAlign="Left" Width="100" />
                                             <ItemTemplate>
                                                 <asp:Label runat="server" ID="lblProcurePrice" Text='<%# Eval("ProcurePrice", "{0:C2}") %>'></asp:Label>
                                             </ItemTemplate>
@@ -139,7 +145,9 @@
                                             </EditItemTemplate>
                                         </telerik:GridTemplateColumn>
                                         <telerik:GridTemplateColumn UniqueName="SalePrice" HeaderText="销售单价" DataField="SalePrice"
-                                            SortExpression="SalePrice" HeaderStyle-Width="100">
+                                            SortExpression="SalePrice">
+                                            <HeaderStyle Width="100" />
+                                            <ItemStyle HorizontalAlign="Left" Width="100" />
                                             <ItemTemplate>
                                                 <asp:Label runat="server" ID="lblSalePrice" Text='<%# Eval("SalePrice", "{0:C2}") %>'></asp:Label>
                                             </ItemTemplate>
@@ -156,13 +164,14 @@
                                             </EditItemTemplate>
                                         </telerik:GridTemplateColumn>
                                         <telerik:GridTemplateColumn UniqueName="Comment" HeaderText="备注" DataField="Comment" SortExpression="Comment">
+                                            <HeaderStyle Width="200" />
                                             <ItemStyle HorizontalAlign="Left" Width="200" />
                                             <ItemTemplate>
                                                 <asp:Label runat="server" ID="lblComment" Text='<%# Eval("Comment")!=null ? Eval("Comment").ToString().CutString(12) :string.Empty %>'
                                                     ToolTip='<%# Eval("Comment")%>'></asp:Label>
                                             </ItemTemplate>
                                             <EditItemTemplate>
-                                                <telerik:RadTextBox runat="server" ID="txtComment" MaxLength="200" Width="140"></telerik:RadTextBox>
+                                                <telerik:RadTextBox runat="server" ID="txtComment" MaxLength="200" Width="100%"></telerik:RadTextBox>
                                             </EditItemTemplate>
                                         </telerik:GridTemplateColumn>
                                         <%--<telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />--%>
@@ -176,6 +185,10 @@
                                         PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
                                         FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
                                 </MasterTableView>
+                                <ClientSettings>
+                                    <Scrolling AllowScroll="true" FrozenColumnsCount="3" SaveScrollPosition="true" UseStaticHeaders="true" />
+                                </ClientSettings>
+                                <HeaderStyle Width="99.8%" />
                             </telerik:RadGrid>
                         </telerik:RadPageView>
                         <telerik:RadPageView ID="pvHighPrice" runat="server">
@@ -195,7 +208,7 @@
                             </table>
                             <telerik:RadGrid ID="rgProductHighPrices" runat="server" PageSize="10"
                                 AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
-                                MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
+                                MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" Height="480" ShowHeader="true"
                                 ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
                                 OnNeedDataSource="rgProductHighPrices_NeedDataSource" OnBatchEditCommand="rgProductHighPrices_BatchEditCommand">
                                 <MasterTableView Width="100%" DataKeyNames="ID,ProductID,ProductSpecificationID" CommandItemDisplay="Top" EditMode="Batch"
@@ -208,19 +221,25 @@
                                         <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
                                         </telerik:GridBoundColumn>
                                         <telerik:GridBoundColumn UniqueName="ProductCode" HeaderText="货品编号" DataField="ProductCode" ReadOnly="true">
-                                            <ItemStyle HorizontalAlign="Left" />
+                                            <HeaderStyle Width="100" />
+                                            <ItemStyle HorizontalAlign="Left" Width="100" />
                                         </telerik:GridBoundColumn>
                                         <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品名称" DataField="ProductName" ReadOnly="true">
-                                            <ItemStyle HorizontalAlign="Left" />
+                                            <HeaderStyle Width="260" />
+                                            <ItemStyle HorizontalAlign="Left" Width="260" />
                                         </telerik:GridBoundColumn>
                                         <telerik:GridBoundColumn UniqueName="Specification" HeaderText="规格" DataField="Specification" ReadOnly="true">
-                                            <ItemStyle HorizontalAlign="Left" />
+                                            <HeaderStyle Width="120" />
+                                            <ItemStyle HorizontalAlign="Left" Width="120" />
                                         </telerik:GridBoundColumn>
                                         <telerik:GridBoundColumn UniqueName="FactoryName" HeaderText="生产企业" DataField="FactoryName" ReadOnly="true">
-                                            <ItemStyle HorizontalAlign="Left" />
+                                            <HeaderStyle Width="120" />
+                                            <ItemStyle HorizontalAlign="Left" Width="120" />
                                         </telerik:GridBoundColumn>
                                         <telerik:GridTemplateColumn UniqueName="HighPrice" HeaderText="高开单价" DataField="HighPrice"
-                                            SortExpression="HighPrice" HeaderStyle-Width="100">
+                                            SortExpression="HighPrice">
+                                            <HeaderStyle Width="100" />
+                                            <ItemStyle HorizontalAlign="Left" Width="100" />
                                             <ItemTemplate>
                                                 <asp:Label runat="server" ID="lblHighPrice" Text='<%# Eval("HighPrice", "{0:C2}") %>'></asp:Label>
                                             </ItemTemplate>
@@ -232,7 +251,9 @@
                                             </EditItemTemplate>
                                         </telerik:GridTemplateColumn>
                                         <telerik:GridTemplateColumn UniqueName="ActualProcurePrice" HeaderText="实际采购单价" DataField="ActualProcurePrice"
-                                            SortExpression="ActualProcurePrice" HeaderStyle-Width="100">
+                                            SortExpression="ActualProcurePrice">
+                                            <HeaderStyle Width="100" />
+                                            <ItemStyle HorizontalAlign="Left" Width="100" />
                                             <ItemTemplate>
                                                 <asp:Label runat="server" ID="lblActualProcurePrice" Text='<%# Eval("ActualProcurePrice", "{0:C2}") %>'></asp:Label>
                                             </ItemTemplate>
@@ -244,7 +265,9 @@
                                             </EditItemTemplate>
                                         </telerik:GridTemplateColumn>
                                         <telerik:GridTemplateColumn UniqueName="ActualSalePrice" HeaderText="实际销售单价" DataField="ActualSalePrice"
-                                            SortExpression="ActualSalePrice" HeaderStyle-Width="100">
+                                            SortExpression="ActualSalePrice">
+                                            <HeaderStyle Width="100" />
+                                            <ItemStyle HorizontalAlign="Left" Width="100" />
                                             <ItemTemplate>
                                                 <asp:Label runat="server" ID="lblActualSalePrice" Text='<%# Eval("ActualSalePrice", "{0:C2}") %>'></asp:Label>
                                             </ItemTemplate>
@@ -256,7 +279,9 @@
                                             </EditItemTemplate>
                                         </telerik:GridTemplateColumn>
                                         <telerik:GridTemplateColumn UniqueName="SupplierTaxRatio" HeaderText="厂家税率" DataField="SupplierTaxRatio"
-                                            SortExpression="SupplierTaxRatio" HeaderStyle-Width="100">
+                                            SortExpression="SupplierTaxRatio">
+                                            <HeaderStyle Width="100" />
+                                            <ItemStyle HorizontalAlign="Left" Width="100" />
                                             <ItemTemplate>
                                                 <asp:Label runat="server" ID="lblSupplierTaxRatio" Text='<%# Eval("SupplierTaxRatio", "{0:P2}") %>'></asp:Label>
                                             </ItemTemplate>
@@ -267,7 +292,10 @@
                                                 </span>
                                             </EditItemTemplate>
                                         </telerik:GridTemplateColumn>
-                                        <telerik:GridTemplateColumn UniqueName="ClientTaxRatio" HeaderText="客户税率" DataField="ClientTaxRatio" SortExpression="ClientTaxRatio">
+                                        <telerik:GridTemplateColumn UniqueName="ClientTaxRatio" HeaderText="客户税率" DataField="ClientTaxRatio"
+                                            SortExpression="ClientTaxRatio">
+                                            <HeaderStyle Width="100" />
+                                            <ItemStyle HorizontalAlign="Left" Width="100" />
                                             <ItemTemplate>
                                                 <asp:Label runat="server" ID="lblClientTaxRatio" Text='<%# Eval("ClientTaxRatio", "{0:P2}") %>'></asp:Label>
                                             </ItemTemplate>
@@ -279,6 +307,7 @@
                                             </EditItemTemplate>
                                         </telerik:GridTemplateColumn>
                                         <telerik:GridTemplateColumn UniqueName="Comment" HeaderText="备注" DataField="Comment" SortExpression="Comment">
+                                            <HeaderStyle Width="200" />
                                             <ItemStyle HorizontalAlign="Left" Width="200" />
                                             <ItemTemplate>
                                                 <asp:Label runat="server" ID="lblComment" Text='<%# Eval("Comment")!=null ? Eval("Comment").ToString().CutString(12) :string.Empty %>'
@@ -298,6 +327,10 @@
                                         PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
                                         FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
                                 </MasterTableView>
+                                <ClientSettings>
+                                    <Scrolling AllowScroll="true" FrozenColumnsCount="3" SaveScrollPosition="true" UseStaticHeaders="true" />
+                                </ClientSettings>
+                                <HeaderStyle Width="99.8%" />
                             </telerik:RadGrid>
                         </telerik:RadPageView>
                         <telerik:RadPageView ID="pvDBPolicyPrice" runat="server">
@@ -317,7 +350,7 @@
                             </table>
                             <telerik:RadGrid ID="rgDBPolicyPrices" runat="server" PageSize="10"
                                 AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
-                                MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
+                                MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" Height="480" ShowHeader="true"
                                 ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
                                 OnNeedDataSource="rgDBPolicyPrices_NeedDataSource" OnBatchEditCommand="rgDBPolicyPrices_BatchEditCommand">
                                 <MasterTableView Width="100%" DataKeyNames="ID,ProductID,ProductSpecificationID" CommandItemDisplay="Top" EditMode="Batch"
@@ -330,22 +363,29 @@
                                         <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
                                         </telerik:GridBoundColumn>
                                         <telerik:GridBoundColumn UniqueName="ProductCode" HeaderText="货品编号" DataField="ProductCode" ReadOnly="true">
-                                            <ItemStyle HorizontalAlign="Left" />
+                                            <HeaderStyle Width="100" />
+                                            <ItemStyle HorizontalAlign="Left" Width="100" />
                                         </telerik:GridBoundColumn>
                                         <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品名称" DataField="ProductName" ReadOnly="true">
-                                            <ItemStyle HorizontalAlign="Left" />
+                                            <HeaderStyle Width="260" />
+                                            <ItemStyle HorizontalAlign="Left" Width="260" />
                                         </telerik:GridBoundColumn>
                                         <telerik:GridBoundColumn UniqueName="Specification" HeaderText="规格" DataField="Specification" ReadOnly="true">
-                                            <ItemStyle HorizontalAlign="Left" />
+                                            <HeaderStyle Width="120" />
+                                            <ItemStyle HorizontalAlign="Left" Width="120" />
                                         </telerik:GridBoundColumn>
                                         <telerik:GridBoundColumn UniqueName="FactoryName" HeaderText="生产企业" DataField="FactoryName" ReadOnly="true">
-                                            <ItemStyle HorizontalAlign="Left" />
+                                            <HeaderStyle Width="160" />
+                                            <ItemStyle HorizontalAlign="Left" Width="160" />
                                         </telerik:GridBoundColumn>
                                         <telerik:GridBoundColumn UniqueName="PackageDescription" HeaderText="包装" DataField="PackageDescription" ReadOnly="true">
-                                            <ItemStyle HorizontalAlign="Left" />
+                                            <HeaderStyle Width="120" />
+                                            <ItemStyle HorizontalAlign="Left" Width="120" />
                                         </telerik:GridBoundColumn>
                                         <telerik:GridTemplateColumn UniqueName="BidPrice" HeaderText="中标价" DataField="BidPrice"
-                                            SortExpression="BidPrice" HeaderStyle-Width="100">
+                                            SortExpression="BidPrice">
+                                            <HeaderStyle Width="100" />
+                                            <ItemStyle HorizontalAlign="Left" Width="100" />
                                             <ItemTemplate>
                                                 <asp:Label runat="server" ID="lblBidPrice" Text='<%# Eval("BidPrice", "{0:C2}") %>'></asp:Label>
                                             </ItemTemplate>
@@ -357,6 +397,8 @@
                                             </EditItemTemplate>
                                         </telerik:GridTemplateColumn>
                                         <telerik:GridTemplateColumn UniqueName="FeeRatio" HeaderText="商业扣率" DataField="FeeRatio" SortExpression="FeeRatio">
+                                            <HeaderStyle Width="100" />
+                                            <ItemStyle HorizontalAlign="Left" Width="100" />
                                             <ItemTemplate>
                                                 <asp:Label runat="server" ID="lblFeeRatio" Text='<%# Eval("FeeRatio", "{0:P2}") %>'></asp:Label>
                                             </ItemTemplate>
@@ -368,7 +410,9 @@
                                             </EditItemTemplate>
                                         </telerik:GridTemplateColumn>
                                         <telerik:GridTemplateColumn UniqueName="PreferredPrice" HeaderText="招商价" DataField="PreferredPrice"
-                                            SortExpression="PreferredPrice" HeaderStyle-Width="100">
+                                            SortExpression="PreferredPrice">
+                                            <HeaderStyle Width="100" />
+                                            <ItemStyle HorizontalAlign="Left" Width="100" />
                                             <ItemTemplate>
                                                 <asp:Label runat="server" ID="lblPreferredPrice" Text='<%# Eval("PreferredPrice", "{0:C2}") %>'></asp:Label>
                                             </ItemTemplate>
@@ -380,7 +424,9 @@
                                             </EditItemTemplate>
                                         </telerik:GridTemplateColumn>
                                         <telerik:GridTemplateColumn UniqueName="PolicyPrice" HeaderText="大包政策价" DataField="PolicyPrice"
-                                            SortExpression="PolicyPrice" HeaderStyle-Width="100">
+                                            SortExpression="PolicyPrice">
+                                            <HeaderStyle Width="100" />
+                                            <ItemStyle HorizontalAlign="Left" Width="100" />
                                             <ItemTemplate>
                                                 <asp:Label runat="server" ID="lblPolicyPrice" Text='<%# Eval("PolicyPrice", "{0:C2}") %>'></asp:Label>
                                             </ItemTemplate>
@@ -392,6 +438,7 @@
                                             </EditItemTemplate>
                                         </telerik:GridTemplateColumn>
                                         <telerik:GridTemplateColumn UniqueName="Comment" HeaderText="备注" DataField="Comment" SortExpression="Comment">
+                                            <HeaderStyle Width="200" />
                                             <ItemStyle HorizontalAlign="Left" Width="200" />
                                             <ItemTemplate>
                                                 <asp:Label runat="server" ID="lblComment" Text='<%# Eval("Comment")!=null ? Eval("Comment").ToString().CutString(12) :string.Empty %>'
@@ -411,6 +458,10 @@
                                         PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
                                         FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
                                 </MasterTableView>
+                                <ClientSettings>
+                                    <Scrolling AllowScroll="true" FrozenColumnsCount="3" SaveScrollPosition="true" UseStaticHeaders="true" />
+                                </ClientSettings>
+                                <HeaderStyle Width="99.8%" />
                             </telerik:RadGrid>
                         </telerik:RadPageView>
                     </telerik:RadMultiPage>
