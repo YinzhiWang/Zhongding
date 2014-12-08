@@ -19,9 +19,19 @@ namespace ZhongDing.Domain.UISearchObjects
         public int DepartmentTypeID { get; set; }
 
         /// <summary>
+        /// 货品ID
+        /// </summary>
+        public int ProductID { get; set; }
+
+        /// <summary>
         /// 货品类别ID
         /// </summary>
         public int ProductCategoryID { get; set; }
+
+        /// <summary>
+        /// 货品类型ID列表
+        /// </summary>
+        public IList<int> ProductCategoryIDs { get; set; }
 
     }
 }

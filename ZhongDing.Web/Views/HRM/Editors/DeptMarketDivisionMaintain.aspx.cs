@@ -110,17 +110,27 @@ namespace ZhongDing.Web.Views.HRM.Editors
             {
                 hdnGridClientID.Value = GridClientID;
 
-                BindDepartmentUsers();
-
                 LoadCurrentEntity();
             }
         }
 
-        private void BindDepartmentUsers()
+        /// <summary>
+        /// 绑定部门用户
+        /// </summary>
+        /// <param name="currentUserID">当前用户ID.</param>
+        private void BindDepartmentUsers(int currentUserID)
         {
+            //排除已经分配过的用户
+            var excludeUserIDs = PageDeptMarketDivisionRepository.GetList(x => x.UserID != currentUserID)
+                .Select(x => x.UserID).ToList();
+
             var deptUsers = PageUsersRepository.GetDropdownItems(new UISearchDropdownItem()
             {
-                ExtensionEntityID = this.OwnerEntityID.HasValue ? this.OwnerEntityID.Value : GlobalConst.INVALID_INT
+                ExcludeItemValues = excludeUserIDs,
+                Extension = new UISearchExtension()
+                {
+                    DepartmentID = this.OwnerEntityID.HasValue ? this.OwnerEntityID.Value : GlobalConst.INVALID_INT
+                }
             });
 
             rcbxDepartmentUsers.DataSource = deptUsers;
@@ -138,11 +148,6 @@ namespace ZhongDing.Web.Views.HRM.Editors
 
                 if (department != null)
                 {
-                    if (department.DepartmentTypeID == (int)EDepartmentType.BaseMedicine)
-                        divConfigProducts.Visible = false;
-                    else
-                        divConfigProducts.Visible = true;
-
                     var selectedMarketIDs = new List<int>();
                     var selectedProductIDs = new List<int>();
 
@@ -150,14 +155,16 @@ namespace ZhongDing.Web.Views.HRM.Editors
 
                     if (deptMarketDivision != null)
                     {
+                        BindDepartmentUsers(deptMarketDivision.UserID);
+
                         rcbxDepartmentUsers.SelectedValue = deptMarketDivision.UserID.ToString();
 
                         if (!string.IsNullOrEmpty(deptMarketDivision.MarketID))
                             selectedMarketIDs = deptMarketDivision.MarketID.Split(',').Select(x => Convert.ToInt32(x)).ToList();
 
                         var uiSearchSelectedMarketsObj = new UISearchDropdownItem();
-                        uiSearchSelectedMarketsObj.ItemValues = selectedMarketIDs;
-                        uiSearchSelectedMarketsObj.ExtensionEntityID = department.DepartmentTypeID;
+                        uiSearchSelectedMarketsObj.IncludeItemValues = selectedMarketIDs;
+                        uiSearchSelectedMarketsObj.Extension = new UISearchExtension { DepartmentTypeID = department.DepartmentTypeID };
 
                         var selectedMarkets = PageDeptMarketRepository.GetDropdownItems(uiSearchSelectedMarketsObj);
 
@@ -169,20 +176,30 @@ namespace ZhongDing.Web.Views.HRM.Editors
                         selectedProductIDs = deptMarketDivision.DeptMarketProduct
                             .Where(x => x.IsDeleted == false).Select(x => x.ProductID).ToList();
 
-                        var uiSearchSelectedProductsObj = new UISearchDropdownItem();
-                        uiSearchSelectedProductsObj.ItemValues = selectedProductIDs;
-                        uiSearchSelectedProductsObj.ExtensionEntityID = department.DepartmentTypeID;
+                        if (selectedProductIDs.Count > 0)
+                        {
+                            var uiSearchSelectedProductsObj = new UISearchDropdownItem();
+                            uiSearchSelectedProductsObj.IncludeItemValues = selectedProductIDs;
+                            uiSearchSelectedProductsObj.Extension = new UISearchExtension
+                            {
+                                DepartmentID = department.ID
+                            };
 
-                        var selectedProducts = PageProductRepository.GetDropdownItems(uiSearchSelectedProductsObj);
+                            var selectedProducts = PageProductRepository.GetDropdownItems(uiSearchSelectedProductsObj);
 
-                        lbxSelectedProducts.DataSource = selectedProducts;
-                        lbxSelectedProducts.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
-                        lbxSelectedProducts.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
-                        lbxSelectedProducts.DataBind();
+                            lbxSelectedProducts.DataSource = selectedProducts;
+                            lbxSelectedProducts.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+                            lbxSelectedProducts.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+                            lbxSelectedProducts.DataBind();
+                        }
+                    }
+                    else
+                    {
+                        BindDepartmentUsers(GlobalConst.INVALID_INT);
                     }
 
                     UISearchDropdownItem uiSearchAllMarketObj = new UISearchDropdownItem();
-                    uiSearchAllMarketObj.ExtensionEntityID = department.DepartmentTypeID;
+                    uiSearchAllMarketObj.Extension = new UISearchExtension { DepartmentTypeID = department.DepartmentTypeID };
 
                     var allDeptMarkets = PageDeptMarketRepository.GetDropdownItems(uiSearchAllMarketObj)
                         .Where(x => !selectedMarketIDs.Contains(x.ItemValue));
@@ -192,20 +209,20 @@ namespace ZhongDing.Web.Views.HRM.Editors
                     lbxAllDeptMarkets.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
                     lbxAllDeptMarkets.DataBind();
 
-                    //部门类型是招商
-                    if (divConfigProducts.Visible)
+                    var uiSearchAllProductsObj = new UISearchDropdownItem();
+                    uiSearchAllProductsObj.Extension = new UISearchExtension
                     {
-                        var uiSearchAllProductsObj = new UISearchDropdownItem();
-                        uiSearchAllProductsObj.ExtensionEntityID = department.DepartmentTypeID;
+                        DepartmentID = department.ID
+                    };
 
-                        var allProducts = PageProductRepository.GetDropdownItems(uiSearchAllProductsObj)
-                            .Where(x => !selectedProductIDs.Contains(x.ItemValue)).ToList();
+                    var allProducts = PageProductRepository.GetDropdownItems(uiSearchAllProductsObj)
+                        .Where(x => !selectedProductIDs.Contains(x.ItemValue)).ToList();
 
-                        lbxAllProducts.DataSource = allProducts;
-                        lbxAllProducts.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
-                        lbxAllProducts.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
-                        lbxAllProducts.DataBind();
-                    }
+                    lbxAllProducts.DataSource = allProducts;
+                    lbxAllProducts.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+                    lbxAllProducts.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+                    lbxAllProducts.DataBind();
+
                 }
             }
 
@@ -231,33 +248,32 @@ namespace ZhongDing.Web.Views.HRM.Editors
 
             if (lbxSelectedDeptMarkets.Items.Count > 0)
                 deptMarketDivision.MarketID = string.Join(",", lbxSelectedDeptMarkets.Items.Select(x => x.Value));
+            else
+                deptMarketDivision.MarketID = string.Empty;
 
-            if (divConfigProducts.Visible)
+            var oldDeptMarketProducts = deptMarketDivision.DeptMarketProduct.Where(x => x.IsDeleted == false);
+
+            if (lbxSelectedProducts.Items.Count > 0)
             {
-                if (lbxSelectedProducts.Items.Count > 0)
+                foreach (RadListBoxItem item in lbxSelectedProducts.Items)
                 {
-                    var oldDeptMarketProducts = deptMarketDivision.DeptMarketProduct.Where(x => x.IsDeleted == false);
+                    var currentDeptMarketProduct = oldDeptMarketProducts.FirstOrDefault(x => x.ProductID.ToString() == item.Value);
 
-                    foreach (RadListBoxItem item in lbxSelectedProducts.Items)
+                    if (currentDeptMarketProduct == null)
                     {
-                        var currentDeptMarketProduct = oldDeptMarketProducts.FirstOrDefault(x => x.ProductID.ToString() == item.Value);
+                        currentDeptMarketProduct = new DeptMarketProduct();
+                        currentDeptMarketProduct.ProductID = int.Parse(item.Value);
 
-                        if (currentDeptMarketProduct == null)
-                        {
-                            currentDeptMarketProduct = new DeptMarketProduct();
-                            currentDeptMarketProduct.ProductID = int.Parse(item.Value);
-
-                            deptMarketDivision.DeptMarketProduct.Add(currentDeptMarketProduct);
-                        }
-                    }
-
-                    //删除之前的未被选择的货品
-                    foreach (var item in oldDeptMarketProducts)
-                    {
-                        if (!lbxSelectedProducts.Items.Any(x => x.Value == item.ProductID.ToString()))
-                            item.IsDeleted = true;
+                        deptMarketDivision.DeptMarketProduct.Add(currentDeptMarketProduct);
                     }
                 }
+            }
+
+            //删除之前的未被选择的货品
+            foreach (var item in oldDeptMarketProducts)
+            {
+                if (!lbxSelectedProducts.Items.Any(x => x.Value == item.ProductID.ToString()))
+                    item.IsDeleted = true;
             }
 
             PageDeptMarketDivisionRepository.Save();
@@ -286,9 +302,13 @@ namespace ZhongDing.Web.Views.HRM.Editors
         {
             List<UIDropdownItem> allProducts = new List<UIDropdownItem>();
 
-            var uiSearchAllProductsObj = new UISearchDropdownItem();
-            
-            uiSearchAllProductsObj.ExtensionEntityID = (int)EDepartmentType.BusinessMedicine;
+            var uiSearchAllProductsObj = new UISearchDropdownItem()
+            {
+                Extension = new UISearchExtension
+                {
+                    DepartmentID = this.OwnerEntityID.HasValue ? this.OwnerEntityID.Value : GlobalConst.INVALID_INT
+                }
+            };
 
             if (!string.IsNullOrEmpty(hdnSearchTextForAllProducts.Value.Trim()))
                 uiSearchAllProductsObj.ItemText = hdnSearchTextForAllProducts.Value.Trim();
@@ -309,8 +329,10 @@ namespace ZhongDing.Web.Views.HRM.Editors
             List<UIDropdownItem> allProducts = new List<UIDropdownItem>();
 
             var uiSearchAllProductsObj = new UISearchDropdownItem();
-
-            uiSearchAllProductsObj.ExtensionEntityID = (int)EDepartmentType.BusinessMedicine;
+            uiSearchAllProductsObj.Extension = new UISearchExtension
+            {
+                DepartmentID = this.OwnerEntityID.HasValue ? this.OwnerEntityID.Value : GlobalConst.INVALID_INT
+            };
 
             if (!string.IsNullOrEmpty(hdnSearchTextForSelectedProducts.Value.Trim()))
                 uiSearchAllProductsObj.ItemText = hdnSearchTextForSelectedProducts.Value.Trim();

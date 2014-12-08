@@ -15,26 +15,22 @@ namespace ZhongDing.Domain.UISearchObjects
         /// <summary>
         /// 父级项值
         /// </summary>
-        /// <value>The parent item value.</value>
         public int? ParentItemValue { get; set; }
 
         /// <summary>
-        /// 需筛选的项值的列表
+        /// 需包含的项值列表
         /// </summary>
-        /// <value>The item values.</value>
-        public IList<int> ItemValues { get; set; }
+        public IList<int> IncludeItemValues { get; set; }
+
+        /// <summary>
+        /// 需排除的项值列表
+        /// </summary>
+        public IList<int> ExcludeItemValues { get; set; }
 
         /// <summary>
         /// 需筛选的项的文本
         /// </summary>
-        /// <value>The item text.</value>
         public string ItemText { get; set; }
-
-        /// <summary>
-        /// 其他扩展实体ID
-        /// </summary>
-        /// <value>例如:users表需要根据DepartmentID过滤user.</value>
-        public int ExtensionEntityID { get; set; }
 
         /// <summary>
         /// 扩展查询参数

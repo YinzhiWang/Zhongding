@@ -50,15 +50,22 @@ namespace ZhongDing.Business.Repositories
 
             if (uiSearchObj != null)
             {
-                if (uiSearchObj.ItemValues != null
-                    && uiSearchObj.ItemValues.Count > 0)
-                    whereFuncs.Add(x => uiSearchObj.ItemValues.Contains(x.UserID));
+                if (uiSearchObj.IncludeItemValues != null
+                    && uiSearchObj.IncludeItemValues.Count > 0)
+                    whereFuncs.Add(x => uiSearchObj.IncludeItemValues.Contains(x.UserID));
+
+                if (uiSearchObj.ExcludeItemValues != null
+                    && uiSearchObj.ExcludeItemValues.Count > 0)
+                    whereFuncs.Add(x => !uiSearchObj.ExcludeItemValues.Contains(x.UserID));
 
                 if (!string.IsNullOrEmpty(uiSearchObj.ItemText))
                     whereFuncs.Add(x => x.FullName.Contains(uiSearchObj.ItemText));
 
-                if (uiSearchObj.ExtensionEntityID > 0)
-                    whereFuncs.Add(x => x.DepartmentID == uiSearchObj.ExtensionEntityID);
+                if (uiSearchObj.Extension != null)
+                {
+                    if (uiSearchObj.Extension.DepartmentID > 0)
+                        whereFuncs.Add(x => x.DepartmentID == uiSearchObj.Extension.DepartmentID);
+                }
             }
 
             uiDropdownItems = GetList(whereFuncs).Select(x => new UIDropdownItem()

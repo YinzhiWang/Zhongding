@@ -112,9 +112,113 @@
                                             AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false"
                                             MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
                                             ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                                            OnNeedDataSource="rgDeptMarketDivisions_NeedDataSource" OnDeleteCommand="rgDeptMarketDivisions_DeleteCommand">
+                                            OnNeedDataSource="rgDeptMarketDivisions_NeedDataSource" OnDeleteCommand="rgDeptMarketDivisions_DeleteCommand"
+                                            OnDetailTableDataBind="rgDeptMarketDivisions_DetailTableDataBind" OnBatchEditCommand="rgDeptMarketDivisions_BatchEditCommand"
+                                            ClientSettings-ClientEvents-OnBatchEditCellValueChanged="onBatchEditCellValueChanged">
                                             <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
                                                 ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
+                                                <DetailTables>
+                                                    <telerik:GridTableView DataKeyNames="ID" EditMode="Batch" CommandItemDisplay="Top"
+                                                        ShowHeadersWhenNoRecords="true">
+                                                        <ParentTableRelation>
+                                                            <telerik:GridRelationFields MasterKeyField="ID" DetailKeyField="MarketDivisionID" />
+                                                        </ParentTableRelation>
+                                                        <CommandItemSettings ShowAddNewRecordButton="false" ShowSaveChangesButton="true" ShowRefreshButton="false"
+                                                            ShowCancelChangesButton="true" SaveChangesText="保存" CancelChangesText="取消" />
+                                                        <Columns>
+                                                            <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
+                                                            </telerik:GridBoundColumn>
+                                                            <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品名称" DataField="ProductName" ReadOnly="true">
+                                                                <ItemStyle HorizontalAlign="Left" />
+                                                            </telerik:GridBoundColumn>
+                                                            <telerik:GridTemplateColumn UniqueName="Q1Task" HeaderText="一季度任务" DataField="Q1Task"
+                                                                SortExpression="Q1Task" HeaderStyle-Width="100">
+                                                                <ItemTemplate>
+                                                                    <asp:Label runat="server" ID="lblQ1Task" Text='<%# Eval("Q1Task") %>'></asp:Label>
+                                                                </ItemTemplate>
+                                                                <EditItemTemplate>
+                                                                    <span>
+                                                                        <telerik:RadNumericTextBox Width="90px" runat="server" ID="txtQ1Task" Type="Number"
+                                                                            NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator="" MinValue="0"
+                                                                            MaxValue="999999999" MaxLength="9" ShowSpinButtons="true" IncrementSettings-Step="100">
+                                                                        </telerik:RadNumericTextBox>
+                                                                        <span style="color: Red">
+                                                                            <asp:RequiredFieldValidator ID="rfvQ1Task" ControlToValidate="txtQ1Task"
+                                                                                ErrorMessage="*Required" runat="server" Display="Dynamic">
+                                                                            </asp:RequiredFieldValidator>
+                                                                        </span>
+                                                                    </span>
+                                                                </EditItemTemplate>
+                                                            </telerik:GridTemplateColumn>
+                                                            <telerik:GridTemplateColumn UniqueName="Q2Task" HeaderText="二季度任务" DataField="Q2Task"
+                                                                SortExpression="Q2Task" HeaderStyle-Width="100">
+                                                                <ItemTemplate>
+                                                                    <asp:Label runat="server" ID="lblQ2Task" Text='<%# Eval("Q2Task") %>'></asp:Label>
+                                                                </ItemTemplate>
+                                                                <EditItemTemplate>
+                                                                    <span>
+                                                                        <telerik:RadNumericTextBox Width="90px" runat="server" ID="txtQ2Task" Type="Number"
+                                                                            NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator="" MinValue="0"
+                                                                            MaxValue="999999999" MaxLength="9" ShowSpinButtons="true" IncrementSettings-Step="100">
+                                                                        </telerik:RadNumericTextBox>
+                                                                        <span style="color: Red">
+                                                                            <asp:RequiredFieldValidator ID="rfvQ2Task" ControlToValidate="txtQ2Task"
+                                                                                ErrorMessage="*Required" runat="server" Display="Dynamic">
+                                                                            </asp:RequiredFieldValidator>
+                                                                        </span>
+                                                                    </span>
+                                                                </EditItemTemplate>
+                                                            </telerik:GridTemplateColumn>
+                                                            <telerik:GridTemplateColumn UniqueName="Q3Task" HeaderText="三季度任务" DataField="Q3Task"
+                                                                SortExpression="Q3Task" HeaderStyle-Width="100">
+                                                                <ItemTemplate>
+                                                                    <asp:Label runat="server" ID="lblQ3Task" Text='<%# Eval("Q3Task") %>'></asp:Label>
+                                                                </ItemTemplate>
+                                                                <EditItemTemplate>
+                                                                    <span>
+                                                                        <telerik:RadNumericTextBox Width="90px" runat="server" ID="txtQ3Task" Type="Number"
+                                                                            NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator="" MinValue="0"
+                                                                            MaxValue="999999999" MaxLength="9" ShowSpinButtons="true" IncrementSettings-Step="100">
+                                                                        </telerik:RadNumericTextBox>
+                                                                        <span style="color: Red">
+                                                                            <asp:RequiredFieldValidator ID="rfvQ3Task" ControlToValidate="txtQ3Task"
+                                                                                ErrorMessage="*Required" runat="server" Display="Dynamic">
+                                                                            </asp:RequiredFieldValidator>
+                                                                        </span>
+                                                                    </span>
+                                                                </EditItemTemplate>
+                                                            </telerik:GridTemplateColumn>
+                                                            <telerik:GridTemplateColumn UniqueName="Q4Task" HeaderText="四季度任务" DataField="Q4Task"
+                                                                SortExpression="Q4Task" HeaderStyle-Width="100">
+                                                                <ItemTemplate>
+                                                                    <asp:Label runat="server" ID="lblQ4Task" Text='<%# Eval("Q4Task") %>'></asp:Label>
+                                                                </ItemTemplate>
+                                                                <EditItemTemplate>
+                                                                    <span>
+                                                                        <telerik:RadNumericTextBox Width="90px" runat="server" ID="txtQ4Task" Type="Number"
+                                                                            NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator="" MinValue="0"
+                                                                            MaxValue="999999999" MaxLength="9" ShowSpinButtons="true" IncrementSettings-Step="100">
+                                                                        </telerik:RadNumericTextBox>
+                                                                        <span style="color: Red">
+                                                                            <asp:RequiredFieldValidator ID="rfvQ4Task" ControlToValidate="txtQ4Task"
+                                                                                ErrorMessage="*Required" runat="server" Display="Dynamic">
+                                                                            </asp:RequiredFieldValidator>
+                                                                        </span>
+                                                                    </span>
+                                                                </EditItemTemplate>
+                                                            </telerik:GridTemplateColumn>
+                                                            <telerik:GridTemplateColumn UniqueName="SubtotalTask" HeaderText="合计" DataField="SubtotalTask"
+                                                                SortExpression="SubtotalTask" HeaderStyle-Width="100" ReadOnly="true">
+                                                                <ItemTemplate>
+                                                                    <asp:Label runat="server" ID="lblSubtotalTask" Text='<%# Eval("SubtotalTask") %>'></asp:Label>
+                                                                </ItemTemplate>
+                                                            </telerik:GridTemplateColumn>
+                                                        </Columns>
+                                                        <NoRecordsTemplate>
+                                                            没有任何数据
+                                                        </NoRecordsTemplate>
+                                                    </telerik:GridTableView>
+                                                </DetailTables>
                                                 <Columns>
                                                     <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
                                                     </telerik:GridBoundColumn>
@@ -249,7 +353,10 @@
             </div>
         </div>
     </div>
+
     <asp:HiddenField ID="hdnCurrentEntityID" runat="server" Value="-1" />
+
+    <asp:HiddenField ID="hdnIsGridCellValueChanged" runat="server" Value="false" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContent" runat="server">
     <script type="text/javascript">
@@ -299,9 +406,29 @@
             $.openRadWindow(targetUrl, "winDeptProductEvaluation", true, 800, 400);
         }
 
-        $(document).ready(function () {
-            currentEntityID = $("#<%= hdnCurrentEntityID.ClientID %>").val();
-        });
+        function onBatchEditCellValueChanged(sender, args) {
+
+            if (args.get_editorValue() != args.get_cellValue()) {
+                $("#<%=hdnIsGridCellValueChanged.ClientID%>").val(true);
+        }
+    }
+
+    //window.onbeforeunload = function (e) {
+        //debugger;
+
+        //var isGridCellValueChanged = $("#<%=hdnIsGridCellValueChanged.ClientID%>").val();
+
+        //if (isGridCellValueChanged === "true") {
+            //e.preventDefault();
+
+            //window.event.returnValue = "确认离开吗？";
+        //}
+    //}
+
+
+    $(document).ready(function () {
+        currentEntityID = $("#<%= hdnCurrentEntityID.ClientID %>").val();
+    });
 
     </script>
 </asp:Content>

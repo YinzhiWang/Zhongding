@@ -156,7 +156,13 @@ namespace ZhongDing.Web.Views.Basics
             {
                 ddlInChargeUser.ClearSelection();
 
-                var inChargeUsers = PageUsersRepository.GetDropdownItems(new UISearchDropdownItem() { ExtensionEntityID = departmentID });
+                var inChargeUsers = PageUsersRepository.GetDropdownItems(new UISearchDropdownItem()
+                {
+                    Extension = new UISearchExtension()
+                    {
+                        DepartmentID = this.CurrentEntityID.HasValue ? this.CurrentEntityID.Value : GlobalConst.INVALID_INT
+                    }
+                });
 
                 ddlInChargeUser.DataSource = inChargeUsers;
                 ddlInChargeUser.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
@@ -181,7 +187,10 @@ namespace ZhongDing.Web.Views.Basics
             {
                 ddlProductSpecification.ClearSelection();
 
-                var productSpecifications = PageProductSpecificationRepository.GetDropdownItems(new UISearchDropdownItem() { ExtensionEntityID = productID });
+                var productSpecifications = PageProductSpecificationRepository.GetDropdownItems(new UISearchDropdownItem()
+                {
+                    Extension = new UISearchExtension { ProductID = productID }
+                });
 
                 ddlProductSpecification.DataSource = productSpecifications;
                 ddlProductSpecification.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;

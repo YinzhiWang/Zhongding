@@ -5,6 +5,8 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using ZhongDing.Business.IRepositories;
+using ZhongDing.Common;
+using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
@@ -131,23 +133,47 @@ namespace ZhongDing.Business.Repositories
 
             if (uiSearchObj != null)
             {
-                if (uiSearchObj.ItemValues != null
-                    && uiSearchObj.ItemValues.Count > 0)
-                    whereFuncs.Add(x => uiSearchObj.ItemValues.Contains(x.ID));
+                if (uiSearchObj.IncludeItemValues != null
+                    && uiSearchObj.IncludeItemValues.Count > 0)
+                    whereFuncs.Add(x => uiSearchObj.IncludeItemValues.Contains(x.ID));
 
                 if (!string.IsNullOrEmpty(uiSearchObj.ItemText))
                     whereFuncs.Add(x => x.ProductName.Contains(uiSearchObj.ItemText));
 
-                if (uiSearchObj.ExtensionEntityID > 0)
-                    whereFuncs.Add(x => x.CategoryID == uiSearchObj.ExtensionEntityID);
-
                 if (uiSearchObj.Extension != null)
                 {
                     if (uiSearchObj.Extension.DepartmentID > 0)
-                        whereFuncs.Add(x => x.DepartmentID == uiSearchObj.Extension.DepartmentID);
+                    {
+                        var department = DB.Department.Where(x => x.ID == uiSearchObj.Extension.DepartmentID).FirstOrDefault();
+
+                        if (department != null)
+                        {
+                            //部门性质是基药，可以看到类型是基药和混合的货品
+                            //部门性质是招商，只能看到该部门对应的货品；
+                            switch (department.DepartmentTypeID)
+                            {
+                                case (int)EDepartmentType.BaseMedicine:
+                                    var productCategoryIDs = new List<int>();
+                                    productCategoryIDs.Add((int)EProductCategory.BaseMedicine);
+                                    productCategoryIDs.Add((int)EProductCategory.MixedMedicine);
+
+                                    uiSearchObj.Extension.ProductCategoryIDs = productCategoryIDs;
+                                    break;
+
+                                case (int)EDepartmentType.BusinessMedicine:
+                                    whereFuncs.Add(x => x.DepartmentID == uiSearchObj.Extension.DepartmentID);
+                                    break;
+                            }
+                        }
+                    }
 
                     if (uiSearchObj.Extension.ProductCategoryID > 0)
                         whereFuncs.Add(x => x.CategoryID == uiSearchObj.Extension.ProductCategoryID);
+
+                    if (uiSearchObj.Extension.ProductCategoryIDs != null
+                        && uiSearchObj.Extension.ProductCategoryIDs.Count > 0)
+                        whereFuncs.Add(x => uiSearchObj.Extension.ProductCategoryIDs
+                            .Contains(x.CategoryID.HasValue ? x.CategoryID.Value : GlobalConst.INVALID_INT));
                 }
             }
 

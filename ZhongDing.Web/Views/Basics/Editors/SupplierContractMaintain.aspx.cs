@@ -251,7 +251,7 @@ namespace ZhongDing.Web.Views.Basics.Editors
         {
             UISearchDropdownItem uiSearchObj = new UISearchDropdownItem()
             {
-                ExtensionEntityID = productID.HasValue ? productID.Value : GlobalConst.INVALID_INT
+                Extension = new UISearchExtension { ProductID = productID.HasValue ? productID.Value : GlobalConst.INVALID_INT }
             };
 
             rcbxProductSpecification.ClearSelection();

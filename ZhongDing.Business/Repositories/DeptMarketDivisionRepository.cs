@@ -56,10 +56,7 @@ namespace ZhongDing.Business.Repositories
                         entity.Markets = string.Join(", ", DB.DeptMarket.Where(x => marketIDs.Contains(x.ID)).Select(x => x.MarketName).ToList());
                     }
 
-                    if (entity.DepartmentTypeID == (int)EDepartmentType.BaseMedicine)
-                        entity.Products = "基药产品";
-                    else
-                        entity.Products = string.Join(", ", DB.Product.Where(x => entity.ProductIDs.Contains(x.ID)).Select(x => x.ProductName).ToList());
+                    entity.Products = string.Join(", ", DB.Product.Where(x => entity.ProductIDs.Contains(x.ID)).Select(x => x.ProductName).ToList());
                 }
             }
 
@@ -110,10 +107,7 @@ namespace ZhongDing.Business.Repositories
                         entity.Markets = string.Join(", ", DB.DeptMarket.Where(x => marketIDs.Contains(x.ID)).Select(x => x.MarketName).ToList());
                     }
 
-                    if (entity.DepartmentTypeID == (int)EDepartmentType.BaseMedicine)
-                        entity.Products = "基药产品";
-                    else
-                        entity.Products = string.Join(", ", DB.Product.Where(x => entity.ProductIDs.Contains(x.ID)).Select(x => x.ProductName).ToList());
+                    entity.Products = string.Join(", ", DB.Product.Where(x => entity.ProductIDs.Contains(x.ID)).Select(x => x.ProductName).ToList());
                 }
             }
 

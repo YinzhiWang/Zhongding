@@ -225,6 +225,7 @@
     <Compile Include="UIObjects\UICompany.cs" />
     <Compile Include="UIObjects\UIDBContract.cs" />
     <Compile Include="UIObjects\UIDepartment.cs" />
+    <Compile Include="UIObjects\UIDeptMarketProduct.cs" />
     <Compile Include="UIObjects\UIDeptProductRecord.cs" />
     <Compile Include="UIObjects\UIDeptProductSalesPlan.cs" />
     <Compile Include="UIObjects\UIDeptMarketDivision.cs" />
@@ -254,6 +255,7 @@
     <Compile Include="UISearchObjects\UISearchCompany.cs" />
     <Compile Include="UISearchObjects\UISearchDBContract.cs" />
     <Compile Include="UISearchObjects\UISearchDepartment.cs" />
+    <Compile Include="UISearchObjects\UISearchDeptMarketProduct.cs" />
     <Compile Include="UISearchObjects\UISearchDeptProductRecord.cs" />
     <Compile Include="UISearchObjects\UISearchDeptProductSalesBonus.cs" />
     <Compile Include="UISearchObjects\UISearchDeptProductSalesPlan.cs" />

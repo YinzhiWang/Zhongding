@@ -21,15 +21,18 @@ namespace ZhongDing.Business.Repositories
 
             if (uiSearchObj != null)
             {
-                if (uiSearchObj.ItemValues != null
-                    && uiSearchObj.ItemValues.Count > 0)
-                    whereFuncs.Add(x => uiSearchObj.ItemValues.Contains(x.ID));
+                if (uiSearchObj.IncludeItemValues != null
+                    && uiSearchObj.IncludeItemValues.Count > 0)
+                    whereFuncs.Add(x => uiSearchObj.IncludeItemValues.Contains(x.ID));
 
                 if (!string.IsNullOrEmpty(uiSearchObj.ItemText))
                     whereFuncs.Add(x => x.DistrictName.Contains(uiSearchObj.ItemText));
 
-                if (uiSearchObj.ExtensionEntityID > 0)
-                    whereFuncs.Add(x => x.DepartmentTypeID == uiSearchObj.ExtensionEntityID);
+                if (uiSearchObj.Extension != null)
+                {
+                    if (uiSearchObj.Extension.DepartmentTypeID > 0)
+                        whereFuncs.Add(x => x.DepartmentTypeID == uiSearchObj.Extension.DepartmentTypeID);
+                }
             }
 
             uiDropdownItems = GetList(whereFuncs).Select(x => new UIDropdownItem()
