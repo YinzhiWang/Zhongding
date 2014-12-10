@@ -64,6 +64,7 @@
     <Compile Include="IRepositories\IClientInfoRepository.cs" />
     <Compile Include="IRepositories\IClientUserRepository.cs" />
     <Compile Include="IRepositories\ICompanyRepository.cs" />
+    <Compile Include="IRepositories\IDBContractHospitalRepository.cs" />
     <Compile Include="IRepositories\IDBContractRepository.cs" />
     <Compile Include="IRepositories\IDBContractTaskAssignmentRepository.cs" />
     <Compile Include="IRepositories\IDeptProductRecordRepository.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Repositories\ClientInfoRepository.cs" />
     <Compile Include="Repositories\ClientUserRepository.cs" />
     <Compile Include="Repositories\CompanyRepository.cs" />
+    <Compile Include="Repositories\DBContractHospitalRepository.cs" />
     <Compile Include="Repositories\DBContractRepository.cs" />
     <Compile Include="Repositories\DBContractTaskAssignmentRepository.cs" />
     <Compile Include="Repositories\DeptProductRecordRepository.cs" />

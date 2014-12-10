@@ -352,6 +352,7 @@
     <Build Include="dbo\Tables\PaymentStatus.sql" />
     <Build Include="dbo\Tables\ApplicationPayment.sql" />
     <Build Include="dbo\Tables\ApplicationNotes.sql" />
+    <Build Include="dbo\Tables\DBContractHospital.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

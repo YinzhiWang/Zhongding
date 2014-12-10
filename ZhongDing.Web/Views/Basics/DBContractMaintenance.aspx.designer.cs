@@ -274,6 +274,51 @@ namespace ZhongDing.Web.Views.Basics {
         protected global::Telerik.Web.UI.RadTextBox txtComment;
         
         /// <summary>
+        /// divOtherSections control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divOtherSections;
+        
+        /// <summary>
+        /// rgHospitals control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid rgHospitals;
+        
+        /// <summary>
+        /// hdnCurrentEditID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnCurrentEditID;
+        
+        /// <summary>
+        /// hdnCurrentEditHospitalID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnCurrentEditHospitalID;
+        
+        /// <summary>
+        /// hdnCurrentEditHospitalName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnCurrentEditHospitalName;
+        
+        /// <summary>
         /// txtMonthTask1 control.
         /// </summary>
         /// <remarks>
@@ -380,33 +425,6 @@ namespace ZhongDing.Web.Views.Basics {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadNumericTextBox txtMonthTask12;
-        
-        /// <summary>
-        /// divOtherSections control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divOtherSections;
-        
-        /// <summary>
-        /// rgHospitals control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid rgHospitals;
-        
-        /// <summary>
-        /// hdnCurrentEditID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnCurrentEditID;
         
         /// <summary>
         /// btnSave control.

@@ -22,6 +22,7 @@
           <EntitySet Name="ClientUser" EntityType="DbModel.Store.ClientUser" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Company" EntityType="DbModel.Store.Company" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DBContract" EntityType="DbModel.Store.DBContract" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DBContractHospital" EntityType="DbModel.Store.DBContractHospital" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DBContractTaskAssignment" EntityType="DbModel.Store.DBContractTaskAssignment" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Department" EntityType="DbModel.Store.Department" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DepartmentProductRecord" EntityType="DbModel.Store.DepartmentProductRecord" store:Type="Tables" Schema="dbo" />
@@ -146,6 +147,14 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="DBContract" EntitySet="DBContract" />
           </AssociationSet>
+          <AssociationSet Name="FK_DBContractHospital_DBContract" Association="DbModel.Store.FK_DBContractHospital_DBContract">
+            <End Role="DBContract" EntitySet="DBContract" />
+            <End Role="DBContractHospital" EntitySet="DBContractHospital" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DBContractHospital_Hospital" Association="DbModel.Store.FK_DBContractHospital_Hospital">
+            <End Role="Hospital" EntitySet="Hospital" />
+            <End Role="DBContractHospital" EntitySet="DBContractHospital" />
+          </AssociationSet>
           <AssociationSet Name="FK_DBContractTaskAssignment_DBContract" Association="DbModel.Store.FK_DBContractTaskAssignment_DBContract">
             <End Role="DBContract" EntitySet="DBContract" />
             <End Role="DBContractTaskAssignment" EntitySet="DBContractTaskAssignment" />
@@ -201,10 +210,6 @@
           <AssociationSet Name="FK_DeptProductEvaluation_Product" Association="DbModel.Store.FK_DeptProductEvaluation_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="DeptProductEvaluation" EntitySet="DeptProductEvaluation" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Hospital_DBContract" Association="DbModel.Store.FK_Hospital_DBContract">
-            <End Role="DBContract" EntitySet="DBContract" />
-            <End Role="Hospital" EntitySet="Hospital" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Company" Association="DbModel.Store.FK_Product_Company">
             <End Role="Company" EntitySet="Company" />
@@ -577,6 +582,19 @@
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
         </EntityType>
+        <EntityType Name="DBContractHospital">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DBContractID" Type="int" Nullable="false" />
+          <Property Name="HospitalID" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
         <EntityType Name="DBContractTaskAssignment">
           <Key>
             <PropertyRef Name="ID" />
@@ -738,7 +756,6 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
-          <Property Name="DBContractID" Type="int" Nullable="false" />
           <Property Name="HospitalName" Type="nvarchar" MaxLength="50" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
@@ -1323,6 +1340,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DBContractHospital_DBContract">
+          <End Role="DBContract" Type="DbModel.Store.DBContract" Multiplicity="1" />
+          <End Role="DBContractHospital" Type="DbModel.Store.DBContractHospital" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DBContract">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBContractHospital">
+              <PropertyRef Name="DBContractID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DBContractHospital_Hospital">
+          <End Role="Hospital" Type="DbModel.Store.Hospital" Multiplicity="1" />
+          <End Role="DBContractHospital" Type="DbModel.Store.DBContractHospital" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBContractHospital">
+              <PropertyRef Name="HospitalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DBContractTaskAssignment_DBContract">
           <End Role="DBContract" Type="DbModel.Store.DBContract" Multiplicity="0..1" />
           <End Role="DBContractTaskAssignment" Type="DbModel.Store.DBContractTaskAssignment" Multiplicity="*" />
@@ -1488,18 +1529,6 @@
             </Principal>
             <Dependent Role="DeptProductEvaluation">
               <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Hospital_DBContract">
-          <End Role="DBContract" Type="DbModel.Store.DBContract" Multiplicity="1" />
-          <End Role="Hospital" Type="DbModel.Store.Hospital" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DBContract">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Hospital">
-              <PropertyRef Name="DBContractID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1878,7 +1907,6 @@
           <EntitySet Name="ClientInfoBankAccount" EntityType="DbModel.ClientInfoBankAccount" />
           <EntitySet Name="ClientInfoContact" EntityType="DbModel.ClientInfoContact" />
           <EntitySet Name="Company" EntityType="DbModel.Company" />
-          <EntitySet Name="Hospital" EntityType="DbModel.Hospital" />
           <EntitySet Name="OwnerType" EntityType="DbModel.OwnerType" />
           <EntitySet Name="Product" EntityType="DbModel.Product" />
           <EntitySet Name="ProductCategory" EntityType="DbModel.ProductCategory" />
@@ -2113,36 +2141,7 @@
             <End Role="DeptDistrict" EntitySet="DeptDistrict" />
             <End Role="DeptMarket" EntitySet="DeptMarket" />
           </AssociationSet>
-          <EntitySet Name="DBContract" EntityType="DbModel.DBContract" />
           <EntitySet Name="DBContractTaskAssignment" EntityType="DbModel.DBContractTaskAssignment" />
-          <AssociationSet Name="FK_DBContract_ClientUser" Association="DbModel.FK_DBContract_ClientUser">
-            <End Role="ClientUser" EntitySet="ClientUser" />
-            <End Role="DBContract" EntitySet="DBContract" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DBContract_Department" Association="DbModel.FK_DBContract_Department">
-            <End Role="Department" EntitySet="Department" />
-            <End Role="DBContract" EntitySet="DBContract" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DBContract_Product" Association="DbModel.FK_DBContract_Product">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="DBContract" EntitySet="DBContract" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DBContract_ProductSpecification" Association="DbModel.FK_DBContract_ProductSpecification">
-            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
-            <End Role="DBContract" EntitySet="DBContract" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DBContract_Users" Association="DbModel.FK_DBContract_Users">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="DBContract" EntitySet="DBContract" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DBContractTaskAssignment_DBContract" Association="DbModel.FK_DBContractTaskAssignment_DBContract">
-            <End Role="DBContract" EntitySet="DBContract" />
-            <End Role="DBContractTaskAssignment" EntitySet="DBContractTaskAssignment" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Hospital_DBContract" Association="DbModel.FK_Hospital_DBContract">
-            <End Role="DBContract" EntitySet="DBContract" />
-            <End Role="Hospital" EntitySet="Hospital" />
-          </AssociationSet>
           <EntitySet Name="DepartmentProductRecord" EntityType="DbModel.DepartmentProductRecord" />
           <EntitySet Name="DepartmentProductSalesBonus" EntityType="DbModel.DepartmentProductSalesBonus" />
           <EntitySet Name="DepartmentProductSalesPlan" EntityType="DbModel.DepartmentProductSalesPlan" />
@@ -2187,6 +2186,41 @@
           <AssociationSet Name="FK_SupplierTaskAssignment_SupplierContract" Association="DbModel.FK_SupplierTaskAssignment_SupplierContract">
             <End Role="SupplierContract" EntitySet="SupplierContract" />
             <End Role="SupplierTaskAssignment" EntitySet="SupplierTaskAssignment" />
+          </AssociationSet>
+          <EntitySet Name="DBContract" EntityType="DbModel.DBContract" />
+          <EntitySet Name="DBContractHospital" EntityType="DbModel.DBContractHospital" />
+          <EntitySet Name="Hospital" EntityType="DbModel.Hospital" />
+          <AssociationSet Name="FK_DBContract_ClientUser" Association="DbModel.FK_DBContract_ClientUser">
+            <End Role="ClientUser" EntitySet="ClientUser" />
+            <End Role="DBContract" EntitySet="DBContract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DBContract_Department" Association="DbModel.FK_DBContract_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="DBContract" EntitySet="DBContract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DBContract_Product" Association="DbModel.FK_DBContract_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="DBContract" EntitySet="DBContract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DBContract_ProductSpecification" Association="DbModel.FK_DBContract_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="DBContract" EntitySet="DBContract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DBContract_Users" Association="DbModel.FK_DBContract_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="DBContract" EntitySet="DBContract" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DBContractHospital_DBContract" Association="DbModel.FK_DBContractHospital_DBContract">
+            <End Role="DBContract" EntitySet="DBContract" />
+            <End Role="DBContractHospital" EntitySet="DBContractHospital" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DBContractTaskAssignment_DBContract" Association="DbModel.FK_DBContractTaskAssignment_DBContract">
+            <End Role="DBContract" EntitySet="DBContract" />
+            <End Role="DBContractTaskAssignment" EntitySet="DBContractTaskAssignment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DBContractHospital_Hospital" Association="DbModel.FK_DBContractHospital_Hospital">
+            <End Role="Hospital" EntitySet="Hospital" />
+            <End Role="DBContractHospital" EntitySet="DBContractHospital" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
@@ -2360,20 +2394,6 @@
           <NavigationProperty Name="Supplier" Relationship="DbModel.FK_Supplier_Company" FromRole="Company" ToRole="Supplier" />
           <NavigationProperty Name="Warehouse" Relationship="DbModel.FK_Warehouse_Company" FromRole="Company" ToRole="Warehouse" />
         </EntityType>
-        <EntityType Name="Hospital">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="DBContractID" Nullable="false" />
-          <Property Type="String" Name="HospitalName" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="DBContract" Relationship="DbModel.FK_Hospital_DBContract" FromRole="Hospital" ToRole="DBContract" />
-        </EntityType>
         <EntityType Name="OwnerType">
           <Key>
             <PropertyRef Name="ID" />
@@ -2415,10 +2435,10 @@
           <NavigationProperty Name="ProductDBPolicyPrice" Relationship="DbModel.FK_ProductDBPolicyPrice_Product" FromRole="Product" ToRole="ProductDBPolicyPrice" />
           <NavigationProperty Name="Department" Relationship="DbModel.FK_Product_Department" FromRole="Product" ToRole="Department" />
           <NavigationProperty Name="DeptMarketProduct" Relationship="DbModel.FK_DeptMarketProduct_Product" FromRole="Product" ToRole="DeptMarketProduct" />
-          <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_Product" FromRole="Product" ToRole="DBContract" />
           <NavigationProperty Name="DepartmentProductRecord" Relationship="DbModel.FK_DepartmentProductRecord_Product" FromRole="Product" ToRole="DepartmentProductRecord" />
           <NavigationProperty Name="DepartmentProductSalesPlan" Relationship="DbModel.FK_DepartmentProductSalesPlan_Product" FromRole="Product" ToRole="DepartmentProductSalesPlan" />
           <NavigationProperty Name="SupplierContract" Relationship="DbModel.FK_SupplierContract_Product" FromRole="Product" ToRole="SupplierContract" />
+          <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_Product" FromRole="Product" ToRole="DBContract" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -2464,8 +2484,8 @@
           <NavigationProperty Name="ProductHighPrice" Relationship="DbModel.FK_ProductHighPrice_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductHighPrice" />
           <NavigationProperty Name="ProductBasicPrice" Relationship="DbModel.FK_ProductBasicPrice_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductBasicPrice" />
           <NavigationProperty Name="ProductDBPolicyPrice" Relationship="DbModel.FK_ProductDBPolicyPrice_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductDBPolicyPrice" />
-          <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_ProductSpecification" FromRole="ProductSpecification" ToRole="DBContract" />
           <NavigationProperty Name="SupplierContract" Relationship="DbModel.FK_SupplierContract_ProductSpecification" FromRole="ProductSpecification" ToRole="SupplierContract" />
+          <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_ProductSpecification" FromRole="ProductSpecification" ToRole="DBContract" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -3350,9 +3370,9 @@
           <NavigationProperty Name="DeptProductEvaluation" Relationship="DbModel.FK_DeptProductEvaluation_Department" FromRole="Department" ToRole="DeptProductEvaluation" />
           <NavigationProperty Name="Product" Relationship="DbModel.FK_Product_Department" FromRole="Department" ToRole="Product" />
           <NavigationProperty Name="Users1" Relationship="DbModel.FK_Users_Department" FromRole="Department" ToRole="Users" />
-          <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_Department" FromRole="Department" ToRole="DBContract" />
           <NavigationProperty Name="DepartmentProductRecord" Relationship="DbModel.FK_DepartmentProductRecord_Department" FromRole="Department" ToRole="DepartmentProductRecord" />
           <NavigationProperty Name="DepartmentProductSalesPlan" Relationship="DbModel.FK_DepartmentProductSalesPlan_Department" FromRole="Department" ToRole="DepartmentProductSalesPlan" />
+          <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_Department" FromRole="Department" ToRole="DBContract" />
         </EntityType>
         <Association Name="FK_ClientInfoProductSetting_Department">
           <End Type="DbModel.Department" Role="Department" Multiplicity="0..1" />
@@ -3517,36 +3537,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="DBContract">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="ContractCode" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="ClientUserID" />
-          <Property Type="Boolean" Name="IsTempContract" />
-          <Property Type="Int32" Name="DepartmentID" />
-          <Property Type="Int32" Name="InChargeUserID" />
-          <Property Type="Int32" Name="ProductID" />
-          <Property Type="Int32" Name="ProductSpecificationID" />
-          <Property Type="Double" Name="PromotionExpense" />
-          <Property Type="DateTime" Name="ContractExpDate" Precision="3" />
-          <Property Type="Boolean" Name="IsNew" />
-          <Property Type="Int32" Name="HospitalTypeID" />
-          <Property Type="String" Name="Comment" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="ClientUser" Relationship="DbModel.FK_DBContract_ClientUser" FromRole="DBContract" ToRole="ClientUser" />
-          <NavigationProperty Name="Department" Relationship="DbModel.FK_DBContract_Department" FromRole="DBContract" ToRole="Department" />
-          <NavigationProperty Name="Product" Relationship="DbModel.FK_DBContract_Product" FromRole="DBContract" ToRole="Product" />
-          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_DBContract_ProductSpecification" FromRole="DBContract" ToRole="ProductSpecification" />
-          <NavigationProperty Name="Users" Relationship="DbModel.FK_DBContract_Users" FromRole="DBContract" ToRole="Users" />
-          <NavigationProperty Name="DBContractTaskAssignment" Relationship="DbModel.FK_DBContractTaskAssignment_DBContract" FromRole="DBContract" ToRole="DBContractTaskAssignment" />
-          <NavigationProperty Name="Hospital" Relationship="DbModel.FK_Hospital_DBContract" FromRole="DBContract" ToRole="Hospital" />
-        </EntityType>
         <EntityType Name="DBContractTaskAssignment">
           <Key>
             <PropertyRef Name="ID" />
@@ -3563,90 +3553,6 @@
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContractTaskAssignment_DBContract" FromRole="DBContractTaskAssignment" ToRole="DBContract" />
         </EntityType>
-        <Association Name="FK_DBContract_ClientUser">
-          <End Type="DbModel.ClientUser" Role="ClientUser" Multiplicity="0..1" />
-          <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ClientUser">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DBContract">
-              <PropertyRef Name="ClientUserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DBContract_Department">
-          <End Type="DbModel.Department" Role="Department" Multiplicity="0..1" />
-          <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DBContract">
-              <PropertyRef Name="DepartmentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DBContract_Product">
-          <End Type="DbModel.Product" Role="Product" Multiplicity="0..1" />
-          <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DBContract">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DBContract_ProductSpecification">
-          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="0..1" />
-          <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProductSpecification">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DBContract">
-              <PropertyRef Name="ProductSpecificationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DBContract_Users">
-          <End Type="DbModel.Users" Role="Users" Multiplicity="0..1" />
-          <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="DBContract">
-              <PropertyRef Name="InChargeUserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DBContractTaskAssignment_DBContract">
-          <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="0..1" />
-          <End Type="DbModel.DBContractTaskAssignment" Role="DBContractTaskAssignment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DBContract">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DBContractTaskAssignment">
-              <PropertyRef Name="DBContractID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Hospital_DBContract">
-          <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="1" />
-          <End Type="DbModel.Hospital" Role="Hospital" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DBContract">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Hospital">
-              <PropertyRef Name="DBContractID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="DepartmentProductRecord">
           <Key>
             <PropertyRef Name="ID" />
@@ -3861,6 +3767,160 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="DBContract">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="ContractCode" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ClientUserID" />
+          <Property Type="Boolean" Name="IsTempContract" />
+          <Property Type="Int32" Name="DepartmentID" />
+          <Property Type="Int32" Name="InChargeUserID" />
+          <Property Type="Int32" Name="ProductID" />
+          <Property Type="Int32" Name="ProductSpecificationID" />
+          <Property Type="Double" Name="PromotionExpense" />
+          <Property Type="DateTime" Name="ContractExpDate" Precision="3" />
+          <Property Type="Boolean" Name="IsNew" />
+          <Property Type="Int32" Name="HospitalTypeID" />
+          <Property Type="String" Name="Comment" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="ClientUser" Relationship="DbModel.FK_DBContract_ClientUser" FromRole="DBContract" ToRole="ClientUser" />
+          <NavigationProperty Name="Department" Relationship="DbModel.FK_DBContract_Department" FromRole="DBContract" ToRole="Department" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_DBContract_Product" FromRole="DBContract" ToRole="Product" />
+          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_DBContract_ProductSpecification" FromRole="DBContract" ToRole="ProductSpecification" />
+          <NavigationProperty Name="Users" Relationship="DbModel.FK_DBContract_Users" FromRole="DBContract" ToRole="Users" />
+          <NavigationProperty Name="DBContractHospital" Relationship="DbModel.FK_DBContractHospital_DBContract" FromRole="DBContract" ToRole="DBContractHospital" />
+          <NavigationProperty Name="DBContractTaskAssignment" Relationship="DbModel.FK_DBContractTaskAssignment_DBContract" FromRole="DBContract" ToRole="DBContractTaskAssignment" />
+        </EntityType>
+        <EntityType Name="DBContractHospital">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DBContractID" Nullable="false" />
+          <Property Type="Int32" Name="HospitalID" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContractHospital_DBContract" FromRole="DBContractHospital" ToRole="DBContract" />
+          <NavigationProperty Name="Hospital" Relationship="DbModel.FK_DBContractHospital_Hospital" FromRole="DBContractHospital" ToRole="Hospital" />
+        </EntityType>
+        <EntityType Name="Hospital">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="HospitalName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="DBContractHospital" Relationship="DbModel.FK_DBContractHospital_Hospital" FromRole="Hospital" ToRole="DBContractHospital" />
+        </EntityType>
+        <Association Name="FK_DBContract_ClientUser">
+          <End Type="DbModel.ClientUser" Role="ClientUser" Multiplicity="0..1" />
+          <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBContract">
+              <PropertyRef Name="ClientUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DBContract_Department">
+          <End Type="DbModel.Department" Role="Department" Multiplicity="0..1" />
+          <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBContract">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DBContract_Product">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBContract">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DBContract_ProductSpecification">
+          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="0..1" />
+          <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBContract">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DBContract_Users">
+          <End Type="DbModel.Users" Role="Users" Multiplicity="0..1" />
+          <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="DBContract">
+              <PropertyRef Name="InChargeUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DBContractHospital_DBContract">
+          <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="1" />
+          <End Type="DbModel.DBContractHospital" Role="DBContractHospital" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DBContract">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBContractHospital">
+              <PropertyRef Name="DBContractID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DBContractTaskAssignment_DBContract">
+          <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="0..1" />
+          <End Type="DbModel.DBContractTaskAssignment" Role="DBContractTaskAssignment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DBContract">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBContractTaskAssignment">
+              <PropertyRef Name="DBContractID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DBContractHospital_Hospital">
+          <End Type="DbModel.Hospital" Role="Hospital" Multiplicity="1" />
+          <End Type="DbModel.DBContractHospital" Role="DBContractHospital" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBContractHospital">
+              <PropertyRef Name="HospitalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4020,20 +4080,6 @@
                 <ScalarProperty Name="ProviderTexRatio" ColumnName="ProviderTexRatio" />
                 <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
                 <ScalarProperty Name="CompanyCode" ColumnName="CompanyCode" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Hospital">
-            <EntityTypeMapping TypeName="DbModel.Hospital">
-              <MappingFragment StoreEntitySet="Hospital">
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="HospitalName" ColumnName="HospitalName" />
-                <ScalarProperty Name="DBContractID" ColumnName="DBContractID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -4508,30 +4554,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DBContract">
-            <EntityTypeMapping TypeName="DbModel.DBContract">
-              <MappingFragment StoreEntitySet="DBContract">
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="HospitalTypeID" ColumnName="HospitalTypeID" />
-                <ScalarProperty Name="IsNew" ColumnName="IsNew" />
-                <ScalarProperty Name="ContractExpDate" ColumnName="ContractExpDate" />
-                <ScalarProperty Name="PromotionExpense" ColumnName="PromotionExpense" />
-                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="InChargeUserID" ColumnName="InChargeUserID" />
-                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
-                <ScalarProperty Name="IsTempContract" ColumnName="IsTempContract" />
-                <ScalarProperty Name="ClientUserID" ColumnName="ClientUserID" />
-                <ScalarProperty Name="ContractCode" ColumnName="ContractCode" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="DBContractTaskAssignment">
             <EntityTypeMapping TypeName="DbModel.DBContractTaskAssignment">
               <MappingFragment StoreEntitySet="DBContractTaskAssignment">
@@ -4631,6 +4653,57 @@
                 <ScalarProperty Name="FilePath" ColumnName="FilePath" />
                 <ScalarProperty Name="FileName" ColumnName="FileName" />
                 <ScalarProperty Name="ContractID" ColumnName="ContractID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DBContract">
+            <EntityTypeMapping TypeName="DbModel.DBContract">
+              <MappingFragment StoreEntitySet="DBContract">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="HospitalTypeID" ColumnName="HospitalTypeID" />
+                <ScalarProperty Name="IsNew" ColumnName="IsNew" />
+                <ScalarProperty Name="ContractExpDate" ColumnName="ContractExpDate" />
+                <ScalarProperty Name="PromotionExpense" ColumnName="PromotionExpense" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="InChargeUserID" ColumnName="InChargeUserID" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="IsTempContract" ColumnName="IsTempContract" />
+                <ScalarProperty Name="ClientUserID" ColumnName="ClientUserID" />
+                <ScalarProperty Name="ContractCode" ColumnName="ContractCode" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DBContractHospital">
+            <EntityTypeMapping TypeName="DbModel.DBContractHospital">
+              <MappingFragment StoreEntitySet="DBContractHospital">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="HospitalID" ColumnName="HospitalID" />
+                <ScalarProperty Name="DBContractID" ColumnName="DBContractID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hospital">
+            <EntityTypeMapping TypeName="DbModel.Hospital">
+              <MappingFragment StoreEntitySet="Hospital">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="HospitalName" ColumnName="HospitalName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

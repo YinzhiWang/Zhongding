@@ -101,6 +101,9 @@
     <Compile Include="Models\DBContract.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DBContractHospital.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DBContractTaskAssignment.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -224,6 +227,7 @@
     <Compile Include="UIObjects\UIClientInfoContact.cs" />
     <Compile Include="UIObjects\UICompany.cs" />
     <Compile Include="UIObjects\UIDBContract.cs" />
+    <Compile Include="UIObjects\UIDBContractHospital.cs" />
     <Compile Include="UIObjects\UIDepartment.cs" />
     <Compile Include="UIObjects\UIDeptMarketProduct.cs" />
     <Compile Include="UIObjects\UIDeptProductRecord.cs" />

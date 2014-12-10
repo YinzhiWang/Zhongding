@@ -13,15 +13,11 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class Hospital : IEntityExtendedProperty
+    public partial class DBContractHospital : IEntityExtendedProperty
     {
-        public Hospital()
-        {
-            this.DBContractHospital = new HashSet<DBContractHospital>();
-        }
-    
         public int ID { get; set; }
-        public string HospitalName { get; set; }
+        public int DBContractID { get; set; }
+        public int HospitalID { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -38,6 +34,7 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ICollection<DBContractHospital> DBContractHospital { get; set; }
+        public virtual DBContract DBContract { get; set; }
+        public virtual Hospital Hospital { get; set; }
     }
 }

@@ -64,7 +64,7 @@ namespace ZhongDing.Business.Repositories
                                   ContractExpDate = q.ContractExpDate,
                                   PromotionExpense = q.PromotionExpense,
                                   InChargeUser = ticu == null ? string.Empty : ticu.FullName,
-                                  HospitalIDs = q.Hospital.Where(x => x.IsDeleted == false).Select(x => x.ID)
+                                  HospitalIDs = q.DBContractHospital.Where(x => x.IsDeleted == false).Select(x => x.HospitalID)
                               }).ToList();
 
                 foreach (var uiEntity in uiEntities)
@@ -129,7 +129,7 @@ namespace ZhongDing.Business.Repositories
                                   ContractExpDate = q.ContractExpDate,
                                   PromotionExpense = q.PromotionExpense,
                                   InChargeUser = ticu == null ? string.Empty : ticu.FullName,
-                                  HospitalIDs = q.Hospital.Where(x => x.IsDeleted == false).Select(x => x.ID)
+                                  HospitalIDs = q.DBContractHospital.Where(x => x.IsDeleted == false).Select(x => x.HospitalID)
                               }).ToList();
 
                 foreach (var uiEntity in uiEntities)

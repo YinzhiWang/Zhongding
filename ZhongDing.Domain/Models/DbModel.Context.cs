@@ -35,7 +35,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<ClientInfoBankAccount> ClientInfoBankAccount { get; set; }
         public DbSet<ClientInfoContact> ClientInfoContact { get; set; }
         public DbSet<Company> Company { get; set; }
-        public DbSet<Hospital> Hospital { get; set; }
         public DbSet<OwnerType> OwnerType { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<ProductCategory> ProductCategory { get; set; }
@@ -66,12 +65,14 @@ namespace ZhongDing.Domain.Models
         public DbSet<DeptMarketDivision> DeptMarketDivision { get; set; }
         public DbSet<DeptMarketProduct> DeptMarketProduct { get; set; }
         public DbSet<DeptMarket> DeptMarket { get; set; }
-        public DbSet<DBContract> DBContract { get; set; }
         public DbSet<DBContractTaskAssignment> DBContractTaskAssignment { get; set; }
         public DbSet<DepartmentProductRecord> DepartmentProductRecord { get; set; }
         public DbSet<DepartmentProductSalesBonus> DepartmentProductSalesBonus { get; set; }
         public DbSet<DepartmentProductSalesPlan> DepartmentProductSalesPlan { get; set; }
         public DbSet<SupplierContract> SupplierContract { get; set; }
         public DbSet<SupplierContractFile> SupplierContractFile { get; set; }
+        public DbSet<DBContract> DBContract { get; set; }
+        public DbSet<DBContractHospital> DBContractHospital { get; set; }
+        public DbSet<Hospital> Hospital { get; set; }
     }
 }

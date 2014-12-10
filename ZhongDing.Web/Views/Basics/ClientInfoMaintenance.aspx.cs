@@ -220,6 +220,25 @@ namespace ZhongDing.Web.Views.Basics
                 && string.IsNullOrEmpty(hdnCustomClientName.Value.Trim()))
                 cvClientName.IsValid = false;
 
+            int selClientUserID = GlobalConst.INVALID_INT;
+            if (!int.TryParse(rcbxClientUser.SelectedValue, out selClientUserID))
+            {
+                var clientUser = PageClientUserRepository
+                    .GetList(x => x.ClientName.ToLower() == hdnCustomClientName.Value.Trim().ToLower())
+                    .FirstOrDefault();
+
+                if (clientUser != null)
+                    selClientUserID = clientUser.ID;
+            }
+
+            int selClientCompanyID;
+            if (int.TryParse(rcbxClientCompany.SelectedValue, out selClientCompanyID))
+            {
+                if (PageClientInfoRepository.GetList(x => x.ID != this.CurrentEntityID && x.ClientUserID == selClientUserID
+                    && x.ClientCompanyID == selClientCompanyID).Count() > 0)
+                    cvDiffClientCompany.IsValid = false;
+            }
+
             if (!IsValid) return;
 
             ClientInfo clientInfo = null;
@@ -247,7 +266,7 @@ namespace ZhongDing.Web.Views.Basics
             else
             {
                 ClientUser clientUser = new ClientUser();
-                clientUser.ClientName = hdnCustomClientName.Value;
+                clientUser.ClientName = hdnCustomClientName.Value.Trim();
 
                 clientInfo.ClientUser = clientUser;
             }

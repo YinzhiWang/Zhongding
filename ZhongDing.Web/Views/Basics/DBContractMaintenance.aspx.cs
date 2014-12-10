@@ -11,6 +11,7 @@ using ZhongDing.Business.Repositories;
 using ZhongDing.Common;
 using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
+using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
 
 namespace ZhongDing.Web.Views.Basics
@@ -93,6 +94,18 @@ namespace ZhongDing.Web.Views.Basics
             }
         }
 
+        private IDBContractHospitalRepository _PageDBContractHospitalRepository;
+        private IDBContractHospitalRepository PageDBContractHospitalRepository
+        {
+            get
+            {
+                if (_PageDBContractHospitalRepository == null)
+                    _PageDBContractHospitalRepository = new DBContractHospitalRepository();
+
+                return _PageDBContractHospitalRepository;
+            }
+        }
+
         private DBContract _CurrentEntity;
         private DBContract CurrentEntity
         {
@@ -106,9 +119,7 @@ namespace ZhongDing.Web.Views.Basics
             }
         }
 
-
         #endregion
-
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -417,10 +428,45 @@ namespace ZhongDing.Web.Views.Basics
 
             int totalRecords;
 
-            var hospitals = PageHospitalRepository.GetUIList(uiSearchObj, rgHospitals.CurrentPageIndex, rgHospitals.PageSize, out totalRecords);
+            var dBContractHospitals = PageDBContractHospitalRepository.GetUIList(uiSearchObj, rgHospitals.CurrentPageIndex, rgHospitals.PageSize, out totalRecords);
 
-            rgHospitals.DataSource = hospitals;
+            rgHospitals.DataSource = dBContractHospitals;
             rgHospitals.VirtualItemCount = totalRecords;
+        }
+
+        protected void rgHospitals_ItemDataBound(object sender, GridItemEventArgs e)
+        {
+            if (e.Item.ItemType == GridItemType.EditItem)
+            {
+                GridDataItem gridDataItem = e.Item as GridDataItem;
+
+                var rcbxHospital = (RadComboBox)e.Item.FindControl("rcbxHospital");
+
+                if (rcbxHospital != null)
+                {
+                    var uiSearchObj = new UISearchDropdownItem();
+
+                    if (this.CurrentEntity != null
+                        && this.CurrentEntity.DBContractHospital.Count > 0)
+                    {
+                        uiSearchObj.ExcludeItemValues = this.CurrentEntity
+                            .DBContractHospital.Where(x => x.IsDeleted == false)
+                            .Select(x => x.HospitalID).ToList();
+                    }
+
+                    var hospitals = PageHospitalRepository.GetDropdownItems(uiSearchObj);
+                    rcbxHospital.DataSource = hospitals;
+                    rcbxHospital.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+                    rcbxHospital.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+                    rcbxHospital.DataBind();
+
+                    if (e.Item.ItemIndex >= 0)
+                    {
+                        var uiEntity = (UIDBContractHospital)gridDataItem.DataItem;
+                        rcbxHospital.SelectedValue = uiEntity.HospitalID.ToString();
+                    }
+                }
+            }
         }
 
         protected void rgHospitals_EditCommand(object sender, GridCommandEventArgs e)
@@ -440,17 +486,30 @@ namespace ZhongDing.Web.Views.Basics
         {
             if (this.CurrentEntity != null)
             {
-                var editableItem = ((GridEditableItem)e.Item);
+                if (e.Item is GridDataItem)
+                {
+                    GridDataItem dataItem = e.Item as GridDataItem;
 
-                Hashtable values = new Hashtable();
-                editableItem.ExtractValues(values);
+                    DBContractHospital dBContractHospital = new DBContractHospital();
 
-                Hospital hospital = new Hospital();
-                hospital.HospitalName = (string)values["HospitalName"];
+                    var rcbxHospital = dataItem.FindControl("rcbxHospital") as RadComboBox;
 
-                this.CurrentEntity.Hospital.Add(hospital);
+                    if (!string.IsNullOrEmpty(rcbxHospital.SelectedValue))
+                    {
+                        int hospitalID;
+                        if (int.TryParse(rcbxHospital.SelectedValue, out hospitalID))
+                            dBContractHospital.HospitalID = hospitalID;
+                    }
+                    else
+                    {
+                        Hospital hospital = new Hospital { HospitalName = hdnCurrentEditHospitalName.Value.Trim() };
+                        dBContractHospital.Hospital = hospital;
+                    }
 
-                PageDBContractRepository.Save();
+                    this.CurrentEntity.DBContractHospital.Add(dBContractHospital);
+
+                    PageDBContractRepository.Save();
+                }
 
                 rgHospitals.Rebind();
             }
@@ -464,21 +523,29 @@ namespace ZhongDing.Web.Views.Basics
             int id = 0;
             if (int.TryParse(sid, out id))
             {
-                Hashtable values = new Hashtable();
-                editableItem.ExtractValues(values);
-
-                Hospital hospital = PageHospitalRepository.GetByID(id);
-
-                if (hospital != null)
+                if (e.Item is GridDataItem)
                 {
-                    hospital.HospitalName = (string)values["HospitalName"];
+                    GridDataItem dataItem = e.Item as GridDataItem;
 
-                    PageHospitalRepository.Save();
+                    var dBContractHospital = PageDBContractHospitalRepository.GetByID(id);
 
-                    rgHospitals.Rebind();
+                    var rcbxHospital = dataItem.FindControl("rcbxHospital") as RadComboBox;
+
+                    if (!string.IsNullOrEmpty(rcbxHospital.SelectedValue))
+                    {
+                        int hospitalID;
+                        if (int.TryParse(rcbxHospital.SelectedValue, out hospitalID))
+                            dBContractHospital.HospitalID = hospitalID;
+                    }
+                    else
+                    {
+                        Hospital hospital = new Hospital { HospitalName = hdnCurrentEditHospitalName.Value.Trim() };
+                        dBContractHospital.Hospital = hospital;
+                    }
+
+                    PageDBContractHospitalRepository.Save();
                 }
             }
-
         }
 
         protected void rgHospitals_DeleteCommand(object sender, Telerik.Web.UI.GridCommandEventArgs e)
@@ -498,15 +565,38 @@ namespace ZhongDing.Web.Views.Basics
 
         protected void cvHospitalName_ServerValidate(object source, ServerValidateEventArgs args)
         {
-            if (!string.IsNullOrEmpty(hdnCurrentEditID.Value))
+            var cvHospitalName = (CustomValidator)source;
+
+            if (this.CurrentEntity != null)
             {
-                int currentEditID;
-                if (int.TryParse(hdnCurrentEditID.Value, out currentEditID))
+                if (hdnCurrentEditHospitalID.Value != GlobalConst.INVALID_INT.ToString())
                 {
-                    if (PageHospitalRepository.GetList(x => x.ID != currentEditID
-                            && x.HospitalName.ToLower().Equals(args.Value.Trim().ToLower())).Count() > 0)
+                    int curEditHospitalID;
+                    if (int.TryParse(hdnCurrentEditHospitalID.Value, out curEditHospitalID))
                     {
-                        args.IsValid = false;
+                        if (PageDBContractHospitalRepository.GetList(x => x.DBContract != null
+                            && x.DBContract.ClientUserID == CurrentEntity.ClientUserID
+                            && x.DBContract.ProductID == CurrentEntity.ProductID
+                            && x.DBContract.ProductSpecificationID == CurrentEntity.ProductSpecificationID
+                            && x.DBContract.DBContractHospital.Any(y => y.HospitalID == curEditHospitalID)).Count() > 0)
+                        {
+                            if (cvHospitalName != null)
+                                cvHospitalName.ErrorMessage = "该客户同一种货品和规格已关联过该医院，请重新选择";
+                            args.IsValid = false;
+                        }
+                    }
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(hdnCurrentEditHospitalName.Value))
+                    {
+                        if (PageHospitalRepository.GetList(x => x.HospitalName.ToLower()
+                            .Equals(args.Value.Trim().ToLower())).Count() > 0)
+                        {
+                            if (cvHospitalName != null)
+                                cvHospitalName.ErrorMessage = "医院名称已存在，请重新选择或输入";
+                            args.IsValid = false;
+                        }
                     }
                 }
             }
@@ -817,11 +907,11 @@ namespace ZhongDing.Web.Views.Basics
 
                     IDBContractRepository dbContractRepository = new DBContractRepository();
                     IDBContractTaskAssignmentRepository dBContractTaskAssignmentRepository = new DBContractTaskAssignmentRepository();
-                    IHospitalRepository hospitalRepository = new HospitalRepository();
+                    IDBContractHospitalRepository dBContractHospitalRepository = new DBContractHospitalRepository();
 
                     dbContractRepository.SetDbModel(db);
                     dBContractTaskAssignmentRepository.SetDbModel(db);
-                    hospitalRepository.SetDbModel(db);
+                    dBContractHospitalRepository.SetDbModel(db);
 
                     var currentEntity = dbContractRepository.GetByID(this.CurrentEntityID);
 
@@ -832,9 +922,9 @@ namespace ZhongDing.Web.Views.Basics
                             dBContractTaskAssignmentRepository.Delete(taskAssignment);
                         }
 
-                        foreach (var hospital in currentEntity.Hospital)
+                        foreach (var dBContractHospital in currentEntity.DBContractHospital)
                         {
-                            hospitalRepository.Delete(hospital);
+                            dBContractHospitalRepository.Delete(dBContractHospital);
                         }
 
                         dbContractRepository.Delete(currentEntity);
@@ -847,6 +937,5 @@ namespace ZhongDing.Web.Views.Basics
                 this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_DELETED_REDIRECT);
             }
         }
-
     }
 }

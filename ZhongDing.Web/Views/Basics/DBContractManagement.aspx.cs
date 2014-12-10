@@ -151,11 +151,11 @@ namespace ZhongDing.Web.Views.Basics
 
                     IDBContractRepository dbContractRepository = new DBContractRepository();
                     IDBContractTaskAssignmentRepository dBContractTaskAssignmentRepository = new DBContractTaskAssignmentRepository();
-                    IHospitalRepository hospitalRepository = new HospitalRepository();
+                    IDBContractHospitalRepository dBContractHospitalRepository = new DBContractHospitalRepository();
 
                     dbContractRepository.SetDbModel(db);
                     dBContractTaskAssignmentRepository.SetDbModel(db);
-                    hospitalRepository.SetDbModel(db);
+                    dBContractHospitalRepository.SetDbModel(db);
 
                     var currentEntity = dbContractRepository.GetByID(id);
 
@@ -166,9 +166,9 @@ namespace ZhongDing.Web.Views.Basics
                             dBContractTaskAssignmentRepository.Delete(taskAssignment);
                         }
 
-                        foreach (var hospital in currentEntity.Hospital)
+                        foreach (var dBContractHospital in currentEntity.DBContractHospital)
                         {
-                            hospitalRepository.Delete(hospital);
+                            dBContractHospitalRepository.Delete(dBContractHospital);
                         }
 
                         dbContractRepository.Delete(currentEntity);

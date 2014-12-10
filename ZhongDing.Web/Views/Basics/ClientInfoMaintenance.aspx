@@ -78,6 +78,10 @@
                                     ControlToValidate="rcbxClientCompany" ValidationGroup="vgMaintenance" Display="Dynamic"
                                     Text="*" CssClass="field-validation-error" OnServerValidate="cvClientCompany_ServerValidate">
                                 </asp:CustomValidator>
+                                <asp:CustomValidator ID="cvDiffClientCompany" runat="server" ErrorMessage="该客户已关联该商业单位，请重新选择商业单位"
+                                    ControlToValidate="rcbxClientCompany" ValidationGroup="vgMaintenance" Display="Dynamic"
+                                    Text="*" CssClass="field-validation-error">
+                                </asp:CustomValidator>
                             </div>
                         </div>
                         <div class="mws-form-row">

@@ -204,6 +204,66 @@
                                 </telerik:RadTextBox>
                             </div>
                         </div>
+
+                        <div class="mws-form-row" runat="server" id="divOtherSections">
+                            <!--医院设置 -->
+                            <div class="mws-panel grid_8 mws-collapsible" data-collapseid="panel-hospital">
+                                <div class="mws-panel-header">
+                                    <span class="mws-i-24 i-creditcard">医院设置</span>
+                                </div>
+                                <div class="mws-panel-body">
+                                    <div class="mws-panel-content">
+                                        <telerik:RadGrid ID="rgHospitals" runat="server" PageSize="10"
+                                            AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
+                                            MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
+                                            ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
+                                            OnNeedDataSource="rgHospitals_NeedDataSource" OnItemDataBound="rgHospitals_ItemDataBound"
+                                            OnEditCommand="rgHospitals_EditCommand" OnInsertCommand="rgHospitals_InsertCommand"
+                                            OnUpdateCommand="rgHospitals_UpdateCommand" OnDeleteCommand="rgHospitals_DeleteCommand">
+                                            <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
+                                                ShowHeadersWhenNoRecords="true" BackColor="#fafafa" EditMode="InPlace">
+                                                <CommandItemSettings AddNewRecordText="添加" RefreshText="刷新" />
+                                                <Columns>
+                                                    <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridTemplateColumn UniqueName="HospitalName" HeaderText="医院名称" DataField="HospitalName" SortExpression="HospitalName">
+                                                        <ItemTemplate>
+                                                            <span><%# Eval("HospitalName") %></span>
+                                                        </ItemTemplate>
+                                                        <EditItemTemplate>
+                                                            <div id="divGridCombox">
+                                                                <telerik:RadComboBox runat="server" ID="rcbxHospital" Filter="Contains" AllowCustomText="true"
+                                                                    MarkFirstMatch="true" Height="160px" Width="50%" EmptyMessage="--请选择--"
+                                                                    OnClientBlur="onClientBlur" OnClientSelectedIndexChanged="onClientSelectedChanged">
+                                                                </telerik:RadComboBox>
+                                                            </div>
+                                                            <asp:RequiredFieldValidator ID="rfvHospitalName" runat="server" ErrorMessage="医院名称必填" CssClass="field-validation-error"
+                                                                ControlToValidate="rcbxHospital"></asp:RequiredFieldValidator>
+                                                            <asp:CustomValidator ID="cvHospitalName" runat="server" ControlToValidate="rcbxHospital" CssClass="field-validation-error"
+                                                                ErrorMessage="" OnServerValidate="cvHospitalName_ServerValidate"></asp:CustomValidator>
+                                                        </EditItemTemplate>
+                                                    </telerik:GridTemplateColumn>
+                                                    <telerik:GridEditCommandColumn ButtonType="LinkButton" InsertText="保存" EditText="编辑" UpdateText="更新" CancelText="取消" HeaderStyle-Width="80">
+                                                    </telerik:GridEditCommandColumn>
+                                                    <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
+                                                </Columns>
+                                                <NoRecordsTemplate>
+                                                    没有任何数据
+                                                </NoRecordsTemplate>
+                                                <ItemStyle Height="30" />
+                                                <AlternatingItemStyle BackColor="#f2f2f2" />
+                                                <PagerStyle PagerTextFormat="{4} 第{0}页/共{1}页, 第{2}-{3}条 共{5}条"
+                                                    PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
+                                                    FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
+                                            </MasterTableView>
+                                        </telerik:RadGrid>
+                                        <asp:HiddenField ID="hdnCurrentEditID" runat="server" Value="-1" />
+                                        <asp:HiddenField ID="hdnCurrentEditHospitalID" runat="server" Value="-1" />
+                                        <asp:HiddenField ID="hdnCurrentEditHospitalName" runat="server" Value="" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="mws-form-row">
                             <div class="mws-panel grid_full">
                                 <div class="mws-panel-header">
@@ -299,60 +359,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="mws-form-row" runat="server" id="divOtherSections">
-
-                            <!--医院设置 -->
-                            <div class="mws-panel grid_8 mws-collapsible" data-collapseid="panel-hospital">
-                                <div class="mws-panel-header">
-                                    <span class="mws-i-24 i-creditcard">医院设置</span>
-                                </div>
-                                <div class="mws-panel-body">
-                                    <div class="mws-panel-content">
-                                        <telerik:RadGrid ID="rgHospitals" runat="server" PageSize="10"
-                                            AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
-                                            MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
-                                            ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                                            OnNeedDataSource="rgHospitals_NeedDataSource" OnEditCommand="rgHospitals_EditCommand"
-                                            OnInsertCommand="rgHospitals_InsertCommand" OnUpdateCommand="rgHospitals_UpdateCommand"
-                                            OnDeleteCommand="rgHospitals_DeleteCommand">
-                                            <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
-                                                ShowHeadersWhenNoRecords="true" BackColor="#fafafa" EditMode="InPlace">
-                                                <CommandItemSettings AddNewRecordText="添加" RefreshText="刷新" />
-                                                <Columns>
-                                                    <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
-                                                    </telerik:GridBoundColumn>
-                                                    <telerik:GridTemplateColumn UniqueName="HospitalName" HeaderText="医院名称" DataField="HospitalName" SortExpression="HospitalName">
-                                                        <ItemTemplate>
-                                                            <span><%# Eval("HospitalName") %></span>
-                                                        </ItemTemplate>
-                                                        <EditItemTemplate>
-                                                            <asp:TextBox ID="txtHospitalName" runat="server" Text='<%# Bind("HospitalName") %>' CssClass="mws-textinput"></asp:TextBox>
-                                                            <asp:RequiredFieldValidator ID="rfvHospitalName" runat="server" ErrorMessage="医院名称必填" CssClass="field-validation-error"
-                                                                ControlToValidate="txtHospitalName"></asp:RequiredFieldValidator>
-                                                            <asp:CustomValidator ID="cvHospitalName" runat="server" ControlToValidate="txtHospitalName" CssClass="field-validation-error"
-                                                                ErrorMessage="医院名称已存在，请重新输入" OnServerValidate="cvHospitalName_ServerValidate"></asp:CustomValidator>
-                                                        </EditItemTemplate>
-                                                    </telerik:GridTemplateColumn>
-                                                    <telerik:GridEditCommandColumn ButtonType="LinkButton" InsertText="保存" EditText="编辑" UpdateText="更新" CancelText="取消" HeaderStyle-Width="80">
-                                                    </telerik:GridEditCommandColumn>
-                                                    <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
-                                                </Columns>
-                                                <NoRecordsTemplate>
-                                                    没有任何数据
-                                                </NoRecordsTemplate>
-                                                <ItemStyle Height="30" />
-                                                <AlternatingItemStyle BackColor="#f2f2f2" />
-                                                <PagerStyle PagerTextFormat="{4} 第{0}页/共{1}页, 第{2}-{3}条 共{5}条"
-                                                    PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
-                                                    FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
-                                            </MasterTableView>
-                                        </telerik:RadGrid>
-                                        <asp:HiddenField ID="hdnCurrentEditID" runat="server" Value="-1" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="mws-button-row">
                             <asp:Button ID="btnSave" runat="server" Text="保存" CssClass="mws-button green" CausesValidation="true" ValidationGroup="vgMaintenance" OnClick="btnSave_Click" />
                             <asp:Button ID="btnDelete" runat="server" Text="删除" CssClass="mws-button orange" CausesValidation="false" OnClick="btnDelete_Click" OnClientClick="return onConfirmDelete();" />
@@ -370,35 +376,16 @@
             padding-left: 5px;
             padding-right: 5px;
         }
-
-        .RadGrid input {
-            height: 28px;
-            border: 1px solid #c5c5c5;
-            padding: 6px 7px;
-            color: #323232;
-            margin: 0;
-            background-color: #ffffff;
-            outline: none;
-            /* CSS 3 */
-            -moz-border-radius: 4px;
-            -webkit-border-radius: 4px;
-            -o-border-radius: 4px;
-            -khtml-border-radius: 4px;
-            border-radius: 4px;
-            box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            -ms-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            -khtml-box-sizing: border-box;
-            -moz-box-shadow: inset 0px 1px 3px rgba(128, 128, 128, 0.1);
-            -o-box-shadow: inset 0px 1px 3px rgba(128, 128, 128, 0.1);
-            -webkit-box-shadow: inset 0px 1px 3px rgba(128, 128, 128, 0.1);
-            -khtml-box-shadow: inset 0px 1px 3px rgba(128, 128, 128, 0.1);
-            box-shadow: inset 0px 1px 3px rgba(128, 128, 128, 0.1);
-        }
     </style>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContent" runat="server">
+    <style>
+        #divGridCombox td, td:first-child {
+            border-color: #36b4cb;
+            border-left-width: 1px;
+            border-left-style: solid;
+        }
+    </style>
     <script type="text/javascript">
 
         function redirectToManagementPage(sender, args) {
@@ -410,6 +397,16 @@
             var currentEntityID = $("#<%= hdnCurrentEntityID.ClientID %>").val();
 
             redirectToPage("Views/Basics/DBContractMaintenance.aspx?EntityID=" + currentEntityID);
+        }
+
+        function onClientBlur(sender, args) {
+            var hdnCurrentEditHospitalName = $("#<%= hdnCurrentEditHospitalName.ClientID %>");
+            hdnCurrentEditHospitalName.val(sender.get_text());
+        }
+
+        function onClientSelectedChanged(sender, args) {
+            var hdnCurrentEditHospitalID = $("#<%= hdnCurrentEditHospitalID.ClientID %>");
+            hdnCurrentEditHospitalID.val(sender.get_value());
         }
 
     </script>

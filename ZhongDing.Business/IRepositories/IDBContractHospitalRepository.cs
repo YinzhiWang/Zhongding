@@ -9,14 +9,14 @@ using ZhongDing.Domain.UISearchObjects;
 
 namespace ZhongDing.Business.IRepositories
 {
-    public interface IHospitalRepository : IBaseRepository<Hospital>, IGenerateDropdownItems
+    public interface IDBContractHospitalRepository : IBaseRepository<DBContractHospital>
     {
         /// <summary>
         /// 获取UI List，不分页
         /// </summary>
         /// <param name="uiSearchObj">The UI search obj.</param>
-        /// <returns>IList{UIHospital}.</returns>
-        IList<UIHospital> GetUIList(UISearchHospital uiSearchObj = null);
+        /// <returns>IList{UIDBContractHospital}.</returns>
+        IList<UIDBContractHospital> GetUIList(UISearchHospital uiSearchObj = null);
 
         /// <summary>
         /// 获取UI List，分页
@@ -25,8 +25,8 @@ namespace ZhongDing.Business.IRepositories
         /// <param name="pageIndex">当前页.</param>
         /// <param name="pageSize">每页条数.</param>
         /// <param name="totalRecords">总记录数.</param>
-        /// <returns>IList{UIHospital}.</returns>
-        IList<UIHospital> GetUIList(UISearchHospital uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
+        /// <returns>IList{UIDBContractHospital}.</returns>
+        IList<UIDBContractHospital> GetUIList(UISearchHospital uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
 
     }
 }

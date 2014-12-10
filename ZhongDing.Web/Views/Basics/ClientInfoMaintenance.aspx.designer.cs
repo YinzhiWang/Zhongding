@@ -112,6 +112,15 @@ namespace ZhongDing.Web.Views.Basics {
         protected global::System.Web.UI.WebControls.CustomValidator cvClientCompany;
         
         /// <summary>
+        /// cvDiffClientCompany control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cvDiffClientCompany;
+        
+        /// <summary>
         /// txtReceiverName control.
         /// </summary>
         /// <remarks>
