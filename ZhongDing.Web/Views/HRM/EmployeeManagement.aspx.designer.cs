@@ -58,6 +58,15 @@ namespace ZhongDing.Web.Views.HRM {
         protected global::Telerik.Web.UI.RadTextBox txtUserName;
         
         /// <summary>
+        /// rcbxDepartment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox rcbxDepartment;
+        
+        /// <summary>
         /// btnSearch control.
         /// </summary>
         /// <remarks>

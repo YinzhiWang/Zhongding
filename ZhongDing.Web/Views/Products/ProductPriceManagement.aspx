@@ -24,6 +24,7 @@
             <telerik:AjaxSetting AjaxControlID="rgProductBasicPrices">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="rgProductBasicPrices" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="hdnBasicPricesCellValueChangedCount" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="btnSearchHighPrice">
@@ -41,6 +42,7 @@
             <telerik:AjaxSetting AjaxControlID="rgProductHighPrices">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="rgProductHighPrices" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="hdnHighPricesCellValueChangedCount" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="btnSearchDBPolicyPrice">
@@ -58,6 +60,7 @@
             <telerik:AjaxSetting AjaxControlID="rgDBPolicyPrices">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="rgDBPolicyPrices" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="hdnDBPolicyPricesCellValueChangedCount" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
         </AjaxSettings>
@@ -98,7 +101,8 @@
                                 AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
                                 MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" Height="480" ShowHeader="true"
                                 ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                                OnNeedDataSource="rgProductBasicPrices_NeedDataSource" OnBatchEditCommand="rgProductBasicPrices_BatchEditCommand">
+                                OnNeedDataSource="rgProductBasicPrices_NeedDataSource" OnBatchEditCommand="rgProductBasicPrices_BatchEditCommand"
+                                ClientSettings-ClientEvents-OnBatchEditCellValueChanged="onBasicPricesCellValueChanged">
                                 <ValidationSettings EnableValidation="true" />
                                 <MasterTableView Width="100%" DataKeyNames="ID,ProductID,ProductSpecificationID" CommandItemDisplay="Top" EditMode="Batch"
                                     ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
@@ -210,7 +214,8 @@
                                 AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
                                 MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" Height="480" ShowHeader="true"
                                 ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                                OnNeedDataSource="rgProductHighPrices_NeedDataSource" OnBatchEditCommand="rgProductHighPrices_BatchEditCommand">
+                                OnNeedDataSource="rgProductHighPrices_NeedDataSource" OnBatchEditCommand="rgProductHighPrices_BatchEditCommand"
+                                ClientSettings-ClientEvents-OnBatchEditCellValueChanged="onHighPricesCellValueChanged">
                                 <MasterTableView Width="100%" DataKeyNames="ID,ProductID,ProductSpecificationID" CommandItemDisplay="Top" EditMode="Batch"
                                     ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                                     <BatchEditingSettings EditType="Cell" />
@@ -352,7 +357,8 @@
                                 AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
                                 MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" Height="480" ShowHeader="true"
                                 ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                                OnNeedDataSource="rgDBPolicyPrices_NeedDataSource" OnBatchEditCommand="rgDBPolicyPrices_BatchEditCommand">
+                                OnNeedDataSource="rgDBPolicyPrices_NeedDataSource" OnBatchEditCommand="rgDBPolicyPrices_BatchEditCommand"
+                                ClientSettings-ClientEvents-OnBatchEditCellValueChanged="onDBPolicyPricesCellValueChanged">
                                 <MasterTableView Width="100%" DataKeyNames="ID,ProductID,ProductSpecificationID" CommandItemDisplay="Top" EditMode="Batch"
                                     ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                                     <BatchEditingSettings EditType="Cell" />
@@ -470,6 +476,10 @@
         </div>
     </div>
 
+    <asp:HiddenField ID="hdnBasicPricesCellValueChangedCount" runat="server" Value="0" />
+    <asp:HiddenField ID="hdnHighPricesCellValueChangedCount" runat="server" Value="0" />
+    <asp:HiddenField ID="hdnDBPolicyPricesCellValueChangedCount" runat="server" Value="0" />
+
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContent" runat="server">
     <script type="text/javascript">
@@ -485,6 +495,72 @@
             }
         }
 
+        function onBasicPricesCellValueChanged(sender, args) {
+            //debugger;
+
+            var hdnGridCellValueChangedCount = $("#<%=hdnBasicPricesCellValueChangedCount.ClientID%>");
+
+            var oChangedCount = parseInt(hdnGridCellValueChangedCount.val(), 0);
+
+            if (args.get_editorValue() != args.get_cellValue())
+                oChangedCount = oChangedCount + 1;
+            else
+                oChangedCount = oChangedCount - 1;
+
+            hdnGridCellValueChangedCount.val(oChangedCount);
+        }
+
+        function onHighPricesCellValueChanged(sender, args) {
+            //debugger;
+
+            var hdnGridCellValueChangedCount = $("#<%=hdnHighPricesCellValueChangedCount.ClientID%>");
+
+            var oChangedCount = parseInt(hdnGridCellValueChangedCount.val(), 0);
+
+            if (args.get_editorValue() != args.get_cellValue())
+                oChangedCount = oChangedCount + 1;
+            else
+                oChangedCount = oChangedCount - 1;
+
+            hdnGridCellValueChangedCount.val(oChangedCount);
+        }
+
+        function onDBPolicyPricesCellValueChanged(sender, args) {
+            //debugger;
+
+            var hdnGridCellValueChangedCount = $("#<%=hdnDBPolicyPricesCellValueChangedCount.ClientID%>");
+
+            var oChangedCount = parseInt(hdnGridCellValueChangedCount.val(), 0);
+
+            if (args.get_editorValue() != args.get_cellValue())
+                oChangedCount = oChangedCount + 1;
+            else
+                oChangedCount = oChangedCount - 1;
+
+            hdnGridCellValueChangedCount.val(oChangedCount);
+        }
+
+        window.onbeforeunload = function (e) {
+            //debugger;
+            var basicPricesCellValueChangedCount = parseInt($("#<%= hdnBasicPricesCellValueChangedCount.ClientID%>").val(), 0);
+            var highPricesCellValueChangedCount = parseInt($("#<%= hdnHighPricesCellValueChangedCount.ClientID%>").val(), 0);
+            var dBPolicyPricesCellValueChangedCount = parseInt($("#<%= hdnDBPolicyPricesCellValueChangedCount.ClientID%>").val(), 0);
+
+            if (basicPricesCellValueChangedCount > 0
+                || highPricesCellValueChangedCount > 0
+                || dBPolicyPricesCellValueChangedCount > 0) {
+
+                e.preventDefault();
+
+                var returnValue = "价格信息还没有保存";
+
+                if ($telerik.isIE)
+                    returnValue+=", 确定要离开此页吗？"
+
+                window.event.returnValue = returnValue;
+            }
+        }
+
         $(document).ready(function () {
 
             BrowserDetect.init();
@@ -492,5 +568,6 @@
             resetTabStripCss();
 
         });
+
     </script>
 </asp:Content>

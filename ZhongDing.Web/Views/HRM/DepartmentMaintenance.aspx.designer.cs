@@ -193,13 +193,13 @@ namespace ZhongDing.Web.Views.HRM {
         protected global::System.Web.UI.WebControls.HiddenField hdnCurrentEntityID;
         
         /// <summary>
-        /// hdnIsGridCellValueChanged control.
+        /// hdnGridCellValueChangedCount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnIsGridCellValueChanged;
+        protected global::System.Web.UI.WebControls.HiddenField hdnGridCellValueChangedCount;
         
         /// <summary>
         /// Master property.

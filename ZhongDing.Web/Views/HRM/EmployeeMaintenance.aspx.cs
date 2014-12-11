@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Telerik.Web.UI;
 using ZhongDing.Business.IRepositories;
 using ZhongDing.Business.Repositories;
 using ZhongDing.Common;
@@ -55,6 +56,8 @@ namespace ZhongDing.Web.Views.HRM
             rcbxDepartment.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
             rcbxDepartment.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
             rcbxDepartment.DataBind();
+
+            rcbxDepartment.Items.Insert(0, new RadComboBoxItem("", ""));
         }
 
         private void LoadCurrentEntity()
@@ -321,6 +324,8 @@ namespace ZhongDing.Web.Views.HRM
 
                 if (!string.IsNullOrEmpty(rcbxDepartment.SelectedValue))
                     user.DepartmentID = int.Parse(rcbxDepartment.SelectedValue);
+                else
+                    user.DepartmentID = null;
 
                 user.Position = txtPosition.Text.Trim();
                 user.EnrollDate = rdpEnrollDate.SelectedDate;

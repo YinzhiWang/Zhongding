@@ -50,24 +50,24 @@ $(document).ready(function () {
 	        parent.addClass("active");
 	    }
 	    else {
-	        $("div#mws-navigation ul li ul li").each(function (i, e) {
-	            if ($(this).attr("data-level") == parentLevel) {
-	                $(this).removeClass("active-sub-nav");
-	            }
-	        });
+	        //$("div#mws-navigation ul li ul li").each(function (i, e) {
+	        //    if ($(this).attr("data-level") == parentLevel) {
+	        //        $(this).removeClass("active-sub-nav");
+	        //    }
+	        //});
 
-	        var curRootNav = parent.parent().parent();
+	        //var curRootNav = parent.parent().parent();
 
-	        if (curRootNav && !curRootNav.hasClass("active")) {
+	        //if (curRootNav && !curRootNav.hasClass("active")) {
 
-	            $("div#mws-navigation ul li[data-level='1']").each(function (i, e) {
-	                $(this).removeClass("active");
-	            });
+	        //    $("div#mws-navigation ul li[data-level='1']").each(function (i, e) {
+	        //        $(this).removeClass("active");
+	        //    });
 
-	            curRootNav.addClass("active");
-	        }
+	        //    curRootNav.addClass("active");
+	        //}
 
-	        parent.addClass("active-sub-nav");
+	        //parent.addClass("active-sub-nav");
 	    }
 
 	    if ($(this).next('ul').size() !== 0) {

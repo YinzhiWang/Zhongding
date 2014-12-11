@@ -38,11 +38,23 @@
             <div class="mws-panel-body">
                 <table runat="server" id="tblSearch" class="leftmargin10">
                     <tr class="height40">
-                        <td class="middle-td leftpadding10">
-                            <telerik:RadTextBox runat="server" ID="txtFullName" Label="员工姓名：" LabelWidth="75" Width="200" MaxLength="100"></telerik:RadTextBox>
+                        <th class="width70 middle-td">员工姓名：</th>
+                        <td class="middle-td width15-percent">
+                            <telerik:RadTextBox runat="server" ID="txtFullName" Width="100%" MaxLength="100"></telerik:RadTextBox>
                         </td>
-                        <td class="middle-td leftpadding10">
-                            <telerik:RadTextBox runat="server" ID="txtUserName" Label="登录名：" LabelWidth="60" Width="200" MaxLength="100"></telerik:RadTextBox>
+                        <th class="width70 middle-td right-td">登录名：</th>
+                        <td class="middle-td width15-percent">
+                            <telerik:RadTextBox runat="server" ID="txtUserName" Width="100%" MaxLength="100"></telerik:RadTextBox>
+                        </td>
+                        <td class="width60"></td>
+                        <td></td>
+                    </tr>
+                    <tr class="height40">
+                        <th class="width70 middle-td right-td">所属部门：</th>
+                        <td class="middle-td width40-percent" colspan="3">
+                            <telerik:RadComboBox runat="server" ID="rcbxDepartment" Filter="Contains"
+                                AllowCustomText="true" Height="160px" Width="100%" EmptyMessage="--请选择--">
+                            </telerik:RadComboBox>
                         </td>
                         <td class="middle-td leftpadding20">
                             <asp:Button ID="btnSearch" runat="server" Text="查询" CssClass="mws-button green" OnClick="btnSearch_Click" />

@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 using ZhongDing.Business.IRepositories;
 using ZhongDing.Business.Repositories;
+using ZhongDing.Common;
 using ZhongDing.Common.Enums;
 using ZhongDing.Domain.UISearchObjects;
 
@@ -14,20 +15,60 @@ namespace ZhongDing.Web.Views.HRM
 {
     public partial class EmployeeManagement : BasePage
     {
+        #region Members
+
+        private IDepartmentRepository _PageDepartmentRepository;
+        private IDepartmentRepository PageDepartmentRepository
+        {
+            get
+            {
+                if (_PageDepartmentRepository == null)
+                    _PageDepartmentRepository = new DepartmentRepository();
+
+                return _PageDepartmentRepository;
+            }
+        }
+
+        #endregion
+
         protected void Page_Load(object sender, EventArgs e)
         {
             this.Master.MenuItemID = (int)EMenuItem.EmployeeManage;
+
+            if (!IsPostBack)
+            {
+                BindDepartments();
+            }
         }
 
         #region Private Methods
+
+        private void BindDepartments()
+        {
+            var departments = PageDepartmentRepository.GetDropdownItems();
+
+            rcbxDepartment.DataSource = departments;
+            rcbxDepartment.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+            rcbxDepartment.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+            rcbxDepartment.DataBind();
+
+            rcbxDepartment.Items.Insert(0, new RadComboBoxItem("", ""));
+        }
 
         private void BindEntities(bool isNeedRebind)
         {
             UISearchUser uiSearchObj = new UISearchUser()
             {
                 FullName = txtFullName.Text.Trim(),
-                UserName = txtUserName.Text.Trim()
+                UserName = txtUserName.Text.Trim(),
             };
+
+            if (!string.IsNullOrEmpty(rcbxDepartment.SelectedValue))
+            {
+                int departmentID;
+                if (int.TryParse(rcbxDepartment.SelectedValue, out departmentID))
+                    uiSearchObj.DepartmentID = departmentID;
+            }
 
             int totalRecords;
 

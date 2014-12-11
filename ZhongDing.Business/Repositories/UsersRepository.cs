@@ -48,6 +48,8 @@ namespace ZhongDing.Business.Repositories
 
             List<Expression<Func<Users, bool>>> whereFuncs = new List<Expression<Func<Users, bool>>>();
 
+            whereFuncs.Add(x => x.UserID != GlobalConst.DEFAULT_SYSTEM_ADMIN_USERID);//不显示系统内置的管理员账号
+
             if (uiSearchObj != null)
             {
                 if (uiSearchObj.IncludeItemValues != null

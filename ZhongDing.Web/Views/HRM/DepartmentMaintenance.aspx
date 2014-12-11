@@ -119,7 +119,7 @@
                                                 ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                                                 <DetailTables>
                                                     <telerik:GridTableView DataKeyNames="ID" EditMode="Batch" CommandItemDisplay="Top"
-                                                        ShowHeadersWhenNoRecords="true">
+                                                        ShowHeadersWhenNoRecords="true" ClientDataKeyNames="ID,MarketDivisionID">
                                                         <ParentTableRelation>
                                                             <telerik:GridRelationFields MasterKeyField="ID" DetailKeyField="MarketDivisionID" />
                                                         </ParentTableRelation>
@@ -356,7 +356,7 @@
 
     <asp:HiddenField ID="hdnCurrentEntityID" runat="server" Value="-1" />
 
-    <asp:HiddenField ID="hdnIsGridCellValueChanged" runat="server" Value="false" />
+    <asp:HiddenField ID="hdnGridCellValueChangedCount" runat="server" Value="0" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContent" runat="server">
     <script type="text/javascript">
@@ -407,27 +407,37 @@
         }
 
         function onBatchEditCellValueChanged(sender, args) {
+            //debugger;
+            var hdnGridCellValueChangedCount = $("#<%=hdnGridCellValueChangedCount.ClientID%>");
 
-            if (args.get_editorValue() != args.get_cellValue()) {
-                $("#<%=hdnIsGridCellValueChanged.ClientID%>").val(true);
+            var oChangedCount = parseInt(hdnGridCellValueChangedCount.val(), 0);
+
+            if (args.get_editorValue() != args.get_cellValue())
+                oChangedCount = oChangedCount + 1;
+            else
+                oChangedCount = oChangedCount - 1;
+
+            hdnGridCellValueChangedCount.val(oChangedCount);
         }
-    }
 
-    //window.onbeforeunload = function (e) {
-        //debugger;
+        window.onbeforeunload = function (e) {
+            var gridCellValueChangedCount = parseInt($("#<%= hdnGridCellValueChangedCount.ClientID%>").val(), 0);
+           
+            if (gridCellValueChangedCount > 0) {
 
-        //var isGridCellValueChanged = $("#<%=hdnIsGridCellValueChanged.ClientID%>").val();
+                e.preventDefault();
 
-        //if (isGridCellValueChanged === "true") {
-            //e.preventDefault();
+                var returnValue = "产品线设置还没有保存";
 
-            //window.event.returnValue = "确认离开吗？";
-        //}
-    //}
+                if ($telerik.isIE)
+                    returnValue += ", 确定要离开此页吗？"
 
+                window.event.returnValue = returnValue;
+            }
+        }
 
-    $(document).ready(function () {
-        currentEntityID = $("#<%= hdnCurrentEntityID.ClientID %>").val();
+        $(document).ready(function () {
+            currentEntityID = $("#<%= hdnCurrentEntityID.ClientID %>").val();
     });
 
     </script>

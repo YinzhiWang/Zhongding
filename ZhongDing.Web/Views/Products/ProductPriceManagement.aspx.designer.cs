@@ -211,6 +211,33 @@ namespace ZhongDing.Web.Views.Products {
         protected global::Telerik.Web.UI.RadGrid rgDBPolicyPrices;
         
         /// <summary>
+        /// hdnBasicPricesCellValueChangedCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnBasicPricesCellValueChangedCount;
+        
+        /// <summary>
+        /// hdnHighPricesCellValueChangedCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnHighPricesCellValueChangedCount;
+        
+        /// <summary>
+        /// hdnDBPolicyPricesCellValueChangedCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnDBPolicyPricesCellValueChangedCount;
+        
+        /// <summary>
         /// Master property.
         /// </summary>
         /// <remarks>

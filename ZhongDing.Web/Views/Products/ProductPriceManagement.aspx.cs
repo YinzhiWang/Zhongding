@@ -101,6 +101,8 @@ namespace ZhongDing.Web.Views.Products
 
             if (isNeedRebind)
                 rgProductBasicPrices.Rebind();
+
+            hdnBasicPricesCellValueChangedCount.Value = "0";
         }
 
         protected void rgProductBasicPrices_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -188,6 +190,8 @@ namespace ZhongDing.Web.Views.Products
                 }
 
                 PageProductBasicPriceRepository.Save();
+
+                hdnBasicPricesCellValueChangedCount.Value = "0";
             }
         }
 
@@ -225,6 +229,8 @@ namespace ZhongDing.Web.Views.Products
 
             if (isNeedRebind)
                 rgProductHighPrices.Rebind();
+
+            hdnHighPricesCellValueChangedCount.Value = "0";
         }
 
         protected void rgProductHighPrices_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
@@ -350,6 +356,8 @@ namespace ZhongDing.Web.Views.Products
                 }
 
                 PageProductHighPriceRepository.Save();
+
+                hdnHighPricesCellValueChangedCount.Value = "0";
             }
         }
 
@@ -387,6 +395,8 @@ namespace ZhongDing.Web.Views.Products
 
             if (isNeedRebind)
                 rgDBPolicyPrices.Rebind();
+
+            hdnDBPolicyPricesCellValueChangedCount.Value = "0";
         }
 
         protected void rgDBPolicyPrices_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
@@ -513,6 +523,8 @@ namespace ZhongDing.Web.Views.Products
                 }
 
                 PageProductDBPolicyPriceRepository.Save();
+
+                hdnDBPolicyPricesCellValueChangedCount.Value = "0";
             }
         }
 

@@ -306,6 +306,7 @@ namespace ZhongDing.Web.Views.HRM
             rgDeptMarketDivisions.DataSource = deptMarketDivisions;
             rgDeptMarketDivisions.VirtualItemCount = totalRecords;
 
+            hdnGridCellValueChangedCount.Value = "0";
         }
 
         protected void rgDeptMarketDivisions_DeleteCommand(object sender, GridCommandEventArgs e)
@@ -355,6 +356,8 @@ namespace ZhongDing.Web.Views.HRM
 
                 e.DetailTableView.DataSource = childEntities;
             }
+
+            hdnGridCellValueChangedCount.Value = "0";
         }
 
         protected void rgDeptMarketDivisions_BatchEditCommand(object sender, GridBatchEditingEventArgs e)
@@ -434,6 +437,7 @@ namespace ZhongDing.Web.Views.HRM
 
                 UpdateDeptProductRecord();
 
+                hdnGridCellValueChangedCount.Value = "0";
             }
         }
 
