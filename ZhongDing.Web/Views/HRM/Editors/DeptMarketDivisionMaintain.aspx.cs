@@ -137,6 +137,8 @@ namespace ZhongDing.Web.Views.HRM.Editors
             rcbxDepartmentUsers.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
             rcbxDepartmentUsers.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
             rcbxDepartmentUsers.DataBind();
+
+            rcbxDepartmentUsers.Items.Insert(0, new RadComboBoxItem("", ""));
         }
 
         private void LoadCurrentEntity()

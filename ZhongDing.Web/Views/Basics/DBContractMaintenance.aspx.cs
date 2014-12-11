@@ -149,6 +149,8 @@ namespace ZhongDing.Web.Views.Basics
             rcbxClientUser.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
             rcbxClientUser.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
             rcbxClientUser.DataBind();
+
+            rcbxClientUser.Items.Insert(0, new RadComboBoxItem("", ""));
         }
 
         private void BindDepartments()
@@ -159,6 +161,8 @@ namespace ZhongDing.Web.Views.Basics
             rcbxDepartment.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
             rcbxDepartment.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
             rcbxDepartment.DataBind();
+
+            rcbxDepartment.Items.Insert(0, new RadComboBoxItem("", ""));
         }
 
         private void BindInChargeUsers(int departmentID)
@@ -190,6 +194,8 @@ namespace ZhongDing.Web.Views.Basics
             rcbxProduct.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
             rcbxProduct.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
             rcbxProduct.DataBind();
+
+            rcbxProduct.Items.Insert(0, new RadComboBoxItem("", ""));
         }
 
         private void BindProductSpecifications(int productID)

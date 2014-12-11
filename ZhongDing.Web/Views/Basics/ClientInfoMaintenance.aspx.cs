@@ -88,6 +88,8 @@ namespace ZhongDing.Web.Views.Basics
             rcbxClientUser.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
             rcbxClientUser.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
             rcbxClientUser.DataBind();
+
+            rcbxClientUser.Items.Insert(0, new RadComboBoxItem("", ""));
         }
 
         private void BindClientCompanies()
@@ -97,6 +99,8 @@ namespace ZhongDing.Web.Views.Basics
             rcbxClientCompany.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
             rcbxClientCompany.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
             rcbxClientCompany.DataBind();
+
+            rcbxClientCompany.Items.Insert(0, new RadComboBoxItem("", ""));
         }
 
         private void LoadClientInfo()

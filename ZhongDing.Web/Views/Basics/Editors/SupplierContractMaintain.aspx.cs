@@ -245,6 +245,8 @@ namespace ZhongDing.Web.Views.Basics.Editors
             rcbxProduct.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
             rcbxProduct.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
             rcbxProduct.DataBind();
+
+            rcbxProduct.Items.Insert(0, new RadComboBoxItem("", ""));
         }
 
         private void BindProductSpecifications(int? productID)
@@ -261,6 +263,8 @@ namespace ZhongDing.Web.Views.Basics.Editors
             rcbxProductSpecification.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
             rcbxProductSpecification.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
             rcbxProductSpecification.DataBind();
+
+            rcbxProductSpecification.Items.Insert(0, new RadComboBoxItem("", ""));
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
