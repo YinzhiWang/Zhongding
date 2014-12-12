@@ -55,6 +55,9 @@
           <EntitySet Name="UserBonus" EntityType="DbModel.Store.UserBonus" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Users" EntityType="DbModel.Store.Users" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Warehouse" EntityType="DbModel.Store.Warehouse" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Workflow" EntityType="DbModel.Store.Workflow" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="WorkflowStep" EntityType="DbModel.Store.WorkflowStep" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="WorkflowStepUser" EntityType="DbModel.Store.WorkflowStepUser" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK__aspnet_Me__UserI__10566F31" Association="DbModel.Store.FK__aspnet_Me__UserI__10566F31">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
@@ -330,6 +333,18 @@
           <AssociationSet Name="FK_Warehouse_SaleType" Association="DbModel.Store.FK_Warehouse_SaleType">
             <End Role="SaleType" EntitySet="SaleType" />
             <End Role="Warehouse" EntitySet="Warehouse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkflowStep_Workflow" Association="DbModel.Store.FK_WorkflowStep_Workflow">
+            <End Role="Workflow" EntitySet="Workflow" />
+            <End Role="WorkflowStep" EntitySet="WorkflowStep" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkflowStepUser_Users" Association="DbModel.Store.FK_WorkflowStepUser_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="WorkflowStepUser" EntitySet="WorkflowStepUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkflowStepUser_WorkflowStep" Association="DbModel.Store.FK_WorkflowStepUser_WorkflowStep">
+            <End Role="WorkflowStep" EntitySet="WorkflowStep" />
+            <End Role="WorkflowStepUser" EntitySet="WorkflowStepUser" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccountType">
@@ -1058,6 +1073,37 @@
           <Property Name="Address" Type="nvarchar" MaxLength="255" />
           <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
           <Property Name="SaleTypeID" Type="int" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="Workflow">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="WorkflowName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkflowStep">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="WorkflowID" Type="int" Nullable="false" />
+          <Property Name="StepName" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkflowStepUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="WorkflowStepID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
@@ -1892,6 +1938,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WorkflowStep_Workflow">
+          <End Role="Workflow" Type="DbModel.Store.Workflow" Multiplicity="1" />
+          <End Role="WorkflowStep" Type="DbModel.Store.WorkflowStep" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workflow">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WorkflowStep">
+              <PropertyRef Name="WorkflowID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkflowStepUser_Users">
+          <End Role="Users" Type="DbModel.Store.Users" Multiplicity="1" />
+          <End Role="WorkflowStepUser" Type="DbModel.Store.WorkflowStepUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="WorkflowStepUser">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkflowStepUser_WorkflowStep">
+          <End Role="WorkflowStep" Type="DbModel.Store.WorkflowStep" Multiplicity="1" />
+          <End Role="WorkflowStepUser" Type="DbModel.Store.WorkflowStepUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStep">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WorkflowStepUser">
+              <PropertyRef Name="WorkflowStepID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -2221,6 +2303,21 @@
           <AssociationSet Name="FK_DBContractHospital_Hospital" Association="DbModel.FK_DBContractHospital_Hospital">
             <End Role="Hospital" EntitySet="Hospital" />
             <End Role="DBContractHospital" EntitySet="DBContractHospital" />
+          </AssociationSet>
+          <EntitySet Name="WorkflowStepUser" EntityType="DbModel.WorkflowStepUser" />
+          <AssociationSet Name="FK_WorkflowStepUser_Users" Association="DbModel.FK_WorkflowStepUser_Users">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="WorkflowStepUser" EntitySet="WorkflowStepUser" />
+          </AssociationSet>
+          <EntitySet Name="WorkflowStep" EntityType="DbModel.WorkflowStep" />
+          <AssociationSet Name="FK_WorkflowStepUser_WorkflowStep" Association="DbModel.FK_WorkflowStepUser_WorkflowStep">
+            <End Role="WorkflowStep" EntitySet="WorkflowStep" />
+            <End Role="WorkflowStepUser" EntitySet="WorkflowStepUser" />
+          </AssociationSet>
+          <EntitySet Name="Workflow" EntityType="DbModel.Workflow" />
+          <AssociationSet Name="FK_WorkflowStep_Workflow" Association="DbModel.FK_WorkflowStep_Workflow">
+            <End Role="Workflow" EntitySet="Workflow" />
+            <End Role="WorkflowStep" EntitySet="WorkflowStep" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
@@ -2626,6 +2723,7 @@
           <NavigationProperty Name="Department1" Relationship="DbModel.FK_Users_Department" FromRole="Users" ToRole="Department" />
           <NavigationProperty Name="DeptMarketDivision" Relationship="DbModel.FK_DeptMarketDivision_Users" FromRole="Users" ToRole="DeptMarketDivision" />
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_Users" FromRole="Users" ToRole="DBContract" />
+          <NavigationProperty Name="WorkflowStepUser" Relationship="DbModel.FK_WorkflowStepUser_Users" FromRole="Users" ToRole="WorkflowStepUser" />
         </EntityType>
         <Association Name="FK_BankAccount_AccountType">
           <End Type="DbModel.AccountType" Role="AccountType" Multiplicity="0..1" />
@@ -3921,6 +4019,78 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="WorkflowStepUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="WorkflowStepID" Nullable="false" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Users" Relationship="DbModel.FK_WorkflowStepUser_Users" FromRole="WorkflowStepUser" ToRole="Users" />
+          <NavigationProperty Name="WorkflowStep" Relationship="DbModel.FK_WorkflowStepUser_WorkflowStep" FromRole="WorkflowStepUser" ToRole="WorkflowStep" />
+        </EntityType>
+        <Association Name="FK_WorkflowStepUser_Users">
+          <End Type="DbModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="DbModel.WorkflowStepUser" Role="WorkflowStepUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="WorkflowStepUser">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="WorkflowStep">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="WorkflowID" Nullable="false" />
+          <Property Type="String" Name="StepName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <NavigationProperty Name="WorkflowStepUser" Relationship="DbModel.FK_WorkflowStepUser_WorkflowStep" FromRole="WorkflowStep" ToRole="WorkflowStepUser" />
+          <NavigationProperty Name="Workflow" Relationship="DbModel.FK_WorkflowStep_Workflow" FromRole="WorkflowStep" ToRole="Workflow" />
+        </EntityType>
+        <Association Name="FK_WorkflowStepUser_WorkflowStep">
+          <End Type="DbModel.WorkflowStep" Role="WorkflowStep" Multiplicity="1" />
+          <End Type="DbModel.WorkflowStepUser" Role="WorkflowStepUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStep">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WorkflowStepUser">
+              <PropertyRef Name="WorkflowStepID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Workflow">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="WorkflowName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsActive" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <NavigationProperty Name="WorkflowStep" Relationship="DbModel.FK_WorkflowStep_Workflow" FromRole="Workflow" ToRole="WorkflowStep" />
+        </EntityType>
+        <Association Name="FK_WorkflowStep_Workflow">
+          <End Type="DbModel.Workflow" Role="Workflow" Multiplicity="1" />
+          <End Type="DbModel.WorkflowStep" Role="WorkflowStep" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workflow">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WorkflowStep">
+              <PropertyRef Name="WorkflowID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -4704,6 +4874,40 @@
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="HospitalName" ColumnName="HospitalName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkflowStepUser">
+            <EntityTypeMapping TypeName="DbModel.WorkflowStepUser">
+              <MappingFragment StoreEntitySet="WorkflowStepUser">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="WorkflowStepID" ColumnName="WorkflowStepID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkflowStep">
+            <EntityTypeMapping TypeName="DbModel.WorkflowStep">
+              <MappingFragment StoreEntitySet="WorkflowStep">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="StepName" ColumnName="StepName" />
+                <ScalarProperty Name="WorkflowID" ColumnName="WorkflowID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Workflow">
+            <EntityTypeMapping TypeName="DbModel.Workflow">
+              <MappingFragment StoreEntitySet="Workflow">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="WorkflowName" ColumnName="WorkflowName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

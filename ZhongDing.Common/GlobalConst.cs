@@ -120,7 +120,12 @@ namespace ZhongDing.Common
             /// <summary>
             /// 提示消息：参数错误，窗口将自动关闭
             /// </summary>
-            public static readonly string MSG_PARAMETER_ERROR = "参数错误，窗口将自动关闭";
+            public static readonly string MSG_PARAMETER_ERROR_CLOSE_WIN = "参数错误，窗口将自动关闭";
+
+            /// <summary>
+            /// 提示消息：参数错误，页面将自动跳转
+            /// </summary>
+            public static readonly string MSG_PARAMETER_ERROR_REDIRECT = "参数错误，页面将自动跳转";
 
         }
 

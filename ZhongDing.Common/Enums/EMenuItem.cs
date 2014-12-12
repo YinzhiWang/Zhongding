@@ -91,7 +91,12 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 员工管理
         /// </summary>
-        EmployeeManage
+        EmployeeManage,
+
+        /// <summary>
+        /// 工作流权限管理
+        /// </summary>
+        WorkflowPermissionManage
 
     }
 }

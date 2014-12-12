@@ -109,11 +109,6 @@
                         <div class="float-left width55-percent">
                             <telerik:RadListBox runat="server" ID="lbxAllDeptMarkets" AllowTransfer="true" AllowTransferOnDoubleClick="true"
                                 TransferMode="Move" TransferToID="lbxSelectedDeptMarkets" Width="98%" Height="200">
-                                <Items>
-                                    <telerik:RadListBoxItem Text="Test1" Value="1" />
-                                    <telerik:RadListBoxItem Text="Test2" Value="2" />
-                                    <telerik:RadListBoxItem Text="Test3" Value="3" />
-                                </Items>
                                 <HeaderTemplate>
                                     <table class="width100-percent">
                                         <tr>

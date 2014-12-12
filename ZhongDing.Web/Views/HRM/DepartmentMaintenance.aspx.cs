@@ -95,6 +95,7 @@ namespace ZhongDing.Web.Views.HRM
         protected void Page_Load(object sender, EventArgs e)
         {
             this.Master.MenuItemID = (int)EMenuItem.DepartmentManage;
+            this.Master.IsNeedAutoHideLoading = true;
 
             if (!IsPostBack)
             {

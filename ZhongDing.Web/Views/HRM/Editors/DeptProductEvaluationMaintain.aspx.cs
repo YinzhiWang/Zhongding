@@ -72,7 +72,7 @@ namespace ZhongDing.Web.Views.HRM.Editors
             {
                 this.Master.BaseNotification.OnClientHidden = "onError";
                 this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
-                this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_PARAMETER_ERROR);
+                this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_PARAMETER_ERROR_CLOSE_WIN);
 
                 return;
             }

@@ -215,6 +215,15 @@
     <Compile Include="Models\Warehouse.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Workflow.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WorkflowStep.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WorkflowStepUser.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIObjects\UIAccountType.cs" />
     <Compile Include="UIObjects\UIBankAccount.cs" />
@@ -251,6 +260,7 @@
     <Compile Include="UIObjects\UISupplierContractFile.cs" />
     <Compile Include="UIObjects\UIUser.cs" />
     <Compile Include="UIObjects\UIWarehouse.cs" />
+    <Compile Include="UIObjects\UIWorkflowStep.cs" />
     <Compile Include="UISearchObjects\UISearchBankAccount.cs" />
     <Compile Include="UISearchObjects\UISearchBase.cs" />
     <Compile Include="UISearchObjects\UISearchCertificate.cs" />
@@ -276,6 +286,7 @@
     <Compile Include="UISearchObjects\UISearchSupplierContractFile.cs" />
     <Compile Include="UISearchObjects\UISearchUser.cs" />
     <Compile Include="UISearchObjects\UISearchWarehouse.cs" />
+    <Compile Include="UISearchObjects\UISearchWorkflowStep.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

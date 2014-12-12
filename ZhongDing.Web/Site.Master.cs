@@ -28,6 +28,22 @@ namespace ZhongDing.Web
             }
         }
 
+        private bool _IsNeedAutoHideLoading;
+        /// <summary>
+        /// 是否需要自动隐藏loading遮罩层
+        /// </summary>
+        public bool IsNeedAutoHideLoading
+        {
+            get
+            {
+                return _IsNeedAutoHideLoading;
+            }
+            set
+            {
+                _IsNeedAutoHideLoading = value;
+            }
+        }
+
         /// <summary>
         /// 公用的提示控件
         /// </summary>

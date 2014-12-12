@@ -90,7 +90,7 @@
                                 <ul class="hide">
                                     <li data-level="2" data-menuitemid="31"><a href="javascript:void(0);" onclick="redirectToPage('Views/HRM/DepartmentManagement.aspx');">部门管理</a></li>
                                     <li data-level="2" data-menuitemid="32"><a href="javascript:void(0);" onclick="redirectToPage('Views/HRM/EmployeeManagement.aspx');">员工管理</a></li>
-                                    <li data-level="2"><a href="#">权限管理</a></li>
+                                    <li data-level="2" data-menuitemid="33"><a href="javascript:void(0);" onclick="redirectToPage('Views/HRM/WorkflowPermissionManagement.aspx');">权限管理</a></li>
                                     <li data-level="2"><a href="#">报销类型管理</a></li>
                                 </ul>
                             </li>
@@ -277,10 +277,14 @@
                     try {
                         $.showLoading();
 
-                        var loadingTimeout = window.setTimeout(function (e) {
-                            $.hideLoading();
-                            window.clearTimeout(loadingTimeout);
-                        }, 1000);
+                        var isNeedHideLoading = "<%= this.IsNeedAutoHideLoading%>";
+
+                        if (isNeedHideLoading.toLowerCase() === "true") {
+                            var loadingTimeout = window.setTimeout(function (e) {
+                                $.hideLoading();
+                                window.clearTimeout(loadingTimeout);
+                            }, 200);
+                        }
 
                         if (url.indexOf("http:") >= 0 || url.indexOf("https:") >= 0)
                             window.location.href = url;

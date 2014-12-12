@@ -340,8 +340,6 @@
     <Build Include="dbo\Tables\DeptMarketProduct.sql" />
     <Build Include="dbo\Tables\DeptMarketDivision.sql" />
     <Build Include="dbo\Tables\ClientCompanyCertificate.sql" />
-    <Build Include="dbo\Tables\ClientOrderAppDetail.sql" />
-    <Build Include="dbo\Tables\ClientOrderApplication.sql" />
     <Build Include="dbo\Tables\DepartmentProductRecord.sql" />
     <Build Include="dbo\Tables\DepartmentProductSalesBonus.sql" />
     <Build Include="dbo\Tables\DepartmentProductSalesPlan.sql" />
@@ -353,6 +351,8 @@
     <Build Include="dbo\Tables\ApplicationPayment.sql" />
     <Build Include="dbo\Tables\ApplicationNotes.sql" />
     <Build Include="dbo\Tables\DBContractHospital.sql" />
+    <Build Include="dbo\Tables\ProcureOrderApplication.sql" />
+    <Build Include="dbo\Tables\ProcureOrderAppDetail.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

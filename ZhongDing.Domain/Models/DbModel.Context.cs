@@ -74,5 +74,8 @@ namespace ZhongDing.Domain.Models
         public DbSet<DBContract> DBContract { get; set; }
         public DbSet<DBContractHospital> DBContractHospital { get; set; }
         public DbSet<Hospital> Hospital { get; set; }
+        public DbSet<WorkflowStepUser> WorkflowStepUser { get; set; }
+        public DbSet<WorkflowStep> WorkflowStep { get; set; }
+        public DbSet<Workflow> Workflow { get; set; }
     }
 }

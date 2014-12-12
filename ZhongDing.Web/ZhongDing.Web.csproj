@@ -2602,6 +2602,8 @@
     <Content Include="Views\HRM\Editors\DeptProductEvaluationMaintain.aspx" />
     <Content Include="Views\HRM\EmployeeMaintenance.aspx" />
     <Content Include="Views\HRM\EmployeeManagement.aspx" />
+    <Content Include="Views\HRM\WorkflowPermissionMaintenance.aspx" />
+    <Content Include="Views\HRM\WorkflowPermissionManagement.aspx" />
     <Content Include="Views\Products\Editors\ProductSpecificationMaintain.aspx" />
     <Content Include="Views\Products\ProductMaintenance.aspx" />
     <Content Include="Views\Products\ProductManagement.aspx" />
@@ -3011,6 +3013,20 @@
     <Compile Include="Views\HRM\EmployeeManagement.aspx.designer.cs">
       <DependentUpon>EmployeeManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\HRM\WorkflowPermissionMaintenance.aspx.cs">
+      <DependentUpon>WorkflowPermissionMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\HRM\WorkflowPermissionMaintenance.aspx.designer.cs">
+      <DependentUpon>WorkflowPermissionMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HRM\WorkflowPermissionManagement.aspx.cs">
+      <DependentUpon>WorkflowPermissionManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\HRM\WorkflowPermissionManagement.aspx.designer.cs">
+      <DependentUpon>WorkflowPermissionManagement.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Products\Editors\ProductSpecificationMaintain.aspx.cs">
       <DependentUpon>ProductSpecificationMaintain.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3098,7 +3114,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -79,6 +79,7 @@ namespace ZhongDing.Web.Views.Products
         protected void Page_Load(object sender, EventArgs e)
         {
             this.Master.MenuItemID = (int)EMenuItem.ProductPriceManage;
+            this.Master.IsNeedAutoHideLoading = true;
         }
 
         #region 低价

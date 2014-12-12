@@ -38,5 +38,10 @@ namespace ZhongDing.Domain.UISearchObjects
         /// </summary>
         public IList<int> ProductCategoryIDs { get; set; }
 
+        /// <summary>
+        /// 工作流ID
+        /// </summary>
+        public int WorkflowID { get; set; }
+
     }
 }
