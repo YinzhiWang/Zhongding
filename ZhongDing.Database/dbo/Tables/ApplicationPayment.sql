@@ -1,16 +1,16 @@
 ﻿CREATE TABLE [dbo].[ApplicationPayment] (
     [ID]                INT            IDENTITY (1, 1) NOT NULL,
-    [ApplicationID]     INT            NULL,
-    [WorkflowID]        INT            NULL,
-    [FromBankAccountID] INT            NULL,
+    [ApplicationID]     INT            NOT NULL,
+    [WorkflowID]        INT            NOT NULL,
+    [FromBankAccountID] INT            NOT NULL,
     [FromAccount]       NVARCHAR (50)  NULL,
-    [ToBankAccountID]   INT            NULL,
+    [ToBankAccountID]   INT            NOT NULL,
     [ToAccount]         NVARCHAR (50)  NULL,
     [Amount]            MONEY          NULL,
     [fee]               MONEY          NULL,
-    [PaymentTypeID]     INT            NULL,
+    [PaymentTypeID]     INT            NOT NULL,
     [Comment]           NVARCHAR (500) NULL,
-    [PaymentStatusID]   INT            NULL,
+    [PaymentStatusID]   INT            NOT NULL,
     [IsDeleted]         BIT            CONSTRAINT [DF_ApplicationPayment_IsDeleted] DEFAULT ((0)) NOT NULL,
     [CreatedOn]         DATETIME       CONSTRAINT [DF_ApplicationPayment_CreatedOn] DEFAULT (getdate()) NOT NULL,
     [CreatedBy]         INT            NULL,
@@ -23,6 +23,8 @@
     CONSTRAINT [FK_ApplicationPayment_PaymentType] FOREIGN KEY ([PaymentTypeID]) REFERENCES [dbo].[PaymentType] ([ID]),
     CONSTRAINT [FK_ApplicationPayment_Workflow] FOREIGN KEY ([WorkflowID]) REFERENCES [dbo].[Workflow] ([ID])
 );
+
+
 
 
 
