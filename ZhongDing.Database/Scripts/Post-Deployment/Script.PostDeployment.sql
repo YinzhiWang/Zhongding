@@ -327,7 +327,7 @@ SET IDENTITY_INSERT [dbo].[WorkflowStep] OFF
 COMMIT TRANSACTION
 ---- end --- 12/04/2014 -- 初始化工作流数据 -- by Yinzhi 
 
-
+---- start --- 12/04/2014 -- 初始化支付类型和状态数据 -- by Yinzhi
 SET NUMERIC_ROUNDABORT OFF
 GO
 SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
@@ -345,6 +345,5 @@ INSERT INTO [dbo].[PaymentStatus] ([ID], [PaymentStatusName]) VALUES (1, N'待�
 INSERT INTO [dbo].[PaymentStatus] ([ID], [PaymentStatusName]) VALUES (2, N'已支付')
 SET IDENTITY_INSERT [dbo].[PaymentStatus] OFF
 
-
 COMMIT TRANSACTION
-
+---- end --- 12/04/2014 -- 初始化工作流数据 -- by Yinzhi 

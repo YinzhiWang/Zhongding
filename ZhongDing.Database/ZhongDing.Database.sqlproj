@@ -349,10 +349,12 @@
     <Build Include="dbo\Tables\PaymentType.sql" />
     <Build Include="dbo\Tables\PaymentStatus.sql" />
     <Build Include="dbo\Tables\ApplicationPayment.sql" />
-    <Build Include="dbo\Tables\ApplicationNotes.sql" />
     <Build Include="dbo\Tables\DBContractHospital.sql" />
     <Build Include="dbo\Tables\ProcureOrderApplication.sql" />
     <Build Include="dbo\Tables\ProcureOrderAppDetail.sql" />
+    <Build Include="dbo\Tables\WorkflowStepStatus.sql" />
+    <Build Include="dbo\Tables\WorkflowStatus.sql" />
+    <Build Include="dbo\Tables\ApplicationNote.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

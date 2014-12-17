@@ -4,9 +4,9 @@
     [WarehouseID]               INT      NOT NULL,
     [ProductID]                 INT      NOT NULL,
     [ProductSpecificationID]    INT      NOT NULL,
-    [ProcureCount]              INT      NULL,
-    [ProcurePrice]              MONEY    NULL,
-    [TotalAmount]               MONEY    NULL,
+    [ProcureCount]              INT      NOT NULL,
+    [ProcurePrice]              MONEY    NOT NULL,
+    [TotalAmount]               MONEY    NOT NULL,
     [TaxAmount]                 MONEY    NULL,
     [IsDeleted]                 BIT      CONSTRAINT [DF_ProcureOrderAppDetail_IsDeleted] DEFAULT ((0)) NOT NULL,
     [CreatedOn]                 DATETIME CONSTRAINT [DF_ProcureOrderAppDetail_CreatedOn] DEFAULT (getdate()) NOT NULL,
@@ -19,4 +19,6 @@
     CONSTRAINT [FK_ProcureOrderAppDetail_ProductSpecification] FOREIGN KEY ([ProductSpecificationID]) REFERENCES [dbo].[ProductSpecification] ([ID]),
     CONSTRAINT [FK_ProcureOrderAppDetail_Warehouse] FOREIGN KEY ([WarehouseID]) REFERENCES [dbo].[Warehouse] ([ID])
 );
+
+
 
