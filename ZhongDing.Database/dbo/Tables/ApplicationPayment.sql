@@ -7,7 +7,7 @@
     [ToBankAccountID]   INT            NOT NULL,
     [ToAccount]         NVARCHAR (50)  NULL,
     [Amount]            MONEY          NULL,
-    [fee]               MONEY          NULL,
+    [Fee]               MONEY          NULL,
     [PaymentTypeID]     INT            NOT NULL,
     [Comment]           NVARCHAR (500) NULL,
     [PaymentStatusID]   INT            NOT NULL,
