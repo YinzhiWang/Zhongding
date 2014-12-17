@@ -355,6 +355,10 @@
     <Build Include="dbo\Tables\WorkflowStepStatus.sql" />
     <Build Include="dbo\Tables\WorkflowStatus.sql" />
     <Build Include="dbo\Tables\ApplicationNote.sql" />
+    <Build Include="dbo\Tables\SalesOrderApplication.sql" />
+    <Build Include="dbo\Tables\SalesOrderAppDetail.sql" />
+    <Build Include="dbo\Tables\DaBaoApplication.sql" />
+    <Build Include="dbo\Tables\ClientSaleApplication.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />
