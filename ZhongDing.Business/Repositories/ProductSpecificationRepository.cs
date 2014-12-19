@@ -130,7 +130,8 @@ namespace ZhongDing.Business.Repositories
             uiDropdownItems = GetList(whereFuncs).Select(x => new UIDropdownItem()
             {
                 ItemValue = x.ID,
-                ItemText = x.Specification
+                ItemText = x.Specification,
+                Extension = new { UnitName = x.UnitOfMeasurement.UnitName }
             }).ToList();
 
             return uiDropdownItems;

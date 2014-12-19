@@ -24,6 +24,12 @@ namespace ZhongDing.Domain.UIObjects
         public DateTime CreatedOn { get; set; }
 
         /// <summary>
+        /// 创建人用户ID
+        /// </summary>
+        /// <value>The created by user ID.</value>
+        public int? CreatedByUserID { get; set; }
+
+        /// <summary>
         /// 创建人
         /// </summary>
         /// <value>The created by.</value>

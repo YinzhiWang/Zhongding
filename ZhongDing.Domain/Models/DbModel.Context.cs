@@ -77,5 +77,13 @@ namespace ZhongDing.Domain.Models
         public DbSet<WorkflowStepUser> WorkflowStepUser { get; set; }
         public DbSet<WorkflowStep> WorkflowStep { get; set; }
         public DbSet<Workflow> Workflow { get; set; }
+        public DbSet<WorkflowStatus> WorkflowStatus { get; set; }
+        public DbSet<WorkflowStepStatus> WorkflowStepStatus { get; set; }
+        public DbSet<ProcureOrderAppDetail> ProcureOrderAppDetail { get; set; }
+        public DbSet<ProcureOrderApplication> ProcureOrderApplication { get; set; }
+        public DbSet<PaymentStatus> PaymentStatus { get; set; }
+        public DbSet<PaymentType> PaymentType { get; set; }
+        public DbSet<ApplicationNote> ApplicationNote { get; set; }
+        public DbSet<ApplicationPayment> ApplicationPayment { get; set; }
     }
 }

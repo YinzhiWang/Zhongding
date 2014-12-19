@@ -167,6 +167,8 @@ namespace ZhongDing.Web.Views.HRM
             rcbxWorkflow.ClearSelection();
             rcbxWorkflowStep.ClearSelection();
 
+            BindWorkflowSteps(GlobalConst.INVALID_INT);
+
             BindEntities(true);
         }
 

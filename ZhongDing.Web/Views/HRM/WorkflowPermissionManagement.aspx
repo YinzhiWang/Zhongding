@@ -21,6 +21,11 @@
                     <telerik:AjaxUpdatedControl ControlID="rgEntities" LoadingPanelID="loadingPanel" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="rcbxWorkflow">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="rcbxWorkflowStep" LoadingPanelID="loadingPanel" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="rgEntities">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="rgEntities" LoadingPanelID="loadingPanel" />

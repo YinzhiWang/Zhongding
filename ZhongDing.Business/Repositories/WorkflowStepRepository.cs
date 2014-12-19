@@ -133,5 +133,19 @@ namespace ZhongDing.Business.Repositories
 
             return uiDropdownItems;
         }
+
+        public IList<int> GetCanAccessUserIDsByID(int stepID)
+        {
+            IList<int> userIDs = new List<int>();
+
+            userIDs = (from wsu in DB.WorkflowStepUser
+                       join ws in DB.WorkflowStep on wsu.WorkflowStepID equals ws.ID
+                       where ws.IsDeleted == false
+                       && wsu.IsDeleted == false
+                       && wsu.WorkflowStepID == stepID
+                       select wsu.UserID).ToList();
+
+            return userIDs;
+        }
     }
 }

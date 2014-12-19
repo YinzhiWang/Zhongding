@@ -28,5 +28,12 @@ namespace ZhongDing.Business.IRepositories
         /// <returns>IList{UIWorkflowStep}.</returns>
         IList<UIWorkflowStep> GetUIList(UISearchWorkflowStep uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
 
+        /// <summary>
+        /// 根据工作流StepID获取可访问的用户IDs
+        /// </summary>
+        /// <param name="stepID">The step ID.</param>
+        /// <returns>IList{System.Int32}.</returns>
+        IList<int> GetCanAccessUserIDsByID(int stepID);
+
     }
 }

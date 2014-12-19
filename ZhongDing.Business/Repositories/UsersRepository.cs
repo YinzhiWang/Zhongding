@@ -31,17 +31,6 @@ namespace ZhongDing.Business.Repositories
             return query;
         }
 
-        public string GetUserNameByID(int userID)
-        {
-            var query = (from u in DB.Users
-                         join au in DB.aspnet_Users on u.AspnetUserID equals au.UserId
-                         join am in DB.aspnet_Membership on au.UserId equals am.UserId
-                         where u.UserID == userID && u.IsDeleted == false && am.IsApproved
-                         select au.UserName).FirstOrDefault();
-
-            return query;
-        }
-
         public IList<UIDropdownItem> GetDropdownItems(UISearchDropdownItem uiSearchObj = null)
         {
             IList<UIDropdownItem> uiDropdownItems = new List<UIDropdownItem>();
@@ -183,6 +172,26 @@ namespace ZhongDing.Business.Repositories
             totalRecords = total;
 
             return uiEntities;
+        }
+
+        public string GetUserNameByID(int userID)
+        {
+            var query = (from u in DB.Users
+                         //join au in DB.aspnet_Users on u.AspnetUserID equals au.UserId
+                         //join am in DB.aspnet_Membership on au.UserId equals am.UserId
+                         where u.UserID == userID
+                         select u.UserName).FirstOrDefault();
+
+            return query;
+        }
+
+        public string GetUserFullNameByID(int userID)
+        {
+            var query = (from u in DB.Users
+                         where u.UserID == userID
+                         select u.FullName).FirstOrDefault();
+
+            return query;
         }
     }
 }

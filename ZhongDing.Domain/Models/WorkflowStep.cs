@@ -18,6 +18,8 @@ namespace ZhongDing.Domain.Models
         public WorkflowStep()
         {
             this.WorkflowStepUser = new HashSet<WorkflowStepUser>();
+            this.WorkflowStepStatus = new HashSet<WorkflowStepStatus>();
+            this.ApplicationNote = new HashSet<ApplicationNote>();
         }
     
         public int ID { get; set; }
@@ -37,5 +39,7 @@ namespace ZhongDing.Domain.Models
     
         public virtual ICollection<WorkflowStepUser> WorkflowStepUser { get; set; }
         public virtual Workflow Workflow { get; set; }
+        public virtual ICollection<WorkflowStepStatus> WorkflowStepStatus { get; set; }
+        public virtual ICollection<ApplicationNote> ApplicationNote { get; set; }
     }
 }

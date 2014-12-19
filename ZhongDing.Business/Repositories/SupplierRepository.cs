@@ -50,7 +50,7 @@ namespace ZhongDing.Business.Repositories
                 uiSupplierList = (from q in query
                                   join cu in DB.Users on q.CreatedBy equals cu.UserID into tempCU
                                   from tcu in tempCU.DefaultIfEmpty()
-                                  join mu in DB.Users on q.CreatedBy equals mu.UserID into tempMU
+                                  join mu in DB.Users on q.LastModifiedBy equals mu.UserID into tempMU
                                   from tmu in tempMU.DefaultIfEmpty()
                                   //orderby q.CreatedOn descending
                                   select new UISupplier()
@@ -109,7 +109,7 @@ namespace ZhongDing.Business.Repositories
                 uiSupplierList = (from q in query
                                   join cu in DB.Users on q.CreatedBy equals cu.UserID into tempCU
                                   from tcu in tempCU.DefaultIfEmpty()
-                                  join mu in DB.Users on q.CreatedBy equals mu.UserID into tempMU
+                                  join mu in DB.Users on q.LastModifiedBy equals mu.UserID into tempMU
                                   from tmu in tempMU.DefaultIfEmpty()
                                   //orderby q.CreatedOn descending
                                   select new UISupplier()

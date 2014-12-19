@@ -29,6 +29,9 @@ namespace ZhongDing.Business.Repositories
                 if (uiSearchObj.ID > 0)
                     whereFuncs.Add(x => x.ID.Equals(uiSearchObj.ID));
 
+                if (uiSearchObj.OwnerTypeID > 0)
+                    whereFuncs.Add(x => x.OwnerTypeID == uiSearchObj.OwnerTypeID);
+
                 if (!string.IsNullOrEmpty(uiSearchObj.AccountName))
                     whereFuncs.Add(x => x.AccountName.Contains(uiSearchObj.AccountName));
 
@@ -64,10 +67,10 @@ namespace ZhongDing.Business.Repositories
             if (query != null)
             {
                 uiBankAccounts = (from q in query
-                                  join cu in this.DB.Users on q.CreatedBy equals cu.UserID into tempCU
-                                  from tcu in tempCU.DefaultIfEmpty()
-                                  join mu in this.DB.Users on q.LastModifiedBy equals mu.UserID into tempMU
-                                  from tmu in tempMU.DefaultIfEmpty()
+                                  //join cu in this.DB.Users on q.CreatedBy equals cu.UserID into tempCU
+                                  //from tcu in tempCU.DefaultIfEmpty()
+                                  //join mu in this.DB.Users on q.LastModifiedBy equals mu.UserID into tempMU
+                                  //from tmu in tempMU.DefaultIfEmpty()
                                   join at in this.DB.AccountType on q.AccountTypeID equals at.ID into tempAT
                                   from tat in tempAT.DefaultIfEmpty()
                                   join ot in this.DB.OwnerType on q.OwnerTypeID equals ot.ID into tempOT
@@ -85,10 +88,10 @@ namespace ZhongDing.Business.Repositories
                                       OwnerType = tot == null ? string.Empty : tot.OwnerTypeName,
                                       CompanyName = tc == null ? string.Empty : tc.CompanyName,
                                       Comment = q.Comment,
-                                      CreatedOn = q.CreatedOn,
-                                      CreatedBy = tcu == null ? string.Empty : tcu.UserName,
-                                      LastModifiedOn = q.LastModifiedOn,
-                                      LastModifiedBy = tmu == null ? string.Empty : tmu.UserName
+                                      //CreatedOn = q.CreatedOn,
+                                      //CreatedBy = tcu == null ? string.Empty : tcu.UserName,
+                                      //LastModifiedOn = q.LastModifiedOn,
+                                      //LastModifiedBy = tmu == null ? string.Empty : tmu.UserName
                                   }).ToList();
 
                 if (uiSearchObj != null
@@ -118,6 +121,9 @@ namespace ZhongDing.Business.Repositories
             {
                 if (uiSearchObj.ID > 0)
                     whereFuncs.Add(x => x.ID.Equals(uiSearchObj.ID));
+
+                if (uiSearchObj.OwnerTypeID > 0)
+                    whereFuncs.Add(x => x.OwnerTypeID == uiSearchObj.OwnerTypeID);
 
                 if (!string.IsNullOrEmpty(uiSearchObj.AccountName))
                     whereFuncs.Add(x => x.AccountName.Contains(uiSearchObj.AccountName));
@@ -154,10 +160,10 @@ namespace ZhongDing.Business.Repositories
             if (query != null)
             {
                 uiBankAccounts = (from q in query
-                                  join cu in this.DB.Users on q.CreatedBy equals cu.UserID into tempCU
-                                  from tcu in tempCU.DefaultIfEmpty()
-                                  join mu in this.DB.Users on q.LastModifiedBy equals mu.UserID into tempMU
-                                  from tmu in tempMU.DefaultIfEmpty()
+                                  //join cu in this.DB.Users on q.CreatedBy equals cu.UserID into tempCU
+                                  //from tcu in tempCU.DefaultIfEmpty()
+                                  //join mu in this.DB.Users on q.LastModifiedBy equals mu.UserID into tempMU
+                                  //from tmu in tempMU.DefaultIfEmpty()
                                   join at in this.DB.AccountType on q.AccountTypeID equals at.ID into tempAT
                                   from tat in tempAT.DefaultIfEmpty()
                                   join ot in this.DB.OwnerType on q.OwnerTypeID equals ot.ID into tempOT
@@ -175,10 +181,10 @@ namespace ZhongDing.Business.Repositories
                                       OwnerType = tot == null ? string.Empty : tot.OwnerTypeName,
                                       CompanyName = tc == null ? string.Empty : tc.CompanyName,
                                       Comment = q.Comment,
-                                      CreatedOn = q.CreatedOn,
-                                      CreatedBy = tcu == null ? string.Empty : tcu.UserName,
-                                      LastModifiedOn = q.LastModifiedOn,
-                                      LastModifiedBy = tmu == null ? string.Empty : tmu.UserName
+                                      //CreatedOn = q.CreatedOn,
+                                      //CreatedBy = tcu == null ? string.Empty : tcu.UserName,
+                                      //LastModifiedOn = q.LastModifiedOn,
+                                      //LastModifiedBy = tmu == null ? string.Empty : tmu.UserName
                                   }).ToList();
 
                 if (uiSearchObj != null
@@ -194,6 +200,63 @@ namespace ZhongDing.Business.Repositories
             totalRecords = total;
 
             return uiBankAccounts;
+        }
+
+        public IList<UIDropdownItem> GetDropdownItems(UISearchDropdownItem uiSearchObj = null)
+        {
+            IList<UIDropdownItem> uiDropdownItems = new List<UIDropdownItem>();
+
+            List<Expression<Func<BankAccount, bool>>> whereFuncs = new List<Expression<Func<BankAccount, bool>>>();
+
+            if (uiSearchObj != null)
+            {
+                if (uiSearchObj.IncludeItemValues != null
+                    && uiSearchObj.IncludeItemValues.Count > 0)
+                    whereFuncs.Add(x => uiSearchObj.IncludeItemValues.Contains(x.ID));
+
+                if (uiSearchObj.ExcludeItemValues != null
+                    && uiSearchObj.ExcludeItemValues.Count > 0)
+                    whereFuncs.Add(x => !uiSearchObj.ExcludeItemValues.Contains(x.ID));
+
+                if (!string.IsNullOrEmpty(uiSearchObj.ItemText))
+                    whereFuncs.Add(x => (x.AccountName + x.BankBranchName + x.Account).Contains(uiSearchObj.ItemText));
+
+                if (uiSearchObj.Extension != null)
+                {
+                    if (uiSearchObj.Extension.OwnerTypeID > 0)
+                        whereFuncs.Add(x => x.OwnerTypeID == uiSearchObj.Extension.OwnerTypeID);
+
+                    if (uiSearchObj.Extension.AccountTypeID > 0)
+                    {
+                        switch (uiSearchObj.Extension.AccountTypeID)
+                        {
+                            case (int)EAccountType.Company:
+                                if (uiSearchObj.Extension.CompanyID > 0)
+                                    whereFuncs.Add(x => x.CompanyID == uiSearchObj.Extension.CompanyID);
+                                break;
+
+                            case (int)EAccountType.Personal:
+                                whereFuncs.Add(x => x.AccountTypeID == uiSearchObj.Extension.AccountTypeID);
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        if (uiSearchObj.Extension.CompanyID > 0)
+                            whereFuncs.Add(x => x.CompanyID == uiSearchObj.Extension.CompanyID || x.AccountTypeID == (int)EAccountType.Personal);
+                    }
+                }
+            }
+
+            var query = GetList(whereFuncs).ToList();
+
+            uiDropdownItems = query.Select(x => new UIDropdownItem()
+            {
+                ItemValue = x.ID,
+                ItemText = x.AccountName + " " + x.BankBranchName + " " + Utility.FormatAccountNumber(x.Account)
+            }).ToList();
+
+            return uiDropdownItems;
         }
     }
 }

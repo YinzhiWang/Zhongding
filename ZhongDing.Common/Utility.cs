@@ -359,6 +359,54 @@ namespace ZhongDing.Common
             return maskedStr;
         }
 
+        /// <summary>
+        /// 格式化银行卡号
+        /// </summary>
+        /// <param name="originalStr">原字符.</param>
+        /// <param name="separator">分隔符.</param>
+        public static string FormatAccountNumber(string originalStr, string separator = " ")
+        {
+            string newValue = string.Empty;
+
+            if (!string.IsNullOrEmpty(originalStr))
+            {
+                originalStr = originalStr.Replace("-", "").Replace(" ", "");
+
+                if (originalStr.Length >= 4)
+                {
+                    newValue = originalStr.Substring(0, 4);
+
+                    if (originalStr.Length >= 8)
+                    {
+                        newValue += separator + originalStr.Substring(4, 4);
+
+                        if (originalStr.Length >= 12)
+                        {
+                            newValue += separator + originalStr.Substring(8, 4);
+
+                            if (originalStr.Length >= 16)
+                            {
+                                newValue += separator + originalStr.Substring(12, 4);
+
+                                if (originalStr.Length >= 19)
+                                {
+                                    newValue += separator + originalStr.Substring(16, 3);
+                                }
+                            }
+                            else
+                                newValue += separator + originalStr.Substring(8);
+                        }
+                        else
+                            newValue += separator + originalStr.Substring(8);
+                    }
+                    else
+                        newValue += separator + originalStr.Substring(4);
+                }
+            }
+
+            return newValue;
+        }
+
 
         /// <summary>
         /// 是否有效的帐号

@@ -113,6 +113,16 @@ namespace ZhongDing.Common
             public static readonly string MSG_SUCCESS_SAEVED_REDIRECT = "保存成功，页面将自动跳转";
 
             /// <summary>
+            /// 提示消息：操作成功，页面将自动跳转
+            /// </summary>
+            public static readonly string MSG_SUCCESS_OPERATE_REDIRECT = "操作成功，页面将自动跳转";
+
+            /// <summary>
+            /// 提示消息：提交成功，待审核，页面将自动跳转
+            /// </summary>
+            public static readonly string MSG_SUCCESS_SUBMITED_TO_AUDITTING_REDIRECT = "提交成功，待审核，页面将自动跳转";
+
+            /// <summary>
             /// 提示消息：删除成功，页面将自动跳转
             /// </summary>
             public static readonly string MSG_SUCCESS_DELETED_REDIRECT = "删除成功，页面将自动跳转";
@@ -178,6 +188,11 @@ namespace ZhongDing.Common
                 /// 大包客户协议
                 /// </summary>
                 public static readonly string DB_CONTRACT = "DBKHXY";
+
+                /// <summary>
+                /// 采购订单编号
+                /// </summary>
+                public static readonly string PROCURE_ORDER = "CD-" + DateTime.Now.ToString("yyyy-MM-dd") + "-";
             }
 
         }
@@ -244,6 +259,32 @@ namespace ZhongDing.Common
             /// </summary>
             public static readonly string LESS_THAN = "<";
         }
+
+        #endregion
+
+        #region Grid Column Unique Name
+
+        /// <summary>
+        /// 常量类：Grid列名
+        /// </summary>
+        public class GridColumnUniqueNames
+        {
+            /// <summary>
+            /// 列名：View
+            /// </summary>
+            public static readonly string COLUMN_VIEW = "View";
+
+            /// <summary>
+            /// 列名：Edit
+            /// </summary>
+            public static readonly string COLUMN_EDIT = "Edit";
+
+            /// <summary>
+            /// 列名：Delete
+            /// </summary>
+            public static readonly string COLUMN_DELETE = "Delete";
+        }
+
 
         #endregion
 

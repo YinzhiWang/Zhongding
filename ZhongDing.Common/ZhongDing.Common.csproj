@@ -71,8 +71,13 @@
     <Compile Include="Enums\EMenuItem.cs" />
     <Compile Include="Enums\EMonthOfYear.cs" />
     <Compile Include="Enums\EOwnerType.cs" />
+    <Compile Include="Enums\EPaymentStatus.cs" />
+    <Compile Include="Enums\EPaymentType.cs" />
     <Compile Include="Enums\EProductCategory.cs" />
     <Compile Include="Enums\ESalesPlanType.cs" />
+    <Compile Include="Enums\EWorkflow.cs" />
+    <Compile Include="Enums\EWorkflowStatus.cs" />
+    <Compile Include="Enums\EWorkflowStep.cs" />
     <Compile Include="Enums\LogCategory.cs" />
     <Compile Include="Enums\LogEventType.cs" />
     <Compile Include="GlobalConst.cs" />

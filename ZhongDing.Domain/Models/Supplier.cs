@@ -22,6 +22,7 @@ namespace ZhongDing.Domain.Models
             this.SupplierTaskAssignment = new HashSet<SupplierTaskAssignment>();
             this.SupplierCertificate = new HashSet<SupplierCertificate>();
             this.SupplierContract = new HashSet<SupplierContract>();
+            this.ProcureOrderApplication = new HashSet<ProcureOrderApplication>();
         }
     
         public int ID { get; set; }
@@ -58,5 +59,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<SupplierTaskAssignment> SupplierTaskAssignment { get; set; }
         public virtual ICollection<SupplierCertificate> SupplierCertificate { get; set; }
         public virtual ICollection<SupplierContract> SupplierContract { get; set; }
+        public virtual ICollection<ProcureOrderApplication> ProcureOrderApplication { get; set; }
     }
 }

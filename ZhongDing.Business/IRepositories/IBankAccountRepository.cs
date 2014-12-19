@@ -9,7 +9,7 @@ using ZhongDing.Domain.UISearchObjects;
 
 namespace ZhongDing.Business.IRepositories
 {
-    public interface IBankAccountRepository : IBaseRepository<BankAccount>
+    public interface IBankAccountRepository : IBaseRepository<BankAccount>, IGenerateDropdownItems
     {
         /// <summary>
         /// 获取UI List，不分页

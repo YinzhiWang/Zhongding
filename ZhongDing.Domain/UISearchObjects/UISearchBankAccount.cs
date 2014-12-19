@@ -39,6 +39,11 @@ namespace ZhongDing.Domain.UISearchObjects
         public int CompanyID { get; set; }
 
         /// <summary>
+        /// 所有者类型ID
+        /// </summary>
+        public int OwnerTypeID { get; set; }
+
+        /// <summary>
         /// 是否遮罩帐号
         /// </summary>
         /// <value><c>true</c> if this instance is need masked account; otherwise, <c>false</c>.</value>

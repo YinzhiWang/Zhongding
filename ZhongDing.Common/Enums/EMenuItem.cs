@@ -96,7 +96,18 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 工作流权限管理
         /// </summary>
-        WorkflowPermissionManage
+        WorkflowPermissionManage,
+
+        /// <summary>
+        /// 采购管理
+        /// </summary>
+        ProcureManage = 50,
+
+        /// <summary>
+        /// 采购订单管理
+        /// </summary>
+        ProcureOrderManage,
+
 
     }
 }

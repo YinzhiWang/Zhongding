@@ -91,7 +91,8 @@ namespace ZhongDing.Web.Views.Basics
                 AccountName = txtAccountName.Text.Trim(),
                 BankBranchName = txtBankBranchName.Text.Trim(),
                 Account = txtAccount.Text.Trim(),
-                CompanyID = CurrentUser.CompanyID
+                CompanyID = CurrentUser.CompanyID,
+                OwnerTypeID = (int)EOwnerType.Company
             };
 
             if (!string.IsNullOrEmpty(ddlAccountType.SelectedValue))

@@ -115,5 +115,39 @@ namespace ZhongDing.Business.Repositories
                 return this.DB.Warehouse.Max(x => x.ID);
             else return null;
         }
+
+        public IList<UIDropdownItem> GetDropdownItems(UISearchDropdownItem uiSearchObj = null)
+        {
+            IList<UIDropdownItem> uiDropdownItems = new List<UIDropdownItem>();
+
+            List<Expression<Func<Warehouse, bool>>> whereFuncs = new List<Expression<Func<Warehouse, bool>>>();
+
+            if (uiSearchObj != null)
+            {
+                if (uiSearchObj.IncludeItemValues != null
+                    && uiSearchObj.IncludeItemValues.Count > 0)
+                    whereFuncs.Add(x => uiSearchObj.IncludeItemValues.Contains(x.ID));
+
+                if (!string.IsNullOrEmpty(uiSearchObj.ItemText))
+                    whereFuncs.Add(x => x.Name.Contains(uiSearchObj.ItemText));
+
+                if (uiSearchObj.Extension != null)
+                {
+                    if (uiSearchObj.Extension.CompanyID > 0)
+                        whereFuncs.Add(x => x.CompanyID.Equals(uiSearchObj.Extension.CompanyID));
+
+                    if (uiSearchObj.Extension.SaleTypeID > 0)
+                        whereFuncs.Add(x => x.SaleTypeID == uiSearchObj.Extension.SaleTypeID);
+                }
+            }
+
+            uiDropdownItems = GetList(whereFuncs).Select(x => new UIDropdownItem()
+            {
+                ItemValue = x.ID,
+                ItemText = x.Name
+            }).ToList();
+
+            return uiDropdownItems;
+        }
     }
 }

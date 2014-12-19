@@ -56,6 +56,12 @@
     <Compile Include="Models\AccountType.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ApplicationNote.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ApplicationPayment.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\aspnet_Membership.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -158,6 +164,18 @@
     <Compile Include="Models\OwnerType.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\PaymentStatus.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PaymentType.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProcureOrderAppDetail.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProcureOrderApplication.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Product.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -218,7 +236,13 @@
     <Compile Include="Models\Workflow.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\WorkflowStatus.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\WorkflowStep.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WorkflowStepStatus.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\WorkflowStepUser.cs">
@@ -226,6 +250,8 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIObjects\UIAccountType.cs" />
+    <Compile Include="UIObjects\UIApplicationNote.cs" />
+    <Compile Include="UIObjects\UIApplicationPayment.cs" />
     <Compile Include="UIObjects\UIBankAccount.cs" />
     <Compile Include="UIObjects\UIBase.cs" />
     <Compile Include="UIObjects\UICertificate.cs" />
@@ -247,6 +273,8 @@
     <Compile Include="UIObjects\UIDistributionCompany.cs" />
     <Compile Include="UIObjects\UIDropdownItem.cs" />
     <Compile Include="UIObjects\UIHospital.cs" />
+    <Compile Include="UIObjects\UIProcureOrderAppDetail.cs" />
+    <Compile Include="UIObjects\UIProcureOrderApplication.cs" />
     <Compile Include="UIObjects\UIProduct.cs" />
     <Compile Include="UIObjects\UIProductBasicPrice.cs" />
     <Compile Include="UIObjects\UIProductDBPolicyPrice.cs" />
@@ -261,6 +289,8 @@
     <Compile Include="UIObjects\UIUser.cs" />
     <Compile Include="UIObjects\UIWarehouse.cs" />
     <Compile Include="UIObjects\UIWorkflowStep.cs" />
+    <Compile Include="UISearchObjects\UISearchApplicationNote.cs" />
+    <Compile Include="UISearchObjects\UISearchApplicationPayment.cs" />
     <Compile Include="UISearchObjects\UISearchBankAccount.cs" />
     <Compile Include="UISearchObjects\UISearchBase.cs" />
     <Compile Include="UISearchObjects\UISearchCertificate.cs" />
@@ -279,6 +309,8 @@
     <Compile Include="UISearchObjects\UISearchDropdownItem.cs" />
     <Compile Include="UISearchObjects\UISearchExtension.cs" />
     <Compile Include="UISearchObjects\UISearchHospital.cs" />
+    <Compile Include="UISearchObjects\UISearchProcureOrderAppDetail.cs" />
+    <Compile Include="UISearchObjects\UISearchProcureOrderApplication.cs" />
     <Compile Include="UISearchObjects\UISearchProduct.cs" />
     <Compile Include="UISearchObjects\UISearchProductSpecification.cs" />
     <Compile Include="UISearchObjects\UISearchSupplier.cs" />

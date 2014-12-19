@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ZhongDing.Domain.UISearchObjects
 {
+    /// <summary>
+    /// 类：查询扩展参数
+    /// </summary>
     public class UISearchExtension
     {
         /// <summary>
@@ -42,6 +45,21 @@ namespace ZhongDing.Domain.UISearchObjects
         /// 工作流ID
         /// </summary>
         public int WorkflowID { get; set; }
+
+        /// <summary>
+        /// 销售价格类型ID：高价、低价
+        /// </summary>
+        public int SaleTypeID { get; set; }
+
+        /// <summary>
+        /// 所有者类型ID
+        /// </summary>
+        public int OwnerTypeID { get; set; }
+
+        /// <summary>
+        /// 银行账号类型ID
+        /// </summary>
+        public int AccountTypeID { get; set; }
 
     }
 }

@@ -48,5 +48,12 @@ namespace ZhongDing.Business.IRepositories
         /// <param name="userID">The user ID.</param>
         /// <returns>System.String.</returns>
         string GetUserNameByID(int userID);
+
+        /// <summary>
+        /// 根据UserID获取对应的FullName
+        /// </summary>
+        /// <param name="userID">The user ID.</param>
+        /// <returns>System.String.</returns>
+        string GetUserFullNameByID(int userID);
     }
 }

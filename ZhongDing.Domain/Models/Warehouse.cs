@@ -15,6 +15,11 @@ namespace ZhongDing.Domain.Models
     [Serializable]
     public partial class Warehouse : IEntityExtendedProperty
     {
+        public Warehouse()
+        {
+            this.ProcureOrderAppDetail = new HashSet<ProcureOrderAppDetail>();
+        }
+    
         public int ID { get; set; }
         public int CompanyID { get; set; }
         public string WarehouseCode { get; set; }
@@ -40,5 +45,6 @@ namespace ZhongDing.Domain.Models
     
         public virtual Company Company { get; set; }
         public virtual SaleType SaleType { get; set; }
+        public virtual ICollection<ProcureOrderAppDetail> ProcureOrderAppDetail { get; set; }
     }
 }

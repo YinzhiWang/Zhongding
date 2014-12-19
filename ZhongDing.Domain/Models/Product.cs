@@ -29,6 +29,7 @@ namespace ZhongDing.Domain.Models
             this.DepartmentProductSalesPlan = new HashSet<DepartmentProductSalesPlan>();
             this.SupplierContract = new HashSet<SupplierContract>();
             this.DBContract = new HashSet<DBContract>();
+            this.ProcureOrderAppDetail = new HashSet<ProcureOrderAppDetail>();
         }
     
         public int ID { get; set; }
@@ -73,5 +74,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<DepartmentProductSalesPlan> DepartmentProductSalesPlan { get; set; }
         public virtual ICollection<SupplierContract> SupplierContract { get; set; }
         public virtual ICollection<DBContract> DBContract { get; set; }
+        public virtual ICollection<ProcureOrderAppDetail> ProcureOrderAppDetail { get; set; }
     }
 }

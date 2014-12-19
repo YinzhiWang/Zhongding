@@ -2604,6 +2604,9 @@
     <Content Include="Views\HRM\EmployeeManagement.aspx" />
     <Content Include="Views\HRM\WorkflowPermissionMaintenance.aspx" />
     <Content Include="Views\HRM\WorkflowPermissionManagement.aspx" />
+    <Content Include="Views\Procures\Editors\ProcureOrderProductMaintain.aspx" />
+    <Content Include="Views\Procures\ProcureOrderMaintenance.aspx" />
+    <Content Include="Views\Procures\ProcureOrderManagement.aspx" />
     <Content Include="Views\Products\Editors\ProductSpecificationMaintain.aspx" />
     <Content Include="Views\Products\ProductMaintenance.aspx" />
     <Content Include="Views\Products\ProductManagement.aspx" />
@@ -2726,6 +2729,9 @@
     <Compile Include="Extensions\BaseHttpHandler.cs" />
     <Compile Include="Extensions\PageEnhance.cs" />
     <Compile Include="Extensions\WebUtility.cs" />
+    <Compile Include="Extensions\WorkflowBasePage.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="Extensions\ZDAsyncUploadConfiguration.cs" />
     <Compile Include="Extensions\ZDAsyncUploadResult.cs" />
     <Compile Include="Extensions\ZDMembershipUser.cs" />
@@ -3027,6 +3033,27 @@
     <Compile Include="Views\HRM\WorkflowPermissionManagement.aspx.designer.cs">
       <DependentUpon>WorkflowPermissionManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Procures\Editors\ProcureOrderProductMaintain.aspx.cs">
+      <DependentUpon>ProcureOrderProductMaintain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Procures\Editors\ProcureOrderProductMaintain.aspx.designer.cs">
+      <DependentUpon>ProcureOrderProductMaintain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Procures\ProcureOrderMaintenance.aspx.cs">
+      <DependentUpon>ProcureOrderMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Procures\ProcureOrderMaintenance.aspx.designer.cs">
+      <DependentUpon>ProcureOrderMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Procures\ProcureOrderManagement.aspx.cs">
+      <DependentUpon>ProcureOrderManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Procures\ProcureOrderManagement.aspx.designer.cs">
+      <DependentUpon>ProcureOrderManagement.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Products\Editors\ProductSpecificationMaintain.aspx.cs">
       <DependentUpon>ProductSpecificationMaintain.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3114,7 +3141,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
