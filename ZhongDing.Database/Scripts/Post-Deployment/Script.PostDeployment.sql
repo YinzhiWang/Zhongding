@@ -366,7 +366,8 @@ INSERT INTO [dbo].[WorkflowStatus] ([ID], [StatusName], [Comment], [IsDeleted]) 
 INSERT INTO [dbo].[WorkflowStatus] ([ID], [StatusName], [Comment], [IsDeleted]) VALUES (6, N'待支付', N'待支付的单据，不可修改', 0)
 INSERT INTO [dbo].[WorkflowStatus] ([ID], [StatusName], [Comment], [IsDeleted]) VALUES (7, N'支付信息退回', N'支付信息未通过审核的单据，可修改', 0)
 INSERT INTO [dbo].[WorkflowStatus] ([ID], [StatusName], [Comment], [IsDeleted]) VALUES (8, N'已支付', N'已支付的单据，不可修改', 0)
-INSERT INTO [dbo].[WorkflowStatus] ([ID], [StatusName], [Comment], [IsDeleted]) VALUES (9, N'已入库', N'已入库的采购订单，不可修改', 0)
+INSERT INTO [dbo].[WorkflowStatus] ([ID], [StatusName], [Comment], [IsDeleted]) VALUES (9, N'待入库', N'待入库的采购订单，可修改', 0)
+INSERT INTO [dbo].[WorkflowStatus] ([ID], [StatusName], [Comment], [IsDeleted]) VALUES (10, N'已入库', N'已入库的采购订单，不可修改', 0)
 SET IDENTITY_INSERT [dbo].[WorkflowStatus] OFF
 
 
