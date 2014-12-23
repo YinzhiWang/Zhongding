@@ -361,6 +361,7 @@ namespace ZhongDing.Web.Views.Procures
         {
             var uiSearchObj = new UISearchApplicationNote()
             {
+                WorkflowID = this.CurrentWorkFlowID,
                 ApplicationID = this.CurrentEntityID.HasValue
                 ? this.CurrentEntityID.Value : GlobalConst.INVALID_INT
             };
