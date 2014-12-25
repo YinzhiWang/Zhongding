@@ -32,5 +32,20 @@ namespace ZhongDing.Common.Enums
         /// 修改订单
         /// </summary>
         EditOrder,
+
+        /// <summary>
+        /// 新增入库单
+        /// </summary>
+        NewStockIn,
+
+        /// <summary>
+        /// 入库操作
+        /// </summary>
+        EntryStockRoom,
+
+        /// <summary>
+        /// 修改入库单
+        /// </summary>
+        EditStockIn
     }
 }

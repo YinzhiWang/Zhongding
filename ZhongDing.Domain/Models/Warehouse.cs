@@ -18,6 +18,7 @@ namespace ZhongDing.Domain.Models
         public Warehouse()
         {
             this.ProcureOrderAppDetail = new HashSet<ProcureOrderAppDetail>();
+            this.StockInDetail = new HashSet<StockInDetail>();
         }
     
         public int ID { get; set; }
@@ -46,5 +47,6 @@ namespace ZhongDing.Domain.Models
         public virtual Company Company { get; set; }
         public virtual SaleType SaleType { get; set; }
         public virtual ICollection<ProcureOrderAppDetail> ProcureOrderAppDetail { get; set; }
+        public virtual ICollection<StockInDetail> StockInDetail { get; set; }
     }
 }

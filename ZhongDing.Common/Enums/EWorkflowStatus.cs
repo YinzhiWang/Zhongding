@@ -45,10 +45,15 @@ namespace ZhongDing.Common.Enums
         /// 已支付
         /// </summary>
         Paid,
+
+        /// <summary>
+        /// 待入库
+        /// </summary>
+        ToBeInWarehouse,
+
         /// <summary>
         /// 已入库
         /// </summary>
         InWarehouse,
-
     }
 }

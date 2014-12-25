@@ -18,7 +18,7 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 采购入库单
         /// </summary>
-        ProcureReceipt,
+        StockIn,
         /// <summary>
         /// 大包申请单
         /// </summary>

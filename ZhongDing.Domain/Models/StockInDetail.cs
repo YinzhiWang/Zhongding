@@ -13,22 +13,21 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class ProcureOrderAppDetail : IEntityExtendedProperty
+    public partial class StockInDetail : IEntityExtendedProperty
     {
-        public ProcureOrderAppDetail()
-        {
-            this.StockInDetail = new HashSet<StockInDetail>();
-        }
-    
         public int ID { get; set; }
-        public int ProcureOrderApplicationID { get; set; }
-        public int WarehouseID { get; set; }
+        public int StockInID { get; set; }
+        public int ProcureOrderAppID { get; set; }
+        public int ProcureOrderAppDetailID { get; set; }
         public int ProductID { get; set; }
         public int ProductSpecificationID { get; set; }
-        public int ProcureCount { get; set; }
+        public int WarehouseID { get; set; }
         public decimal ProcurePrice { get; set; }
-        public decimal TotalAmount { get; set; }
-        public Nullable<decimal> TaxAmount { get; set; }
+        public int InQty { get; set; }
+        public string BatchNumber { get; set; }
+        public Nullable<System.DateTime> ExpirationDate { get; set; }
+        public string LicenseNumber { get; set; }
+        public Nullable<bool> IsMortgagedProduct { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -45,10 +44,11 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
+        public virtual ProcureOrderAppDetail ProcureOrderAppDetail { get; set; }
+        public virtual ProcureOrderApplication ProcureOrderApplication { get; set; }
         public virtual Product Product { get; set; }
         public virtual ProductSpecification ProductSpecification { get; set; }
+        public virtual StockIn StockIn { get; set; }
         public virtual Warehouse Warehouse { get; set; }
-        public virtual ProcureOrderApplication ProcureOrderApplication { get; set; }
-        public virtual ICollection<StockInDetail> StockInDetail { get; set; }
     }
 }

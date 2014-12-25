@@ -377,7 +377,7 @@ namespace ZhongDing.Web.Views.Procures
         {
             var uiSearchObj = new UISearchProcureOrderAppDetail()
             {
-                ProcureOrderApplicationID = this.CurrentEntityID.HasValue ? this.CurrentEntityID.Value : GlobalConst.INVALID_INT,
+                ProcureOrderAppID = this.CurrentEntityID.HasValue ? this.CurrentEntityID.Value : GlobalConst.INVALID_INT,
             };
 
             int totalRecords;

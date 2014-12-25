@@ -51,6 +51,8 @@
           <EntitySet Name="ProductSpecification" EntityType="DbModel.Store.ProductSpecification" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Roles" EntityType="DbModel.Store.Roles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SaleType" EntityType="DbModel.Store.SaleType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="StockIn" EntityType="DbModel.Store.StockIn" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="StockInDetail" EntityType="DbModel.Store.StockInDetail" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Supplier" EntityType="DbModel.Store.Supplier" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierBankAccount" EntityType="DbModel.Store.SupplierBankAccount" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierCertificate" EntityType="DbModel.Store.SupplierCertificate" store:Type="Tables" Schema="dbo" />
@@ -333,6 +335,38 @@
           <AssociationSet Name="FK_Roles_aspnet_Roles" Association="DbModel.Store.FK_Roles_aspnet_Roles">
             <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
             <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockIn_Supplier" Association="DbModel.Store.FK_StockIn_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="StockIn" EntitySet="StockIn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockIn_WorkflowStatus" Association="DbModel.Store.FK_StockIn_WorkflowStatus">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="StockIn" EntitySet="StockIn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockInDetail_ProcureOrderAppDetail" Association="DbModel.Store.FK_StockInDetail_ProcureOrderAppDetail">
+            <End Role="ProcureOrderAppDetail" EntitySet="ProcureOrderAppDetail" />
+            <End Role="StockInDetail" EntitySet="StockInDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockInDetail_ProcureOrderApplication" Association="DbModel.Store.FK_StockInDetail_ProcureOrderApplication">
+            <End Role="ProcureOrderApplication" EntitySet="ProcureOrderApplication" />
+            <End Role="StockInDetail" EntitySet="StockInDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockInDetail_Product" Association="DbModel.Store.FK_StockInDetail_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="StockInDetail" EntitySet="StockInDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockInDetail_ProductSpecification" Association="DbModel.Store.FK_StockInDetail_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="StockInDetail" EntitySet="StockInDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockInDetail_StockIn" Association="DbModel.Store.FK_StockInDetail_StockIn">
+            <End Role="StockIn" EntitySet="StockIn" />
+            <End Role="StockInDetail" EntitySet="StockInDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockInDetail_Warehouse" Association="DbModel.Store.FK_StockInDetail_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="StockInDetail" EntitySet="StockInDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_Supplier_Company" Association="DbModel.Store.FK_Supplier_Company">
             <End Role="Company" EntitySet="Company" />
@@ -1071,6 +1105,44 @@
           </Key>
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="SaleType" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="StockIn">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="SupplierID" Type="int" Nullable="false" />
+          <Property Name="WorkflowStatusID" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="StockInDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="StockInID" Type="int" Nullable="false" />
+          <Property Name="ProcureOrderAppID" Type="int" Nullable="false" />
+          <Property Name="ProcureOrderAppDetailID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="ProductSpecificationID" Type="int" Nullable="false" />
+          <Property Name="WarehouseID" Type="int" Nullable="false" />
+          <Property Name="ProcurePrice" Type="money" Nullable="false" />
+          <Property Name="InQty" Type="int" Nullable="false" />
+          <Property Name="BatchNumber" Type="nvarchar" MaxLength="255" />
+          <Property Name="ExpirationDate" Type="datetime" />
+          <Property Name="LicenseNumber" Type="nvarchar" MaxLength="255" />
+          <Property Name="IsMortgagedProduct" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
         </EntityType>
         <EntityType Name="Supplier">
           <Key>
@@ -2089,6 +2161,102 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_StockIn_Supplier">
+          <End Role="Supplier" Type="DbModel.Store.Supplier" Multiplicity="1" />
+          <End Role="StockIn" Type="DbModel.Store.StockIn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockIn">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockIn_WorkflowStatus">
+          <End Role="WorkflowStatus" Type="DbModel.Store.WorkflowStatus" Multiplicity="1" />
+          <End Role="StockIn" Type="DbModel.Store.StockIn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockIn">
+              <PropertyRef Name="WorkflowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockInDetail_ProcureOrderAppDetail">
+          <End Role="ProcureOrderAppDetail" Type="DbModel.Store.ProcureOrderAppDetail" Multiplicity="1" />
+          <End Role="StockInDetail" Type="DbModel.Store.StockInDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProcureOrderAppDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockInDetail">
+              <PropertyRef Name="ProcureOrderAppDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockInDetail_ProcureOrderApplication">
+          <End Role="ProcureOrderApplication" Type="DbModel.Store.ProcureOrderApplication" Multiplicity="1" />
+          <End Role="StockInDetail" Type="DbModel.Store.StockInDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProcureOrderApplication">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockInDetail">
+              <PropertyRef Name="ProcureOrderAppID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockInDetail_Product">
+          <End Role="Product" Type="DbModel.Store.Product" Multiplicity="1" />
+          <End Role="StockInDetail" Type="DbModel.Store.StockInDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockInDetail">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockInDetail_ProductSpecification">
+          <End Role="ProductSpecification" Type="DbModel.Store.ProductSpecification" Multiplicity="1" />
+          <End Role="StockInDetail" Type="DbModel.Store.StockInDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockInDetail">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockInDetail_StockIn">
+          <End Role="StockIn" Type="DbModel.Store.StockIn" Multiplicity="1" />
+          <End Role="StockInDetail" Type="DbModel.Store.StockInDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockIn">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockInDetail">
+              <PropertyRef Name="StockInID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockInDetail_Warehouse">
+          <End Role="Warehouse" Type="DbModel.Store.Warehouse" Multiplicity="1" />
+          <End Role="StockInDetail" Type="DbModel.Store.StockInDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockInDetail">
+              <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Supplier_Company">
           <End Role="Company" Type="DbModel.Store.Company" Multiplicity="0..1" />
           <End Role="Supplier" Type="DbModel.Store.Supplier" Multiplicity="*" />
@@ -2742,6 +2910,40 @@
             <End Role="Workflow" EntitySet="Workflow" />
             <End Role="ApplicationPayment" EntitySet="ApplicationPayment" />
           </AssociationSet>
+          <EntitySet Name="StockIn" EntityType="DbModel.StockIn" />
+          <AssociationSet Name="FK_StockIn_Supplier" Association="DbModel.FK_StockIn_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="StockIn" EntitySet="StockIn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockIn_WorkflowStatus" Association="DbModel.FK_StockIn_WorkflowStatus">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="StockIn" EntitySet="StockIn" />
+          </AssociationSet>
+          <EntitySet Name="StockInDetail" EntityType="DbModel.StockInDetail" />
+          <AssociationSet Name="FK_StockInDetail_ProcureOrderAppDetail" Association="DbModel.FK_StockInDetail_ProcureOrderAppDetail">
+            <End Role="ProcureOrderAppDetail" EntitySet="ProcureOrderAppDetail" />
+            <End Role="StockInDetail" EntitySet="StockInDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockInDetail_ProcureOrderApplication" Association="DbModel.FK_StockInDetail_ProcureOrderApplication">
+            <End Role="ProcureOrderApplication" EntitySet="ProcureOrderApplication" />
+            <End Role="StockInDetail" EntitySet="StockInDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockInDetail_Product" Association="DbModel.FK_StockInDetail_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="StockInDetail" EntitySet="StockInDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockInDetail_ProductSpecification" Association="DbModel.FK_StockInDetail_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="StockInDetail" EntitySet="StockInDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockInDetail_StockIn" Association="DbModel.FK_StockInDetail_StockIn">
+            <End Role="StockIn" EntitySet="StockIn" />
+            <End Role="StockInDetail" EntitySet="StockInDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockInDetail_Warehouse" Association="DbModel.FK_StockInDetail_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="StockInDetail" EntitySet="StockInDetail" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -2962,6 +3164,7 @@
           <NavigationProperty Name="SupplierContract" Relationship="DbModel.FK_SupplierContract_Product" FromRole="Product" ToRole="SupplierContract" />
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_Product" FromRole="Product" ToRole="DBContract" />
           <NavigationProperty Name="ProcureOrderAppDetail" Relationship="DbModel.FK_ProcureOrderAppDetail_Product" FromRole="Product" ToRole="ProcureOrderAppDetail" />
+          <NavigationProperty Name="StockInDetail" Relationship="DbModel.FK_StockInDetail_Product" FromRole="Product" ToRole="StockInDetail" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -3010,6 +3213,7 @@
           <NavigationProperty Name="SupplierContract" Relationship="DbModel.FK_SupplierContract_ProductSpecification" FromRole="ProductSpecification" ToRole="SupplierContract" />
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_ProductSpecification" FromRole="ProductSpecification" ToRole="DBContract" />
           <NavigationProperty Name="ProcureOrderAppDetail" Relationship="DbModel.FK_ProcureOrderAppDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="ProcureOrderAppDetail" />
+          <NavigationProperty Name="StockInDetail" Relationship="DbModel.FK_StockInDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="StockInDetail" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -3062,6 +3266,7 @@
           <NavigationProperty Name="SupplierCertificate" Relationship="DbModel.FK_SupplierCertificate_Supplier" FromRole="Supplier" ToRole="SupplierCertificate" />
           <NavigationProperty Name="SupplierContract" Relationship="DbModel.FK_SupplierContract_Supplier" FromRole="Supplier" ToRole="SupplierContract" />
           <NavigationProperty Name="ProcureOrderApplication" Relationship="DbModel.FK_ProcureOrderApplication_Supplier" FromRole="Supplier" ToRole="ProcureOrderApplication" />
+          <NavigationProperty Name="StockIn" Relationship="DbModel.FK_StockIn_Supplier" FromRole="Supplier" ToRole="StockIn" />
         </EntityType>
         <EntityType Name="SupplierBankAccount">
           <Key>
@@ -3424,6 +3629,7 @@
           <NavigationProperty Name="Company" Relationship="DbModel.FK_Warehouse_Company" FromRole="Warehouse" ToRole="Company" />
           <NavigationProperty Name="SaleType" Relationship="DbModel.FK_Warehouse_SaleType" FromRole="Warehouse" ToRole="SaleType" />
           <NavigationProperty Name="ProcureOrderAppDetail" Relationship="DbModel.FK_ProcureOrderAppDetail_Warehouse" FromRole="Warehouse" ToRole="ProcureOrderAppDetail" />
+          <NavigationProperty Name="StockInDetail" Relationship="DbModel.FK_StockInDetail_Warehouse" FromRole="Warehouse" ToRole="StockInDetail" />
         </EntityType>
         <Association Name="FK_Warehouse_Company">
           <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
@@ -4534,6 +4740,7 @@
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
           <NavigationProperty Name="WorkflowStepStatus" Relationship="DbModel.FK_WorkflowStepStatus_WorkflowStatus" FromRole="WorkflowStatus" ToRole="WorkflowStepStatus" />
           <NavigationProperty Name="ProcureOrderApplication" Relationship="DbModel.FK_ProcureOrderApplication_WorkflowStatus" FromRole="WorkflowStatus" ToRole="ProcureOrderApplication" />
+          <NavigationProperty Name="StockIn" Relationship="DbModel.FK_StockIn_WorkflowStatus" FromRole="WorkflowStatus" ToRole="StockIn" />
         </EntityType>
         <EntityType Name="WorkflowStepStatus">
           <Key>
@@ -4592,6 +4799,7 @@
           <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_ProcureOrderAppDetail_ProductSpecification" FromRole="ProcureOrderAppDetail" ToRole="ProductSpecification" />
           <NavigationProperty Name="Warehouse" Relationship="DbModel.FK_ProcureOrderAppDetail_Warehouse" FromRole="ProcureOrderAppDetail" ToRole="Warehouse" />
           <NavigationProperty Name="ProcureOrderApplication" Relationship="DbModel.FK_ProcureOrderAppDetail_ProcureOrderApplication" FromRole="ProcureOrderAppDetail" ToRole="ProcureOrderApplication" />
+          <NavigationProperty Name="StockInDetail" Relationship="DbModel.FK_StockInDetail_ProcureOrderAppDetail" FromRole="ProcureOrderAppDetail" ToRole="StockInDetail" />
         </EntityType>
         <Association Name="FK_ProcureOrderAppDetail_Product">
           <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
@@ -4650,6 +4858,7 @@
           <NavigationProperty Name="ProcureOrderAppDetail" Relationship="DbModel.FK_ProcureOrderAppDetail_ProcureOrderApplication" FromRole="ProcureOrderApplication" ToRole="ProcureOrderAppDetail" />
           <NavigationProperty Name="Supplier" Relationship="DbModel.FK_ProcureOrderApplication_Supplier" FromRole="ProcureOrderApplication" ToRole="Supplier" />
           <NavigationProperty Name="WorkflowStatus" Relationship="DbModel.FK_ProcureOrderApplication_WorkflowStatus" FromRole="ProcureOrderApplication" ToRole="WorkflowStatus" />
+          <NavigationProperty Name="StockInDetail" Relationship="DbModel.FK_StockInDetail_ProcureOrderApplication" FromRole="ProcureOrderApplication" ToRole="StockInDetail" />
         </EntityType>
         <Association Name="FK_ProcureOrderAppDetail_ProcureOrderApplication">
           <End Type="DbModel.ProcureOrderApplication" Role="ProcureOrderApplication" Multiplicity="1" />
@@ -4828,6 +5037,149 @@
             </Principal>
             <Dependent Role="ApplicationPayment">
               <PropertyRef Name="WorkflowID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="StockIn">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="Code" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="EntryDate" Precision="3" />
+          <Property Type="Int32" Name="SupplierID" Nullable="false" />
+          <Property Type="Int32" Name="WorkflowStatusID" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Supplier" Relationship="DbModel.FK_StockIn_Supplier" FromRole="StockIn" ToRole="Supplier" />
+          <NavigationProperty Name="WorkflowStatus" Relationship="DbModel.FK_StockIn_WorkflowStatus" FromRole="StockIn" ToRole="WorkflowStatus" />
+          <NavigationProperty Name="StockInDetail" Relationship="DbModel.FK_StockInDetail_StockIn" FromRole="StockIn" ToRole="StockInDetail" />
+        </EntityType>
+        <Association Name="FK_StockIn_Supplier">
+          <End Type="DbModel.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="DbModel.StockIn" Role="StockIn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockIn">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockIn_WorkflowStatus">
+          <End Type="DbModel.WorkflowStatus" Role="WorkflowStatus" Multiplicity="1" />
+          <End Type="DbModel.StockIn" Role="StockIn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockIn">
+              <PropertyRef Name="WorkflowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="StockInDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="StockInID" Nullable="false" />
+          <Property Type="Int32" Name="ProcureOrderAppID" Nullable="false" />
+          <Property Type="Int32" Name="ProcureOrderAppDetailID" Nullable="false" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
+          <Property Type="Int32" Name="WarehouseID" Nullable="false" />
+          <Property Type="Decimal" Name="ProcurePrice" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="InQty" Nullable="false" />
+          <Property Type="String" Name="BatchNumber" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="ExpirationDate" Precision="3" />
+          <Property Type="String" Name="LicenseNumber" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsMortgagedProduct" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="ProcureOrderAppDetail" Relationship="DbModel.FK_StockInDetail_ProcureOrderAppDetail" FromRole="StockInDetail" ToRole="ProcureOrderAppDetail" />
+          <NavigationProperty Name="ProcureOrderApplication" Relationship="DbModel.FK_StockInDetail_ProcureOrderApplication" FromRole="StockInDetail" ToRole="ProcureOrderApplication" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_StockInDetail_Product" FromRole="StockInDetail" ToRole="Product" />
+          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_StockInDetail_ProductSpecification" FromRole="StockInDetail" ToRole="ProductSpecification" />
+          <NavigationProperty Name="StockIn" Relationship="DbModel.FK_StockInDetail_StockIn" FromRole="StockInDetail" ToRole="StockIn" />
+          <NavigationProperty Name="Warehouse" Relationship="DbModel.FK_StockInDetail_Warehouse" FromRole="StockInDetail" ToRole="Warehouse" />
+        </EntityType>
+        <Association Name="FK_StockInDetail_ProcureOrderAppDetail">
+          <End Type="DbModel.ProcureOrderAppDetail" Role="ProcureOrderAppDetail" Multiplicity="1" />
+          <End Type="DbModel.StockInDetail" Role="StockInDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProcureOrderAppDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockInDetail">
+              <PropertyRef Name="ProcureOrderAppDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockInDetail_ProcureOrderApplication">
+          <End Type="DbModel.ProcureOrderApplication" Role="ProcureOrderApplication" Multiplicity="1" />
+          <End Type="DbModel.StockInDetail" Role="StockInDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProcureOrderApplication">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockInDetail">
+              <PropertyRef Name="ProcureOrderAppID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockInDetail_Product">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DbModel.StockInDetail" Role="StockInDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockInDetail">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockInDetail_ProductSpecification">
+          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
+          <End Type="DbModel.StockInDetail" Role="StockInDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockInDetail">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockInDetail_StockIn">
+          <End Type="DbModel.StockIn" Role="StockIn" Multiplicity="1" />
+          <End Type="DbModel.StockInDetail" Role="StockInDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockIn">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockInDetail">
+              <PropertyRef Name="StockInID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockInDetail_Warehouse">
+          <End Type="DbModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+          <End Type="DbModel.StockInDetail" Role="StockInDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockInDetail">
+              <PropertyRef Name="WarehouseID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5763,6 +6115,46 @@
                 <ScalarProperty Name="FromBankAccountID" ColumnName="FromBankAccountID" />
                 <ScalarProperty Name="WorkflowID" ColumnName="WorkflowID" />
                 <ScalarProperty Name="ApplicationID" ColumnName="ApplicationID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockIn">
+            <EntityTypeMapping TypeName="DbModel.StockIn">
+              <MappingFragment StoreEntitySet="StockIn">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="WorkflowStatusID" ColumnName="WorkflowStatusID" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockInDetail">
+            <EntityTypeMapping TypeName="DbModel.StockInDetail">
+              <MappingFragment StoreEntitySet="StockInDetail">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="IsMortgagedProduct" ColumnName="IsMortgagedProduct" />
+                <ScalarProperty Name="LicenseNumber" ColumnName="LicenseNumber" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="BatchNumber" ColumnName="BatchNumber" />
+                <ScalarProperty Name="InQty" ColumnName="InQty" />
+                <ScalarProperty Name="ProcurePrice" ColumnName="ProcurePrice" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ProcureOrderAppDetailID" ColumnName="ProcureOrderAppDetailID" />
+                <ScalarProperty Name="ProcureOrderAppID" ColumnName="ProcureOrderAppID" />
+                <ScalarProperty Name="StockInID" ColumnName="StockInID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

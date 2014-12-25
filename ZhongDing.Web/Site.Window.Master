@@ -44,12 +44,10 @@
         </div>
 
         <style type="text/css">
-            .RadGrid_Silk
-            {
+            .RadGrid_Silk {
             }
 
-                .RadGrid_Silk .rgHeader
-                {
+                .RadGrid_Silk .rgHeader {
                     color: #333333;
                     padding-top: 10px;
                     padding-bottom: 10px;
@@ -58,67 +56,67 @@
                     border-left-style: solid;
                 }
 
-                    .RadGrid_Silk .rgHeader a
-                    {
+                    .RadGrid_Silk .rgHeader a {
                         color: #333333;
                         font-size: 13px;
                         font-family: 'Microsoft Yahei',Arial,Helvetica,sans-serif,'微软雅黑';
                         font-weight: normal;
                     }
 
-                .RadGrid_Silk .rgCommandCell
-                {
+                .RadGrid_Silk .rgCommandCell {
                     padding-top: 5px;
                     padding-bottom: 5px;
                 }
 
-                .RadGrid_Silk .rgPager
-                {
+                .RadGrid_Silk .rgPager {
                     background-color: #444444;
                 }
 
-                .RadGrid_Silk td.rgPagerCell
-                {
+                .RadGrid_Silk td.rgPagerCell {
                     border: none;
                     color: #ffffff;
                 }
 
-                .RadGrid_Silk .rgInfoPart, .RadGrid_Silk .rgInfoPart strong
-                {
+                .RadGrid_Silk .rgInfoPart, .RadGrid_Silk .rgInfoPart strong {
                     color: #ffffff;
                 }
 
-                .RadGrid_Silk .rgRow td, .RadGrid_Silk .rgAltRow td, .RadGrid_Silk .rgEditRow td
-                {
+                .RadGrid_Silk .rgRow td, .RadGrid_Silk .rgAltRow td, .RadGrid_Silk .rgEditRow td {
                     border-left-color: #bebebe !important;
                     border-left-width: 1px;
                     border-left-style: dotted;
                 }
 
-                    .RadGrid_Silk .rgRow td:first-child, .RadGrid_Silk .rgAltRow td:first-child, .RadGrid_Silk .rgEditRow td:first-child
-                    {
+                    .RadGrid_Silk .rgRow td:first-child, .RadGrid_Silk .rgAltRow td:first-child, .RadGrid_Silk .rgEditRow td:first-child {
                         border-left-style: none;
                     }
 
-            .RadWindow_Silk .rwTable .rwTitlebarControls em
-            {
+            .RadWindow_Silk .rwTable .rwTitlebarControls em {
                 font-size: 13px;
                 font-weight: 600;
                 text-shadow: 0 0 6px rgba(128, 128,128, 0.5);
             }
 
-            .RadNotification .rnContentIconClip
-            {
+            .RadNotification .rnContentIconClip {
                 position: relative;
             }
 
-            .RadNotification .rnContent
-            {
+            .RadNotification .rnContent {
                 padding-top: 5px;
                 font-family: inherit;
                 font-size: 14px;
                 font-weight: 600;
                 color: #323232;
+            }
+        </style>
+
+        <style media="print">
+            .no-print {
+                display: none;
+            }
+
+            .page-next {
+                page-break-after: always;
             }
         </style>
 

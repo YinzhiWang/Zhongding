@@ -108,5 +108,21 @@ namespace ZhongDing.Web.Extensions
 
             Utility.WriteLog(exp.Source, exp.Message, categories, (int)LogEventType.Business, extentProp);
         }
+
+        #region Session Names
+
+        /// <summary>
+        /// 公用会话名称
+        /// </summary>
+        public class WebSessionNames
+        {
+            /// <summary>
+            /// 入库单明细数据（session临时数据）
+            /// </summary>
+            public static readonly string StockInDetailData = "STOCK_IN_DETAIL_DATA";
+        }
+
+        #endregion
+
     }
 }

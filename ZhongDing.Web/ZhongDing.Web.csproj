@@ -2604,9 +2604,13 @@
     <Content Include="Views\HRM\EmployeeManagement.aspx" />
     <Content Include="Views\HRM\WorkflowPermissionMaintenance.aspx" />
     <Content Include="Views\HRM\WorkflowPermissionManagement.aspx" />
+    <Content Include="Views\Procures\Editors\ChooseProcureOrderProducts.aspx" />
     <Content Include="Views\Procures\Editors\ProcureOrderProductMaintain.aspx" />
+    <Content Include="Views\Procures\Printers\PrintStockIn.aspx" />
     <Content Include="Views\Procures\ProcureOrderMaintenance.aspx" />
     <Content Include="Views\Procures\ProcureOrderManagement.aspx" />
+    <Content Include="Views\Procures\StockInMaintenance.aspx" />
+    <Content Include="Views\Procures\StockInManagement.aspx" />
     <Content Include="Views\Products\Editors\ProductSpecificationMaintain.aspx" />
     <Content Include="Views\Products\ProductMaintenance.aspx" />
     <Content Include="Views\Products\ProductManagement.aspx" />
@@ -3033,12 +3037,26 @@
     <Compile Include="Views\HRM\WorkflowPermissionManagement.aspx.designer.cs">
       <DependentUpon>WorkflowPermissionManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Procures\Editors\ChooseProcureOrderProducts.aspx.cs">
+      <DependentUpon>ChooseProcureOrderProducts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Procures\Editors\ChooseProcureOrderProducts.aspx.designer.cs">
+      <DependentUpon>ChooseProcureOrderProducts.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Procures\Editors\ProcureOrderProductMaintain.aspx.cs">
       <DependentUpon>ProcureOrderProductMaintain.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Views\Procures\Editors\ProcureOrderProductMaintain.aspx.designer.cs">
       <DependentUpon>ProcureOrderProductMaintain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Procures\Printers\PrintStockIn.aspx.cs">
+      <DependentUpon>PrintStockIn.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Procures\Printers\PrintStockIn.aspx.designer.cs">
+      <DependentUpon>PrintStockIn.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Procures\ProcureOrderMaintenance.aspx.cs">
       <DependentUpon>ProcureOrderMaintenance.aspx</DependentUpon>
@@ -3053,6 +3071,20 @@
     </Compile>
     <Compile Include="Views\Procures\ProcureOrderManagement.aspx.designer.cs">
       <DependentUpon>ProcureOrderManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Procures\StockInMaintenance.aspx.cs">
+      <DependentUpon>StockInMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Procures\StockInMaintenance.aspx.designer.cs">
+      <DependentUpon>StockInMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Procures\StockInManagement.aspx.cs">
+      <DependentUpon>StockInManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Procures\StockInManagement.aspx.designer.cs">
+      <DependentUpon>StockInManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Products\Editors\ProductSpecificationMaintain.aspx.cs">
       <DependentUpon>ProductSpecificationMaintain.aspx</DependentUpon>
@@ -3141,7 +3173,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

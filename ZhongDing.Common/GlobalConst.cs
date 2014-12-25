@@ -98,6 +98,11 @@ namespace ZhongDing.Common
             public static readonly string MSG_SUCCESS_SAEVED_CLOSE_WIN = "保存成功，窗口将自动关闭";
 
             /// <summary>
+            /// 提示消息：操作成功，窗口将自动关闭
+            /// </summary>
+            public static readonly string MSG_SUCCESS_OPERATE_CLOSE_WIN = "操作成功，窗口将自动关闭";
+
+            /// <summary>
             /// 提示消息：保存失败，稍后再试，窗口将自动关闭
             /// </summary>
             public static readonly string MSG_FAILED_SAEVED_CLOSE_WIN = "保存失败，稍后再试，窗口将自动关闭";
@@ -192,7 +197,17 @@ namespace ZhongDing.Common
                 /// <summary>
                 /// 采购订单编号
                 /// </summary>
-                public static readonly string PROCURE_ORDER = "CD-" + DateTime.Now.ToString("yyyy-MM-dd") + "-";
+                public static readonly string PROCURE_ORDER = "CG-" + DateTime.Now.ToString("yyyy-MM-dd") + "-";
+
+                /// <summary>
+                /// 入库单编号
+                /// </summary>
+                public static readonly string STOCK_IN = "IN-" + DateTime.Now.ToString("yyyy-MM-dd") + "-";
+
+                /// <summary>
+                /// 出库单编号
+                /// </summary>
+                public static readonly string STOCK_OUT = "OUT-" + DateTime.Now.ToString("yyyy-MM-dd") + "-";
             }
 
         }
@@ -262,7 +277,7 @@ namespace ZhongDing.Common
 
         #endregion
 
-        #region Grid Column Unique Name
+        #region Grid Column Unique Names
 
         /// <summary>
         /// 常量类：Grid列名
@@ -278,6 +293,11 @@ namespace ZhongDing.Common
             /// 列名：Edit
             /// </summary>
             public static readonly string COLUMN_EDIT = "Edit";
+
+            /// <summary>
+            /// 列名：Print
+            /// </summary>
+            public static readonly string COLUMN_PRINT = "Print";
 
             /// <summary>
             /// 列名：Delete

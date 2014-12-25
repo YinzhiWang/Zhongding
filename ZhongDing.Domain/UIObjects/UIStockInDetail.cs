@@ -6,9 +6,13 @@ using System.Threading.Tasks;
 
 namespace ZhongDing.Domain.UIObjects
 {
-    public class UIProcureOrderAppDetail : UIBase
+    public class UIStockInDetail : UIBase
     {
+        public int StockInID { get; set; }
+
         public int ProcureOrderAppID { get; set; }
+
+        public int ProcureOrderAppDetailID { get; set; }
 
         public int ProductID { get; set; }
 
@@ -24,10 +28,15 @@ namespace ZhongDing.Domain.UIObjects
 
         public string Specification { get; set; }
 
-        public string FactoryName { get; set; }
-
         public string UnitOfMeasurement { get; set; }
 
+        public string FactoryName { get; set; }
+
+        public decimal ProcurePrice { get; set; }
+
+        /// <summary>
+        /// 采购数量
+        /// </summary>
         public int ProcureCount { get; set; }
 
         /// <summary>
@@ -42,11 +51,15 @@ namespace ZhongDing.Domain.UIObjects
 
         public decimal NumberOfPackages { get; set; }
 
-        public decimal ProcurePrice { get; set; }
+        public string BatchNumber { get; set; }
 
-        public decimal TotalAmount { get; set; }
+        public DateTime? ExpirationDate { get; set; }
 
-        public decimal? TaxAmount { get; set; }
+        public string LicenseNumber { get; set; }
+
+        public bool? IsMortgagedProduct { get; set; }
+
+        public bool IsDeleted { get; set; }
 
     }
 }

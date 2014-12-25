@@ -1,0 +1,339 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+using Telerik.Web.UI;
+using ZhongDing.Business.IRepositories;
+using ZhongDing.Business.Repositories;
+using ZhongDing.Common;
+using ZhongDing.Common.Enums;
+using ZhongDing.Domain.UIObjects;
+using ZhongDing.Domain.UISearchObjects;
+
+namespace ZhongDing.Web.Views.Procures
+{
+    public partial class StockInManagement : WorkflowBasePage
+    {
+        #region Members
+
+        private IStockInRepository _PageStockInRepository;
+        private IStockInRepository PageStockInRepository
+        {
+            get
+            {
+                if (_PageStockInRepository == null)
+                    _PageStockInRepository = new StockInRepository();
+
+                return _PageStockInRepository;
+            }
+        }
+
+        private ISupplierRepository _PageSupplierRepository;
+        private ISupplierRepository PageSupplierRepository
+        {
+            get
+            {
+                if (_PageSupplierRepository == null)
+                    _PageSupplierRepository = new SupplierRepository();
+
+                return _PageSupplierRepository;
+            }
+        }
+
+        private IList<int> _CanAddUserIDs;
+        private IList<int> CanAddUserIDs
+        {
+            get
+            {
+                if (_CanAddUserIDs == null)
+                    _CanAddUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.NewStockIn);
+
+                return _CanAddUserIDs;
+            }
+        }
+
+        private IList<int> _CanEditUserIDs;
+        private IList<int> CanEditUserIDs
+        {
+            get
+            {
+                if (_CanEditUserIDs == null)
+                    _CanEditUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.EditStockIn);
+
+                return _CanEditUserIDs;
+            }
+        }
+
+        #endregion
+
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            this.Master.MenuItemID = (int)EMenuItem.StockInManage;
+
+            if (!IsPostBack)
+            {
+                BindSuppliers();
+
+                BindWorkflowStatus();
+            }
+        }
+
+        #region Private Methods
+
+        private void BindSuppliers()
+        {
+            var suppliers = PageSupplierRepository.GetDropdownItems(new UISearchDropdownItem
+            {
+                Extension = new UISearchExtension
+                {
+                    CompanyID = CurrentUser.CompanyID
+                }
+            });
+
+            rcbxSupplier.DataSource = suppliers;
+            rcbxSupplier.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+            rcbxSupplier.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+            rcbxSupplier.DataBind();
+
+            rcbxSupplier.Items.Insert(0, new RadComboBoxItem("", ""));
+        }
+
+        private void BindWorkflowStatus()
+        {
+            var workflowStatus = PageWorkflowStatusRepository.GetDropdownItems();
+
+            rcbxWorkflowStatus.DataSource = workflowStatus;
+            rcbxWorkflowStatus.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+            rcbxWorkflowStatus.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+            rcbxWorkflowStatus.DataBind();
+
+            rcbxWorkflowStatus.Items.Insert(0, new RadComboBoxItem("", ""));
+        }
+
+        private void BindEntities(bool isNeedRebind)
+        {
+            var uiSearchObj = new UISearchStockIn()
+            {
+                CompanyID = CurrentUser.CompanyID,
+                BeginDate = rdpBeginDate.SelectedDate,
+                EndDate = rdpEndDate.SelectedDate,
+            };
+
+            IList<int> includeWorkflowStatusIDs = PageWorkflowStatusRepository
+                .GetCanAccessIDsByUserID(CurrentUser.UserID);
+
+            if (includeWorkflowStatusIDs == null)
+                includeWorkflowStatusIDs = new List<int>();
+
+            includeWorkflowStatusIDs.Add((int)EWorkflowStatus.InWarehouse);
+
+            uiSearchObj.IncludeWorkflowStatusIDs = includeWorkflowStatusIDs;
+
+            if (!string.IsNullOrEmpty(rcbxSupplier.SelectedValue))
+            {
+                int supplierID;
+                if (int.TryParse(rcbxSupplier.SelectedValue, out supplierID))
+                    uiSearchObj.SupplierID = supplierID;
+            }
+
+            if (!string.IsNullOrEmpty(rcbxWorkflowStatus.SelectedValue))
+            {
+                int workflowStatusID;
+                if (int.TryParse(rcbxWorkflowStatus.SelectedValue, out workflowStatusID))
+                    uiSearchObj.WorkflowStatusID = workflowStatusID;
+            }
+
+            int totalRecords;
+
+            var entities = PageStockInRepository.GetUIList(uiSearchObj, rgEntities.CurrentPageIndex, rgEntities.PageSize, out totalRecords);
+
+            rgEntities.VirtualItemCount = totalRecords;
+
+            rgEntities.DataSource = entities;
+
+            if (isNeedRebind)
+                rgEntities.Rebind();
+        }
+
+        #endregion
+
+        protected void rgEntities_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
+        {
+            BindEntities(false);
+        }
+
+        protected void rgEntities_DeleteCommand(object sender, Telerik.Web.UI.GridCommandEventArgs e)
+        {
+            GridEditableItem editableItem = e.Item as GridEditableItem;
+
+            String sid = editableItem.GetDataKeyValue("ID").ToString();
+
+            int id = 0;
+            if (int.TryParse(sid, out id))
+            {
+                using (IUnitOfWork unitOfWork = new UnitOfWork())
+                {
+                    var db = unitOfWork.GetDbModel();
+
+                    IStockInRepository stockInRepository = new StockInRepository();
+                    IApplicationNoteRepository appNoteRepository = new ApplicationNoteRepository();
+
+                    stockInRepository.SetDbModel(db);
+                    appNoteRepository.SetDbModel(db);
+
+                    var currentEntity = stockInRepository.GetByID(id);
+
+                    if (currentEntity != null)
+                    {
+                        foreach (var item in currentEntity.StockInDetail)
+                        {
+                            item.IsDeleted = true;
+                        }
+
+                        var appNotes = appNoteRepository.GetList(x => x.ApplicationID == currentEntity.ID);
+                        foreach (var item in appNotes)
+                        {
+                            appNoteRepository.Delete(item);
+                        }
+
+                        unitOfWork.SaveChanges();
+                    }
+                }
+
+                rgEntities.Rebind();
+            }
+        }
+
+        protected void rgEntities_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)
+        {
+            if (e.Item is GridCommandItem)
+            {
+                GridCommandItem commandItem = e.Item as GridCommandItem;
+                Panel plAddCommand = commandItem.FindControl("plAddCommand") as Panel;
+
+                if (plAddCommand != null)
+                {
+                    if (this.CanAddUserIDs.Contains(CurrentUser.UserID))
+                        plAddCommand.Visible = true;
+                    else
+                        plAddCommand.Visible = false;
+                }
+            }
+        }
+
+        protected void rgEntities_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
+        {
+            if (this.CanAddUserIDs.Contains(CurrentUser.UserID))
+                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = true;
+            else
+                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = false;
+        }
+
+        protected void rgEntities_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
+        {
+            if (e.Item.ItemType == GridItemType.Item
+                || e.Item.ItemType == GridItemType.AlternatingItem)
+            {
+                GridDataItem gridDataItem = e.Item as GridDataItem;
+                UIStockIn uiEntity = (UIStockIn)gridDataItem.DataItem;
+
+                if (uiEntity != null)
+                {
+                    string linkHtml = "<a href=\"javascript:void(0);\" onclick=\"redirectToMaintenancePage(" + uiEntity.ID + ")\">";
+
+                    var canAccessUserIDs = PageWorkflowStatusRepository.GetCanAccessUserIDsByID(uiEntity.WorkflowStatusID);
+
+                    bool isCanAccessUser = false;
+                    if (canAccessUserIDs.Contains(CurrentUser.UserID))
+                        isCanAccessUser = true;
+
+                    bool isCanEditUser = false;
+                    if (CanEditUserIDs.Contains(CurrentUser.UserID)
+                        || uiEntity.CreatedByUserID == CurrentUser.UserID)
+                        isCanEditUser = true;
+
+                    bool isShowPrintLink = false;
+
+                    EWorkflowStatus workflowStatus = (EWorkflowStatus)uiEntity.WorkflowStatusID;
+
+                    if (isCanAccessUser)
+                    {
+                        switch (workflowStatus)
+                        {
+                            case EWorkflowStatus.TemporarySave:
+                                if (isCanEditUser)
+                                    linkHtml += "编辑";
+                                else
+                                    linkHtml += "查看";
+
+                                break;
+
+                            case EWorkflowStatus.ToBeInWarehouse:
+                                linkHtml += "入库";
+                                isShowPrintLink = true;
+                                break;
+
+                            case EWorkflowStatus.InWarehouse:
+                                isShowPrintLink = true;
+                                linkHtml += "查看";
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        linkHtml += "查看";
+
+                        switch (workflowStatus)
+                        {
+                            case EWorkflowStatus.ToBeInWarehouse:
+                            case EWorkflowStatus.InWarehouse:
+                                isShowPrintLink = true;
+                                break;
+                        }
+                    }
+
+                    linkHtml += "</a>";
+
+                    var editColumn = rgEntities.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT);
+
+                    if (editColumn != null)
+                    {
+                        var editCell = gridDataItem.Cells[editColumn.OrderIndex];
+
+                        if (editCell != null)
+                            editCell.Text = linkHtml;
+                    }
+
+                    var printColumn = rgEntities.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_PRINT);
+
+                    if (printColumn != null)
+                    {
+                        var printCell = gridDataItem.Cells[printColumn.OrderIndex];
+
+                        if (printCell != null && !isShowPrintLink)
+                            printCell.Text = string.Empty;
+                    }
+                }
+            }
+        }
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            BindEntities(true);
+        }
+
+        protected void btnReset_Click(object sender, EventArgs e)
+        {
+            rdpBeginDate.Clear();
+            rdpEndDate.Clear();
+
+            rcbxSupplier.ClearSelection();
+            rcbxWorkflowStatus.ClearSelection();
+
+            BindEntities(true);
+        }
+    }
+}

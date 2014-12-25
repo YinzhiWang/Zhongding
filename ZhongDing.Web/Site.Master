@@ -98,8 +98,14 @@
 
                             <li data-level="1" data-menuitemid="50"><a href="#" class="mws-i-24 i-box-incoming">采购订单管理</a>
                                 <ul class="hide">
-                                    <li data-level="2" data-menuitemid="51"><a href="javascript:void(0);" onclick="redirectToPage('Views/Procures/ProcureOrderManagement.aspx');">采购订单</a></li>
-                                    <li data-level="2"><a href="#">入库单</a></li>
+                                    <li data-level="2" data-menuitemid="51"><a href="javascript:void(0);" onclick="redirectToPage('Views/Procures/ProcureOrderManagement.aspx');">采购订单</a>
+                                        <%--<ul>
+                                            <li data-level="3"><a href="#">采购管理1</a></li>
+                                            <li data-level="3"><a href="#">采购管理2</a></li>
+                                            <li data-level="3"><a href="#">采购管理3</a></li>
+                                        </ul>--%>
+                                    </li>
+                                    <li data-level="2" data-menuitemid="52"><a href="javascript:void(0);" onclick="redirectToPage('Views/Procures/StockInManagement.aspx');">入库单</a></li>
                                     <li data-level="2"><a href="#">物流费用管理</a></li>
                                 </ul>
                             </li>

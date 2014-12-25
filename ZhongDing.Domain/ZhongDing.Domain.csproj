@@ -203,6 +203,12 @@
     <Compile Include="Models\SaleType.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\StockIn.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StockInDetail.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Supplier.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -281,6 +287,8 @@
     <Compile Include="UIObjects\UIProductHighPrice.cs" />
     <Compile Include="UIObjects\UIProductPrice.cs" />
     <Compile Include="UIObjects\UIProductSpecification.cs" />
+    <Compile Include="UIObjects\UIStockIn.cs" />
+    <Compile Include="UIObjects\UIStockInDetail.cs" />
     <Compile Include="UIObjects\UISupplier.cs" />
     <Compile Include="UIObjects\UISupplierBankAccount.cs" />
     <Compile Include="UIObjects\UISupplierCertificate.cs" />
@@ -313,6 +321,8 @@
     <Compile Include="UISearchObjects\UISearchProcureOrderApplication.cs" />
     <Compile Include="UISearchObjects\UISearchProduct.cs" />
     <Compile Include="UISearchObjects\UISearchProductSpecification.cs" />
+    <Compile Include="UISearchObjects\UISearchStockIn.cs" />
+    <Compile Include="UISearchObjects\UISearchStockInDetail.cs" />
     <Compile Include="UISearchObjects\UISearchSupplier.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierContract.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierContractFile.cs" />

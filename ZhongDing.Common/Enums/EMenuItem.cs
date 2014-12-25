@@ -108,6 +108,11 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         ProcureOrderManage,
 
+        /// <summary>
+        /// 入库单管理
+        /// </summary>
+        StockInManage,
+
 
     }
 }

@@ -85,5 +85,7 @@ namespace ZhongDing.Domain.Models
         public DbSet<PaymentType> PaymentType { get; set; }
         public DbSet<ApplicationNote> ApplicationNote { get; set; }
         public DbSet<ApplicationPayment> ApplicationPayment { get; set; }
+        public DbSet<StockIn> StockIn { get; set; }
+        public DbSet<StockInDetail> StockInDetail { get; set; }
     }
 }

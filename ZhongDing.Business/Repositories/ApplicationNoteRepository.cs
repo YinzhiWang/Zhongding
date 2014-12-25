@@ -23,11 +23,10 @@ namespace ZhongDing.Business.Repositories
 
             if (uiSearchObj != null)
             {
+                whereFuncs.Add(x => x.ApplicationID == uiSearchObj.ApplicationID);
+
                 if (uiSearchObj.ID > 0)
                     whereFuncs.Add(x => x.ID.Equals(uiSearchObj.ID));
-
-                if (uiSearchObj.ApplicationID > 0)
-                    whereFuncs.Add(x => x.ApplicationID == uiSearchObj.ApplicationID);
 
                 if (uiSearchObj.WorkflowID > 0)
                     whereFuncs.Add(x => x.WorkflowID.Equals(uiSearchObj.WorkflowID));

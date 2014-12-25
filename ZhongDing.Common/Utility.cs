@@ -438,5 +438,15 @@ namespace ZhongDing.Common
 
             return isValidAccountNumber;
         }
+
+        /// <summary>
+        /// 从object获取字符串
+        /// </summary>
+        public static string GetValueFromObject(object obj)
+        {
+            if (obj != null)
+                return obj.ToString();
+            return string.Empty;
+        }
     }
 }

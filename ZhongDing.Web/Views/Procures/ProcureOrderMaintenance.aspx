@@ -9,6 +9,11 @@
     </telerik:RadAjaxLoadingPanel>
     <telerik:RadAjaxManager runat="server" ID="RadAjaxManager1">
         <AjaxSettings>
+            <telerik:AjaxSetting AjaxControlID="rgAppNotes">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="rgAppNotes" LoadingPanelID="loadingPanel" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="rdpOrderDate">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="rdpEstDeliveryDate" LoadingPanelID="loadingPanel" />

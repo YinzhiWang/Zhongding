@@ -13,22 +13,18 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class ProcureOrderAppDetail : IEntityExtendedProperty
+    public partial class StockIn : IEntityExtendedProperty
     {
-        public ProcureOrderAppDetail()
+        public StockIn()
         {
             this.StockInDetail = new HashSet<StockInDetail>();
         }
     
         public int ID { get; set; }
-        public int ProcureOrderApplicationID { get; set; }
-        public int WarehouseID { get; set; }
-        public int ProductID { get; set; }
-        public int ProductSpecificationID { get; set; }
-        public int ProcureCount { get; set; }
-        public decimal ProcurePrice { get; set; }
-        public decimal TotalAmount { get; set; }
-        public Nullable<decimal> TaxAmount { get; set; }
+        public string Code { get; set; }
+        public Nullable<System.DateTime> EntryDate { get; set; }
+        public int SupplierID { get; set; }
+        public int WorkflowStatusID { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -45,10 +41,8 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual Product Product { get; set; }
-        public virtual ProductSpecification ProductSpecification { get; set; }
-        public virtual Warehouse Warehouse { get; set; }
-        public virtual ProcureOrderApplication ProcureOrderApplication { get; set; }
+        public virtual Supplier Supplier { get; set; }
+        public virtual WorkflowStatus WorkflowStatus { get; set; }
         public virtual ICollection<StockInDetail> StockInDetail { get; set; }
     }
 }

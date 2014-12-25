@@ -11,16 +11,15 @@ using ZhongDing.Domain.UISearchObjects;
 
 namespace ZhongDing.Business.Repositories
 {
-    public class ProcureOrderApplicationRepository : BaseRepository<ProcureOrderApplication>, IProcureOrderApplicationRepository
+    public class StockInRepository : BaseRepository<StockIn>, IStockInRepository
     {
-
-        public IList<UIProcureOrderApplication> GetUIList(UISearchProcureOrderApplication uiSearchObj = null)
+        public IList<UIStockIn> GetUIList(UISearchStockIn uiSearchObj = null)
         {
-            IList<UIProcureOrderApplication> uiEntities = new List<UIProcureOrderApplication>();
+            IList<UIStockIn> uiEntities = new List<UIStockIn>();
 
-            IQueryable<ProcureOrderApplication> query = null;
+            IQueryable<StockIn> query = null;
 
-            List<Expression<Func<ProcureOrderApplication, bool>>> whereFuncs = new List<Expression<Func<ProcureOrderApplication, bool>>>();
+            List<Expression<Func<StockIn, bool>>> whereFuncs = new List<Expression<Func<StockIn, bool>>>();
 
             if (uiSearchObj != null)
             {
@@ -34,19 +33,19 @@ namespace ZhongDing.Business.Repositories
                     && uiSearchObj.IncludeWorkflowStatusIDs.Count() > 0)
                     whereFuncs.Add(x => uiSearchObj.IncludeWorkflowStatusIDs.Contains(x.WorkflowStatusID));
 
-                if (!string.IsNullOrEmpty(uiSearchObj.OrderCode))
-                    whereFuncs.Add(x => x.OrderCode.Contains(uiSearchObj.OrderCode));
+                if (!string.IsNullOrEmpty(uiSearchObj.Code))
+                    whereFuncs.Add(x => x.Code.Contains(uiSearchObj.Code));
 
                 if (uiSearchObj.SupplierID > 0)
                     whereFuncs.Add(x => x.SupplierID.Equals(uiSearchObj.SupplierID));
 
-                if (uiSearchObj.OrderBeginDate.HasValue)
-                    whereFuncs.Add(x => x.OrderDate >= uiSearchObj.OrderBeginDate);
+                if (uiSearchObj.BeginDate.HasValue)
+                    whereFuncs.Add(x => x.EntryDate >= uiSearchObj.BeginDate);
 
-                if (uiSearchObj.OrderEndDate.HasValue)
+                if (uiSearchObj.EndDate.HasValue)
                 {
-                    uiSearchObj.OrderEndDate = uiSearchObj.OrderEndDate.Value.AddDays(1);
-                    whereFuncs.Add(x => x.OrderDate < uiSearchObj.OrderEndDate);
+                    uiSearchObj.EndDate = uiSearchObj.EndDate.Value.AddDays(1);
+                    whereFuncs.Add(x => x.EntryDate < uiSearchObj.EndDate);
                 }
 
                 if (uiSearchObj.WorkflowStatusID > 0)
@@ -63,14 +62,12 @@ namespace ZhongDing.Business.Repositories
                               join cu in DB.Users on q.CreatedBy equals cu.UserID into tempCU
                               from tcu in tempCU.DefaultIfEmpty()
                               orderby q.CreatedOn descending
-                              select new UIProcureOrderApplication()
+                              select new UIStockIn()
                               {
                                   ID = q.ID,
-                                  OrderCode = q.OrderCode,
-                                  OrderDate = q.OrderDate,
+                                  Code = q.Code,
+                                  EntryDate = q.EntryDate,
                                   SupplierName = s.SupplierName,
-                                  IsStop = q.IsStop,
-                                  EstDeliveryDate = q.EstDeliveryDate,
                                   WorkflowStatusID = q.WorkflowStatusID,
                                   WorkflowStatus = ws.StatusName,
                                   CreatedByUserID = q.CreatedBy,
@@ -81,15 +78,15 @@ namespace ZhongDing.Business.Repositories
             return uiEntities;
         }
 
-        public IList<UIProcureOrderApplication> GetUIList(UISearchProcureOrderApplication uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
+        public IList<UIStockIn> GetUIList(UISearchStockIn uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
         {
-            IList<UIProcureOrderApplication> uiEntities = new List<UIProcureOrderApplication>();
+            IList<UIStockIn> uiEntities = new List<UIStockIn>();
 
             int total = 0;
 
-            IQueryable<ProcureOrderApplication> query = null;
+            IQueryable<StockIn> query = null;
 
-            List<Expression<Func<ProcureOrderApplication, bool>>> whereFuncs = new List<Expression<Func<ProcureOrderApplication, bool>>>();
+            List<Expression<Func<StockIn, bool>>> whereFuncs = new List<Expression<Func<StockIn, bool>>>();
 
             if (uiSearchObj != null)
             {
@@ -103,19 +100,19 @@ namespace ZhongDing.Business.Repositories
                     && uiSearchObj.IncludeWorkflowStatusIDs.Count() > 0)
                     whereFuncs.Add(x => uiSearchObj.IncludeWorkflowStatusIDs.Contains(x.WorkflowStatusID));
 
-                if (!string.IsNullOrEmpty(uiSearchObj.OrderCode))
-                    whereFuncs.Add(x => x.OrderCode.Contains(uiSearchObj.OrderCode));
+                if (!string.IsNullOrEmpty(uiSearchObj.Code))
+                    whereFuncs.Add(x => x.Code.Contains(uiSearchObj.Code));
 
                 if (uiSearchObj.SupplierID > 0)
                     whereFuncs.Add(x => x.SupplierID.Equals(uiSearchObj.SupplierID));
 
-                if (uiSearchObj.OrderBeginDate.HasValue)
-                    whereFuncs.Add(x => x.OrderDate >= uiSearchObj.OrderBeginDate);
+                if (uiSearchObj.BeginDate.HasValue)
+                    whereFuncs.Add(x => x.EntryDate >= uiSearchObj.BeginDate);
 
-                if (uiSearchObj.OrderEndDate.HasValue)
+                if (uiSearchObj.EndDate.HasValue)
                 {
-                    uiSearchObj.OrderEndDate = uiSearchObj.OrderEndDate.Value.AddDays(1);
-                    whereFuncs.Add(x => x.OrderDate < uiSearchObj.OrderEndDate);
+                    uiSearchObj.EndDate = uiSearchObj.EndDate.Value.AddDays(1);
+                    whereFuncs.Add(x => x.EntryDate < uiSearchObj.EndDate);
                 }
 
                 if (uiSearchObj.WorkflowStatusID > 0)
@@ -132,14 +129,12 @@ namespace ZhongDing.Business.Repositories
                               join cu in DB.Users on q.CreatedBy equals cu.UserID into tempCU
                               from tcu in tempCU.DefaultIfEmpty()
                               orderby q.CreatedOn descending
-                              select new UIProcureOrderApplication()
+                              select new UIStockIn()
                               {
                                   ID = q.ID,
-                                  OrderCode = q.OrderCode,
-                                  OrderDate = q.OrderDate,
+                                  Code = q.Code,
+                                  EntryDate = q.EntryDate,
                                   SupplierName = s.SupplierName,
-                                  IsStop = q.IsStop,
-                                  EstDeliveryDate = q.EstDeliveryDate,
                                   WorkflowStatusID = q.WorkflowStatusID,
                                   WorkflowStatus = ws.StatusName,
                                   CreatedByUserID = q.CreatedBy,
@@ -154,8 +149,8 @@ namespace ZhongDing.Business.Repositories
 
         public int? GetMaxEntityID()
         {
-            if (this.DB.ProcureOrderApplication.Count() > 0)
-                return this.DB.ProcureOrderApplication.Max(x => x.ID);
+            if (this.DB.StockIn.Count() > 0)
+                return this.DB.StockIn.Max(x => x.ID);
             else return null;
         }
     }
