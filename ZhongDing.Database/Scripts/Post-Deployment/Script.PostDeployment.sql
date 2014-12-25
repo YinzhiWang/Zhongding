@@ -360,8 +360,8 @@ BEGIN TRANSACTION
 SET IDENTITY_INSERT [dbo].[WorkflowStatus] ON
 INSERT INTO [dbo].[WorkflowStatus] ([ID], [StatusName], [Comment], [IsDeleted]) VALUES (1, N'暂存', N'未提交的单据，可修改', 0)
 INSERT INTO [dbo].[WorkflowStatus] ([ID], [StatusName], [Comment], [IsDeleted]) VALUES (2, N'提交', N'已提交的单据，不可修改', 0)
-INSERT INTO [dbo].[WorkflowStatus] ([ID], [StatusName], [Comment], [IsDeleted]) VALUES (3, N'基础信息已审核', N'已审核的单据，不可修改', 0)
-INSERT INTO [dbo].[WorkflowStatus] ([ID], [StatusName], [Comment], [IsDeleted]) VALUES (4, N'基础信息退回', N'订单基础信息未通过审核的单据，可修改', 0)
+INSERT INTO [dbo].[WorkflowStatus] ([ID], [StatusName], [Comment], [IsDeleted]) VALUES (3, N'已审核', N'已审核的单据，不可修改', 0)
+INSERT INTO [dbo].[WorkflowStatus] ([ID], [StatusName], [Comment], [IsDeleted]) VALUES (4, N'退回', N'未通过审核的单据，可修改', 0)
 INSERT INTO [dbo].[WorkflowStatus] ([ID], [StatusName], [Comment], [IsDeleted]) VALUES (5, N'支付信息待审核', N'已有支付信息的待审核的单据，不可修改', 0)
 INSERT INTO [dbo].[WorkflowStatus] ([ID], [StatusName], [Comment], [IsDeleted]) VALUES (6, N'待支付', N'待支付的单据，不可修改', 0)
 INSERT INTO [dbo].[WorkflowStatus] ([ID], [StatusName], [Comment], [IsDeleted]) VALUES (7, N'支付信息退回', N'支付信息未通过审核的单据，可修改', 0)
