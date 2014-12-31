@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZhongDing.Domain.UIObjects
 {
-    public class UIProcureOrderApplication : UIBase
+    public class UIProcureOrderApplication : UIWorkflowBase
     {
         public string OrderCode { get; set; }
 
@@ -17,10 +17,6 @@ namespace ZhongDing.Domain.UIObjects
         public DateTime OrderDate { get; set; }
 
         public DateTime? EstDeliveryDate { get; set; }
-
-        public string WorkflowStatus { get; set; }
-
-        public int WorkflowStatusID { get; set; }
 
     }
 }

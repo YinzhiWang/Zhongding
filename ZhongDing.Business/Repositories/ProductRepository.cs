@@ -137,6 +137,10 @@ namespace ZhongDing.Business.Repositories
                     && uiSearchObj.IncludeItemValues.Count > 0)
                     whereFuncs.Add(x => uiSearchObj.IncludeItemValues.Contains(x.ID));
 
+                if (uiSearchObj.ExcludeItemValues != null
+                    && uiSearchObj.ExcludeItemValues.Count > 0)
+                    whereFuncs.Add(x => !uiSearchObj.ExcludeItemValues.Contains(x.ID));
+
                 if (!string.IsNullOrEmpty(uiSearchObj.ItemText))
                     whereFuncs.Add(x => x.ProductName.Contains(uiSearchObj.ItemText));
 
@@ -175,6 +179,7 @@ namespace ZhongDing.Business.Repositories
                         whereFuncs.Add(x => uiSearchObj.Extension.ProductCategoryIDs
                             .Contains(x.CategoryID.HasValue ? x.CategoryID.Value : GlobalConst.INVALID_INT));
                 }
+
             }
 
             uiDropdownItems = GetList(whereFuncs).Select(x => new UIDropdownItem()

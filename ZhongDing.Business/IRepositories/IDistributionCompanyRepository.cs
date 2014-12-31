@@ -9,7 +9,7 @@ using ZhongDing.Domain.UISearchObjects;
 
 namespace ZhongDing.Business.IRepositories
 {
-    public interface IDistributionCompanyRepository : IBaseRepository<DistributionCompany>, IAutoSerialNo
+    public interface IDistributionCompanyRepository : IBaseRepository<DistributionCompany>, IAutoSerialNo, IGenerateDropdownItems
     {
         /// <summary>
         /// 获取UI List，不分页

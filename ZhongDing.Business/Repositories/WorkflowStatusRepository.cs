@@ -38,17 +38,19 @@ namespace ZhongDing.Business.Repositories
             return uiDropdownItems;
         }
 
-        public IList<int> GetCanAccessUserIDsByID(int statusID)
+        public IList<int> GetCanAccessUserIDsByID(int workflowID, int statusID)
         {
             IList<int> userIDs = new List<int>();
 
             userIDs = (from wss in DB.WorkflowStepStatus
                        join ws in DB.WorkflowStatus on wss.WorkflowStatusID equals ws.ID
+                       join wsp in DB.WorkflowStep on wss.WorkflowStepID equals wsp.ID
                        join wsu in DB.WorkflowStepUser on wss.WorkflowStepID equals wsu.WorkflowStepID
                        where ws.IsDeleted == false
                        && wss.IsDeleted == false
                        && wsu.IsDeleted == false
                        && wss.WorkflowStatusID == statusID
+                       && wsp.WorkflowID == workflowID
                        select wsu.UserID).ToList();
 
             return userIDs;
@@ -64,7 +66,7 @@ namespace ZhongDing.Business.Repositories
                          where ws.IsDeleted == false
                          && wss.IsDeleted == false
                          && wsu.IsDeleted == false
-                         && wsu.UserID == userID 
+                         && wsu.UserID == userID
                          select wss.WorkflowStatusID).ToList();
 
             return statusIDs;

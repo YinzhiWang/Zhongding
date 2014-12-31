@@ -102,7 +102,7 @@ namespace ZhongDing.Web.Views.Procures
                     if (this.CurrentEntity == null)
                         _CanAccessUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.NewProcureOrder);
                     else
-                        _CanAccessUserIDs = PageWorkflowStatusRepository.GetCanAccessUserIDsByID(this.CurrentEntity.WorkflowStatusID);
+                        _CanAccessUserIDs = PageWorkflowStatusRepository.GetCanAccessUserIDsByID(this.CurrentWorkFlowID, this.CurrentEntity.WorkflowStatusID);
                 }
 
                 return _CanAccessUserIDs;
@@ -115,7 +115,7 @@ namespace ZhongDing.Web.Views.Procures
             get
             {
                 if (_CanEditUserIDs == null)
-                    _CanEditUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.EditOrder);
+                    _CanEditUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.EditProcureOrder);
 
                 return _CanEditUserIDs;
             }

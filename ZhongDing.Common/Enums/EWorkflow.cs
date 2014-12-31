@@ -20,13 +20,13 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         StockIn,
         /// <summary>
-        /// 大包申请单
+        /// 大包配送申请单
         /// </summary>
-        DBClientOrder,
+        DBOrderRequest,
         /// <summary>
         /// 大包配送订单
         /// </summary>
-        DBDistribution,
+        DBOrder,
         /// <summary>
         /// 大包出库单
         /// </summary>

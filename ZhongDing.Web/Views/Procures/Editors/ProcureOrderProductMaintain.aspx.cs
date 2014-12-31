@@ -152,7 +152,10 @@ namespace ZhongDing.Web.Views.Procures.Editors
 
         private void BindProducts()
         {
-            var products = PageProductRepository.GetDropdownItems();
+            var products = PageProductRepository.GetDropdownItems(new UISearchDropdownItem()
+            {
+                Extension = new UISearchExtension { CompanyID = CurrentUser.CompanyID }
+            });
 
             rcbxProduct.DataSource = products;
             rcbxProduct.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;

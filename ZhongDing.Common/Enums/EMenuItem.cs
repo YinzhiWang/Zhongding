@@ -113,6 +113,35 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         StockInManage,
 
+        /// <summary>
+        /// 销售管理
+        /// </summary>
+        SalesManage = 60,
+
+        /// <summary>
+        /// 客户订单管理
+        /// </summary>
+        ClientOrderManage,
+
+        /// <summary>
+        /// 客户订单出库单管理
+        /// </summary>
+        ClientOrderStockOutManage,
+
+        /// <summary>
+        /// 大包订单申请单管理
+        /// </summary>
+        DBOrderRequestManage,
+
+        /// <summary>
+        /// 大包订单管理
+        /// </summary>
+        DBOrderManage,
+
+        /// <summary>
+        /// 大包订单出库单管理
+        /// </summary>
+        DBOrderStockOutManage,
 
     }
 }

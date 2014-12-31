@@ -29,9 +29,9 @@ namespace ZhongDing.Common.Enums
         ProcureOrderCashier,
 
         /// <summary>
-        /// 修改订单
+        /// 修改采购订单
         /// </summary>
-        EditOrder,
+        EditProcureOrder,
 
         /// <summary>
         /// 新增入库单
@@ -46,6 +46,27 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 修改入库单
         /// </summary>
-        EditStockIn
+        EditStockIn,
+
+        /// <summary>
+        /// 新增大包配送申请单
+        /// </summary>
+        NewDBOrderRequest,
+
+        /// <summary>
+        /// 审核大包配送申请单
+        /// </summary>
+        AuditDBOrderRequest,
+
+        /// <summary>
+        /// 修改大包配送申请单
+        /// </summary>
+        EditDBOrderRequest,
+
+        /// <summary>
+        /// 修改大包配送订单
+        /// </summary>
+        EditDBOrder,
+
     }
 }

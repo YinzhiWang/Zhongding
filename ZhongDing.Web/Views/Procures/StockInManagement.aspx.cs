@@ -72,6 +72,7 @@ namespace ZhongDing.Web.Views.Procures
         protected void Page_Load(object sender, EventArgs e)
         {
             this.Master.MenuItemID = (int)EMenuItem.StockInManage;
+            this.CurrentWorkFlowID = (int)EWorkflow.StockIn;
 
             if (!IsPostBack)
             {
@@ -103,7 +104,16 @@ namespace ZhongDing.Web.Views.Procures
 
         private void BindWorkflowStatus()
         {
-            var workflowStatus = PageWorkflowStatusRepository.GetDropdownItems();
+            var uiSearchObj = new UISearchDropdownItem();
+
+            IList<int> includeItemValues = new List<int>();
+            includeItemValues.Add((int)EWorkflowStatus.TemporarySave);
+            includeItemValues.Add((int)EWorkflowStatus.ToBeInWarehouse);
+            includeItemValues.Add((int)EWorkflowStatus.InWarehouse);
+
+            uiSearchObj.IncludeItemValues = includeItemValues;
+
+            var workflowStatus = PageWorkflowStatusRepository.GetDropdownItems(uiSearchObj);
 
             rcbxWorkflowStatus.DataSource = workflowStatus;
             rcbxWorkflowStatus.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
@@ -244,7 +254,7 @@ namespace ZhongDing.Web.Views.Procures
                 {
                     string linkHtml = "<a href=\"javascript:void(0);\" onclick=\"redirectToMaintenancePage(" + uiEntity.ID + ")\">";
 
-                    var canAccessUserIDs = PageWorkflowStatusRepository.GetCanAccessUserIDsByID(uiEntity.WorkflowStatusID);
+                    var canAccessUserIDs = PageWorkflowStatusRepository.GetCanAccessUserIDsByID(this.CurrentWorkFlowID, uiEntity.WorkflowStatusID);
 
                     bool isCanAccessUser = false;
                     if (canAccessUserIDs.Contains(CurrentUser.UserID))

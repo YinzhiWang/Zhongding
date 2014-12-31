@@ -40,13 +40,13 @@ namespace ZhongDing.Business.Repositories
                 if (uiSearchObj.SupplierID > 0)
                     whereFuncs.Add(x => x.SupplierID.Equals(uiSearchObj.SupplierID));
 
-                if (uiSearchObj.OrderBeginDate.HasValue)
-                    whereFuncs.Add(x => x.OrderDate >= uiSearchObj.OrderBeginDate);
+                if (uiSearchObj.BeginDate.HasValue)
+                    whereFuncs.Add(x => x.OrderDate >= uiSearchObj.BeginDate);
 
-                if (uiSearchObj.OrderEndDate.HasValue)
+                if (uiSearchObj.EndDate.HasValue)
                 {
-                    uiSearchObj.OrderEndDate = uiSearchObj.OrderEndDate.Value.AddDays(1);
-                    whereFuncs.Add(x => x.OrderDate < uiSearchObj.OrderEndDate);
+                    uiSearchObj.EndDate = uiSearchObj.EndDate.Value.AddDays(1);
+                    whereFuncs.Add(x => x.OrderDate < uiSearchObj.EndDate);
                 }
 
                 if (uiSearchObj.WorkflowStatusID > 0)
@@ -109,13 +109,13 @@ namespace ZhongDing.Business.Repositories
                 if (uiSearchObj.SupplierID > 0)
                     whereFuncs.Add(x => x.SupplierID.Equals(uiSearchObj.SupplierID));
 
-                if (uiSearchObj.OrderBeginDate.HasValue)
-                    whereFuncs.Add(x => x.OrderDate >= uiSearchObj.OrderBeginDate);
+                if (uiSearchObj.BeginDate.HasValue)
+                    whereFuncs.Add(x => x.OrderDate >= uiSearchObj.BeginDate);
 
-                if (uiSearchObj.OrderEndDate.HasValue)
+                if (uiSearchObj.EndDate.HasValue)
                 {
-                    uiSearchObj.OrderEndDate = uiSearchObj.OrderEndDate.Value.AddDays(1);
-                    whereFuncs.Add(x => x.OrderDate < uiSearchObj.OrderEndDate);
+                    uiSearchObj.EndDate = uiSearchObj.EndDate.Value.AddDays(1);
+                    whereFuncs.Add(x => x.OrderDate < uiSearchObj.EndDate);
                 }
 
                 if (uiSearchObj.WorkflowStatusID > 0)

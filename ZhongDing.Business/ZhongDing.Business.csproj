@@ -66,6 +66,9 @@
     <Compile Include="IRepositories\IClientInfoRepository.cs" />
     <Compile Include="IRepositories\IClientUserRepository.cs" />
     <Compile Include="IRepositories\ICompanyRepository.cs" />
+    <Compile Include="IRepositories\IDaBaoApplicationRepository.cs" />
+    <Compile Include="IRepositories\IDaBaoRequestAppDetailRepository.cs" />
+    <Compile Include="IRepositories\IDaBaoRequestApplicationRepository.cs" />
     <Compile Include="IRepositories\IDBContractHospitalRepository.cs" />
     <Compile Include="IRepositories\IDBContractRepository.cs" />
     <Compile Include="IRepositories\IDBContractTaskAssignmentRepository.cs" />
@@ -92,6 +95,8 @@
     <Compile Include="IRepositories\IProductRepository.cs" />
     <Compile Include="IRepositories\IProductSpecificationRepository.cs" />
     <Compile Include="IRepositories\IReportRepository.cs" />
+    <Compile Include="IRepositories\ISalesOrderAppDetailRepository.cs" />
+    <Compile Include="IRepositories\ISalesOrderApplicationRepository.cs" />
     <Compile Include="IRepositories\ISaleTypeRepository.cs" />
     <Compile Include="IRepositories\IStockInDetailRepository.cs" />
     <Compile Include="IRepositories\IStockInRepository.cs" />
@@ -125,6 +130,9 @@
     <Compile Include="Repositories\ClientInfoRepository.cs" />
     <Compile Include="Repositories\ClientUserRepository.cs" />
     <Compile Include="Repositories\CompanyRepository.cs" />
+    <Compile Include="Repositories\DaBaoApplicationRepository.cs" />
+    <Compile Include="Repositories\DaBaoRequestAppDetailRepository.cs" />
+    <Compile Include="Repositories\DaBaoRequestApplicationRepository.cs" />
     <Compile Include="Repositories\DBContractHospitalRepository.cs" />
     <Compile Include="Repositories\DBContractRepository.cs" />
     <Compile Include="Repositories\DBContractTaskAssignmentRepository.cs" />
@@ -150,6 +158,8 @@
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\ProductSpecificationRepository.cs" />
     <Compile Include="Repositories\Reports\ReportRepository.cs" />
+    <Compile Include="Repositories\SalesOrderAppDetailRepository.cs" />
+    <Compile Include="Repositories\SalesOrderApplicationRepository.cs" />
     <Compile Include="Repositories\SaleTypeRepository.cs" />
     <Compile Include="Repositories\StockInDetailRepository.cs" />
     <Compile Include="Repositories\StockInRepository.cs" />

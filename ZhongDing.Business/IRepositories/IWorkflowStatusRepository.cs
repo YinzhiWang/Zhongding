@@ -12,9 +12,10 @@ namespace ZhongDing.Business.IRepositories
         /// <summary>
         /// 根据工作流状态ID获取可访问的用户IDs
         /// </summary>
+        /// <param name="workflowID">The workflow ID.</param>
         /// <param name="statusID">The status ID.</param>
         /// <returns>IList{System.Int32}.</returns>
-        IList<int> GetCanAccessUserIDsByID(int statusID);
+        IList<int> GetCanAccessUserIDsByID(int workflowID, int statusID);
 
         /// <summary>
         /// 根据用户ID获取该用户可以访问的状态列表

@@ -428,18 +428,7 @@
             var targetUrl = $.getRootPath() + "Views/Procures/Editors/ProcureOrderProductMaintain.aspx?EntityID=" + id
                 + "&OwnerEntityID=" + currentEntityID + "&GridClientID=" + gridClientIDs.gridOrderProducts;
 
-            $.openRadWindow(targetUrl, "winProductSpecification", true, 800, 380);
-        }
-
-        function openCertificateWindow(id, ownerTypeID, gridClientID) {
-            $.showLoading();
-
-            var currentEntityID = $("#<%= hdnCurrentEntityID.ClientID %>").val();
-
-            var targetUrl = $.getRootPath() + "Views/Basics/Editors/CertificateMaintain.aspx?EntityID=" + id
-                + "&OwnerEntityID=" + currentEntityID + "&OwnerTypeID=" + ownerTypeID + "&GridClientID=" + gridClientID;
-
-            $.openRadWindow(targetUrl, "winCertificate", true, 800, 400);
+            $.openRadWindow(targetUrl, "winOrderProduct", true, 800, 380);
         }
 
         $(document).ready(function () {

@@ -23,6 +23,9 @@
           <EntitySet Name="ClientInfoProductSetting" EntityType="DbModel.Store.ClientInfoProductSetting" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ClientUser" EntityType="DbModel.Store.ClientUser" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Company" EntityType="DbModel.Store.Company" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DaBaoApplication" EntityType="DbModel.Store.DaBaoApplication" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DaBaoRequestAppDetail" EntityType="DbModel.Store.DaBaoRequestAppDetail" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DaBaoRequestApplication" EntityType="DbModel.Store.DaBaoRequestApplication" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DBContract" EntityType="DbModel.Store.DBContract" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DBContractHospital" EntityType="DbModel.Store.DBContractHospital" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DBContractTaskAssignment" EntityType="DbModel.Store.DBContractTaskAssignment" store:Type="Tables" Schema="dbo" />
@@ -50,6 +53,8 @@
           <EntitySet Name="ProductHighPrice" EntityType="DbModel.Store.ProductHighPrice" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ProductSpecification" EntityType="DbModel.Store.ProductSpecification" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Roles" EntityType="DbModel.Store.Roles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SalesOrderAppDetail" EntityType="DbModel.Store.SalesOrderAppDetail" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SalesOrderApplication" EntityType="DbModel.Store.SalesOrderApplication" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SaleType" EntityType="DbModel.Store.SaleType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="StockIn" EntityType="DbModel.Store.StockIn" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="StockInDetail" EntityType="DbModel.Store.StockInDetail" store:Type="Tables" Schema="dbo" />
@@ -167,6 +172,58 @@
           <AssociationSet Name="FK_ClientInfoProductSetting_ProductSpecification" Association="DbModel.Store.FK_ClientInfoProductSetting_ProductSpecification">
             <End Role="ProductSpecification" EntitySet="ProductSpecification" />
             <End Role="ClientInfoProductSetting" EntitySet="ClientInfoProductSetting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoApplication_Company" Association="DbModel.Store.FK_DaBaoApplication_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="DaBaoApplication" EntitySet="DaBaoApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoApplication_Department" Association="DbModel.Store.FK_DaBaoApplication_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="DaBaoApplication" EntitySet="DaBaoApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoApplication_DistributionCompany" Association="DbModel.Store.FK_DaBaoApplication_DistributionCompany">
+            <End Role="DistributionCompany" EntitySet="DistributionCompany" />
+            <End Role="DaBaoApplication" EntitySet="DaBaoApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoApplication_SalesOrderApplication" Association="DbModel.Store.FK_DaBaoApplication_SalesOrderApplication">
+            <End Role="SalesOrderApplication" EntitySet="SalesOrderApplication" />
+            <End Role="DaBaoApplication" EntitySet="DaBaoApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoApplication_WorkflowStatus" Association="DbModel.Store.FK_DaBaoApplication_WorkflowStatus">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="DaBaoApplication" EntitySet="DaBaoApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoRequestAppDetail_DaBaoRequestApplication" Association="DbModel.Store.FK_DaBaoRequestAppDetail_DaBaoRequestApplication">
+            <End Role="DaBaoRequestApplication" EntitySet="DaBaoRequestApplication" />
+            <End Role="DaBaoRequestAppDetail" EntitySet="DaBaoRequestAppDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoRequestAppDetail_Product" Association="DbModel.Store.FK_DaBaoRequestAppDetail_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="DaBaoRequestAppDetail" EntitySet="DaBaoRequestAppDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoRequestAppDetail_ProductSpecification" Association="DbModel.Store.FK_DaBaoRequestAppDetail_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="DaBaoRequestAppDetail" EntitySet="DaBaoRequestAppDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoRequestApplication_Company" Association="DbModel.Store.FK_DaBaoRequestApplication_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="DaBaoRequestApplication" EntitySet="DaBaoRequestApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoRequestApplication_DaBaoApplication" Association="DbModel.Store.FK_DaBaoRequestApplication_DaBaoApplication">
+            <End Role="DaBaoApplication" EntitySet="DaBaoApplication" />
+            <End Role="DaBaoRequestApplication" EntitySet="DaBaoRequestApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoRequestApplication_Department" Association="DbModel.Store.FK_DaBaoRequestApplication_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="DaBaoRequestApplication" EntitySet="DaBaoRequestApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoRequestApplication_DistributionCompany" Association="DbModel.Store.FK_DaBaoRequestApplication_DistributionCompany">
+            <End Role="DistributionCompany" EntitySet="DistributionCompany" />
+            <End Role="DaBaoRequestApplication" EntitySet="DaBaoRequestApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoRequestApplication_WorkflowStatus" Association="DbModel.Store.FK_DaBaoRequestApplication_WorkflowStatus">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="DaBaoRequestApplication" EntitySet="DaBaoRequestApplication" />
           </AssociationSet>
           <AssociationSet Name="FK_DBContract_ClientUser" Association="DbModel.Store.FK_DBContract_ClientUser">
             <End Role="ClientUser" EntitySet="ClientUser" />
@@ -335,6 +392,18 @@
           <AssociationSet Name="FK_Roles_aspnet_Roles" Association="DbModel.Store.FK_Roles_aspnet_Roles">
             <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
             <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesOrderAppDetail_Product" Association="DbModel.Store.FK_SalesOrderAppDetail_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="SalesOrderAppDetail" EntitySet="SalesOrderAppDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesOrderAppDetail_ProductSpecification" Association="DbModel.Store.FK_SalesOrderAppDetail_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="SalesOrderAppDetail" EntitySet="SalesOrderAppDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesOrderAppDetail_SalesOrderApplication" Association="DbModel.Store.FK_SalesOrderAppDetail_SalesOrderApplication">
+            <End Role="SalesOrderApplication" EntitySet="SalesOrderApplication" />
+            <End Role="SalesOrderAppDetail" EntitySet="SalesOrderAppDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_StockIn_Supplier" Association="DbModel.Store.FK_StockIn_Supplier">
             <End Role="Supplier" EntitySet="Supplier" />
@@ -707,6 +776,62 @@
           <Property Name="ClientTaxLowRatio" Type="decimal" Scale="8" />
           <Property Name="EnableTaxDeduction" Type="bit" />
           <Property Name="ClientTaxDeductionRatio" Type="decimal" Scale="8" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="DaBaoApplication">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SalesOrderApplicationID" Type="int" Nullable="false" />
+          <Property Name="DistributionCompanyID" Type="int" Nullable="false" />
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
+          <Property Name="CompanyID" Type="int" Nullable="false" />
+          <Property Name="ReceiverName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ReceiverPhone" Type="nvarchar" MaxLength="50" />
+          <Property Name="ReceiverAddress" Type="nvarchar" MaxLength="500" />
+          <Property Name="WorkflowStatusID" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="DaBaoRequestAppDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DaBaoRequestApplicationID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="ProductSpecificationID" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="SalesPrice" Type="money" Nullable="false" />
+          <Property Name="TotalSalesAmount" Type="money" Nullable="false" />
+          <Property Name="GiftCount" Type="int" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="DaBaoRequestApplication">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DaBaoApplicationID" Type="int" />
+          <Property Name="DistributionCompanyID" Type="int" Nullable="false" />
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
+          <Property Name="CompanyID" Type="int" Nullable="false" />
+          <Property Name="ReceiverName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ReceiverPhone" Type="nvarchar" MaxLength="50" />
+          <Property Name="ReceiverAddress" Type="nvarchar" MaxLength="500" />
+          <Property Name="WorkflowStatusID" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
@@ -1093,6 +1218,41 @@
           <Property Name="AspnetRoleID" Type="uniqueidentifier" />
           <Property Name="RoleName" Type="nvarchar" MaxLength="256" />
           <Property Name="IsSystemDefault" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="SalesOrderAppDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SalesOrderApplicationID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="ProductSpecificationID" Type="int" Nullable="false" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="SalesPrice" Type="money" Nullable="false" />
+          <Property Name="TotalSalesAmount" Type="money" Nullable="false" />
+          <Property Name="GiftCount" Type="int" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="SalesOrderApplication">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SaleOrderTypeID" Type="int" Nullable="false" />
+          <Property Name="OrderCode" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="OrderDate" Type="datetime" Nullable="false" />
+          <Property Name="IsStop" Type="bit" Nullable="false" />
+          <Property Name="StoppedOn" Type="datetime" />
+          <Property Name="StoppedBy" Type="int" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
@@ -1657,6 +1817,162 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DaBaoApplication_Company">
+          <End Role="Company" Type="DbModel.Store.Company" Multiplicity="1" />
+          <End Role="DaBaoApplication" Type="DbModel.Store.DaBaoApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoApplication">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaBaoApplication_Department">
+          <End Role="Department" Type="DbModel.Store.Department" Multiplicity="1" />
+          <End Role="DaBaoApplication" Type="DbModel.Store.DaBaoApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoApplication">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaBaoApplication_DistributionCompany">
+          <End Role="DistributionCompany" Type="DbModel.Store.DistributionCompany" Multiplicity="1" />
+          <End Role="DaBaoApplication" Type="DbModel.Store.DaBaoApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCompany">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoApplication">
+              <PropertyRef Name="DistributionCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaBaoApplication_SalesOrderApplication">
+          <End Role="SalesOrderApplication" Type="DbModel.Store.SalesOrderApplication" Multiplicity="1" />
+          <End Role="DaBaoApplication" Type="DbModel.Store.DaBaoApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesOrderApplication">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoApplication">
+              <PropertyRef Name="SalesOrderApplicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaBaoApplication_WorkflowStatus">
+          <End Role="WorkflowStatus" Type="DbModel.Store.WorkflowStatus" Multiplicity="1" />
+          <End Role="DaBaoApplication" Type="DbModel.Store.DaBaoApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoApplication">
+              <PropertyRef Name="WorkflowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaBaoRequestAppDetail_DaBaoRequestApplication">
+          <End Role="DaBaoRequestApplication" Type="DbModel.Store.DaBaoRequestApplication" Multiplicity="1" />
+          <End Role="DaBaoRequestAppDetail" Type="DbModel.Store.DaBaoRequestAppDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DaBaoRequestApplication">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoRequestAppDetail">
+              <PropertyRef Name="DaBaoRequestApplicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaBaoRequestAppDetail_Product">
+          <End Role="Product" Type="DbModel.Store.Product" Multiplicity="1" />
+          <End Role="DaBaoRequestAppDetail" Type="DbModel.Store.DaBaoRequestAppDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoRequestAppDetail">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaBaoRequestAppDetail_ProductSpecification">
+          <End Role="ProductSpecification" Type="DbModel.Store.ProductSpecification" Multiplicity="1" />
+          <End Role="DaBaoRequestAppDetail" Type="DbModel.Store.DaBaoRequestAppDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoRequestAppDetail">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaBaoRequestApplication_Company">
+          <End Role="Company" Type="DbModel.Store.Company" Multiplicity="1" />
+          <End Role="DaBaoRequestApplication" Type="DbModel.Store.DaBaoRequestApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoRequestApplication">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaBaoRequestApplication_DaBaoApplication">
+          <End Role="DaBaoApplication" Type="DbModel.Store.DaBaoApplication" Multiplicity="0..1" />
+          <End Role="DaBaoRequestApplication" Type="DbModel.Store.DaBaoRequestApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DaBaoApplication">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoRequestApplication">
+              <PropertyRef Name="DaBaoApplicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaBaoRequestApplication_Department">
+          <End Role="Department" Type="DbModel.Store.Department" Multiplicity="1" />
+          <End Role="DaBaoRequestApplication" Type="DbModel.Store.DaBaoRequestApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoRequestApplication">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaBaoRequestApplication_DistributionCompany">
+          <End Role="DistributionCompany" Type="DbModel.Store.DistributionCompany" Multiplicity="1" />
+          <End Role="DaBaoRequestApplication" Type="DbModel.Store.DaBaoRequestApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCompany">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoRequestApplication">
+              <PropertyRef Name="DistributionCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaBaoRequestApplication_WorkflowStatus">
+          <End Role="WorkflowStatus" Type="DbModel.Store.WorkflowStatus" Multiplicity="1" />
+          <End Role="DaBaoRequestApplication" Type="DbModel.Store.DaBaoRequestApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoRequestApplication">
+              <PropertyRef Name="WorkflowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DBContract_ClientUser">
           <End Role="ClientUser" Type="DbModel.Store.ClientUser" Multiplicity="0..1" />
           <End Role="DBContract" Type="DbModel.Store.DBContract" Multiplicity="*" />
@@ -2158,6 +2474,42 @@
             </Principal>
             <Dependent Role="Roles">
               <PropertyRef Name="AspnetRoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesOrderAppDetail_Product">
+          <End Role="Product" Type="DbModel.Store.Product" Multiplicity="1" />
+          <End Role="SalesOrderAppDetail" Type="DbModel.Store.SalesOrderAppDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SalesOrderAppDetail">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesOrderAppDetail_ProductSpecification">
+          <End Role="ProductSpecification" Type="DbModel.Store.ProductSpecification" Multiplicity="1" />
+          <End Role="SalesOrderAppDetail" Type="DbModel.Store.SalesOrderAppDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SalesOrderAppDetail">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesOrderAppDetail_SalesOrderApplication">
+          <End Role="SalesOrderApplication" Type="DbModel.Store.SalesOrderApplication" Multiplicity="1" />
+          <End Role="SalesOrderAppDetail" Type="DbModel.Store.SalesOrderAppDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesOrderApplication">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SalesOrderAppDetail">
+              <PropertyRef Name="SalesOrderApplicationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2944,6 +3296,75 @@
             <End Role="Warehouse" EntitySet="Warehouse" />
             <End Role="StockInDetail" EntitySet="StockInDetail" />
           </AssociationSet>
+          <EntitySet Name="DaBaoApplication" EntityType="DbModel.DaBaoApplication" />
+          <EntitySet Name="DaBaoRequestApplication" EntityType="DbModel.DaBaoRequestApplication" />
+          <AssociationSet Name="FK_DaBaoApplication_Company" Association="DbModel.FK_DaBaoApplication_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="DaBaoApplication" EntitySet="DaBaoApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoRequestApplication_Company" Association="DbModel.FK_DaBaoRequestApplication_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="DaBaoRequestApplication" EntitySet="DaBaoRequestApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoApplication_Department" Association="DbModel.FK_DaBaoApplication_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="DaBaoApplication" EntitySet="DaBaoApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoApplication_DistributionCompany" Association="DbModel.FK_DaBaoApplication_DistributionCompany">
+            <End Role="DistributionCompany" EntitySet="DistributionCompany" />
+            <End Role="DaBaoApplication" EntitySet="DaBaoApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoApplication_WorkflowStatus" Association="DbModel.FK_DaBaoApplication_WorkflowStatus">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="DaBaoApplication" EntitySet="DaBaoApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoRequestApplication_DaBaoApplication" Association="DbModel.FK_DaBaoRequestApplication_DaBaoApplication">
+            <End Role="DaBaoApplication" EntitySet="DaBaoApplication" />
+            <End Role="DaBaoRequestApplication" EntitySet="DaBaoRequestApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoRequestApplication_Department" Association="DbModel.FK_DaBaoRequestApplication_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="DaBaoRequestApplication" EntitySet="DaBaoRequestApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoRequestApplication_DistributionCompany" Association="DbModel.FK_DaBaoRequestApplication_DistributionCompany">
+            <End Role="DistributionCompany" EntitySet="DistributionCompany" />
+            <End Role="DaBaoRequestApplication" EntitySet="DaBaoRequestApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoRequestApplication_WorkflowStatus" Association="DbModel.FK_DaBaoRequestApplication_WorkflowStatus">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="DaBaoRequestApplication" EntitySet="DaBaoRequestApplication" />
+          </AssociationSet>
+          <EntitySet Name="DaBaoRequestAppDetail" EntityType="DbModel.DaBaoRequestAppDetail" />
+          <AssociationSet Name="FK_DaBaoRequestAppDetail_DaBaoRequestApplication" Association="DbModel.FK_DaBaoRequestAppDetail_DaBaoRequestApplication">
+            <End Role="DaBaoRequestApplication" EntitySet="DaBaoRequestApplication" />
+            <End Role="DaBaoRequestAppDetail" EntitySet="DaBaoRequestAppDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoRequestAppDetail_Product" Association="DbModel.FK_DaBaoRequestAppDetail_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="DaBaoRequestAppDetail" EntitySet="DaBaoRequestAppDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DaBaoRequestAppDetail_ProductSpecification" Association="DbModel.FK_DaBaoRequestAppDetail_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="DaBaoRequestAppDetail" EntitySet="DaBaoRequestAppDetail" />
+          </AssociationSet>
+          <EntitySet Name="SalesOrderApplication" EntityType="DbModel.SalesOrderApplication" />
+          <AssociationSet Name="FK_DaBaoApplication_SalesOrderApplication" Association="DbModel.FK_DaBaoApplication_SalesOrderApplication">
+            <End Role="SalesOrderApplication" EntitySet="SalesOrderApplication" />
+            <End Role="DaBaoApplication" EntitySet="DaBaoApplication" />
+          </AssociationSet>
+          <EntitySet Name="SalesOrderAppDetail" EntityType="DbModel.SalesOrderAppDetail" />
+          <AssociationSet Name="FK_SalesOrderAppDetail_Product" Association="DbModel.FK_SalesOrderAppDetail_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="SalesOrderAppDetail" EntitySet="SalesOrderAppDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesOrderAppDetail_ProductSpecification" Association="DbModel.FK_SalesOrderAppDetail_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="SalesOrderAppDetail" EntitySet="SalesOrderAppDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesOrderAppDetail_SalesOrderApplication" Association="DbModel.FK_SalesOrderAppDetail_SalesOrderApplication">
+            <End Role="SalesOrderApplication" EntitySet="SalesOrderApplication" />
+            <End Role="SalesOrderAppDetail" EntitySet="SalesOrderAppDetail" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -3117,6 +3538,8 @@
           <NavigationProperty Name="Product" Relationship="DbModel.FK_Product_Company" FromRole="Company" ToRole="Product" />
           <NavigationProperty Name="Supplier" Relationship="DbModel.FK_Supplier_Company" FromRole="Company" ToRole="Supplier" />
           <NavigationProperty Name="Warehouse" Relationship="DbModel.FK_Warehouse_Company" FromRole="Company" ToRole="Warehouse" />
+          <NavigationProperty Name="DaBaoApplication" Relationship="DbModel.FK_DaBaoApplication_Company" FromRole="Company" ToRole="DaBaoApplication" />
+          <NavigationProperty Name="DaBaoRequestApplication" Relationship="DbModel.FK_DaBaoRequestApplication_Company" FromRole="Company" ToRole="DaBaoRequestApplication" />
         </EntityType>
         <EntityType Name="OwnerType">
           <Key>
@@ -3165,6 +3588,8 @@
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_Product" FromRole="Product" ToRole="DBContract" />
           <NavigationProperty Name="ProcureOrderAppDetail" Relationship="DbModel.FK_ProcureOrderAppDetail_Product" FromRole="Product" ToRole="ProcureOrderAppDetail" />
           <NavigationProperty Name="StockInDetail" Relationship="DbModel.FK_StockInDetail_Product" FromRole="Product" ToRole="StockInDetail" />
+          <NavigationProperty Name="DaBaoRequestAppDetail" Relationship="DbModel.FK_DaBaoRequestAppDetail_Product" FromRole="Product" ToRole="DaBaoRequestAppDetail" />
+          <NavigationProperty Name="SalesOrderAppDetail" Relationship="DbModel.FK_SalesOrderAppDetail_Product" FromRole="Product" ToRole="SalesOrderAppDetail" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -3214,6 +3639,8 @@
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_ProductSpecification" FromRole="ProductSpecification" ToRole="DBContract" />
           <NavigationProperty Name="ProcureOrderAppDetail" Relationship="DbModel.FK_ProcureOrderAppDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="ProcureOrderAppDetail" />
           <NavigationProperty Name="StockInDetail" Relationship="DbModel.FK_StockInDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="StockInDetail" />
+          <NavigationProperty Name="DaBaoRequestAppDetail" Relationship="DbModel.FK_DaBaoRequestAppDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="DaBaoRequestAppDetail" />
+          <NavigationProperty Name="SalesOrderAppDetail" Relationship="DbModel.FK_SalesOrderAppDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="SalesOrderAppDetail" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -3729,6 +4156,8 @@
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="DaBaoApplication" Relationship="DbModel.FK_DaBaoApplication_DistributionCompany" FromRole="DistributionCompany" ToRole="DaBaoApplication" />
+          <NavigationProperty Name="DaBaoRequestApplication" Relationship="DbModel.FK_DaBaoRequestApplication_DistributionCompany" FromRole="DistributionCompany" ToRole="DaBaoRequestApplication" />
         </EntityType>
         <EntityType Name="ClientCompanyCertificate">
           <Key>
@@ -4106,6 +4535,8 @@
           <NavigationProperty Name="DepartmentProductRecord" Relationship="DbModel.FK_DepartmentProductRecord_Department" FromRole="Department" ToRole="DepartmentProductRecord" />
           <NavigationProperty Name="DepartmentProductSalesPlan" Relationship="DbModel.FK_DepartmentProductSalesPlan_Department" FromRole="Department" ToRole="DepartmentProductSalesPlan" />
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_Department" FromRole="Department" ToRole="DBContract" />
+          <NavigationProperty Name="DaBaoApplication" Relationship="DbModel.FK_DaBaoApplication_Department" FromRole="Department" ToRole="DaBaoApplication" />
+          <NavigationProperty Name="DaBaoRequestApplication" Relationship="DbModel.FK_DaBaoRequestApplication_Department" FromRole="Department" ToRole="DaBaoRequestApplication" />
         </EntityType>
         <Association Name="FK_ClientInfoProductSetting_Department">
           <End Type="DbModel.Department" Role="Department" Multiplicity="0..1" />
@@ -4741,6 +5172,8 @@
           <NavigationProperty Name="WorkflowStepStatus" Relationship="DbModel.FK_WorkflowStepStatus_WorkflowStatus" FromRole="WorkflowStatus" ToRole="WorkflowStepStatus" />
           <NavigationProperty Name="ProcureOrderApplication" Relationship="DbModel.FK_ProcureOrderApplication_WorkflowStatus" FromRole="WorkflowStatus" ToRole="ProcureOrderApplication" />
           <NavigationProperty Name="StockIn" Relationship="DbModel.FK_StockIn_WorkflowStatus" FromRole="WorkflowStatus" ToRole="StockIn" />
+          <NavigationProperty Name="DaBaoApplication" Relationship="DbModel.FK_DaBaoApplication_WorkflowStatus" FromRole="WorkflowStatus" ToRole="DaBaoApplication" />
+          <NavigationProperty Name="DaBaoRequestApplication" Relationship="DbModel.FK_DaBaoRequestApplication_WorkflowStatus" FromRole="WorkflowStatus" ToRole="DaBaoRequestApplication" />
         </EntityType>
         <EntityType Name="WorkflowStepStatus">
           <Key>
@@ -5180,6 +5613,309 @@
             </Principal>
             <Dependent Role="StockInDetail">
               <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DaBaoApplication">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="SalesOrderApplicationID" Nullable="false" />
+          <Property Type="Int32" Name="DistributionCompanyID" Nullable="false" />
+          <Property Type="Int32" Name="DepartmentID" Nullable="false" />
+          <Property Type="Int32" Name="CompanyID" Nullable="false" />
+          <Property Type="String" Name="ReceiverName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ReceiverPhone" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ReceiverAddress" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="WorkflowStatusID" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Company" Relationship="DbModel.FK_DaBaoApplication_Company" FromRole="DaBaoApplication" ToRole="Company" />
+          <NavigationProperty Name="Department" Relationship="DbModel.FK_DaBaoApplication_Department" FromRole="DaBaoApplication" ToRole="Department" />
+          <NavigationProperty Name="DistributionCompany" Relationship="DbModel.FK_DaBaoApplication_DistributionCompany" FromRole="DaBaoApplication" ToRole="DistributionCompany" />
+          <NavigationProperty Name="WorkflowStatus" Relationship="DbModel.FK_DaBaoApplication_WorkflowStatus" FromRole="DaBaoApplication" ToRole="WorkflowStatus" />
+          <NavigationProperty Name="DaBaoRequestApplication" Relationship="DbModel.FK_DaBaoRequestApplication_DaBaoApplication" FromRole="DaBaoApplication" ToRole="DaBaoRequestApplication" />
+          <NavigationProperty Name="SalesOrderApplication" Relationship="DbModel.FK_DaBaoApplication_SalesOrderApplication" FromRole="DaBaoApplication" ToRole="SalesOrderApplication" />
+        </EntityType>
+        <EntityType Name="DaBaoRequestApplication">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DaBaoApplicationID" />
+          <Property Type="Int32" Name="DistributionCompanyID" Nullable="false" />
+          <Property Type="Int32" Name="DepartmentID" Nullable="false" />
+          <Property Type="Int32" Name="CompanyID" Nullable="false" />
+          <Property Type="String" Name="ReceiverName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ReceiverPhone" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ReceiverAddress" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="WorkflowStatusID" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Company" Relationship="DbModel.FK_DaBaoRequestApplication_Company" FromRole="DaBaoRequestApplication" ToRole="Company" />
+          <NavigationProperty Name="DaBaoApplication" Relationship="DbModel.FK_DaBaoRequestApplication_DaBaoApplication" FromRole="DaBaoRequestApplication" ToRole="DaBaoApplication" />
+          <NavigationProperty Name="Department" Relationship="DbModel.FK_DaBaoRequestApplication_Department" FromRole="DaBaoRequestApplication" ToRole="Department" />
+          <NavigationProperty Name="DistributionCompany" Relationship="DbModel.FK_DaBaoRequestApplication_DistributionCompany" FromRole="DaBaoRequestApplication" ToRole="DistributionCompany" />
+          <NavigationProperty Name="WorkflowStatus" Relationship="DbModel.FK_DaBaoRequestApplication_WorkflowStatus" FromRole="DaBaoRequestApplication" ToRole="WorkflowStatus" />
+          <NavigationProperty Name="DaBaoRequestAppDetail" Relationship="DbModel.FK_DaBaoRequestAppDetail_DaBaoRequestApplication" FromRole="DaBaoRequestApplication" ToRole="DaBaoRequestAppDetail" />
+        </EntityType>
+        <Association Name="FK_DaBaoApplication_Company">
+          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="DbModel.DaBaoApplication" Role="DaBaoApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoApplication">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaBaoRequestApplication_Company">
+          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="DbModel.DaBaoRequestApplication" Role="DaBaoRequestApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoRequestApplication">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaBaoApplication_Department">
+          <End Type="DbModel.Department" Role="Department" Multiplicity="1" />
+          <End Type="DbModel.DaBaoApplication" Role="DaBaoApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoApplication">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaBaoApplication_DistributionCompany">
+          <End Type="DbModel.DistributionCompany" Role="DistributionCompany" Multiplicity="1" />
+          <End Type="DbModel.DaBaoApplication" Role="DaBaoApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCompany">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoApplication">
+              <PropertyRef Name="DistributionCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaBaoApplication_WorkflowStatus">
+          <End Type="DbModel.WorkflowStatus" Role="WorkflowStatus" Multiplicity="1" />
+          <End Type="DbModel.DaBaoApplication" Role="DaBaoApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoApplication">
+              <PropertyRef Name="WorkflowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaBaoRequestApplication_DaBaoApplication">
+          <End Type="DbModel.DaBaoApplication" Role="DaBaoApplication" Multiplicity="0..1" />
+          <End Type="DbModel.DaBaoRequestApplication" Role="DaBaoRequestApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DaBaoApplication">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoRequestApplication">
+              <PropertyRef Name="DaBaoApplicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaBaoRequestApplication_Department">
+          <End Type="DbModel.Department" Role="Department" Multiplicity="1" />
+          <End Type="DbModel.DaBaoRequestApplication" Role="DaBaoRequestApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoRequestApplication">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaBaoRequestApplication_DistributionCompany">
+          <End Type="DbModel.DistributionCompany" Role="DistributionCompany" Multiplicity="1" />
+          <End Type="DbModel.DaBaoRequestApplication" Role="DaBaoRequestApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCompany">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoRequestApplication">
+              <PropertyRef Name="DistributionCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaBaoRequestApplication_WorkflowStatus">
+          <End Type="DbModel.WorkflowStatus" Role="WorkflowStatus" Multiplicity="1" />
+          <End Type="DbModel.DaBaoRequestApplication" Role="DaBaoRequestApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoRequestApplication">
+              <PropertyRef Name="WorkflowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DaBaoRequestAppDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DaBaoRequestApplicationID" Nullable="false" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
+          <Property Type="Int32" Name="Count" Nullable="false" />
+          <Property Type="Decimal" Name="SalesPrice" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="TotalSalesAmount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="GiftCount" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="DaBaoRequestApplication" Relationship="DbModel.FK_DaBaoRequestAppDetail_DaBaoRequestApplication" FromRole="DaBaoRequestAppDetail" ToRole="DaBaoRequestApplication" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_DaBaoRequestAppDetail_Product" FromRole="DaBaoRequestAppDetail" ToRole="Product" />
+          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_DaBaoRequestAppDetail_ProductSpecification" FromRole="DaBaoRequestAppDetail" ToRole="ProductSpecification" />
+        </EntityType>
+        <Association Name="FK_DaBaoRequestAppDetail_DaBaoRequestApplication">
+          <End Type="DbModel.DaBaoRequestApplication" Role="DaBaoRequestApplication" Multiplicity="1" />
+          <End Type="DbModel.DaBaoRequestAppDetail" Role="DaBaoRequestAppDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DaBaoRequestApplication">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoRequestAppDetail">
+              <PropertyRef Name="DaBaoRequestApplicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaBaoRequestAppDetail_Product">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DbModel.DaBaoRequestAppDetail" Role="DaBaoRequestAppDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoRequestAppDetail">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DaBaoRequestAppDetail_ProductSpecification">
+          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
+          <End Type="DbModel.DaBaoRequestAppDetail" Role="DaBaoRequestAppDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoRequestAppDetail">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SalesOrderApplication">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="SaleOrderTypeID" Nullable="false" />
+          <Property Type="String" Name="OrderCode" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="OrderDate" Nullable="false" Precision="3" />
+          <Property Type="Boolean" Name="IsStop" Nullable="false" />
+          <Property Type="DateTime" Name="StoppedOn" Precision="3" />
+          <Property Type="Int32" Name="StoppedBy" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="DaBaoApplication" Relationship="DbModel.FK_DaBaoApplication_SalesOrderApplication" FromRole="SalesOrderApplication" ToRole="DaBaoApplication" />
+          <NavigationProperty Name="SalesOrderAppDetail" Relationship="DbModel.FK_SalesOrderAppDetail_SalesOrderApplication" FromRole="SalesOrderApplication" ToRole="SalesOrderAppDetail" />
+        </EntityType>
+        <Association Name="FK_DaBaoApplication_SalesOrderApplication">
+          <End Type="DbModel.SalesOrderApplication" Role="SalesOrderApplication" Multiplicity="1" />
+          <End Type="DbModel.DaBaoApplication" Role="DaBaoApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesOrderApplication">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DaBaoApplication">
+              <PropertyRef Name="SalesOrderApplicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SalesOrderAppDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="SalesOrderApplicationID" Nullable="false" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
+          <Property Type="Int32" Name="Count" Nullable="false" />
+          <Property Type="Decimal" Name="SalesPrice" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="TotalSalesAmount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="GiftCount" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_SalesOrderAppDetail_Product" FromRole="SalesOrderAppDetail" ToRole="Product" />
+          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_SalesOrderAppDetail_ProductSpecification" FromRole="SalesOrderAppDetail" ToRole="ProductSpecification" />
+          <NavigationProperty Name="SalesOrderApplication" Relationship="DbModel.FK_SalesOrderAppDetail_SalesOrderApplication" FromRole="SalesOrderAppDetail" ToRole="SalesOrderApplication" />
+        </EntityType>
+        <Association Name="FK_SalesOrderAppDetail_Product">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DbModel.SalesOrderAppDetail" Role="SalesOrderAppDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SalesOrderAppDetail">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesOrderAppDetail_ProductSpecification">
+          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
+          <End Type="DbModel.SalesOrderAppDetail" Role="SalesOrderAppDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SalesOrderAppDetail">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesOrderAppDetail_SalesOrderApplication">
+          <End Type="DbModel.SalesOrderApplication" Role="SalesOrderApplication" Multiplicity="1" />
+          <End Type="DbModel.SalesOrderAppDetail" Role="SalesOrderAppDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesOrderApplication">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SalesOrderAppDetail">
+              <PropertyRef Name="SalesOrderApplicationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6155,6 +6891,102 @@
                 <ScalarProperty Name="ProcureOrderAppDetailID" ColumnName="ProcureOrderAppDetailID" />
                 <ScalarProperty Name="ProcureOrderAppID" ColumnName="ProcureOrderAppID" />
                 <ScalarProperty Name="StockInID" ColumnName="StockInID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DaBaoApplication">
+            <EntityTypeMapping TypeName="DbModel.DaBaoApplication">
+              <MappingFragment StoreEntitySet="DaBaoApplication">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="WorkflowStatusID" ColumnName="WorkflowStatusID" />
+                <ScalarProperty Name="ReceiverAddress" ColumnName="ReceiverAddress" />
+                <ScalarProperty Name="ReceiverPhone" ColumnName="ReceiverPhone" />
+                <ScalarProperty Name="ReceiverName" ColumnName="ReceiverName" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="DistributionCompanyID" ColumnName="DistributionCompanyID" />
+                <ScalarProperty Name="SalesOrderApplicationID" ColumnName="SalesOrderApplicationID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DaBaoRequestApplication">
+            <EntityTypeMapping TypeName="DbModel.DaBaoRequestApplication">
+              <MappingFragment StoreEntitySet="DaBaoRequestApplication">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="WorkflowStatusID" ColumnName="WorkflowStatusID" />
+                <ScalarProperty Name="ReceiverAddress" ColumnName="ReceiverAddress" />
+                <ScalarProperty Name="ReceiverPhone" ColumnName="ReceiverPhone" />
+                <ScalarProperty Name="ReceiverName" ColumnName="ReceiverName" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="DistributionCompanyID" ColumnName="DistributionCompanyID" />
+                <ScalarProperty Name="DaBaoApplicationID" ColumnName="DaBaoApplicationID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DaBaoRequestAppDetail">
+            <EntityTypeMapping TypeName="DbModel.DaBaoRequestAppDetail">
+              <MappingFragment StoreEntitySet="DaBaoRequestAppDetail">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="GiftCount" ColumnName="GiftCount" />
+                <ScalarProperty Name="TotalSalesAmount" ColumnName="TotalSalesAmount" />
+                <ScalarProperty Name="SalesPrice" ColumnName="SalesPrice" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="DaBaoRequestApplicationID" ColumnName="DaBaoRequestApplicationID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SalesOrderApplication">
+            <EntityTypeMapping TypeName="DbModel.SalesOrderApplication">
+              <MappingFragment StoreEntitySet="SalesOrderApplication">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="StoppedBy" ColumnName="StoppedBy" />
+                <ScalarProperty Name="StoppedOn" ColumnName="StoppedOn" />
+                <ScalarProperty Name="IsStop" ColumnName="IsStop" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
+                <ScalarProperty Name="SaleOrderTypeID" ColumnName="SaleOrderTypeID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SalesOrderAppDetail">
+            <EntityTypeMapping TypeName="DbModel.SalesOrderAppDetail">
+              <MappingFragment StoreEntitySet="SalesOrderAppDetail">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="GiftCount" ColumnName="GiftCount" />
+                <ScalarProperty Name="TotalSalesAmount" ColumnName="TotalSalesAmount" />
+                <ScalarProperty Name="SalesPrice" ColumnName="SalesPrice" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="SalesOrderApplicationID" ColumnName="SalesOrderApplicationID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

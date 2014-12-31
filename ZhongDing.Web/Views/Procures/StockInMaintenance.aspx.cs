@@ -105,7 +105,7 @@ namespace ZhongDing.Web.Views.Procures
                     if (this.CurrentEntity == null)
                         _CanAccessUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.NewStockIn);
                     else
-                        _CanAccessUserIDs = PageWorkflowStatusRepository.GetCanAccessUserIDsByID(this.CurrentEntity.WorkflowStatusID);
+                        _CanAccessUserIDs = PageWorkflowStatusRepository.GetCanAccessUserIDsByID(this.CurrentWorkFlowID, this.CurrentEntity.WorkflowStatusID);
                 }
 
                 return _CanAccessUserIDs;
@@ -202,7 +202,7 @@ namespace ZhongDing.Web.Views.Procures
                             ShowEntryStockControls(false);
 
                         btnPrint.Visible = true;
-                        
+
                         #endregion
 
                         break;

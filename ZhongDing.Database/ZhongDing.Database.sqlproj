@@ -361,6 +361,8 @@
     <Build Include="dbo\Tables\ClientSaleApplication.sql" />
     <Build Include="dbo\Tables\StockInDetail.sql" />
     <Build Include="dbo\Tables\StockIn.sql" />
+    <Build Include="dbo\Tables\DaBaoRequestApplication.sql" />
+    <Build Include="dbo\Tables\DaBaoRequestAppDetail.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

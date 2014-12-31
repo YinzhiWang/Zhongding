@@ -109,11 +109,12 @@
                                     <li data-level="2"><a href="#">物流费用管理</a></li>
                                 </ul>
                             </li>
-                            <li data-level="1"><a href="table.html" class="mws-i-24 i-box-outgoing">销售订单管理</a>
+                            <li data-level="1" data-menuitemid="60"><a href="table.html" class="mws-i-24 i-box-outgoing">销售订单管理</a>
                                 <ul class="hide">
                                     <li data-level="2"><a href="#">客户订单</a></li>
                                     <li data-level="2"><a href="#">出库单</a></li>
-                                    <li data-level="2"><a href="#">大包配送订单</a></li>
+                                    <li data-level="2" data-menuitemid="63"><a href="javascript:void(0);" onclick="redirectToPage('Views/Sales/DBAppRequestManagement.aspx');">大包配送申请单</a></li>
+                                    <li data-level="2" data-menuitemid="64"><a href="javascript:void(0);" onclick="redirectToPage('Views/Sales/DBAppManagement.aspx');">大包配送订单</a></li>
                                     <li data-level="2"><a href="#">大包出库单</a></li>
                                     <li data-level="2"><a href="#">担保收款</a></li>
                                     <li data-level="2"><a href="#">物流费用管理</a></li>

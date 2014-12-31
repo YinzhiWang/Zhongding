@@ -104,6 +104,15 @@
     <Compile Include="Models\Company.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DaBaoApplication.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DaBaoRequestAppDetail.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DaBaoRequestApplication.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DBContract.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -200,6 +209,12 @@
     <Compile Include="Models\Roles.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SalesOrderAppDetail.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SalesOrderApplication.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SaleType.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -267,6 +282,8 @@
     <Compile Include="UIObjects\UIClientInfoBankAccount.cs" />
     <Compile Include="UIObjects\UIClientInfoContact.cs" />
     <Compile Include="UIObjects\UICompany.cs" />
+    <Compile Include="UIObjects\UIDaBaoApplication.cs" />
+    <Compile Include="UIObjects\UIDaBaoAppDetail.cs" />
     <Compile Include="UIObjects\UIDBContract.cs" />
     <Compile Include="UIObjects\UIDBContractHospital.cs" />
     <Compile Include="UIObjects\UIDepartment.cs" />
@@ -296,6 +313,7 @@
     <Compile Include="UIObjects\UISupplierContractFile.cs" />
     <Compile Include="UIObjects\UIUser.cs" />
     <Compile Include="UIObjects\UIWarehouse.cs" />
+    <Compile Include="UIObjects\UIWorkflowBase.cs" />
     <Compile Include="UIObjects\UIWorkflowStep.cs" />
     <Compile Include="UISearchObjects\UISearchApplicationNote.cs" />
     <Compile Include="UISearchObjects\UISearchApplicationPayment.cs" />
@@ -305,6 +323,8 @@
     <Compile Include="UISearchObjects\UISearchClientCompany.cs" />
     <Compile Include="UISearchObjects\UISearchClientInfo.cs" />
     <Compile Include="UISearchObjects\UISearchCompany.cs" />
+    <Compile Include="UISearchObjects\UISearchDaBaoApplication.cs" />
+    <Compile Include="UISearchObjects\UISearchDaBaoAppDetail.cs" />
     <Compile Include="UISearchObjects\UISearchDBContract.cs" />
     <Compile Include="UISearchObjects\UISearchDepartment.cs" />
     <Compile Include="UISearchObjects\UISearchDeptMarketProduct.cs" />
@@ -328,6 +348,7 @@
     <Compile Include="UISearchObjects\UISearchSupplierContractFile.cs" />
     <Compile Include="UISearchObjects\UISearchUser.cs" />
     <Compile Include="UISearchObjects\UISearchWarehouse.cs" />
+    <Compile Include="UISearchObjects\UISearchWorkflowBase.cs" />
     <Compile Include="UISearchObjects\UISearchWorkflowStep.cs" />
   </ItemGroup>
   <ItemGroup>

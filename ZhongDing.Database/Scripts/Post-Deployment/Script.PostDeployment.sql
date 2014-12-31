@@ -423,3 +423,27 @@ COMMIT TRANSACTION
 
 ---- start --- 12/25/2014 -- 初始化工作流状态关联数据(入库单相关) -- by lihong
 
+
+---- start --- 12/31/2014 -- 初始化工作流状态关联数据(大包申请单和订单相关) -- by lihong
+SET NUMERIC_ROUNDABORT OFF
+GO
+SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+
+BEGIN TRANSACTION
+ALTER TABLE [dbo].[WorkflowStepStatus] DROP CONSTRAINT [FK_WorkflowStepStatus_WorkflowStatus]
+ALTER TABLE [dbo].[WorkflowStepStatus] DROP CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep]
+SET IDENTITY_INSERT [dbo].[WorkflowStepStatus] ON
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (15, 9, 1, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (16, 9, 4, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (17, 10, 2, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (18, 11, 1, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (19, 11, 4, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (20, 12, 2, 0)
+SET IDENTITY_INSERT [dbo].[WorkflowStepStatus] OFF
+ALTER TABLE [dbo].[WorkflowStepStatus]
+    ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStatus] FOREIGN KEY ([WorkflowStatusID]) REFERENCES [dbo].[WorkflowStatus] ([ID])
+ALTER TABLE [dbo].[WorkflowStepStatus]
+    ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep] FOREIGN KEY ([WorkflowStepID]) REFERENCES [dbo].[WorkflowStep] ([ID])
+COMMIT TRANSACTION
+---- end --- 12/31/2014 -- 初始化工作流状态关联数据(大包申请单和订单相关) -- by lihong

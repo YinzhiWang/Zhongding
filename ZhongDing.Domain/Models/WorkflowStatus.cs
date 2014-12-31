@@ -20,6 +20,8 @@ namespace ZhongDing.Domain.Models
             this.WorkflowStepStatus = new HashSet<WorkflowStepStatus>();
             this.ProcureOrderApplication = new HashSet<ProcureOrderApplication>();
             this.StockIn = new HashSet<StockIn>();
+            this.DaBaoApplication = new HashSet<DaBaoApplication>();
+            this.DaBaoRequestApplication = new HashSet<DaBaoRequestApplication>();
         }
     
         public int ID { get; set; }
@@ -40,5 +42,7 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<WorkflowStepStatus> WorkflowStepStatus { get; set; }
         public virtual ICollection<ProcureOrderApplication> ProcureOrderApplication { get; set; }
         public virtual ICollection<StockIn> StockIn { get; set; }
+        public virtual ICollection<DaBaoApplication> DaBaoApplication { get; set; }
+        public virtual ICollection<DaBaoRequestApplication> DaBaoRequestApplication { get; set; }
     }
 }

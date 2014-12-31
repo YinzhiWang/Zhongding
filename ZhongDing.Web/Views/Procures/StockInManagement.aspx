@@ -57,7 +57,7 @@
                         <th class="width60 middle-td right-td">状态：</th>
                         <td class="middle-td">
                             <telerik:RadComboBox runat="server" ID="rcbxWorkflowStatus" Filter="Contains" AutoPostBack="true"
-                                AllowCustomText="true" Height="160px" EmptyMessage="--请选择--">
+                                AllowCustomText="true" EmptyMessage="--请选择--">
                             </telerik:RadComboBox>
                         </td>
                         <td class="middle-td leftpadding20">

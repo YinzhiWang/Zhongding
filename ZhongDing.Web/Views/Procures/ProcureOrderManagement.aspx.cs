@@ -63,7 +63,7 @@ namespace ZhongDing.Web.Views.Procures
             get
             {
                 if (_CanEditUserIDs == null)
-                    _CanEditUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.EditOrder);
+                    _CanEditUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.EditProcureOrder);
 
                 return _CanEditUserIDs;
             }
@@ -74,6 +74,7 @@ namespace ZhongDing.Web.Views.Procures
         protected void Page_Load(object sender, EventArgs e)
         {
             this.Master.MenuItemID = (int)EMenuItem.ProcureOrderManage;
+            this.CurrentWorkFlowID = (int)EWorkflow.ProcureOrder;
 
             if (!IsPostBack)
             {
@@ -105,7 +106,21 @@ namespace ZhongDing.Web.Views.Procures
 
         private void BindWorkflowStatus()
         {
-            var workflowStatus = PageWorkflowStatusRepository.GetDropdownItems();
+            var uiSearchObj = new UISearchDropdownItem();
+
+            IList<int> includeItemValues = new List<int>();
+            includeItemValues.Add((int)EWorkflowStatus.TemporarySave);
+            includeItemValues.Add((int)EWorkflowStatus.Submit);
+            includeItemValues.Add((int)EWorkflowStatus.ApprovedBasicInfo);
+            includeItemValues.Add((int)EWorkflowStatus.ReturnBasicInfo);
+            includeItemValues.Add((int)EWorkflowStatus.AuditingOfPaymentInfo);
+            includeItemValues.Add((int)EWorkflowStatus.ToBePaid);
+            includeItemValues.Add((int)EWorkflowStatus.ReturnPaymentInfo);
+            includeItemValues.Add((int)EWorkflowStatus.Paid);
+
+            uiSearchObj.IncludeItemValues = includeItemValues;
+
+            var workflowStatus = PageWorkflowStatusRepository.GetDropdownItems(uiSearchObj);
 
             rcbxWorkflowStatus.DataSource = workflowStatus;
             rcbxWorkflowStatus.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
@@ -120,8 +135,8 @@ namespace ZhongDing.Web.Views.Procures
             UISearchProcureOrderApplication uiSearchObj = new UISearchProcureOrderApplication()
             {
                 CompanyID = CurrentUser.CompanyID,
-                OrderBeginDate = rdpBeginDate.SelectedDate,
-                OrderEndDate = rdpEndDate.SelectedDate,
+                BeginDate = rdpBeginDate.SelectedDate,
+                EndDate = rdpEndDate.SelectedDate,
             };
 
             IList<int> includeWorkflowStatusIDs = PageWorkflowStatusRepository
@@ -259,7 +274,7 @@ namespace ZhongDing.Web.Views.Procures
                 {
                     string linkHtml = "<a href=\"javascript:void(0);\" onclick=\"redirectToMaintenancePage(" + uiEntity.ID + ")\">";
 
-                    var canAccessUserIDs = PageWorkflowStatusRepository.GetCanAccessUserIDsByID(uiEntity.WorkflowStatusID);
+                    var canAccessUserIDs = PageWorkflowStatusRepository.GetCanAccessUserIDsByID(this.CurrentWorkFlowID, uiEntity.WorkflowStatusID);
 
                     bool isCanAccessUser = false;
                     if (canAccessUserIDs.Contains(CurrentUser.UserID))

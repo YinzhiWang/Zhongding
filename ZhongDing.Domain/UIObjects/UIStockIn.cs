@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ZhongDing.Domain.UIObjects
 {
-    public class UIStockIn : UIBase
+    public class UIStockIn : UIWorkflowBase
     {
         public string Code { get; set; }
 
@@ -14,8 +14,5 @@ namespace ZhongDing.Domain.UIObjects
 
         public string SupplierName { get; set; }
 
-        public int WorkflowStatusID { get; set; }
-
-        public string WorkflowStatus { get; set; }
     }
 }

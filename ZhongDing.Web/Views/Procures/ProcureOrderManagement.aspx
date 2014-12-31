@@ -50,8 +50,8 @@
                     <tr class="height40">
                         <th class="width60 middle-td right-td">供应商：</th>
                         <td class="middle-td width35-percent">
-                            <telerik:RadComboBox runat="server" ID="rcbxSupplier" Filter="Contains" AutoPostBack="true"
-                                AllowCustomText="true" Height="160px" Width="260" EmptyMessage="--请选择--">
+                            <telerik:RadComboBox runat="server" ID="rcbxSupplier" Filter="Contains"
+                                Height="160px" Width="260" EmptyMessage="--请选择--">
                             </telerik:RadComboBox>
                         </td>
                         <th class="width60 middle-td right-td">状态：</th>

@@ -208,6 +208,11 @@ namespace ZhongDing.Common
                 /// 出库单编号
                 /// </summary>
                 public static readonly string STOCK_OUT = "OUT-" + DateTime.Now.ToString("yyyy-MM-dd") + "-";
+
+                /// <summary>
+                /// 大包配送订单编号
+                /// </summary>
+                public static readonly string DABAO_ORDER = "DB-" + DateTime.Now.ToString("yyyy-MM-dd") + "-";
             }
 
         }

@@ -15,6 +15,12 @@ namespace ZhongDing.Domain.Models
     [Serializable]
     public partial class DistributionCompany : IEntityExtendedProperty
     {
+        public DistributionCompany()
+        {
+            this.DaBaoApplication = new HashSet<DaBaoApplication>();
+            this.DaBaoRequestApplication = new HashSet<DaBaoRequestApplication>();
+        }
+    
         public int ID { get; set; }
         public string SerialNo { get; set; }
         public string Name { get; set; }
@@ -36,5 +42,8 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedOn { get { return true; } }
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
+    
+        public virtual ICollection<DaBaoApplication> DaBaoApplication { get; set; }
+        public virtual ICollection<DaBaoRequestApplication> DaBaoRequestApplication { get; set; }
     }
 }
