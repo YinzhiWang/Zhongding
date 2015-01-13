@@ -17,7 +17,7 @@ namespace ZhongDing.Common
     /// <summary>
     /// Class Utility
     /// </summary>
-    public static partial class Utility
+    public partial class Utility
     {
         /// <summary>
         /// Jsons the seralize.

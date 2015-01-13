@@ -11,6 +11,8 @@ namespace ZhongDing.Common
     /// </summary>
     public class GlobalConst
     {
+        #region General Consts
+
         /// <summary>
         /// 无效的Int:-1
         /// </summary>
@@ -45,6 +47,14 @@ namespace ZhongDing.Common
         /// </summary>
         public static readonly string DEFAULT_DROPDOWN_DATAVALUEFIELD = "ItemValue";
 
+        #endregion
+
+        #region Win service consts
+        /// <summary>
+        /// 服务默认运行周期：24小时
+        /// </summary>
+        public const int WIN_SERVICE_DEFAULT_INTERVAl = 24;
+        #endregion
 
         #region System Security
 

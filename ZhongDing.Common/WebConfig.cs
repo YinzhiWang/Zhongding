@@ -7,33 +7,54 @@ using System.Threading.Tasks;
 
 namespace ZhongDing.Common
 {
-    public static class WebConfig
+    public class WebConfig
     {
-        #region Web config consts
-        private const string CONFIGKEY_EMAILENABLED = "Email.Enabled";
-        private const string CONFIGKEY_EMAILSMTPSERVER = "Email.SmtpServer";
-        private const string CONFIGKEY_EMAILSMTPSERVERPORT = "Email.SmtpServerPort";
-        private const string CONFIGKEY_EMAILFROM = "Email.From";
-        private const string CONFIGKEY_EMAILUSERNAME = "Email.UserName";
-        private const string CONFIGKEY_EMAILPASSWORD = "Email.Password";
-        private const string CONFIGKEY_EMAILTO = "Email.To";
-        private const string CONFIGKEY_EMAILCC = "Email.Cc";
-        private const string CONFIGKEY_EMAILBCC = "Email.Bcc";
+        #region Config consts
 
-        private const string CONFIGKEY_UPLOADFILEPATH_COMMON = "UploadFilePath.Common";
-        private const string CONFIGKEY_UPLOADFILEPATH_SUPPLIER_CONTRACT = "UploadFilePath.SupplierContract";
-        private const string CONFIGKEY_UPLOADFILEPATH_GUARANTEECOMPANY = "UploadFilePath.GuaranteeCompany";
-        private const string CONFIGKEY_UPLOADFILEPATH_RELATEDCOMPANY = "UploadFilePath.RelatedCompany";
-        private const string CONFIGKEY_UPLOADFILEPATH_PRODUCT = "UploadFilePath.Product";
+        #region Web site config consts
 
-        private const string CONFIGKEY_MEMBERSHIP_PASSWORDRESETLENGTH = "Membership.PasswordResetLength";
-        private const string CONFIGKEY_MEMBERSHIP_PASSWORDRESETNONALPHANUMERICCOUNT = "Membership.PasswordResetNonalphanumericCount";
-        private const string CONFIGKEY_MEMBERSHIP_LOCKEDOUTTIMEOUT = "Membership.LockedOutTimeout";
+        private static readonly string CONFIGKEY_EMAILENABLED = "Email.Enabled";
+        private static readonly string CONFIGKEY_EMAILSMTPSERVER = "Email.SmtpServer";
+        private static readonly string CONFIGKEY_EMAILSMTPSERVERPORT = "Email.SmtpServerPort";
+        private static readonly string CONFIGKEY_EMAILFROM = "Email.From";
+        private static readonly string CONFIGKEY_EMAILUSERNAME = "Email.UserName";
+        private static readonly string CONFIGKEY_EMAILPASSWORD = "Email.Password";
+        private static readonly string CONFIGKEY_EMAILTO = "Email.To";
+        private static readonly string CONFIGKEY_EMAILCC = "Email.Cc";
+        private static readonly string CONFIGKEY_EMAILBCC = "Email.Bcc";
 
-        private const string CONFIGKEY_WEBSITE_ROOTURL = "Website.RootUrl";
+        private static readonly string CONFIGKEY_UPLOADFILEPATH_COMMON = "UploadFilePath.Common";
+        private static readonly string CONFIGKEY_UPLOADFILEPATH_SUPPLIER_CONTRACT = "UploadFilePath.SupplierContract";
+        private static readonly string CONFIGKEY_UPLOADFILEPATH_PRODUCT = "UploadFilePath.Product";
+
+        private static readonly string CONFIGKEY_MEMBERSHIP_PASSWORDRESETLENGTH = "Membership.PasswordResetLength";
+        private static readonly string CONFIGKEY_MEMBERSHIP_PASSWORDRESETNONALPHANUMERICCOUNT = "Membership.PasswordResetNonalphanumericCount";
+        private static readonly string CONFIGKEY_MEMBERSHIP_LOCKEDOUTTIMEOUT = "Membership.LockedOutTimeout";
+
+        private static readonly string CONFIGKEY_WEBSITE_ROOTURL = "Website.RootUrl";
+
         #endregion
 
-        #region Web config properties
+        #region Win service config consts
+
+        /// <summary>
+        /// 计算库存服务运行的开始时间
+        /// </summary>
+        private static readonly string CONFIGKEY_CALCULATEINVENTORY_SERVICE_STARTTIME = "CalculateInventoryService.StartTime";
+
+
+        /// <summary>
+        /// 计算库存服务运行的周期
+        /// </summary>
+        private static readonly string CONFIGKEY_CALCULATEINVENTORY_SERVICE_INTERVAl = "CalculateInventoryService.Interval";
+
+        #endregion
+
+        #endregion
+
+        #region Config properties
+
+        #region Web site config properties
 
         public static bool EmailEnabled
         {
@@ -155,31 +176,6 @@ namespace ZhongDing.Common
         }
 
         /// <summary>
-        /// 担保公司文件上传路径
-        /// </summary>
-        /// <value>The upload file path guarantee company.</value>
-        public static string UploadFilePathGuaranteeCompany
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings[CONFIGKEY_UPLOADFILEPATH_GUARANTEECOMPANY];
-            }
-        }
-
-
-        /// <summary>
-        /// 公司关联的公司的文件上传路径
-        /// </summary>
-        /// <value>The upload file path related company.</value>
-        public static string UploadFilePathRelatedCompany
-        {
-            get
-            {
-                return ConfigurationManager.AppSettings[CONFIGKEY_UPLOADFILEPATH_RELATEDCOMPANY];
-            }
-        }
-
-        /// <summary>
         /// 密码恢复时格式长度
         /// </summary>
         public static int PasswordResetLength
@@ -239,6 +235,47 @@ namespace ZhongDing.Common
                 return ConfigurationManager.AppSettings[CONFIGKEY_WEBSITE_ROOTURL];
             }
         }
+
+        #endregion
+
+        #region Win Service config properties
+
+        /// <summary>
+        /// 计算库存服务运行的开始时间
+        /// </summary>
+        public static DateTime CalculateInventoryServiceStartTime
+        {
+            get
+            {
+                try
+                {
+                    return DateTime.Parse(ConfigurationManager.AppSettings[CONFIGKEY_CALCULATEINVENTORY_SERVICE_STARTTIME]);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 计算库存服务运行的周期
+        /// </summary>
+        public static int CalculateInventoryServiceInterval
+        {
+            get
+            {
+                var sInterval = ConfigurationManager.AppSettings[CONFIGKEY_CALCULATEINVENTORY_SERVICE_INTERVAl];
+
+                int iInerval;
+                if (int.TryParse(sInterval, out iInerval))
+                    return iInerval;
+                else
+                    return GlobalConst.WIN_SERVICE_DEFAULT_INTERVAl;
+            }
+        }
+
+        #endregion
 
         #endregion
 
