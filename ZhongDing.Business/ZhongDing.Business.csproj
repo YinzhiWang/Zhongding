@@ -100,6 +100,8 @@
     <Compile Include="IRepositories\ISaleTypeRepository.cs" />
     <Compile Include="IRepositories\IStockInDetailRepository.cs" />
     <Compile Include="IRepositories\IStockInRepository.cs" />
+    <Compile Include="IRepositories\IStockOutDetailRepository.cs" />
+    <Compile Include="IRepositories\IStockOutRepository.cs" />
     <Compile Include="IRepositories\ISupplierBankAccountRepository.cs" />
     <Compile Include="IRepositories\ISupplierCertificateRepository.cs" />
     <Compile Include="IRepositories\ISupplierContractFileRepository.cs" />
@@ -163,6 +165,8 @@
     <Compile Include="Repositories\SaleTypeRepository.cs" />
     <Compile Include="Repositories\StockInDetailRepository.cs" />
     <Compile Include="Repositories\StockInRepository.cs" />
+    <Compile Include="Repositories\StockOutDetailRepository.cs" />
+    <Compile Include="Repositories\StockOutRepository.cs" />
     <Compile Include="Repositories\SupplierBankAccountRepository.cs" />
     <Compile Include="Repositories\SupplierCertificateRepository.cs" />
     <Compile Include="Repositories\SupplierContractFileRepository.cs" />

@@ -74,6 +74,7 @@
     <Compile Include="Enums\EPaymentStatus.cs" />
     <Compile Include="Enums\EPaymentType.cs" />
     <Compile Include="Enums\EProductCategory.cs" />
+    <Compile Include="Enums\EReceiverType.cs" />
     <Compile Include="Enums\ESaleOrderType.cs" />
     <Compile Include="Enums\ESalesPlanType.cs" />
     <Compile Include="Enums\EWorkflow.cs" />

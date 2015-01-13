@@ -49,6 +49,8 @@ namespace ZhongDing.Domain.UIObjects
         /// </summary>
         public int ToBeInQty { get; set; }
 
+        public int? NumberInLargePackage { get; set; }
+
         public decimal NumberOfPackages { get; set; }
 
         public string BatchNumber { get; set; }
@@ -58,6 +60,12 @@ namespace ZhongDing.Domain.UIObjects
         public string LicenseNumber { get; set; }
 
         public bool? IsMortgagedProduct { get; set; }
+
+        /// <summary>
+        /// 剩余库存
+        /// </summary>
+        /// <value>The balance qty.</value>
+        public int BalanceQty { get; set; }
 
         public bool IsDeleted { get; set; }
 

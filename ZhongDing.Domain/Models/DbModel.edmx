@@ -58,6 +58,8 @@
           <EntitySet Name="SaleType" EntityType="DbModel.Store.SaleType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="StockIn" EntityType="DbModel.Store.StockIn" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="StockInDetail" EntityType="DbModel.Store.StockInDetail" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="StockOut" EntityType="DbModel.Store.StockOut" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="StockOutDetail" EntityType="DbModel.Store.StockOutDetail" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Supplier" EntityType="DbModel.Store.Supplier" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierBankAccount" EntityType="DbModel.Store.SupplierBankAccount" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierCertificate" EntityType="DbModel.Store.SupplierCertificate" store:Type="Tables" Schema="dbo" />
@@ -436,6 +438,50 @@
           <AssociationSet Name="FK_StockInDetail_Warehouse" Association="DbModel.Store.FK_StockInDetail_Warehouse">
             <End Role="Warehouse" EntitySet="Warehouse" />
             <End Role="StockInDetail" EntitySet="StockInDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOut_ClientCompany" Association="DbModel.Store.FK_StockOut_ClientCompany">
+            <End Role="ClientCompany" EntitySet="ClientCompany" />
+            <End Role="StockOut" EntitySet="StockOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOut_ClientUser" Association="DbModel.Store.FK_StockOut_ClientUser">
+            <End Role="ClientUser" EntitySet="ClientUser" />
+            <End Role="StockOut" EntitySet="StockOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOut_Company" Association="DbModel.Store.FK_StockOut_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="StockOut" EntitySet="StockOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOut_DistributionCompany" Association="DbModel.Store.FK_StockOut_DistributionCompany">
+            <End Role="DistributionCompany" EntitySet="DistributionCompany" />
+            <End Role="StockOut" EntitySet="StockOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOut_WorkflowStatus" Association="DbModel.Store.FK_StockOut_WorkflowStatus">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="StockOut" EntitySet="StockOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOutDetail_Product" Association="DbModel.Store.FK_StockOutDetail_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="StockOutDetail" EntitySet="StockOutDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOutDetail_ProductSpecification" Association="DbModel.Store.FK_StockOutDetail_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="StockOutDetail" EntitySet="StockOutDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOutDetail_SalesOrderAppDetail" Association="DbModel.Store.FK_StockOutDetail_SalesOrderAppDetail">
+            <End Role="SalesOrderAppDetail" EntitySet="SalesOrderAppDetail" />
+            <End Role="StockOutDetail" EntitySet="StockOutDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOutDetail_SalesOrderApplication" Association="DbModel.Store.FK_StockOutDetail_SalesOrderApplication">
+            <End Role="SalesOrderApplication" EntitySet="SalesOrderApplication" />
+            <End Role="StockOutDetail" EntitySet="StockOutDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOutDetail_StockOut" Association="DbModel.Store.FK_StockOutDetail_StockOut">
+            <End Role="StockOut" EntitySet="StockOut" />
+            <End Role="StockOutDetail" EntitySet="StockOutDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOutDetail_Warehouse" Association="DbModel.Store.FK_StockOutDetail_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="StockOutDetail" EntitySet="StockOutDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_Supplier_Company" Association="DbModel.Store.FK_Supplier_Company">
             <End Role="Company" EntitySet="Company" />
@@ -1298,6 +1344,54 @@
           <Property Name="ExpirationDate" Type="datetime" />
           <Property Name="LicenseNumber" Type="nvarchar" MaxLength="255" />
           <Property Name="IsMortgagedProduct" Type="bit" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="StockOut">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyID" Type="int" Nullable="false" />
+          <Property Name="ReceiverTypeID" Type="int" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="BillDate" Type="datetime" Nullable="false" />
+          <Property Name="OutDate" Type="datetime" />
+          <Property Name="DistributionCompanyID" Type="int" />
+          <Property Name="ClientUserID" Type="int" />
+          <Property Name="ClientCompanyID" Type="int" />
+          <Property Name="InvoiceTypeID" Type="int" />
+          <Property Name="WorkflowStatusID" Type="int" Nullable="false" />
+          <Property Name="ReceiverName" Type="nvarchar" MaxLength="50" />
+          <Property Name="ReceiverPhone" Type="nvarchar" MaxLength="50" />
+          <Property Name="ReceiverAddress" Type="nvarchar" MaxLength="500" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="StockOutDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="StockOutID" Type="int" Nullable="false" />
+          <Property Name="SalesOrderApplicationID" Type="int" Nullable="false" />
+          <Property Name="SalesOrderAppDetailID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="ProductSpecificationID" Type="int" Nullable="false" />
+          <Property Name="SalesPrice" Type="money" Nullable="false" />
+          <Property Name="OutQty" Type="int" Nullable="false" />
+          <Property Name="TotalSalesAmount" Type="money" Nullable="false" />
+          <Property Name="WarehouseID" Type="int" Nullable="false" />
+          <Property Name="BatchNumber" Type="nvarchar" MaxLength="255" />
+          <Property Name="ExpirationDate" Type="datetime" />
+          <Property Name="LicenseNumber" Type="nvarchar" MaxLength="255" />
+          <Property Name="TaxQty" Type="int" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
@@ -2609,6 +2703,138 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_StockOut_ClientCompany">
+          <End Role="ClientCompany" Type="DbModel.Store.ClientCompany" Multiplicity="0..1" />
+          <End Role="StockOut" Type="DbModel.Store.StockOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientCompany">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOut">
+              <PropertyRef Name="ClientCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockOut_ClientUser">
+          <End Role="ClientUser" Type="DbModel.Store.ClientUser" Multiplicity="0..1" />
+          <End Role="StockOut" Type="DbModel.Store.StockOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOut">
+              <PropertyRef Name="ClientUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockOut_Company">
+          <End Role="Company" Type="DbModel.Store.Company" Multiplicity="1" />
+          <End Role="StockOut" Type="DbModel.Store.StockOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOut">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockOut_DistributionCompany">
+          <End Role="DistributionCompany" Type="DbModel.Store.DistributionCompany" Multiplicity="0..1" />
+          <End Role="StockOut" Type="DbModel.Store.StockOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCompany">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOut">
+              <PropertyRef Name="DistributionCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockOut_WorkflowStatus">
+          <End Role="WorkflowStatus" Type="DbModel.Store.WorkflowStatus" Multiplicity="1" />
+          <End Role="StockOut" Type="DbModel.Store.StockOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOut">
+              <PropertyRef Name="WorkflowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockOutDetail_Product">
+          <End Role="Product" Type="DbModel.Store.Product" Multiplicity="1" />
+          <End Role="StockOutDetail" Type="DbModel.Store.StockOutDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOutDetail">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockOutDetail_ProductSpecification">
+          <End Role="ProductSpecification" Type="DbModel.Store.ProductSpecification" Multiplicity="1" />
+          <End Role="StockOutDetail" Type="DbModel.Store.StockOutDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOutDetail">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockOutDetail_SalesOrderAppDetail">
+          <End Role="SalesOrderAppDetail" Type="DbModel.Store.SalesOrderAppDetail" Multiplicity="1" />
+          <End Role="StockOutDetail" Type="DbModel.Store.StockOutDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesOrderAppDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOutDetail">
+              <PropertyRef Name="SalesOrderAppDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockOutDetail_SalesOrderApplication">
+          <End Role="SalesOrderApplication" Type="DbModel.Store.SalesOrderApplication" Multiplicity="1" />
+          <End Role="StockOutDetail" Type="DbModel.Store.StockOutDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesOrderApplication">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOutDetail">
+              <PropertyRef Name="SalesOrderApplicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockOutDetail_StockOut">
+          <End Role="StockOut" Type="DbModel.Store.StockOut" Multiplicity="1" />
+          <End Role="StockOutDetail" Type="DbModel.Store.StockOutDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockOut">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOutDetail">
+              <PropertyRef Name="StockOutID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockOutDetail_Warehouse">
+          <End Role="Warehouse" Type="DbModel.Store.Warehouse" Multiplicity="1" />
+          <End Role="StockOutDetail" Type="DbModel.Store.StockOutDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOutDetail">
+              <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Supplier_Company">
           <End Role="Company" Type="DbModel.Store.Company" Multiplicity="0..1" />
           <End Role="Supplier" Type="DbModel.Store.Supplier" Multiplicity="*" />
@@ -3365,6 +3591,52 @@
             <End Role="SalesOrderApplication" EntitySet="SalesOrderApplication" />
             <End Role="SalesOrderAppDetail" EntitySet="SalesOrderAppDetail" />
           </AssociationSet>
+          <EntitySet Name="StockOutDetail" EntityType="DbModel.StockOutDetail" />
+          <AssociationSet Name="FK_StockOutDetail_Product" Association="DbModel.FK_StockOutDetail_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="StockOutDetail" EntitySet="StockOutDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOutDetail_ProductSpecification" Association="DbModel.FK_StockOutDetail_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="StockOutDetail" EntitySet="StockOutDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOutDetail_SalesOrderAppDetail" Association="DbModel.FK_StockOutDetail_SalesOrderAppDetail">
+            <End Role="SalesOrderAppDetail" EntitySet="SalesOrderAppDetail" />
+            <End Role="StockOutDetail" EntitySet="StockOutDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOutDetail_SalesOrderApplication" Association="DbModel.FK_StockOutDetail_SalesOrderApplication">
+            <End Role="SalesOrderApplication" EntitySet="SalesOrderApplication" />
+            <End Role="StockOutDetail" EntitySet="StockOutDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOutDetail_Warehouse" Association="DbModel.FK_StockOutDetail_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="StockOutDetail" EntitySet="StockOutDetail" />
+          </AssociationSet>
+          <EntitySet Name="StockOut" EntityType="DbModel.StockOut" />
+          <AssociationSet Name="FK_StockOut_ClientCompany" Association="DbModel.FK_StockOut_ClientCompany">
+            <End Role="ClientCompany" EntitySet="ClientCompany" />
+            <End Role="StockOut" EntitySet="StockOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOut_ClientUser" Association="DbModel.FK_StockOut_ClientUser">
+            <End Role="ClientUser" EntitySet="ClientUser" />
+            <End Role="StockOut" EntitySet="StockOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOut_Company" Association="DbModel.FK_StockOut_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="StockOut" EntitySet="StockOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOut_DistributionCompany" Association="DbModel.FK_StockOut_DistributionCompany">
+            <End Role="DistributionCompany" EntitySet="DistributionCompany" />
+            <End Role="StockOut" EntitySet="StockOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOut_WorkflowStatus" Association="DbModel.FK_StockOut_WorkflowStatus">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="StockOut" EntitySet="StockOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockOutDetail_StockOut" Association="DbModel.FK_StockOutDetail_StockOut">
+            <End Role="StockOut" EntitySet="StockOut" />
+            <End Role="StockOutDetail" EntitySet="StockOutDetail" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -3540,6 +3812,7 @@
           <NavigationProperty Name="Warehouse" Relationship="DbModel.FK_Warehouse_Company" FromRole="Company" ToRole="Warehouse" />
           <NavigationProperty Name="DaBaoApplication" Relationship="DbModel.FK_DaBaoApplication_Company" FromRole="Company" ToRole="DaBaoApplication" />
           <NavigationProperty Name="DaBaoRequestApplication" Relationship="DbModel.FK_DaBaoRequestApplication_Company" FromRole="Company" ToRole="DaBaoRequestApplication" />
+          <NavigationProperty Name="StockOut" Relationship="DbModel.FK_StockOut_Company" FromRole="Company" ToRole="StockOut" />
         </EntityType>
         <EntityType Name="OwnerType">
           <Key>
@@ -3590,6 +3863,7 @@
           <NavigationProperty Name="StockInDetail" Relationship="DbModel.FK_StockInDetail_Product" FromRole="Product" ToRole="StockInDetail" />
           <NavigationProperty Name="DaBaoRequestAppDetail" Relationship="DbModel.FK_DaBaoRequestAppDetail_Product" FromRole="Product" ToRole="DaBaoRequestAppDetail" />
           <NavigationProperty Name="SalesOrderAppDetail" Relationship="DbModel.FK_SalesOrderAppDetail_Product" FromRole="Product" ToRole="SalesOrderAppDetail" />
+          <NavigationProperty Name="StockOutDetail" Relationship="DbModel.FK_StockOutDetail_Product" FromRole="Product" ToRole="StockOutDetail" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -3641,6 +3915,7 @@
           <NavigationProperty Name="StockInDetail" Relationship="DbModel.FK_StockInDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="StockInDetail" />
           <NavigationProperty Name="DaBaoRequestAppDetail" Relationship="DbModel.FK_DaBaoRequestAppDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="DaBaoRequestAppDetail" />
           <NavigationProperty Name="SalesOrderAppDetail" Relationship="DbModel.FK_SalesOrderAppDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="SalesOrderAppDetail" />
+          <NavigationProperty Name="StockOutDetail" Relationship="DbModel.FK_StockOutDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="StockOutDetail" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -4057,6 +4332,7 @@
           <NavigationProperty Name="SaleType" Relationship="DbModel.FK_Warehouse_SaleType" FromRole="Warehouse" ToRole="SaleType" />
           <NavigationProperty Name="ProcureOrderAppDetail" Relationship="DbModel.FK_ProcureOrderAppDetail_Warehouse" FromRole="Warehouse" ToRole="ProcureOrderAppDetail" />
           <NavigationProperty Name="StockInDetail" Relationship="DbModel.FK_StockInDetail_Warehouse" FromRole="Warehouse" ToRole="StockInDetail" />
+          <NavigationProperty Name="StockOutDetail" Relationship="DbModel.FK_StockOutDetail_Warehouse" FromRole="Warehouse" ToRole="StockOutDetail" />
         </EntityType>
         <Association Name="FK_Warehouse_Company">
           <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
@@ -4158,6 +4434,7 @@
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="DaBaoApplication" Relationship="DbModel.FK_DaBaoApplication_DistributionCompany" FromRole="DistributionCompany" ToRole="DaBaoApplication" />
           <NavigationProperty Name="DaBaoRequestApplication" Relationship="DbModel.FK_DaBaoRequestApplication_DistributionCompany" FromRole="DistributionCompany" ToRole="DaBaoRequestApplication" />
+          <NavigationProperty Name="StockOut" Relationship="DbModel.FK_StockOut_DistributionCompany" FromRole="DistributionCompany" ToRole="StockOut" />
         </EntityType>
         <EntityType Name="ClientCompanyCertificate">
           <Key>
@@ -4270,6 +4547,7 @@
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="ClientCompanyCertificate" Relationship="DbModel.FK_ClientCompanyCertificate_ClientCompany" FromRole="ClientCompany" ToRole="ClientCompanyCertificate" />
           <NavigationProperty Name="ClientInfo" Relationship="DbModel.FK_ClientInfo_ClientCompany" FromRole="ClientCompany" ToRole="ClientInfo" />
+          <NavigationProperty Name="StockOut" Relationship="DbModel.FK_StockOut_ClientCompany" FromRole="ClientCompany" ToRole="StockOut" />
         </EntityType>
         <EntityType Name="ClientUser">
           <Key>
@@ -4284,6 +4562,7 @@
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="ClientInfo" Relationship="DbModel.FK_ClientInfo_ClientUser" FromRole="ClientUser" ToRole="ClientInfo" />
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_ClientUser" FromRole="ClientUser" ToRole="DBContract" />
+          <NavigationProperty Name="StockOut" Relationship="DbModel.FK_StockOut_ClientUser" FromRole="ClientUser" ToRole="StockOut" />
         </EntityType>
         <Association Name="FK_ClientCompanyCertificate_ClientCompany">
           <End Type="DbModel.ClientCompany" Role="ClientCompany" Multiplicity="1" />
@@ -5174,6 +5453,7 @@
           <NavigationProperty Name="StockIn" Relationship="DbModel.FK_StockIn_WorkflowStatus" FromRole="WorkflowStatus" ToRole="StockIn" />
           <NavigationProperty Name="DaBaoApplication" Relationship="DbModel.FK_DaBaoApplication_WorkflowStatus" FromRole="WorkflowStatus" ToRole="DaBaoApplication" />
           <NavigationProperty Name="DaBaoRequestApplication" Relationship="DbModel.FK_DaBaoRequestApplication_WorkflowStatus" FromRole="WorkflowStatus" ToRole="DaBaoRequestApplication" />
+          <NavigationProperty Name="StockOut" Relationship="DbModel.FK_StockOut_WorkflowStatus" FromRole="WorkflowStatus" ToRole="StockOut" />
         </EntityType>
         <EntityType Name="WorkflowStepStatus">
           <Key>
@@ -5849,6 +6129,7 @@
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="DaBaoApplication" Relationship="DbModel.FK_DaBaoApplication_SalesOrderApplication" FromRole="SalesOrderApplication" ToRole="DaBaoApplication" />
           <NavigationProperty Name="SalesOrderAppDetail" Relationship="DbModel.FK_SalesOrderAppDetail_SalesOrderApplication" FromRole="SalesOrderApplication" ToRole="SalesOrderAppDetail" />
+          <NavigationProperty Name="StockOutDetail" Relationship="DbModel.FK_StockOutDetail_SalesOrderApplication" FromRole="SalesOrderApplication" ToRole="StockOutDetail" />
         </EntityType>
         <Association Name="FK_DaBaoApplication_SalesOrderApplication">
           <End Type="DbModel.SalesOrderApplication" Role="SalesOrderApplication" Multiplicity="1" />
@@ -5882,6 +6163,7 @@
           <NavigationProperty Name="Product" Relationship="DbModel.FK_SalesOrderAppDetail_Product" FromRole="SalesOrderAppDetail" ToRole="Product" />
           <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_SalesOrderAppDetail_ProductSpecification" FromRole="SalesOrderAppDetail" ToRole="ProductSpecification" />
           <NavigationProperty Name="SalesOrderApplication" Relationship="DbModel.FK_SalesOrderAppDetail_SalesOrderApplication" FromRole="SalesOrderAppDetail" ToRole="SalesOrderApplication" />
+          <NavigationProperty Name="StockOutDetail" Relationship="DbModel.FK_StockOutDetail_SalesOrderAppDetail" FromRole="SalesOrderAppDetail" ToRole="StockOutDetail" />
         </EntityType>
         <Association Name="FK_SalesOrderAppDetail_Product">
           <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
@@ -5916,6 +6198,198 @@
             </Principal>
             <Dependent Role="SalesOrderAppDetail">
               <PropertyRef Name="SalesOrderApplicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="StockOutDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="StockOutID" Nullable="false" />
+          <Property Type="Int32" Name="SalesOrderApplicationID" Nullable="false" />
+          <Property Type="Int32" Name="SalesOrderAppDetailID" Nullable="false" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
+          <Property Type="Decimal" Name="SalesPrice" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="OutQty" Nullable="false" />
+          <Property Type="Decimal" Name="TotalSalesAmount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="WarehouseID" Nullable="false" />
+          <Property Type="String" Name="BatchNumber" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="ExpirationDate" Precision="3" />
+          <Property Type="String" Name="LicenseNumber" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="TaxQty" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_StockOutDetail_Product" FromRole="StockOutDetail" ToRole="Product" />
+          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_StockOutDetail_ProductSpecification" FromRole="StockOutDetail" ToRole="ProductSpecification" />
+          <NavigationProperty Name="SalesOrderAppDetail" Relationship="DbModel.FK_StockOutDetail_SalesOrderAppDetail" FromRole="StockOutDetail" ToRole="SalesOrderAppDetail" />
+          <NavigationProperty Name="SalesOrderApplication" Relationship="DbModel.FK_StockOutDetail_SalesOrderApplication" FromRole="StockOutDetail" ToRole="SalesOrderApplication" />
+          <NavigationProperty Name="Warehouse" Relationship="DbModel.FK_StockOutDetail_Warehouse" FromRole="StockOutDetail" ToRole="Warehouse" />
+          <NavigationProperty Name="StockOut" Relationship="DbModel.FK_StockOutDetail_StockOut" FromRole="StockOutDetail" ToRole="StockOut" />
+        </EntityType>
+        <Association Name="FK_StockOutDetail_Product">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DbModel.StockOutDetail" Role="StockOutDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOutDetail">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockOutDetail_ProductSpecification">
+          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
+          <End Type="DbModel.StockOutDetail" Role="StockOutDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOutDetail">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockOutDetail_SalesOrderAppDetail">
+          <End Type="DbModel.SalesOrderAppDetail" Role="SalesOrderAppDetail" Multiplicity="1" />
+          <End Type="DbModel.StockOutDetail" Role="StockOutDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesOrderAppDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOutDetail">
+              <PropertyRef Name="SalesOrderAppDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockOutDetail_SalesOrderApplication">
+          <End Type="DbModel.SalesOrderApplication" Role="SalesOrderApplication" Multiplicity="1" />
+          <End Type="DbModel.StockOutDetail" Role="StockOutDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesOrderApplication">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOutDetail">
+              <PropertyRef Name="SalesOrderApplicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockOutDetail_Warehouse">
+          <End Type="DbModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+          <End Type="DbModel.StockOutDetail" Role="StockOutDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOutDetail">
+              <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="StockOut">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="CompanyID" Nullable="false" />
+          <Property Type="Int32" Name="ReceiverTypeID" Nullable="false" />
+          <Property Type="String" Name="Code" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="BillDate" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="OutDate" Precision="3" />
+          <Property Type="Int32" Name="DistributionCompanyID" />
+          <Property Type="Int32" Name="ClientUserID" />
+          <Property Type="Int32" Name="ClientCompanyID" />
+          <Property Type="Int32" Name="InvoiceTypeID" />
+          <Property Type="Int32" Name="WorkflowStatusID" Nullable="false" />
+          <Property Type="String" Name="ReceiverName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ReceiverPhone" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ReceiverAddress" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="ClientCompany" Relationship="DbModel.FK_StockOut_ClientCompany" FromRole="StockOut" ToRole="ClientCompany" />
+          <NavigationProperty Name="ClientUser" Relationship="DbModel.FK_StockOut_ClientUser" FromRole="StockOut" ToRole="ClientUser" />
+          <NavigationProperty Name="Company" Relationship="DbModel.FK_StockOut_Company" FromRole="StockOut" ToRole="Company" />
+          <NavigationProperty Name="DistributionCompany" Relationship="DbModel.FK_StockOut_DistributionCompany" FromRole="StockOut" ToRole="DistributionCompany" />
+          <NavigationProperty Name="WorkflowStatus" Relationship="DbModel.FK_StockOut_WorkflowStatus" FromRole="StockOut" ToRole="WorkflowStatus" />
+          <NavigationProperty Name="StockOutDetail" Relationship="DbModel.FK_StockOutDetail_StockOut" FromRole="StockOut" ToRole="StockOutDetail" />
+        </EntityType>
+        <Association Name="FK_StockOut_ClientCompany">
+          <End Type="DbModel.ClientCompany" Role="ClientCompany" Multiplicity="0..1" />
+          <End Type="DbModel.StockOut" Role="StockOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientCompany">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOut">
+              <PropertyRef Name="ClientCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockOut_ClientUser">
+          <End Type="DbModel.ClientUser" Role="ClientUser" Multiplicity="0..1" />
+          <End Type="DbModel.StockOut" Role="StockOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOut">
+              <PropertyRef Name="ClientUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockOut_Company">
+          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="DbModel.StockOut" Role="StockOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOut">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockOut_DistributionCompany">
+          <End Type="DbModel.DistributionCompany" Role="DistributionCompany" Multiplicity="0..1" />
+          <End Type="DbModel.StockOut" Role="StockOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCompany">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOut">
+              <PropertyRef Name="DistributionCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockOut_WorkflowStatus">
+          <End Type="DbModel.WorkflowStatus" Role="WorkflowStatus" Multiplicity="1" />
+          <End Type="DbModel.StockOut" Role="StockOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOut">
+              <PropertyRef Name="WorkflowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockOutDetail_StockOut">
+          <End Type="DbModel.StockOut" Role="StockOut" Multiplicity="1" />
+          <End Type="DbModel.StockOutDetail" Role="StockOutDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockOut">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockOutDetail">
+              <PropertyRef Name="StockOutID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6987,6 +7461,56 @@
                 <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="SalesOrderApplicationID" ColumnName="SalesOrderApplicationID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockOutDetail">
+            <EntityTypeMapping TypeName="DbModel.StockOutDetail">
+              <MappingFragment StoreEntitySet="StockOutDetail">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="TaxQty" ColumnName="TaxQty" />
+                <ScalarProperty Name="LicenseNumber" ColumnName="LicenseNumber" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="BatchNumber" ColumnName="BatchNumber" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="TotalSalesAmount" ColumnName="TotalSalesAmount" />
+                <ScalarProperty Name="OutQty" ColumnName="OutQty" />
+                <ScalarProperty Name="SalesPrice" ColumnName="SalesPrice" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="SalesOrderAppDetailID" ColumnName="SalesOrderAppDetailID" />
+                <ScalarProperty Name="SalesOrderApplicationID" ColumnName="SalesOrderApplicationID" />
+                <ScalarProperty Name="StockOutID" ColumnName="StockOutID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockOut">
+            <EntityTypeMapping TypeName="DbModel.StockOut">
+              <MappingFragment StoreEntitySet="StockOut">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ReceiverAddress" ColumnName="ReceiverAddress" />
+                <ScalarProperty Name="ReceiverPhone" ColumnName="ReceiverPhone" />
+                <ScalarProperty Name="ReceiverName" ColumnName="ReceiverName" />
+                <ScalarProperty Name="WorkflowStatusID" ColumnName="WorkflowStatusID" />
+                <ScalarProperty Name="InvoiceTypeID" ColumnName="InvoiceTypeID" />
+                <ScalarProperty Name="ClientCompanyID" ColumnName="ClientCompanyID" />
+                <ScalarProperty Name="ClientUserID" ColumnName="ClientUserID" />
+                <ScalarProperty Name="DistributionCompanyID" ColumnName="DistributionCompanyID" />
+                <ScalarProperty Name="OutDate" ColumnName="OutDate" />
+                <ScalarProperty Name="BillDate" ColumnName="BillDate" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="ReceiverTypeID" ColumnName="ReceiverTypeID" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -224,6 +224,12 @@
     <Compile Include="Models\StockInDetail.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\StockOut.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StockOutDetail.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Supplier.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -304,13 +310,17 @@
     <Compile Include="UIObjects\UIProductHighPrice.cs" />
     <Compile Include="UIObjects\UIProductPrice.cs" />
     <Compile Include="UIObjects\UIProductSpecification.cs" />
+    <Compile Include="UIObjects\UISalesOrderAppDetail.cs" />
     <Compile Include="UIObjects\UIStockIn.cs" />
     <Compile Include="UIObjects\UIStockInDetail.cs" />
+    <Compile Include="UIObjects\UIStockOut.cs" />
+    <Compile Include="UIObjects\UIStockOutDetail.cs" />
     <Compile Include="UIObjects\UISupplier.cs" />
     <Compile Include="UIObjects\UISupplierBankAccount.cs" />
     <Compile Include="UIObjects\UISupplierCertificate.cs" />
     <Compile Include="UIObjects\UISupplierContract.cs" />
     <Compile Include="UIObjects\UISupplierContractFile.cs" />
+    <Compile Include="UIObjects\UIToBeOutSalesOrderDetail.cs" />
     <Compile Include="UIObjects\UIUser.cs" />
     <Compile Include="UIObjects\UIWarehouse.cs" />
     <Compile Include="UIObjects\UIWorkflowBase.cs" />
@@ -341,11 +351,15 @@
     <Compile Include="UISearchObjects\UISearchProcureOrderApplication.cs" />
     <Compile Include="UISearchObjects\UISearchProduct.cs" />
     <Compile Include="UISearchObjects\UISearchProductSpecification.cs" />
+    <Compile Include="UISearchObjects\UISearchSalesOrderAppDetail.cs" />
     <Compile Include="UISearchObjects\UISearchStockIn.cs" />
     <Compile Include="UISearchObjects\UISearchStockInDetail.cs" />
+    <Compile Include="UISearchObjects\UISearchStockOut.cs" />
+    <Compile Include="UISearchObjects\UISearchStockOutDetail.cs" />
     <Compile Include="UISearchObjects\UISearchSupplier.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierContract.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierContractFile.cs" />
+    <Compile Include="UISearchObjects\UISearchToBeOutSalesOrderDetail.cs" />
     <Compile Include="UISearchObjects\UISearchUser.cs" />
     <Compile Include="UISearchObjects\UISearchWarehouse.cs" />
     <Compile Include="UISearchObjects\UISearchWorkflowBase.cs" />

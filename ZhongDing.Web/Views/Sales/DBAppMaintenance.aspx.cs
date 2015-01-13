@@ -305,7 +305,7 @@ namespace ZhongDing.Web.Views.Sales
 
         protected void rgOrderProducts_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
-            var uiSearchObj = new UISearchDaBaoAppDetail
+            var uiSearchObj = new UISearchSalesOrderAppDetail
             {
                 SalesOrderApplicationID = this.CurrentEntityID.HasValue
                 ? this.CurrentEntityID.Value : GlobalConst.INVALID_INT

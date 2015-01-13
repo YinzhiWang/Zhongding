@@ -21,8 +21,6 @@ namespace ZhongDing.Web.Views.Procures
     {
         #region Consts
 
-        private const string SESSION_TEMP_STOCK_IN_DETAIL_DATA = "StockInDetailData";
-
         private const string DATA_KEY_NAME_STOCK_IN_DETAIL_ID = "ID";
         private const string DATA_KEY_NAME_PROCURE_ORDER_APP_ID = "ProcureOrderAppID";
         private const string DATA_KEY_NAME_PROCURE_ORDER_APP_DETAIL_ID = "ProcureOrderAppDetailID";

@@ -153,5 +153,72 @@ namespace ZhongDing.Business.Repositories
 
             return uiEntities;
         }
+
+
+        public IList<UIStockInDetail> GetInventory(UISearchStockInDetail uiSearchObj = null)
+        {
+            IList<UIStockInDetail> uiEntities = new List<UIStockInDetail>();
+
+            IQueryable<StockInDetail> query = null;
+
+            List<Expression<Func<StockInDetail, bool>>> whereFuncs = new List<Expression<Func<StockInDetail, bool>>>();
+
+            if (uiSearchObj != null)
+            {
+                if (uiSearchObj.ID > 0)
+                    whereFuncs.Add(x => x.ID.Equals(uiSearchObj.ID));
+
+                if (uiSearchObj.WarehouseID > 0)
+                    whereFuncs.Add(x => x.WarehouseID == uiSearchObj.WarehouseID);
+
+                if (uiSearchObj.ProductID > 0)
+                    whereFuncs.Add(x => x.ProductID == uiSearchObj.ProductID);
+
+                if (uiSearchObj.ProductSpecificationID > 0)
+                    whereFuncs.Add(x => x.ProductSpecificationID == uiSearchObj.ProductSpecificationID);
+            }
+
+            query = GetList(whereFuncs);
+
+            if (query != null)
+            {
+                uiEntities = (from q in query
+                              join si in DB.StockIn on q.StockInID equals si.ID
+                              join po in DB.ProcureOrderApplication on q.ProcureOrderAppID equals po.ID
+                              join pod in DB.ProcureOrderAppDetail on q.ProcureOrderAppDetailID equals pod.ID
+                              join w in DB.Warehouse on q.WarehouseID equals w.ID
+                              join s in DB.Supplier on si.SupplierID equals s.ID
+                              join p in DB.Product on q.ProductID equals p.ID
+                              join ps in DB.ProductSpecification on q.ProductSpecificationID equals ps.ID
+                              join um in DB.UnitOfMeasurement on ps.UnitOfMeasurementID equals um.ID into tempUM
+                              from tum in tempUM.DefaultIfEmpty()
+                              select new UIStockInDetail()
+                              {
+                                  ID = q.ID,
+                                  ProductID = q.ProductID,
+                                  ProductSpecificationID = q.ProductSpecificationID,
+                                  WarehouseID = q.WarehouseID,
+                                  Warehouse = w.Name,
+                                  ProductName = p.ProductName,
+                                  Specification = ps.Specification,
+                                  UnitOfMeasurement = tum == null ? string.Empty : tum.UnitName,
+                                  FactoryName = s.FactoryName,
+                                  BalanceQty = q.InQty - (DB.StockOutDetail.Any(x => x.IsDeleted == false && x.WarehouseID == q.WarehouseID
+                                      && x.ProductID == q.ProductID && x.ProductSpecificationID == q.ProductSpecificationID
+                                      && x.LicenseNumber == q.LicenseNumber && x.BatchNumber == q.BatchNumber && x.ExpirationDate == q.ExpirationDate)
+                                      ? DB.StockOutDetail.Where(x => x.IsDeleted == false && x.WarehouseID == q.WarehouseID
+                                          && x.ProductID == q.ProductID && x.ProductSpecificationID == q.ProductSpecificationID
+                                          && x.LicenseNumber == q.LicenseNumber && x.BatchNumber == q.BatchNumber && x.ExpirationDate == q.ExpirationDate)
+                                          .Sum(x => x.OutQty) : 0),
+                                  NumberInLargePackage = ps.NumberInLargePackage,
+                                  NumberOfPackages = q.InQty / (ps.NumberInLargePackage.HasValue ? ps.NumberInLargePackage.Value : 1),
+                                  BatchNumber = q.BatchNumber,
+                                  ExpirationDate = q.ExpirationDate,
+                                  LicenseNumber = q.LicenseNumber
+                              }).ToList();
+            }
+
+            return uiEntities;
+        }
     }
 }

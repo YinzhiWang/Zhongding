@@ -66,7 +66,7 @@
                                         Display="Dynamic" CssClass="field-validation-error"
                                         ValidationGroup="vgMaintenance" Text="*">
                                     </asp:RequiredFieldValidator>
-                                    <asp:Button ID="btnSearchOrders" runat="server" Text="订单查询" CssClass="mws-button green"
+                                    <asp:Button ID="btnSearchOrders" runat="server" Text="查询订单" CssClass="mws-button green"
                                         CausesValidation="false" OnClientClick="openChooseOrderProductWindow();return false;" />
                                 </div>
                             </div>
@@ -540,7 +540,7 @@
         }
 
         function checkGridCellValueChanged() {
-            debugger;
+            //debugger;
 
             if (parseInt(currentEntityID, 0) > 0) {
                 var gridCellValueChangedCount = parseInt($("#<%= hdnGridCellValueChangedCount.ClientID%>").val(), 0);

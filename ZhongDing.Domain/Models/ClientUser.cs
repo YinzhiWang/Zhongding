@@ -19,6 +19,7 @@ namespace ZhongDing.Domain.Models
         {
             this.ClientInfo = new HashSet<ClientInfo>();
             this.DBContract = new HashSet<DBContract>();
+            this.StockOut = new HashSet<StockOut>();
         }
     
         public int ID { get; set; }
@@ -41,5 +42,6 @@ namespace ZhongDing.Domain.Models
     
         public virtual ICollection<ClientInfo> ClientInfo { get; set; }
         public virtual ICollection<DBContract> DBContract { get; set; }
+        public virtual ICollection<StockOut> StockOut { get; set; }
     }
 }
