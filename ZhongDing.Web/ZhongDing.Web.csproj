@@ -2574,7 +2574,6 @@
     <Content Include="Images\core\sort_desc.png" />
     <Content Include="Images\defaultAvatar.gif" />
     <Content Include="packages.config" />
-    <Content Include="Content\icons\16\Thumbs.db" />
     <Content Include="HttpHandle\AsyncBusinessHandler.ashx" />
     <Content Include="UserControls\UCCurrentCompany.ascx" />
     <Content Include="Views\Basics\ClientCompanyMaintenance.aspx" />
@@ -3253,7 +3252,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
