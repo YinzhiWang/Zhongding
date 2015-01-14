@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using ZhongDing.Business.IRepositories;
+using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
@@ -300,7 +301,106 @@ namespace ZhongDing.Business.Repositories
 
         public IList<UIToBeOutSalesOrderDetail> GetToBeOutUIList(UISearchToBeOutSalesOrderDetail uiSearchObj)
         {
-            throw new NotImplementedException();
+            IList<UIToBeOutSalesOrderDetail> uiEntities = new List<UIToBeOutSalesOrderDetail>();
+
+            IQueryable<SalesOrderAppDetail> query = null;
+
+            List<Expression<Func<SalesOrderAppDetail, bool>>> whereFuncs = new List<Expression<Func<SalesOrderAppDetail, bool>>>();
+
+            if (uiSearchObj != null)
+            {
+                if (uiSearchObj.ID > 0)
+                    whereFuncs.Add(x => x.ID.Equals(uiSearchObj.ID));
+
+                if (uiSearchObj.SalesOrderApplicationID > 0)
+                    whereFuncs.Add(x => x.SalesOrderApplicationID.Equals(uiSearchObj.SalesOrderApplicationID));
+
+                if (uiSearchObj.SaleOrderTypeIDs != null
+                    && uiSearchObj.SaleOrderTypeIDs.Count() > 0)
+                    whereFuncs.Add(x => uiSearchObj.SaleOrderTypeIDs.Contains(x.SalesOrderApplication.SaleOrderTypeID));
+
+                if (uiSearchObj.DistributionCompanyID > 0)
+                    whereFuncs.Add(x => x.SalesOrderApplication.DaBaoApplication.Any(y => y.DistributionCompanyID == uiSearchObj.DistributionCompanyID));
+
+                if (uiSearchObj.ExcludeIDs != null
+                    && uiSearchObj.ExcludeIDs.Count() > 0)
+                    whereFuncs.Add(x => !uiSearchObj.ExcludeIDs.Contains(x.ID));
+            }
+
+            query = GetList(whereFuncs);
+
+            if (query != null)
+            {
+                //var statDate = DateTime.Now.Date.AddDays(-1);
+                //var curBeginDate = DateTime.Now.Date;
+                //var curEndDate = DateTime.Now.Date.AddDays(1);
+
+                uiEntities = (from q in query
+                              join soa in DB.SalesOrderApplication on q.SalesOrderApplicationID equals soa.ID
+                              join p in DB.Product on q.ProductID equals p.ID
+                              join ps in DB.ProductSpecification on q.ProductSpecificationID equals ps.ID
+                              select new UIToBeOutSalesOrderDetail()
+                              {
+                                  ID = q.ID,
+                                  SalesOrderApplicationID = q.SalesOrderApplicationID,
+                                  ProductID = q.ProductID,
+                                  ProductSpecificationID = q.ProductSpecificationID,
+                                  OrderCode = soa.OrderCode,
+                                  ProductName = p.ProductName,
+                                  Specification = ps.Specification,
+                                  OutQty = DB.StockOutDetail.Any(x => x.IsDeleted == false && x.SalesOrderAppDetailID == q.ID)
+                                   ? DB.StockOutDetail.Where(x => x.IsDeleted == false && x.SalesOrderAppDetailID == q.ID).Sum(x => x.OutQty) : 0,
+
+                                  ToBeOutQty = q.Count - (DB.StockOutDetail.Any(x => x.IsDeleted == false && x.SalesOrderAppDetailID == q.ID)
+                                  ? DB.StockOutDetail.Where(x => x.IsDeleted == false && x.SalesOrderAppDetailID == q.ID).Sum(x => x.OutQty) : 0),
+
+                                  //BalanceQty = (DB.StockInDetail.Any(x => x.IsDeleted == false && x.ProductID == q.ProductID
+                                  //    && x.ProductSpecificationID == q.ProductSpecificationID && x.StockIn.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse)
+                                  //    ? DB.StockInDetail.Where(x => x.IsDeleted == false && x.ProductID == q.ProductID && x.ProductSpecificationID == q.ProductSpecificationID
+                                  //        && x.StockIn.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse).Sum(x => x.InQty) : 0) -
+                                  //  (DB.StockOutDetail.Any(x => x.IsDeleted == false && x.ProductID == q.ProductID
+                                  //        && x.ProductSpecificationID == q.ProductSpecificationID) ? DB.StockOutDetail.Where(x => x.IsDeleted == false
+                                  //            && x.ProductID == q.ProductID && x.ProductSpecificationID == q.ProductSpecificationID).Sum(x => x.OutQty) : 0),
+
+                                  WarehouseData = ((from sid in DB.StockInDetail
+                                                    join si in DB.StockIn on sid.StockInID equals si.ID
+                                                    join w in DB.Warehouse on sid.WarehouseID equals w.ID
+                                                    where si.IsDeleted == false && si.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse
+                                                    && sid.IsDeleted == false && sid.ProductID == q.ProductID
+                                                    && sid.ProductSpecificationID == q.ProductSpecificationID
+                                                    select new
+                                                    {
+                                                        sid.ProductID,
+                                                        sid.ProductSpecificationID,
+                                                        sid.WarehouseID,
+                                                        WarehouseName = w.Name,
+                                                        sid.InQty
+                                                    })
+                                                   .GroupBy(x => new { x.ProductID, x.ProductSpecificationID, x.WarehouseID, x.WarehouseName })
+                                                   .Select(g => new
+                                                   {
+                                                       WarehouseKey = g.Key,
+                                                       BalanceQty = g.Sum(x => x.InQty) -
+                                                           (DB.StockOutDetail.Any(x => x.IsDeleted == false && x.ProductID == g.Key.ProductID
+                                                               && x.ProductSpecificationID == g.Key.ProductSpecificationID
+                                                               && x.WarehouseID == g.Key.WarehouseID) ?
+                                                           DB.StockOutDetail.Where(x => x.IsDeleted == false && x.ProductID == g.Key.ProductID
+                                                               && x.ProductSpecificationID == g.Key.ProductSpecificationID
+                                                               && x.WarehouseID == g.Key.WarehouseID).Sum(x => x.OutQty) : 0)
+                                                   })
+                                                   .Where(x => x.BalanceQty > 0))
+                                                   .Select(x => new UIDropdownItem
+                                                   {
+                                                       ItemValue = x.WarehouseKey.WarehouseID,
+                                                       ItemText = x.WarehouseKey.WarehouseName,
+                                                       Extension = new { BalanceQty = x.BalanceQty }
+                                                   }).ToList()
+                              })
+                              .Where(x => x.WarehouseData.Count > 0 && x.ToBeOutQty > 0)
+                              .ToList();
+            }
+
+            return uiEntities;
         }
 
         public IList<UIToBeOutSalesOrderDetail> GetToBeOutUIList(UISearchToBeOutSalesOrderDetail uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
@@ -339,6 +439,10 @@ namespace ZhongDing.Business.Repositories
 
             if (query != null)
             {
+                //var statDate = DateTime.Now.Date.AddDays(-1);
+                //var curBeginDate = DateTime.Now.Date;
+                //var curEndDate = DateTime.Now.Date.AddDays(1);
+
                 uiEntities = (from q in query
                               join soa in DB.SalesOrderApplication on q.SalesOrderApplicationID equals soa.ID
                               join p in DB.Product on q.ProductID equals p.ID
@@ -358,25 +462,52 @@ namespace ZhongDing.Business.Repositories
                                   ToBeOutQty = q.Count - (DB.StockOutDetail.Any(x => x.IsDeleted == false && x.SalesOrderAppDetailID == q.ID)
                                   ? DB.StockOutDetail.Where(x => x.IsDeleted == false && x.SalesOrderAppDetailID == q.ID).Sum(x => x.OutQty) : 0),
 
-                                  BalanceQty = (DB.StockInDetail.Any(x => x.IsDeleted == false && x.ProductID == q.ProductID
-                                      && x.ProductSpecificationID == q.ProductSpecificationID) ? DB.StockInDetail.Where(x => x.IsDeleted == false
-                                          && x.ProductID == q.ProductID && x.ProductSpecificationID == q.ProductSpecificationID).Sum(x => x.InQty) : 0) -
-                                    (DB.StockOutDetail.Any(x => x.IsDeleted == false && x.ProductID == q.ProductID
-                                          && x.ProductSpecificationID == q.ProductSpecificationID) ? DB.StockOutDetail.Where(x => x.IsDeleted == false
-                                              && x.ProductID == q.ProductID && x.ProductSpecificationID == q.ProductSpecificationID).Sum(x => x.OutQty) : 0),
+                                  //BalanceQty = (DB.StockInDetail.Any(x => x.IsDeleted == false && x.ProductID == q.ProductID 
+                                  //    && x.ProductSpecificationID == q.ProductSpecificationID && x.StockIn.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse)
+                                  //    ? DB.StockInDetail.Where(x => x.IsDeleted == false && x.ProductID == q.ProductID && x.ProductSpecificationID == q.ProductSpecificationID
+                                  //        && x.StockIn.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse).Sum(x => x.InQty) : 0) -
+                                  //        (DB.StockOutDetail.Any(x => x.IsDeleted == false && x.ProductID == q.ProductID
+                                  //            && x.ProductSpecificationID == q.ProductSpecificationID) ? DB.StockOutDetail.Where(x => x.IsDeleted == false
+                                  //                && x.ProductID == q.ProductID && x.ProductSpecificationID == q.ProductSpecificationID).Sum(x => x.OutQty) : 0),
 
-                                  WarehouseData = ((from sid in DB.StockInDetail
-                                                    join w in DB.Warehouse on sid.WarehouseID equals w.ID
-                                                    where sid.IsDeleted == false && sid.ProductID == q.ProductID
-                                                    && sid.ProductSpecificationID == q.ProductSpecificationID
-                                                    select new
-                                                    {
-                                                        sid.ProductID,
-                                                        sid.ProductSpecificationID,
-                                                        sid.WarehouseID,
-                                                        WarehouseName = w.Name,
-                                                        sid.InQty
-                                                    })
+                                  //BalanceQty = DB.InventoryHistory.Any(x => x.StatDate == statDate && x.ProductID == q.ProductID
+                                  //    && x.ProductSpecificationID == q.ProductSpecificationID)
+                                  //    ? (DB.InventoryHistory.Where(x => x.StatDate == statDate && x.ProductID == q.ProductID
+                                  //        && x.ProductSpecificationID == q.ProductSpecificationID).Sum(x => x.BalanceQty)
+                                  //        +
+                                  //        (DB.StockInDetail.Any(x => x.IsDeleted == false && x.ProductID == q.ProductID && x.ProductSpecificationID == q.ProductSpecificationID
+                                  //            && x.StockIn.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse && x.StockIn.EntryDate >= curBeginDate && x.StockIn.EntryDate < curEndDate)
+                                  //            ? DB.StockInDetail.Where(x => x.IsDeleted == false && x.ProductID == q.ProductID && x.ProductSpecificationID == q.ProductSpecificationID
+                                  //                && x.StockIn.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse && x.StockIn.EntryDate >= curBeginDate && x.StockIn.EntryDate < curEndDate)
+                                  //                .Sum(x => x.InQty) : 0)
+                                  //                -
+                                  //                (DB.StockOutDetail.Any(x => x.IsDeleted == false && x.ProductID == q.ProductID && x.ProductSpecificationID == q.ProductSpecificationID
+                                  //                    && x.CreatedOn >= curBeginDate && x.CreatedOn < curEndDate)
+                                  //                    ? DB.StockOutDetail.Where(x => x.IsDeleted == false && x.ProductID == q.ProductID && x.ProductSpecificationID == q.ProductSpecificationID
+                                  //                        && x.CreatedOn >= curBeginDate && x.CreatedOn < curEndDate).Sum(x => x.OutQty) : 0)
+                                  //        )
+                                  //    : ((DB.StockInDetail.Any(x => x.IsDeleted == false && x.ProductID == q.ProductID
+                                  //        && x.ProductSpecificationID == q.ProductSpecificationID && x.StockIn.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse)
+                                  //        ? DB.StockInDetail.Where(x => x.IsDeleted == false && x.ProductID == q.ProductID && x.ProductSpecificationID == q.ProductSpecificationID
+                                  //            && x.StockIn.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse).Sum(x => x.InQty) : 0) -
+                                  //            (DB.StockOutDetail.Any(x => x.IsDeleted == false && x.ProductID == q.ProductID
+                                  //                && x.ProductSpecificationID == q.ProductSpecificationID) ? DB.StockOutDetail.Where(x => x.IsDeleted == false
+                                  //                    && x.ProductID == q.ProductID && x.ProductSpecificationID == q.ProductSpecificationID).Sum(x => x.OutQty) : 0)),
+
+                                  WarehouseData = (from sid in DB.StockInDetail
+                                                   join si in DB.StockIn on sid.StockInID equals si.ID
+                                                   join w in DB.Warehouse on sid.WarehouseID equals w.ID
+                                                   where si.IsDeleted == false && si.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse
+                                                   && sid.IsDeleted == false && sid.ProductID == q.ProductID
+                                                   && sid.ProductSpecificationID == q.ProductSpecificationID
+                                                   select new
+                                                   {
+                                                       sid.ProductID,
+                                                       sid.ProductSpecificationID,
+                                                       sid.WarehouseID,
+                                                       WarehouseName = w.Name,
+                                                       sid.InQty
+                                                   })
                                                    .GroupBy(x => new { x.ProductID, x.ProductSpecificationID, x.WarehouseID, x.WarehouseName })
                                                    .Select(g => new
                                                    {
@@ -389,7 +520,7 @@ namespace ZhongDing.Business.Repositories
                                                                && x.ProductSpecificationID == g.Key.ProductSpecificationID
                                                                && x.WarehouseID == g.Key.WarehouseID).Sum(x => x.OutQty) : 0)
                                                    })
-                                                   .Where(x => x.BalanceQty > 0))
+                                                   .Where(x => x.BalanceQty > 0)
                                                    .Select(x => new UIDropdownItem
                                                    {
                                                        ItemValue = x.WarehouseKey.WarehouseID,
@@ -397,7 +528,7 @@ namespace ZhongDing.Business.Repositories
                                                        Extension = new { BalanceQty = x.BalanceQty }
                                                    }).ToList()
                               })
-                              .Where(x => x.BalanceQty > 0 && x.ToBeOutQty > 0)
+                              .Where(x => x.WarehouseData.Count > 0 && x.ToBeOutQty > 0)
                               .ToList();
 
                 totalRecords = uiEntities.Count;

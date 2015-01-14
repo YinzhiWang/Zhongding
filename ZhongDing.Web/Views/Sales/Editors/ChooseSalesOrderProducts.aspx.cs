@@ -214,14 +214,6 @@ namespace ZhongDing.Web.Views.Sales.Editors
                 var orderProducts = PageSalesOrderAppDetailRepository.GetToBeOutUIList(uiSearchObj,
                     rgSalesOrderAppDetails.CurrentPageIndex, rgSalesOrderAppDetails.PageSize, out totalRecords);
 
-                foreach (var orderProduct in orderProducts)
-                {
-                    if (orderProduct.BalanceQty > orderProduct.ToBeOutQty)
-                        orderProduct.CurrentOutQty = orderProduct.ToBeOutQty;
-                    else
-                        orderProduct.CurrentOutQty = orderProduct.BalanceQty;
-                }
-
                 rgSalesOrderAppDetails.DataSource = orderProducts;
 
                 rgSalesOrderAppDetails.VirtualItemCount = totalRecords;
