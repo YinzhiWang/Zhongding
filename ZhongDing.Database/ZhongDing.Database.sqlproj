@@ -365,6 +365,7 @@
     <Build Include="dbo\Tables\DaBaoRequestAppDetail.sql" />
     <Build Include="dbo\Tables\StockOutDetail.sql" />
     <Build Include="dbo\Tables\StockOut.sql" />
+    <Build Include="dbo\Tables\InventoryHistory.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

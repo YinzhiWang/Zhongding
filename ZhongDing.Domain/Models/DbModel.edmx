@@ -40,6 +40,7 @@
           <EntitySet Name="DeptProductEvaluation" EntityType="DbModel.Store.DeptProductEvaluation" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DistributionCompany" EntityType="DbModel.Store.DistributionCompany" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Hospital" EntityType="DbModel.Store.Hospital" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="InventoryHistory" EntityType="DbModel.Store.InventoryHistory" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="OwnerType" EntityType="DbModel.Store.OwnerType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PaymentStatus" EntityType="DbModel.Store.PaymentStatus" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PaymentType" EntityType="DbModel.Store.PaymentType" store:Type="Tables" Schema="dbo" />
@@ -310,6 +311,18 @@
           <AssociationSet Name="FK_DeptProductEvaluation_Product" Association="DbModel.Store.FK_DeptProductEvaluation_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="DeptProductEvaluation" EntitySet="DeptProductEvaluation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryHistory_Product" Association="DbModel.Store.FK_InventoryHistory_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="InventoryHistory" EntitySet="InventoryHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryHistory_ProductSpecification" Association="DbModel.Store.FK_InventoryHistory_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="InventoryHistory" EntitySet="InventoryHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryHistory_Warehouse" Association="DbModel.Store.FK_InventoryHistory_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="InventoryHistory" EntitySet="InventoryHistory" />
           </AssociationSet>
           <AssociationSet Name="FK_ProcureOrderAppDetail_ProcureOrderApplication" Association="DbModel.Store.FK_ProcureOrderAppDetail_ProcureOrderApplication">
             <End Role="ProcureOrderApplication" EntitySet="ProcureOrderApplication" />
@@ -1087,6 +1100,24 @@
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="InventoryHistory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="WarehouseID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="ProductSpecificationID" Type="int" Nullable="false" />
+          <Property Name="LicenseNumber" Type="nvarchar" MaxLength="255" />
+          <Property Name="BatchNumber" Type="nvarchar" MaxLength="255" />
+          <Property Name="ExpirationDate" Type="datetime" />
+          <Property Name="ProcurePrice" Type="money" Nullable="false" />
+          <Property Name="InQty" Type="int" Nullable="false" />
+          <Property Name="OutQty" Type="int" Nullable="false" />
+          <Property Name="BalanceQty" Type="int" Nullable="false" />
+          <Property Name="StatDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="OwnerType">
           <Key>
@@ -2316,6 +2347,42 @@
             </Principal>
             <Dependent Role="DeptProductEvaluation">
               <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryHistory_Product">
+          <End Role="Product" Type="DbModel.Store.Product" Multiplicity="1" />
+          <End Role="InventoryHistory" Type="DbModel.Store.InventoryHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="InventoryHistory">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryHistory_ProductSpecification">
+          <End Role="ProductSpecification" Type="DbModel.Store.ProductSpecification" Multiplicity="1" />
+          <End Role="InventoryHistory" Type="DbModel.Store.InventoryHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="InventoryHistory">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryHistory_Warehouse">
+          <End Role="Warehouse" Type="DbModel.Store.Warehouse" Multiplicity="1" />
+          <End Role="InventoryHistory" Type="DbModel.Store.InventoryHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="InventoryHistory">
+              <PropertyRef Name="WarehouseID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3637,6 +3704,19 @@
             <End Role="StockOut" EntitySet="StockOut" />
             <End Role="StockOutDetail" EntitySet="StockOutDetail" />
           </AssociationSet>
+          <EntitySet Name="InventoryHistory" EntityType="DbModel.InventoryHistory" />
+          <AssociationSet Name="FK_InventoryHistory_Product" Association="DbModel.FK_InventoryHistory_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="InventoryHistory" EntitySet="InventoryHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryHistory_ProductSpecification" Association="DbModel.FK_InventoryHistory_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="InventoryHistory" EntitySet="InventoryHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryHistory_Warehouse" Association="DbModel.FK_InventoryHistory_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="InventoryHistory" EntitySet="InventoryHistory" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -3864,6 +3944,7 @@
           <NavigationProperty Name="DaBaoRequestAppDetail" Relationship="DbModel.FK_DaBaoRequestAppDetail_Product" FromRole="Product" ToRole="DaBaoRequestAppDetail" />
           <NavigationProperty Name="SalesOrderAppDetail" Relationship="DbModel.FK_SalesOrderAppDetail_Product" FromRole="Product" ToRole="SalesOrderAppDetail" />
           <NavigationProperty Name="StockOutDetail" Relationship="DbModel.FK_StockOutDetail_Product" FromRole="Product" ToRole="StockOutDetail" />
+          <NavigationProperty Name="InventoryHistory" Relationship="DbModel.FK_InventoryHistory_Product" FromRole="Product" ToRole="InventoryHistory" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -3916,6 +3997,7 @@
           <NavigationProperty Name="DaBaoRequestAppDetail" Relationship="DbModel.FK_DaBaoRequestAppDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="DaBaoRequestAppDetail" />
           <NavigationProperty Name="SalesOrderAppDetail" Relationship="DbModel.FK_SalesOrderAppDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="SalesOrderAppDetail" />
           <NavigationProperty Name="StockOutDetail" Relationship="DbModel.FK_StockOutDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="StockOutDetail" />
+          <NavigationProperty Name="InventoryHistory" Relationship="DbModel.FK_InventoryHistory_ProductSpecification" FromRole="ProductSpecification" ToRole="InventoryHistory" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -4333,6 +4415,7 @@
           <NavigationProperty Name="ProcureOrderAppDetail" Relationship="DbModel.FK_ProcureOrderAppDetail_Warehouse" FromRole="Warehouse" ToRole="ProcureOrderAppDetail" />
           <NavigationProperty Name="StockInDetail" Relationship="DbModel.FK_StockInDetail_Warehouse" FromRole="Warehouse" ToRole="StockInDetail" />
           <NavigationProperty Name="StockOutDetail" Relationship="DbModel.FK_StockOutDetail_Warehouse" FromRole="Warehouse" ToRole="StockOutDetail" />
+          <NavigationProperty Name="InventoryHistory" Relationship="DbModel.FK_InventoryHistory_Warehouse" FromRole="Warehouse" ToRole="InventoryHistory" />
         </EntityType>
         <Association Name="FK_Warehouse_Company">
           <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
@@ -6393,6 +6476,63 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="InventoryHistory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="WarehouseID" Nullable="false" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
+          <Property Type="String" Name="LicenseNumber" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="BatchNumber" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="ExpirationDate" Precision="3" />
+          <Property Type="Decimal" Name="ProcurePrice" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="InQty" Nullable="false" />
+          <Property Type="Int32" Name="OutQty" Nullable="false" />
+          <Property Type="Int32" Name="BalanceQty" Nullable="false" />
+          <Property Type="DateTime" Name="StatDate" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_InventoryHistory_Product" FromRole="InventoryHistory" ToRole="Product" />
+          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_InventoryHistory_ProductSpecification" FromRole="InventoryHistory" ToRole="ProductSpecification" />
+          <NavigationProperty Name="Warehouse" Relationship="DbModel.FK_InventoryHistory_Warehouse" FromRole="InventoryHistory" ToRole="Warehouse" />
+        </EntityType>
+        <Association Name="FK_InventoryHistory_Product">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DbModel.InventoryHistory" Role="InventoryHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="InventoryHistory">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryHistory_ProductSpecification">
+          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
+          <End Type="DbModel.InventoryHistory" Role="InventoryHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="InventoryHistory">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryHistory_Warehouse">
+          <End Type="DbModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+          <End Type="DbModel.InventoryHistory" Role="InventoryHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="InventoryHistory">
+              <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -7511,6 +7651,25 @@
                 <ScalarProperty Name="Code" ColumnName="Code" />
                 <ScalarProperty Name="ReceiverTypeID" ColumnName="ReceiverTypeID" />
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InventoryHistory">
+            <EntityTypeMapping TypeName="DbModel.InventoryHistory">
+              <MappingFragment StoreEntitySet="InventoryHistory">
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="StatDate" ColumnName="StatDate" />
+                <ScalarProperty Name="BalanceQty" ColumnName="BalanceQty" />
+                <ScalarProperty Name="OutQty" ColumnName="OutQty" />
+                <ScalarProperty Name="InQty" ColumnName="InQty" />
+                <ScalarProperty Name="ProcurePrice" ColumnName="ProcurePrice" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="BatchNumber" ColumnName="BatchNumber" />
+                <ScalarProperty Name="LicenseNumber" ColumnName="LicenseNumber" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

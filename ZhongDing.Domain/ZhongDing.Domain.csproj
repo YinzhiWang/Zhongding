@@ -170,6 +170,9 @@
     <Compile Include="Models\Hospital.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\InventoryHistory.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\OwnerType.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -302,6 +305,7 @@
     <Compile Include="UIObjects\UIDistributionCompany.cs" />
     <Compile Include="UIObjects\UIDropdownItem.cs" />
     <Compile Include="UIObjects\UIHospital.cs" />
+    <Compile Include="UIObjects\UIInventoryHistory.cs" />
     <Compile Include="UIObjects\UIProcureOrderAppDetail.cs" />
     <Compile Include="UIObjects\UIProcureOrderApplication.cs" />
     <Compile Include="UIObjects\UIProduct.cs" />

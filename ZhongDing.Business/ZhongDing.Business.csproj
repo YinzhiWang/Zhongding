@@ -84,6 +84,7 @@
     <Compile Include="IRepositories\IDistributionCompanyRepository.cs" />
     <Compile Include="IRepositories\IGenerateDropdownItems.cs" />
     <Compile Include="IRepositories\IHospitalRepository.cs" />
+    <Compile Include="IRepositories\IInventoryHistoryRepository.cs" />
     <Compile Include="IRepositories\IOwnerTypeRepository.cs" />
     <Compile Include="IRepositories\IProcureOrderAppDetailRepository.cs" />
     <Compile Include="IRepositories\IProcureOrderApplicationRepository.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="Repositories\DeptProductEvaluationRepository.cs" />
     <Compile Include="Repositories\DistributionCompanyRepository.cs" />
     <Compile Include="Repositories\HospitalRepository.cs" />
+    <Compile Include="Repositories\InventoryHistoryRepository.cs" />
     <Compile Include="Repositories\OwnerTypeRepository.cs" />
     <Compile Include="Repositories\ProcureOrderAppDetailRepository.cs" />
     <Compile Include="Repositories\ProcureOrderApplicationRepository.cs" />
