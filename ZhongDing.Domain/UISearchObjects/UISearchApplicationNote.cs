@@ -10,6 +10,8 @@ namespace ZhongDing.Domain.UISearchObjects
     {
         public int ApplicationID { get; set; }
 
+        public int NoteTypeID { get; set; }
+
         public int WorkflowID { get; set; }
 
         public int WorkflowStepID { get; set; }

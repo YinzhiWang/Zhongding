@@ -41,6 +41,7 @@
           <EntitySet Name="DistributionCompany" EntityType="DbModel.Store.DistributionCompany" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Hospital" EntityType="DbModel.Store.Hospital" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="InventoryHistory" EntityType="DbModel.Store.InventoryHistory" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="NoteType" EntityType="DbModel.Store.NoteType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="OwnerType" EntityType="DbModel.Store.OwnerType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PaymentStatus" EntityType="DbModel.Store.PaymentStatus" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PaymentType" EntityType="DbModel.Store.PaymentType" store:Type="Tables" Schema="dbo" />
@@ -79,6 +80,10 @@
           <AssociationSet Name="FK__aspnet_Me__UserI__10566F31" Association="DbModel.Store.FK__aspnet_Me__UserI__10566F31">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApplicationNote_NoteType" Association="DbModel.Store.FK_ApplicationNote_NoteType">
+            <End Role="NoteType" EntitySet="NoteType" />
+            <End Role="ApplicationNote" EntitySet="ApplicationNote" />
           </AssociationSet>
           <AssociationSet Name="FK_ApplicationNote_Workflow" Association="DbModel.Store.FK_ApplicationNote_Workflow">
             <End Role="Workflow" EntitySet="Workflow" />
@@ -592,6 +597,7 @@
           <Property Name="ApplicationID" Type="int" />
           <Property Name="WorkflowID" Type="int" Nullable="false" />
           <Property Name="WorkflowStepID" Type="int" Nullable="false" />
+          <Property Name="NoteTypeID" Type="int" Nullable="false" />
           <Property Name="Note" Type="nvarchar" MaxLength="1000" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
@@ -1118,6 +1124,13 @@
           <Property Name="BalanceQty" Type="int" Nullable="false" />
           <Property Name="StatDate" Type="datetime" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NoteType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="NoteTypeName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="OwnerType">
           <Key>
@@ -1651,6 +1664,18 @@
             </Principal>
             <Dependent Role="aspnet_Membership">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ApplicationNote_NoteType">
+          <End Role="NoteType" Type="DbModel.Store.NoteType" Multiplicity="1" />
+          <End Role="ApplicationNote" Type="DbModel.Store.ApplicationNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NoteType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ApplicationNote">
+              <PropertyRef Name="NoteTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3525,16 +3550,7 @@
           </AssociationSet>
           <EntitySet Name="PaymentStatus" EntityType="DbModel.PaymentStatus" />
           <EntitySet Name="PaymentType" EntityType="DbModel.PaymentType" />
-          <EntitySet Name="ApplicationNote" EntityType="DbModel.ApplicationNote" />
           <EntitySet Name="ApplicationPayment" EntityType="DbModel.ApplicationPayment" />
-          <AssociationSet Name="FK_ApplicationNote_Workflow" Association="DbModel.FK_ApplicationNote_Workflow">
-            <End Role="Workflow" EntitySet="Workflow" />
-            <End Role="ApplicationNote" EntitySet="ApplicationNote" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ApplicationNote_WorkflowStep" Association="DbModel.FK_ApplicationNote_WorkflowStep">
-            <End Role="WorkflowStep" EntitySet="WorkflowStep" />
-            <End Role="ApplicationNote" EntitySet="ApplicationNote" />
-          </AssociationSet>
           <AssociationSet Name="FK_ApplicationPayment_FromBankAccount" Association="DbModel.FK_ApplicationPayment_FromBankAccount">
             <End Role="BankAccount" EntitySet="BankAccount" />
             <End Role="ApplicationPayment" EntitySet="ApplicationPayment" />
@@ -3716,6 +3732,20 @@
           <AssociationSet Name="FK_InventoryHistory_Warehouse" Association="DbModel.FK_InventoryHistory_Warehouse">
             <End Role="Warehouse" EntitySet="Warehouse" />
             <End Role="InventoryHistory" EntitySet="InventoryHistory" />
+          </AssociationSet>
+          <EntitySet Name="ApplicationNote" EntityType="DbModel.ApplicationNote" />
+          <EntitySet Name="NoteType" EntityType="DbModel.NoteType" />
+          <AssociationSet Name="FK_ApplicationNote_NoteType" Association="DbModel.FK_ApplicationNote_NoteType">
+            <End Role="NoteType" EntitySet="NoteType" />
+            <End Role="ApplicationNote" EntitySet="ApplicationNote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApplicationNote_Workflow" Association="DbModel.FK_ApplicationNote_Workflow">
+            <End Role="Workflow" EntitySet="Workflow" />
+            <End Role="ApplicationNote" EntitySet="ApplicationNote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ApplicationNote_WorkflowStep" Association="DbModel.FK_ApplicationNote_WorkflowStep">
+            <End Role="WorkflowStep" EntitySet="WorkflowStep" />
+            <End Role="ApplicationNote" EntitySet="ApplicationNote" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
@@ -5508,8 +5538,8 @@
           <Property Type="Boolean" Name="IsActive" Nullable="false" />
           <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
           <NavigationProperty Name="WorkflowStep" Relationship="DbModel.FK_WorkflowStep_Workflow" FromRole="Workflow" ToRole="WorkflowStep" />
-          <NavigationProperty Name="ApplicationNote" Relationship="DbModel.FK_ApplicationNote_Workflow" FromRole="Workflow" ToRole="ApplicationNote" />
           <NavigationProperty Name="ApplicationPayment" Relationship="DbModel.FK_ApplicationPayment_Workflow" FromRole="Workflow" ToRole="ApplicationPayment" />
+          <NavigationProperty Name="ApplicationNote" Relationship="DbModel.FK_ApplicationNote_Workflow" FromRole="Workflow" ToRole="ApplicationNote" />
         </EntityType>
         <Association Name="FK_WorkflowStep_Workflow">
           <End Type="DbModel.Workflow" Role="Workflow" Multiplicity="1" />
@@ -5708,23 +5738,6 @@
           <Property Type="String" Name="PaymentTypeName" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ApplicationPayment" Relationship="DbModel.FK_ApplicationPayment_PaymentType" FromRole="PaymentType" ToRole="ApplicationPayment" />
         </EntityType>
-        <EntityType Name="ApplicationNote">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="ApplicationID" />
-          <Property Type="Int32" Name="WorkflowID" Nullable="false" />
-          <Property Type="Int32" Name="WorkflowStepID" Nullable="false" />
-          <Property Type="String" Name="Note" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="Workflow" Relationship="DbModel.FK_ApplicationNote_Workflow" FromRole="ApplicationNote" ToRole="Workflow" />
-          <NavigationProperty Name="WorkflowStep" Relationship="DbModel.FK_ApplicationNote_WorkflowStep" FromRole="ApplicationNote" ToRole="WorkflowStep" />
-        </EntityType>
         <EntityType Name="ApplicationPayment">
           <Key>
             <PropertyRef Name="ID" />
@@ -5752,30 +5765,6 @@
           <NavigationProperty Name="BankAccount1" Relationship="DbModel.FK_ApplicationPayment_ToBankAccount" FromRole="ApplicationPayment" ToRole="BankAccount" />
           <NavigationProperty Name="Workflow" Relationship="DbModel.FK_ApplicationPayment_Workflow" FromRole="ApplicationPayment" ToRole="Workflow" />
         </EntityType>
-        <Association Name="FK_ApplicationNote_Workflow">
-          <End Type="DbModel.Workflow" Role="Workflow" Multiplicity="1" />
-          <End Type="DbModel.ApplicationNote" Role="ApplicationNote" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Workflow">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ApplicationNote">
-              <PropertyRef Name="WorkflowID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ApplicationNote_WorkflowStep">
-          <End Type="DbModel.WorkflowStep" Role="WorkflowStep" Multiplicity="1" />
-          <End Type="DbModel.ApplicationNote" Role="ApplicationNote" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="WorkflowStep">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ApplicationNote">
-              <PropertyRef Name="WorkflowStepID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ApplicationPayment_FromBankAccount">
           <End Type="DbModel.BankAccount" Role="BankAccount" Multiplicity="1" />
           <End Type="DbModel.ApplicationPayment" Role="ApplicationPayment" Multiplicity="*" />
@@ -6530,6 +6519,69 @@
             </Principal>
             <Dependent Role="InventoryHistory">
               <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ApplicationNote">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ApplicationID" />
+          <Property Type="Int32" Name="WorkflowID" Nullable="false" />
+          <Property Type="Int32" Name="WorkflowStepID" Nullable="false" />
+          <Property Type="Int32" Name="NoteTypeID" Nullable="false" />
+          <Property Type="String" Name="Note" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="NoteType" Relationship="DbModel.FK_ApplicationNote_NoteType" FromRole="ApplicationNote" ToRole="NoteType" />
+          <NavigationProperty Name="Workflow" Relationship="DbModel.FK_ApplicationNote_Workflow" FromRole="ApplicationNote" ToRole="Workflow" />
+          <NavigationProperty Name="WorkflowStep" Relationship="DbModel.FK_ApplicationNote_WorkflowStep" FromRole="ApplicationNote" ToRole="WorkflowStep" />
+        </EntityType>
+        <EntityType Name="NoteType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="NoteTypeName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ApplicationNote" Relationship="DbModel.FK_ApplicationNote_NoteType" FromRole="NoteType" ToRole="ApplicationNote" />
+        </EntityType>
+        <Association Name="FK_ApplicationNote_NoteType">
+          <End Type="DbModel.NoteType" Role="NoteType" Multiplicity="1" />
+          <End Type="DbModel.ApplicationNote" Role="ApplicationNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NoteType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ApplicationNote">
+              <PropertyRef Name="NoteTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ApplicationNote_Workflow">
+          <End Type="DbModel.Workflow" Role="Workflow" Multiplicity="1" />
+          <End Type="DbModel.ApplicationNote" Role="ApplicationNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Workflow">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ApplicationNote">
+              <PropertyRef Name="WorkflowID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ApplicationNote_WorkflowStep">
+          <End Type="DbModel.WorkflowStep" Role="WorkflowStep" Multiplicity="1" />
+          <End Type="DbModel.ApplicationNote" Role="ApplicationNote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStep">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ApplicationNote">
+              <PropertyRef Name="WorkflowStepID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7430,22 +7482,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ApplicationNote">
-            <EntityTypeMapping TypeName="DbModel.ApplicationNote">
-              <MappingFragment StoreEntitySet="ApplicationNote">
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="WorkflowStepID" ColumnName="WorkflowStepID" />
-                <ScalarProperty Name="WorkflowID" ColumnName="WorkflowID" />
-                <ScalarProperty Name="ApplicationID" ColumnName="ApplicationID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ApplicationPayment">
             <EntityTypeMapping TypeName="DbModel.ApplicationPayment">
               <MappingFragment StoreEntitySet="ApplicationPayment">
@@ -7670,6 +7706,31 @@
                 <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ApplicationNote">
+            <EntityTypeMapping TypeName="DbModel.ApplicationNote">
+              <MappingFragment StoreEntitySet="ApplicationNote">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="NoteTypeID" ColumnName="NoteTypeID" />
+                <ScalarProperty Name="WorkflowStepID" ColumnName="WorkflowStepID" />
+                <ScalarProperty Name="WorkflowID" ColumnName="WorkflowID" />
+                <ScalarProperty Name="ApplicationID" ColumnName="ApplicationID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NoteType">
+            <EntityTypeMapping TypeName="DbModel.NoteType">
+              <MappingFragment StoreEntitySet="NoteType">
+                <ScalarProperty Name="NoteTypeName" ColumnName="NoteTypeName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

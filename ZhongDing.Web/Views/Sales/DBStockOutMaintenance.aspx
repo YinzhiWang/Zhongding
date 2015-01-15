@@ -280,7 +280,7 @@
                         </div>
 
                         <div class="mws-button-row">
-                            <asp:Button ID="btnSave" runat="server" Text="暂存" CssClass="mws-button green" CausesValidation="true" ValidationGroup="vgMaintenance" OnClientClick="return checkGridCellValueChanged();" OnClick="btnSave_Click" />
+                            <asp:Button ID="btnSave" runat="server" Text="保存" CssClass="mws-button green" CausesValidation="true" ValidationGroup="vgMaintenance" OnClientClick="return checkGridCellValueChanged();" OnClick="btnSave_Click" />
                             <asp:Button ID="btnSubmit" runat="server" Text="提交" CssClass="mws-button green" CausesValidation="true" OnClientClick="return checkGridCellValueChanged();" OnClick="btnSubmit_Click" />
                             <asp:Button ID="btnOutStock" runat="server" Text="确认出库" CssClass="mws-button green" CausesValidation="true" OnClick="btnOutStock_Click" />
                             <asp:Button ID="btnPrint" runat="server" Text="打印" CssClass="mws-button green" CausesValidation="true" OnClientClick="openPrintPage();return false;" Visible="false" />

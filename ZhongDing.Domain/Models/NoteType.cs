@@ -13,23 +13,19 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class Workflow : IEntityExtendedProperty
+    public partial class NoteType : IEntityExtendedProperty
     {
-        public Workflow()
+        public NoteType()
         {
-            this.WorkflowStep = new HashSet<WorkflowStep>();
-            this.ApplicationPayment = new HashSet<ApplicationPayment>();
             this.ApplicationNote = new HashSet<ApplicationNote>();
         }
     
         public int ID { get; set; }
-        public string WorkflowName { get; set; }
-        public bool IsActive { get; set; }
-        public bool IsDeleted { get; set; }
+        public string NoteTypeName { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
-    	public bool HasColumnIsDeleted { get { return true; } }
+    	public bool HasColumnIsDeleted { get { return false; } }
     	public bool HasColumnDeletedOn { get { return false; } }
     	public bool HasColumnCreatedOn { get { return false; } }
     	public bool HasColumnCreatedBy { get { return false; } }
@@ -37,8 +33,6 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return false; } }
     
     
-        public virtual ICollection<WorkflowStep> WorkflowStep { get; set; }
-        public virtual ICollection<ApplicationPayment> ApplicationPayment { get; set; }
         public virtual ICollection<ApplicationNote> ApplicationNote { get; set; }
     }
 }

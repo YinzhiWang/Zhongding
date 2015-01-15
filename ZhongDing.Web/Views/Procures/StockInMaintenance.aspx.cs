@@ -176,43 +176,57 @@ namespace ZhongDing.Web.Views.Procures
 
                 switch (workfolwStatus)
                 {
-                    case EWorkflowStatus.TemporarySave:
-                        #region 暂存（订单创建者或有修改权限的用户才能修改）
-                        if (CurrentUser.UserID == this.CurrentEntity.CreatedBy
-                            || this.CanEditUserIDs.Contains(CurrentUser.UserID))
-                            ShowSaveButtons(true);
-                        else
-                            DisabledBasicInfoControls();
-
-                        btnEntryStock.Visible = false;
-                        btnPrint.Visible = false;
-                        #endregion
-
-                        break;
                     case EWorkflowStatus.ToBeInWarehouse:
-                        #region 已提交，待入库
+                    case EWorkflowStatus.InWarehouse:
+                        btnPrint.Visible = true;
+                        break;
+                }
 
-                        DisabledBasicInfoControls();
+                if (CanEditUserIDs.Contains(CurrentUser.UserID))
+                {
+                    btnSave.Visible = true;
+                    btnSubmit.Visible = false;
+                    ShowEntryStockControls(false);
+                }
+                else
+                {
+                    switch (workfolwStatus)
+                    {
+                        case EWorkflowStatus.TemporarySave:
+                            #region 暂存（订单创建者或有修改权限的用户才能修改）
+                            if (CurrentUser.UserID == this.CurrentEntity.CreatedBy
+                                || this.CanEditUserIDs.Contains(CurrentUser.UserID))
+                                ShowSaveButtons(true);
+                            else
+                                DisabledBasicInfoControls();
 
-                        if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
-                            ShowEntryStockControls(true);
-                        else
                             ShowEntryStockControls(false);
 
-                        btnPrint.Visible = true;
+                            #endregion
 
-                        #endregion
+                            break;
+                        case EWorkflowStatus.ToBeInWarehouse:
+                            #region 已提交，待入库
 
-                        break;
-                    case EWorkflowStatus.InWarehouse:
-                        #region 已入库,不能修改
+                            DisabledBasicInfoControls();
 
-                        DisabledBasicInfoControls();
-                        ShowEntryStockControls(false);
-                        btnPrint.Visible = true;
+                            if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
+                                ShowEntryStockControls(true);
+                            else
+                                ShowEntryStockControls(false);
 
-                        #endregion
-                        break;
+                            #endregion
+
+                            break;
+                        case EWorkflowStatus.InWarehouse:
+                            #region 已入库,不能修改
+
+                            DisabledBasicInfoControls();
+                            ShowEntryStockControls(false);
+
+                            #endregion
+                            break;
+                    }
                 }
 
                 var uiSearchStockInDetailObj = new UISearchStockInDetail()
@@ -280,7 +294,7 @@ namespace ZhongDing.Web.Views.Procures
         }
 
         /// <summary>
-        /// 显示或隐藏暂存提交按钮
+        /// 显示或隐藏保存和提交按钮
         /// </summary>
         private void ShowSaveButtons(bool isShow)
         {
@@ -312,6 +326,7 @@ namespace ZhongDing.Web.Views.Procures
                 var appNote = new ApplicationNote();
                 appNote.WorkflowID = (int)EWorkflow.StockIn;
                 appNote.WorkflowStepID = (int)EWorkflowStep.NewStockIn;
+                appNote.NoteTypeID = (int)EAppNoteType.Comment;
                 appNote.ApplicationID = currentEntity.ID;
                 appNote.Note = txtComment.Text.Trim();
 
@@ -347,6 +362,7 @@ namespace ZhongDing.Web.Views.Procures
             var uiSearchObj = new UISearchApplicationNote()
             {
                 WorkflowID = this.CurrentWorkFlowID,
+                NoteTypeID = (int)EAppNoteType.Comment,
                 ApplicationID = this.CurrentEntityID.HasValue
                 ? this.CurrentEntityID.Value : GlobalConst.INVALID_INT
             };
@@ -358,23 +374,9 @@ namespace ZhongDing.Web.Views.Procures
 
         protected void rgStockInDetails_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-            //var uiSearchObj = new UISearchStockInDetail()
-            //{
-            //    StockInID = this.CurrentEntityID.HasValue ? this.CurrentEntityID.Value : GlobalConst.INVALID_INT,
-            //};
-
-            //int totalRecords;
-
-            //var orderProducts = PageStockInDetailRepository.GetUIList(uiSearchObj,
-            //    rgStockInDetails.CurrentPageIndex, rgStockInDetails.PageSize, out totalRecords);
-
             var stockInDetailData = (List<UIStockInDetail>)Session[WebUtility.WebSessionNames.StockInDetailData];
 
-            //Session[SESSION_TEMP_STOCK_IN_DETAIL_DATA] = stockInDetailData;
-
             rgStockInDetails.DataSource = stockInDetailData.Where(x => x.IsDeleted == false);
-
-            //rgStockInDetails.VirtualItemCount = totalRecords;
         }
 
         protected void rgStockInDetails_DeleteCommand(object sender, GridCommandEventArgs e)
@@ -411,9 +413,9 @@ namespace ZhongDing.Web.Views.Procures
 
                         if (saveChangesCell != null)
                         {
-                            if (this.CurrentEntity != null
-                            && (this.CurrentEntity.CreatedBy == CurrentUser.UserID || this.CanEditUserIDs.Contains(CurrentUser.UserID))
-                            && (this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.TemporarySave))
+                            if (this.CurrentEntity != null && (this.CanEditUserIDs.Contains(CurrentUser.UserID)
+                                || (this.CurrentEntity.CreatedBy == CurrentUser.UserID
+                                    && (this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.TemporarySave))))
                                 saveChangesCell.Visible = true;
                             else
                                 saveChangesCell.Visible = false;
@@ -425,9 +427,9 @@ namespace ZhongDing.Web.Views.Procures
 
         protected void rgStockInDetails_ColumnCreated(object sender, GridColumnCreatedEventArgs e)
         {
-            if (this.CurrentEntity != null
-                && (this.CurrentEntity.CreatedBy == CurrentUser.UserID || this.CanEditUserIDs.Contains(CurrentUser.UserID))
-                && (this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.TemporarySave))
+            if (this.CurrentEntity != null && (this.CanEditUserIDs.Contains(CurrentUser.UserID)
+                    || (this.CurrentEntity.CreatedBy == CurrentUser.UserID
+                        && (this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.TemporarySave))))
             {
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = true;
             }
@@ -768,6 +770,7 @@ namespace ZhongDing.Web.Views.Procures
                         var appNote = new ApplicationNote();
                         appNote.WorkflowID = (int)EWorkflow.StockIn;
                         appNote.WorkflowStepID = (int)EWorkflowStep.EntryStockRoom;
+                        appNote.NoteTypeID = (int)EAppNoteType.Comment;
                         appNote.ApplicationID = currentEntity.ID;
                         appNote.Note = "入库单已入库（由系统自动生成）";
                         appNoteRepository.Add(appNote);

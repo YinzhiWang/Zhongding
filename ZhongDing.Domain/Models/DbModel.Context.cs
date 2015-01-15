@@ -83,7 +83,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<ProcureOrderApplication> ProcureOrderApplication { get; set; }
         public DbSet<PaymentStatus> PaymentStatus { get; set; }
         public DbSet<PaymentType> PaymentType { get; set; }
-        public DbSet<ApplicationNote> ApplicationNote { get; set; }
         public DbSet<ApplicationPayment> ApplicationPayment { get; set; }
         public DbSet<StockIn> StockIn { get; set; }
         public DbSet<StockInDetail> StockInDetail { get; set; }
@@ -95,5 +94,7 @@ namespace ZhongDing.Domain.Models
         public DbSet<StockOutDetail> StockOutDetail { get; set; }
         public DbSet<StockOut> StockOut { get; set; }
         public DbSet<InventoryHistory> InventoryHistory { get; set; }
+        public DbSet<ApplicationNote> ApplicationNote { get; set; }
+        public DbSet<NoteType> NoteType { get; set; }
     }
 }

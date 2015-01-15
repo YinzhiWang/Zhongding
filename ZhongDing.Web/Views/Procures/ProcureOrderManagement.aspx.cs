@@ -143,10 +143,39 @@ namespace ZhongDing.Web.Views.Procures
                 .GetCanAccessIDsByUserID(CurrentUser.UserID);
 
             if (includeWorkflowStatusIDs == null)
+            {
                 includeWorkflowStatusIDs = new List<int>();
+                includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Paid);
+            }
+            else
+            {
+                if (this.CanAddUserIDs.Contains(CurrentUser.UserID) || this.CanEditUserIDs.Contains(CurrentUser.UserID))
+                {
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.TemporarySave))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.TemporarySave);
 
-            includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Paid);
-            includeWorkflowStatusIDs.Add((int)EWorkflowStatus.InWarehouse);
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Submit))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Submit);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ApprovedBasicInfo))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ApprovedBasicInfo);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ReturnBasicInfo))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ReturnBasicInfo);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.AuditingOfPaymentInfo))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.AuditingOfPaymentInfo);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ToBePaid))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ToBePaid);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ReturnPaymentInfo))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ReturnPaymentInfo);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Paid))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Paid);
+                }
+            }
 
             uiSearchObj.IncludeWorkflowStatusIDs = includeWorkflowStatusIDs;
 
@@ -256,7 +285,7 @@ namespace ZhongDing.Web.Views.Procures
 
         protected void rgEntities_ColumnCreated(object sender, GridColumnCreatedEventArgs e)
         {
-            if (this.CanAddUserIDs.Contains(CurrentUser.UserID))
+            if (this.CanAddUserIDs.Contains(CurrentUser.UserID) || CanEditUserIDs.Contains(CurrentUser.UserID))
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = true;
             else
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = false;
@@ -285,49 +314,76 @@ namespace ZhongDing.Web.Views.Procures
                         || uiEntity.CreatedByUserID == CurrentUser.UserID)
                         isCanEditUser = true;
 
+                    bool isShowDeleteLink = false;
+
                     EWorkflowStatus workflowStatus = (EWorkflowStatus)uiEntity.WorkflowStatusID;
 
-                    if (isCanAccessUser)
+                    if (CanEditUserIDs.Contains(CurrentUser.UserID))
                     {
+                        linkHtml += "编辑";
+
                         switch (workflowStatus)
                         {
                             case EWorkflowStatus.TemporarySave:
                             case EWorkflowStatus.ReturnBasicInfo:
-                                if (isCanEditUser)
-                                    linkHtml += "编辑";
-                                else
-                                    linkHtml += "查看";
-
-                                break;
-
-                            case EWorkflowStatus.Submit:
-                                linkHtml += "审核";
-                                break;
-
-                            case EWorkflowStatus.ApprovedBasicInfo:
                             case EWorkflowStatus.ReturnPaymentInfo:
-                                if (isCanEditUser)
-                                    linkHtml += "维护支付信息";
-                                else
-                                    linkHtml += "查看";
-                                break;
-
-                            case EWorkflowStatus.AuditingOfPaymentInfo:
-                                linkHtml += "审核支付信息";
-                                break;
-
-                            case EWorkflowStatus.ToBePaid:
-                                linkHtml += "支付";
-                                break;
-
-                            case EWorkflowStatus.Paid:
-                            case EWorkflowStatus.InWarehouse:
-                                linkHtml += "查看";
+                                isShowDeleteLink = true;
                                 break;
                         }
                     }
                     else
-                        linkHtml += "查看";
+                    {
+                        if (isCanAccessUser)
+                        {
+                            switch (workflowStatus)
+                            {
+                                case EWorkflowStatus.TemporarySave:
+                                case EWorkflowStatus.ReturnBasicInfo:
+                                    if (isCanEditUser)
+                                        linkHtml += "编辑";
+                                    else
+                                        linkHtml += "查看";
+
+                                    isShowDeleteLink = true;
+                                    break;
+
+                                case EWorkflowStatus.Submit:
+                                    linkHtml += "审核";
+                                    break;
+
+                                case EWorkflowStatus.ApprovedBasicInfo:
+                                    if (isCanEditUser)
+                                        linkHtml += "维护支付信息";
+                                    else
+                                        linkHtml += "查看";
+                                    break;
+
+                                case EWorkflowStatus.ReturnPaymentInfo:
+                                    if (isCanEditUser)
+                                        linkHtml += "维护支付信息";
+                                    else
+                                        linkHtml += "查看";
+
+                                    isShowDeleteLink = true;
+                                    break;
+
+                                case EWorkflowStatus.AuditingOfPaymentInfo:
+                                    linkHtml += "审核支付信息";
+                                    break;
+
+                                case EWorkflowStatus.ToBePaid:
+                                    linkHtml += "支付";
+                                    break;
+
+                                case EWorkflowStatus.Paid:
+                                case EWorkflowStatus.InWarehouse:
+                                    linkHtml += "查看";
+                                    break;
+                            }
+                        }
+                        else
+                            linkHtml += "查看";
+                    }
 
                     linkHtml += "</a>";
 
@@ -339,6 +395,16 @@ namespace ZhongDing.Web.Views.Procures
 
                         if (editCell != null)
                             editCell.Text = linkHtml;
+                    }
+
+                    var deleteColumn = rgEntities.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE);
+
+                    if (deleteColumn != null)
+                    {
+                        var deleteCell = gridDataItem.Cells[deleteColumn.OrderIndex];
+
+                        if (deleteCell != null && !isShowDeleteLink)
+                            deleteCell.Text = string.Empty;
                     }
                 }
             }

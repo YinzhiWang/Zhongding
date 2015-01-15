@@ -142,7 +142,7 @@
                             PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
                             FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
                     </MasterTableView>
-                    <ClientSettings>
+                    <ClientSettings EnableRowHoverStyle="true">
                         <ClientEvents OnGridCreated="GetsGridObject" />
                     </ClientSettings>
                 </telerik:RadGrid>

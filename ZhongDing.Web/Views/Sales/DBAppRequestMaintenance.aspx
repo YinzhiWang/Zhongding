@@ -95,7 +95,7 @@
                                 <asp:Label ID="lblReceiverAddress" runat="server"></asp:Label>
                             </div>
                         </div>
-                        <div class="mws-form-row">
+                        <div class="mws-form-row" runat="server" id="divComment">
                             <label>备注</label>
                             <div class="mws-form-item medium">
                                 <telerik:RadTextBox runat="server" ID="txtComment" Width="90%" MaxLength="1000"
@@ -138,6 +138,7 @@
                                                         <ItemStyle Height="30" />
                                                         <AlternatingItemStyle BackColor="#f2f2f2" />
                                                     </MasterTableView>
+                                                    <ClientSettings EnableRowHoverStyle="true" />
                                                 </telerik:RadGrid>
                                             </ContentTemplate>
                                         </telerik:RadDock>
@@ -156,6 +157,7 @@
                                         <telerik:RadGrid ID="rgRequestProducts" runat="server" PageSize="10"
                                             AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false"
                                             MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true" ShowFooter="true"
+                                            ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
                                             OnNeedDataSource="rgRequestProducts_NeedDataSource" OnDeleteCommand="rgRequestProducts_DeleteCommand"
                                             OnItemCreated="rgRequestProducts_ItemCreated" OnColumnCreated="rgRequestProducts_ColumnCreated">
                                             <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
@@ -228,13 +230,52 @@
                             </div>
 
                             <!--审核 -->
-                            <div class="mws-panel grid_8 mws-collapsible" data-collapseid="panel-procure-audit" runat="server" id="divAudit">
+                            <div class="mws-panel grid_8 mws-collapsible" data-collapseid="panel-procure-audit">
                                 <div class="mws-panel-header">
                                     <span class="mws-i-24 i-creditcard">审核</span>
                                 </div>
                                 <div class="mws-panel-body">
                                     <div class="mws-panel-content">
-                                        <div class="mws-form-row">
+                                        <telerik:RadDockLayout runat="server" ID="RadDockLayout2">
+                                            <telerik:RadDockZone runat="server" ID="RadDockZone2" Orientation="Vertical"
+                                                Width="99%" FitDocks="true" BorderStyle="None">
+                                                <telerik:RadDock ID="RadDock2" Title="审核历史记录" runat="server" AllowedZones="RadDockZone1" Font-Size="12px"
+                                                    DefaultCommands="ExpandCollapse" EnableAnimation="true" EnableDrag="false"
+                                                    DockMode="Docked" ExpandText="展开" CollapseText="折叠">
+                                                    <ContentTemplate>
+                                                        <div class="toppadding10"></div>
+                                                        <telerik:RadGrid ID="rgAuditNotes" runat="server"
+                                                            ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
+                                                            AllowPaging="false" AllowSorting="true" AutoGenerateColumns="false" Skin="Silk" Width="99.5%"
+                                                            OnNeedDataSource="rgAuditNotes_NeedDataSource">
+                                                            <MasterTableView Width="100%" DataKeyNames="ID" ShowHeader="true" BackColor="#fafafa">
+                                                                <Columns>
+                                                                    <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
+                                                                    </telerik:GridBoundColumn>
+                                                                    <telerik:GridBoundColumn UniqueName="CreatedOn" HeaderText="创建时间" DataField="CreatedOn" DataFormatString="{0:yyyy/MM/dd HH:mm:ss}">
+                                                                        <ItemStyle HorizontalAlign="Left" Width="20%" />
+                                                                    </telerik:GridBoundColumn>
+                                                                    <telerik:GridBoundColumn UniqueName="CreatedBy" HeaderText="创建人" DataField="CreatedBy">
+                                                                        <ItemStyle HorizontalAlign="Left" Width="15%" />
+                                                                    </telerik:GridBoundColumn>
+                                                                    <telerik:GridBoundColumn UniqueName="Note" HeaderText="备注内容" DataField="Note">
+                                                                        <ItemStyle HorizontalAlign="Left" />
+                                                                    </telerik:GridBoundColumn>
+                                                                </Columns>
+                                                                <NoRecordsTemplate>
+                                                                    没有任何数据
+                                                                </NoRecordsTemplate>
+                                                                <ItemStyle Height="30" />
+                                                                <AlternatingItemStyle BackColor="#f2f2f2" />
+                                                            </MasterTableView>
+                                                            <ClientSettings EnableRowHoverStyle="true" />
+                                                        </telerik:RadGrid>
+                                                    </ContentTemplate>
+                                                </telerik:RadDock>
+                                            </telerik:RadDockZone>
+                                        </telerik:RadDockLayout>
+
+                                        <div class="mws-form-row" runat="server" id="divAudit">
                                             <label>审核意见</label>
                                             <div class="mws-form-item large">
                                                 <telerik:RadTextBox runat="server" ID="txtAuditComment" Width="90%" MaxLength="1000"
@@ -252,7 +293,7 @@
                         </div>
 
                         <div class="mws-button-row">
-                            <asp:Button ID="btnSave" runat="server" Text="暂存" CssClass="mws-button green" CausesValidation="true" ValidationGroup="vgMaintenance" OnClick="btnSave_Click" />
+                            <asp:Button ID="btnSave" runat="server" Text="保存" CssClass="mws-button green" CausesValidation="true" ValidationGroup="vgMaintenance" OnClick="btnSave_Click" />
                             <asp:Button ID="btnSubmit" runat="server" Text="提交" CssClass="mws-button green" CausesValidation="true" OnClick="btnSubmit_Click" />
                             <asp:Button ID="btnExportToOrder" runat="server" Text="生成配送订单" CssClass="mws-button green" CausesValidation="true" OnClick="btnExportToOrder_Click" />
                             <asp:Button ID="btnReturn" runat="server" Text="退回" CssClass="mws-button orange" CausesValidation="true" OnClick="btnReturn_Click" />

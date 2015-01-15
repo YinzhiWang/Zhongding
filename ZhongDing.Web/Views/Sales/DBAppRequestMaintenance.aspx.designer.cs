@@ -130,6 +130,15 @@ namespace ZhongDing.Web.Views.Sales {
         protected global::System.Web.UI.WebControls.Label lblReceiverAddress;
         
         /// <summary>
+        /// divComment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divComment;
+        
+        /// <summary>
         /// txtComment control.
         /// </summary>
         /// <remarks>
@@ -200,6 +209,42 @@ namespace ZhongDing.Web.Views.Sales {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid rgRequestProducts;
+        
+        /// <summary>
+        /// RadDockLayout2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDockLayout RadDockLayout2;
+        
+        /// <summary>
+        /// RadDockZone2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDockZone RadDockZone2;
+        
+        /// <summary>
+        /// RadDock2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDock RadDock2;
+        
+        /// <summary>
+        /// rgAuditNotes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid rgAuditNotes;
         
         /// <summary>
         /// divAudit control.

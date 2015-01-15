@@ -142,7 +142,7 @@ namespace ZhongDing.Web.Views.Procures
             }
             else
             {
-                if (this.CanAddUserIDs.Contains(CurrentUser.UserID))
+                if (this.CanAddUserIDs.Contains(CurrentUser.UserID) || this.CanEditUserIDs.Contains(CurrentUser.UserID))
                 {
                     if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.TemporarySave))
                         includeWorkflowStatusIDs.Add((int)EWorkflowStatus.TemporarySave);
@@ -251,7 +251,7 @@ namespace ZhongDing.Web.Views.Procures
 
         protected void rgEntities_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
         {
-            if (this.CanAddUserIDs.Contains(CurrentUser.UserID))
+            if (this.CanAddUserIDs.Contains(CurrentUser.UserID) || CanEditUserIDs.Contains(CurrentUser.UserID))
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = true;
             else
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = false;
@@ -281,42 +281,55 @@ namespace ZhongDing.Web.Views.Procures
                         isCanEditUser = true;
 
                     bool isShowPrintLink = false;
+                    bool isShowDeleteLink = false;
 
                     EWorkflowStatus workflowStatus = (EWorkflowStatus)uiEntity.WorkflowStatusID;
 
-                    if (isCanAccessUser)
+                    switch (workflowStatus)
                     {
+                        case EWorkflowStatus.ToBeInWarehouse:
+                        case EWorkflowStatus.InWarehouse:
+                            isShowPrintLink = true;
+                            break;
+                    }
+
+                    if (CanEditUserIDs.Contains(CurrentUser.UserID))
+                    {
+                        linkHtml += "编辑";
+
                         switch (workflowStatus)
                         {
                             case EWorkflowStatus.TemporarySave:
-                                if (isCanEditUser)
-                                    linkHtml += "编辑";
-                                else
-                                    linkHtml += "查看";
-
-                                break;
-
-                            case EWorkflowStatus.ToBeInWarehouse:
-                                linkHtml += "入库";
-                                isShowPrintLink = true;
-                                break;
-
-                            case EWorkflowStatus.InWarehouse:
-                                isShowPrintLink = true;
-                                linkHtml += "查看";
+                                isShowDeleteLink = true;
                                 break;
                         }
                     }
                     else
                     {
-                        linkHtml += "查看";
-
-                        switch (workflowStatus)
+                        if (isCanAccessUser)
                         {
-                            case EWorkflowStatus.ToBeInWarehouse:
-                            case EWorkflowStatus.InWarehouse:
-                                isShowPrintLink = true;
-                                break;
+                            switch (workflowStatus)
+                            {
+                                case EWorkflowStatus.TemporarySave:
+                                    if (isCanEditUser)
+                                        linkHtml += "编辑";
+                                    else
+                                        linkHtml += "查看";
+                                    isShowDeleteLink = true;
+                                    break;
+
+                                case EWorkflowStatus.ToBeInWarehouse:
+                                    linkHtml += "入库";
+                                    break;
+
+                                case EWorkflowStatus.InWarehouse:
+                                    linkHtml += "查看";
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            linkHtml += "查看";
                         }
                     }
 
@@ -340,6 +353,16 @@ namespace ZhongDing.Web.Views.Procures
 
                         if (printCell != null && !isShowPrintLink)
                             printCell.Text = string.Empty;
+                    }
+
+                    var deleteColumn = rgEntities.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE);
+
+                    if (deleteColumn != null)
+                    {
+                        var deleteCell = gridDataItem.Cells[deleteColumn.OrderIndex];
+
+                        if (deleteCell != null && !isShowDeleteLink)
+                            deleteCell.Text = string.Empty;
                     }
                 }
             }

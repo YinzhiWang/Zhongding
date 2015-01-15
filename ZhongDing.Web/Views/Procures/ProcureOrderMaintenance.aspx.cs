@@ -162,10 +162,6 @@ namespace ZhongDing.Web.Views.Procures
             {
                 hdnCurrentEntityID.Value = this.CurrentEntity.ID.ToString();
 
-                divComments.Visible = true;
-                divOtherSections.Visible = true;
-                divIsStop.Visible = true;
-
                 txtOrderCode.Text = this.CurrentEntity.OrderCode;
                 lblCreateBy.Text = PageUsersRepository.GetUserFullNameByID(this.CurrentEntity.CreatedBy.HasValue
                     ? this.CurrentEntity.CreatedBy.Value : GlobalConst.INVALID_INT);
@@ -175,112 +171,121 @@ namespace ZhongDing.Web.Views.Procures
                 rdpEstDeliveryDate.MinDate = this.CurrentEntity.OrderDate;
                 cbxIsStop.Checked = this.CurrentEntity.IsStop;
 
-                EWorkflowStatus workfolwStatus = (EWorkflowStatus)this.CurrentEntity.WorkflowStatusID;
-
-                switch (workfolwStatus)
+                if (CanEditUserIDs.Contains(CurrentUser.UserID))
                 {
-                    case EWorkflowStatus.TemporarySave:
-                    case EWorkflowStatus.ReturnBasicInfo:
-                        #region 暂存和基础信息退回（订单创建者才能修改）
+                    btnSave.Visible = true;
+                    btnSubmit.Visible = false;
+                    ShowAuditControls(false);
+                }
+                else
+                {
+                    EWorkflowStatus workfolwStatus = (EWorkflowStatus)this.CurrentEntity.WorkflowStatusID;
 
-                        if (CurrentUser.UserID == this.CurrentEntity.CreatedBy
-                            || this.CanEditUserIDs.Contains(CurrentUser.UserID))
-                            ShowSaveButtons(true);
-                        else
+                    switch (workfolwStatus)
+                    {
+                        case EWorkflowStatus.TemporarySave:
+                        case EWorkflowStatus.ReturnBasicInfo:
+                            #region 暂存和基础信息退回（订单创建者才能修改）
+
+                            if (CurrentUser.UserID == this.CurrentEntity.CreatedBy
+                                || this.CanEditUserIDs.Contains(CurrentUser.UserID))
+                                ShowSaveButtons(true);
+                            else
+                                DisabledBasicInfoControls();
+
+                            btnAudit.Visible = false;
+                            btnReturn.Visible = false;
+                            divAudit.Visible = false;
+                            divAppPayments.Visible = false;
+
+                            #endregion
+
+                            break;
+                        case EWorkflowStatus.Submit:
+                            #region 已提交，待审核
+
                             DisabledBasicInfoControls();
 
-                        btnAudit.Visible = false;
-                        btnReturn.Visible = false;
-                        divAudit.Visible = false;
-                        divAppPayments.Visible = false;
+                            divAppPayments.Visible = false;
 
-                        #endregion
+                            if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
+                                ShowAuditControls(true);
+                            else
+                                ShowAuditControls(false);
 
-                        break;
-                    case EWorkflowStatus.Submit:
-                        #region 已提交，待审核
+                            #endregion
 
-                        DisabledBasicInfoControls();
+                            break;
+                        case EWorkflowStatus.ApprovedBasicInfo:
+                        case EWorkflowStatus.ReturnPaymentInfo:
+                            #region 基础信息已审核，待填写支付信息或支付信息退回，待修改支付信息
 
-                        divAppPayments.Visible = false;
+                            DisabledBasicInfoControls();
 
-                        if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
-                            ShowAuditControls(true);
-                        else
                             ShowAuditControls(false);
 
-                        #endregion
+                            if (CurrentUser.UserID == this.CurrentEntity.CreatedBy
+                                || this.CanEditUserIDs.Contains(CurrentUser.UserID))
+                                ShowSaveButtons(true);
+                            else
+                            {
+                                ShowSaveButtons(false);
 
-                        break;
-                    case EWorkflowStatus.ApprovedBasicInfo:
-                    case EWorkflowStatus.ReturnPaymentInfo:
-                        #region 基础信息已审核，待填写支付信息或支付信息退回，待修改支付信息
+                                rgAppPayments.MasterTableView.CommandItemSettings.ShowAddNewRecordButton = false;
+                            }
 
-                        DisabledBasicInfoControls();
+                            #endregion
 
-                        ShowAuditControls(false);
+                            break;
+                        case EWorkflowStatus.AuditingOfPaymentInfo:
+                            #region 已填写或修改支付信息，待审核
 
-                        if (CurrentUser.UserID == this.CurrentEntity.CreatedBy
-                            || this.CanEditUserIDs.Contains(CurrentUser.UserID))
-                            ShowSaveButtons(true);
-                        else
-                        {
+                            DisabledBasicInfoControls();
+
                             ShowSaveButtons(false);
 
                             rgAppPayments.MasterTableView.CommandItemSettings.ShowAddNewRecordButton = false;
-                        }
 
-                        #endregion
+                            if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
+                                ShowAuditControls(true);
+                            else
+                                ShowAuditControls(false);
 
-                        break;
-                    case EWorkflowStatus.AuditingOfPaymentInfo:
-                        #region 已填写或修改支付信息，待审核
+                            #endregion
+                            break;
 
-                        DisabledBasicInfoControls();
+                        case EWorkflowStatus.ToBePaid:
+                            #region 支付信息已审核，待支付
 
-                        ShowSaveButtons(false);
+                            DisabledBasicInfoControls();
 
-                        rgAppPayments.MasterTableView.CommandItemSettings.ShowAddNewRecordButton = false;
+                            ShowSaveButtons(false);
 
-                        if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
-                            ShowAuditControls(true);
-                        else
                             ShowAuditControls(false);
 
-                        #endregion
-                        break;
+                            rgAppPayments.MasterTableView.CommandItemSettings.ShowAddNewRecordButton = false;
 
-                    case EWorkflowStatus.ToBePaid:
-                        #region 支付信息已审核，待支付
+                            if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
+                                btnPay.Visible = true;
 
-                        DisabledBasicInfoControls();
+                            #endregion
 
-                        ShowSaveButtons(false);
+                            break;
+                        case EWorkflowStatus.Paid:
+                        case EWorkflowStatus.InWarehouse:
+                            #region 已支付，不能修改
 
-                        ShowAuditControls(false);
+                            DisabledBasicInfoControls();
 
-                        rgAppPayments.MasterTableView.CommandItemSettings.ShowAddNewRecordButton = false;
+                            ShowSaveButtons(false);
 
-                        if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
-                            btnPay.Visible = true;
+                            ShowAuditControls(false);
 
-                        #endregion
+                            rgAppPayments.MasterTableView.CommandItemSettings.ShowAddNewRecordButton = false;
 
-                        break;
-                    case EWorkflowStatus.Paid:
-                    case EWorkflowStatus.InWarehouse:
-                        #region 已支付，不能修改
-
-                        DisabledBasicInfoControls();
-
-                        ShowSaveButtons(false);
-
-                        ShowAuditControls(false);
-
-                        rgAppPayments.MasterTableView.CommandItemSettings.ShowAddNewRecordButton = false;
-
-                        #endregion
-                        break;
+                            #endregion
+                            break;
+                    }
                 }
             }
             else
@@ -298,7 +303,7 @@ namespace ZhongDing.Web.Views.Procures
         }
 
         /// <summary>
-        /// 显示或隐藏暂存提交按钮
+        /// 显示或隐藏保存和提交按钮
         /// </summary>
         private void ShowSaveButtons(bool isShow)
         {
@@ -340,6 +345,7 @@ namespace ZhongDing.Web.Views.Procures
             btnAudit.Visible = false;
             btnReturn.Visible = false;
             divIsStop.Visible = false;
+            divComment.Visible = false;
             divComments.Visible = false;
             divOtherSections.Visible = false;
 
@@ -362,6 +368,7 @@ namespace ZhongDing.Web.Views.Procures
             var uiSearchObj = new UISearchApplicationNote()
             {
                 WorkflowID = this.CurrentWorkFlowID,
+                NoteTypeID = (int)EAppNoteType.Comment,
                 ApplicationID = this.CurrentEntityID.HasValue
                 ? this.CurrentEntityID.Value : GlobalConst.INVALID_INT
             };
@@ -369,6 +376,21 @@ namespace ZhongDing.Web.Views.Procures
             var appNotes = PageAppNoteRepository.GetUIList(uiSearchObj);
 
             rgAppNotes.DataSource = appNotes;
+        }
+
+        protected void rgAuditNotes_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            var uiSearchObj = new UISearchApplicationNote()
+            {
+                WorkflowID = this.CurrentWorkFlowID,
+                NoteTypeID = (int)EAppNoteType.AuditOpinion,
+                ApplicationID = this.CurrentEntityID.HasValue
+                ? this.CurrentEntityID.Value : GlobalConst.INVALID_INT
+            };
+
+            var appNotes = PageAppNoteRepository.GetUIList(uiSearchObj);
+
+            rgAuditNotes.DataSource = appNotes;
         }
 
         #region rgOrderProducts Events
@@ -415,10 +437,10 @@ namespace ZhongDing.Web.Views.Procures
 
                 if (plAddCommand != null)
                 {
-                    if (this.CurrentEntity != null
-                        && (this.CurrentEntity.CreatedBy == CurrentUser.UserID || this.CanEditUserIDs.Contains(CurrentUser.UserID))
-                        && (this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.TemporarySave
-                        || this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.ReturnBasicInfo))
+                    if (this.CurrentEntity != null && (this.CanEditUserIDs.Contains(CurrentUser.UserID)
+                            || (this.CurrentEntity.CreatedBy == CurrentUser.UserID
+                                && (this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.TemporarySave
+                                    || this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.ReturnBasicInfo))))
                         plAddCommand.Visible = true;
                     else
                         plAddCommand.Visible = false;
@@ -428,10 +450,10 @@ namespace ZhongDing.Web.Views.Procures
 
         protected void rgOrderProducts_ColumnCreated(object sender, GridColumnCreatedEventArgs e)
         {
-            if (this.CurrentEntity != null
-                && (this.CurrentEntity.CreatedBy == CurrentUser.UserID || this.CanEditUserIDs.Contains(CurrentUser.UserID))
-                && (this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.TemporarySave
-                || this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.ReturnBasicInfo))
+            if (this.CurrentEntity != null && (this.CanEditUserIDs.Contains(CurrentUser.UserID)
+                    || (this.CurrentEntity.CreatedBy == CurrentUser.UserID
+                        && (this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.TemporarySave
+                            || this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.ReturnBasicInfo))))
             {
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT).Visible = true;
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = true;
@@ -707,7 +729,7 @@ namespace ZhongDing.Web.Views.Procures
         #region Buttons Events
 
         /// <summary>
-        /// 暂存
+        /// 保存
         /// </summary>
         protected void btnSave_Click(object sender, EventArgs e)
         {
@@ -766,6 +788,7 @@ namespace ZhongDing.Web.Views.Procures
                 var appNote = new ApplicationNote();
                 appNote.WorkflowID = (int)EWorkflow.ProcureOrder;
                 appNote.WorkflowStepID = (int)EWorkflowStep.NewProcureOrder;
+                appNote.NoteTypeID = (int)EAppNoteType.Comment;
                 appNote.ApplicationID = currentEntity.ID;
                 appNote.Note = txtComment.Text.Trim();
 
@@ -859,6 +882,7 @@ namespace ZhongDing.Web.Views.Procures
                     {
                         var appNote = new ApplicationNote();
                         appNote.WorkflowID = (int)EWorkflow.ProcureOrder;
+                        appNote.NoteTypeID = (int)EAppNoteType.AuditOpinion;
                         appNoteRepository.Add(appNote);
 
                         switch (currentEntity.WorkflowStatusID)
@@ -919,6 +943,7 @@ namespace ZhongDing.Web.Views.Procures
                     {
                         var appNote = new ApplicationNote();
                         appNote.WorkflowID = (int)EWorkflow.ProcureOrder;
+                        appNote.NoteTypeID = (int)EAppNoteType.AuditOpinion;
                         appNoteRepository.Add(appNote);
 
                         switch (currentEntity.WorkflowStatusID)
@@ -986,6 +1011,7 @@ namespace ZhongDing.Web.Views.Procures
                         var appNote = new ApplicationNote();
                         appNote.WorkflowID = (int)EWorkflow.ProcureOrder;
                         appNote.WorkflowStepID = (int)EWorkflowStep.ProcureOrderCashier;
+                        appNote.NoteTypeID = (int)EAppNoteType.Comment;
                         appNote.ApplicationID = currentEntity.ID;
                         appNote.Note = "订单已支付（由系统自动生成）";
                         appNoteRepository.Add(appNote);
@@ -1000,6 +1026,8 @@ namespace ZhongDing.Web.Views.Procures
         }
 
         #endregion
+
+
 
         #endregion
     }

@@ -173,6 +173,9 @@
     <Compile Include="Models\InventoryHistory.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\NoteType.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\OwnerType.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>

@@ -129,7 +129,7 @@ namespace ZhongDing.Web.Views.Sales
             IList<int> includeWorkflowStatusIDs = PageWorkflowStatusRepository
                 .GetCanAccessIDsByUserID(CurrentWorkFlowID, CurrentUser.UserID);
 
-            if (includeWorkflowStatusIDs == null 
+            if (includeWorkflowStatusIDs == null
                 || includeWorkflowStatusIDs.Count == 0)
             {
                 includeWorkflowStatusIDs = new List<int>();
@@ -137,7 +137,7 @@ namespace ZhongDing.Web.Views.Sales
             }
             else
             {
-                if (this.CanAddUserIDs.Contains(CurrentUser.UserID))
+                if (this.CanAddUserIDs.Contains(CurrentUser.UserID) || this.CanEditUserIDs.Contains(CurrentUser.UserID))
                 {
                     if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.TemporarySave))
                         includeWorkflowStatusIDs.Add((int)EWorkflowStatus.TemporarySave);
@@ -246,7 +246,7 @@ namespace ZhongDing.Web.Views.Sales
 
         protected void rgEntities_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
         {
-            if (this.CanAddUserIDs.Contains(CurrentUser.UserID))
+            if (this.CanAddUserIDs.Contains(CurrentUser.UserID) || CanEditUserIDs.Contains(CurrentUser.UserID))
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = true;
             else
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = false;
@@ -280,44 +280,56 @@ namespace ZhongDing.Web.Views.Sales
 
                     EWorkflowStatus workflowStatus = (EWorkflowStatus)uiEntity.WorkflowStatusID;
 
-                    if (isCanAccessUser)
+                    switch (workflowStatus)
                     {
+                        case EWorkflowStatus.ToBeOutWarehouse:
+                        case EWorkflowStatus.OutWarehouse:
+                            isShowPrintLink = true;
+                            break;
+                    }
+
+                    if (CanEditUserIDs.Contains(CurrentUser.UserID))
+                    {
+                        columnEditLinkHtml += "编辑";
+
                         switch (workflowStatus)
                         {
                             case EWorkflowStatus.TemporarySave:
-                                if (isCanEditUser)
-                                {
-                                    columnEditLinkHtml += "编辑";
-
-                                    isShowDeleteLink = true;
-                                }
-                                else
-                                    columnEditLinkHtml += "查看";
-
-                                break;
-
-                            case EWorkflowStatus.ToBeOutWarehouse:
-                                columnEditLinkHtml += "出库";
-                                isShowPrintLink = true;
-                                break;
-
-                            case EWorkflowStatus.OutWarehouse:
-                                isShowPrintLink = true;
-                                columnEditLinkHtml += "查看";
+                                isShowDeleteLink = true;
                                 break;
                         }
                     }
                     else
                     {
-                        columnEditLinkHtml += "查看";
-
-                        switch (workflowStatus)
+                        if (isCanAccessUser)
                         {
-                            case EWorkflowStatus.ToBeOutWarehouse:
-                            case EWorkflowStatus.OutWarehouse:
-                                isShowPrintLink = true;
-                                break;
+                            switch (workflowStatus)
+                            {
+                                case EWorkflowStatus.TemporarySave:
+                                    if (isCanEditUser)
+                                    {
+                                        columnEditLinkHtml += "编辑";
+
+                                        isShowDeleteLink = true;
+                                    }
+                                    else
+                                        columnEditLinkHtml += "查看";
+
+                                    break;
+
+                                case EWorkflowStatus.ToBeOutWarehouse:
+                                    columnEditLinkHtml += "出库";
+                                    isShowPrintLink = true;
+                                    break;
+
+                                case EWorkflowStatus.OutWarehouse:
+                                    isShowPrintLink = true;
+                                    columnEditLinkHtml += "查看";
+                                    break;
+                            }
                         }
+                        else
+                            columnEditLinkHtml += "查看";
                     }
 
                     columnEditLinkHtml += "</a>";

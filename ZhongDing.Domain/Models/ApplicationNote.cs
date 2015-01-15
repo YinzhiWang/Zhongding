@@ -19,6 +19,7 @@ namespace ZhongDing.Domain.Models
         public Nullable<int> ApplicationID { get; set; }
         public int WorkflowID { get; set; }
         public int WorkflowStepID { get; set; }
+        public int NoteTypeID { get; set; }
         public string Note { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
@@ -36,6 +37,7 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
+        public virtual NoteType NoteType { get; set; }
         public virtual Workflow Workflow { get; set; }
         public virtual WorkflowStep WorkflowStep { get; set; }
     }

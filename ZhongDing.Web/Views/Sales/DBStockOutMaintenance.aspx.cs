@@ -169,9 +169,6 @@ namespace ZhongDing.Web.Views.Sales
 
                 hdnCurrentEntityID.Value = this.CurrentEntity.ID.ToString();
 
-                divComments.Visible = true;
-                divOtherSections.Visible = true;
-
                 txtCode.Text = this.CurrentEntity.Code;
                 rdpBillDate.SelectedDate = this.CurrentEntity.BillDate;
                 rcbxDistributionCompany.SelectedValue = this.CurrentEntity.DistributionCompanyID.ToString();
@@ -179,47 +176,56 @@ namespace ZhongDing.Web.Views.Sales
                 lblReceiverPhone.Text = this.CurrentEntity.ReceiverPhone;
                 lblReceiverAddress.Text = this.CurrentEntity.ReceiverAddress;
 
-                EWorkflowStatus workfolwStatus = (EWorkflowStatus)this.CurrentEntity.WorkflowStatusID;
-
-                switch (workfolwStatus)
+                if (CanEditUserIDs.Contains(CurrentUser.UserID))
                 {
-                    case EWorkflowStatus.TemporarySave:
-                        #region 暂存（订单创建者或有修改权限的用户才能修改）
-                        if (CurrentUser.UserID == this.CurrentEntity.CreatedBy
-                            || this.CanEditUserIDs.Contains(CurrentUser.UserID))
-                            ShowSaveButtons(true);
-                        else
+                    btnSave.Visible = true;
+                    btnSubmit.Visible = false;
+                    btnOutStock.Visible = false;
+                }
+                else
+                {
+                    EWorkflowStatus workfolwStatus = (EWorkflowStatus)this.CurrentEntity.WorkflowStatusID;
+
+                    switch (workfolwStatus)
+                    {
+                        case EWorkflowStatus.TemporarySave:
+                            #region 暂存（订单创建者或有修改权限的用户才能修改）
+                            if (CurrentUser.UserID == this.CurrentEntity.CreatedBy
+                                || this.CanEditUserIDs.Contains(CurrentUser.UserID))
+                                ShowSaveButtons(true);
+                            else
+                                DisabledBasicInfoControls();
+
+                            btnOutStock.Visible = false;
+                            btnPrint.Visible = false;
+                            #endregion
+
+                            break;
+                        case EWorkflowStatus.ToBeOutWarehouse:
+                            #region 已提交，待出库
+
                             DisabledBasicInfoControls();
 
-                        btnOutStock.Visible = false;
-                        btnPrint.Visible = false;
-                        #endregion
+                            if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
+                                ShowEntryStockControls(true);
+                            else
+                                ShowEntryStockControls(false);
 
-                        break;
-                    case EWorkflowStatus.ToBeOutWarehouse:
-                        #region 已提交，待出库
+                            btnPrint.Visible = true;
 
-                        DisabledBasicInfoControls();
+                            #endregion
 
-                        if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
-                            ShowEntryStockControls(true);
-                        else
+                            break;
+                        case EWorkflowStatus.OutWarehouse:
+                            #region 已出库,不能修改
+
+                            DisabledBasicInfoControls();
                             ShowEntryStockControls(false);
+                            btnPrint.Visible = true;
 
-                        btnPrint.Visible = true;
-
-                        #endregion
-
-                        break;
-                    case EWorkflowStatus.OutWarehouse:
-                        #region 已出库,不能修改
-
-                        DisabledBasicInfoControls();
-                        ShowEntryStockControls(false);
-                        btnPrint.Visible = true;
-
-                        #endregion
-                        break;
+                            #endregion
+                            break;
+                    }
                 }
             }
             else
@@ -275,7 +281,7 @@ namespace ZhongDing.Web.Views.Sales
         }
 
         /// <summary>
-        /// 显示或隐藏暂存提交按钮
+        /// 显示或隐藏保存和提交按钮
         /// </summary>
         private void ShowSaveButtons(bool isShow)
         {
@@ -317,6 +323,7 @@ namespace ZhongDing.Web.Views.Sales
                 var appNote = new ApplicationNote();
                 appNote.WorkflowID = (int)EWorkflow.DBStockOut;
                 appNote.WorkflowStepID = (int)EWorkflowStep.NewDBStockOut;
+                appNote.NoteTypeID = (int)EAppNoteType.Comment;
                 appNote.ApplicationID = currentEntity.ID;
                 appNote.Note = txtComment.Text.Trim();
 
@@ -375,9 +382,9 @@ namespace ZhongDing.Web.Views.Sales
 
         protected void rgStockOutDetails_ColumnCreated(object sender, GridColumnCreatedEventArgs e)
         {
-            if (this.CurrentEntity != null
-                && (this.CurrentEntity.CreatedBy == CurrentUser.UserID || this.CanEditUserIDs.Contains(CurrentUser.UserID))
-                && (this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.TemporarySave))
+            if (this.CurrentEntity != null && (this.CanEditUserIDs.Contains(CurrentUser.UserID)
+                    || (this.CurrentEntity.CreatedBy == CurrentUser.UserID 
+                        && this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.TemporarySave)))
             {
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = true;
             }
@@ -521,6 +528,7 @@ namespace ZhongDing.Web.Views.Sales
                         var appNote = new ApplicationNote();
                         appNote.WorkflowID = (int)EWorkflow.DBStockOut;
                         appNote.WorkflowStepID = (int)EWorkflowStep.OutDBStockRoom;
+                        appNote.NoteTypeID = (int)EAppNoteType.Comment;
                         appNote.ApplicationID = currentEntity.ID;
                         appNote.Note = "出库单已出库（由系统自动生成）";
                         appNoteRepository.Add(appNote);
@@ -536,8 +544,6 @@ namespace ZhongDing.Web.Views.Sales
         }
 
         #endregion
-
-
 
         #endregion
 

@@ -145,9 +145,27 @@ namespace ZhongDing.Web.Views.Sales
                 .GetCanAccessIDsByUserID(CurrentUser.UserID);
 
             if (includeWorkflowStatusIDs == null)
+            {
                 includeWorkflowStatusIDs = new List<int>();
+                includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ExportToDBOrder);
+            }
+            else
+            {
+                if (this.CanAddUserIDs.Contains(CurrentUser.UserID) || this.CanEditUserIDs.Contains(CurrentUser.UserID))
+                {
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.TemporarySave))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.TemporarySave);
 
-            includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ExportToDBOrder);
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Submit))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Submit);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ReturnBasicInfo))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ReturnBasicInfo);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ExportToDBOrder))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ExportToDBOrder);
+                }
+            }
 
             uiSearchObj.IncludeWorkflowStatusIDs = includeWorkflowStatusIDs;
 
@@ -247,7 +265,7 @@ namespace ZhongDing.Web.Views.Sales
 
         protected void rgEntities_ColumnCreated(object sender, GridColumnCreatedEventArgs e)
         {
-            if (this.CanAddUserIDs.Contains(CurrentUser.UserID))
+            if (this.CanAddUserIDs.Contains(CurrentUser.UserID) || CanEditUserIDs.Contains(CurrentUser.UserID))
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = true;
             else
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = false;
@@ -276,32 +294,49 @@ namespace ZhongDing.Web.Views.Sales
                         || uiEntity.CreatedByUserID == CurrentUser.UserID)
                         isCanEditUser = true;
 
+                    bool isShowDeleteLink = false;
+
                     EWorkflowStatus workflowStatus = (EWorkflowStatus)uiEntity.WorkflowStatusID;
 
-                    if (isCanAccessUser)
+                    if (CanEditUserIDs.Contains(CurrentUser.UserID))
                     {
+                        linkHtml += "编辑";
+
                         switch (workflowStatus)
                         {
                             case EWorkflowStatus.TemporarySave:
                             case EWorkflowStatus.ReturnBasicInfo:
-                                if (isCanEditUser)
-                                    linkHtml += "编辑";
-                                else
-                                    linkHtml += "查看";
-
-                                break;
-
-                            case EWorkflowStatus.Submit:
-                                linkHtml += "生成配送订单";
-                                break;
-
-                            case EWorkflowStatus.ExportToDBOrder:
-                                linkHtml += "查看";
+                                isShowDeleteLink = true;
                                 break;
                         }
                     }
                     else
-                        linkHtml += "查看";
+                    {
+                        if (isCanAccessUser)
+                        {
+                            switch (workflowStatus)
+                            {
+                                case EWorkflowStatus.TemporarySave:
+                                case EWorkflowStatus.ReturnBasicInfo:
+                                    if (isCanEditUser)
+                                        linkHtml += "编辑";
+                                    else
+                                        linkHtml += "查看";
+                                    isShowDeleteLink = true;
+                                    break;
+
+                                case EWorkflowStatus.Submit:
+                                    linkHtml += "生成配送订单";
+                                    break;
+
+                                case EWorkflowStatus.ExportToDBOrder:
+                                    linkHtml += "查看";
+                                    break;
+                            }
+                        }
+                        else
+                            linkHtml += "查看";
+                    }
 
                     linkHtml += "</a>";
 
@@ -313,6 +348,16 @@ namespace ZhongDing.Web.Views.Sales
 
                         if (editCell != null)
                             editCell.Text = linkHtml;
+                    }
+
+                    var deleteColumn = rgEntities.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE);
+
+                    if (deleteColumn != null)
+                    {
+                        var deleteCell = gridDataItem.Cells[deleteColumn.OrderIndex];
+
+                        if (deleteCell != null && !isShowDeleteLink)
+                            deleteCell.Text = string.Empty;
                     }
                 }
             }

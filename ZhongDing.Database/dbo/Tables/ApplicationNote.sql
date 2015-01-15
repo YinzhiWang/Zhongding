@@ -3,6 +3,7 @@
     [ApplicationID]  INT             NULL,
     [WorkflowID]     INT             NOT NULL,
     [WorkflowStepID] INT             NOT NULL,
+    [NoteTypeID]     INT             NOT NULL,
     [Note]           NVARCHAR (1000) NULL,
     [IsDeleted]      BIT             CONSTRAINT [DF_ApplicationNotes_IsDeleted] DEFAULT ((0)) NOT NULL,
     [CreatedOn]      DATETIME        CONSTRAINT [DF_ApplicationNotes_CreatedOn] DEFAULT (getdate()) NOT NULL,
@@ -10,9 +11,14 @@
     [LastModifiedOn] DATETIME        NULL,
     [LastModifiedBy] INT             NULL,
     CONSTRAINT [PK_ApplicationNotes] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_ApplicationNote_NoteType] FOREIGN KEY ([NoteTypeID]) REFERENCES [dbo].[NoteType] ([ID]),
     CONSTRAINT [FK_ApplicationNote_Workflow] FOREIGN KEY ([WorkflowID]) REFERENCES [dbo].[Workflow] ([ID]),
     CONSTRAINT [FK_ApplicationNote_WorkflowStep] FOREIGN KEY ([WorkflowStepID]) REFERENCES [dbo].[WorkflowStep] ([ID])
 );
+
+
+
+
 
 
 

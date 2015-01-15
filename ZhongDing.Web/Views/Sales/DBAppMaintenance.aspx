@@ -241,7 +241,7 @@
                         </div>
 
                         <div class="mws-button-row">
-                            <asp:Button ID="btnSubmit" runat="server" Text="提交" CssClass="mws-button green" CausesValidation="true" OnClick="btnSubmit_Click" />
+                            <asp:Button ID="btnSubmit" runat="server" Text="保存" CssClass="mws-button green" CausesValidation="true" OnClick="btnSubmit_Click" />
                             <asp:Button ID="btnCancel" runat="server" Text="取消" UseSubmitBehavior="false" CssClass="mws-button green" OnClientClick="redirectToPage('Views/Sales/DBAppManagement.aspx');return false;" />
                         </div>
                     </div>

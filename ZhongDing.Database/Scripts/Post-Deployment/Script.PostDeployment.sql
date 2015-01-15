@@ -479,3 +479,18 @@ ALTER TABLE [dbo].[WorkflowStepStatus]
     ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep] FOREIGN KEY ([WorkflowStepID]) REFERENCES [dbo].[WorkflowStep] ([ID])
 COMMIT TRANSACTION
 ---- end --- 1/13/2015 -- 初始化工作流状态关联数据(大包出库单相关) -- by lihong
+
+
+---- start --- 1/15/2015 -- 初始化备注类型数据 -- by lihong
+SET NUMERIC_ROUNDABORT OFF
+GO
+SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+
+BEGIN TRANSACTION
+SET IDENTITY_INSERT [dbo].[NoteType] ON
+INSERT INTO [dbo].[NoteType] ([ID], [NoteTypeName]) VALUES (1, N'单据备注')
+INSERT INTO [dbo].[NoteType] ([ID], [NoteTypeName]) VALUES (2, N'单据审核意见')
+SET IDENTITY_INSERT [dbo].[NoteType] OFF
+COMMIT TRANSACTION
+---- end --- 1/15/2015 -- 初始化备注类型数据 -- by lihong

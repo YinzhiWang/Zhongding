@@ -218,7 +218,7 @@ namespace ZhongDing.Web.Views.Sales
         }
 
         /// <summary>
-        /// 显示或隐藏暂存提交按钮
+        /// 显示或隐藏保存和提交按钮
         /// </summary>
         private void ShowSaveButtons(bool isShow)
         {
@@ -418,7 +418,7 @@ namespace ZhongDing.Web.Views.Sales
                             var appNote = new ApplicationNote();
                             appNote.WorkflowID = (int)EWorkflow.DBOrder;
                             appNote.WorkflowStepID = (int)EWorkflowStep.EditDBOrder;
-
+                            appNote.NoteTypeID = (int)EAppNoteType.Comment;
                             appNote.ApplicationID = currentEntity.ID;
                             appNote.Note = txtComment.Text.Trim();
 
