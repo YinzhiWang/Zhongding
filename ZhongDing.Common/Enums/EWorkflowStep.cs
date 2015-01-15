@@ -68,5 +68,20 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         EditDBOrder,
 
+        /// <summary>
+        /// 新增大包出库单
+        /// </summary>
+        NewDBStockOut,
+
+        /// <summary>
+        /// 大包出库单出库
+        /// </summary>
+        OutDBStockRoom,
+
+        /// <summary>
+        /// 修改大包出库单
+        /// </summary>
+        EditDBStockOut
+
     }
 }

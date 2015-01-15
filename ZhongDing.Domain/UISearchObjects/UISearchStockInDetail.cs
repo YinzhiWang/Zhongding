@@ -14,6 +14,8 @@ namespace ZhongDing.Domain.UISearchObjects
 
         public int ProductID { get; set; }
 
+        public int ProductSpecificationID { get; set; }
+
         public int SupplierID { get; set; }
     }
 }

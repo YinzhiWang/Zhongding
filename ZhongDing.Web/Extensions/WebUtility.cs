@@ -109,10 +109,27 @@ namespace ZhongDing.Web.Extensions
             Utility.WriteLog(exp.Source, exp.Message, categories, (int)LogEventType.Business, extentProp);
         }
 
+        /// <summary>
+        /// 获取参数值
+        /// </summary>
+        /// <param name="paramName">Name of the param.</param>
+        /// <returns>System.Nullable{System.Int32}.</returns>
+        public static int? GetValueFromQueryString(string paramName)
+        {
+            string sParamValue = HttpContext.Current.Request.QueryString[paramName];
+
+            int iParamValue;
+
+            if (int.TryParse(sParamValue, out iParamValue))
+                return iParamValue;
+            else
+                return null;
+        }
+
         #region Session Names
 
         /// <summary>
-        /// 公用会话名称
+        /// 公用会话名称(session临时数据)
         /// </summary>
         public class WebSessionNames
         {
@@ -120,6 +137,11 @@ namespace ZhongDing.Web.Extensions
             /// 入库单明细数据（session临时数据）
             /// </summary>
             public static readonly string StockInDetailData = "STOCK_IN_DETAIL_DATA";
+
+            /// <summary>
+            /// 出库单明细数据（session临时数据）
+            /// </summary>
+            public static readonly string StockOutDetailData = "STOCK_OUT_DETAIL_DATA";
         }
 
         #endregion

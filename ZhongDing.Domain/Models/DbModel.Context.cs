@@ -92,5 +92,8 @@ namespace ZhongDing.Domain.Models
         public DbSet<DaBaoRequestAppDetail> DaBaoRequestAppDetail { get; set; }
         public DbSet<SalesOrderApplication> SalesOrderApplication { get; set; }
         public DbSet<SalesOrderAppDetail> SalesOrderAppDetail { get; set; }
+        public DbSet<StockOutDetail> StockOutDetail { get; set; }
+        public DbSet<StockOut> StockOut { get; set; }
+        public DbSet<InventoryHistory> InventoryHistory { get; set; }
     }
 }

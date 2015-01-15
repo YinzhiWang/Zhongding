@@ -60,5 +60,15 @@ namespace ZhongDing.Common.Enums
         /// 已生成配送订单
         /// </summary>
         ExportToDBOrder,
+
+        /// <summary>
+        /// 待出库
+        /// </summary>
+        ToBeOutWarehouse,
+
+        /// <summary>
+        /// 已出库
+        /// </summary>
+        OutWarehouse,
     }
 }

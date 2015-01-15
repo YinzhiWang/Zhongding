@@ -30,6 +30,6 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 大包出库单
         /// </summary>
-        DBDelivery
+        DBStockOut
     }
 }

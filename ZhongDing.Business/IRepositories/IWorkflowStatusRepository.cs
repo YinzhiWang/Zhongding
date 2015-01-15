@@ -23,5 +23,13 @@ namespace ZhongDing.Business.IRepositories
         /// <param name="userID">The user ID.</param>
         /// <returns>IList{System.Int32}.</returns>
         IList<int> GetCanAccessIDsByUserID(int userID);
+
+        /// <summary>
+        /// 根据工作流ID和用户ID获取该用户可以访问的状态列表
+        /// </summary>
+        /// <param name="workflowID">The workflow ID.</param>
+        /// <param name="userID">The user ID.</param>
+        /// <returns>IList{System.Int32}.</returns>
+        IList<int> GetCanAccessIDsByUserID(int workflowID, int userID);
     }
 }

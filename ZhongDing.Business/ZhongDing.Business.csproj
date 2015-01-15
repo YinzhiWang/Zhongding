@@ -84,6 +84,7 @@
     <Compile Include="IRepositories\IDistributionCompanyRepository.cs" />
     <Compile Include="IRepositories\IGenerateDropdownItems.cs" />
     <Compile Include="IRepositories\IHospitalRepository.cs" />
+    <Compile Include="IRepositories\IInventoryHistoryRepository.cs" />
     <Compile Include="IRepositories\IOwnerTypeRepository.cs" />
     <Compile Include="IRepositories\IProcureOrderAppDetailRepository.cs" />
     <Compile Include="IRepositories\IProcureOrderApplicationRepository.cs" />
@@ -100,6 +101,8 @@
     <Compile Include="IRepositories\ISaleTypeRepository.cs" />
     <Compile Include="IRepositories\IStockInDetailRepository.cs" />
     <Compile Include="IRepositories\IStockInRepository.cs" />
+    <Compile Include="IRepositories\IStockOutDetailRepository.cs" />
+    <Compile Include="IRepositories\IStockOutRepository.cs" />
     <Compile Include="IRepositories\ISupplierBankAccountRepository.cs" />
     <Compile Include="IRepositories\ISupplierCertificateRepository.cs" />
     <Compile Include="IRepositories\ISupplierContractFileRepository.cs" />
@@ -147,6 +150,7 @@
     <Compile Include="Repositories\DeptProductEvaluationRepository.cs" />
     <Compile Include="Repositories\DistributionCompanyRepository.cs" />
     <Compile Include="Repositories\HospitalRepository.cs" />
+    <Compile Include="Repositories\InventoryHistoryRepository.cs" />
     <Compile Include="Repositories\OwnerTypeRepository.cs" />
     <Compile Include="Repositories\ProcureOrderAppDetailRepository.cs" />
     <Compile Include="Repositories\ProcureOrderApplicationRepository.cs" />
@@ -163,6 +167,8 @@
     <Compile Include="Repositories\SaleTypeRepository.cs" />
     <Compile Include="Repositories\StockInDetailRepository.cs" />
     <Compile Include="Repositories\StockInRepository.cs" />
+    <Compile Include="Repositories\StockOutDetailRepository.cs" />
+    <Compile Include="Repositories\StockOutRepository.cs" />
     <Compile Include="Repositories\SupplierBankAccountRepository.cs" />
     <Compile Include="Repositories\SupplierCertificateRepository.cs" />
     <Compile Include="Repositories\SupplierContractFileRepository.cs" />

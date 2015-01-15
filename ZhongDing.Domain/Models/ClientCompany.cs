@@ -19,6 +19,7 @@ namespace ZhongDing.Domain.Models
         {
             this.ClientCompanyCertificate = new HashSet<ClientCompanyCertificate>();
             this.ClientInfo = new HashSet<ClientInfo>();
+            this.StockOut = new HashSet<StockOut>();
         }
     
         public int ID { get; set; }
@@ -44,5 +45,6 @@ namespace ZhongDing.Domain.Models
     
         public virtual ICollection<ClientCompanyCertificate> ClientCompanyCertificate { get; set; }
         public virtual ICollection<ClientInfo> ClientInfo { get; set; }
+        public virtual ICollection<StockOut> StockOut { get; set; }
     }
 }

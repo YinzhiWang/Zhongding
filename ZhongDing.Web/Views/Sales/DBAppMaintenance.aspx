@@ -190,7 +190,7 @@
                                                     <telerik:GridBoundColumn UniqueName="SalesPrice" HeaderText="单价" DataField="SalesPrice" DataFormatString="{0:C2}">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
-                                                    <telerik:GridBoundColumn UniqueName="Count" HeaderText="数量" DataField="Count" FooterText="合计："
+                                                    <telerik:GridBoundColumn UniqueName="SalesQty" HeaderText="数量" DataField="SalesQty" FooterText="合计："
                                                         FooterStyle-Font-Bold="true" FooterStyle-HorizontalAlign="Right">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>

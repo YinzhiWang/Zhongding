@@ -71,5 +71,23 @@ namespace ZhongDing.Business.Repositories
 
             return statusIDs;
         }
+
+        public IList<int> GetCanAccessIDsByUserID(int workflowID, int userID)
+        {
+            IList<int> statusIDs = new List<int>();
+
+            statusIDs = (from wss in DB.WorkflowStepStatus
+                         join ws in DB.WorkflowStatus on wss.WorkflowStatusID equals ws.ID
+                         join wsp in DB.WorkflowStep on wss.WorkflowStepID equals wsp.ID
+                         join wsu in DB.WorkflowStepUser on wss.WorkflowStepID equals wsu.WorkflowStepID
+                         where ws.IsDeleted == false
+                         && wss.IsDeleted == false
+                         && wsu.IsDeleted == false
+                         && wsu.UserID == userID
+                         && wsp.WorkflowID == workflowID
+                         select wss.WorkflowStatusID).ToList();
+
+            return statusIDs;
+        }
     }
 }

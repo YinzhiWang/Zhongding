@@ -136,9 +136,24 @@ namespace ZhongDing.Web.Views.Procures
                 .GetCanAccessIDsByUserID(CurrentUser.UserID);
 
             if (includeWorkflowStatusIDs == null)
+            {
                 includeWorkflowStatusIDs = new List<int>();
+                includeWorkflowStatusIDs.Add((int)EWorkflowStatus.InWarehouse);
+            }
+            else
+            {
+                if (this.CanAddUserIDs.Contains(CurrentUser.UserID))
+                {
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.TemporarySave))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.TemporarySave);
 
-            includeWorkflowStatusIDs.Add((int)EWorkflowStatus.InWarehouse);
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ToBeInWarehouse))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ToBeInWarehouse);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.InWarehouse))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.InWarehouse);
+                }
+            }
 
             uiSearchObj.IncludeWorkflowStatusIDs = includeWorkflowStatusIDs;
 

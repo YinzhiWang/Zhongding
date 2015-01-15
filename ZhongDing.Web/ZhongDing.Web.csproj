@@ -2574,7 +2574,6 @@
     <Content Include="Images\core\sort_desc.png" />
     <Content Include="Images\defaultAvatar.gif" />
     <Content Include="packages.config" />
-    <Content Include="Content\icons\16\Thumbs.db" />
     <Content Include="HttpHandle\AsyncBusinessHandler.ashx" />
     <Content Include="UserControls\UCCurrentCompany.ascx" />
     <Content Include="Views\Basics\ClientCompanyMaintenance.aspx" />
@@ -2619,8 +2618,12 @@
     <Content Include="Views\Sales\DBAppManagement.aspx" />
     <Content Include="Views\Sales\DBAppRequestMaintenance.aspx" />
     <Content Include="Views\Sales\DBAppRequestManagement.aspx" />
+    <Content Include="Views\Sales\DBStockOutMaintenance.aspx" />
+    <Content Include="Views\Sales\DBStockOutManagement.aspx" />
+    <Content Include="Views\Sales\Editors\ChooseSalesOrderProducts.aspx" />
     <Content Include="Views\Sales\Editors\DBOrderProductMaintain.aspx" />
     <Content Include="Views\Sales\Editors\DBOrderRequestProductMaintain.aspx" />
+    <Content Include="Views\Sales\Printers\PrintStockOut.aspx" />
     <Content Include="WebServices\SupplierWS.asmx" />
     <Content Include="HttpHandle\AsyncUploadFileHandler.ashx" />
     <Content Include="HttpHandle\AsyncOperateFileHandler.ashx" />
@@ -3148,6 +3151,27 @@
     <Compile Include="Views\Sales\DBAppRequestManagement.aspx.designer.cs">
       <DependentUpon>DBAppRequestManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Sales\DBStockOutMaintenance.aspx.cs">
+      <DependentUpon>DBStockOutMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Sales\DBStockOutMaintenance.aspx.designer.cs">
+      <DependentUpon>DBStockOutMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sales\DBStockOutManagement.aspx.cs">
+      <DependentUpon>DBStockOutManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Sales\DBStockOutManagement.aspx.designer.cs">
+      <DependentUpon>DBStockOutManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sales\Editors\ChooseSalesOrderProducts.aspx.cs">
+      <DependentUpon>ChooseSalesOrderProducts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Sales\Editors\ChooseSalesOrderProducts.aspx.designer.cs">
+      <DependentUpon>ChooseSalesOrderProducts.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Sales\Editors\DBOrderProductMaintain.aspx.cs">
       <DependentUpon>DBOrderProductMaintain.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3161,6 +3185,13 @@
     </Compile>
     <Compile Include="Views\Sales\Editors\DBOrderRequestProductMaintain.aspx.designer.cs">
       <DependentUpon>DBOrderRequestProductMaintain.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sales\Printers\PrintStockOut.aspx.cs">
+      <DependentUpon>PrintStockOut.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Sales\Printers\PrintStockOut.aspx.designer.cs">
+      <DependentUpon>PrintStockOut.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebServices\SupplierWS.asmx.cs">
       <DependentUpon>SupplierWS.asmx</DependentUpon>
@@ -3221,7 +3252,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

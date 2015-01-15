@@ -83,7 +83,7 @@ namespace ZhongDing.Web.HttpHandle
                     serverUploadFilePath += "\\";
                 }
 
-                string fileName = DateTime.UtcNow.ToString("yyyyMMddHHmmssffffff") + file.GetExtension();
+                string fileName = DateTime.Now.ToString("yyyyMMddHHmmssffffff") + file.GetExtension();
 
                 //string fileName = file.GetName();
 

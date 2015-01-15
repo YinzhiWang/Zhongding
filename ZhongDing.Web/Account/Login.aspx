@@ -14,8 +14,7 @@
     <link href="../Content/mws.style.css" rel="stylesheet" />
     <style>
         /*adjust the form height for ie7*/
-        body form
-        {
+        body form {
             height: auto;
         }
     </style>
@@ -121,6 +120,12 @@
             if (!hdnErrorMsgCompany.val().isNullOrEmpty())
                 ddlCompany.after("<label class=\"error\" id=\"ddlCompany-error\" for=\"ddlCompany\">" + hdnErrorMsgCompany.val() + "</label>");
         });
+
+        //Disabled the back button of the browser
+        window.history.forward(1);
+
+        if (window != top)
+            top.location.href = location.href;
 
     </script>
 </body>
