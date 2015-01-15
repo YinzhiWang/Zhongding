@@ -142,7 +142,7 @@ namespace ZhongDing.Web.Views.Sales
             };
 
             IList<int> includeWorkflowStatusIDs = PageWorkflowStatusRepository
-                .GetCanAccessIDsByUserID(CurrentUser.UserID);
+                .GetCanAccessIDsByUserID(this.CurrentWorkFlowID, CurrentUser.UserID);
 
             if (includeWorkflowStatusIDs == null)
             {

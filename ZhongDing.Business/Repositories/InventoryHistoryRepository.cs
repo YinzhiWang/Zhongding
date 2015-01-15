@@ -91,12 +91,14 @@ namespace ZhongDing.Business.Repositories
                                           ? (DB.StockOutDetail.Any(y => y.IsDeleted == false && y.WarehouseID == x.Key.WarehouseID
                                               && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
                                               && y.BatchNumber == x.Key.BatchNumber && y.LicenseNumber == x.Key.LicenseNumber
-                                              && y.ExpirationDate == x.Key.ExpirationDate && y.CreatedOn >= beginDate && y.CreatedOn < endDate)
+                                              && y.ExpirationDate == x.Key.ExpirationDate && ((y.CreatedOn >= beginDate && y.CreatedOn < endDate)
+                                                    || (y.LastModifiedOn >= beginDate && y.LastModifiedOn < endDate)))
                                              ? DB.StockOutDetail.Where(y => y.IsDeleted == false && y.WarehouseID == x.Key.WarehouseID
                                                  && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
                                                  && y.BatchNumber == x.Key.BatchNumber && y.LicenseNumber == x.Key.LicenseNumber
                                                  && y.ExpirationDate == x.Key.ExpirationDate
-                                                 && y.CreatedOn >= beginDate && y.CreatedOn < endDate).Sum(y => y.OutQty) : 0)
+                                                 && ((y.CreatedOn >= beginDate && y.CreatedOn < endDate)
+                                                    || (y.LastModifiedOn >= beginDate && y.LastModifiedOn < endDate))).Sum(y => y.OutQty) : 0)
                                           : x.TotalOutQty,
                                       BalanceQty = x.TotalInQty - x.TotalOutQty,
                                       StatDate = statDate
