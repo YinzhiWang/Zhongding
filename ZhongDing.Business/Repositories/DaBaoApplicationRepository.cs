@@ -59,6 +59,7 @@ namespace ZhongDing.Business.Repositories
                               join soa in DB.SalesOrderApplication on q.SalesOrderApplicationID equals soa.ID
                               join cu in DB.Users on q.CreatedBy equals cu.UserID into tempCU
                               from tcu in tempCU.DefaultIfEmpty()
+                              orderby q.CreatedOn descending
                               select new UIDaBaoApplication()
                               {
                                   ID = q.ID,
@@ -126,6 +127,7 @@ namespace ZhongDing.Business.Repositories
                               join soa in DB.SalesOrderApplication on q.SalesOrderApplicationID equals soa.ID
                               join cu in DB.Users on q.CreatedBy equals cu.UserID into tempCU
                               from tcu in tempCU.DefaultIfEmpty()
+                              orderby q.CreatedOn descending
                               select new UIDaBaoApplication()
                               {
                                   ID = q.ID,

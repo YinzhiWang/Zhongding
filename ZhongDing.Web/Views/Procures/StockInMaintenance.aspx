@@ -90,7 +90,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mws-form-row">
+                        <div class="mws-form-row"  runat="server" id="divComment">
                             <label>备注</label>
                             <div class="mws-form-item medium">
                                 <telerik:RadTextBox runat="server" ID="txtComment" Width="90%" MaxLength="1000"

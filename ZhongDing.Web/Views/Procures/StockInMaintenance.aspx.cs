@@ -264,6 +264,7 @@ namespace ZhongDing.Web.Views.Procures
             btnSearchOrders.Visible = false;
             btnSubmit.Visible = false;
             btnEntryStock.Visible = false;
+            divComment.Visible = false;
             divComments.Visible = false;
             divOtherSections.Visible = false;
 
