@@ -19,13 +19,13 @@ namespace ZhongDing.Domain.Models
         public int ClientInfoID { get; set; }
         public int ProductID { get; set; }
         public int ProductSpecificationID { get; set; }
-        public Nullable<double> HighPrice { get; set; }
-        public Nullable<double> BasicPrice { get; set; }
-        public Nullable<bool> UseFlowData { get; set; }
+        public Nullable<decimal> HighPrice { get; set; }
+        public Nullable<decimal> BasicPrice { get; set; }
+        public bool UseFlowData { get; set; }
         public Nullable<int> DepartmentID { get; set; }
-        public Nullable<int> DeptDistrictID { get; set; }
+        public Nullable<int> DeptMarketID { get; set; }
         public Nullable<int> MonthlyTask { get; set; }
-        public Nullable<double> RefundPrice { get; set; }
+        public Nullable<decimal> RefundPrice { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -42,9 +42,10 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual Product Product { get; set; }
-        public virtual ProductSpecification ProductSpecification { get; set; }
         public virtual ClientInfo ClientInfo { get; set; }
         public virtual Department Department { get; set; }
+        public virtual DeptMarket DeptMarket { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual ProductSpecification ProductSpecification { get; set; }
     }
 }

@@ -19,7 +19,6 @@ namespace ZhongDing.Domain.Models
         {
             this.ProductCertificate = new HashSet<ProductCertificate>();
             this.ProductSpecification = new HashSet<ProductSpecification>();
-            this.ClientInfoProductSetting = new HashSet<ClientInfoProductSetting>();
             this.DeptProductEvaluation = new HashSet<DeptProductEvaluation>();
             this.ProductHighPrice = new HashSet<ProductHighPrice>();
             this.ProductBasicPrice = new HashSet<ProductBasicPrice>();
@@ -35,6 +34,7 @@ namespace ZhongDing.Domain.Models
             this.SalesOrderAppDetail = new HashSet<SalesOrderAppDetail>();
             this.StockOutDetail = new HashSet<StockOutDetail>();
             this.InventoryHistory = new HashSet<InventoryHistory>();
+            this.ClientInfoProductSetting = new HashSet<ClientInfoProductSetting>();
         }
     
         public int ID { get; set; }
@@ -68,7 +68,6 @@ namespace ZhongDing.Domain.Models
         public virtual Supplier Supplier { get; set; }
         public virtual ICollection<ProductCertificate> ProductCertificate { get; set; }
         public virtual ICollection<ProductSpecification> ProductSpecification { get; set; }
-        public virtual ICollection<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
         public virtual ICollection<DeptProductEvaluation> DeptProductEvaluation { get; set; }
         public virtual ICollection<ProductHighPrice> ProductHighPrice { get; set; }
         public virtual ICollection<ProductBasicPrice> ProductBasicPrice { get; set; }
@@ -85,5 +84,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<SalesOrderAppDetail> SalesOrderAppDetail { get; set; }
         public virtual ICollection<StockOutDetail> StockOutDetail { get; set; }
         public virtual ICollection<InventoryHistory> InventoryHistory { get; set; }
+        public virtual ICollection<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
     }
 }

@@ -74,7 +74,7 @@
                                     <li data-level="2" data-menuitemid="8"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/WarehouseManagement.aspx');">仓库管理</a></li>
                                     <li data-level="2" data-menuitemid="9"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/DistributionCompanyManagement.aspx');">配送公司管理</a></li>
                                     <li data-level="2" data-menuitemid="10"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/DBContractManagement.aspx');">大包客户协议管理</a></li>
-                                    <li data-level="2" data-menuitemid="11"><a href="#">商业客户流向管理</a></li>
+                                    <li data-level="2" data-menuitemid="11"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/ClientInfoProductFlowManagement.aspx');">商业客户流向管理</a></li>
                                     <li data-level="2" data-menuitemid="12"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/DeptProductSalesPlanAndBonusManagement.aspx');">部门销售计划及提成策略</a></li>
                                 </ul>
                             </li>

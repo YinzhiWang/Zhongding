@@ -15,6 +15,11 @@ namespace ZhongDing.Domain.Models
     [Serializable]
     public partial class DeptMarket : IEntityExtendedProperty
     {
+        public DeptMarket()
+        {
+            this.ClientInfoProductSetting = new HashSet<ClientInfoProductSetting>();
+        }
+    
         public int ID { get; set; }
         public int DeptDistrictID { get; set; }
         public string MarketName { get; set; }
@@ -30,5 +35,6 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual DeptDistrict DeptDistrict { get; set; }
+        public virtual ICollection<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
     }
 }

@@ -173,6 +173,10 @@
             <End Role="Department" EntitySet="Department" />
             <End Role="ClientInfoProductSetting" EntitySet="ClientInfoProductSetting" />
           </AssociationSet>
+          <AssociationSet Name="FK_ClientInfoProductSetting_DeptMarket" Association="DbModel.Store.FK_ClientInfoProductSetting_DeptMarket">
+            <End Role="DeptMarket" EntitySet="DeptMarket" />
+            <End Role="ClientInfoProductSetting" EntitySet="ClientInfoProductSetting" />
+          </AssociationSet>
           <AssociationSet Name="FK_ClientInfoProductSetting_Product" Association="DbModel.Store.FK_ClientInfoProductSetting_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="ClientInfoProductSetting" EntitySet="ClientInfoProductSetting" />
@@ -804,13 +808,13 @@
           <Property Name="ClientInfoID" Type="int" Nullable="false" />
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="ProductSpecificationID" Type="int" Nullable="false" />
-          <Property Name="HighPrice" Type="float" />
-          <Property Name="BasicPrice" Type="float" />
-          <Property Name="UseFlowData" Type="bit" />
+          <Property Name="HighPrice" Type="money" />
+          <Property Name="BasicPrice" Type="money" />
+          <Property Name="UseFlowData" Type="bit" Nullable="false" />
           <Property Name="DepartmentID" Type="int" />
-          <Property Name="DeptDistrictID" Type="int" />
+          <Property Name="DeptMarketID" Type="int" />
           <Property Name="MonthlyTask" Type="int" />
-          <Property Name="RefundPrice" Type="float" />
+          <Property Name="RefundPrice" Type="money" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
@@ -1940,6 +1944,18 @@
             </Principal>
             <Dependent Role="ClientInfoProductSetting">
               <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientInfoProductSetting_DeptMarket">
+          <End Role="DeptMarket" Type="DbModel.Store.DeptMarket" Multiplicity="0..1" />
+          <End Role="ClientInfoProductSetting" Type="DbModel.Store.ClientInfoProductSetting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeptMarket">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientInfoProductSetting">
+              <PropertyRef Name="DeptMarketID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3288,16 +3304,7 @@
             <End Role="SaleType" EntitySet="SaleType" />
             <End Role="Warehouse" EntitySet="Warehouse" />
           </AssociationSet>
-          <EntitySet Name="ClientInfoProductSetting" EntityType="DbModel.ClientInfoProductSetting" />
           <EntitySet Name="DeptDistrict" EntityType="DbModel.DeptDistrict" />
-          <AssociationSet Name="FK_ClientInfoProductSetting_Product" Association="DbModel.FK_ClientInfoProductSetting_Product">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="ClientInfoProductSetting" EntitySet="ClientInfoProductSetting" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClientInfoProductSetting_ProductSpecification" Association="DbModel.FK_ClientInfoProductSetting_ProductSpecification">
-            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
-            <End Role="ClientInfoProductSetting" EntitySet="ClientInfoProductSetting" />
-          </AssociationSet>
           <EntitySet Name="DistributionCompany" EntityType="DbModel.DistributionCompany" />
           <EntitySet Name="ClientCompanyCertificate" EntityType="DbModel.ClientCompanyCertificate" />
           <EntitySet Name="DeptProductEvaluation" EntityType="DbModel.DeptProductEvaluation" />
@@ -3341,10 +3348,6 @@
             <End Role="ClientInfo" EntitySet="ClientInfo" />
             <End Role="ClientInfoContact" EntitySet="ClientInfoContact" />
           </AssociationSet>
-          <AssociationSet Name="FK_ClientInfoProductSetting_ClientInfo" Association="DbModel.FK_ClientInfoProductSetting_ClientInfo">
-            <End Role="ClientInfo" EntitySet="ClientInfo" />
-            <End Role="ClientInfoProductSetting" EntitySet="ClientInfoProductSetting" />
-          </AssociationSet>
           <EntitySet Name="ProductHighPrice" EntityType="DbModel.ProductHighPrice" />
           <AssociationSet Name="FK_ProductHighPrice_Product" Association="DbModel.FK_ProductHighPrice_Product">
             <End Role="Product" EntitySet="Product" />
@@ -3373,10 +3376,6 @@
             <End Role="ProductDBPolicyPrice" EntitySet="ProductDBPolicyPrice" />
           </AssociationSet>
           <EntitySet Name="Department" EntityType="DbModel.Department" />
-          <AssociationSet Name="FK_ClientInfoProductSetting_Department" Association="DbModel.FK_ClientInfoProductSetting_Department">
-            <End Role="Department" EntitySet="Department" />
-            <End Role="ClientInfoProductSetting" EntitySet="ClientInfoProductSetting" />
-          </AssociationSet>
           <AssociationSet Name="FK_Department_DeptDistrict" Association="DbModel.FK_Department_DeptDistrict">
             <End Role="DeptDistrict" EntitySet="DeptDistrict" />
             <End Role="Department" EntitySet="Department" />
@@ -3747,6 +3746,27 @@
             <End Role="WorkflowStep" EntitySet="WorkflowStep" />
             <End Role="ApplicationNote" EntitySet="ApplicationNote" />
           </AssociationSet>
+          <EntitySet Name="ClientInfoProductSetting" EntityType="DbModel.ClientInfoProductSetting" />
+          <AssociationSet Name="FK_ClientInfoProductSetting_ClientInfo" Association="DbModel.FK_ClientInfoProductSetting_ClientInfo">
+            <End Role="ClientInfo" EntitySet="ClientInfo" />
+            <End Role="ClientInfoProductSetting" EntitySet="ClientInfoProductSetting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientInfoProductSetting_Department" Association="DbModel.FK_ClientInfoProductSetting_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="ClientInfoProductSetting" EntitySet="ClientInfoProductSetting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientInfoProductSetting_DeptMarket" Association="DbModel.FK_ClientInfoProductSetting_DeptMarket">
+            <End Role="DeptMarket" EntitySet="DeptMarket" />
+            <End Role="ClientInfoProductSetting" EntitySet="ClientInfoProductSetting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientInfoProductSetting_Product" Association="DbModel.FK_ClientInfoProductSetting_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ClientInfoProductSetting" EntitySet="ClientInfoProductSetting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientInfoProductSetting_ProductSpecification" Association="DbModel.FK_ClientInfoProductSetting_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="ClientInfoProductSetting" EntitySet="ClientInfoProductSetting" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -3958,7 +3978,6 @@
           <NavigationProperty Name="Supplier" Relationship="DbModel.FK_Product_Supplier" FromRole="Product" ToRole="Supplier" />
           <NavigationProperty Name="ProductCertificate" Relationship="DbModel.FK_ProductCertificate_Product" FromRole="Product" ToRole="ProductCertificate" />
           <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_ProductSpecification_Product" FromRole="Product" ToRole="ProductSpecification" />
-          <NavigationProperty Name="ClientInfoProductSetting" Relationship="DbModel.FK_ClientInfoProductSetting_Product" FromRole="Product" ToRole="ClientInfoProductSetting" />
           <NavigationProperty Name="DeptProductEvaluation" Relationship="DbModel.FK_DeptProductEvaluation_Product" FromRole="Product" ToRole="DeptProductEvaluation" />
           <NavigationProperty Name="ProductHighPrice" Relationship="DbModel.FK_ProductHighPrice_Product" FromRole="Product" ToRole="ProductHighPrice" />
           <NavigationProperty Name="ProductBasicPrice" Relationship="DbModel.FK_ProductBasicPrice_Product" FromRole="Product" ToRole="ProductBasicPrice" />
@@ -3975,6 +3994,7 @@
           <NavigationProperty Name="SalesOrderAppDetail" Relationship="DbModel.FK_SalesOrderAppDetail_Product" FromRole="Product" ToRole="SalesOrderAppDetail" />
           <NavigationProperty Name="StockOutDetail" Relationship="DbModel.FK_StockOutDetail_Product" FromRole="Product" ToRole="StockOutDetail" />
           <NavigationProperty Name="InventoryHistory" Relationship="DbModel.FK_InventoryHistory_Product" FromRole="Product" ToRole="InventoryHistory" />
+          <NavigationProperty Name="ClientInfoProductSetting" Relationship="DbModel.FK_ClientInfoProductSetting_Product" FromRole="Product" ToRole="ClientInfoProductSetting" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -4016,7 +4036,6 @@
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="Product" Relationship="DbModel.FK_ProductSpecification_Product" FromRole="ProductSpecification" ToRole="Product" />
           <NavigationProperty Name="UnitOfMeasurement" Relationship="DbModel.FK_ProductSpecification_UnitOfMeasurement" FromRole="ProductSpecification" ToRole="UnitOfMeasurement" />
-          <NavigationProperty Name="ClientInfoProductSetting" Relationship="DbModel.FK_ClientInfoProductSetting_ProductSpecification" FromRole="ProductSpecification" ToRole="ClientInfoProductSetting" />
           <NavigationProperty Name="ProductHighPrice" Relationship="DbModel.FK_ProductHighPrice_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductHighPrice" />
           <NavigationProperty Name="ProductBasicPrice" Relationship="DbModel.FK_ProductBasicPrice_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductBasicPrice" />
           <NavigationProperty Name="ProductDBPolicyPrice" Relationship="DbModel.FK_ProductDBPolicyPrice_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductDBPolicyPrice" />
@@ -4028,6 +4047,7 @@
           <NavigationProperty Name="SalesOrderAppDetail" Relationship="DbModel.FK_SalesOrderAppDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="SalesOrderAppDetail" />
           <NavigationProperty Name="StockOutDetail" Relationship="DbModel.FK_StockOutDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="StockOutDetail" />
           <NavigationProperty Name="InventoryHistory" Relationship="DbModel.FK_InventoryHistory_ProductSpecification" FromRole="ProductSpecification" ToRole="InventoryHistory" />
+          <NavigationProperty Name="ClientInfoProductSetting" Relationship="DbModel.FK_ClientInfoProductSetting_ProductSpecification" FromRole="ProductSpecification" ToRole="ClientInfoProductSetting" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -4471,31 +4491,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="ClientInfoProductSetting">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="ClientInfoID" Nullable="false" />
-          <Property Type="Int32" Name="ProductID" Nullable="false" />
-          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
-          <Property Type="Double" Name="HighPrice" />
-          <Property Type="Double" Name="BasicPrice" />
-          <Property Type="Boolean" Name="UseFlowData" />
-          <Property Type="Int32" Name="DepartmentID" />
-          <Property Type="Int32" Name="DeptDistrictID" />
-          <Property Type="Int32" Name="MonthlyTask" />
-          <Property Type="Double" Name="RefundPrice" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="Product" Relationship="DbModel.FK_ClientInfoProductSetting_Product" FromRole="ClientInfoProductSetting" ToRole="Product" />
-          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_ClientInfoProductSetting_ProductSpecification" FromRole="ClientInfoProductSetting" ToRole="ProductSpecification" />
-          <NavigationProperty Name="ClientInfo" Relationship="DbModel.FK_ClientInfoProductSetting_ClientInfo" FromRole="ClientInfoProductSetting" ToRole="ClientInfo" />
-          <NavigationProperty Name="Department" Relationship="DbModel.FK_ClientInfoProductSetting_Department" FromRole="ClientInfoProductSetting" ToRole="Department" />
-        </EntityType>
         <EntityType Name="DeptDistrict">
           <Key>
             <PropertyRef Name="ID" />
@@ -4506,30 +4501,6 @@
           <NavigationProperty Name="Department" Relationship="DbModel.FK_Department_DeptDistrict" FromRole="DeptDistrict" ToRole="Department" />
           <NavigationProperty Name="DeptMarket" Relationship="DbModel.FK_DeptMarket_DeptDistrict" FromRole="DeptDistrict" ToRole="DeptMarket" />
         </EntityType>
-        <Association Name="FK_ClientInfoProductSetting_Product">
-          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
-          <End Type="DbModel.ClientInfoProductSetting" Role="ClientInfoProductSetting" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ClientInfoProductSetting">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClientInfoProductSetting_ProductSpecification">
-          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
-          <End Type="DbModel.ClientInfoProductSetting" Role="ClientInfoProductSetting" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProductSpecification">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ClientInfoProductSetting">
-              <PropertyRef Name="ProductSpecificationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="DistributionCompany">
           <Key>
             <PropertyRef Name="ID" />
@@ -4761,18 +4732,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ClientInfoProductSetting_ClientInfo">
-          <End Type="DbModel.ClientInfo" Role="ClientInfo" Multiplicity="1" />
-          <End Type="DbModel.ClientInfoProductSetting" Role="ClientInfoProductSetting" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ClientInfo">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ClientInfoProductSetting">
-              <PropertyRef Name="ClientInfoID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="ProductHighPrice">
           <Key>
             <PropertyRef Name="ID" />
@@ -4918,7 +4877,6 @@
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="ClientInfoProductSetting" Relationship="DbModel.FK_ClientInfoProductSetting_Department" FromRole="Department" ToRole="ClientInfoProductSetting" />
           <NavigationProperty Name="DeptDistrict" Relationship="DbModel.FK_Department_DeptDistrict" FromRole="Department" ToRole="DeptDistrict" />
           <NavigationProperty Name="Users" Relationship="DbModel.FK_Department_Users" FromRole="Department" ToRole="Users" />
           <NavigationProperty Name="DeptProductEvaluation" Relationship="DbModel.FK_DeptProductEvaluation_Department" FromRole="Department" ToRole="DeptProductEvaluation" />
@@ -4929,19 +4887,8 @@
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_Department" FromRole="Department" ToRole="DBContract" />
           <NavigationProperty Name="DaBaoApplication" Relationship="DbModel.FK_DaBaoApplication_Department" FromRole="Department" ToRole="DaBaoApplication" />
           <NavigationProperty Name="DaBaoRequestApplication" Relationship="DbModel.FK_DaBaoRequestApplication_Department" FromRole="Department" ToRole="DaBaoRequestApplication" />
+          <NavigationProperty Name="ClientInfoProductSetting" Relationship="DbModel.FK_ClientInfoProductSetting_Department" FromRole="Department" ToRole="ClientInfoProductSetting" />
         </EntityType>
-        <Association Name="FK_ClientInfoProductSetting_Department">
-          <End Type="DbModel.Department" Role="Department" Multiplicity="0..1" />
-          <End Type="DbModel.ClientInfoProductSetting" Role="ClientInfoProductSetting" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ClientInfoProductSetting">
-              <PropertyRef Name="DepartmentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Department_DeptDistrict">
           <End Type="DbModel.DeptDistrict" Role="DeptDistrict" Multiplicity="0..1" />
           <End Type="DbModel.Department" Role="Department" Multiplicity="*" />
@@ -5080,6 +5027,7 @@
           <Property Type="Int32" Name="DeptDistrictID" Nullable="false" />
           <Property Type="String" Name="MarketName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DeptDistrict" Relationship="DbModel.FK_DeptMarket_DeptDistrict" FromRole="DeptMarket" ToRole="DeptDistrict" />
+          <NavigationProperty Name="ClientInfoProductSetting" Relationship="DbModel.FK_ClientInfoProductSetting_DeptMarket" FromRole="DeptMarket" ToRole="ClientInfoProductSetting" />
         </EntityType>
         <Association Name="FK_DeptMarket_DeptDistrict">
           <End Type="DbModel.DeptDistrict" Role="DeptDistrict" Multiplicity="1" />
@@ -6585,6 +6533,92 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ClientInfoProductSetting">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ClientInfoID" Nullable="false" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
+          <Property Type="Decimal" Name="HighPrice" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="BasicPrice" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="UseFlowData" Nullable="false" />
+          <Property Type="Int32" Name="DepartmentID" />
+          <Property Type="Int32" Name="DeptMarketID" />
+          <Property Type="Int32" Name="MonthlyTask" />
+          <Property Type="Decimal" Name="RefundPrice" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="ClientInfo" Relationship="DbModel.FK_ClientInfoProductSetting_ClientInfo" FromRole="ClientInfoProductSetting" ToRole="ClientInfo" />
+          <NavigationProperty Name="Department" Relationship="DbModel.FK_ClientInfoProductSetting_Department" FromRole="ClientInfoProductSetting" ToRole="Department" />
+          <NavigationProperty Name="DeptMarket" Relationship="DbModel.FK_ClientInfoProductSetting_DeptMarket" FromRole="ClientInfoProductSetting" ToRole="DeptMarket" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_ClientInfoProductSetting_Product" FromRole="ClientInfoProductSetting" ToRole="Product" />
+          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_ClientInfoProductSetting_ProductSpecification" FromRole="ClientInfoProductSetting" ToRole="ProductSpecification" />
+        </EntityType>
+        <Association Name="FK_ClientInfoProductSetting_ClientInfo">
+          <End Type="DbModel.ClientInfo" Role="ClientInfo" Multiplicity="1" />
+          <End Type="DbModel.ClientInfoProductSetting" Role="ClientInfoProductSetting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientInfo">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientInfoProductSetting">
+              <PropertyRef Name="ClientInfoID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientInfoProductSetting_Department">
+          <End Type="DbModel.Department" Role="Department" Multiplicity="0..1" />
+          <End Type="DbModel.ClientInfoProductSetting" Role="ClientInfoProductSetting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientInfoProductSetting">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientInfoProductSetting_DeptMarket">
+          <End Type="DbModel.DeptMarket" Role="DeptMarket" Multiplicity="0..1" />
+          <End Type="DbModel.ClientInfoProductSetting" Role="ClientInfoProductSetting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeptMarket">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientInfoProductSetting">
+              <PropertyRef Name="DeptMarketID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientInfoProductSetting_Product">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DbModel.ClientInfoProductSetting" Role="ClientInfoProductSetting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientInfoProductSetting">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientInfoProductSetting_ProductSpecification">
+          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
+          <End Type="DbModel.ClientInfoProductSetting" Role="ClientInfoProductSetting" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientInfoProductSetting">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -6960,28 +6994,6 @@
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="WarehouseCode" ColumnName="WarehouseCode" />
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ClientInfoProductSetting">
-            <EntityTypeMapping TypeName="DbModel.ClientInfoProductSetting">
-              <MappingFragment StoreEntitySet="ClientInfoProductSetting">
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="RefundPrice" ColumnName="RefundPrice" />
-                <ScalarProperty Name="MonthlyTask" ColumnName="MonthlyTask" />
-                <ScalarProperty Name="DeptDistrictID" ColumnName="DeptDistrictID" />
-                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
-                <ScalarProperty Name="UseFlowData" ColumnName="UseFlowData" />
-                <ScalarProperty Name="BasicPrice" ColumnName="BasicPrice" />
-                <ScalarProperty Name="HighPrice" ColumnName="HighPrice" />
-                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="ClientInfoID" ColumnName="ClientInfoID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -7731,6 +7743,28 @@
             <EntityTypeMapping TypeName="DbModel.NoteType">
               <MappingFragment StoreEntitySet="NoteType">
                 <ScalarProperty Name="NoteTypeName" ColumnName="NoteTypeName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientInfoProductSetting">
+            <EntityTypeMapping TypeName="DbModel.ClientInfoProductSetting">
+              <MappingFragment StoreEntitySet="ClientInfoProductSetting">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="RefundPrice" ColumnName="RefundPrice" />
+                <ScalarProperty Name="MonthlyTask" ColumnName="MonthlyTask" />
+                <ScalarProperty Name="DeptMarketID" ColumnName="DeptMarketID" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="UseFlowData" ColumnName="UseFlowData" />
+                <ScalarProperty Name="BasicPrice" ColumnName="BasicPrice" />
+                <ScalarProperty Name="HighPrice" ColumnName="HighPrice" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ClientInfoID" ColumnName="ClientInfoID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

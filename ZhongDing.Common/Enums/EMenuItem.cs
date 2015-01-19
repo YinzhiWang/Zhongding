@@ -56,7 +56,7 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 商业客户流向管理
         /// </summary>
-        BusinessClientFlowsManage,
+        ClientInfoProductFlowManage,
 
         /// <summary>
         /// 部门货品销售计划和提成策略管理

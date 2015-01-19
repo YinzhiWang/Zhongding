@@ -118,6 +118,12 @@ namespace ZhongDing.Common
             public static readonly string MSG_FAILED_SAEVED_CLOSE_WIN = "保存失败，稍后再试，窗口将自动关闭";
 
             /// <summary>
+            /// 提示消息：保存失败，稍后再试
+            /// </summary>
+            public static readonly string MSG_FAILED_SAEVED = "保存失败，稍后再试";
+
+
+            /// <summary>
             /// 提示消息：保存成功，页面将自动刷新
             /// </summary>
             public static readonly string MSG_SUCCESS_SAEVED_REFRESH = "保存成功，页面将自动刷新";

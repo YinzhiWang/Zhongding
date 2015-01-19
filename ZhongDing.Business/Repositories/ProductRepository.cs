@@ -179,14 +179,22 @@ namespace ZhongDing.Business.Repositories
                         whereFuncs.Add(x => uiSearchObj.Extension.ProductCategoryIDs
                             .Contains(x.CategoryID.HasValue ? x.CategoryID.Value : GlobalConst.INVALID_INT));
                 }
-
             }
 
-            uiDropdownItems = GetList(whereFuncs).Select(x => new UIDropdownItem()
+            var query = GetList(whereFuncs);
+
+            if (query != null)
             {
-                ItemValue = x.ID,
-                ItemText = x.ProductName
-            }).ToList();
+                uiDropdownItems = (from q in query
+                                   join s in DB.Supplier on q.SupplierID equals s.ID into tempS
+                                   from ts in tempS.DefaultIfEmpty()
+                                   select new UIDropdownItem
+                                   {
+                                       ItemValue = q.ID,
+                                       ItemText = q.ProductName,
+                                       Extension = new { FactoryName = ts == null ? string.Empty : ts.FactoryName }
+                                   }).ToList();
+            }
 
             return uiDropdownItems;
         }

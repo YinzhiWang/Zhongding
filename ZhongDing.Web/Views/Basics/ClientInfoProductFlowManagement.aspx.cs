@@ -9,24 +9,23 @@ using ZhongDing.Business.IRepositories;
 using ZhongDing.Business.Repositories;
 using ZhongDing.Common;
 using ZhongDing.Common.Enums;
-using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UISearchObjects;
 
 namespace ZhongDing.Web.Views.Basics
 {
-    public partial class ClientInfoManagement : BasePage
+    public partial class ClientInfoProductFlowManagement : BasePage
     {
         #region Members
 
-        private IClientInfoRepository _PageClientInfoRepository;
-        private IClientInfoRepository PageClientInfoRepository
+        private IClientInfoProductSettingRepository _PageClientInfoProductSettingRepository;
+        private IClientInfoProductSettingRepository PageClientInfoProductSettingRepository
         {
             get
             {
-                if (_PageClientInfoRepository == null)
-                    _PageClientInfoRepository = new ClientInfoRepository();
+                if (_PageClientInfoProductSettingRepository == null)
+                    _PageClientInfoProductSettingRepository = new ClientInfoProductSettingRepository();
 
-                return _PageClientInfoRepository;
+                return _PageClientInfoProductSettingRepository;
             }
         }
 
@@ -58,7 +57,7 @@ namespace ZhongDing.Web.Views.Basics
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.Master.MenuItemID = (int)EMenuItem.ClientInfoManage;
+            this.Master.MenuItemID = (int)EMenuItem.ClientInfoProductFlowManage;
 
             if (!IsPostBack)
             {
@@ -67,6 +66,8 @@ namespace ZhongDing.Web.Views.Basics
                 BindClientCompanies();
             }
         }
+
+        #region Private Methods
 
         private void BindClientUsers()
         {
@@ -81,6 +82,8 @@ namespace ZhongDing.Web.Views.Basics
 
         private void BindClientCompanies()
         {
+            rcbxClientCompany.Items.Clear();
+
             var uiSearchObj = new UISearchDropdownItem();
 
             if (!string.IsNullOrEmpty(rcbxClientUser.SelectedValue))
@@ -101,10 +104,7 @@ namespace ZhongDing.Web.Views.Basics
 
         private void BindEntities(bool isNeedRebind)
         {
-            UISearchClientInfo uiSearchObj = new UISearchClientInfo()
-            {
-                ClientCode = txtSerialNo.Text.Trim()
-            };
+            var uiSearchObj = new UISearchClientInfoProductSetting();
 
             if (!string.IsNullOrEmpty(rcbxClientUser.SelectedValue))
             {
@@ -122,13 +122,20 @@ namespace ZhongDing.Web.Views.Basics
 
             int totalRecords;
 
-            var uiEntities = PageClientInfoRepository.GetUIList(uiSearchObj, rgEntities.CurrentPageIndex, rgEntities.PageSize, out totalRecords);
+            var uiEntities = PageClientInfoProductSettingRepository.GetUIList(uiSearchObj, rgEntities.CurrentPageIndex, rgEntities.PageSize, out totalRecords);
 
             rgEntities.VirtualItemCount = totalRecords;
             rgEntities.DataSource = uiEntities;
 
             if (isNeedRebind)
                 rgEntities.Rebind();
+        }
+
+        #endregion
+
+        protected void rcbxClientUser_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            BindClientCompanies();
         }
 
         protected void rgEntities_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
@@ -145,44 +152,8 @@ namespace ZhongDing.Web.Views.Basics
             int id = 0;
             if (int.TryParse(sid, out id))
             {
-                using (IUnitOfWork unitOfWork = new UnitOfWork())
-                {
-                    DbModelContainer db = unitOfWork.GetDbModel();
-
-                    IClientInfoRepository clientInfoRepository = new ClientInfoRepository();
-                    IClientInfoBankAccountRepository clientInfoBankAccountRepository = new ClientInfoBankAccountRepository();
-                    IBankAccountRepository bankAccountRepository = new BankAccountRepository();
-                    IClientInfoContactRepository clientInfoContactRepository = new ClientInfoContactRepository();
-                    clientInfoRepository.SetDbModel(db);
-                    clientInfoBankAccountRepository.SetDbModel(db);
-                    bankAccountRepository.SetDbModel(db);
-                    clientInfoContactRepository.SetDbModel(db);
-
-                    var clientInfo = clientInfoRepository.GetByID(id);
-
-                    if (clientInfo != null)
-                    {
-                        foreach (var clientInfoBA in clientInfo.ClientInfoBankAccount)
-                        {
-                            if (clientInfoBA != null)
-                            {
-                                if (clientInfoBA.BankAccount != null)
-                                    bankAccountRepository.Delete(clientInfoBA.BankAccount);
-
-                                clientInfoBankAccountRepository.Delete(clientInfoBA);
-                            }
-                        }
-
-                        foreach (var clientInfoContact in clientInfo.ClientInfoContact)
-                        {
-                            clientInfoContactRepository.Delete(clientInfoContact);
-                        }
-
-                        clientInfoRepository.Delete(clientInfo);
-                    }
-
-                    unitOfWork.SaveChanges();
-                }
+                PageClientInfoProductSettingRepository.DeleteByID(id);
+                PageClientInfoProductSettingRepository.Save();
             }
 
             rgEntities.Rebind();
@@ -210,11 +181,12 @@ namespace ZhongDing.Web.Views.Basics
 
         protected void btnReset_Click(object sender, EventArgs e)
         {
-            txtSerialNo.Text = string.Empty;
             rcbxClientUser.ClearSelection();
             rcbxClientCompany.ClearSelection();
 
             BindEntities(true);
         }
+
+
     }
 }

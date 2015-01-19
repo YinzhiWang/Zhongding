@@ -116,7 +116,10 @@ namespace ZhongDing.Web
             {
                 FormsAuthentication.SignOut();
                 Session.Clear();
-                Response.Redirect(FormsAuthentication.LoginUrl, true);
+
+                string redirectUrl = FormsAuthentication.LoginUrl + "?ReturnUrl=" + Server.UrlEncode(HttpContext.Current.Request.Url.AbsoluteUri);
+
+                Response.Redirect(redirectUrl, true);
             }
 
             base.OnPreInit(e);

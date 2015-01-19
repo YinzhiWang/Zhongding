@@ -115,5 +115,55 @@ namespace ZhongDing.Business.Repositories
 
             return uiEntities;
         }
+
+        public IList<UIDropdownItem> GetDropdownItems(UISearchDropdownItem uiSearchObj = null)
+        {
+            IList<UIDropdownItem> uiDropdownItems = new List<UIDropdownItem>();
+
+            List<Expression<Func<DeptMarketDivision, bool>>> whereFuncs = new List<Expression<Func<DeptMarketDivision, bool>>>();
+
+            if (uiSearchObj != null)
+            {
+                if (uiSearchObj.IncludeItemValues != null
+                    && uiSearchObj.IncludeItemValues.Count > 0)
+                    whereFuncs.Add(x => uiSearchObj.IncludeItemValues.Contains(x.ID));
+
+                if (uiSearchObj.Extension != null)
+                {
+                    if (uiSearchObj.Extension.DepartmentID > 0)
+                        whereFuncs.Add(x => x.Users.DepartmentID == uiSearchObj.Extension.DepartmentID);
+                }
+            }
+
+            var query = GetList(whereFuncs).Select(x => x.MarketID).ToList();
+
+            if (query != null)
+            {
+                List<int> marketIDs = new List<int>();
+
+                foreach (var sMarketID in query)
+                {
+                    var curMarkIDs = sMarketID.Split(',').Select(x => Convert.ToInt32(x)).ToList();
+
+                    marketIDs.AddRange(curMarkIDs);
+                }
+
+                marketIDs = marketIDs.Distinct().ToList();
+
+                var tempDropdownItems = DB.DeptMarket.Where(x => marketIDs.Contains(x.ID))
+                     .Select(x => new UIDropdownItem()
+                     {
+                         ItemValue = x.ID,
+                         ItemText = x.MarketName
+                     });
+
+                if (uiSearchObj != null && !string.IsNullOrEmpty(uiSearchObj.ItemText))
+                    tempDropdownItems = tempDropdownItems.Where(x => x.ItemText.Contains(uiSearchObj.ItemText));
+
+                uiDropdownItems = tempDropdownItems.ToList();
+            }
+
+            return uiDropdownItems;
+        }
     }
 }

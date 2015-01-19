@@ -293,6 +293,7 @@
     <Compile Include="UIObjects\UIClientInfo.cs" />
     <Compile Include="UIObjects\UIClientInfoBankAccount.cs" />
     <Compile Include="UIObjects\UIClientInfoContact.cs" />
+    <Compile Include="UIObjects\UIClientInfoProductSetting.cs" />
     <Compile Include="UIObjects\UICompany.cs" />
     <Compile Include="UIObjects\UIDaBaoApplication.cs" />
     <Compile Include="UIObjects\UIDaBaoAppDetail.cs" />
@@ -339,6 +340,7 @@
     <Compile Include="UISearchObjects\UISearchCertificate.cs" />
     <Compile Include="UISearchObjects\UISearchClientCompany.cs" />
     <Compile Include="UISearchObjects\UISearchClientInfo.cs" />
+    <Compile Include="UISearchObjects\UISearchClientInfoProductSetting.cs" />
     <Compile Include="UISearchObjects\UISearchCompany.cs" />
     <Compile Include="UISearchObjects\UISearchDaBaoApplication.cs" />
     <Compile Include="UISearchObjects\UISearchDaBaoAppDetail.cs" />

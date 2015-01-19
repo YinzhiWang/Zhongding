@@ -9,14 +9,14 @@ using ZhongDing.Domain.UISearchObjects;
 
 namespace ZhongDing.Business.IRepositories
 {
-    public interface IDeptMarketDivisionRepository : IBaseRepository<DeptMarketDivision>, IGenerateDropdownItems
+    public interface IClientInfoProductSettingRepository : IBaseRepository<ClientInfoProductSetting>
     {
         /// <summary>
         /// 获取UI List，不分页
         /// </summary>
         /// <param name="uiSearchObj">The UI search obj.</param>
-        /// <returns>IList{UIDeptMarketDivision}.</returns>
-        IList<UIDeptMarketDivision> GetUIList(UISearchDeptMarketDivision uiSearchObj = null);
+        /// <returns>IList{UIClientInfoProductSetting}.</returns>
+        IList<UIClientInfoProductSetting> GetUIList(UISearchClientInfoProductSetting uiSearchObj = null);
 
         /// <summary>
         /// 获取UI List，分页
@@ -25,7 +25,9 @@ namespace ZhongDing.Business.IRepositories
         /// <param name="pageIndex">当前页.</param>
         /// <param name="pageSize">每页条数.</param>
         /// <param name="totalRecords">总记录数.</param>
-        /// <returns>IList{UIDeptMarketDivision}.</returns>
-        IList<UIDeptMarketDivision> GetUIList(UISearchDeptMarketDivision uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
+        /// <returns>IList{UIClientInfoProductSetting}.</returns>
+        IList<UIClientInfoProductSetting> GetUIList(UISearchClientInfoProductSetting uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
+
+
     }
 }

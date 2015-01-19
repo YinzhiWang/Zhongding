@@ -63,6 +63,7 @@
     <Compile Include="IRepositories\IClientCompanyRepository.cs" />
     <Compile Include="IRepositories\IClientInfoBankAccountRepository.cs" />
     <Compile Include="IRepositories\IClientInfoContactRepository.cs" />
+    <Compile Include="IRepositories\IClientInfoProductSettingRepository.cs" />
     <Compile Include="IRepositories\IClientInfoRepository.cs" />
     <Compile Include="IRepositories\IClientUserRepository.cs" />
     <Compile Include="IRepositories\ICompanyRepository.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="Repositories\ClientCompanyRepository.cs" />
     <Compile Include="Repositories\ClientInfoBankAccountRepository.cs" />
     <Compile Include="Repositories\ClientInfoContactRepository.cs" />
+    <Compile Include="Repositories\ClientInfoProductSettingRepository.cs" />
     <Compile Include="Repositories\ClientInfoRepository.cs" />
     <Compile Include="Repositories\ClientUserRepository.cs" />
     <Compile Include="Repositories\CompanyRepository.cs" />

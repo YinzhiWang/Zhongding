@@ -367,6 +367,7 @@
     <Build Include="dbo\Tables\StockOut.sql" />
     <Build Include="dbo\Tables\InventoryHistory.sql" />
     <Build Include="dbo\Tables\NoteType.sql" />
+    <Build Include="dbo\Tables\SalesModel.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

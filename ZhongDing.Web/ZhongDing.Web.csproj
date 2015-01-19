@@ -2580,6 +2580,8 @@
     <Content Include="Views\Basics\ClientCompanyManagement.aspx" />
     <Content Include="Views\Basics\ClientInfoMaintenance.aspx" />
     <Content Include="Views\Basics\ClientInfoManagement.aspx" />
+    <Content Include="Views\Basics\ClientInfoProductFlowMaintenance.aspx" />
+    <Content Include="Views\Basics\ClientInfoProductFlowManagement.aspx" />
     <Content Include="Views\Basics\DBContractMaintenance.aspx" />
     <Content Include="Views\Basics\DBContractManagement.aspx" />
     <Content Include="Views\Basics\DeptProductSalesPlanAndBonusMaintenance.aspx" />
@@ -2856,6 +2858,20 @@
     </Compile>
     <Compile Include="Views\Basics\ClientInfoManagement.aspx.designer.cs">
       <DependentUpon>ClientInfoManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\ClientInfoProductFlowMaintenance.aspx.cs">
+      <DependentUpon>ClientInfoProductFlowMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\ClientInfoProductFlowMaintenance.aspx.designer.cs">
+      <DependentUpon>ClientInfoProductFlowMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\ClientInfoProductFlowManagement.aspx.cs">
+      <DependentUpon>ClientInfoProductFlowManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\ClientInfoProductFlowManagement.aspx.designer.cs">
+      <DependentUpon>ClientInfoProductFlowManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Basics\CompanyMaintenance.aspx.cs">
       <DependentUpon>CompanyMaintenance.aspx</DependentUpon>
@@ -3252,7 +3268,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

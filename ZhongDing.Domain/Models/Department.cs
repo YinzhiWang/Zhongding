@@ -17,7 +17,6 @@ namespace ZhongDing.Domain.Models
     {
         public Department()
         {
-            this.ClientInfoProductSetting = new HashSet<ClientInfoProductSetting>();
             this.DeptProductEvaluation = new HashSet<DeptProductEvaluation>();
             this.Product = new HashSet<Product>();
             this.Users1 = new HashSet<Users>();
@@ -26,6 +25,7 @@ namespace ZhongDing.Domain.Models
             this.DBContract = new HashSet<DBContract>();
             this.DaBaoApplication = new HashSet<DaBaoApplication>();
             this.DaBaoRequestApplication = new HashSet<DaBaoRequestApplication>();
+            this.ClientInfoProductSetting = new HashSet<ClientInfoProductSetting>();
         }
     
         public int ID { get; set; }
@@ -49,7 +49,6 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ICollection<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
         public virtual DeptDistrict DeptDistrict { get; set; }
         public virtual Users Users { get; set; }
         public virtual ICollection<DeptProductEvaluation> DeptProductEvaluation { get; set; }
@@ -60,5 +59,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<DBContract> DBContract { get; set; }
         public virtual ICollection<DaBaoApplication> DaBaoApplication { get; set; }
         public virtual ICollection<DaBaoRequestApplication> DaBaoRequestApplication { get; set; }
+        public virtual ICollection<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
     }
 }
