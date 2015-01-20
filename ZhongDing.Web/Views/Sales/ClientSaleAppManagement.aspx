@@ -1,4 +1,4 @@
-﻿<%@ Page Title="大包配送申请单管理" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DBAppRequestManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Sales.DBAppRequestManagement" %>
+﻿<%@ Page Title="客户订单管理" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ClientSaleAppManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Sales.ClientSaleAppManagement" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 
@@ -21,6 +21,11 @@
                     <telerik:AjaxUpdatedControl ControlID="rgEntities" LoadingPanelID="loadingPanel" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="rcbxClientUser">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="rcbxClientCompany" LoadingPanelID="loadingPanel" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="rgEntities">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="rgEntities" LoadingPanelID="loadingPanel" />
@@ -33,7 +38,7 @@
     <div class="container">
         <div class="mws-panel grid_8">
             <div class="mws-panel-header">
-                <span class="mws-i-24 i-table-1">大包配送申请单管理</span>
+                <span class="mws-i-24 i-table-1">客户订单管理</span>
             </div>
             <div class="mws-panel-body">
                 <table runat="server" id="tblSearch" class="leftmargin10">
@@ -44,26 +49,32 @@
                             -&nbsp;&nbsp;
                             <telerik:RadDatePicker runat="server" ID="rdpEndDate" Width="120"></telerik:RadDatePicker>
                         </td>
-                        <td></td>
-                        <td></td>
                     </tr>
                     <tr class="height40">
-                        <th class="width60 middle-td right-td">部门：</th>
-                        <td class="middle-td width35-percent">
-                            <telerik:RadComboBox runat="server" ID="rcbxDepartment" Filter="Contains"
-                                Height="160px" Width="260" EmptyMessage="--请选择--">
+                        <th class="width70 middle-td">客户名称：</th>
+                        <td class="middle-td width20-percent">
+                            <telerik:RadComboBox runat="server" ID="rcbxClientUser" Filter="Contains"
+                                AllowCustomText="false" Height="160px" Width="100%" EmptyMessage="--请选择--"
+                                AutoPostBack="true" OnSelectedIndexChanged="rcbxClientUser_SelectedIndexChanged">
                             </telerik:RadComboBox>
                         </td>
-                        <th class="width60 middle-td right-td">状态：</th>
+                        <th class="width100 middle-td right-td">商业单位：</th>
+                        <td class="middle-td leftpadding10">
+                            <telerik:RadComboBox runat="server" ID="rcbxClientCompany" Height="160px" Width="60%" Filter="Contains"
+                                EmptyMessage="--请选择--" AllowCustomText="false">
+                            </telerik:RadComboBox>
+                        </td>
+                    </tr>
+                    <tr class="height40">
+                        <th class="width60 middle-td">状态：</th>
                         <td class="middle-td">
                             <telerik:RadComboBox runat="server" ID="rcbxWorkflowStatus" Filter="Contains" AutoPostBack="true"
                                 AllowCustomText="true" EmptyMessage="--请选择--">
                             </telerik:RadComboBox>
                         </td>
-                        <td class="middle-td leftpadding20">
+                        <td class="middle-td leftpadding20" colspan="2">
                             <asp:Button ID="btnSearch" runat="server" Text="查询" CssClass="mws-button green" OnClick="btnSearch_Click" />
-                        </td>
-                        <td class="middle-td leftpadding20">
+                            &nbsp;&nbsp;
                             <asp:Button ID="btnReset" runat="server" Text="重置" CssClass="mws-button orange" OnClick="btnReset_Click" />
                         </td>
                     </tr>
@@ -81,39 +92,53 @@
                             <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false">
                                 <ItemStyle HorizontalAlign="Left" Width="50" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="CreatedOn" HeaderText="申请日期" DataField="CreatedOn" DataFormatString="{0:yyyy/MM/dd}">
-                                <ItemStyle HorizontalAlign="Left" Width="80" />
-                            </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="CreatedBy" HeaderText="申请人" DataField="CreatedBy">
-                                <ItemStyle HorizontalAlign="Left" Width="80" />
-                            </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="DepartmentName" HeaderText="部门" DataField="DepartmentName">
+                            <telerik:GridBoundColumn UniqueName="OrderCode" HeaderText="订单编号" DataField="OrderCode">
                                 <ItemStyle HorizontalAlign="Left" Width="15%" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="DistributionCompany" HeaderText="配送公司" DataField="DistributionCompany">
-                                <ItemStyle HorizontalAlign="Left" Width="15%" />
+                            <telerik:GridBoundColumn UniqueName="OrderDate" HeaderText="订单日期" DataField="OrderDate" DataFormatString="{0:yyyy/MM/dd}">
+                                <ItemStyle HorizontalAlign="Left" Width="80" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn UniqueName="SalesModel" HeaderText="订单类型" DataField="SalesModel">
+                                <ItemStyle HorizontalAlign="Left" Width="80" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn UniqueName="ClientUserName" HeaderText="客户名称" DataField="ClientUserName">
+                                <ItemStyle HorizontalAlign="Left" Width="120" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn UniqueName="ClientCompanyName" HeaderText="商业单位" DataField="ClientCompanyName">
+                                <ItemStyle HorizontalAlign="Left" Width="120" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn UniqueName="CreatedBy" HeaderText="制单人" DataField="CreatedBy">
+                                <ItemStyle HorizontalAlign="Left" Width="80" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="WorkflowStatus" HeaderText="状态" DataField="WorkflowStatus">
                                 <ItemStyle HorizontalAlign="Left" Width="15%" />
                             </telerik:GridBoundColumn>
+                            <telerik:GridTemplateColumn UniqueName="IconUrlOfGuarantee" HeaderText="担保" SortExpression="IconUrlOfGuarantee">
+                                <ItemStyle HorizontalAlign="Center" Width="60" />
+                                <ItemTemplate>
+                                    <asp:Image runat="server" ID="iconOfGuarantee" ImageUrl='<%# Page.ResolveUrl(DataBinder.Eval(Container.DataItem,"IconUrlOfGuarantee")!=null
+                                    ?DataBinder.Eval(Container.DataItem,"IconUrlOfGuarantee").ToString():string.Empty)%>'
+                                        Width="24" Height="24"
+                                        Visible='<%# DataBinder.Eval(Container.DataItem,"IsGuaranteeTransaction") %>' />
+                                </ItemTemplate>
+                            </telerik:GridTemplateColumn>
+                            <telerik:GridCheckBoxColumn UniqueName="IsStop" HeaderText="中止执行" DataField="IsStop">
+                                <HeaderStyle Width="60" />
+                                <ItemStyle HorizontalAlign="Left" Width="60" />
+                            </telerik:GridCheckBoxColumn>
                             <telerik:GridTemplateColumn UniqueName="Edit">
-                                <HeaderStyle HorizontalAlign="Center" Width="15%" />
-                                <ItemStyle HorizontalAlign="Center" />
+                                <ItemStyle HorizontalAlign="Center" Width="60" />
                                 <ItemTemplate>
                                     <a href="javascript:void(0);" onclick="redirectToMaintenancePage(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">编辑</a>
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>
-                            <telerik:GridButtonColumn Text="删除" HeaderText="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton"
-                                HeaderStyle-Width="60" HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="60" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
+                            <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton"
+                                HeaderStyle-Width="60" ItemStyle-Width="60" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" Visible="false" />
                         </Columns>
                         <CommandItemTemplate>
                             <table class="width100-percent">
                                 <tr>
                                     <td>
-                                        <asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
-                                            <input type="button" class="rgAdd" onclick="redirectToMaintenancePage(-1); return false;" />
-                                            <a href="javascript:void(0)" onclick="redirectToMaintenancePage(-1); return false;">添加</a>
-                                        </asp:Panel>
                                         <%--<asp:Panel ID="plExportCommand" runat="server" CssClass="width80 float-left">
                                             <input type="button" class="rgExpXLS" onclick="exportExcel(); return false;" />
                                             <a href="javascript:void(0);" onclick="exportExcel(); return false;">导出excel</a>
@@ -157,7 +182,7 @@
 
         function redirectToMaintenancePage(id) {
             $.showLoading();
-            window.location.href = "DBAppRequestMaintenance.aspx?EntityID=" + id;
+            window.location.href = "ClientSaleAppMaintenance.aspx?EntityID=" + id;
         }
     </script>
 </asp:Content>

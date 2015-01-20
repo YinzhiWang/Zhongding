@@ -513,10 +513,10 @@ namespace ZhongDing.Web.Views.Sales
                     var db = unitOfWork.GetDbModel();
 
                     IStockOutRepository stockOutRepository = new StockOutRepository();
-                    IApplicationNoteRepository appNoteRepository = new ApplicationNoteRepository();
+                    //IApplicationNoteRepository appNoteRepository = new ApplicationNoteRepository();
 
                     stockOutRepository.SetDbModel(db);
-                    appNoteRepository.SetDbModel(db);
+                    //appNoteRepository.SetDbModel(db);
 
                     var currentEntity = stockOutRepository.GetByID(this.CurrentEntityID);
 
@@ -525,13 +525,13 @@ namespace ZhongDing.Web.Views.Sales
                         currentEntity.WorkflowStatusID = (int)EWorkflowStatus.OutWarehouse;
                         currentEntity.OutDate = DateTime.Now;
 
-                        var appNote = new ApplicationNote();
-                        appNote.WorkflowID = (int)EWorkflow.DBStockOut;
-                        appNote.WorkflowStepID = (int)EWorkflowStep.OutDBStockRoom;
-                        appNote.NoteTypeID = (int)EAppNoteType.Comment;
-                        appNote.ApplicationID = currentEntity.ID;
-                        appNote.Note = "出库单已出库（由系统自动生成）";
-                        appNoteRepository.Add(appNote);
+                        //var appNote = new ApplicationNote();
+                        //appNote.WorkflowID = (int)EWorkflow.DBStockOut;
+                        //appNote.WorkflowStepID = (int)EWorkflowStep.OutDBStockRoom;
+                        //appNote.NoteTypeID = (int)EAppNoteType.Comment;
+                        //appNote.ApplicationID = currentEntity.ID;
+                        //appNote.Note = "出库单已出库（由系统自动生成）";
+                        //appNoteRepository.Add(appNote);
 
                         unitOfWork.SaveChanges();
 

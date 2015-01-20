@@ -106,13 +106,15 @@
                                     <a href="javascript:void(0);" onclick="redirectToMaintenancePage(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">编辑</a>
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>
-                            <telerik:GridTemplateColumn UniqueName="Print">
+                            <telerik:GridTemplateColumn UniqueName="Print" HeaderText="打印">
+                                <HeaderStyle HorizontalAlign="Center" Width="60" />
                                 <ItemStyle HorizontalAlign="Center" Width="60" />
                                 <ItemTemplate>
                                     <a href="javascript:void(0);" onclick="openPrintPage(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">打印</a>
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>
-                            <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="60" ItemStyle-Width="60" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
+                            <telerik:GridButtonColumn Text="删除" HeaderText="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton"
+                                HeaderStyle-Width="60" HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="60" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
                         </Columns>
                         <CommandItemTemplate>
                             <table class="width100-percent">

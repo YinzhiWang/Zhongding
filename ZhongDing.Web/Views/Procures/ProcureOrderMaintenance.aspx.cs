@@ -835,12 +835,24 @@ namespace ZhongDing.Web.Views.Procures
 
                         if (PageAppPaymentRepository.GetList(x => x.ApplicationID == this.CurrentEntity.ID).Count() > 0)
                         {
-                            this.CurrentEntity.WorkflowStatusID = (int)EWorkflowStatus.AuditingOfPaymentInfo;
-                            PageProcureOrderAppRepository.Save();
+                            var orderPaymentTotalAmount = PageAppPaymentRepository.GetList(x => x.ApplicationID == this.CurrentEntity.ID).Sum(x => x.Amount);
+                            var orderTotalAmount = this.CurrentEntity.ProcureOrderAppDetail.Where(x => x.IsDeleted == false).Sum(x => x.TotalAmount);
 
-                            this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
-                            this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_SUCCESS;
-                            this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SUBMITED_TO_AUDITTING_REDIRECT);
+                            if (orderPaymentTotalAmount == orderTotalAmount)
+                            {
+                                this.CurrentEntity.WorkflowStatusID = (int)EWorkflowStatus.AuditingOfPaymentInfo;
+                                PageProcureOrderAppRepository.Save();
+
+                                this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
+                                this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_SUCCESS;
+                                this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SUBMITED_TO_AUDITTING_REDIRECT);
+                            }
+                            else
+                            {
+                                this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
+                                this.Master.BaseNotification.AutoCloseDelay = 1000;
+                                this.Master.BaseNotification.Show("支付总金额不等于订单总金额，订单不能提交");
+                            }
                         }
                         else
                         {
@@ -989,11 +1001,11 @@ namespace ZhongDing.Web.Views.Procures
 
                     IProcureOrderApplicationRepository orderAppRepository = new ProcureOrderApplicationRepository();
                     IApplicationPaymentRepository appPaymentRepository = new ApplicationPaymentRepository();
-                    IApplicationNoteRepository appNoteRepository = new ApplicationNoteRepository();
+                    //IApplicationNoteRepository appNoteRepository = new ApplicationNoteRepository();
 
                     orderAppRepository.SetDbModel(db);
                     appPaymentRepository.SetDbModel(db);
-                    appNoteRepository.SetDbModel(db);
+                    //appNoteRepository.SetDbModel(db);
 
                     var currentEntity = orderAppRepository.GetByID(this.CurrentEntityID);
 
@@ -1008,13 +1020,13 @@ namespace ZhongDing.Web.Views.Procures
                             item.PaymentStatusID = (int)EPaymentStatus.Paid;
                         }
 
-                        var appNote = new ApplicationNote();
-                        appNote.WorkflowID = (int)EWorkflow.ProcureOrder;
-                        appNote.WorkflowStepID = (int)EWorkflowStep.ProcureOrderCashier;
-                        appNote.NoteTypeID = (int)EAppNoteType.Comment;
-                        appNote.ApplicationID = currentEntity.ID;
-                        appNote.Note = "订单已支付（由系统自动生成）";
-                        appNoteRepository.Add(appNote);
+                        //var appNote = new ApplicationNote();
+                        //appNote.WorkflowID = (int)EWorkflow.ProcureOrder;
+                        //appNote.WorkflowStepID = (int)EWorkflowStep.ProcureOrderCashier;
+                        //appNote.NoteTypeID = (int)EAppNoteType.Comment;
+                        //appNote.ApplicationID = currentEntity.ID;
+                        //appNote.Note = "订单已支付（由系统自动生成）";
+                        //appNoteRepository.Add(appNote);
 
                         unitOfWork.SaveChanges();
 

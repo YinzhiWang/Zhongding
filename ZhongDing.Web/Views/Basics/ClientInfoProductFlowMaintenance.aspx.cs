@@ -187,7 +187,7 @@ namespace ZhongDing.Web.Views.Basics
         {
             if (productID > 0)
             {
-                ddlProductSpecification.ClearSelection();
+                ddlProductSpecification.Items.Clear();
 
                 var productSpecifications = PageProductSpecificationRepository.GetDropdownItems(new UISearchDropdownItem()
                 {

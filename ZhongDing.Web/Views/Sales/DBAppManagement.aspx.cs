@@ -117,7 +117,7 @@ namespace ZhongDing.Web.Views.Sales
         {
             var uiSearchObj = new UISearchDaBaoApplication()
             {
-                CompanyID = CurrentUser.CompanyID,
+                //CompanyID = CurrentUser.CompanyID,
                 BeginDate = rdpBeginDate.SelectedDate,
                 EndDate = rdpEndDate.SelectedDate,
             };
@@ -197,7 +197,7 @@ namespace ZhongDing.Web.Views.Sales
 
                             currentEntity.SalesOrderApplication.IsDeleted = true;
                         }
-                        
+
                         dbOrderAppRepository.Delete(currentEntity);
 
                         var appNotes = appNoteRepository.GetList(x => x.ApplicationID == currentEntity.ID);
@@ -221,21 +221,48 @@ namespace ZhongDing.Web.Views.Sales
 
         protected void rgEntities_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
         {
-            if (this.CanEditUserIDs.Contains(CurrentUser.UserID))
-            {
-                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT).Visible = true;
-                //e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = true;
-            }
-            else
-            {
-                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT).Visible = false;
-                //e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = false;
-            }
+            //if (this.CanEditUserIDs.Contains(CurrentUser.UserID))
+            //{
+            //    e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT).Visible = true;
+            //    //e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = true;
+            //}
+            //else
+            //{
+            //    e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT).Visible = false;
+            //    //e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = false;
+            //}
         }
 
         protected void rgEntities_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
+            if (e.Item.ItemType == GridItemType.Item
+                || e.Item.ItemType == GridItemType.AlternatingItem)
+            {
+                GridDataItem gridDataItem = e.Item as GridDataItem;
+                UIDaBaoApplication uiEntity = (UIDaBaoApplication)gridDataItem.DataItem;
 
+                if (uiEntity != null)
+                {
+                    string linkHtml = "<a href=\"javascript:void(0);\" onclick=\"redirectToMaintenancePage(" + uiEntity.ID + ")\">";
+
+                    if (CanEditUserIDs.Contains(CurrentUser.UserID))
+                        linkHtml += "编辑";
+                    else
+                        linkHtml += "查看";
+
+                    linkHtml += "</a>";
+
+                    var editColumn = rgEntities.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT);
+
+                    if (editColumn != null)
+                    {
+                        var editCell = gridDataItem.Cells[editColumn.OrderIndex];
+
+                        if (editCell != null)
+                            editCell.Text = linkHtml;
+                    }
+                }
+            }
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)

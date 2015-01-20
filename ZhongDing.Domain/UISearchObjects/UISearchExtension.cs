@@ -12,6 +12,11 @@ namespace ZhongDing.Domain.UISearchObjects
     public class UISearchExtension
     {
         /// <summary>
+        /// 当前用户ID
+        /// </summary>
+        public int CurrentUserID { get; set; }
+
+        /// <summary>
         /// 账套ID
         /// </summary>
         public int CompanyID { get; set; }
@@ -65,6 +70,11 @@ namespace ZhongDing.Domain.UISearchObjects
         /// 客户名ID
         /// </summary>
         public int ClientUserID { get; set; }
+
+        /// <summary>
+        /// 供应商ID
+        /// </summary>
+        public int SupplierID { get; set; }
 
     }
 }

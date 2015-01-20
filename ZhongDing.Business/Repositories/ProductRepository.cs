@@ -178,6 +178,9 @@ namespace ZhongDing.Business.Repositories
                         && uiSearchObj.Extension.ProductCategoryIDs.Count > 0)
                         whereFuncs.Add(x => uiSearchObj.Extension.ProductCategoryIDs
                             .Contains(x.CategoryID.HasValue ? x.CategoryID.Value : GlobalConst.INVALID_INT));
+
+                    if (uiSearchObj.Extension.SupplierID > 0)
+                        whereFuncs.Add(x => x.SupplierID == uiSearchObj.Extension.SupplierID);
                 }
             }
 

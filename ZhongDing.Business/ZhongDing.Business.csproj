@@ -65,6 +65,7 @@
     <Compile Include="IRepositories\IClientInfoContactRepository.cs" />
     <Compile Include="IRepositories\IClientInfoProductSettingRepository.cs" />
     <Compile Include="IRepositories\IClientInfoRepository.cs" />
+    <Compile Include="IRepositories\IClientSaleApplicationRepository.cs" />
     <Compile Include="IRepositories\IClientUserRepository.cs" />
     <Compile Include="IRepositories\ICompanyRepository.cs" />
     <Compile Include="IRepositories\IDaBaoApplicationRepository.cs" />
@@ -133,6 +134,7 @@
     <Compile Include="Repositories\ClientInfoContactRepository.cs" />
     <Compile Include="Repositories\ClientInfoProductSettingRepository.cs" />
     <Compile Include="Repositories\ClientInfoRepository.cs" />
+    <Compile Include="Repositories\ClientSaleApplicationRepository.cs" />
     <Compile Include="Repositories\ClientUserRepository.cs" />
     <Compile Include="Repositories\CompanyRepository.cs" />
     <Compile Include="Repositories\DaBaoApplicationRepository.cs" />

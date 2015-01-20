@@ -169,13 +169,13 @@ namespace ZhongDing.Web.Views.Basics
         {
             if (departmentID > 0)
             {
-                ddlInChargeUser.ClearSelection();
+                ddlInChargeUser.Items.Clear();
 
                 var inChargeUsers = PageUsersRepository.GetDropdownItems(new UISearchDropdownItem()
                 {
                     Extension = new UISearchExtension()
                     {
-                        DepartmentID = this.CurrentEntityID.HasValue ? this.CurrentEntityID.Value : GlobalConst.INVALID_INT
+                        DepartmentID = departmentID
                     }
                 });
 
@@ -202,7 +202,7 @@ namespace ZhongDing.Web.Views.Basics
         {
             if (productID > 0)
             {
-                ddlProductSpecification.ClearSelection();
+                ddlProductSpecification.Items.Clear();
 
                 var productSpecifications = PageProductSpecificationRepository.GetDropdownItems(new UISearchDropdownItem()
                 {
@@ -412,6 +412,8 @@ namespace ZhongDing.Web.Views.Basics
                 if (int.TryParse(e.Value, out departmentID))
                     BindInChargeUsers(departmentID);
             }
+            else
+                ddlInChargeUser.Items.Clear();
         }
 
         protected void rcbxProduct_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
@@ -423,6 +425,8 @@ namespace ZhongDing.Web.Views.Basics
                 if (int.TryParse(e.Value, out productID))
                     BindProductSpecifications(productID);
             }
+            else
+                ddlProductSpecification.Items.Clear();
         }
 
         protected void rgHospitals_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)

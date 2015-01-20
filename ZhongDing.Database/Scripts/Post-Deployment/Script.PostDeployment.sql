@@ -494,3 +494,17 @@ INSERT INTO [dbo].[NoteType] ([ID], [NoteTypeName]) VALUES (2, N'单据审核意
 SET IDENTITY_INSERT [dbo].[NoteType] OFF
 COMMIT TRANSACTION
 ---- end --- 1/15/2015 -- 初始化备注类型数据 -- by lihong
+
+
+---- start --- 1/20/2015 -- 初始化客户订单模式数据 -- by lihong
+SET NUMERIC_ROUNDABORT OFF
+GO
+SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+BEGIN TRANSACTION
+SET IDENTITY_INSERT [dbo].[SalesModel] ON
+INSERT INTO [dbo].[SalesModel] ([ID], [SalesModelName]) VALUES (1, N'招商模式')
+INSERT INTO [dbo].[SalesModel] ([ID], [SalesModelName]) VALUES (2, N'挂靠模式')
+SET IDENTITY_INSERT [dbo].[SalesModel] OFF
+COMMIT TRANSACTION
+---- end --- 1/20/2015 -- 初始化客户订单模式数据 -- by lihong

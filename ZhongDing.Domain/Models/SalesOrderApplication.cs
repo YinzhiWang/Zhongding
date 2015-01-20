@@ -20,6 +20,7 @@ namespace ZhongDing.Domain.Models
             this.DaBaoApplication = new HashSet<DaBaoApplication>();
             this.SalesOrderAppDetail = new HashSet<SalesOrderAppDetail>();
             this.StockOutDetail = new HashSet<StockOutDetail>();
+            this.ClientSaleApplication = new HashSet<ClientSaleApplication>();
         }
     
         public int ID { get; set; }
@@ -48,5 +49,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<DaBaoApplication> DaBaoApplication { get; set; }
         public virtual ICollection<SalesOrderAppDetail> SalesOrderAppDetail { get; set; }
         public virtual ICollection<StockOutDetail> StockOutDetail { get; set; }
+        public virtual ICollection<ClientSaleApplication> ClientSaleApplication { get; set; }
     }
 }

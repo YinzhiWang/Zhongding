@@ -13,27 +13,19 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class WorkflowStatus : IEntityExtendedProperty
+    public partial class SalesModel : IEntityExtendedProperty
     {
-        public WorkflowStatus()
+        public SalesModel()
         {
-            this.WorkflowStepStatus = new HashSet<WorkflowStepStatus>();
-            this.ProcureOrderApplication = new HashSet<ProcureOrderApplication>();
-            this.StockIn = new HashSet<StockIn>();
-            this.DaBaoApplication = new HashSet<DaBaoApplication>();
-            this.DaBaoRequestApplication = new HashSet<DaBaoRequestApplication>();
-            this.StockOut = new HashSet<StockOut>();
             this.ClientSaleApplication = new HashSet<ClientSaleApplication>();
         }
     
         public int ID { get; set; }
-        public string StatusName { get; set; }
-        public string Comment { get; set; }
-        public bool IsDeleted { get; set; }
+        public string SalesModelName { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
-    	public bool HasColumnIsDeleted { get { return true; } }
+    	public bool HasColumnIsDeleted { get { return false; } }
     	public bool HasColumnDeletedOn { get { return false; } }
     	public bool HasColumnCreatedOn { get { return false; } }
     	public bool HasColumnCreatedBy { get { return false; } }
@@ -41,12 +33,6 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return false; } }
     
     
-        public virtual ICollection<WorkflowStepStatus> WorkflowStepStatus { get; set; }
-        public virtual ICollection<ProcureOrderApplication> ProcureOrderApplication { get; set; }
-        public virtual ICollection<StockIn> StockIn { get; set; }
-        public virtual ICollection<DaBaoApplication> DaBaoApplication { get; set; }
-        public virtual ICollection<DaBaoRequestApplication> DaBaoRequestApplication { get; set; }
-        public virtual ICollection<StockOut> StockOut { get; set; }
         public virtual ICollection<ClientSaleApplication> ClientSaleApplication { get; set; }
     }
 }

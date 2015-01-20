@@ -97,7 +97,7 @@
                                 <ItemStyle HorizontalAlign="Left" Width="15%" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="WorkflowStatus" HeaderText="状态" DataField="WorkflowStatus">
-                                <ItemStyle HorizontalAlign="Left" Width="15%" />
+                                <ItemStyle HorizontalAlign="Left" Width="10%" />
                             </telerik:GridBoundColumn>
                             <telerik:GridTemplateColumn UniqueName="Edit">
                                 <ItemStyle HorizontalAlign="Center" Width="60" />

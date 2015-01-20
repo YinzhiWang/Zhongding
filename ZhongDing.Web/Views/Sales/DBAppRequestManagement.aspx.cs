@@ -136,7 +136,7 @@ namespace ZhongDing.Web.Views.Sales
         {
             var uiSearchObj = new UISearchDaBaoApplication()
             {
-                CompanyID = CurrentUser.CompanyID,
+                //CompanyID = CurrentUser.CompanyID,
                 BeginDate = rdpBeginDate.SelectedDate,
                 EndDate = rdpEndDate.SelectedDate,
             };

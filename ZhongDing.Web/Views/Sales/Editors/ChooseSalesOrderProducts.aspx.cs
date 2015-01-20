@@ -130,8 +130,6 @@ namespace ZhongDing.Web.Views.Sales.Editors
                 if (!IsPostBack)
                 {
                     hdnGridClientID.Value = base.GridClientID;
-
-                    BindWarehouses();
                 }
             }
             else
@@ -142,27 +140,6 @@ namespace ZhongDing.Web.Views.Sales.Editors
 
                 return;
             }
-        }
-
-        private void BindWarehouses()
-        {
-            var uiSearchObj = new UISearchDropdownItem
-            {
-                Extension = new UISearchExtension
-                {
-                    CompanyID = CurrentUser.CompanyID
-                }
-            };
-
-            var warehouses = PageWarehouseRepository.GetDropdownItems(uiSearchObj);
-
-            rcbxWarehouse.DataSource = warehouses;
-            rcbxWarehouse.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
-            rcbxWarehouse.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
-            rcbxWarehouse.DataBind();
-
-            if (warehouses.Count > 0)
-                rcbxWarehouse.SelectedIndex = 0;
         }
 
         private void BindSalesOrderAppDetails(bool isNeedRebind)

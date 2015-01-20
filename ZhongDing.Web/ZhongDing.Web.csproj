@@ -2573,6 +2573,8 @@
     <Content Include="Images\core\sort_asc.png" />
     <Content Include="Images\core\sort_desc.png" />
     <Content Include="Images\defaultAvatar.gif" />
+    <Content Include="Images\guarantee.png" />
+    <Content Include="Images\guarantee_grey.png" />
     <Content Include="packages.config" />
     <Content Include="HttpHandle\AsyncBusinessHandler.ashx" />
     <Content Include="UserControls\UCCurrentCompany.ascx" />
@@ -2616,6 +2618,8 @@
     <Content Include="Views\Products\ProductMaintenance.aspx" />
     <Content Include="Views\Products\ProductManagement.aspx" />
     <Content Include="Views\Products\ProductPriceManagement.aspx" />
+    <Content Include="Views\Sales\ClientSaleAppMaintenance.aspx" />
+    <Content Include="Views\Sales\ClientSaleAppManagement.aspx" />
     <Content Include="Views\Sales\DBAppMaintenance.aspx" />
     <Content Include="Views\Sales\DBAppManagement.aspx" />
     <Content Include="Views\Sales\DBAppRequestMaintenance.aspx" />
@@ -3139,6 +3143,20 @@
     <Compile Include="Views\Products\ProductPriceManagement.aspx.designer.cs">
       <DependentUpon>ProductPriceManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Sales\ClientSaleAppMaintenance.aspx.cs">
+      <DependentUpon>ClientSaleAppMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Sales\ClientSaleAppMaintenance.aspx.designer.cs">
+      <DependentUpon>ClientSaleAppMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sales\ClientSaleAppManagement.aspx.cs">
+      <DependentUpon>ClientSaleAppManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Sales\ClientSaleAppManagement.aspx.designer.cs">
+      <DependentUpon>ClientSaleAppManagement.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Sales\DBAppMaintenance.aspx.cs">
       <DependentUpon>DBAppMaintenance.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3268,7 +3286,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

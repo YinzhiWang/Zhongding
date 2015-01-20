@@ -96,5 +96,7 @@ namespace ZhongDing.Domain.Models
         public DbSet<ApplicationNote> ApplicationNote { get; set; }
         public DbSet<NoteType> NoteType { get; set; }
         public DbSet<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
+        public DbSet<SalesModel> SalesModel { get; set; }
+        public DbSet<ClientSaleApplication> ClientSaleApplication { get; set; }
     }
 }

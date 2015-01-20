@@ -101,13 +101,25 @@ namespace ZhongDing.Web.Views.Procures.Editors
             }
         }
 
+        private ProcureOrderApplication _CurrentOwnerEntity;
+        private ProcureOrderApplication CurrentOwnerEntity
+        {
+            get
+            {
+                if (_CurrentOwnerEntity == null)
+                    if (this.OwnerEntityID.HasValue && this.OwnerEntityID > 0)
+                        _CurrentOwnerEntity = PageProcureOrderApplicationRepository.GetByID(this.OwnerEntityID);
+
+                return _CurrentOwnerEntity;
+            }
+        }
+
         #endregion
 
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if ((!this.OwnerEntityID.HasValue
-                || this.OwnerEntityID <= 0))
+            if (CurrentOwnerEntity == null)
             {
                 this.Master.BaseNotification.OnClientHidden = "onError";
                 this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
@@ -154,7 +166,11 @@ namespace ZhongDing.Web.Views.Procures.Editors
         {
             var products = PageProductRepository.GetDropdownItems(new UISearchDropdownItem()
             {
-                Extension = new UISearchExtension { CompanyID = CurrentUser.CompanyID }
+                Extension = new UISearchExtension
+                {
+                    CompanyID = CurrentUser.CompanyID,
+                    SupplierID = CurrentOwnerEntity.SupplierID,
+                }
             });
 
             rcbxProduct.DataSource = products;
@@ -169,7 +185,7 @@ namespace ZhongDing.Web.Views.Procures.Editors
         {
             if (productID > 0)
             {
-                ddlProductSpecification.ClearSelection();
+                ddlProductSpecification.Items.Clear();
 
                 var productSpecifications = PageProductSpecificationRepository.GetDropdownItems(new UISearchDropdownItem()
                 {

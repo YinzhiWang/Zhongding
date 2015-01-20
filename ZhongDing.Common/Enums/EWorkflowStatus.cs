@@ -70,5 +70,16 @@ namespace ZhongDing.Common.Enums
         /// 已出库
         /// </summary>
         OutWarehouse,
+
+        /// <summary>
+        /// 发货中
+        /// </summary>
+        Shipping,
+
+        /// <summary>
+        /// 已完成
+        /// </summary>
+        Completed,
+
     }
 }

@@ -30,6 +30,11 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 大包出库单
         /// </summary>
-        DBStockOut
+        DBStockOut,
+
+        /// <summary>
+        /// 客户订单
+        /// </summary>
+        ClientOrder,
     }
 }

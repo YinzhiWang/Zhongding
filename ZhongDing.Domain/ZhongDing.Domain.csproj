@@ -98,6 +98,9 @@
     <Compile Include="Models\ClientInfoProductSetting.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClientSaleApplication.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ClientUser.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -215,6 +218,9 @@
     <Compile Include="Models\Roles.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SalesModel.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SalesOrderAppDetail.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -294,6 +300,7 @@
     <Compile Include="UIObjects\UIClientInfoBankAccount.cs" />
     <Compile Include="UIObjects\UIClientInfoContact.cs" />
     <Compile Include="UIObjects\UIClientInfoProductSetting.cs" />
+    <Compile Include="UIObjects\UIClientSaleApplication.cs" />
     <Compile Include="UIObjects\UICompany.cs" />
     <Compile Include="UIObjects\UIDaBaoApplication.cs" />
     <Compile Include="UIObjects\UIDaBaoAppDetail.cs" />
@@ -341,6 +348,7 @@
     <Compile Include="UISearchObjects\UISearchClientCompany.cs" />
     <Compile Include="UISearchObjects\UISearchClientInfo.cs" />
     <Compile Include="UISearchObjects\UISearchClientInfoProductSetting.cs" />
+    <Compile Include="UISearchObjects\UISearchClientSaleApplication.cs" />
     <Compile Include="UISearchObjects\UISearchCompany.cs" />
     <Compile Include="UISearchObjects\UISearchDaBaoApplication.cs" />
     <Compile Include="UISearchObjects\UISearchDaBaoAppDetail.cs" />

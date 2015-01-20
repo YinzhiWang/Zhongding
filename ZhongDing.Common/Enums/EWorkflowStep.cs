@@ -81,7 +81,27 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 修改大包出库单
         /// </summary>
-        EditDBStockOut
+        EditDBStockOut,
+
+        /// <summary>
+        /// 新增客户订单
+        /// </summary>
+        NewClientOrder,
+
+        /// <summary>
+        /// 审核客户订单
+        /// </summary>
+        AuditClientOrder,
+
+        /// <summary>
+        /// 中止客户订单
+        /// </summary>
+        StopClientOrder,
+
+        /// <summary>
+        /// 修改客户订单
+        /// </summary>
+        EditClientOrder,
 
     }
 }

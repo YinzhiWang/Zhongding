@@ -21,6 +21,7 @@
           <EntitySet Name="ClientInfoBankAccount" EntityType="DbModel.Store.ClientInfoBankAccount" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ClientInfoContact" EntityType="DbModel.Store.ClientInfoContact" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ClientInfoProductSetting" EntityType="DbModel.Store.ClientInfoProductSetting" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ClientSaleApplication" EntityType="DbModel.Store.ClientSaleApplication" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ClientUser" EntityType="DbModel.Store.ClientUser" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Company" EntityType="DbModel.Store.Company" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DaBaoApplication" EntityType="DbModel.Store.DaBaoApplication" store:Type="Tables" Schema="dbo" />
@@ -55,6 +56,7 @@
           <EntitySet Name="ProductHighPrice" EntityType="DbModel.Store.ProductHighPrice" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ProductSpecification" EntityType="DbModel.Store.ProductSpecification" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Roles" EntityType="DbModel.Store.Roles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SalesModel" EntityType="DbModel.Store.SalesModel" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SalesOrderAppDetail" EntityType="DbModel.Store.SalesOrderAppDetail" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SalesOrderApplication" EntityType="DbModel.Store.SalesOrderApplication" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SaleType" EntityType="DbModel.Store.SaleType" store:Type="Tables" Schema="dbo" />
@@ -184,6 +186,38 @@
           <AssociationSet Name="FK_ClientInfoProductSetting_ProductSpecification" Association="DbModel.Store.FK_ClientInfoProductSetting_ProductSpecification">
             <End Role="ProductSpecification" EntitySet="ProductSpecification" />
             <End Role="ClientInfoProductSetting" EntitySet="ClientInfoProductSetting" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleApplication_BankAccount" Association="DbModel.Store.FK_ClientSaleApplication_BankAccount">
+            <End Role="BankAccount" EntitySet="BankAccount" />
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleApplication_ClientCompany" Association="DbModel.Store.FK_ClientSaleApplication_ClientCompany">
+            <End Role="ClientCompany" EntitySet="ClientCompany" />
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleApplication_ClientInfoContact" Association="DbModel.Store.FK_ClientSaleApplication_ClientInfoContact">
+            <End Role="ClientInfoContact" EntitySet="ClientInfoContact" />
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleApplication_ClientUser" Association="DbModel.Store.FK_ClientSaleApplication_ClientUser">
+            <End Role="ClientUser" EntitySet="ClientUser" />
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleApplication_Company" Association="DbModel.Store.FK_ClientSaleApplication_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleApplication_SalesModel" Association="DbModel.Store.FK_ClientSaleApplication_SalesModel">
+            <End Role="SalesModel" EntitySet="SalesModel" />
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleApplication_SalesOrderApplication" Association="DbModel.Store.FK_ClientSaleApplication_SalesOrderApplication">
+            <End Role="SalesOrderApplication" EntitySet="SalesOrderApplication" />
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleApplication_WorkflowStatus" Association="DbModel.Store.FK_ClientSaleApplication_WorkflowStatus">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
           </AssociationSet>
           <AssociationSet Name="FK_DaBaoApplication_Company" Association="DbModel.Store.FK_DaBaoApplication_Company">
             <End Role="Company" EntitySet="Company" />
@@ -821,6 +855,30 @@
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
         </EntityType>
+        <EntityType Name="ClientSaleApplication">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="SalesOrderApplicationID" Type="int" Nullable="false" />
+          <Property Name="SalesModelID" Type="int" Nullable="false" />
+          <Property Name="ClientUserID" Type="int" Nullable="false" />
+          <Property Name="ClientCompanyID" Type="int" Nullable="false" />
+          <Property Name="DeliveryModeID" Type="int" />
+          <Property Name="ReceivingBankAccountID" Type="int" />
+          <Property Name="ClientContactID" Type="int" Nullable="false" />
+          <Property Name="GuaranteeAmount" Type="money" />
+          <Property Name="Guaranteeby" Type="int" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="WorkflowStatusID" Type="int" Nullable="false" />
+          <Property Name="CompanyID" Type="int" Nullable="false" />
+          <Property Name="IsGuaranteeTransaction" Type="bit" Nullable="false" />
+          <Property Name="IsReturnedGuaranteeAmount" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="ClientUser">
           <Key>
             <PropertyRef Name="ID" />
@@ -1317,6 +1375,13 @@
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="SalesModel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SalesModelName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="SalesOrderAppDetail">
           <Key>
@@ -1980,6 +2045,102 @@
             </Principal>
             <Dependent Role="ClientInfoProductSetting">
               <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleApplication_BankAccount">
+          <End Role="BankAccount" Type="DbModel.Store.BankAccount" Multiplicity="0..1" />
+          <End Role="ClientSaleApplication" Type="DbModel.Store.ClientSaleApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BankAccount">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplication">
+              <PropertyRef Name="ReceivingBankAccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleApplication_ClientCompany">
+          <End Role="ClientCompany" Type="DbModel.Store.ClientCompany" Multiplicity="1" />
+          <End Role="ClientSaleApplication" Type="DbModel.Store.ClientSaleApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientCompany">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplication">
+              <PropertyRef Name="ClientCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleApplication_ClientInfoContact">
+          <End Role="ClientInfoContact" Type="DbModel.Store.ClientInfoContact" Multiplicity="1" />
+          <End Role="ClientSaleApplication" Type="DbModel.Store.ClientSaleApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientInfoContact">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplication">
+              <PropertyRef Name="ClientContactID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleApplication_ClientUser">
+          <End Role="ClientUser" Type="DbModel.Store.ClientUser" Multiplicity="1" />
+          <End Role="ClientSaleApplication" Type="DbModel.Store.ClientSaleApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplication">
+              <PropertyRef Name="ClientUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleApplication_Company">
+          <End Role="Company" Type="DbModel.Store.Company" Multiplicity="1" />
+          <End Role="ClientSaleApplication" Type="DbModel.Store.ClientSaleApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplication">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleApplication_SalesModel">
+          <End Role="SalesModel" Type="DbModel.Store.SalesModel" Multiplicity="1" />
+          <End Role="ClientSaleApplication" Type="DbModel.Store.ClientSaleApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesModel">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplication">
+              <PropertyRef Name="SalesModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleApplication_SalesOrderApplication">
+          <End Role="SalesOrderApplication" Type="DbModel.Store.SalesOrderApplication" Multiplicity="1" />
+          <End Role="ClientSaleApplication" Type="DbModel.Store.ClientSaleApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesOrderApplication">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplication">
+              <PropertyRef Name="SalesOrderApplicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleApplication_WorkflowStatus">
+          <End Role="WorkflowStatus" Type="DbModel.Store.WorkflowStatus" Multiplicity="1" />
+          <End Role="ClientSaleApplication" Type="DbModel.Store.ClientSaleApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplication">
+              <PropertyRef Name="WorkflowStatusID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3767,6 +3928,40 @@
             <End Role="ProductSpecification" EntitySet="ProductSpecification" />
             <End Role="ClientInfoProductSetting" EntitySet="ClientInfoProductSetting" />
           </AssociationSet>
+          <EntitySet Name="SalesModel" EntityType="DbModel.SalesModel" />
+          <EntitySet Name="ClientSaleApplication" EntityType="DbModel.ClientSaleApplication" />
+          <AssociationSet Name="FK_ClientSaleApplication_BankAccount" Association="DbModel.FK_ClientSaleApplication_BankAccount">
+            <End Role="BankAccount" EntitySet="BankAccount" />
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleApplication_ClientCompany" Association="DbModel.FK_ClientSaleApplication_ClientCompany">
+            <End Role="ClientCompany" EntitySet="ClientCompany" />
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleApplication_ClientInfoContact" Association="DbModel.FK_ClientSaleApplication_ClientInfoContact">
+            <End Role="ClientInfoContact" EntitySet="ClientInfoContact" />
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleApplication_ClientUser" Association="DbModel.FK_ClientSaleApplication_ClientUser">
+            <End Role="ClientUser" EntitySet="ClientUser" />
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleApplication_Company" Association="DbModel.FK_ClientSaleApplication_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleApplication_SalesModel" Association="DbModel.FK_ClientSaleApplication_SalesModel">
+            <End Role="SalesModel" EntitySet="SalesModel" />
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleApplication_SalesOrderApplication" Association="DbModel.FK_ClientSaleApplication_SalesOrderApplication">
+            <End Role="SalesOrderApplication" EntitySet="SalesOrderApplication" />
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleApplication_WorkflowStatus" Association="DbModel.FK_ClientSaleApplication_WorkflowStatus">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -3852,6 +4047,7 @@
           <NavigationProperty Name="SupplierBankAccount" Relationship="DbModel.FK_SupplierBankAccount_BankAccount" FromRole="BankAccount" ToRole="SupplierBankAccount" />
           <NavigationProperty Name="ApplicationPayment" Relationship="DbModel.FK_ApplicationPayment_FromBankAccount" FromRole="BankAccount" ToRole="ApplicationPayment" />
           <NavigationProperty Name="ApplicationPayment1" Relationship="DbModel.FK_ApplicationPayment_ToBankAccount" FromRole="BankAccount" ToRole="ApplicationPayment" />
+          <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_BankAccount" FromRole="BankAccount" ToRole="ClientSaleApplication" />
           </EntityType>
         <EntityType Name="Certificate">
           <Key>
@@ -3918,6 +4114,7 @@
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="ClientInfo" Relationship="DbModel.FK_ClientInfoContact_ClientInfo" FromRole="ClientInfoContact" ToRole="ClientInfo" />
+          <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_ClientInfoContact" FromRole="ClientInfoContact" ToRole="ClientSaleApplication" />
         </EntityType>
         <EntityType Name="Company">
           <Key>
@@ -3943,6 +4140,7 @@
           <NavigationProperty Name="DaBaoApplication" Relationship="DbModel.FK_DaBaoApplication_Company" FromRole="Company" ToRole="DaBaoApplication" />
           <NavigationProperty Name="DaBaoRequestApplication" Relationship="DbModel.FK_DaBaoRequestApplication_Company" FromRole="Company" ToRole="DaBaoRequestApplication" />
           <NavigationProperty Name="StockOut" Relationship="DbModel.FK_StockOut_Company" FromRole="Company" ToRole="StockOut" />
+          <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_Company" FromRole="Company" ToRole="ClientSaleApplication" />
         </EntityType>
         <EntityType Name="OwnerType">
           <Key>
@@ -4632,6 +4830,7 @@
           <NavigationProperty Name="ClientCompanyCertificate" Relationship="DbModel.FK_ClientCompanyCertificate_ClientCompany" FromRole="ClientCompany" ToRole="ClientCompanyCertificate" />
           <NavigationProperty Name="ClientInfo" Relationship="DbModel.FK_ClientInfo_ClientCompany" FromRole="ClientCompany" ToRole="ClientInfo" />
           <NavigationProperty Name="StockOut" Relationship="DbModel.FK_StockOut_ClientCompany" FromRole="ClientCompany" ToRole="StockOut" />
+          <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_ClientCompany" FromRole="ClientCompany" ToRole="ClientSaleApplication" />
         </EntityType>
         <EntityType Name="ClientUser">
           <Key>
@@ -4647,6 +4846,7 @@
           <NavigationProperty Name="ClientInfo" Relationship="DbModel.FK_ClientInfo_ClientUser" FromRole="ClientUser" ToRole="ClientInfo" />
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_ClientUser" FromRole="ClientUser" ToRole="DBContract" />
           <NavigationProperty Name="StockOut" Relationship="DbModel.FK_StockOut_ClientUser" FromRole="ClientUser" ToRole="StockOut" />
+          <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_ClientUser" FromRole="ClientUser" ToRole="ClientSaleApplication" />
         </EntityType>
         <Association Name="FK_ClientCompanyCertificate_ClientCompany">
           <End Type="DbModel.ClientCompany" Role="ClientCompany" Multiplicity="1" />
@@ -5515,6 +5715,7 @@
           <NavigationProperty Name="DaBaoApplication" Relationship="DbModel.FK_DaBaoApplication_WorkflowStatus" FromRole="WorkflowStatus" ToRole="DaBaoApplication" />
           <NavigationProperty Name="DaBaoRequestApplication" Relationship="DbModel.FK_DaBaoRequestApplication_WorkflowStatus" FromRole="WorkflowStatus" ToRole="DaBaoRequestApplication" />
           <NavigationProperty Name="StockOut" Relationship="DbModel.FK_StockOut_WorkflowStatus" FromRole="WorkflowStatus" ToRole="StockOut" />
+          <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_WorkflowStatus" FromRole="WorkflowStatus" ToRole="ClientSaleApplication" />
         </EntityType>
         <EntityType Name="WorkflowStepStatus">
           <Key>
@@ -6150,6 +6351,7 @@
           <NavigationProperty Name="DaBaoApplication" Relationship="DbModel.FK_DaBaoApplication_SalesOrderApplication" FromRole="SalesOrderApplication" ToRole="DaBaoApplication" />
           <NavigationProperty Name="SalesOrderAppDetail" Relationship="DbModel.FK_SalesOrderAppDetail_SalesOrderApplication" FromRole="SalesOrderApplication" ToRole="SalesOrderAppDetail" />
           <NavigationProperty Name="StockOutDetail" Relationship="DbModel.FK_StockOutDetail_SalesOrderApplication" FromRole="SalesOrderApplication" ToRole="StockOutDetail" />
+          <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_SalesOrderApplication" FromRole="SalesOrderApplication" ToRole="ClientSaleApplication" />
         </EntityType>
         <Association Name="FK_DaBaoApplication_SalesOrderApplication">
           <End Type="DbModel.SalesOrderApplication" Role="SalesOrderApplication" Multiplicity="1" />
@@ -6616,6 +6818,142 @@
             </Principal>
             <Dependent Role="ClientInfoProductSetting">
               <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SalesModel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="SalesModelName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_SalesModel" FromRole="SalesModel" ToRole="ClientSaleApplication" />
+        </EntityType>
+        <EntityType Name="ClientSaleApplication">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="SalesOrderApplicationID" Nullable="false" />
+          <Property Type="Int32" Name="SalesModelID" Nullable="false" />
+          <Property Type="Int32" Name="ClientUserID" Nullable="false" />
+          <Property Type="Int32" Name="ClientCompanyID" Nullable="false" />
+          <Property Type="Int32" Name="DeliveryModeID" />
+          <Property Type="Int32" Name="ReceivingBankAccountID" />
+          <Property Type="Int32" Name="ClientContactID" Nullable="false" />
+          <Property Type="Decimal" Name="GuaranteeAmount" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="Guaranteeby" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <Property Type="Int32" Name="WorkflowStatusID" Nullable="false" />
+          <Property Type="Int32" Name="CompanyID" Nullable="false" />
+          <Property Type="Boolean" Name="IsGuaranteeTransaction" Nullable="false" />
+          <Property Type="Boolean" Name="IsReturnedGuaranteeAmount" Nullable="false" />
+          <NavigationProperty Name="BankAccount" Relationship="DbModel.FK_ClientSaleApplication_BankAccount" FromRole="ClientSaleApplication" ToRole="BankAccount" />
+          <NavigationProperty Name="ClientCompany" Relationship="DbModel.FK_ClientSaleApplication_ClientCompany" FromRole="ClientSaleApplication" ToRole="ClientCompany" />
+          <NavigationProperty Name="ClientInfoContact" Relationship="DbModel.FK_ClientSaleApplication_ClientInfoContact" FromRole="ClientSaleApplication" ToRole="ClientInfoContact" />
+          <NavigationProperty Name="ClientUser" Relationship="DbModel.FK_ClientSaleApplication_ClientUser" FromRole="ClientSaleApplication" ToRole="ClientUser" />
+          <NavigationProperty Name="Company" Relationship="DbModel.FK_ClientSaleApplication_Company" FromRole="ClientSaleApplication" ToRole="Company" />
+          <NavigationProperty Name="SalesModel" Relationship="DbModel.FK_ClientSaleApplication_SalesModel" FromRole="ClientSaleApplication" ToRole="SalesModel" />
+          <NavigationProperty Name="SalesOrderApplication" Relationship="DbModel.FK_ClientSaleApplication_SalesOrderApplication" FromRole="ClientSaleApplication" ToRole="SalesOrderApplication" />
+          <NavigationProperty Name="WorkflowStatus" Relationship="DbModel.FK_ClientSaleApplication_WorkflowStatus" FromRole="ClientSaleApplication" ToRole="WorkflowStatus" />
+        </EntityType>
+        <Association Name="FK_ClientSaleApplication_BankAccount">
+          <End Type="DbModel.BankAccount" Role="BankAccount" Multiplicity="0..1" />
+          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BankAccount">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplication">
+              <PropertyRef Name="ReceivingBankAccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleApplication_ClientCompany">
+          <End Type="DbModel.ClientCompany" Role="ClientCompany" Multiplicity="1" />
+          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientCompany">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplication">
+              <PropertyRef Name="ClientCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleApplication_ClientInfoContact">
+          <End Type="DbModel.ClientInfoContact" Role="ClientInfoContact" Multiplicity="1" />
+          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientInfoContact">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplication">
+              <PropertyRef Name="ClientContactID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleApplication_ClientUser">
+          <End Type="DbModel.ClientUser" Role="ClientUser" Multiplicity="1" />
+          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplication">
+              <PropertyRef Name="ClientUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleApplication_Company">
+          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplication">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleApplication_SalesModel">
+          <End Type="DbModel.SalesModel" Role="SalesModel" Multiplicity="1" />
+          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesModel">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplication">
+              <PropertyRef Name="SalesModelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleApplication_SalesOrderApplication">
+          <End Type="DbModel.SalesOrderApplication" Role="SalesOrderApplication" Multiplicity="1" />
+          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesOrderApplication">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplication">
+              <PropertyRef Name="SalesOrderApplicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleApplication_WorkflowStatus">
+          <End Type="DbModel.WorkflowStatus" Role="WorkflowStatus" Multiplicity="1" />
+          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplication">
+              <PropertyRef Name="WorkflowStatusID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7765,6 +8103,39 @@
                 <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ClientInfoID" ColumnName="ClientInfoID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SalesModel">
+            <EntityTypeMapping TypeName="DbModel.SalesModel">
+              <MappingFragment StoreEntitySet="SalesModel">
+                <ScalarProperty Name="SalesModelName" ColumnName="SalesModelName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientSaleApplication">
+            <EntityTypeMapping TypeName="DbModel.ClientSaleApplication">
+              <MappingFragment StoreEntitySet="ClientSaleApplication">
+                <ScalarProperty Name="IsReturnedGuaranteeAmount" ColumnName="IsReturnedGuaranteeAmount" />
+                <ScalarProperty Name="IsGuaranteeTransaction" ColumnName="IsGuaranteeTransaction" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="WorkflowStatusID" ColumnName="WorkflowStatusID" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Guaranteeby" ColumnName="Guaranteeby" />
+                <ScalarProperty Name="GuaranteeAmount" ColumnName="GuaranteeAmount" />
+                <ScalarProperty Name="ClientContactID" ColumnName="ClientContactID" />
+                <ScalarProperty Name="ReceivingBankAccountID" ColumnName="ReceivingBankAccountID" />
+                <ScalarProperty Name="DeliveryModeID" ColumnName="DeliveryModeID" />
+                <ScalarProperty Name="ClientCompanyID" ColumnName="ClientCompanyID" />
+                <ScalarProperty Name="ClientUserID" ColumnName="ClientUserID" />
+                <ScalarProperty Name="SalesModelID" ColumnName="SalesModelID" />
+                <ScalarProperty Name="SalesOrderApplicationID" ColumnName="SalesOrderApplicationID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

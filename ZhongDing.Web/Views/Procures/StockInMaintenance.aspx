@@ -46,7 +46,7 @@
                                 </div>
                             </div>
                             <div class="float-left">
-                                <label>申请人</label>
+                                <label>操作人</label>
                                 <div class="mws-form-item toppadding5">
                                     <asp:Label ID="lblCreateBy" runat="server"></asp:Label>
                                 </div>
@@ -263,22 +263,15 @@
                                                             </span>
                                                         </EditItemTemplate>
                                                     </telerik:GridTemplateColumn>
-                                                    <telerik:GridCheckBoxColumn UniqueName="IsMortgagedProduct" HeaderText="抵款货物" DataField="IsMortgagedProduct" SortExpression="IsMortgagedProduct">
-                                                        <HeaderStyle Width="80" />
-                                                        <ItemStyle HorizontalAlign="Left" Width="80" />
+                                                    <telerik:GridCheckBoxColumn UniqueName="IsMortgagedProduct" HeaderText="抵款货物?" DataField="IsMortgagedProduct" SortExpression="IsMortgagedProduct">
+                                                        <HeaderStyle Width="120" />
+                                                        <ItemStyle HorizontalAlign="Left" Width="120" />
                                                     </telerik:GridCheckBoxColumn>
                                                     <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete"
                                                         ButtonType="LinkButton" ConfirmText="确认删除该条数据吗？">
-                                                        <HeaderStyle Width="80" />
-                                                        <ItemStyle HorizontalAlign="Justify" Width="80" />
+                                                        <HeaderStyle Width="140" />
+                                                        <ItemStyle HorizontalAlign="Justify" Width="140" />
                                                     </telerik:GridButtonColumn>
-                                                    <telerik:GridTemplateColumn UniqueName="ToBeInQty" DataField="ToBeInQty" HeaderText="">
-                                                        <HeaderStyle Width="100" />
-                                                        <ItemStyle HorizontalAlign="Left" Width="100" />
-                                                        <ItemTemplate>
-                                                            <span class="width60">&nbsp;</span>
-                                                        </ItemTemplate>
-                                                    </telerik:GridTemplateColumn>
                                                 </Columns>
                                                 <NoRecordsTemplate>
                                                     没有任何数据

@@ -40,21 +40,6 @@
                             <asp:ValidationSummary ID="vsMaintenance" runat="server" ValidationGroup="vgMaintenance" DisplayMode="BulletList" HeaderText="请更正以下错误:" CssClass="validation-summary-errors" />
                         </div>
                     </div>
-                    <div class="mws-form-row" style="padding-top: 0px; padding-left: 0px;">
-                        <table runat="server" id="tblSearch" class="leftmargin10 hide">
-                            <tr class="height40">
-                                <th class="width100">仓库：</th>
-                                <td>
-                                    <telerik:RadComboBox runat="server" ID="rcbxWarehouse" Filter="Contains"
-                                        AllowCustomText="false" Height="160px" EmptyMessage="--请选择--">
-                                    </telerik:RadComboBox>
-                                </td>
-                                <td class="leftpadding20">
-                                    <asp:Button ID="btnSearch" runat="server" Text="查询" CssClass="mws-button green" OnClick="btnSearch_Click" />
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
                     <div class="mws-form-row" style="padding-top: 0px; padding-left: 0px; padding-right: 1px;">
                         <telerik:RadGrid ID="rgSalesOrderAppDetails" runat="server" PageSize="10"
                             AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false" AllowMultiRowSelection="true"

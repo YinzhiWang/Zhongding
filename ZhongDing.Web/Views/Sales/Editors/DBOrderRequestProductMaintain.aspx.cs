@@ -127,7 +127,7 @@ namespace ZhongDing.Web.Views.Sales.Editors
         {
             if (productID > 0)
             {
-                ddlProductSpecification.ClearSelection();
+                ddlProductSpecification.Items.Clear();
 
                 var productSpecifications = PageProductSpecificationRepository.GetDropdownItems(new UISearchDropdownItem()
                 {
@@ -150,8 +150,6 @@ namespace ZhongDing.Web.Views.Sales.Editors
 
                 if (dbRequestApp != null)
                 {
-                    BindProducts(dbRequestApp.DepartmentID);
-
                     var dbRequestAppDetail = dbRequestApp.DaBaoRequestAppDetail
                         .Where(x => x.IsDeleted == false && x.ID == this.CurrentEntityID).FirstOrDefault();
 

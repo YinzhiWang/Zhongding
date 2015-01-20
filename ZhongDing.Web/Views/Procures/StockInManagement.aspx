@@ -90,7 +90,7 @@
                             <telerik:GridBoundColumn UniqueName="SupplierName" HeaderText="供应商" DataField="SupplierName">
                                 <ItemStyle HorizontalAlign="Left" Width="25%" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="CreatedBy" HeaderText="制单人" DataField="CreatedBy">
+                            <telerik:GridBoundColumn UniqueName="CreatedBy" HeaderText="操作人" DataField="CreatedBy">
                                 <ItemStyle HorizontalAlign="Left" Width="100" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="WorkflowStatus" HeaderText="状态" DataField="WorkflowStatus">
