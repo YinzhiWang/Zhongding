@@ -47,7 +47,7 @@
                             ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
                             OnNeedDataSource="rgSalesOrderAppDetails_NeedDataSource" OnItemDataBound="rgSalesOrderAppDetails_ItemDataBound">
                             <MasterTableView Width="100%" DataKeyNames="ID,SalesOrderApplicationID,ProductID,ProductSpecificationID" CommandItemDisplay="None"
-                                ShowHeadersWhenNoRecords="true" BackColor="#fafafa" ClientDataKeyNames="ID,ToBeOutQty">
+                                ShowHeadersWhenNoRecords="true" BackColor="#fafafa" ClientDataKeyNames="ID,ProductID,ProductSpecificationID,ToBeOutQty">
                                 <Columns>
                                     <telerik:GridClientSelectColumn UniqueName="ClientSelectColumn" HeaderText="全选">
                                         <HeaderStyle Width="40" />
@@ -70,7 +70,7 @@
                                         <ItemStyle HorizontalAlign="Left" Width="120" />
                                         <ItemTemplate>
                                             <telerik:RadDropDownList runat="server" ID="ddlWarehouse" DefaultMessage="--请选择--" Width="100" OnItemDataBound="ddlWarehouse_ItemDataBound"
-                                                OnClientSelectedIndexChanged="onClientSelectedWarehouse">
+                                                OnClientItemSelecting="onClientSelectingWarehouse" OnClientSelectedIndexChanged="onClientSelectedWarehouse">
                                             </telerik:RadDropDownList>
                                         </ItemTemplate>
                                     </telerik:GridTemplateColumn>
@@ -176,6 +176,28 @@
             closeWindow(false);
         }
 
+        function onClientSelectingWarehouse(sender, eventArgs) {
+            //debugger;
+
+            var gridItem = sender.get_parent();
+
+            if (gridItem) {
+
+                var selectingItem = eventArgs.get_item();
+
+                var validBalanceQty = calculateValidInventory(gridItem, selectingItem);
+
+                if (validBalanceQty <= 0) {
+                    var radNotification = $find("<%=radNotification.ClientID%>");
+
+                    radNotification.set_text("该货品在 " + selectingItem.get_text() + " 仓库中可用库存为0，不能出库");
+                    radNotification.show();
+
+                    eventArgs.set_cancel(true);
+                }
+            }
+        }
+
         function onClientSelectedWarehouse(sender, eventArgs) {
             //debugger;
 
@@ -186,18 +208,20 @@
             if (extensionAttr) {
                 var extensionData = JSON.parse(extensionAttr);
 
-                var gridRow = sender.get_parent();
-                if (gridRow) {
+                var gridItem = sender.get_parent();
 
-                    var lblBalanceQty = $($telerik.findElement(gridRow.get_element(), "lblBalanceQty"));
+                if (gridItem) {
+
+                    var gridItemElement = gridItem.get_element();
+
+                    var lblBalanceQty = $($telerik.findElement(gridItemElement, "lblBalanceQty"));
 
                     if (lblBalanceQty)
                         lblBalanceQty.text(extensionData.BalanceQty);
 
-                    var txtCurrentOutQty = $telerik.findControl(gridRow.get_element(), "txtCurrentOutQty");
+                    var txtCurrentOutQty = $telerik.findControl(gridItemElement, "txtCurrentOutQty");
 
-                    var dataItemIndex = gridRow.get_itemIndex();
-                    var toBeOutQty = parseInt(gridRow.get_owner().get_dataItems()[dataItemIndex].getDataKeyValue("ToBeOutQty"));
+                    var toBeOutQty = parseInt(gridItem.getDataKeyValue("ToBeOutQty"));
 
                     if (toBeOutQty > extensionData.BalanceQty)
                         txtCurrentOutQty.set_maxValue(extensionData.BalanceQty);
@@ -215,16 +239,17 @@
         function onCurrentOutQtyChanging(sender, eventArgs) {
             //debugger;
 
-            var newValue = eventArgs.get_newValue();
+            var gridItem = sender.get_parent();
 
-            if (newValue) {
+            if (gridItem) {
 
-                var gridRow = sender.get_parent();
+                var validBalanceQty = calculateValidInventory(gridItem);
 
-                if (gridRow) {
+                var newValue = eventArgs.get_newValue();
 
-                    var dataItemIndex = gridRow.get_itemIndex();
-                    var toBeOutQty = parseInt(gridRow.get_owner().get_dataItems()[dataItemIndex].getDataKeyValue("ToBeOutQty"));
+                if (newValue) {
+
+                    var toBeOutQty = parseInt(gridItem.getDataKeyValue("ToBeOutQty"));
 
                     if (newValue > toBeOutQty) {
 
@@ -236,60 +261,33 @@
                         eventArgs.set_cancel(true);
                     }
 
-                    var ddlWarehouse = $telerik.findControl(gridRow.get_element(), "ddlWarehouse");
+                    if (newValue > validBalanceQty) {
 
-                    var selectedItem = ddlWarehouse.get_selectedItem();
+                        var radNotification = $find("<%=radNotification.ClientID%>");
 
-                    if (selectedItem) {
+                        radNotification.set_text("本次发出数量不能大于可用库存数量：" + validBalanceQty);
+                        radNotification.show();
 
-                        var extensionAttr = selectedItem.get_attributes().getAttribute("Extension");
-
-                        if (extensionAttr) {
-
-                            var extensionData = JSON.parse(extensionAttr);
-
-                            if (newValue > extensionData.BalanceQty) {
-
-                                var radNotification = $find("<%=radNotification.ClientID%>");
-
-                                radNotification.set_text("本次发出数量必须小于库存数量：" + extensionData.BalanceQty);
-                                radNotification.show();
-
-                                eventArgs.set_cancel(true);
-                            }
-                        }
+                        sender.set_value(validBalanceQty);
+                        sender.set_maxValue(validBalanceQty);
                     }
                 }
-            }
-            else {
-                var radNotification = $find("<%=radNotification.ClientID%>");
+                else {
+                    var radNotification = $find("<%=radNotification.ClientID%>");
 
-                radNotification.set_text("本次发出数量为必填项");
-                radNotification.show();
+                    radNotification.set_text("本次发出数量为必填项");
+                    radNotification.show();
 
-                eventArgs.set_cancel(true);
+                    eventArgs.set_cancel(true);
+                }
             }
         }
 
         function onRowSelecting(sender, eventArgs) {
+            //debugger;
 
             var selectingItem = eventArgs.get_gridDataItem();
             var selectingElement = selectingItem.get_element();
-
-            var ddlWarehouse = $telerik.findControl(selectingElement, "ddlWarehouse");
-            var selectedWarehouseItem = ddlWarehouse.get_selectedItem();
-            if (selectedWarehouseItem == null
-                || selectedWarehouseItem == undefined) {
-
-                var radNotification = $find("<%=radNotification.ClientID%>");
-
-                radNotification.set_text("请选择仓库" + extensionData.BalanceQty);
-                radNotification.show();
-
-                eventArgs.set_cancel(true);
-
-                return;
-            }
 
             var txtCurrentOutQty = $telerik.findControl(selectingElement, "txtCurrentOutQty");
             var currentOutQty = txtCurrentOutQty.get_value();
@@ -297,13 +295,168 @@
             if (currentOutQty == null) {
                 var radNotification = $find("<%=radNotification.ClientID%>");
 
-                radNotification.set_text("本次发出数量为必填项" + extensionData.BalanceQty);
+                radNotification.set_text("本次发出数量为必填项");
                 radNotification.show();
 
                 eventArgs.set_cancel(true);
-
-                return;
             }
+            else {
+                var totalBalanceQty = 0;
+
+                var toBeOutQty = parseInt(selectingItem.getDataKeyValue("ToBeOutQty"));
+
+                var productID = parseInt(selectingItem.getDataKeyValue("ProductID"));
+                var productSpecificationID = parseInt(selectingItem.getDataKeyValue("ProductSpecificationID"));
+                var warehouseID = 0;
+
+                var ddlWarehouse = $telerik.findControl(selectingElement, "ddlWarehouse");
+                var selectedWarehouseItem = ddlWarehouse.get_selectedItem();
+                var warehouseName = "";
+                if (selectedWarehouseItem) {
+                    warehouseID = selectedWarehouseItem.get_value();
+                    warehouseName = selectedWarehouseItem.get_text();
+
+                    var extensionAttr = selectedWarehouseItem.get_attributes().getAttribute("Extension");
+                    if (extensionAttr) {
+                        var extensionData = JSON.parse(extensionAttr);
+                        totalBalanceQty = extensionData.BalanceQty
+                    }
+                }
+
+                var selectedTotalOutQty = 0;
+
+                //获取已经选中的items
+                var selectedItems = eventArgs.get_tableView().get_selectedItems();
+
+                for (var i = 0; i < selectedItems.length; i++) {
+                    var curSelectedItem = selectedItems[i];
+                    var curSelectedItemElement = curSelectedItem.get_element();
+
+                    var curProductID = parseInt(curSelectedItem.getDataKeyValue("ProductID"));
+                    var curProductSpecificationID = parseInt(curSelectedItem.getDataKeyValue("ProductSpecificationID"));
+                    var curWarehouseID = 0;
+
+                    var curWarehouseControl = $telerik.findControl(curSelectedItemElement, "ddlWarehouse");
+                    var curSelectedWarehouseItem = curWarehouseControl.get_selectedItem();
+                    if (curSelectedWarehouseItem) {
+                        curWarehouseID = curSelectedWarehouseItem.get_value();
+                    }
+
+                    if (curProductID === productID && curWarehouseID === warehouseID
+                        && curProductSpecificationID === productSpecificationID) {
+
+                        var curCurrentOutQtyControl = $telerik.findControl(curSelectedItemElement, "txtCurrentOutQty");
+                        var curCurrentOutQty = curCurrentOutQtyControl.get_value();
+
+                        if (curCurrentOutQty) {
+                            selectedTotalOutQty += parseInt(curCurrentOutQty);
+                        }
+                    }
+                }
+
+                var curBalanceQty = totalBalanceQty - selectedTotalOutQty;
+
+                if (curBalanceQty == 0) {
+                    var radNotification = $find("<%=radNotification.ClientID%>");
+
+                    radNotification.set_text("该货品在 " + warehouseName + " 仓库中可用库存为0，不能出库");
+                    radNotification.show();
+
+                    eventArgs.set_cancel(true);
+                }
+                else {
+                    if (currentOutQty > curBalanceQty) {
+                        txtCurrentOutQty.set_value(curBalanceQty);
+                        txtCurrentOutQty.set_maxValue(curBalanceQty);
+                    }
+                    else {
+                        if (curBalanceQty > toBeOutQty) {
+                            txtCurrentOutQty.set_value(toBeOutQty);
+                            txtCurrentOutQty.set_maxValue(toBeOutQty);
+                        }
+                        else {
+                            txtCurrentOutQty.set_value(curBalanceQty);
+                            txtCurrentOutQty.set_maxValue(curBalanceQty);
+                        }
+                    }
+                }
+            }
+        }
+
+        function calculateValidInventory(gridItem, selectingWarehouseItem) {
+
+            var gridItemElement = gridItem.get_element();
+
+            var totalBalanceQty = 0;
+
+            var id = parseInt(gridItem.getDataKeyValue("ID"));
+            var toBeOutQty = parseInt(gridItem.getDataKeyValue("ToBeOutQty"));
+            var productID = parseInt(gridItem.getDataKeyValue("ProductID"));
+            var productSpecificationID = parseInt(gridItem.getDataKeyValue("ProductSpecificationID"));
+            var warehouseID = 0;
+            var currentOutQty = 0;
+
+            var warehouseItem = null;
+
+            if (selectingWarehouseItem) {
+                warehouseItem = selectingWarehouseItem;
+            }
+            else {
+                var ddlWarehouse = $telerik.findControl(gridItemElement, "ddlWarehouse");
+                var selectedWarehouseItem = ddlWarehouse.get_selectedItem();
+                if (selectedWarehouseItem) {
+                    warehouseItem = selectedWarehouseItem;
+                }
+            }
+
+            if (warehouseItem) {
+                warehouseID = warehouseItem.get_value();
+                var extensionAttr = warehouseItem.get_attributes().getAttribute("Extension");
+                if (extensionAttr) {
+                    var extensionData = JSON.parse(extensionAttr);
+                    totalBalanceQty = extensionData.BalanceQty
+                }
+            }
+
+            var txtCurrentOutQty = $telerik.findControl(gridItemElement, "txtCurrentOutQty");
+            var tempCurrentOutQty = txtCurrentOutQty.get_value();
+            if (tempCurrentOutQty) {
+                currentOutQty = parseInt(tempCurrentOutQty);
+            }
+
+            var selectedTotalOutQty = 0;
+
+            //获取已经选中的items
+            var selectedItems = gridItem.get_owner().get_selectedItems();
+
+            for (var i = 0; i < selectedItems.length; i++) {
+                var curSelectedItem = selectedItems[i];
+                var curSelectedItemElement = curSelectedItem.get_element();
+
+                var curId = parseInt(curSelectedItem.getDataKeyValue("ID"));
+                var curProductID = parseInt(curSelectedItem.getDataKeyValue("ProductID"));
+                var curProductSpecificationID = parseInt(curSelectedItem.getDataKeyValue("ProductSpecificationID"));
+                var curWarehouseID = 0;
+
+                var curWarehouseControl = $telerik.findControl(curSelectedItemElement, "ddlWarehouse");
+                var curSelectedWarehouseItem = curWarehouseControl.get_selectedItem();
+                if (curSelectedWarehouseItem) {
+                    curWarehouseID = curSelectedWarehouseItem.get_value();
+                }
+
+                if (curProductID === productID && curWarehouseID === warehouseID
+                    && curProductSpecificationID === productSpecificationID && curId != id) {
+
+                    var curCurrentOutQtyControl = $telerik.findControl(curSelectedItemElement, "txtCurrentOutQty");
+                    var curCurrentOutQty = curCurrentOutQtyControl.get_value();
+
+                    if (curCurrentOutQty) {
+                        selectedTotalOutQty += parseInt(curCurrentOutQty);
+                    }
+                }
+            }
+
+            return totalBalanceQty - selectedTotalOutQty;
         }
 
     </script>

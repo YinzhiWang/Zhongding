@@ -117,7 +117,22 @@ namespace ZhongDing.Web
                 FormsAuthentication.SignOut();
                 Session.Clear();
 
-                string redirectUrl = FormsAuthentication.LoginUrl + "?ReturnUrl=" + Server.UrlEncode(HttpContext.Current.Request.Url.AbsoluteUri);
+                string redirectUrl = FormsAuthentication.LoginUrl;
+
+                string requestUrl = HttpContext.Current.Request.Url == null
+                    ? string.Empty : HttpContext.Current.Request.Url.AbsoluteUri;
+
+                //如果该请求页面是在window里打开，则取父页面的url
+                if (!string.IsNullOrEmpty(requestUrl) && requestUrl.IndexOf("&rwndrnd=") > -1)
+                {
+                    string referUrl = HttpContext.Current.Request.UrlReferrer == null
+                        ? string.Empty : HttpContext.Current.Request.UrlReferrer.AbsoluteUri;
+
+                    if (!string.IsNullOrEmpty(referUrl))
+                        redirectUrl += "?ReturnUrl=" + Server.UrlEncode(referUrl);
+                }
+                else
+                    redirectUrl += "?ReturnUrl=" + Server.UrlEncode(requestUrl);
 
                 Response.Redirect(redirectUrl, true);
             }
