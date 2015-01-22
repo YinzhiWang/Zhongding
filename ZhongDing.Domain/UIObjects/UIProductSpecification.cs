@@ -15,5 +15,7 @@ namespace ZhongDing.Domain.UIObjects
         public int? NumberInSmallPackage { get; set; }
 
         public int? NumberInLargePackage { get; set; }
+
+        public string LicenseNumber { get; set; }
     }
 }

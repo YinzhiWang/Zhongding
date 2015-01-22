@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using ZhongDing.Business.IRepositories;
+using ZhongDing.Common;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
@@ -15,7 +16,73 @@ namespace ZhongDing.Business.Repositories
     {
         public IList<UIClientSaleApplication> GetUIList(UISearchClientSaleApplication uiSearchObj = null)
         {
-            throw new NotImplementedException();
+            IList<UIClientSaleApplication> uiEntities = new List<UIClientSaleApplication>();
+
+            IQueryable<ClientSaleApplication> query = null;
+
+            List<Expression<Func<ClientSaleApplication, bool>>> whereFuncs = new List<Expression<Func<ClientSaleApplication, bool>>>();
+
+            if (uiSearchObj != null)
+            {
+                if (uiSearchObj.ID > 0)
+                    whereFuncs.Add(x => x.ID.Equals(uiSearchObj.ID));
+
+                if (uiSearchObj.ClientUserID > 0)
+                    whereFuncs.Add(x => x.ClientUserID == uiSearchObj.ClientUserID);
+
+                if (uiSearchObj.ClientCompanyID > 0)
+                    whereFuncs.Add(x => x.ClientCompanyID == uiSearchObj.ClientCompanyID);
+
+                if (uiSearchObj.WorkflowStatusID > 0)
+                    whereFuncs.Add(x => x.WorkflowStatusID == uiSearchObj.WorkflowStatusID);
+
+                if (uiSearchObj.IncludeWorkflowStatusIDs != null
+                    && uiSearchObj.IncludeWorkflowStatusIDs.Count() > 0)
+                    whereFuncs.Add(x => uiSearchObj.IncludeWorkflowStatusIDs.Contains(x.WorkflowStatusID));
+
+                if (uiSearchObj.BeginDate.HasValue)
+                    whereFuncs.Add(x => x.CreatedOn >= uiSearchObj.BeginDate);
+
+                if (uiSearchObj.EndDate.HasValue)
+                {
+                    uiSearchObj.EndDate = uiSearchObj.EndDate.Value.AddDays(1);
+                    whereFuncs.Add(x => x.CreatedOn < uiSearchObj.EndDate);
+                }
+
+            }
+
+            query = GetList(whereFuncs);
+
+            if (query != null)
+            {
+                uiEntities = (from q in query
+                              join soa in DB.SalesOrderApplication on q.SalesOrderApplicationID equals soa.ID
+                              join sm in DB.SalesModel on q.SalesModelID equals sm.ID
+                              join cu in DB.ClientUser on q.ClientUserID equals cu.ID
+                              join cc in DB.ClientCompany on q.ClientCompanyID equals cc.ID
+                              select new UIClientSaleApplication()
+                              {
+                                  ID = q.ID,
+                                  OrderCode = soa.OrderCode,
+                                  OrderDate = soa.OrderDate,
+                                  SalesModel = sm.SalesModelName,
+                                  ClientUserName = cu.ClientName,
+                                  ClientCompanyName = cc.Name,
+                                  IsGuaranteed = q.IsGuaranteed,
+                                  IsReceiptedGuaranteeAmount = q.GuaranteeLog.Any(x => x.IsDeleted == false && x.IsReceipted == true),
+                                  IsStop = soa.IsStop
+                              }).ToList();
+
+                foreach (var uiEntity in uiEntities.Where(x => x.IsGuaranteed == true))
+                {
+                    if (uiEntity.IsReceiptedGuaranteeAmount)
+                        uiEntity.IconUrlOfGuarantee = GlobalConst.Icons.ICON_GUARANTEE_RECEIPTED;
+                    else
+                        uiEntity.IconUrlOfGuarantee = GlobalConst.Icons.ICON_GUARANTEE_NOT_RECEIPTED;
+                }
+            }
+
+            return uiEntities;
         }
 
         public IList<UIClientSaleApplication> GetUIList(UISearchClientSaleApplication uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
@@ -74,23 +141,30 @@ namespace ZhongDing.Business.Repositories
                                   SalesModel = sm.SalesModelName,
                                   ClientUserName = cu.ClientName,
                                   ClientCompanyName = cc.Name,
-                                  IsGuaranteeTransaction = q.IsGuaranteeTransaction,
-                                  IsReturnedGuaranteeAmount = q.IsReturnedGuaranteeAmount,
+                                  IsGuaranteed = q.IsGuaranteed,
+                                  IsReceiptedGuaranteeAmount = q.GuaranteeLog.Any(x => x.IsDeleted == false && x.IsReceipted == true),
                                   IsStop = soa.IsStop
                               }).ToList();
 
-                foreach (var uiEntity in uiEntities.Where(x => x.IsGuaranteeTransaction == true))
+                foreach (var uiEntity in uiEntities.Where(x => x.IsGuaranteed == true))
                 {
-                    if (uiEntity.IsReturnedGuaranteeAmount)
-                        uiEntity.IconUrlOfGuarantee = "";
+                    if (uiEntity.IsReceiptedGuaranteeAmount)
+                        uiEntity.IconUrlOfGuarantee = GlobalConst.Icons.ICON_GUARANTEE_RECEIPTED;
                     else
-                        uiEntity.IconUrlOfGuarantee = "";
+                        uiEntity.IconUrlOfGuarantee = GlobalConst.Icons.ICON_GUARANTEE_NOT_RECEIPTED;
                 }
             }
 
             totalRecords = total;
 
             return uiEntities;
+        }
+
+        public int? GetMaxEntityID()
+        {
+            if (this.DB.ClientSaleApplication.Count() > 0)
+                return this.DB.ClientSaleApplication.Max(x => x.ID);
+            else return null;
         }
     }
 }

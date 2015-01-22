@@ -47,8 +47,8 @@ namespace ZhongDing.Domain.Models
         public virtual ProcureOrderAppDetail ProcureOrderAppDetail { get; set; }
         public virtual ProcureOrderApplication ProcureOrderApplication { get; set; }
         public virtual Product Product { get; set; }
-        public virtual ProductSpecification ProductSpecification { get; set; }
         public virtual StockIn StockIn { get; set; }
         public virtual Warehouse Warehouse { get; set; }
+        public virtual ProductSpecification ProductSpecification { get; set; }
     }
 }

@@ -82,6 +82,7 @@ namespace ZhongDing.Web.Views.Basics
 
         private void BindClientCompanies()
         {
+            rcbxClientCompany.ClearSelection();
             rcbxClientCompany.Items.Clear();
 
             var uiSearchObj = new UISearchDropdownItem();

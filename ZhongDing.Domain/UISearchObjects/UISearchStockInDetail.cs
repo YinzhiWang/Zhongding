@@ -17,5 +17,10 @@ namespace ZhongDing.Domain.UISearchObjects
         public int ProductSpecificationID { get; set; }
 
         public int SupplierID { get; set; }
+
+        /// <summary>
+        /// 是否排除过期的货品
+        /// </summary>
+        public bool ExcludeExpired { get; set; }
     }
 }

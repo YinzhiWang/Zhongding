@@ -195,6 +195,9 @@
                                                     <telerik:GridBoundColumn UniqueName="NumberInLargePackage" HeaderText="每件数量" DataField="NumberInLargePackage">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="LicenseNumber" HeaderText="批准文号" DataField="LicenseNumber">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
                                                     <telerik:GridTemplateColumn UniqueName="Edit" HeaderStyle-Width="40">
                                                         <ItemStyle HorizontalAlign="Center" Width="40" />
                                                         <ItemTemplate>
@@ -377,7 +380,7 @@
             var targetUrl = $.getRootPath() + "Views/Products/Editors/ProductSpecificationMaintain.aspx?EntityID=" + id
                 + "&OwnerEntityID=" + currentEntityID + "&GridClientID=" + gridClientIDs.gridProductSpecifications;
 
-            $.openRadWindow(targetUrl, "winProductSpecification", true, 800, 380);
+            $.openRadWindow(targetUrl, "winProductSpecification", true, 800, 320);
         }
 
         function openCertificateWindow(id, ownerTypeID, gridClientID) {

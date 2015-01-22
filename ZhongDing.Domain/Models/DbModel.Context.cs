@@ -39,7 +39,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<Product> Product { get; set; }
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<ProductCertificate> ProductCertificate { get; set; }
-        public DbSet<ProductSpecification> ProductSpecification { get; set; }
         public DbSet<Roles> Roles { get; set; }
         public DbSet<SaleType> SaleType { get; set; }
         public DbSet<Supplier> Supplier { get; set; }
@@ -97,6 +96,9 @@ namespace ZhongDing.Domain.Models
         public DbSet<NoteType> NoteType { get; set; }
         public DbSet<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
         public DbSet<SalesModel> SalesModel { get; set; }
+        public DbSet<ProductSpecification> ProductSpecification { get; set; }
+        public DbSet<ClientSaleAppBankAccount> ClientSaleAppBankAccount { get; set; }
+        public DbSet<GuaranteeLog> GuaranteeLog { get; set; }
         public DbSet<ClientSaleApplication> ClientSaleApplication { get; set; }
     }
 }

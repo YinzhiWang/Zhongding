@@ -368,6 +368,7 @@ namespace ZhongDing.Business.Repositories
                                                     where si.IsDeleted == false && si.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse
                                                     && sid.IsDeleted == false && sid.ProductID == q.ProductID
                                                     && sid.ProductSpecificationID == q.ProductSpecificationID
+                                                    && sid.ExpirationDate > DateTime.Now //过期的货品不能出库
                                                     select new
                                                     {
                                                         sid.ProductID,
@@ -500,6 +501,7 @@ namespace ZhongDing.Business.Repositories
                                                    where si.IsDeleted == false && si.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse
                                                    && sid.IsDeleted == false && sid.ProductID == q.ProductID
                                                    && sid.ProductSpecificationID == q.ProductSpecificationID
+                                                   && sid.ExpirationDate > DateTime.Now //过期的货品不能出库
                                                    select new
                                                    {
                                                        sid.ProductID,

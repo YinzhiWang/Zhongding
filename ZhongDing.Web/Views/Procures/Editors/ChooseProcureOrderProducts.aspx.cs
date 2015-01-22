@@ -162,6 +162,7 @@ namespace ZhongDing.Web.Views.Procures.Editors
                 int procureCount = Convert.ToInt32(Utility.GetValueFromObject(newValues["ProcureCount"]));
                 decimal procurePrice = Convert.ToDecimal(Utility.GetValueFromObject(newValues["ProcurePrice"]));
                 decimal numberOfPackages = Convert.ToDecimal(Utility.GetValueFromObject(newValues["NumberOfPackages"]));
+                string licenseNumber = Utility.GetValueFromObject(newValues["LicenseNumber"]);
                 int inQty = Convert.ToInt32(Utility.GetValueFromObject(newValues["InQty"]));
                 int toBeInQty = Convert.ToInt32(Utility.GetValueFromObject(newValues["ToBeInQty"]));
 
@@ -183,6 +184,7 @@ namespace ZhongDing.Web.Views.Procures.Editors
                         UnitOfMeasurement = unitOfMeasurement,
                         ProcureCount = procureCount,
                         ProcurePrice = procurePrice,
+                        LicenseNumber = licenseNumber,
                         NumberOfPackages = numberOfPackages,
                         InQty = toBeInQty,
                         ToBeInQty = toBeInQty,

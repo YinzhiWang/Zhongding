@@ -234,6 +234,11 @@ namespace ZhongDing.Common
                 /// 大包配送订单编号
                 /// </summary>
                 public static readonly string DABAO_ORDER = "DB-" + DateTime.Now.ToString("yyyy-MM-dd") + "-";
+
+                /// <summary>
+                /// 客户订单编号
+                /// </summary>
+                public static readonly string CLIENT_ORDER = "KH-" + DateTime.Now.ToString("yyyy-MM-dd") + "-";
             }
 
         }
@@ -331,6 +336,45 @@ namespace ZhongDing.Common
             public static readonly string COLUMN_DELETE = "Delete";
         }
 
+
+        #endregion
+
+        #region Icons
+
+        /// <summary>
+        /// 常量类：静态图标
+        /// </summary>
+        public class Icons
+        {
+            /// <summary>
+            /// 客户订单发货模式为担保模式，且担保金额未收回
+            /// </summary>
+            public static readonly string ICON_GUARANTEE_NOT_RECEIPTED = "~/Images/guarantee.png";
+
+            /// <summary>
+            /// 客户订单发货模式为担保模式，且担保金额已收回
+            /// </summary>
+            public static readonly string ICON_GUARANTEE_RECEIPTED = "~/Images/guarantee_grey.png";
+        }
+        #endregion
+
+        #region 发货模式
+
+        /// <summary>
+        /// 常量类：发货模式
+        /// </summary>
+        public class DeliveryModes
+        {
+            /// <summary>
+            /// 查款发货
+            /// </summary>
+            public static readonly string RECEIPTED_DELIVERY = "查款发货";
+
+            /// <summary>
+            /// 担保发货
+            /// </summary>
+            public static readonly string GUARANTEE_DELIVERY = "担保发货";
+        }
 
         #endregion
 

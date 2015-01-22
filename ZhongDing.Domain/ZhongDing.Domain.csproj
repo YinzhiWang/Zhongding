@@ -98,6 +98,9 @@
     <Compile Include="Models\ClientInfoProductSetting.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClientSaleAppBankAccount.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ClientSaleApplication.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -168,6 +171,9 @@
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DistributionCompany.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\GuaranteeLog.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Hospital.cs">

@@ -13,21 +13,14 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class SalesOrderAppDetail : IEntityExtendedProperty
+    public partial class GuaranteeLog : IEntityExtendedProperty
     {
-        public SalesOrderAppDetail()
-        {
-            this.StockOutDetail = new HashSet<StockOutDetail>();
-        }
-    
         public int ID { get; set; }
-        public int SalesOrderApplicationID { get; set; }
-        public int ProductID { get; set; }
-        public int ProductSpecificationID { get; set; }
-        public int Count { get; set; }
-        public decimal SalesPrice { get; set; }
-        public decimal TotalSalesAmount { get; set; }
-        public Nullable<int> GiftCount { get; set; }
+        public int ClientSaleApplicationID { get; set; }
+        public Nullable<decimal> GuaranteeAmount { get; set; }
+        public Nullable<int> Guaranteeby { get; set; }
+        public Nullable<System.DateTime> GuaranteeExpirationDate { get; set; }
+        public bool IsReceipted { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -44,9 +37,6 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual Product Product { get; set; }
-        public virtual SalesOrderApplication SalesOrderApplication { get; set; }
-        public virtual ICollection<StockOutDetail> StockOutDetail { get; set; }
-        public virtual ProductSpecification ProductSpecification { get; set; }
+        public virtual ClientSaleApplication ClientSaleApplication { get; set; }
     }
 }

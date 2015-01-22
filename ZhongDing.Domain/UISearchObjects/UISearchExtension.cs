@@ -72,6 +72,11 @@ namespace ZhongDing.Domain.UISearchObjects
         public int ClientUserID { get; set; }
 
         /// <summary>
+        /// 客户商业单位ID
+        /// </summary>
+        public int ClientCompanyID { get; set; }
+
+        /// <summary>
         /// 供应商ID
         /// </summary>
         public int SupplierID { get; set; }

@@ -235,7 +235,7 @@ namespace ZhongDing.Web.Views.Sales
                     this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
                     this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
                     this.Master.BaseNotification.AutoCloseDelay = 1000;
-                    this.Master.BaseNotification.Show("您没有权限新增采购订单");
+                    this.Master.BaseNotification.Show("您没有权限新增大包配送申请单");
                 }
             }
         }

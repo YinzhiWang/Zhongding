@@ -15,15 +15,19 @@ namespace ZhongDing.Domain.Models
     [Serializable]
     public partial class ClientSaleApplication : IEntityExtendedProperty
     {
+        public ClientSaleApplication()
+        {
+            this.ClientSaleAppBankAccount = new HashSet<ClientSaleAppBankAccount>();
+            this.GuaranteeLog = new HashSet<GuaranteeLog>();
+        }
+    
         public int ID { get; set; }
         public int SalesOrderApplicationID { get; set; }
         public int SalesModelID { get; set; }
         public int ClientUserID { get; set; }
         public int ClientCompanyID { get; set; }
         public Nullable<int> DeliveryModeID { get; set; }
-        public Nullable<int> ReceivingBankAccountID { get; set; }
         public int ClientContactID { get; set; }
-        public Nullable<decimal> GuaranteeAmount { get; set; }
         public Nullable<int> Guaranteeby { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
@@ -32,8 +36,13 @@ namespace ZhongDing.Domain.Models
         public Nullable<int> LastModifiedBy { get; set; }
         public int WorkflowStatusID { get; set; }
         public int CompanyID { get; set; }
-        public bool IsGuaranteeTransaction { get; set; }
-        public bool IsReturnedGuaranteeAmount { get; set; }
+        public bool IsGuaranteed { get; set; }
+        public Nullable<System.DateTime> GuaranteeExpirationDate { get; set; }
+        public string ClientContactPhone { get; set; }
+        public string ReceiverName { get; set; }
+        public string ReceiverPhone { get; set; }
+        public string ReceiverAddress { get; set; }
+        public string ReceiverFax { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -45,13 +54,14 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual BankAccount BankAccount { get; set; }
         public virtual ClientCompany ClientCompany { get; set; }
         public virtual ClientInfoContact ClientInfoContact { get; set; }
+        public virtual ICollection<ClientSaleAppBankAccount> ClientSaleAppBankAccount { get; set; }
         public virtual ClientUser ClientUser { get; set; }
         public virtual Company Company { get; set; }
         public virtual SalesModel SalesModel { get; set; }
         public virtual SalesOrderApplication SalesOrderApplication { get; set; }
         public virtual WorkflowStatus WorkflowStatus { get; set; }
+        public virtual ICollection<GuaranteeLog> GuaranteeLog { get; set; }
     }
 }

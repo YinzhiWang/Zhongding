@@ -17,18 +17,18 @@ namespace ZhongDing.Domain.Models
     {
         public ProductSpecification()
         {
-            this.ProductHighPrice = new HashSet<ProductHighPrice>();
+            this.ClientInfoProductSetting = new HashSet<ClientInfoProductSetting>();
+            this.DaBaoRequestAppDetail = new HashSet<DaBaoRequestAppDetail>();
+            this.DBContract = new HashSet<DBContract>();
+            this.InventoryHistory = new HashSet<InventoryHistory>();
+            this.ProcureOrderAppDetail = new HashSet<ProcureOrderAppDetail>();
             this.ProductBasicPrice = new HashSet<ProductBasicPrice>();
             this.ProductDBPolicyPrice = new HashSet<ProductDBPolicyPrice>();
-            this.SupplierContract = new HashSet<SupplierContract>();
-            this.DBContract = new HashSet<DBContract>();
-            this.ProcureOrderAppDetail = new HashSet<ProcureOrderAppDetail>();
-            this.StockInDetail = new HashSet<StockInDetail>();
-            this.DaBaoRequestAppDetail = new HashSet<DaBaoRequestAppDetail>();
+            this.ProductHighPrice = new HashSet<ProductHighPrice>();
             this.SalesOrderAppDetail = new HashSet<SalesOrderAppDetail>();
+            this.StockInDetail = new HashSet<StockInDetail>();
             this.StockOutDetail = new HashSet<StockOutDetail>();
-            this.InventoryHistory = new HashSet<InventoryHistory>();
-            this.ClientInfoProductSetting = new HashSet<ClientInfoProductSetting>();
+            this.SupplierContract = new HashSet<SupplierContract>();
         }
     
         public int ID { get; set; }
@@ -42,6 +42,7 @@ namespace ZhongDing.Domain.Models
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
+        public string LicenseNumber { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -53,19 +54,19 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
+        public virtual ICollection<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
+        public virtual ICollection<DaBaoRequestAppDetail> DaBaoRequestAppDetail { get; set; }
+        public virtual ICollection<DBContract> DBContract { get; set; }
+        public virtual ICollection<InventoryHistory> InventoryHistory { get; set; }
+        public virtual ICollection<ProcureOrderAppDetail> ProcureOrderAppDetail { get; set; }
         public virtual Product Product { get; set; }
-        public virtual UnitOfMeasurement UnitOfMeasurement { get; set; }
-        public virtual ICollection<ProductHighPrice> ProductHighPrice { get; set; }
         public virtual ICollection<ProductBasicPrice> ProductBasicPrice { get; set; }
         public virtual ICollection<ProductDBPolicyPrice> ProductDBPolicyPrice { get; set; }
-        public virtual ICollection<SupplierContract> SupplierContract { get; set; }
-        public virtual ICollection<DBContract> DBContract { get; set; }
-        public virtual ICollection<ProcureOrderAppDetail> ProcureOrderAppDetail { get; set; }
-        public virtual ICollection<StockInDetail> StockInDetail { get; set; }
-        public virtual ICollection<DaBaoRequestAppDetail> DaBaoRequestAppDetail { get; set; }
+        public virtual ICollection<ProductHighPrice> ProductHighPrice { get; set; }
+        public virtual UnitOfMeasurement UnitOfMeasurement { get; set; }
         public virtual ICollection<SalesOrderAppDetail> SalesOrderAppDetail { get; set; }
+        public virtual ICollection<StockInDetail> StockInDetail { get; set; }
         public virtual ICollection<StockOutDetail> StockOutDetail { get; set; }
-        public virtual ICollection<InventoryHistory> InventoryHistory { get; set; }
-        public virtual ICollection<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
+        public virtual ICollection<SupplierContract> SupplierContract { get; set; }
     }
 }

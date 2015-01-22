@@ -29,6 +29,11 @@
                     <telerik:AjaxUpdatedControl ControlID="rgAppPayments" LoadingPanelID="loadingPanel" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="rgAuditNotes">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="rgAuditNotes" LoadingPanelID="loadingPanel" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
         </AjaxSettings>
     </telerik:RadAjaxManager>
 

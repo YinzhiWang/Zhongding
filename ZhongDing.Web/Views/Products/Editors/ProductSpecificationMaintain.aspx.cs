@@ -117,6 +117,8 @@ namespace ZhongDing.Web.Views.Products.Editors
 
                         txtNumberInSmallPackage.Value = (double?)productSpecification.NumberInSmallPackage;
                         txtNumberInLargePackage.Value = (double?)productSpecification.NumberInLargePackage;
+
+                        txtLicenseNumber.Text = productSpecification.LicenseNumber;
                     }
                 }
             }
@@ -152,6 +154,7 @@ namespace ZhongDing.Web.Views.Products.Editors
 
                     productSpecification.NumberInSmallPackage = (int?)txtNumberInSmallPackage.Value;
                     productSpecification.NumberInLargePackage = (int?)txtNumberInLargePackage.Value;
+                    productSpecification.LicenseNumber = txtLicenseNumber.Text.Trim();
 
                     product.LastModifiedOn = DateTime.Now;
                     product.LastModifiedBy = CurrentUser.UserID;

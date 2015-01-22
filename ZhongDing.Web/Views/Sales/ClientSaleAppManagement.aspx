@@ -139,6 +139,10 @@
                             <table class="width100-percent">
                                 <tr>
                                     <td>
+                                        <asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
+                                            <input type="button" class="rgAdd" onclick="redirectToMaintenancePage(-1); return false;" />
+                                            <a href="javascript:void(0)" onclick="redirectToMaintenancePage(-1); return false;">添加</a>
+                                        </asp:Panel>
                                         <%--<asp:Panel ID="plExportCommand" runat="server" CssClass="width80 float-left">
                                             <input type="button" class="rgExpXLS" onclick="exportExcel(); return false;" />
                                             <a href="javascript:void(0);" onclick="exportExcel(); return false;">导出excel</a>

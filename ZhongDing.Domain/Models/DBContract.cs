@@ -53,9 +53,9 @@ namespace ZhongDing.Domain.Models
         public virtual ClientUser ClientUser { get; set; }
         public virtual Department Department { get; set; }
         public virtual Product Product { get; set; }
-        public virtual ProductSpecification ProductSpecification { get; set; }
         public virtual Users Users { get; set; }
         public virtual ICollection<DBContractHospital> DBContractHospital { get; set; }
         public virtual ICollection<DBContractTaskAssignment> DBContractTaskAssignment { get; set; }
+        public virtual ProductSpecification ProductSpecification { get; set; }
     }
 }

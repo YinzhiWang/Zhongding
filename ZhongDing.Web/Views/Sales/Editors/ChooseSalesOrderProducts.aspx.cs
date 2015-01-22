@@ -306,7 +306,8 @@ namespace ZhongDing.Web.Views.Sales.Editors
                             {
                                 WarehouseID = warehouseID,
                                 ProductID = productID,
-                                ProductSpecificationID = productSpecificationID
+                                ProductSpecificationID = productSpecificationID,
+                                ExcludeExpired = true
                             };
 
                             var canOutStockInDetails = PageStockInDetailRepository.GetInventory(uiSearchObj)

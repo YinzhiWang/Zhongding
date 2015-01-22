@@ -103,6 +103,7 @@ namespace ZhongDing.Web.Views.Sales.Editors
 
         private void BindProducts(int departmentID, IList<int> excludeItemValues = null)
         {
+            rcbxProduct.ClearSelection();
             rcbxProduct.Items.Clear();
 
             var uiSearchObj = new UISearchDropdownItem()

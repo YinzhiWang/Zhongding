@@ -48,5 +48,7 @@ namespace ZhongDing.Domain.UIObjects
 
         public decimal? TaxAmount { get; set; }
 
+        public string LicenseNumber { get; set; }
+
     }
 }

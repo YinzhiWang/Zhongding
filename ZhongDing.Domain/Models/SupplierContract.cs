@@ -46,9 +46,9 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual Product Product { get; set; }
-        public virtual ProductSpecification ProductSpecification { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual ICollection<SupplierContractFile> SupplierContractFile { get; set; }
         public virtual ICollection<SupplierTaskAssignment> SupplierTaskAssignment { get; set; }
+        public virtual ProductSpecification ProductSpecification { get; set; }
     }
 }

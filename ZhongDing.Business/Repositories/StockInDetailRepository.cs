@@ -176,6 +176,9 @@ namespace ZhongDing.Business.Repositories
 
                 if (uiSearchObj.ProductSpecificationID > 0)
                     whereFuncs.Add(x => x.ProductSpecificationID == uiSearchObj.ProductSpecificationID);
+
+                if (uiSearchObj.ExcludeExpired == true)
+                    whereFuncs.Add(x => x.ExpirationDate > DateTime.Now);
             }
 
             query = GetList(whereFuncs);

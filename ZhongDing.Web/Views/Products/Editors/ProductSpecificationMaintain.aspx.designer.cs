@@ -94,6 +94,33 @@ namespace ZhongDing.Web.Views.Products.Editors {
         protected global::Telerik.Web.UI.RadNumericTextBox txtNumberInLargePackage;
         
         /// <summary>
+        /// txtLicenseNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtLicenseNumber;
+        
+        /// <summary>
+        /// rttLicenseNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadToolTip rttLicenseNumber;
+        
+        /// <summary>
+        /// rfvLicenseNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvLicenseNumber;
+        
+        /// <summary>
         /// btnSave control.
         /// </summary>
         /// <remarks>

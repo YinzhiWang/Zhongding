@@ -7,7 +7,7 @@ using ZhongDing.Domain.Models;
 
 namespace ZhongDing.Business.IRepositories
 {
-    public interface IClientInfoContactRepository : IBaseRepository<ClientInfoContact>
+    public interface IClientInfoContactRepository : IBaseRepository<ClientInfoContact>, IGenerateDropdownItems
     {
     }
 }

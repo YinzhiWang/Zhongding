@@ -59,8 +59,8 @@
                                         <ItemStyle HorizontalAlign="Left" Width="100" />
                                     </telerik:GridBoundColumn>
                                     <telerik:GridBoundColumn UniqueName="FactoryName" HeaderText="生产企业" DataField="FactoryName">
-                                        <HeaderStyle Width="200" />
-                                        <ItemStyle HorizontalAlign="Left" Width="200" />
+                                        <HeaderStyle Width="160" />
+                                        <ItemStyle HorizontalAlign="Left" Width="160" />
                                     </telerik:GridBoundColumn>
                                     <telerik:GridBoundColumn UniqueName="UnitOfMeasurement" HeaderText="基本单位" DataField="UnitOfMeasurement">
                                         <HeaderStyle Width="80" />
@@ -78,13 +78,17 @@
                                         <HeaderStyle Width="80" />
                                         <ItemStyle HorizontalAlign="Left" Width="80" />
                                     </telerik:GridBoundColumn>
-                                    <telerik:GridBoundColumn UniqueName="InQty" HeaderText="已入库数量" DataField="InQty">
+                                    <telerik:GridBoundColumn UniqueName="LicenseNumber" HeaderText="批准文号" DataField="LicenseNumber">
                                         <HeaderStyle Width="160" />
                                         <ItemStyle HorizontalAlign="Left" Width="160" />
                                     </telerik:GridBoundColumn>
+                                    <telerik:GridBoundColumn UniqueName="InQty" HeaderText="已入库数量" DataField="InQty">
+                                        <HeaderStyle Width="100" />
+                                        <ItemStyle HorizontalAlign="Left" Width="100" />
+                                    </telerik:GridBoundColumn>
                                     <telerik:GridBoundColumn UniqueName="ToBeInQty" HeaderText="未入库数量" DataField="ToBeInQty">
-                                        <HeaderStyle Width="160" />
-                                        <ItemStyle HorizontalAlign="Left" Width="160" />
+                                        <HeaderStyle Width="100" />
+                                        <ItemStyle HorizontalAlign="Left" Width="100" />
                                     </telerik:GridBoundColumn>
                                 </Columns>
                                 <NoRecordsTemplate>

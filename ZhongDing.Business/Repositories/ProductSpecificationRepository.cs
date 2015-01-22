@@ -49,7 +49,8 @@ namespace ZhongDing.Business.Repositories
                                   Specification = q.Specification,
                                   UnitOfMeasurement = tum == null ? string.Empty : tum.UnitName,
                                   NumberInSmallPackage = q.NumberInSmallPackage,
-                                  NumberInLargePackage = q.NumberInLargePackage
+                                  NumberInLargePackage = q.NumberInLargePackage,
+                                  LicenseNumber = q.LicenseNumber
 
                               }).ToList();
             }
@@ -95,8 +96,8 @@ namespace ZhongDing.Business.Repositories
                                   Specification = q.Specification,
                                   UnitOfMeasurement = tum == null ? string.Empty : tum.UnitName,
                                   NumberInSmallPackage = q.NumberInSmallPackage,
-                                  NumberInLargePackage = q.NumberInLargePackage
-
+                                  NumberInLargePackage = q.NumberInLargePackage,
+                                  LicenseNumber = q.LicenseNumber
                               }).ToList();
             }
 

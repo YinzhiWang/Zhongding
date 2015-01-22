@@ -15,48 +15,65 @@
                         </div>
                     </div>
                     <div class="mws-form-row">
-                        <label>规格</label>
+                        <div class="float-left width50-percent">
+                            <label>规格</label>
+                            <div class="mws-form-item small">
+                                <telerik:RadTextBox runat="server" ID="txtSpecification" CssClass="mws-textinput" MaxLength="100"></telerik:RadTextBox>
+                                <telerik:RadToolTip ID="rttSpecification" runat="server" TargetControlID="txtSpecification" ShowEvent="OnClick"
+                                    Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
+                                </telerik:RadToolTip>
+                                <asp:RequiredFieldValidator ID="rfvAccountName" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="txtSpecification"
+                                    ErrorMessage="规格必填" Text="*" CssClass="field-validation-error">
+                                </asp:RequiredFieldValidator>
+                            </div>
+                        </div>
+                        <div class="float-left">
+                            <label>基本单位</label>
+                            <div class="mws-form-item small">
+                                <telerik:RadDropDownList runat="server" ID="ddlUnitOfMeasurement" DefaultMessage="--请选择--">
+                                </telerik:RadDropDownList>
+                                <telerik:RadToolTip ID="rttUnitOfMeasurement" runat="server" TargetControlID="ddlUnitOfMeasurement" ShowEvent="OnClick"
+                                    Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
+                                </telerik:RadToolTip>
+                                <asp:RequiredFieldValidator ID="rfvUnitOfMeasurement"
+                                    runat="server"
+                                    ErrorMessage="请选择基本单位"
+                                    ControlToValidate="ddlUnitOfMeasurement"
+                                    Display="Dynamic" CssClass="field-validation-error"
+                                    ValidationGroup="vgMaintenance" Text="*">
+                                </asp:RequiredFieldValidator>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mws-form-row">
+                        <div class="float-left width50-percent">
+                            <label>小包装数量</label>
+                            <div class="mws-form-item small">
+                                <telerik:RadNumericTextBox runat="server" ID="txtNumberInSmallPackage" CssClass="mws-textinput" Type="Number" ShowSpinButtons="true"
+                                    NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator="" MinValue="0" MaxValue="999999999" MaxLength="10">
+                                </telerik:RadNumericTextBox>
+                            </div>
+                        </div>
+                        <div class="float-left">
+                            <label>每件数量</label>
+                            <div class="mws-form-item small">
+                                <telerik:RadNumericTextBox runat="server" ID="txtNumberInLargePackage" CssClass="mws-textinput" Type="Number" ShowSpinButtons="true"
+                                    NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator="" MinValue="0" MaxValue="999999999" MaxLength="10">
+                                </telerik:RadNumericTextBox>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mws-form-row">
+                        <label>批准文号</label>
                         <div class="mws-form-item small">
-                            <telerik:RadTextBox runat="server" ID="txtSpecification" CssClass="mws-textinput" Width="40%" MaxLength="100"></telerik:RadTextBox>
-                            <telerik:RadToolTip ID="rttSpecification" runat="server" TargetControlID="txtSpecification" ShowEvent="OnClick"
+                            <telerik:RadTextBox runat="server" ID="txtLicenseNumber" CssClass="mws-textinput" MaxLength="200"></telerik:RadTextBox>
+                            <telerik:RadToolTip ID="rttLicenseNumber" runat="server" TargetControlID="txtLicenseNumber" ShowEvent="OnClick"
                                 Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
                             </telerik:RadToolTip>
-                            <asp:RequiredFieldValidator ID="rfvAccountName" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="txtSpecification"
-                                ErrorMessage="规格必填" Text="*" CssClass="field-validation-error">
+                            <asp:RequiredFieldValidator ID="rfvLicenseNumber" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="txtLicenseNumber"
+                                ErrorMessage="批准文号必填" Text="*" CssClass="field-validation-error">
                             </asp:RequiredFieldValidator>
-                        </div>
-                    </div>
-                    <div class="mws-form-row">
-                        <label>基本单位</label>
-                        <div class="mws-form-item small">
-                            <telerik:RadDropDownList runat="server" ID="ddlUnitOfMeasurement" DefaultMessage="--请选择--">
-                            </telerik:RadDropDownList>
-                            <telerik:RadToolTip ID="rttUnitOfMeasurement" runat="server" TargetControlID="ddlUnitOfMeasurement" ShowEvent="OnClick"
-                                Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
-                            </telerik:RadToolTip>
-                            <asp:RequiredFieldValidator ID="rfvUnitOfMeasurement"
-                                runat="server"
-                                ErrorMessage="请选择基本单位"
-                                ControlToValidate="ddlUnitOfMeasurement"
-                                Display="Dynamic" CssClass="field-validation-error"
-                                ValidationGroup="vgMaintenance" Text="*">
-                            </asp:RequiredFieldValidator>
-                        </div>
-                    </div>
-                    <div class="mws-form-row">
-                        <label>小包装数量</label>
-                        <div class="mws-form-item small">
-                            <telerik:RadNumericTextBox runat="server" ID="txtNumberInSmallPackage" CssClass="mws-textinput" Type="Number" ShowSpinButtons="true"
-                                NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator="" MinValue="0" MaxValue="999999999" MaxLength="10">
-                            </telerik:RadNumericTextBox>
-                        </div>
-                    </div>
-                    <div class="mws-form-row">
-                        <label>每件数量</label>
-                        <div class="mws-form-item small">
-                            <telerik:RadNumericTextBox runat="server" ID="txtNumberInLargePackage" CssClass="mws-textinput" Type="Number" ShowSpinButtons="true"
-                                NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator="" MinValue="0" MaxValue="999999999" MaxLength="10">
-                            </telerik:RadNumericTextBox>
                         </div>
                     </div>
                     <div class="height20"></div>
