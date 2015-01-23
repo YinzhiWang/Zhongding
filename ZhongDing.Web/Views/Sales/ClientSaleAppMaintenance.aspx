@@ -95,8 +95,8 @@
                             </div>
                             <div class="float-left">
                                 <label>订单类型</label>
-                                <div class="mws-form-item small">
-                                    <asp:Label ID="lblSalesModel" runat="server"></asp:Label>
+                                <div class="mws-form-item small toppadding5">
+                                    <asp:Label ID="lblSalesOrderType" runat="server"></asp:Label>
                                 </div>
                             </div>
                         </div>
@@ -134,27 +134,27 @@
                             </div>
                         </div>
                         <div class="mws-form-row">
-                            <label>客户余额</label>
-                            <div class="mws-form-item  small toppadding5">
-                                <asp:Label ID="lblClientBalanceAmount" runat="server"></asp:Label>元
-                            </div>
-                        </div>
-                        <div class="mws-form-row">
                             <div class="float-left width40-percent">
-                                <label>发货模式</label>
-                                <div class="mws-form-item">
-                                    <telerik:RadDropDownList runat="server" ID="ddlDeliveryMode" EmptyMessage="--请选择--"
-                                        OnClientSelectedIndexChanged="onClientSelectedDeliveryMode">
-                                    </telerik:RadDropDownList>
+                                <label>客户余额</label>
+                                <div class="mws-form-item  small toppadding5">
+                                    <asp:Label ID="lblClientBalanceAmount" runat="server"></asp:Label>元
                                 </div>
                             </div>
                             <div class="float-left" runat="server" id="divStop">
                                 <label>中止执行</label>
-                                <div class="mws-form-item small">
+                                <div class="mws-form-item small toppadding5">
                                     <telerik:RadButton runat="server" ID="cbxIsStop" ButtonType="ToggleButton"
-                                        ToggleType="CheckBox" AutoPostBack="false">
+                                        ToggleType="CheckBox" AutoPostBack="false" Enabled="false">
                                     </telerik:RadButton>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="mws-form-row" id="divDeliveryMode">
+                            <label>发货模式</label>
+                            <div class="mws-form-item">
+                                <telerik:RadDropDownList runat="server" ID="ddlDeliveryMode" EmptyMessage="--请选择--"
+                                    OnClientSelectedIndexChanged="onClientSelectedDeliveryMode">
+                                </telerik:RadDropDownList>
                             </div>
                         </div>
                         <div class="mws-form-row" id="divReceivingBankAccount">
@@ -163,7 +163,7 @@
                                 <telerik:RadComboBox runat="server" ID="rcbxReceivingBankAccount" Filter="Contains" AllowCustomText="false"
                                     MarkFirstMatch="true" Height="160px" Width="60%" EmptyMessage="--请选择--"
                                     CheckBoxes="true" EnableCheckAllItemsCheckBox="true">
-                                    <Localization CheckAllString="全选" AllItemsCheckedString="已全选" />
+                                    <Localization CheckAllString="全选" AllItemsCheckedString="已全选" ItemsCheckedString="项已选择" />
                                 </telerik:RadComboBox>
                                 <asp:CustomValidator ID="cvReceivingBankAccount" runat="server" ErrorMessage="请选择收款账号"
                                     ControlToValidate="rcbxReceivingBankAccount" ValidationGroup="vgMaintenance" Display="Dynamic"
@@ -211,6 +211,13 @@
                                         MarkFirstMatch="true" Height="160px" EmptyMessage="--请选择--"
                                         OnItemDataBound="rcbxClientContact_ItemDataBound" OnClientSelectedIndexChanged="onClientSelectedClientContact">
                                     </telerik:RadComboBox>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1"
+                                        runat="server"
+                                        ErrorMessage="请选择联系人"
+                                        ControlToValidate="rcbxClientContact"
+                                        Display="Dynamic" CssClass="field-validation-error"
+                                        ValidationGroup="vgMaintenance" Text="*">
+                                    </asp:RequiredFieldValidator>
                                 </div>
                             </div>
                             <div class="float-left">
@@ -332,7 +339,10 @@
                                                     <telerik:GridBoundColumn UniqueName="SalesPrice" HeaderText="单价" DataField="SalesPrice" DataFormatString="{0:C2}">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
-                                                    <telerik:GridBoundColumn UniqueName="Count" HeaderText="数量" DataField="Count" FooterText="合计："
+                                                    <telerik:GridBoundColumn UniqueName="Count" HeaderText="数量" DataField="Count">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="GiftCount" HeaderText="赠送数量" DataField="GiftCount" FooterText="合计："
                                                         FooterStyle-Font-Bold="true" FooterStyle-HorizontalAlign="Right">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
@@ -353,10 +363,10 @@
                                                     <table class="width100-percent">
                                                         <tr>
                                                             <td>
-                                                                <asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
+                                                                <%--<asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
                                                                     <input type="button" class="rgAdd" onclick="openRequestProductWindow(-1); return false;" />
                                                                     <a href="javascript:void(0)" onclick="openRequestProductWindow(-1); return false;">添加</a>
-                                                                </asp:Panel>
+                                                                </asp:Panel>--%>
                                                             </td>
                                                             <td class="right-td rightpadding10">
                                                                 <input type="button" class="rgRefresh" onclick="refreshGrid(gridClientIDs.gridRequestProducts); return false;" />
@@ -458,6 +468,7 @@
     </div>
 
     <asp:HiddenField ID="hdnCurrentEntityID" runat="server" Value="-1" />
+    <asp:HiddenField ID="hdnSaleOrderTypeID" runat="server" Value="-1" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContent" runat="server">
     <style>
@@ -538,23 +549,6 @@
         $(document).ready(function () {
             currentEntityID = $("#<%= hdnCurrentEntityID.ClientID %>").val();
 
-            var ddlDeliveryMode = $find("<%= ddlDeliveryMode.ClientID %>");
-
-            if (ddlDeliveryMode) {
-
-                var selectedItem = ddlDeliveryMode.get_selectedItem();
-                var selDeliveryModeID = parseInt(selectedItem.get_value());
-
-                if (selDeliveryModeID === deliveryModes.ReceiptedDelivery) {
-                    $("#divReceivingBankAccount").show();
-                    $("#divGuaranteeInfo").hide();
-                }
-                else if (selDeliveryModeID === deliveryModes.GuaranteeDelivery) {
-                    $("#divReceivingBankAccount").hide();
-                    $("#divGuaranteeInfo").show();
-                }
-            }
-
             var rcbxClientContact = $find("<%= rcbxClientContact.ClientID %>");
 
             var selectedItem = rcbxClientContact.get_selectedItem();
@@ -570,6 +564,34 @@
                 }
             }
 
+            var saleOrderTypeID = $("#<%= hdnSaleOrderTypeID.ClientID %>").val();
+
+            //招商模式
+            if (saleOrderTypeID == ESaleOrderTypes.AttractBusinessMode) {
+                $("#divDeliveryMode").show();
+
+                var ddlDeliveryMode = $find("<%= ddlDeliveryMode.ClientID %>");
+
+                if (ddlDeliveryMode) {
+
+                    var selectedItem = ddlDeliveryMode.get_selectedItem();
+                    var selDeliveryModeID = parseInt(selectedItem.get_value());
+
+                    if (selDeliveryModeID === deliveryModes.ReceiptedDelivery) {
+                        $("#divReceivingBankAccount").show();
+                        $("#divGuaranteeInfo").hide();
+                    }
+                    else if (selDeliveryModeID === deliveryModes.GuaranteeDelivery) {
+                        $("#divReceivingBankAccount").hide();
+                        $("#divGuaranteeInfo").show();
+                    }
+                }
+            }
+            else if (saleOrderTypeID == ESaleOrderTypes.AttachedMode) {//挂靠模式
+                $("#divDeliveryMode").hide();
+                $("#divReceivingBankAccount").show();
+                $("#divGuaranteeInfo").hide();
+            }
         });
 
     </script>

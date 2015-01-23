@@ -307,8 +307,8 @@ namespace ZhongDing.Web.Views.Sales
         {
             var uiSearchObj = new UISearchSalesOrderAppDetail
             {
-                SalesOrderApplicationID = this.CurrentEntityID.HasValue
-                ? this.CurrentEntityID.Value : GlobalConst.INVALID_INT
+                SalesOrderApplicationID = CurrentEntity != null
+                ? CurrentEntity.SalesOrderApplicationID : GlobalConst.INVALID_INT
             };
 
             int totalRecords;

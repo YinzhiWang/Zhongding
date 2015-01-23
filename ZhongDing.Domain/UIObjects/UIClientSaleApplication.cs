@@ -12,7 +12,7 @@ namespace ZhongDing.Domain.UIObjects
 
         public DateTime OrderDate { get; set; }
 
-        public string SalesModel { get; set; }
+        public string SaleOrderTypeName { get; set; }
 
         public string ClientUserName { get; set; }
 

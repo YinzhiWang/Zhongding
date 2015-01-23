@@ -57,20 +57,28 @@ namespace ZhongDing.Business.Repositories
             {
                 uiEntities = (from q in query
                               join soa in DB.SalesOrderApplication on q.SalesOrderApplicationID equals soa.ID
-                              join sm in DB.SalesModel on q.SalesModelID equals sm.ID
+                              join sot in DB.SaleOrderType on soa.SaleOrderTypeID equals sot.ID
                               join cu in DB.ClientUser on q.ClientUserID equals cu.ID
                               join cc in DB.ClientCompany on q.ClientCompanyID equals cc.ID
+                              join ws in DB.WorkflowStatus on q.WorkflowStatusID equals ws.ID
+                              join cbu in DB.Users on q.CreatedBy equals cbu.UserID into tempCBU
+                              from tcbu in tempCBU.DefaultIfEmpty()
+                              orderby q.CreatedOn descending
                               select new UIClientSaleApplication()
                               {
                                   ID = q.ID,
                                   OrderCode = soa.OrderCode,
                                   OrderDate = soa.OrderDate,
-                                  SalesModel = sm.SalesModelName,
+                                  SaleOrderTypeName = sot.TypeName,
                                   ClientUserName = cu.ClientName,
                                   ClientCompanyName = cc.Name,
                                   IsGuaranteed = q.IsGuaranteed,
                                   IsReceiptedGuaranteeAmount = q.GuaranteeLog.Any(x => x.IsDeleted == false && x.IsReceipted == true),
-                                  IsStop = soa.IsStop
+                                  IsStop = soa.IsStop,
+                                  WorkflowStatusID = q.WorkflowStatusID,
+                                  WorkflowStatus = ws.StatusName,
+                                  CreatedByUserID = q.CreatedBy,
+                                  CreatedBy = tcbu == null ? string.Empty : tcbu.FullName
                               }).ToList();
 
                 foreach (var uiEntity in uiEntities.Where(x => x.IsGuaranteed == true))
@@ -121,29 +129,35 @@ namespace ZhongDing.Business.Repositories
                     uiSearchObj.EndDate = uiSearchObj.EndDate.Value.AddDays(1);
                     whereFuncs.Add(x => x.CreatedOn < uiSearchObj.EndDate);
                 }
-
             }
 
-            query = GetList(pageIndex, pageSize, whereFuncs, out total);
+            query = GetList(pageIndex, pageSize, whereFuncs, GlobalConst.OrderByExpression.CREATEDON_DESC, out total);
 
             if (query != null)
             {
                 uiEntities = (from q in query
                               join soa in DB.SalesOrderApplication on q.SalesOrderApplicationID equals soa.ID
-                              join sm in DB.SalesModel on q.SalesModelID equals sm.ID
+                              join sot in DB.SaleOrderType on soa.SaleOrderTypeID equals sot.ID
                               join cu in DB.ClientUser on q.ClientUserID equals cu.ID
                               join cc in DB.ClientCompany on q.ClientCompanyID equals cc.ID
+                              join ws in DB.WorkflowStatus on q.WorkflowStatusID equals ws.ID
+                              join cbu in DB.Users on q.CreatedBy equals cbu.UserID into tempCBU
+                              from tcbu in tempCBU.DefaultIfEmpty()
                               select new UIClientSaleApplication()
                               {
                                   ID = q.ID,
                                   OrderCode = soa.OrderCode,
                                   OrderDate = soa.OrderDate,
-                                  SalesModel = sm.SalesModelName,
+                                  SaleOrderTypeName = sot.TypeName,
                                   ClientUserName = cu.ClientName,
                                   ClientCompanyName = cc.Name,
                                   IsGuaranteed = q.IsGuaranteed,
                                   IsReceiptedGuaranteeAmount = q.GuaranteeLog.Any(x => x.IsDeleted == false && x.IsReceipted == true),
-                                  IsStop = soa.IsStop
+                                  IsStop = soa.IsStop,
+                                  WorkflowStatusID = q.WorkflowStatusID,
+                                  WorkflowStatus = ws.StatusName,
+                                  CreatedByUserID = q.CreatedBy,
+                                  CreatedBy = tcbu == null ? string.Empty : tcbu.FullName
                               }).ToList();
 
                 foreach (var uiEntity in uiEntities.Where(x => x.IsGuaranteed == true))

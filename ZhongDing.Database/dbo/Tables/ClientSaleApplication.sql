@@ -1,7 +1,6 @@
 ﻿CREATE TABLE [dbo].[ClientSaleApplication] (
-    [ID]                      INT            NOT NULL,
+    [ID]                      INT            IDENTITY (1, 1) NOT NULL,
     [SalesOrderApplicationID] INT            NOT NULL,
-    [SalesModelID]            INT            NOT NULL,
     [ClientUserID]            INT            NOT NULL,
     [ClientCompanyID]         INT            NOT NULL,
     [DeliveryModeID]          INT            NULL,
@@ -26,10 +25,13 @@
     CONSTRAINT [FK_ClientSaleApplication_ClientInfoContact] FOREIGN KEY ([ClientContactID]) REFERENCES [dbo].[ClientInfoContact] ([ID]),
     CONSTRAINT [FK_ClientSaleApplication_ClientUser] FOREIGN KEY ([ClientUserID]) REFERENCES [dbo].[ClientUser] ([ID]),
     CONSTRAINT [FK_ClientSaleApplication_Company] FOREIGN KEY ([CompanyID]) REFERENCES [dbo].[Company] ([ID]),
-    CONSTRAINT [FK_ClientSaleApplication_SalesModel] FOREIGN KEY ([SalesModelID]) REFERENCES [dbo].[SalesModel] ([ID]),
     CONSTRAINT [FK_ClientSaleApplication_SalesOrderApplication] FOREIGN KEY ([SalesOrderApplicationID]) REFERENCES [dbo].[SalesOrderApplication] ([ID]),
     CONSTRAINT [FK_ClientSaleApplication_WorkflowStatus] FOREIGN KEY ([WorkflowStatusID]) REFERENCES [dbo].[WorkflowStatus] ([ID])
 );
+
+
+
+
 
 
 

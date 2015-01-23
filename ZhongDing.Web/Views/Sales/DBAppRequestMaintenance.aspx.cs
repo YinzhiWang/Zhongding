@@ -504,6 +504,8 @@ namespace ZhongDing.Web.Views.Sales
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
+            if (!IsValid) return;
+
             if (this.CurrentEntity != null)
             {
                 EWorkflowStatus workfolwStatus = (EWorkflowStatus)this.CurrentEntity.WorkflowStatusID;

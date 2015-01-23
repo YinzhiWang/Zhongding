@@ -15,3 +15,10 @@ var EOwnerTypes = {
     Product: 5
 }
 
+//订单类型
+var ESaleOrderTypes = {
+    DaBaoMode: 1,
+    AttractBusinessMode: 2,
+    AttachedMode: 3
+};
+

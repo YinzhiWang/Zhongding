@@ -45,8 +45,8 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual Product Product { get; set; }
-        public virtual SalesOrderApplication SalesOrderApplication { get; set; }
         public virtual ICollection<StockOutDetail> StockOutDetail { get; set; }
         public virtual ProductSpecification ProductSpecification { get; set; }
+        public virtual SalesOrderApplication SalesOrderApplication { get; set; }
     }
 }

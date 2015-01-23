@@ -11,8 +11,11 @@
     [CreatedBy]       INT           NULL,
     [LastModifiedOn]  DATETIME      NULL,
     [LastModifiedBy]  INT           NULL,
-    CONSTRAINT [PK_SalesOrderApplication] PRIMARY KEY CLUSTERED ([ID] ASC)
+    CONSTRAINT [PK_SalesOrderApplication] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_SalesOrderApplication_SaleOrderType] FOREIGN KEY ([SaleOrderTypeID]) REFERENCES [dbo].[SaleOrderType] ([ID])
 );
+
+
 
 
 

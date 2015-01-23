@@ -81,5 +81,11 @@ namespace ZhongDing.Domain.UISearchObjects
         /// </summary>
         public int SupplierID { get; set; }
 
+        /// <summary>
+        /// 是否只包含有效的client user：
+        /// 如果一个client user 没有一个有效的client info，则该client user 是无效的
+        /// </summary>
+        public bool OnlyIncludeValidClientUser { get; set; }
+
     }
 }

@@ -81,8 +81,8 @@
                                     Display="Dynamic" CssClass="field-validation-error"
                                     ValidationGroup="vgMaintenance" Text="*">
                                 </asp:RequiredFieldValidator>
-                                <asp:Button ID="btnSearchOrders" runat="server" Text="查询订单" CssClass="mws-button green"
-                                    CausesValidation="false" OnClientClick="openChooseOrderProductWindow();return false;" />
+                                <%--<asp:Button ID="btnSearchOrders" runat="server" Text="查询订单" CssClass="mws-button green"
+                                    CausesValidation="false" OnClientClick="openChooseOrderProductWindow();return false;" />--%>
                             </div>
                         </div>
                         <div class="mws-form-row">
@@ -172,11 +172,10 @@
                                             AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false"
                                             MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" Height="480" ShowHeader="true" ShowFooter="true"
                                             ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                                            OnNeedDataSource="rgStockOutDetails_NeedDataSource" OnColumnCreated="rgStockOutDetails_ColumnCreated"
-                                            OnDeleteCommand="rgStockOutDetails_DeleteCommand">
+                                            OnNeedDataSource="rgStockOutDetails_NeedDataSource" OnItemCreated="rgStockOutDetails_ItemCreated"
+                                            OnColumnCreated="rgStockOutDetails_ColumnCreated" OnDeleteCommand="rgStockOutDetails_DeleteCommand">
                                             <MasterTableView Width="100%" DataKeyNames="ID,SalesOrderApplicationID,SalesOrderAppDetailID,ProductID,ProductSpecificationID" CommandItemDisplay="Top"
                                                 ShowHeadersWhenNoRecords="true" BackColor="#fafafa" ClientDataKeyNames="ID,SalesQty,ToBeOutQty,BalanceQty,NumberInLargePackage,SalesPrice">
-                                                <CommandItemSettings ShowAddNewRecordButton="false" ShowSaveChangesButton="false" ShowCancelChangesButton="false" ShowRefreshButton="true" RefreshText="刷新" />
                                                 <Columns>
                                                     <telerik:GridBoundColumn UniqueName="OrderCode" HeaderText="订单编号" DataField="OrderCode" ReadOnly="true">
                                                         <HeaderStyle Width="160" />
@@ -258,6 +257,22 @@
                                                         </ItemTemplate>
                                                     </telerik:GridTemplateColumn>
                                                 </Columns>
+                                                <CommandItemTemplate>
+                                                    <table class="width100-percent">
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
+                                                                    <input type="button" class="rgAdd" onclick="openChooseOrderProductWindow(); return false;" />
+                                                                    <a href="javascript:void(0)" onclick="openChooseOrderProductWindow(); return false;">添加</a>
+                                                                </asp:Panel>
+                                                            </td>
+                                                            <td class="right-td rightpadding10">
+                                                                <input type="button" class="rgRefresh" onclick="refreshGrid(gridClientIDs.gridStockOutDetails); return false;" />
+                                                                <a href="javascript:void(0);" onclick="refreshGrid(gridClientIDs.gridStockOutDetails); return false;">刷新</a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </CommandItemTemplate>
                                                 <NoRecordsTemplate>
                                                     没有任何数据
                                                 </NoRecordsTemplate>

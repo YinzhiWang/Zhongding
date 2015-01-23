@@ -249,7 +249,7 @@ namespace ZhongDing.Web.Views.Sales
         /// </summary>
         private void InitDefaultData()
         {
-            btnSearchOrders.Visible = false;
+            //btnSearchOrders.Visible = false;
             btnSubmit.Visible = false;
             btnOutStock.Visible = false;
             divComment.Visible = false;
@@ -274,7 +274,7 @@ namespace ZhongDing.Web.Views.Sales
             btnSave.Visible = false;
             btnSubmit.Visible = false;
 
-            btnSearchOrders.Visible = false;
+            //btnSearchOrders.Visible = false;
 
             //目的是禁用Cell编辑
             rgStockOutDetails.MasterTableView.EditMode = GridEditMode.InPlace;
@@ -380,10 +380,29 @@ namespace ZhongDing.Web.Views.Sales
             rgStockOutDetails.DataSource = stockOutDetails;
         }
 
+        protected void rgStockOutDetails_ItemCreated(object sender, GridItemEventArgs e)
+        {
+            if (e.Item is GridCommandItem)
+            {
+                GridCommandItem commandItem = e.Item as GridCommandItem;
+                Panel plAddCommand = commandItem.FindControl("plAddCommand") as Panel;
+
+                if (plAddCommand != null)
+                {
+                    if (this.CurrentEntity != null && (this.CanEditUserIDs.Contains(CurrentUser.UserID)
+                        || (this.CurrentEntity.CreatedBy == CurrentUser.UserID
+                            && this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.TemporarySave)))
+                        plAddCommand.Visible = true;
+                    else
+                        plAddCommand.Visible = false;
+                }
+            }
+        }
+
         protected void rgStockOutDetails_ColumnCreated(object sender, GridColumnCreatedEventArgs e)
         {
             if (this.CurrentEntity != null && (this.CanEditUserIDs.Contains(CurrentUser.UserID)
-                    || (this.CurrentEntity.CreatedBy == CurrentUser.UserID 
+                    || (this.CurrentEntity.CreatedBy == CurrentUser.UserID
                         && this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.TemporarySave)))
             {
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = true;
@@ -544,6 +563,8 @@ namespace ZhongDing.Web.Views.Sales
         }
 
         #endregion
+
+
 
         #endregion
 

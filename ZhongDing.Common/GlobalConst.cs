@@ -378,5 +378,22 @@ namespace ZhongDing.Common
 
         #endregion
 
+        #region Order by
+
+        /// <summary>
+        /// 常量类：排序语句
+        /// </summary>
+        public class OrderByExpression
+        {
+            /// <summary>
+            /// 创建时间倒序："CreatedOn DESC"
+            /// </summary>
+            public static readonly string CREATEDON_DESC = "CreatedOn DESC";
+
+        
+        }
+
+        #endregion
+
     }
 }

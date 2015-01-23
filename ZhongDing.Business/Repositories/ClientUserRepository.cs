@@ -27,6 +27,13 @@ namespace ZhongDing.Business.Repositories
 
                 if (!string.IsNullOrEmpty(uiSearchObj.ItemText))
                     whereFuncs.Add(x => x.ClientName.Contains(uiSearchObj.ItemText));
+
+                if (uiSearchObj.Extension != null)
+                {
+                    if (uiSearchObj.Extension.OnlyIncludeValidClientUser == true)
+                        //如果一个client user 没有一个有效的client info，则该client user 是无效的
+                        whereFuncs.Add(x => x.ClientInfo.Any(y => y.IsDeleted == false));
+                }
             }
 
             uiDropdownItems = GetList(whereFuncs).Select(x => new UIDropdownItem()

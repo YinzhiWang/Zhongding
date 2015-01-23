@@ -98,6 +98,7 @@
     <Compile Include="IRepositories\IProductRepository.cs" />
     <Compile Include="IRepositories\IProductSpecificationRepository.cs" />
     <Compile Include="IRepositories\IReportRepository.cs" />
+    <Compile Include="IRepositories\ISaleOrderTypeRepository.cs" />
     <Compile Include="IRepositories\ISalesOrderAppDetailRepository.cs" />
     <Compile Include="IRepositories\ISalesOrderApplicationRepository.cs" />
     <Compile Include="IRepositories\ISaleTypeRepository.cs" />
@@ -166,6 +167,7 @@
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\ProductSpecificationRepository.cs" />
     <Compile Include="Repositories\Reports\ReportRepository.cs" />
+    <Compile Include="Repositories\SaleOrderTypeRepository.cs" />
     <Compile Include="Repositories\SalesOrderAppDetailRepository.cs" />
     <Compile Include="Repositories\SalesOrderApplicationRepository.cs" />
     <Compile Include="Repositories\SaleTypeRepository.cs" />

@@ -12,6 +12,7 @@ using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
+using ZhongDing.Web.Extensions;
 
 namespace ZhongDing.Web.Views.Sales
 {
@@ -103,6 +104,30 @@ namespace ZhongDing.Web.Views.Sales
             }
         }
 
+        private ISaleOrderTypeRepository _PageSaleOrderTypeRepository;
+        private ISaleOrderTypeRepository PageSaleOrderTypeRepository
+        {
+            get
+            {
+                if (_PageSaleOrderTypeRepository == null)
+                    _PageSaleOrderTypeRepository = new SaleOrderTypeRepository();
+
+                return _PageSaleOrderTypeRepository;
+            }
+        }
+
+        private int? SaleOrderTypeID
+        {
+            get
+            {
+                if (this.CurrentEntity == null)
+                    return WebUtility.GetValueFromQueryString("SaleOrderTypeID");
+                else
+                    return CurrentEntity.SalesOrderApplication == null
+                        ? GlobalConst.INVALID_INT : CurrentEntity.SalesOrderApplication.SaleOrderTypeID;
+            }
+        }
+
         private ClientSaleApplication _CurrentEntity;
         private ClientSaleApplication CurrentEntity
         {
@@ -145,6 +170,18 @@ namespace ZhongDing.Web.Views.Sales
             }
         }
 
+        private IList<int> _CanStopUserIDs;
+        private IList<int> CanStopUserIDs
+        {
+            get
+            {
+                if (_CanStopUserIDs == null)
+                    _CanStopUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.StopClientOrder);
+
+                return _CanStopUserIDs;
+            }
+        }
+
         #endregion
 
 
@@ -153,17 +190,29 @@ namespace ZhongDing.Web.Views.Sales
             this.Master.MenuItemID = (int)EMenuItem.ClientOrderManage;
             this.CurrentWorkFlowID = (int)EWorkflow.ClientOrder;
 
-            if (!IsPostBack)
+            if (this.SaleOrderTypeID.HasValue && this.SaleOrderTypeID > 0
+                && (this.SaleOrderTypeID == (int)ESaleOrderType.AttractBusinessMode
+                || this.SaleOrderTypeID == (int)ESaleOrderType.AttachedMode))
             {
-                BindClientUsers();
+                if (!IsPostBack)
+                {
+                    BindClientUsers();
 
-                BindDeliveryModes();
+                    BindDeliveryModes();
 
-                BindReceivingBankAccounts();
+                    BindReceivingBankAccounts();
 
-                BindGuaranteebyUsers();
+                    BindGuaranteebyUsers();
 
-                LoadCurrentEntity();
+                    LoadCurrentEntity();
+                }
+            }
+            else
+            {
+                this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
+                this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
+                this.Master.BaseNotification.AutoCloseDelay = 1000;
+                this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_PARAMETER_ERROR_REDIRECT);
             }
         }
 
@@ -171,7 +220,11 @@ namespace ZhongDing.Web.Views.Sales
 
         private void BindClientUsers()
         {
-            var clientUsers = PageClientUserRepository.GetDropdownItems();
+            var clientUsers = PageClientUserRepository.GetDropdownItems(new UISearchDropdownItem
+            {
+                Extension = new UISearchExtension { OnlyIncludeValidClientUser = true }
+            });
+
             rcbxClientUser.DataSource = clientUsers;
             rcbxClientUser.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
             rcbxClientUser.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
@@ -259,7 +312,6 @@ namespace ZhongDing.Web.Views.Sales
                 Extension = new UISearchExtension
                 {
                     OwnerTypeID = (int)EOwnerType.Company,
-                    AccountTypeID = (int)EAccountType.Company,
                     CompanyID = CurrentUser.CompanyID
                 }
             };
@@ -288,17 +340,24 @@ namespace ZhongDing.Web.Views.Sales
             {
                 hdnCurrentEntityID.Value = this.CurrentEntity.ID.ToString();
 
+                int saleOrderTypeID = 0;
+
                 if (CurrentEntity.SalesOrderApplication != null)
                 {
-                    txtOrderCode.Text = CurrentEntity.SalesOrderApplication.OrderCode;
-                    rdpOrderDate.SelectedDate = CurrentEntity.SalesOrderApplication.OrderDate;
+                    var salesOrderApp = CurrentEntity.SalesOrderApplication;
+
+                    txtOrderCode.Text = salesOrderApp.OrderCode;
+                    rdpOrderDate.SelectedDate = salesOrderApp.OrderDate;
+                    lblSalesOrderType.Text = salesOrderApp.SaleOrderType == null
+                        ? string.Empty : salesOrderApp.SaleOrderType.TypeName;
+
+                    saleOrderTypeID = salesOrderApp.SaleOrderTypeID;
+
+                    hdnSaleOrderTypeID.Value = salesOrderApp.SaleOrderTypeID.ToString();
                 }
 
                 lblCreateBy.Text = PageUsersRepository.GetUserFullNameByID(this.CurrentEntity.CreatedBy.HasValue
                     ? this.CurrentEntity.CreatedBy.Value : GlobalConst.INVALID_INT);
-
-                lblSalesModel.Text = CurrentEntity.SalesModel == null
-                    ? string.Empty : CurrentEntity.SalesModel.SalesModelName;
 
                 rcbxClientUser.SelectedValue = CurrentEntity.ClientUserID.ToString();
 
@@ -308,15 +367,43 @@ namespace ZhongDing.Web.Views.Sales
                 BindClientContacts();
                 rcbxClientContact.SelectedValue = CurrentEntity.ClientContactID.ToString();
 
-                if (CurrentEntity.DeliveryModeID.HasValue)
+                if (saleOrderTypeID > 0)
                 {
-                    ddlDeliveryMode.SelectedValue = CurrentEntity.DeliveryModeID.Value.ToString();
+                    var eSaleOrderType = (ESaleOrderType)saleOrderTypeID;
 
-                    var eDeliveryMode = (EDeliveryMode)CurrentEntity.DeliveryModeID.Value;
-
-                    switch (eDeliveryMode)
+                    switch (eSaleOrderType)
                     {
-                        case EDeliveryMode.ReceiptedDelivery:
+                        case ESaleOrderType.AttractBusinessMode:
+                            if (CurrentEntity.DeliveryModeID.HasValue)
+                            {
+                                ddlDeliveryMode.SelectedValue = CurrentEntity.DeliveryModeID.Value.ToString();
+
+                                var eDeliveryMode = (EDeliveryMode)CurrentEntity.DeliveryModeID.Value;
+
+                                switch (eDeliveryMode)
+                                {
+                                    case EDeliveryMode.ReceiptedDelivery:
+                                        foreach (RadComboBoxItem item in rcbxReceivingBankAccount.Items)
+                                        {
+                                            int bankAccountID = int.Parse(item.Value);
+
+                                            if (CurrentEntity.ClientSaleAppBankAccount.Any(x => x.IsDeleted == false && x.ReceiverBankAccountID == bankAccountID))
+                                                item.Checked = true;
+                                        }
+
+                                        break;
+                                    case EDeliveryMode.GuaranteeDelivery:
+                                        rdpGuaranteeExpiration.SelectedDate = CurrentEntity.GuaranteeExpirationDate;
+                                        if (CurrentEntity.Guaranteeby.HasValue)
+                                            rcbxGuaranteeby.SelectedValue = CurrentEntity.Guaranteeby.Value.ToString();
+
+                                        break;
+                                }
+                            }
+
+                            break;
+                        case ESaleOrderType.AttachedMode:
+
                             foreach (RadComboBoxItem item in rcbxReceivingBankAccount.Items)
                             {
                                 int bankAccountID = int.Parse(item.Value);
@@ -324,12 +411,6 @@ namespace ZhongDing.Web.Views.Sales
                                 if (CurrentEntity.ClientSaleAppBankAccount.Any(x => x.ReceiverBankAccountID == bankAccountID))
                                     item.Checked = true;
                             }
-
-                            break;
-                        case EDeliveryMode.GuaranteeDelivery:
-                            rdpGuaranteeExpiration.SelectedDate = CurrentEntity.GuaranteeExpirationDate;
-                            if (CurrentEntity.Guaranteeby.HasValue)
-                                rcbxGuaranteeby.SelectedValue = CurrentEntity.Guaranteeby.Value.ToString();
 
                             break;
                     }
@@ -340,16 +421,27 @@ namespace ZhongDing.Web.Views.Sales
                 lblReceiverAddress.Text = this.CurrentEntity.ReceiverAddress;
                 lblReceiverFax.Text = this.CurrentEntity.ReceiverFax;
 
+                EWorkflowStatus workfolwStatus = (EWorkflowStatus)this.CurrentEntity.WorkflowStatusID;
+
                 if (CanEditUserIDs.Contains(CurrentUser.UserID))
                 {
                     btnSave.Visible = true;
                     btnSubmit.Visible = false;
                     ShowAuditControls(false);
+
+                    #region 审核通过和发货中的订单，只能中止
+                    switch (workfolwStatus)
+                    {
+                        case EWorkflowStatus.ApprovedBasicInfo:
+                        case EWorkflowStatus.Shipping:
+                            if (CanStopUserIDs.Contains(CurrentUser.UserID))
+                                cbxIsStop.Enabled = true;
+                            break;
+                    }
+                    #endregion
                 }
                 else
                 {
-                    EWorkflowStatus workfolwStatus = (EWorkflowStatus)this.CurrentEntity.WorkflowStatusID;
-
                     switch (workfolwStatus)
                     {
                         case EWorkflowStatus.TemporarySave:
@@ -383,8 +475,25 @@ namespace ZhongDing.Web.Views.Sales
 
                             break;
 
-                        case EWorkflowStatus.ExportToDBOrder:
-                            #region 已生成配送订单，不能修改
+                        case EWorkflowStatus.ApprovedBasicInfo:
+                        case EWorkflowStatus.Shipping:
+                            #region 审核通过和发货中的订单，只能中止
+                            if (CanStopUserIDs.Contains(CurrentUser.UserID))
+                            {
+                                btnSave.Visible = true;
+                                btnSubmit.Visible = false;
+
+                                DisabledBasicInfoControls();
+
+                                cbxIsStop.Enabled = true;
+
+                                ShowAuditControls(false);
+                            }
+                            #endregion
+                            break;
+
+                        case EWorkflowStatus.Completed:
+                            #region 完成的订单，不能修改
 
                             DisabledBasicInfoControls();
 
@@ -395,7 +504,6 @@ namespace ZhongDing.Web.Views.Sales
                             #endregion
                             break;
                     }
-
                 }
             }
             else
@@ -470,6 +578,167 @@ namespace ZhongDing.Web.Views.Sales
 
             rdpOrderDate.SelectedDate = DateTime.Now;
             lblCreateBy.Text = CurrentUser.FullName;
+
+            var saleOrderType = PageSaleOrderTypeRepository.GetByID(SaleOrderTypeID);
+            if (saleOrderType != null)
+                lblSalesOrderType.Text = saleOrderType.TypeName;
+
+            hdnSaleOrderTypeID.Value = this.SaleOrderTypeID.ToString();
+        }
+
+        /// <summary>
+        /// 保存客户订单基本信息
+        /// </summary>
+        private void SaveClientSaleAppBasicData(ClientSaleApplication currentEntity)
+        {
+            currentEntity.SalesOrderApplication.OrderDate = rdpOrderDate.SelectedDate.HasValue
+                ? rdpOrderDate.SelectedDate.Value : DateTime.Now;
+
+            currentEntity.ClientUserID = int.Parse(rcbxClientUser.SelectedValue);
+            currentEntity.ClientCompanyID = int.Parse(ddlClientCompany.SelectedValue);
+
+            var clientInfo = PageClientInfoRepository.GetList(x => x.ClientUserID == currentEntity.ClientUserID
+                                && x.ClientCompanyID == currentEntity.ClientCompanyID).FirstOrDefault();
+
+            if (clientInfo != null)
+            {
+                currentEntity.ReceiverName = clientInfo.ReceiverName;
+                currentEntity.ReceiverPhone = clientInfo.PhoneNumber;
+                currentEntity.ReceiverAddress = clientInfo.ReceiverAddress;
+                currentEntity.ReceiverFax = clientInfo.Fax;
+            }
+
+            currentEntity.ClientContactID = int.Parse(rcbxClientContact.SelectedValue);
+            var clientContact = PageClientInfoContactRepository.GetByID(currentEntity.ClientContactID);
+            if (clientContact != null)
+                currentEntity.ClientContactPhone = clientContact.PhoneNumber;
+
+            var eSaleOrderType = (ESaleOrderType)this.SaleOrderTypeID;
+
+            switch (eSaleOrderType)
+            {
+                case ESaleOrderType.AttractBusinessMode:
+                    currentEntity.DeliveryModeID = int.Parse(ddlDeliveryMode.SelectedValue);
+                    currentEntity.IsGuaranteed = false;
+                    currentEntity.Guaranteeby = null;
+                    currentEntity.GuaranteeExpirationDate = null;
+
+                    if (currentEntity.DeliveryModeID == (int)EDeliveryMode.ReceiptedDelivery)
+                    {
+                        SaveReceivingBankAccounts(currentEntity);
+                    }
+                    else if (currentEntity.DeliveryModeID == (int)EDeliveryMode.GuaranteeDelivery)
+                    {
+                        currentEntity.DeliveryModeID = null;
+                        currentEntity.IsGuaranteed = true;
+
+                        currentEntity.GuaranteeExpirationDate = rdpGuaranteeExpiration.SelectedDate;
+                        currentEntity.Guaranteeby = int.Parse(rcbxGuaranteeby.SelectedValue);
+                    }
+
+                    break;
+                case ESaleOrderType.AttachedMode:
+                    currentEntity.DeliveryModeID = null;
+                    currentEntity.IsGuaranteed = false;
+                    currentEntity.Guaranteeby = null;
+                    currentEntity.GuaranteeExpirationDate = null;
+
+                    SaveReceivingBankAccounts(currentEntity);
+
+                    break;
+            }
+
+            PageClientSaleAppRepository.Save();
+
+            if (!string.IsNullOrEmpty(txtComment.Text.Trim()))
+            {
+                var appNote = new ApplicationNote();
+                appNote.WorkflowID = (int)EWorkflow.ClientOrder;
+                appNote.NoteTypeID = (int)EAppNoteType.Comment;
+
+                if (CanEditUserIDs.Contains(CurrentUser.UserID))
+                    appNote.WorkflowStepID = (int)EWorkflowStep.EditClientOrder;
+                else
+                    appNote.WorkflowStepID = (int)EWorkflowStep.NewClientOrder;
+
+                appNote.ApplicationID = currentEntity.ID;
+                appNote.Note = txtComment.Text.Trim();
+
+                PageAppNoteRepository.Add(appNote);
+
+                PageAppNoteRepository.Save();
+            }
+        }
+
+        private void SaveReceivingBankAccounts(ClientSaleApplication currentEntity)
+        {
+            foreach (RadComboBoxItem item in rcbxReceivingBankAccount.Items)
+            {
+                var curBankAccountID = int.Parse(item.Value);
+
+                var matchedBankAccount = currentEntity.ClientSaleAppBankAccount
+                    .FirstOrDefault(x => x.IsDeleted == false && x.ReceiverBankAccountID == curBankAccountID);
+
+                if (item.Checked)
+                {
+                    //选中并且没有保存过，则新增并保存
+                    if (matchedBankAccount == null)
+                    {
+                        matchedBankAccount = new ClientSaleAppBankAccount()
+                        {
+                            ReceiverBankAccountID = curBankAccountID
+                        };
+
+                        currentEntity.ClientSaleAppBankAccount.Add(matchedBankAccount);
+                    }
+                }
+                else
+                {
+                    //未选中，但之前有保存过，则删除
+                    if (matchedBankAccount != null)
+                        matchedBankAccount.IsDeleted = true;
+                }
+            }
+        }
+
+        private void ValidControls()
+        {
+            if (this.SaleOrderTypeID == (int)ESaleOrderType.AttractBusinessMode)
+            {
+                if (!string.IsNullOrEmpty(ddlDeliveryMode.SelectedValue))
+                {
+                    int deliveryModeID;
+
+                    if (int.TryParse(ddlDeliveryMode.SelectedValue, out deliveryModeID))
+                    {
+                        EDeliveryMode eDeliveryMode = (EDeliveryMode)deliveryModeID;
+
+                        switch (eDeliveryMode)
+                        {
+                            case EDeliveryMode.ReceiptedDelivery:
+
+                                if (rcbxReceivingBankAccount.CheckedItems.Count == 0)
+                                    cvReceivingBankAccount.IsValid = false;
+
+                                break;
+                            case EDeliveryMode.GuaranteeDelivery:
+
+                                if (!rdpGuaranteeExpiration.SelectedDate.HasValue)
+                                    cvGuaranteeExpiration.IsValid = false;
+
+                                if (string.IsNullOrEmpty(rcbxGuaranteeby.SelectedValue))
+                                    cvGuaranteeby.IsValid = false;
+
+                                break;
+                        }
+                    }
+                }
+            }
+            else if (this.SaleOrderTypeID == (int)ESaleOrderType.AttachedMode)
+            {
+                if (rcbxReceivingBankAccount.CheckedItems.Count == 0)
+                    cvReceivingBankAccount.IsValid = false;
+            }
         }
 
 
@@ -554,63 +823,158 @@ namespace ZhongDing.Web.Views.Sales
 
         protected void rgOrderProducts_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
+            var uiSearchObj = new UISearchSalesOrderAppDetail
+            {
+                SalesOrderApplicationID = CurrentEntity != null
+                ? CurrentEntity.SalesOrderApplicationID : GlobalConst.INVALID_INT
+            };
 
+            int totalRecords;
+
+            var requestProducts = PageSalesOrderAppDetailRepository
+                .GetUIList(uiSearchObj, rgOrderProducts.CurrentPageIndex, rgOrderProducts.PageSize, out totalRecords);
+
+            rgOrderProducts.DataSource = requestProducts;
         }
 
         protected void rgOrderProducts_DeleteCommand(object sender, Telerik.Web.UI.GridCommandEventArgs e)
         {
+            GridEditableItem editableItem = e.Item as GridEditableItem;
 
+            String sid = editableItem.GetDataKeyValue("ID").ToString();
+
+            int id = 0;
+            if (int.TryParse(sid, out id))
+            {
+                PageSalesOrderAppDetailRepository.DeleteByID(id);
+                PageSalesOrderAppDetailRepository.Save();
+            }
+
+            rgOrderProducts.Rebind();
         }
 
         protected void rgOrderProducts_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
+            if (e.Item is GridCommandItem)
+            {
+                GridCommandItem commandItem = e.Item as GridCommandItem;
+                Panel plAddCommand = commandItem.FindControl("plAddCommand") as Panel;
 
+                if (plAddCommand != null)
+                {
+                    if (this.CurrentEntity != null && (this.CanEditUserIDs.Contains(CurrentUser.UserID)
+                            || (this.CurrentEntity.CreatedBy == CurrentUser.UserID
+                                && (this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.TemporarySave
+                                    || this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.ReturnBasicInfo))))
+                        plAddCommand.Visible = true;
+                    else
+                        plAddCommand.Visible = false;
+                }
+            }
         }
 
         protected void rgOrderProducts_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
         {
-
+            if (this.CurrentEntity != null && (this.CanEditUserIDs.Contains(CurrentUser.UserID)
+                    || (this.CurrentEntity.CreatedBy == CurrentUser.UserID
+                        && (this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.TemporarySave
+                            || this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.ReturnBasicInfo))))
+            {
+                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT).Visible = true;
+                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = true;
+            }
+            else
+            {
+                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT).Visible = false;
+                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = false;
+            }
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(ddlDeliveryMode.SelectedValue))
-            {
-                int deliveryModeID;
+            #region 验证数据是否有效
 
-                if (int.TryParse(ddlDeliveryMode.SelectedValue, out deliveryModeID))
-                {
-                    EDeliveryMode eDeliveryMode = (EDeliveryMode)deliveryModeID;
+            ValidControls();
 
-                    switch (eDeliveryMode)
-                    {
-                        case EDeliveryMode.ReceiptedDelivery:
-
-                            if (rcbxReceivingBankAccount.CheckedItems.Count == 0)
-                                cvReceivingBankAccount.IsValid = false;
-
-                            break;
-                        case EDeliveryMode.GuaranteeDelivery:
-
-                            if (!rdpGuaranteeExpiration.SelectedDate.HasValue)
-                                cvGuaranteeExpiration.IsValid = false;
-
-                            if (string.IsNullOrEmpty(rcbxGuaranteeby.SelectedValue))
-                                cvGuaranteeby.IsValid = false;
-
-                            break;
-                    }
-                }
-            }
+            #endregion
 
             if (!IsValid) return;
 
+            ClientSaleApplication currentEntity = this.CurrentEntity;
 
+            if (currentEntity == null)
+            {
+                currentEntity = new ClientSaleApplication();
+                currentEntity.CompanyID = CurrentUser.CompanyID;
+                currentEntity.WorkflowStatusID = (int)EWorkflowStatus.TemporarySave;
+
+                var salesOrderApp = new SalesOrderApplication()
+                {
+                    SaleOrderTypeID = this.SaleOrderTypeID.Value,
+                    OrderCode = Utility.GenerateAutoSerialNo(PageClientSaleAppRepository.GetMaxEntityID(),
+                                GlobalConst.EntityAutoSerialNo.SerialNoPrefix.CLIENT_ORDER)
+                };
+
+                currentEntity.SalesOrderApplication = salesOrderApp;
+
+                PageClientSaleAppRepository.Add(currentEntity);
+            }
+
+            SaveClientSaleAppBasicData(currentEntity);
+
+            hdnCurrentEntityID.Value = currentEntity.ID.ToString();
+
+            if (this.CurrentEntity != null)
+            {
+                this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
+                this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SAEVED_REDIRECT);
+            }
+            else
+            {
+                this.Master.BaseNotification.OnClientHidden = "refreshMaintenancePage";
+                this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SAEVED_REFRESH);
+            }
         }
+
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
+            #region 验证数据是否有效
 
+            ValidControls();
+
+            #endregion
+
+            if (!IsValid) return;
+
+            if (this.CurrentEntity != null)
+            {
+                EWorkflowStatus workfolwStatus = (EWorkflowStatus)this.CurrentEntity.WorkflowStatusID;
+
+                switch (workfolwStatus)
+                {
+                    case EWorkflowStatus.TemporarySave:
+                    case EWorkflowStatus.ReturnBasicInfo:
+                        if (this.CurrentEntity.SalesOrderApplication.SalesOrderAppDetail.Where(x => x.IsDeleted == false).Count() > 0)
+                        {
+                            this.CurrentEntity.WorkflowStatusID = (int)EWorkflowStatus.Submit;
+
+                            SaveClientSaleAppBasicData(this.CurrentEntity);
+
+                            this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
+                            this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_SUCCESS;
+                            this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_OPERATE_REDIRECT);
+                        }
+                        else
+                        {
+                            this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
+                            this.Master.BaseNotification.AutoCloseDelay = 1000;
+                            this.Master.BaseNotification.Show("货品为空，订单单不能提交");
+                        }
+
+                        break;
+                }
+            }
         }
 
         protected void btnAudit_Click(object sender, EventArgs e)

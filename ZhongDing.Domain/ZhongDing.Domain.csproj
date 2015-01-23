@@ -224,7 +224,7 @@
     <Compile Include="Models\Roles.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\SalesModel.cs">
+    <Compile Include="Models\SaleOrderType.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\SalesOrderAppDetail.cs">

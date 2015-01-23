@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using ZhongDing.Business.IRepositories;
+using ZhongDing.Common;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
@@ -121,7 +122,7 @@ namespace ZhongDing.Business.Repositories
                 }
             }
 
-            query = GetList(pageIndex, pageSize, whereFuncs, out total);
+            query = GetList(pageIndex, pageSize, whereFuncs, GlobalConst.OrderByExpression.CREATEDON_DESC, out total);
 
             if (query != null)
             {
@@ -131,7 +132,6 @@ namespace ZhongDing.Business.Repositories
                               join ws in DB.WorkflowStatus on q.WorkflowStatusID equals ws.ID
                               join cu in DB.Users on q.CreatedBy equals cu.UserID into tempCU
                               from tcu in tempCU.DefaultIfEmpty()
-                              orderby q.CreatedOn descending
                               select new UIDaBaoApplication()
                               {
                                   ID = q.ID,

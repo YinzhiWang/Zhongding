@@ -5,6 +5,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using ZhongDing.Business.IRepositories;
+using ZhongDing.Common;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
@@ -85,14 +86,13 @@ namespace ZhongDing.Business.Repositories
                     whereFuncs.Add(x => x.WorkflowStepID.Equals(uiSearchObj.WorkflowStepID));
             }
 
-            query = GetList(pageIndex, pageSize, whereFuncs, out total);
+            query = GetList(pageIndex, pageSize, whereFuncs, GlobalConst.OrderByExpression.CREATEDON_DESC, out total);
 
             if (query != null)
             {
                 uiEntities = (from q in query
                               join cu in this.DB.Users on q.CreatedBy equals cu.UserID into tempCU
                               from tcu in tempCU.DefaultIfEmpty()
-                              orderby q.CreatedOn descending
                               select new UIApplicationNote()
                               {
                                   ID = q.ID,

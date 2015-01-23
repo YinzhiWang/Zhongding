@@ -23,7 +23,6 @@ namespace ZhongDing.Domain.Models
     
         public int ID { get; set; }
         public int SalesOrderApplicationID { get; set; }
-        public int SalesModelID { get; set; }
         public int ClientUserID { get; set; }
         public int ClientCompanyID { get; set; }
         public Nullable<int> DeliveryModeID { get; set; }
@@ -59,7 +58,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<ClientSaleAppBankAccount> ClientSaleAppBankAccount { get; set; }
         public virtual ClientUser ClientUser { get; set; }
         public virtual Company Company { get; set; }
-        public virtual SalesModel SalesModel { get; set; }
         public virtual SalesOrderApplication SalesOrderApplication { get; set; }
         public virtual WorkflowStatus WorkflowStatus { get; set; }
         public virtual ICollection<GuaranteeLog> GuaranteeLog { get; set; }

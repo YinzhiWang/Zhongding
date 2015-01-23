@@ -496,15 +496,49 @@ COMMIT TRANSACTION
 ---- end --- 1/15/2015 -- 初始化备注类型数据 -- by lihong
 
 
----- start --- 1/20/2015 -- 初始化客户订单模式数据 -- by lihong
+---- start --- 1/23/2015 -- 初始化订单类型、工作流状态关联数据(客户订单相关)数据 -- by lihong
 SET NUMERIC_ROUNDABORT OFF
 GO
 SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
 GO
 BEGIN TRANSACTION
-SET IDENTITY_INSERT [dbo].[SalesModel] ON
-INSERT INTO [dbo].[SalesModel] ([ID], [SalesModelName]) VALUES (1, N'招商模式')
-INSERT INTO [dbo].[SalesModel] ([ID], [SalesModelName]) VALUES (2, N'挂靠模式')
-SET IDENTITY_INSERT [dbo].[SalesModel] OFF
+SET IDENTITY_INSERT [dbo].[SaleOrderType] ON
+INSERT INTO [dbo].[SaleOrderType] ([ID], [TypeName]) VALUES (1, N'大包配送模式')
+INSERT INTO [dbo].[SaleOrderType] ([ID], [TypeName]) VALUES (2, N'招商模式')
+INSERT INTO [dbo].[SaleOrderType] ([ID], [TypeName]) VALUES (3, N'挂靠模式')
+SET IDENTITY_INSERT [dbo].[SaleOrderType] OFF
+
+ALTER TABLE [dbo].[WorkflowStepStatus] DROP CONSTRAINT [FK_WorkflowStepStatus_WorkflowStatus]
+ALTER TABLE [dbo].[WorkflowStepStatus] DROP CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep]
+ALTER TABLE [dbo].[WorkflowStep] DROP CONSTRAINT [FK_WorkflowStep_Workflow]
+
+SET IDENTITY_INSERT [dbo].[Workflow] ON
+INSERT INTO [dbo].[Workflow] ([ID], [WorkflowName], [IsActive], [IsDeleted]) VALUES (6, N'客户订单', 1, 0)
+SET IDENTITY_INSERT [dbo].[Workflow] OFF
+SET IDENTITY_INSERT [dbo].[WorkflowStatus] ON
+INSERT INTO [dbo].[WorkflowStatus] ([ID], [StatusName], [Comment], [IsDeleted]) VALUES (14, N'发货中', N'订单已在发货中', 0)
+INSERT INTO [dbo].[WorkflowStatus] ([ID], [StatusName], [Comment], [IsDeleted]) VALUES (15, N'已完成', N'订单已全部发货完成', 0)
+SET IDENTITY_INSERT [dbo].[WorkflowStatus] OFF
+SET IDENTITY_INSERT [dbo].[WorkflowStep] ON
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (16, 6, N'客户订单新增', 0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (17, 6, N'客户订单审核', 0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (18, 6, N'客户订单中止', 0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (19, 6, N'修改客户订单', 0)
+SET IDENTITY_INSERT [dbo].[WorkflowStep] OFF
+SET IDENTITY_INSERT [dbo].[WorkflowStepStatus] ON
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (24, 16, 1, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (25, 16, 4, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (26, 17, 2, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (27, 18, 3, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (28, 18, 14, 0)
+SET IDENTITY_INSERT [dbo].[WorkflowStepStatus] OFF
+
+ALTER TABLE [dbo].[WorkflowStepStatus]
+    ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStatus] FOREIGN KEY ([WorkflowStatusID]) REFERENCES [dbo].[WorkflowStatus] ([ID])
+ALTER TABLE [dbo].[WorkflowStepStatus]
+    ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep] FOREIGN KEY ([WorkflowStepID]) REFERENCES [dbo].[WorkflowStep] ([ID])
+ALTER TABLE [dbo].[WorkflowStep]
+    ADD CONSTRAINT [FK_WorkflowStep_Workflow] FOREIGN KEY ([WorkflowID]) REFERENCES [dbo].[Workflow] ([ID])
+
 COMMIT TRANSACTION
----- end --- 1/20/2015 -- 初始化客户订单模式数据 -- by lihong
+---- end --- 1/23/2015 -- 初始化订单类型、工作流状态关联数据(客户订单相关)数据 -- by lihong

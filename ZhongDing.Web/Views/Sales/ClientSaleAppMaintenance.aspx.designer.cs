@@ -76,13 +76,13 @@ namespace ZhongDing.Web.Views.Sales {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvOrderDate;
         
         /// <summary>
-        /// lblSalesModel control.
+        /// lblSalesOrderType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblSalesModel;
+        protected global::System.Web.UI.WebControls.Label lblSalesOrderType;
         
         /// <summary>
         /// rcbxClientUser control.
@@ -139,15 +139,6 @@ namespace ZhongDing.Web.Views.Sales {
         protected global::System.Web.UI.WebControls.Label lblClientBalanceAmount;
         
         /// <summary>
-        /// ddlDeliveryMode control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadDropDownList ddlDeliveryMode;
-        
-        /// <summary>
         /// divStop control.
         /// </summary>
         /// <remarks>
@@ -164,6 +155,15 @@ namespace ZhongDing.Web.Views.Sales {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadButton cbxIsStop;
+        
+        /// <summary>
+        /// ddlDeliveryMode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDropDownList ddlDeliveryMode;
         
         /// <summary>
         /// rcbxReceivingBankAccount control.
@@ -236,6 +236,15 @@ namespace ZhongDing.Web.Views.Sales {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadComboBox rcbxClientContact;
+        
+        /// <summary>
+        /// RequiredFieldValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
         
         /// <summary>
         /// lblContactPhone control.
@@ -479,6 +488,15 @@ namespace ZhongDing.Web.Views.Sales {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnCurrentEntityID;
+        
+        /// <summary>
+        /// hdnSaleOrderTypeID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnSaleOrderTypeID;
         
         /// <summary>
         /// Master property.

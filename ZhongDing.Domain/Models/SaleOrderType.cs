@@ -13,15 +13,15 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class SalesModel : IEntityExtendedProperty
+    public partial class SaleOrderType : IEntityExtendedProperty
     {
-        public SalesModel()
+        public SaleOrderType()
         {
-            this.ClientSaleApplication = new HashSet<ClientSaleApplication>();
+            this.SalesOrderApplication = new HashSet<SalesOrderApplication>();
         }
     
         public int ID { get; set; }
-        public string SalesModelName { get; set; }
+        public string TypeName { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -33,6 +33,6 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return false; } }
     
     
-        public virtual ICollection<ClientSaleApplication> ClientSaleApplication { get; set; }
+        public virtual ICollection<SalesOrderApplication> SalesOrderApplication { get; set; }
     }
 }
