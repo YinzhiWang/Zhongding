@@ -79,6 +79,7 @@
     <Compile Include="Enums\EReceiverType.cs" />
     <Compile Include="Enums\ESaleOrderType.cs" />
     <Compile Include="Enums\ESalesPlanType.cs" />
+    <Compile Include="Enums\ESaleType.cs" />
     <Compile Include="Enums\EWorkflow.cs" />
     <Compile Include="Enums\EWorkflowStatus.cs" />
     <Compile Include="Enums\EWorkflowStep.cs" />

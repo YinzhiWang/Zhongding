@@ -146,7 +146,7 @@ namespace ZhongDing.Web.Views.Sales
         {
             get
             {
-                if (_CanAccessUserIDs == null)
+                if (_CanAccessUserIDs == null || _CanAccessUserIDs.Count == 0)
                 {
                     if (this.CurrentEntity == null)
                         _CanAccessUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.NewClientOrder);
@@ -179,6 +179,18 @@ namespace ZhongDing.Web.Views.Sales
                     _CanStopUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.StopClientOrder);
 
                 return _CanStopUserIDs;
+            }
+        }
+
+        private IList<int> _CanAuditUserIDs;
+        private IList<int> CanAuditUserIDs
+        {
+            get
+            {
+                if (_CanAuditUserIDs == null)
+                    _CanAuditUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.AuditClientOrder);
+
+                return _CanAuditUserIDs;
             }
         }
 
@@ -888,6 +900,45 @@ namespace ZhongDing.Web.Views.Sales
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT).Visible = false;
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = false;
             }
+
+            if (this.CanAuditUserIDs.Contains(CurrentUser.UserID)
+                && this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.Submit)
+            {
+                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT).Visible = true;
+            }
+        }
+
+        protected void rgOrderProducts_ItemDataBound(object sender, GridItemEventArgs e)
+        {
+            if (e.Item.ItemType == GridItemType.Item
+                || e.Item.ItemType == GridItemType.AlternatingItem)
+            {
+                GridDataItem gridDataItem = e.Item as GridDataItem;
+                var uiEntity = (UISalesOrderAppDetail)gridDataItem.DataItem;
+
+                if (uiEntity != null)
+                {
+                    string linkEditHtml = "<a href=\"javascript:void(0);\" onclick=\"openOrderProductWindow(" + uiEntity.ID + ")\">";
+
+                    if (this.CanAuditUserIDs.Contains(CurrentUser.UserID)
+                        && this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.Submit)
+                    {
+                        linkEditHtml += "修改单价";
+                    }
+
+                    linkEditHtml += "</a>";
+
+                    var editColumn = rgOrderProducts.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT);
+
+                    if (editColumn != null)
+                    {
+                        var editCell = gridDataItem.Cells[editColumn.OrderIndex];
+
+                        if (editCell != null)
+                            editCell.Text = linkEditHtml;
+                    }
+                }
+            }
         }
 
         protected void btnSave_Click(object sender, EventArgs e)
@@ -969,7 +1020,7 @@ namespace ZhongDing.Web.Views.Sales
                         {
                             this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
                             this.Master.BaseNotification.AutoCloseDelay = 1000;
-                            this.Master.BaseNotification.Show("货品为空，订单单不能提交");
+                            this.Master.BaseNotification.Show("货品为空，订单不能提交");
                         }
 
                         break;

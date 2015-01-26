@@ -132,7 +132,14 @@ namespace ZhongDing.Business.Repositories
             {
                 ItemValue = x.ID,
                 ItemText = x.Specification,
-                Extension = new { UnitName = x.UnitOfMeasurement.UnitName }
+                Extension = new
+                {
+                    //基本单位
+                    UnitName = x.UnitOfMeasurement.UnitName,
+                    //每件数量
+                    NumberInLargePackage = x.NumberInLargePackage.HasValue
+                    ? x.NumberInLargePackage.Value : 1
+                }
             }).ToList();
 
             return uiDropdownItems;

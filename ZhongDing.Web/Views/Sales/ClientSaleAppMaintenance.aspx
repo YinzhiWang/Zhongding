@@ -318,13 +318,14 @@
                                             MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true" ShowFooter="true"
                                             ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
                                             OnNeedDataSource="rgOrderProducts_NeedDataSource" OnDeleteCommand="rgOrderProducts_DeleteCommand"
-                                            OnItemCreated="rgOrderProducts_ItemCreated" OnColumnCreated="rgOrderProducts_ColumnCreated">
+                                            OnItemCreated="rgOrderProducts_ItemCreated" OnColumnCreated="rgOrderProducts_ColumnCreated"
+                                            OnItemDataBound="rgOrderProducts_ItemDataBound">
                                             <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
                                                 ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                                                 <Columns>
                                                     <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
                                                     </telerik:GridBoundColumn>
-                                                    <telerik:GridBoundColumn UniqueName="ProductCode" HeaderText="货品编号" DataField="ProductCode">
+                                                    <telerik:GridBoundColumn UniqueName="Warehouse" HeaderText="出库仓库" DataField="Warehouse">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
                                                     <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品名称" DataField="ProductName">
@@ -334,26 +335,29 @@
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
                                                     <telerik:GridBoundColumn UniqueName="UnitOfMeasurement" HeaderText="基本单位" DataField="UnitOfMeasurement">
+                                                        <ItemStyle HorizontalAlign="Left" Width="60" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="SalesQty" HeaderText="基本数量" DataField="SalesQty">
+                                                        <ItemStyle HorizontalAlign="Left" Width="60" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="NumberOfPackages" HeaderText="件数" DataField="NumberOfPackages">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
                                                     <telerik:GridBoundColumn UniqueName="SalesPrice" HeaderText="单价" DataField="SalesPrice" DataFormatString="{0:C2}">
-                                                        <ItemStyle HorizontalAlign="Left" />
-                                                    </telerik:GridBoundColumn>
-                                                    <telerik:GridBoundColumn UniqueName="Count" HeaderText="数量" DataField="Count">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
                                                     <telerik:GridBoundColumn UniqueName="GiftCount" HeaderText="赠送数量" DataField="GiftCount" FooterText="合计："
                                                         FooterStyle-Font-Bold="true" FooterStyle-HorizontalAlign="Right">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
-                                                    <telerik:GridBoundColumn UniqueName="TotalSalesAmount" HeaderText="金额" DataField="TotalSalesAmount" DataFormatString="{0:C2}"
+                                                    <telerik:GridBoundColumn UniqueName="TotalSalesAmount" HeaderText="货款" DataField="TotalSalesAmount" DataFormatString="{0:C2}"
                                                         Aggregate="Sum" FooterStyle-Font-Bold="true">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
-                                                    <telerik:GridTemplateColumn UniqueName="Edit" HeaderStyle-Width="40">
-                                                        <ItemStyle HorizontalAlign="Center" Width="40" />
+                                                    <telerik:GridTemplateColumn UniqueName="Edit" HeaderStyle-Width="60">
+                                                        <ItemStyle HorizontalAlign="Center" Width="60" />
                                                         <ItemTemplate>
-                                                            <a href="javascript:void(0);" onclick="openRequestProductWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">
+                                                            <a href="javascript:void(0);" onclick="openOrderProductWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">
                                                                 <u>编辑</u></a>
                                                         </ItemTemplate>
                                                     </telerik:GridTemplateColumn>
@@ -363,14 +367,14 @@
                                                     <table class="width100-percent">
                                                         <tr>
                                                             <td>
-                                                                <%--<asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
-                                                                    <input type="button" class="rgAdd" onclick="openRequestProductWindow(-1); return false;" />
-                                                                    <a href="javascript:void(0)" onclick="openRequestProductWindow(-1); return false;">添加</a>
-                                                                </asp:Panel>--%>
+                                                                <asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
+                                                                    <input type="button" class="rgAdd" onclick="openOrderProductWindow(-1); return false;" />
+                                                                    <a href="javascript:void(0)" onclick="openOrderProductWindow(-1); return false;">添加</a>
+                                                                </asp:Panel>
                                                             </td>
                                                             <td class="right-td rightpadding10">
-                                                                <input type="button" class="rgRefresh" onclick="refreshGrid(gridClientIDs.gridRequestProducts); return false;" />
-                                                                <a href="javascript:void(0);" onclick="refreshGrid(gridClientIDs.gridRequestProducts); return false;">刷新</a>
+                                                                <input type="button" class="rgRefresh" onclick="refreshGrid(gridClientIDs.gridOrderProducts); return false;" />
+                                                                <a href="javascript:void(0);" onclick="refreshGrid(gridClientIDs.gridOrderProducts); return false;">刷新</a>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -482,7 +486,7 @@
         var currentEntityID = -1;
 
         var gridClientIDs = {
-            gridRequestProducts: "<%= rgOrderProducts.ClientID %>",
+            gridOrderProducts: "<%= rgOrderProducts.ClientID %>",
 
         };
 
@@ -509,13 +513,13 @@
             redirectToPage("Views/Sales/ClientSaleAppMaintenance.aspx?EntityID=" + currentEntityID);
         }
 
-        function openRequestProductWindow(id) {
+        function openOrderProductWindow(id) {
             $.showLoading();
 
-            var targetUrl = $.getRootPath() + "Views/Sales/Editors/DBOrderRequestProductMaintain.aspx?EntityID=" + id
-                + "&OwnerEntityID=" + currentEntityID + "&GridClientID=" + gridClientIDs.gridRequestProducts;
+            var targetUrl = $.getRootPath() + "Views/Sales/Editors/ClientOrderProductMaintain.aspx?EntityID=" + id
+                + "&OwnerEntityID=" + currentEntityID + "&GridClientID=" + gridClientIDs.gridOrderProducts;
 
-            $.openRadWindow(targetUrl, "winRequestProduct", true, 800, 340);
+            $.openRadWindow(targetUrl, "winCleintOrderProduct", true, 800, 400);
         }
 
         function onClientSelectedClientContact(sender, eventArgs) {

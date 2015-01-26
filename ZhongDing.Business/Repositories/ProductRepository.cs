@@ -181,6 +181,9 @@ namespace ZhongDing.Business.Repositories
 
                     if (uiSearchObj.Extension.SupplierID > 0)
                         whereFuncs.Add(x => x.SupplierID == uiSearchObj.Extension.SupplierID);
+
+                    if (uiSearchObj.Extension.CompanyID > 0)
+                        whereFuncs.Add(x => x.CompanyID == uiSearchObj.Extension.CompanyID);
                 }
             }
 

@@ -2627,6 +2627,7 @@
     <Content Include="Views\Sales\DBStockOutMaintenance.aspx" />
     <Content Include="Views\Sales\DBStockOutManagement.aspx" />
     <Content Include="Views\Sales\Editors\ChooseSalesOrderProducts.aspx" />
+    <Content Include="Views\Sales\Editors\ClientOrderProductMaintain.aspx" />
     <Content Include="Views\Sales\Editors\DBOrderProductMaintain.aspx" />
     <Content Include="Views\Sales\Editors\DBOrderRequestProductMaintain.aspx" />
     <Content Include="Views\Sales\Printers\PrintStockOut.aspx" />
@@ -3206,6 +3207,13 @@
     <Compile Include="Views\Sales\Editors\ChooseSalesOrderProducts.aspx.designer.cs">
       <DependentUpon>ChooseSalesOrderProducts.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Sales\Editors\ClientOrderProductMaintain.aspx.cs">
+      <DependentUpon>ClientOrderProductMaintain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Sales\Editors\ClientOrderProductMaintain.aspx.designer.cs">
+      <DependentUpon>ClientOrderProductMaintain.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Sales\Editors\DBOrderProductMaintain.aspx.cs">
       <DependentUpon>DBOrderProductMaintain.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3286,7 +3294,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

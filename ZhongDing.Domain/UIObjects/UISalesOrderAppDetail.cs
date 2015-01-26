@@ -67,5 +67,7 @@ namespace ZhongDing.Domain.UIObjects
         public string LicenseNumber { get; set; }
 
         public int? NumberInLargePackage { get; set; }
+
+        public int? GiftCount { get; set; }
     }
 }

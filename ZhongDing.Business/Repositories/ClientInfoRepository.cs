@@ -197,5 +197,13 @@ namespace ZhongDing.Business.Repositories
 
             return uiContacts;
         }
+
+
+        public ClientInfo GetByConditions(int clientUserID, int clientCompanyID)
+        {
+            return GetList(x => x.IsDeleted == false && x.ClientUserID == clientUserID
+                && x.ClientCompanyID == clientCompanyID)
+                .FirstOrDefault();
+        }
     }
 }

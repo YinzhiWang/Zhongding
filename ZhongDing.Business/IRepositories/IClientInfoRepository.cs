@@ -43,5 +43,13 @@ namespace ZhongDing.Business.IRepositories
         /// <returns>IList{UIClientInfoContact}.</returns>
         IList<UIClientInfoContact> GetContacts(int? clientInfoID);
 
+        /// <summary>
+        /// 获取客户,根据client user id 和 client company id
+        /// </summary>
+        /// <param name="clientUserID">The client user ID.</param>
+        /// <param name="clientCompanyID">The client company ID.</param>
+        /// <returns>ClientInfo.</returns>
+        ClientInfo GetByConditions(int clientUserID, int clientCompanyID);
+
     }
 }

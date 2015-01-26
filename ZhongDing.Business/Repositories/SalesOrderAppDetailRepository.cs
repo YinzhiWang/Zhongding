@@ -40,6 +40,8 @@ namespace ZhongDing.Business.Repositories
                               join ps in DB.ProductSpecification on q.ProductSpecificationID equals ps.ID
                               join um in DB.UnitOfMeasurement on ps.UnitOfMeasurementID equals um.ID into tempUM
                               from tum in tempUM.DefaultIfEmpty()
+                              join w in DB.Warehouse on q.WarehouseID equals w.ID into tempW
+                              from tw in tempW.DefaultIfEmpty()
                               select new UISalesOrderAppDetail()
                               {
                                   ID = q.ID,
@@ -49,7 +51,10 @@ namespace ZhongDing.Business.Repositories
                                   UnitOfMeasurement = tum == null ? string.Empty : tum.UnitName,
                                   SalesPrice = q.SalesPrice,
                                   SalesQty = q.Count,
-                                  TotalSalesAmount = q.TotalSalesAmount
+                                  TotalSalesAmount = q.TotalSalesAmount,
+                                  GiftCount = q.GiftCount,
+                                  NumberOfPackages = q.Count / (ps.NumberInLargePackage.HasValue ? ps.NumberInLargePackage.Value : 1),
+                                  Warehouse = tw == null ? string.Empty : tw.Name
                               }).ToList();
             }
 
@@ -84,6 +89,8 @@ namespace ZhongDing.Business.Repositories
                               join ps in DB.ProductSpecification on q.ProductSpecificationID equals ps.ID
                               join um in DB.UnitOfMeasurement on ps.UnitOfMeasurementID equals um.ID into tempUM
                               from tum in tempUM.DefaultIfEmpty()
+                              join w in DB.Warehouse on q.WarehouseID equals w.ID into tempW
+                              from tw in tempW.DefaultIfEmpty()
                               select new UISalesOrderAppDetail()
                               {
                                   ID = q.ID,
@@ -93,7 +100,10 @@ namespace ZhongDing.Business.Repositories
                                   UnitOfMeasurement = tum == null ? string.Empty : tum.UnitName,
                                   SalesPrice = q.SalesPrice,
                                   SalesQty = q.Count,
-                                  TotalSalesAmount = q.TotalSalesAmount
+                                  TotalSalesAmount = q.TotalSalesAmount,
+                                  GiftCount = q.GiftCount,
+                                  NumberOfPackages = q.Count / (ps.NumberInLargePackage.HasValue ? ps.NumberInLargePackage.Value : 1),
+                                  Warehouse = tw == null ? string.Empty : tw.Name
                               }).ToList();
             }
 
