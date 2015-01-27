@@ -116,6 +116,18 @@ namespace ZhongDing.Web.Views.Sales
             }
         }
 
+        private IApplicationPaymentRepository _PageAppPaymentRepository;
+        private IApplicationPaymentRepository PageAppPaymentRepository
+        {
+            get
+            {
+                if (_PageAppPaymentRepository == null)
+                    _PageAppPaymentRepository = new ApplicationPaymentRepository();
+
+                return _PageAppPaymentRepository;
+            }
+        }
+
         private int? SaleOrderTypeID
         {
             get
@@ -441,6 +453,9 @@ namespace ZhongDing.Web.Views.Sales
                     btnSubmit.Visible = false;
                     ShowAuditControls(false);
 
+                    if (CurrentEntity.DeliveryModeID != (int)EDeliveryMode.GuaranteeDelivery)
+                        divAppPayments.Visible = true;
+
                     #region 审核通过和发货中的订单，只能中止
                     switch (workfolwStatus)
                     {
@@ -469,6 +484,7 @@ namespace ZhongDing.Web.Views.Sales
                             btnAudit.Visible = false;
                             btnReturn.Visible = false;
                             divAudit.Visible = false;
+                            divAppPayments.Visible = false;
 
                             #endregion
 
@@ -479,7 +495,15 @@ namespace ZhongDing.Web.Views.Sales
                             DisabledBasicInfoControls();
 
                             if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
+                            {
                                 ShowAuditControls(true);
+
+                                if (CurrentEntity.DeliveryModeID != (int)EDeliveryMode.GuaranteeDelivery)
+                                    divAppPayments.Visible = true;
+                                else
+                                    divAppPayments.Visible = false;
+
+                            }
                             else
                                 ShowAuditControls(false);
 
@@ -547,6 +571,7 @@ namespace ZhongDing.Web.Views.Sales
         private void ShowAuditControls(bool isShow)
         {
             divAudit.Visible = isShow;
+            divAppPayments.Visible = isShow;
             btnAudit.Visible = isShow;
             btnReturn.Visible = isShow;
         }
@@ -641,7 +666,6 @@ namespace ZhongDing.Web.Views.Sales
                     }
                     else if (currentEntity.DeliveryModeID == (int)EDeliveryMode.GuaranteeDelivery)
                     {
-                        currentEntity.DeliveryModeID = null;
                         currentEntity.IsGuaranteed = true;
 
                         currentEntity.GuaranteeExpirationDate = rdpGuaranteeExpiration.SelectedDate;
@@ -803,6 +827,12 @@ namespace ZhongDing.Web.Views.Sales
                 e.Item.Attributes["Extension"] = Utility.JsonSeralize(dataItem.Extension);
         }
 
+        #region Events
+
+        #region Grid Events
+
+        #region App Notes
+
         protected void rgAppNotes_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
             var uiSearchObj = new UISearchApplicationNote()
@@ -832,6 +862,10 @@ namespace ZhongDing.Web.Views.Sales
 
             rgAuditNotes.DataSource = appNotes;
         }
+
+        #endregion
+
+        #region rgOrderProducts
 
         protected void rgOrderProducts_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
@@ -922,9 +956,9 @@ namespace ZhongDing.Web.Views.Sales
 
                     if (this.CanAuditUserIDs.Contains(CurrentUser.UserID)
                         && this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.Submit)
-                    {
                         linkEditHtml += "修改单价";
-                    }
+                    else
+                        linkEditHtml += "编辑";
 
                     linkEditHtml += "</a>";
 
@@ -940,6 +974,97 @@ namespace ZhongDing.Web.Views.Sales
                 }
             }
         }
+
+        #endregion
+
+        #region rgAppPayments
+
+        protected void rgAppPayments_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            var uiSearchObj = new UISearchApplicationPayment
+            {
+                WorkflowID = this.CurrentWorkFlowID,
+                ApplicationID = this.CurrentEntityID.HasValue
+                ? this.CurrentEntityID.Value : GlobalConst.INVALID_INT
+            };
+
+            int totalRecords;
+
+            var appPayments = PageClientSaleAppRepository.GetPayments(uiSearchObj, rgAppPayments.CurrentPageIndex, rgAppPayments.PageSize, out totalRecords);
+
+            rgAppPayments.DataSource = appPayments;
+            rgAppPayments.VirtualItemCount = totalRecords;
+        }
+
+        protected void rgAppPayments_ItemCreated(object sender, GridItemEventArgs e)
+        {
+            if (e.Item is GridCommandItem)
+            {
+                GridCommandItem commandItem = e.Item as GridCommandItem;
+                Panel plAddCommand = commandItem.FindControl("plAddCommand") as Panel;
+
+                if (plAddCommand != null)
+                {
+                    if (this.CurrentEntity != null && (this.CanEditUserIDs.Contains(CurrentUser.UserID)
+                        || (this.CanAuditUserIDs.Contains(CurrentUser.UserID)
+                            && this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.Submit)))
+                        plAddCommand.Visible = true;
+                    else
+                        plAddCommand.Visible = false;
+                }
+            }
+        }
+
+        protected void rgAppPayments_ColumnCreated(object sender, GridColumnCreatedEventArgs e)
+        {
+            if (this.CurrentEntity != null && (this.CanEditUserIDs.Contains(CurrentUser.UserID)
+                || (this.CanAuditUserIDs.Contains(CurrentUser.UserID)
+                    && this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.Submit)))
+            {
+                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT).Visible = true;
+                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = true;
+            }
+            else
+            {
+                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT).Visible = false;
+                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = false;
+            }
+        }
+
+        protected void rgAppPayments_DeleteCommand(object sender, GridCommandEventArgs e)
+        {
+            var editableItem = ((GridEditableItem)e.Item);
+            String sid = editableItem.GetDataKeyValue("ID").ToString();
+
+            int id = 0;
+            if (int.TryParse(sid, out id))
+            {
+                string sPaymentMethodID = editableItem.GetDataKeyValue("PaymentMethodID").ToString();
+
+                int iPaymentMethodID;
+
+                if (int.TryParse(sPaymentMethodID, out iPaymentMethodID))
+                {
+                    if (iPaymentMethodID == (int)EPaymentMethod.BankTransfer)
+                    {
+                        PageAppPaymentRepository.DeleteByID(id);
+                        PageAppPaymentRepository.Save();
+                    }
+                    else if (iPaymentMethodID == (int)EPaymentMethod.Deduction)
+                    {
+
+                    }
+                }
+
+                rgAppPayments.Rebind();
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Button Events
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
@@ -987,7 +1112,6 @@ namespace ZhongDing.Web.Views.Sales
             }
         }
 
-
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
             #region 验证数据是否有效
@@ -1030,13 +1154,150 @@ namespace ZhongDing.Web.Views.Sales
 
         protected void btnAudit_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtAuditComment.Text.Trim()))
+                cvAuditComment.IsValid = false;
 
+            if (!IsValid) return;
+
+            if (this.CurrentEntityID.HasValue && this.CurrentEntityID > 0)
+            {
+                using (IUnitOfWork unitOfWork = new UnitOfWork())
+                {
+                    var db = unitOfWork.GetDbModel();
+
+                    IClientSaleApplicationRepository clientSaleAppRepository = new ClientSaleApplicationRepository();
+                    IApplicationPaymentRepository appPaymentRepository = new ApplicationPaymentRepository();
+                    IApplicationNoteRepository appNoteRepository = new ApplicationNoteRepository();
+
+                    clientSaleAppRepository.SetDbModel(db);
+                    appPaymentRepository.SetDbModel(db);
+                    appNoteRepository.SetDbModel(db);
+
+                    var currentEntity = clientSaleAppRepository.GetByID(this.CurrentEntityID);
+
+                    if (currentEntity != null)
+                    {
+                        decimal totalOrderAmount = 0;
+                        decimal totalPayAmount = 0;
+
+                        if (currentEntity.SalesOrderApplication != null)
+                            totalOrderAmount = currentEntity.SalesOrderApplication.SalesOrderAppDetail.Sum(x => x.TotalSalesAmount);
+
+                        var appPayments = appPaymentRepository.GetList(x => x.WorkflowID == CurrentWorkFlowID
+                            && x.ApplicationID == currentEntity.ID);
+
+                        if (currentEntity.DeliveryModeID == (int)EDeliveryMode.GuaranteeDelivery)
+                        {
+                            if (totalOrderAmount > WebConfig.MaxGuaranteeAmount)
+                            {
+                                this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
+                                this.Master.BaseNotification.AutoCloseDelay = 1000;
+                                this.Master.BaseNotification.Show("已超过最大担保金额：" + WebConfig.MaxGuaranteeAmount + "元");
+
+                                return;
+                            }
+                        }
+                        else
+                        {
+                            totalPayAmount += appPayments.Sum(x => ((x.Amount.HasValue ? x.Amount.Value : 0) + (x.Fee.HasValue ? x.Fee.Value : 0)));
+
+                            //还需要加上抵扣的总金额
+                            //totalPayAmount += 
+
+                            if (totalOrderAmount != totalPayAmount)
+                            {
+                                this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
+                                this.Master.BaseNotification.AutoCloseDelay = 1000;
+                                this.Master.BaseNotification.Show("货品总金额必须等于收款总金额");
+
+                                return;
+                            }
+                        }
+
+                        var appNote = new ApplicationNote();
+                        appNote.WorkflowID = CurrentWorkFlowID;
+                        appNote.NoteTypeID = (int)EAppNoteType.AuditOpinion;
+                        appNoteRepository.Add(appNote);
+
+                        switch (currentEntity.WorkflowStatusID)
+                        {
+                            case (int)EWorkflowStatus.Submit:
+                                appNote.WorkflowStepID = (int)EWorkflowStep.AuditClientOrder;
+                                appNote.ApplicationID = currentEntity.ID;
+                                appNote.Note = txtAuditComment.Text.Trim();
+
+                                currentEntity.WorkflowStatusID = (int)EWorkflowStatus.ApprovedBasicInfo;
+
+                                break;
+                        }
+
+                        foreach (var item in appPayments)
+                        {
+                            item.PaymentStatusID = (int)EPaymentStatus.Paid;
+                        }
+
+                        unitOfWork.SaveChanges();
+
+                        this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
+                        this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_SUCCESS;
+                        this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_OPERATE_REDIRECT);
+                    }
+                }
+            }
         }
 
         protected void btnReturn_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(txtAuditComment.Text.Trim()))
+                cvAuditComment.IsValid = false;
 
+            if (!IsValid) return;
+
+            if (this.CurrentEntityID.HasValue && this.CurrentEntityID > 0)
+            {
+                using (IUnitOfWork unitOfWork = new UnitOfWork())
+                {
+                    var db = unitOfWork.GetDbModel();
+
+                    IClientSaleApplicationRepository clientSaleAppRepository = new ClientSaleApplicationRepository();
+                    IApplicationNoteRepository appNoteRepository = new ApplicationNoteRepository();
+
+                    clientSaleAppRepository.SetDbModel(db);
+                    appNoteRepository.SetDbModel(db);
+
+                    var currentEntity = clientSaleAppRepository.GetByID(this.CurrentEntityID);
+
+                    if (currentEntity != null)
+                    {
+                        var appNote = new ApplicationNote();
+                        appNote.WorkflowID = CurrentWorkFlowID;
+                        appNote.NoteTypeID = (int)EAppNoteType.AuditOpinion;
+                        appNoteRepository.Add(appNote);
+
+                        switch (currentEntity.WorkflowStatusID)
+                        {
+                            case (int)EWorkflowStatus.Submit:
+                                appNote.WorkflowStepID = (int)EWorkflowStep.AuditClientOrder;
+                                appNote.ApplicationID = currentEntity.ID;
+                                appNote.Note = txtAuditComment.Text.Trim();
+
+                                currentEntity.WorkflowStatusID = (int)EWorkflowStatus.ReturnBasicInfo;
+
+                                break;
+                        }
+
+                        unitOfWork.SaveChanges();
+
+                        this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
+                        this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_OPERATE_REDIRECT);
+                    }
+                }
+            }
         }
+
+        #endregion
+
+        #endregion
 
     }
 }

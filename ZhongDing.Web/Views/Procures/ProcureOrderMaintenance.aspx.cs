@@ -473,6 +473,7 @@ namespace ZhongDing.Web.Views.Procures
         {
             var uiSearchObj = new UISearchApplicationPayment
             {
+                WorkflowID = this.CurrentWorkFlowID,
                 ApplicationID = this.CurrentEntityID.HasValue ? this.CurrentEntityID.Value : GlobalConst.INVALID_INT
             };
 
@@ -1013,7 +1014,7 @@ namespace ZhongDing.Web.Views.Procures
                     {
                         currentEntity.WorkflowStatusID = (int)EWorkflowStatus.Paid;
 
-                        var appPayments = appPaymentRepository.GetList(x => x.ApplicationID == currentEntity.ID);
+                        var appPayments = appPaymentRepository.GetList(x => x.WorkflowID == CurrentWorkFlowID && x.ApplicationID == currentEntity.ID);
 
                         foreach (var item in appPayments)
                         {

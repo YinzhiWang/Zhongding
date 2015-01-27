@@ -43,6 +43,11 @@
                     <telerik:AjaxUpdatedControl ControlID="rgOrderProducts" LoadingPanelID="loadingPanel" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="rgAppPayments">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="rgAppPayments" LoadingPanelID="loadingPanel" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
         </AjaxSettings>
     </telerik:RadAjaxManager>
 
@@ -137,7 +142,7 @@
                             <div class="float-left width40-percent">
                                 <label>客户余额</label>
                                 <div class="mws-form-item  small toppadding5">
-                                    <asp:Label ID="lblClientBalanceAmount" runat="server"></asp:Label>元
+                                    <asp:Label ID="lblClientBalanceAmount" runat="server" Text="0.0"></asp:Label>元
                                 </div>
                             </div>
                             <div class="float-left" runat="server" id="divStop">
@@ -323,8 +328,6 @@
                                             <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
                                                 ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                                                 <Columns>
-                                                    <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
-                                                    </telerik:GridBoundColumn>
                                                     <telerik:GridBoundColumn UniqueName="Warehouse" HeaderText="出库仓库" DataField="Warehouse">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
@@ -390,6 +393,82 @@
                                             </MasterTableView>
                                             <ClientSettings EnableRowHoverStyle="true">
                                             </ClientSettings>
+                                        </telerik:RadGrid>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--收款信息维护 -->
+                            <div class="mws-panel grid_8 mws-collapsible" data-collapseid="panel-payment" runat="server" id="divAppPayments">
+                                <div class="mws-panel-header">
+                                    <span class="mws-i-24 i-creditcard">确认收款</span>
+                                </div>
+                                <div class="mws-panel-body">
+                                    <div class="mws-panel-content">
+                                        <telerik:RadGrid ID="rgAppPayments" runat="server" PageSize="10"
+                                            AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
+                                            MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true" ShowFooter="true"
+                                            ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
+                                            OnNeedDataSource="rgAppPayments_NeedDataSource" OnItemCreated="rgAppPayments_ItemCreated"
+                                            OnColumnCreated="rgAppPayments_ColumnCreated" OnDeleteCommand="rgAppPayments_DeleteCommand">
+                                            <MasterTableView Width="100%" DataKeyNames="ID,PaymentMethodID" CommandItemDisplay="Top"
+                                                ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
+                                                <Columns>
+                                                    <telerik:GridBoundColumn UniqueName="PaymentMethod" HeaderText="收款方式" DataField="PaymentMethod">
+                                                        <HeaderStyle Width="15%" />
+                                                        <ItemStyle HorizontalAlign="Left" Width="10%" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="Amount" HeaderText="金额" DataField="Amount" DataFormatString="{0:C2}">
+                                                        <HeaderStyle Width="15%" />
+                                                        <ItemStyle HorizontalAlign="Left" Width="10%" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="Fee" HeaderText="手续费" DataField="Fee" DataFormatString="{0:C2}">
+                                                        <HeaderStyle Width="15%" />
+                                                        <ItemStyle HorizontalAlign="Left" Width="10%" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="PayDate" HeaderText="到账日期" DataField="PayDate">
+                                                        <HeaderStyle Width="15%" />
+                                                        <ItemStyle HorizontalAlign="Left" Width="10%" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="Comment" HeaderText="备注" DataField="Comment">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridTemplateColumn UniqueName="Edit" HeaderStyle-Width="60">
+                                                        <ItemStyle HorizontalAlign="Center" Width="60" />
+                                                        <ItemTemplate>
+                                                            <a href="javascript:void(0);" onclick="openAppPaymentWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>, <%#DataBinder.Eval(Container.DataItem,"PaymentMethodID")%>)">
+                                                                <u>编辑</u></a>
+                                                        </ItemTemplate>
+                                                    </telerik:GridTemplateColumn>
+                                                    <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="60" ItemStyle-Width="60" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
+                                                </Columns>
+                                                <CommandItemTemplate>
+                                                    <table class="width100-percent">
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
+                                                                    <input type="button" class="rgAdd" onclick="openAppPaymentWindow(-1); return false;" />
+                                                                    <a href="javascript:void(0)" onclick="openAppPaymentWindow(-1); return false;">添加</a>
+                                                                </asp:Panel>
+                                                            </td>
+                                                            <td class="right-td rightpadding10">
+                                                                <input type="button" class="rgRefresh" onclick="refreshGrid(gridClientIDs.gridAppPayments); return false;" />
+                                                                <a href="javascript:void(0);" onclick="refreshGrid(gridClientIDs.gridAppPayments); return false;">刷新</a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </CommandItemTemplate>
+                                                <NoRecordsTemplate>
+                                                    没有任何数据
+                                                </NoRecordsTemplate>
+                                                <ItemStyle Height="30" />
+                                                <CommandItemStyle Height="30" />
+                                                <AlternatingItemStyle BackColor="#f2f2f2" />
+                                                <PagerStyle PagerTextFormat="{4} 第{0}页/共{1}页, 第{2}-{3}条 共{5}条"
+                                                    PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
+                                                    FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
+                                            </MasterTableView>
+                                            <ClientSettings EnableRowHoverStyle="true" />
                                         </telerik:RadGrid>
                                     </div>
                                 </div>
@@ -487,7 +566,7 @@
 
         var gridClientIDs = {
             gridOrderProducts: "<%= rgOrderProducts.ClientID %>",
-
+            gridAppPayments: "<%= rgAppPayments.ClientID %>",
         };
 
         var deliveryModes = {
@@ -520,6 +599,16 @@
                 + "&OwnerEntityID=" + currentEntityID + "&GridClientID=" + gridClientIDs.gridOrderProducts;
 
             $.openRadWindow(targetUrl, "winCleintOrderProduct", true, 800, 400);
+        }
+
+        function openAppPaymentWindow(id, paymentMethodID) {
+            $.showLoading();
+
+            var targetUrl = $.getRootPath() + "Views/Sales/Editors/ClientOrderPaymentMaintain.aspx?EntityID=" + id
+                + "&OwnerEntityID=" + currentEntityID + "&PaymentMethodID=" + paymentMethodID
+                + "&GridClientID=" + gridClientIDs.gridAppPayments;
+
+            $.openRadWindow(targetUrl, "winCleintOrderPayment", true, 800, 440);
         }
 
         function onClientSelectedClientContact(sender, eventArgs) {

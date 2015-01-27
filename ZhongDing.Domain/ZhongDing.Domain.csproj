@@ -307,6 +307,7 @@
     <Compile Include="UIObjects\UIClientInfoContact.cs" />
     <Compile Include="UIObjects\UIClientInfoProductSetting.cs" />
     <Compile Include="UIObjects\UIClientSaleApplication.cs" />
+    <Compile Include="UIObjects\UIClientSaleAppPayment.cs" />
     <Compile Include="UIObjects\UICompany.cs" />
     <Compile Include="UIObjects\UIDaBaoApplication.cs" />
     <Compile Include="UIObjects\UIDaBaoAppDetail.cs" />

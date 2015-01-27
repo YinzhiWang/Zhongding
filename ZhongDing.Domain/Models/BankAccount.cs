@@ -19,9 +19,9 @@ namespace ZhongDing.Domain.Models
         {
             this.ClientInfoBankAccount = new HashSet<ClientInfoBankAccount>();
             this.SupplierBankAccount = new HashSet<SupplierBankAccount>();
+            this.ClientSaleAppBankAccount = new HashSet<ClientSaleAppBankAccount>();
             this.ApplicationPayment = new HashSet<ApplicationPayment>();
             this.ApplicationPayment1 = new HashSet<ApplicationPayment>();
-            this.ClientSaleAppBankAccount = new HashSet<ClientSaleAppBankAccount>();
         }
     
         public int ID { get; set; }
@@ -53,8 +53,8 @@ namespace ZhongDing.Domain.Models
         public virtual OwnerType OwnerType { get; set; }
         public virtual ICollection<ClientInfoBankAccount> ClientInfoBankAccount { get; set; }
         public virtual ICollection<SupplierBankAccount> SupplierBankAccount { get; set; }
+        public virtual ICollection<ClientSaleAppBankAccount> ClientSaleAppBankAccount { get; set; }
         public virtual ICollection<ApplicationPayment> ApplicationPayment { get; set; }
         public virtual ICollection<ApplicationPayment> ApplicationPayment1 { get; set; }
-        public virtual ICollection<ClientSaleAppBankAccount> ClientSaleAppBankAccount { get; set; }
     }
 }

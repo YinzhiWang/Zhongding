@@ -150,7 +150,7 @@ namespace ZhongDing.Business.Repositories
             if (clientInfoID.HasValue && clientInfoID > 0)
             {
                 uiBankAccounts = (from cba in DB.ClientInfoBankAccount.Where(x => x.IsDeleted == false && x.ClientInfoID == clientInfoID)
-                                  join ba in DB.BankAccount on cba.BankAccountID equals ba.ID into tempBA
+                                  join ba in DB.BankAccount.Where(x => x.IsDeleted == false) on cba.BankAccountID equals ba.ID into tempBA
                                   from tba in tempBA.DefaultIfEmpty()
                                   //join cu in DB.Users on cba.CreatedBy equals cu.UserID into tempCU
                                   //from tcu in tempCU.DefaultIfEmpty()

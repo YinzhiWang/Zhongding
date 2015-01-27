@@ -22,3 +22,9 @@ var ESaleOrderTypes = {
     AttachedMode: 3
 };
 
+//收款方式
+var EPaymentMethods = {
+    BankTransfer: 1,
+    Deduction: 2
+};
+

@@ -47,6 +47,11 @@ namespace ZhongDing.Common
         /// </summary>
         public static readonly string DEFAULT_DROPDOWN_DATAVALUEFIELD = "ItemValue";
 
+        /// <summary>
+        /// 默认最大担保金额：5万元RMB
+        /// </summary>
+        public static readonly decimal DEFAULT_MAX_GUARANTEE_AMOUNT = 50000;
+
         #endregion
 
         #region Win service consts
@@ -374,6 +379,26 @@ namespace ZhongDing.Common
             /// 担保发货
             /// </summary>
             public static readonly string GUARANTEE_DELIVERY = "担保发货";
+        }
+
+        #endregion
+
+        #region 收款方式
+
+        /// <summary>
+        /// 常量类：收款方式
+        /// </summary>
+        public class PaymentMethods
+        {
+            /// <summary>
+            /// 银行转账
+            /// </summary>
+            public static readonly string BANK_TRANSFER = "银行转账";
+
+            /// <summary>
+            /// 客户余额抵扣
+            /// </summary>
+            public static readonly string DEDUCATION = "抵扣";
         }
 
         #endregion

@@ -33,6 +33,8 @@ namespace ZhongDing.Common
 
         private static readonly string CONFIGKEY_WEBSITE_ROOTURL = "Website.RootUrl";
 
+        private static readonly string CONFIGKEY_MAX_GUARANTEE_AMOUNT = "MaxGuaranteeAmount";
+
         #endregion
 
         #region Win service config consts
@@ -233,6 +235,22 @@ namespace ZhongDing.Common
             get
             {
                 return ConfigurationManager.AppSettings[CONFIGKEY_WEBSITE_ROOTURL];
+            }
+        }
+
+        /// <summary>
+        /// 最大担保金额
+        /// </summary>
+        /// <value>The max guarantee amount.</value>
+        public static decimal MaxGuaranteeAmount
+        {
+            get
+            {
+                decimal maxGuaranteeAmount;
+                if (decimal.TryParse(ConfigurationManager.AppSettings[CONFIGKEY_MAX_GUARANTEE_AMOUNT], out maxGuaranteeAmount))
+                    return maxGuaranteeAmount;
+                else
+                    return GlobalConst.DEFAULT_MAX_GUARANTEE_AMOUNT;
             }
         }
 

@@ -373,6 +373,24 @@ namespace ZhongDing.Web.Views.Sales {
         protected global::Telerik.Web.UI.RadGrid rgOrderProducts;
         
         /// <summary>
+        /// divAppPayments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAppPayments;
+        
+        /// <summary>
+        /// rgAppPayments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid rgAppPayments;
+        
+        /// <summary>
         /// RadDockLayout2 control.
         /// </summary>
         /// <remarks>
