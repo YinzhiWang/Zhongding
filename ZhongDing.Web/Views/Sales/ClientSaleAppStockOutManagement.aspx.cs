@@ -14,19 +14,19 @@ using ZhongDing.Domain.UISearchObjects;
 
 namespace ZhongDing.Web.Views.Sales
 {
-    public partial class ClientSaleAppManagement : WorkflowBasePage
+    public partial class ClientSaleAppStockOutManagement : WorkflowBasePage
     {
         #region Members
 
-        private IClientSaleApplicationRepository _PageClientSalesAppRepository;
-        private IClientSaleApplicationRepository PageClientSalesAppRepository
+        private IStockOutRepository _PageStockOutRepository;
+        private IStockOutRepository PageStockOutRepository
         {
             get
             {
-                if (_PageClientSalesAppRepository == null)
-                    _PageClientSalesAppRepository = new ClientSaleApplicationRepository();
+                if (_PageStockOutRepository == null)
+                    _PageStockOutRepository = new StockOutRepository();
 
-                return _PageClientSalesAppRepository;
+                return _PageStockOutRepository;
             }
         }
 
@@ -60,7 +60,7 @@ namespace ZhongDing.Web.Views.Sales
             get
             {
                 if (_CanAddUserIDs == null)
-                    _CanAddUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.NewClientOrder);
+                    _CanAddUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.NewClientStockOut);
 
                 return _CanAddUserIDs;
             }
@@ -72,37 +72,22 @@ namespace ZhongDing.Web.Views.Sales
             get
             {
                 if (_CanEditUserIDs == null)
-                    _CanEditUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.EditClientOrder);
+                    _CanEditUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.EditClientStockOut);
 
                 return _CanEditUserIDs;
             }
         }
 
-        private IList<int> _CanStopUserIDs;
-        private IList<int> CanStopUserIDs
-        {
-            get
-            {
-                if (_CanStopUserIDs == null)
-                    _CanStopUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.StopClientOrder);
-
-                return _CanStopUserIDs;
-            }
-        }
-
         #endregion
-
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.Master.MenuItemID = (int)EMenuItem.ClientOrderManage;
-            this.CurrentWorkFlowID = (int)EWorkflow.ClientOrder;
+            this.Master.MenuItemID = (int)EMenuItem.ClientOrderStockOutManage;
+            this.CurrentWorkFlowID = (int)EWorkflow.ClientOrderStockOut;
 
             if (!IsPostBack)
             {
                 BindClientUsers();
-
-                BindClientCompanies();
 
                 BindWorkflowStatus();
             }
@@ -150,11 +135,9 @@ namespace ZhongDing.Web.Views.Sales
 
             IList<int> includeItemValues = new List<int>();
             includeItemValues.Add((int)EWorkflowStatus.TemporarySave);
-            includeItemValues.Add((int)EWorkflowStatus.Submit);
-            includeItemValues.Add((int)EWorkflowStatus.ReturnBasicInfo);
-            includeItemValues.Add((int)EWorkflowStatus.ApprovedBasicInfo);
-            includeItemValues.Add((int)EWorkflowStatus.Shipping);
-            includeItemValues.Add((int)EWorkflowStatus.Completed);
+            includeItemValues.Add((int)EWorkflowStatus.ToBeOutWarehouse);
+            includeItemValues.Add((int)EWorkflowStatus.OutWarehouse);
+
             uiSearchObj.IncludeItemValues = includeItemValues;
 
             var workflowStatus = PageWorkflowStatusRepository.GetDropdownItems(uiSearchObj);
@@ -169,12 +152,39 @@ namespace ZhongDing.Web.Views.Sales
 
         private void BindEntities(bool isNeedRebind)
         {
-            var uiSearchObj = new UISearchClientSaleApplication
+            var uiSearchObj = new UISearchStockOut()
             {
-                CompanyID = CurrentUser.CompanyID,
+                //CompanyID = CurrentUser.CompanyID,
                 BeginDate = rdpBeginDate.SelectedDate,
                 EndDate = rdpEndDate.SelectedDate,
+                ReceiverTypeID = (int)EReceiverType.ClientUser
             };
+
+            IList<int> includeWorkflowStatusIDs = PageWorkflowStatusRepository
+                .GetCanAccessIDsByUserID(CurrentWorkFlowID, CurrentUser.UserID);
+
+            if (includeWorkflowStatusIDs == null
+                || includeWorkflowStatusIDs.Count == 0)
+            {
+                includeWorkflowStatusIDs = new List<int>();
+                includeWorkflowStatusIDs.Add((int)EWorkflowStatus.OutWarehouse);
+            }
+            else
+            {
+                if (this.CanAddUserIDs.Contains(CurrentUser.UserID) || this.CanEditUserIDs.Contains(CurrentUser.UserID))
+                {
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.TemporarySave))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.TemporarySave);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ToBeOutWarehouse))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ToBeOutWarehouse);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.OutWarehouse))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.OutWarehouse);
+                }
+            }
+
+            uiSearchObj.IncludeWorkflowStatusIDs = includeWorkflowStatusIDs;
 
             if (!string.IsNullOrEmpty(rcbxClientUser.SelectedValue))
             {
@@ -190,46 +200,20 @@ namespace ZhongDing.Web.Views.Sales
                     uiSearchObj.ClientCompanyID = clientCompanyID;
             }
 
-            IList<int> includeWorkflowStatusIDs = PageWorkflowStatusRepository
-                .GetCanAccessIDsByUserID(this.CurrentWorkFlowID, CurrentUser.UserID);
-
-            if (includeWorkflowStatusIDs == null)
+            if (!string.IsNullOrEmpty(rcbxWorkflowStatus.SelectedValue))
             {
-                includeWorkflowStatusIDs = new List<int>();
-                includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Completed);
+                int workflowStatusID;
+                if (int.TryParse(rcbxWorkflowStatus.SelectedValue, out workflowStatusID))
+                    uiSearchObj.WorkflowStatusID = workflowStatusID;
             }
-            else
-            {
-                if (this.CanAddUserIDs.Contains(CurrentUser.UserID) || this.CanEditUserIDs.Contains(CurrentUser.UserID))
-                {
-                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.TemporarySave))
-                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.TemporarySave);
-
-                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Submit))
-                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Submit);
-
-                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ReturnBasicInfo))
-                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ReturnBasicInfo);
-
-                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ApprovedBasicInfo))
-                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ApprovedBasicInfo);
-
-                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Shipping))
-                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Shipping);
-
-                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Completed))
-                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Completed);
-                }
-            }
-
-            uiSearchObj.IncludeWorkflowStatusIDs = includeWorkflowStatusIDs;
 
             int totalRecords;
 
-            var uiEntities = PageClientSalesAppRepository.GetUIList(uiSearchObj, rgEntities.CurrentPageIndex, rgEntities.PageSize, out totalRecords);
+            var entities = PageStockOutRepository.GetUIList(uiSearchObj, rgEntities.CurrentPageIndex, rgEntities.PageSize, out totalRecords);
 
             rgEntities.VirtualItemCount = totalRecords;
-            rgEntities.DataSource = uiEntities;
+
+            rgEntities.DataSource = entities;
 
             if (isNeedRebind)
                 rgEntities.Rebind();
@@ -240,6 +224,7 @@ namespace ZhongDing.Web.Views.Sales
         protected void rcbxClientUser_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
             BindClientCompanies();
+
         }
 
         protected void rgEntities_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
@@ -247,6 +232,47 @@ namespace ZhongDing.Web.Views.Sales
             BindEntities(false);
         }
 
+        protected void rgEntities_DeleteCommand(object sender, Telerik.Web.UI.GridCommandEventArgs e)
+        {
+            GridEditableItem editableItem = e.Item as GridEditableItem;
+
+            String sid = editableItem.GetDataKeyValue("ID").ToString();
+
+            int id = 0;
+            if (int.TryParse(sid, out id))
+            {
+                using (IUnitOfWork unitOfWork = new UnitOfWork())
+                {
+                    var db = unitOfWork.GetDbModel();
+
+                    IStockOutRepository stockOutRepository = new StockOutRepository();
+                    IApplicationNoteRepository appNoteRepository = new ApplicationNoteRepository();
+
+                    stockOutRepository.SetDbModel(db);
+                    appNoteRepository.SetDbModel(db);
+
+                    var currentEntity = stockOutRepository.GetByID(id);
+
+                    if (currentEntity != null)
+                    {
+                        foreach (var item in currentEntity.StockOutDetail)
+                        {
+                            item.IsDeleted = true;
+                        }
+
+                        var appNotes = appNoteRepository.GetList(x => x.ApplicationID == currentEntity.ID);
+                        foreach (var item in appNotes)
+                        {
+                            appNoteRepository.Delete(item);
+                        }
+
+                        unitOfWork.SaveChanges();
+                    }
+                }
+
+                rgEntities.Rebind();
+            }
+        }
 
         protected void rgEntities_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
@@ -271,11 +297,6 @@ namespace ZhongDing.Web.Views.Sales
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = true;
             else
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = false;
-
-            if (this.CanStopUserIDs.Contains(CurrentUser.UserID))
-                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_STOP).Visible = true;
-            else
-                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_STOP).Visible = false;
         }
 
         protected void rgEntities_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
@@ -284,11 +305,11 @@ namespace ZhongDing.Web.Views.Sales
                 || e.Item.ItemType == GridItemType.AlternatingItem)
             {
                 GridDataItem gridDataItem = e.Item as GridDataItem;
-                var uiEntity = (UIClientSaleApplication)gridDataItem.DataItem;
+                UIStockOut uiEntity = (UIStockOut)gridDataItem.DataItem;
 
                 if (uiEntity != null)
                 {
-                    string linkHtml = "<a href=\"javascript:void(0);\" onclick=\"redirectToMaintenancePage(" + uiEntity.ID + ")\">";
+                    string columnEditLinkHtml = "<a href=\"javascript:void(0);\" onclick=\"redirectToMaintenancePage(" + uiEntity.ID + ")\">";
 
                     var canAccessUserIDs = PageWorkflowStatusRepository.GetCanAccessUserIDsByID(this.CurrentWorkFlowID, uiEntity.WorkflowStatusID);
 
@@ -301,19 +322,26 @@ namespace ZhongDing.Web.Views.Sales
                         || uiEntity.CreatedByUserID == CurrentUser.UserID)
                         isCanEditUser = true;
 
+                    bool isShowPrintLink = false;
                     bool isShowDeleteLink = false;
-                    bool isShowStopLink = false;
 
                     EWorkflowStatus workflowStatus = (EWorkflowStatus)uiEntity.WorkflowStatusID;
 
+                    switch (workflowStatus)
+                    {
+                        case EWorkflowStatus.ToBeOutWarehouse:
+                        case EWorkflowStatus.OutWarehouse:
+                            isShowPrintLink = true;
+                            break;
+                    }
+
                     if (CanEditUserIDs.Contains(CurrentUser.UserID))
                     {
-                        linkHtml += "编辑";
+                        columnEditLinkHtml += "编辑";
 
                         switch (workflowStatus)
                         {
                             case EWorkflowStatus.TemporarySave:
-                            case EWorkflowStatus.ReturnBasicInfo:
                                 isShowDeleteLink = true;
                                 break;
                         }
@@ -325,42 +353,33 @@ namespace ZhongDing.Web.Views.Sales
                             switch (workflowStatus)
                             {
                                 case EWorkflowStatus.TemporarySave:
-                                case EWorkflowStatus.ReturnBasicInfo:
                                     if (isCanEditUser)
-                                        linkHtml += "编辑";
+                                    {
+                                        columnEditLinkHtml += "编辑";
+
+                                        isShowDeleteLink = true;
+                                    }
                                     else
-                                        linkHtml += "查看";
-                                    isShowDeleteLink = true;
+                                        columnEditLinkHtml += "查看";
+
                                     break;
 
-                                case EWorkflowStatus.Submit:
-                                    linkHtml += "审核";
+                                case EWorkflowStatus.ToBeOutWarehouse:
+                                    columnEditLinkHtml += "出库";
+                                    isShowPrintLink = true;
                                     break;
 
-                                case EWorkflowStatus.ApprovedBasicInfo:
-                                case EWorkflowStatus.Shipping:
-                                case EWorkflowStatus.Completed:
-                                    linkHtml += "查看";
+                                case EWorkflowStatus.OutWarehouse:
+                                    isShowPrintLink = true;
+                                    columnEditLinkHtml += "查看";
                                     break;
                             }
                         }
                         else
-                            linkHtml += "查看";
+                            columnEditLinkHtml += "查看";
                     }
 
-                    linkHtml += "</a>";
-
-                    if (this.CanStopUserIDs.Contains(CurrentUser.UserID)
-                        && uiEntity.IsStop == false)
-                    {
-                        switch (workflowStatus)
-                        {
-                            case EWorkflowStatus.ApprovedBasicInfo:
-                            case EWorkflowStatus.Shipping:
-                                isShowStopLink = true;
-                                break;
-                        }
-                    }
+                    columnEditLinkHtml += "</a>";
 
                     var editColumn = rgEntities.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT);
 
@@ -369,7 +388,17 @@ namespace ZhongDing.Web.Views.Sales
                         var editCell = gridDataItem.Cells[editColumn.OrderIndex];
 
                         if (editCell != null)
-                            editCell.Text = linkHtml;
+                            editCell.Text = columnEditLinkHtml;
+                    }
+
+                    var printColumn = rgEntities.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_PRINT);
+
+                    if (printColumn != null)
+                    {
+                        var printCell = gridDataItem.Cells[printColumn.OrderIndex];
+
+                        if (printCell != null && !isShowPrintLink)
+                            printCell.Text = string.Empty;
                     }
 
                     var deleteColumn = rgEntities.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE);
@@ -382,92 +411,7 @@ namespace ZhongDing.Web.Views.Sales
                             deleteCell.Text = string.Empty;
                     }
 
-                    var stopColumn = rgEntities.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_STOP);
-
-                    if (stopColumn != null)
-                    {
-                        var stopCell = gridDataItem.Cells[stopColumn.OrderIndex];
-
-                        if (stopCell != null && !isShowStopLink)
-                            stopCell.Text = string.Empty;
-                    }
                 }
-            }
-        }
-
-        protected void rgEntities_DeleteCommand(object sender, Telerik.Web.UI.GridCommandEventArgs e)
-        {
-            GridEditableItem editableItem = e.Item as GridEditableItem;
-
-            String sid = editableItem.GetDataKeyValue("ID").ToString();
-
-            int id = 0;
-            if (int.TryParse(sid, out id))
-            {
-                using (IUnitOfWork unitOfWork = new UnitOfWork())
-                {
-                    var db = unitOfWork.GetDbModel();
-
-                    IClientSaleApplicationRepository clientSalesAppRepository = new ClientSaleApplicationRepository();
-                    IApplicationNoteRepository appNoteRepository = new ApplicationNoteRepository();
-
-                    clientSalesAppRepository.SetDbModel(db);
-                    appNoteRepository.SetDbModel(db);
-
-                    var currentEntity = clientSalesAppRepository.GetByID(id);
-
-                    if (currentEntity != null)
-                    {
-                        if (currentEntity.SalesOrderApplication != null)
-                        {
-                            foreach (var item in currentEntity.SalesOrderApplication.SalesOrderAppDetail)
-                            {
-                                item.IsDeleted = true;
-                            }
-
-                            currentEntity.SalesOrderApplication.IsDeleted = true;
-                        }
-
-                        clientSalesAppRepository.Delete(currentEntity);
-
-                        var appNotes = appNoteRepository.GetList(x => x.ApplicationID == currentEntity.ID);
-                        foreach (var item in appNotes)
-                        {
-                            appNoteRepository.Delete(item);
-                        }
-
-                        unitOfWork.SaveChanges();
-                    }
-                }
-
-                rgEntities.Rebind();
-            }
-        }
-
-        protected void rgEntities_ItemCommand(object sender, GridCommandEventArgs e)
-        {
-            if (e.CommandName == GlobalConst.GridColumnUniqueNames.COLUMN_STOP)
-            {
-                GridEditableItem editableItem = e.Item as GridEditableItem;
-
-                String sid = editableItem.GetDataKeyValue("ID").ToString();
-
-                int id = 0;
-                if (int.TryParse(sid, out id))
-                {
-                    var currentEntity = PageClientSalesAppRepository.GetByID(id);
-
-                    if (currentEntity != null)
-                    {
-                        currentEntity.SalesOrderApplication.IsStop = true;
-                        currentEntity.SalesOrderApplication.StoppedBy = CurrentUser.UserID;
-                        currentEntity.SalesOrderApplication.StoppedOn = DateTime.Now;
-
-                        PageClientSalesAppRepository.Save();
-                    }
-                }
-
-                rgEntities.Rebind();
             }
         }
 
@@ -487,6 +431,5 @@ namespace ZhongDing.Web.Views.Sales
 
             BindEntities(true);
         }
-
     }
 }

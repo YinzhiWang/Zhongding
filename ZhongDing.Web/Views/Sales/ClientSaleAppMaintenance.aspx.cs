@@ -374,10 +374,11 @@ namespace ZhongDing.Web.Views.Sales
                     rdpOrderDate.SelectedDate = salesOrderApp.OrderDate;
                     lblSalesOrderType.Text = salesOrderApp.SaleOrderType == null
                         ? string.Empty : salesOrderApp.SaleOrderType.TypeName;
+                    cbxIsStop.Checked = salesOrderApp.IsStop;
 
                     saleOrderTypeID = salesOrderApp.SaleOrderTypeID;
 
-                    hdnSaleOrderTypeID.Value = salesOrderApp.SaleOrderTypeID.ToString();
+                    hdnSaleOrderTypeID.Value = saleOrderTypeID.ToString();
                 }
 
                 lblCreateBy.Text = PageUsersRepository.GetUserFullNameByID(this.CurrentEntity.CreatedBy.HasValue
@@ -514,16 +515,17 @@ namespace ZhongDing.Web.Views.Sales
                         case EWorkflowStatus.ApprovedBasicInfo:
                         case EWorkflowStatus.Shipping:
                             #region 审核通过和发货中的订单，只能中止
-                            if (CanStopUserIDs.Contains(CurrentUser.UserID))
+
+                            DisabledBasicInfoControls();
+                            ShowAuditControls(false);
+
+                            if (CanStopUserIDs.Contains(CurrentUser.UserID)
+                                && CurrentEntity.SalesOrderApplication != null
+                                && CurrentEntity.SalesOrderApplication.IsStop == false)
                             {
                                 btnSave.Visible = true;
                                 btnSubmit.Visible = false;
-
-                                DisabledBasicInfoControls();
-
                                 cbxIsStop.Enabled = true;
-
-                                ShowAuditControls(false);
                             }
                             #endregion
                             break;

@@ -244,6 +244,11 @@ namespace ZhongDing.Common
                 /// 客户订单编号
                 /// </summary>
                 public static readonly string CLIENT_ORDER = "KH-" + DateTime.Now.ToString("yyyy-MM-dd") + "-";
+
+                /// <summary>
+                /// 客户订单出库单编号
+                /// </summary>
+                public static readonly string STOCK_OUT_CLIENT = "OUT-KH-" + DateTime.Now.ToString("yyyy-MM-dd") + "-";
             }
 
         }
@@ -336,6 +341,11 @@ namespace ZhongDing.Common
             public static readonly string COLUMN_PRINT = "Print";
 
             /// <summary>
+            /// 列名：Stop
+            /// </summary>
+            public static readonly string COLUMN_STOP = "Stop";
+
+            /// <summary>
             /// 列名：Delete
             /// </summary>
             public static readonly string COLUMN_DELETE = "Delete";
@@ -403,7 +413,7 @@ namespace ZhongDing.Common
 
         #endregion
 
-        #region Order by
+        #region 排序语句
 
         /// <summary>
         /// 常量类：排序语句
@@ -416,6 +426,26 @@ namespace ZhongDing.Common
             public static readonly string CREATEDON_DESC = "CreatedOn DESC";
 
         
+        }
+
+        #endregion
+
+        #region 发票类型
+
+        /// <summary>
+        /// 常量类：发票类型
+        /// </summary>
+        public class InvoiceTypes
+        {
+            /// <summary>
+            /// 收据
+            /// </summary>
+            public static readonly string RECEIPT = "收据";
+
+            /// <summary>
+            /// 发票
+            /// </summary>
+            public static readonly string INVOICE = "发票";
         }
 
         #endregion

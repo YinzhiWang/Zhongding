@@ -329,6 +329,12 @@ namespace ZhongDing.Business.Repositories
                     && uiSearchObj.SaleOrderTypeIDs.Count() > 0)
                     whereFuncs.Add(x => uiSearchObj.SaleOrderTypeIDs.Contains(x.SalesOrderApplication.SaleOrderTypeID));
 
+                if (uiSearchObj.ClientUserID > 0)
+                    whereFuncs.Add(x => x.SalesOrderApplication.ClientSaleApplication.Any(y => y.ClientUserID == uiSearchObj.ClientUserID));
+
+                if (uiSearchObj.ClientCompanyID > 0)
+                    whereFuncs.Add(x => x.SalesOrderApplication.ClientSaleApplication.Any(y => y.ClientCompanyID == uiSearchObj.ClientCompanyID));
+
                 if (uiSearchObj.DistributionCompanyID > 0)
                     whereFuncs.Add(x => x.SalesOrderApplication.DaBaoApplication.Any(y => y.DistributionCompanyID == uiSearchObj.DistributionCompanyID));
 
@@ -346,7 +352,8 @@ namespace ZhongDing.Business.Repositories
                 //var curEndDate = DateTime.Now.Date.AddDays(1);
 
                 uiEntities = (from q in query
-                              join soa in DB.SalesOrderApplication on q.SalesOrderApplicationID equals soa.ID
+                              join soa in DB.SalesOrderApplication.Where(x => x.IsDeleted == false && x.IsStop == false)
+                                on q.SalesOrderApplicationID equals soa.ID
                               join p in DB.Product on q.ProductID equals p.ID
                               join ps in DB.ProductSpecification on q.ProductSpecificationID equals ps.ID
                               select new UIToBeOutSalesOrderDetail()
@@ -439,6 +446,12 @@ namespace ZhongDing.Business.Repositories
                 if (uiSearchObj.DistributionCompanyID > 0)
                     whereFuncs.Add(x => x.SalesOrderApplication.DaBaoApplication.Any(y => y.DistributionCompanyID == uiSearchObj.DistributionCompanyID));
 
+                if (uiSearchObj.ClientUserID > 0)
+                    whereFuncs.Add(x => x.SalesOrderApplication.ClientSaleApplication.Any(y => y.ClientUserID == uiSearchObj.ClientUserID));
+
+                if (uiSearchObj.ClientCompanyID > 0)
+                    whereFuncs.Add(x => x.SalesOrderApplication.ClientSaleApplication.Any(y => y.ClientCompanyID == uiSearchObj.ClientCompanyID));
+
                 if (uiSearchObj.ExcludeIDs != null
                     && uiSearchObj.ExcludeIDs.Count() > 0)
                     whereFuncs.Add(x => !uiSearchObj.ExcludeIDs.Contains(x.ID));
@@ -455,7 +468,8 @@ namespace ZhongDing.Business.Repositories
                 //var curEndDate = DateTime.Now.Date.AddDays(1);
 
                 uiEntities = (from q in query
-                              join soa in DB.SalesOrderApplication on q.SalesOrderApplicationID equals soa.ID
+                              join soa in DB.SalesOrderApplication.Where(x => x.IsDeleted == false && x.IsStop == false)
+                                on q.SalesOrderApplicationID equals soa.ID
                               join p in DB.Product on q.ProductID equals p.ID
                               join ps in DB.ProductSpecification on q.ProductSpecificationID equals ps.ID
                               select new UIToBeOutSalesOrderDetail()

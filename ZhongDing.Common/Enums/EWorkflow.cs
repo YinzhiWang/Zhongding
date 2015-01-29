@@ -36,5 +36,10 @@ namespace ZhongDing.Common.Enums
         /// 客户订单
         /// </summary>
         ClientOrder,
+
+        /// <summary>
+        /// 客户订单出库单
+        /// </summary>
+        ClientOrderStockOut,
     }
 }

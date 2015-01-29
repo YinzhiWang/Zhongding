@@ -14,6 +14,10 @@ namespace ZhongDing.Domain.UISearchObjects
 
         public int DistributionCompanyID { get; set; }
 
+        public int ClientUserID { get; set; }
+
+        public int ClientCompanyID { get; set; }
+
         /// <summary>
         /// 需排除的IDs
         /// </summary>

@@ -48,7 +48,6 @@ namespace ZhongDing.Business.Repositories
                               join sop in DB.SalesOrderApplication on q.SalesOrderApplicationID equals sop.ID
                               join soad in DB.SalesOrderAppDetail on q.SalesOrderAppDetailID equals soad.ID
                               join w in DB.Warehouse on q.WarehouseID equals w.ID
-                              join dc in DB.DistributionCompany on so.DistributionCompanyID equals dc.ID
                               join p in DB.Product on q.ProductID equals p.ID
                               join ps in DB.ProductSpecification on q.ProductSpecificationID equals ps.ID
                               join s in DB.Supplier on p.SupplierID equals s.ID into tempS
@@ -74,6 +73,7 @@ namespace ZhongDing.Business.Repositories
                                   SalesQty = soad.Count,
                                   SalesPrice = soad.SalesPrice,
                                   OutQty = q.OutQty,
+                                  TaxQty = q.TaxQty,
                                   TotalSalesAmount = q.TotalSalesAmount,
                                   ToBeOutQty = soad.Count - q.OutQty,
                                   NumberInLargePackage = ps.NumberInLargePackage,
@@ -130,7 +130,6 @@ namespace ZhongDing.Business.Repositories
                               join sop in DB.SalesOrderApplication on q.SalesOrderApplicationID equals sop.ID
                               join soad in DB.SalesOrderAppDetail on q.SalesOrderAppDetailID equals soad.ID
                               join w in DB.Warehouse on q.WarehouseID equals w.ID
-                              join dc in DB.DistributionCompany on so.DistributionCompanyID equals dc.ID
                               join p in DB.Product on q.ProductID equals p.ID
                               join ps in DB.ProductSpecification on q.ProductSpecificationID equals ps.ID
                               join s in DB.Supplier on p.SupplierID equals s.ID into tempS
@@ -156,6 +155,7 @@ namespace ZhongDing.Business.Repositories
                                   SalesQty = soad.Count,
                                   SalesPrice = soad.SalesPrice,
                                   OutQty = q.OutQty,
+                                  TaxQty = q.TaxQty,
                                   TotalSalesAmount = q.TotalSalesAmount,
                                   ToBeOutQty = soad.Count - q.OutQty,
                                   NumberInLargePackage = ps.NumberInLargePackage,

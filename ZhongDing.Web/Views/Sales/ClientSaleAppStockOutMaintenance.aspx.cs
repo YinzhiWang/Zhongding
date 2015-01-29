@@ -10,25 +10,12 @@ using ZhongDing.Business.Repositories;
 using ZhongDing.Common;
 using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
-using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
-using ZhongDing.Web.Extensions;
 
 namespace ZhongDing.Web.Views.Sales
 {
-    public partial class DBStockOutMaintenance : WorkflowBasePage
+    public partial class ClientSaleAppStockOutMaintenance : WorkflowBasePage
     {
-        #region Consts
-
-        private const string DATA_KEY_NAME_STOCK_OUT_DETAIL_ID = "ID";
-        private const string DATA_KEY_NAME_SALES_ORDER_APP_ID = "SalesOrderApplicationID";
-        private const string DATA_KEY_NAME_SALES_ORDER_APP_DETAIL_ID = "SalesOrderAppDetailID";
-        private const string DATA_KEY_NAME_PRODUCT_ID = "ProductID";
-        private const string DATA_KEY_NAME_PRODUCT_SPECIFICATION_ID = "ProductSpecificationID";
-        private const string DATA_KEY_NAME_WAREHOUSE_ID = "WarehouseID";
-
-        #endregion
-
         #region Members
 
         private IStockOutRepository _PageStockOutRepository;
@@ -40,18 +27,6 @@ namespace ZhongDing.Web.Views.Sales
                     _PageStockOutRepository = new StockOutRepository();
 
                 return _PageStockOutRepository;
-            }
-        }
-
-        private IDistributionCompanyRepository _PageDistributionCompanyRepository;
-        private IDistributionCompanyRepository PageDistributionCompanyRepository
-        {
-            get
-            {
-                if (_PageDistributionCompanyRepository == null)
-                    _PageDistributionCompanyRepository = new DistributionCompanyRepository();
-
-                return _PageDistributionCompanyRepository;
             }
         }
 
@@ -67,17 +42,42 @@ namespace ZhongDing.Web.Views.Sales
             }
         }
 
-        private IWarehouseRepository _PageWarehouseRepository;
-        private IWarehouseRepository PageWarehouseRepository
+        private IClientUserRepository _PageClientUserRepository;
+        private IClientUserRepository PageClientUserRepository
         {
             get
             {
-                if (_PageWarehouseRepository == null)
-                    _PageWarehouseRepository = new WarehouseRepository();
+                if (_PageClientUserRepository == null)
+                    _PageClientUserRepository = new ClientUserRepository();
 
-                return _PageWarehouseRepository;
+                return _PageClientUserRepository;
             }
         }
+
+        private IClientCompanyRepository _PageClientCompanyRepository;
+        private IClientCompanyRepository PageClientCompanyRepository
+        {
+            get
+            {
+                if (_PageClientCompanyRepository == null)
+                    _PageClientCompanyRepository = new ClientCompanyRepository();
+
+                return _PageClientCompanyRepository;
+            }
+        }
+
+        private IClientInfoRepository _PageClientInfoRepository;
+        private IClientInfoRepository PageClientInfoRepository
+        {
+            get
+            {
+                if (_PageClientInfoRepository == null)
+                    _PageClientInfoRepository = new ClientInfoRepository();
+
+                return _PageClientInfoRepository;
+            }
+        }
+
 
         private StockOut _CurrentEntity;
         private StockOut CurrentEntity
@@ -100,7 +100,7 @@ namespace ZhongDing.Web.Views.Sales
                 if (_CanAccessUserIDs == null)
                 {
                     if (this.CurrentEntity == null)
-                        _CanAccessUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.NewDBStockOut);
+                        _CanAccessUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.NewClientStockOut);
                     else
                         _CanAccessUserIDs = PageWorkflowStatusRepository.GetCanAccessUserIDsByID(this.CurrentWorkFlowID, this.CurrentEntity.WorkflowStatusID);
                 }
@@ -115,39 +115,80 @@ namespace ZhongDing.Web.Views.Sales
             get
             {
                 if (_CanEditUserIDs == null)
-                    _CanEditUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.EditDBStockOut);
+                    _CanEditUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.EditClientStockOut);
 
                 return _CanEditUserIDs;
             }
         }
 
+
         #endregion
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.Master.MenuItemID = (int)EMenuItem.DBOrderStockOutManage;
-            this.CurrentWorkFlowID = (int)EWorkflow.DBStockOut;
+            this.Master.MenuItemID = (int)EMenuItem.ClientOrderStockOutManage;
+            this.CurrentWorkFlowID = (int)EWorkflow.ClientOrderStockOut;
 
             if (!IsPostBack)
             {
-                BindDistributionCompanies();
+                BindClientUsers();
+
+                BindInvoiceTypes();
 
                 LoadCurrentEntity();
+
             }
         }
 
         #region Private Methods
 
-        private void BindDistributionCompanies()
+        private void BindClientUsers()
         {
-            var distributionCompanies = PageDistributionCompanyRepository.GetDropdownItems();
+            var clientUsers = PageClientUserRepository.GetDropdownItems(new UISearchDropdownItem
+            {
+                Extension = new UISearchExtension { OnlyIncludeValidClientUser = true }
+            });
 
-            rcbxDistributionCompany.DataSource = distributionCompanies;
-            rcbxDistributionCompany.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
-            rcbxDistributionCompany.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
-            rcbxDistributionCompany.DataBind();
+            rcbxClientUser.DataSource = clientUsers;
+            rcbxClientUser.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+            rcbxClientUser.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+            rcbxClientUser.DataBind();
 
-            rcbxDistributionCompany.Items.Insert(0, new RadComboBoxItem("", ""));
+            rcbxClientUser.Items.Insert(0, new RadComboBoxItem("", ""));
+        }
+
+        private void BindClientCompanies()
+        {
+            ddlClientCompany.Items.Clear();
+
+            var uiSearchObj = new UISearchDropdownItem();
+
+            if (!string.IsNullOrEmpty(rcbxClientUser.SelectedValue))
+            {
+                int clientUserID;
+                if (int.TryParse(rcbxClientUser.SelectedValue, out clientUserID))
+                    uiSearchObj.Extension = new UISearchExtension { ClientUserID = clientUserID };
+            }
+
+            var clientCompanies = PageClientCompanyRepository.GetDropdownItems(uiSearchObj);
+            ddlClientCompany.DataSource = clientCompanies;
+            ddlClientCompany.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+            ddlClientCompany.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+            ddlClientCompany.DataBind();
+
+            ddlClientCompany.Items.Insert(0, new DropDownListItem("", ""));
+        }
+
+        private void BindInvoiceTypes()
+        {
+            ddlInvoiceType.Items.Add(new DropDownListItem(GlobalConst.InvoiceTypes.RECEIPT,
+                ((int)EInvoiceType.Receipt).ToString()));
+
+            ddlInvoiceType.Items.Add(new DropDownListItem(GlobalConst.InvoiceTypes.INVOICE,
+                ((int)EInvoiceType.Invoice).ToString()));
+
+            ddlInvoiceType.DataBind();
         }
 
         private void LoadCurrentEntity()
@@ -156,8 +197,8 @@ namespace ZhongDing.Web.Views.Sales
 
             if (this.CurrentEntity != null)
             {
-                //只能操作大包出库单
-                if (this.CurrentEntity.ReceiverTypeID != (int)EReceiverType.DistributionCompany)
+                //只能操作客户订单出库单
+                if (this.CurrentEntity.ReceiverTypeID != (int)EReceiverType.ClientUser)
                 {
                     this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
                     this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
@@ -171,7 +212,14 @@ namespace ZhongDing.Web.Views.Sales
 
                 txtCode.Text = this.CurrentEntity.Code;
                 rdpBillDate.SelectedDate = this.CurrentEntity.BillDate;
-                rcbxDistributionCompany.SelectedValue = this.CurrentEntity.DistributionCompanyID.ToString();
+                rcbxClientUser.SelectedValue = this.CurrentEntity.ClientUserID.ToString();
+                BindClientCompanies();
+                ddlClientCompany.SelectedValue = this.CurrentEntity.ClientCompanyID.ToString();
+                ddlInvoiceType.SelectedValue = this.CurrentEntity.InvoiceTypeID.ToString();
+
+                if (this.CurrentEntity.ClientCompany != null)
+                    lblClientCompanyRegistedAddress.Text = this.CurrentEntity.ClientCompany.Address;
+
                 lblReceiverName.Text = this.CurrentEntity.ReceiverName;
                 lblReceiverPhone.Text = this.CurrentEntity.ReceiverPhone;
                 lblReceiverAddress.Text = this.CurrentEntity.ReceiverAddress;
@@ -237,7 +285,7 @@ namespace ZhongDing.Web.Views.Sales
                     this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
                     this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
                     this.Master.BaseNotification.AutoCloseDelay = 1000;
-                    this.Master.BaseNotification.Show("您没有权限新增大包出库单");
+                    this.Master.BaseNotification.Show("您没有权限新增客户订单出库单");
 
                     return;
                 }
@@ -249,7 +297,6 @@ namespace ZhongDing.Web.Views.Sales
         /// </summary>
         private void InitDefaultData()
         {
-            //btnSearchOrders.Visible = false;
             btnSubmit.Visible = false;
             btnOutStock.Visible = false;
             divComment.Visible = false;
@@ -259,7 +306,7 @@ namespace ZhongDing.Web.Views.Sales
             rdpBillDate.SelectedDate = DateTime.Now;
 
             txtCode.Text = Utility.GenerateAutoSerialNo(PageStockOutRepository.GetMaxEntityID(),
-                GlobalConst.EntityAutoSerialNo.SerialNoPrefix.STOCK_OUT_DABAO);
+                GlobalConst.EntityAutoSerialNo.SerialNoPrefix.STOCK_OUT_CLIENT);
         }
 
         /// <summary>
@@ -268,16 +315,13 @@ namespace ZhongDing.Web.Views.Sales
         private void DisabledBasicInfoControls()
         {
             rdpBillDate.Enabled = false;
-            rcbxDistributionCompany.Enabled = false;
+            rcbxClientUser.Enabled = false;
+            ddlClientCompany.Enabled = false;
+            ddlInvoiceType.Enabled = false;
             txtComment.Enabled = false;
 
             btnSave.Visible = false;
             btnSubmit.Visible = false;
-
-            //btnSearchOrders.Visible = false;
-
-            //目的是禁用Cell编辑
-            rgStockOutDetails.MasterTableView.EditMode = GridEditMode.InPlace;
         }
 
         /// <summary>
@@ -305,15 +349,18 @@ namespace ZhongDing.Web.Views.Sales
         {
             currentEntity.BillDate = rdpBillDate.SelectedDate.HasValue
                 ? rdpBillDate.SelectedDate.Value : DateTime.Now;
-            currentEntity.DistributionCompanyID = Convert.ToInt32(rcbxDistributionCompany.SelectedValue);
+            currentEntity.ClientUserID = Convert.ToInt32(rcbxClientUser.SelectedValue);
+            currentEntity.ClientCompanyID = Convert.ToInt32(ddlClientCompany.SelectedValue);
+            currentEntity.InvoiceTypeID = Convert.ToInt32(ddlInvoiceType.SelectedValue);
 
-            var distCompany = PageDistributionCompanyRepository.GetByID(currentEntity.DistributionCompanyID);
+            var clientInfo = PageClientInfoRepository.GetList(x => x.ClientUserID == currentEntity.ClientUserID
+                    && x.ClientCompanyID == currentEntity.ClientCompanyID).FirstOrDefault();
 
-            if (distCompany != null)
+            if (clientInfo != null)
             {
-                currentEntity.ReceiverName = distCompany.ReceiverName;
-                currentEntity.ReceiverPhone = distCompany.PhoneNumber;
-                currentEntity.ReceiverAddress = distCompany.Address;
+                currentEntity.ReceiverName = clientInfo.ReceiverName;
+                currentEntity.ReceiverPhone = clientInfo.PhoneNumber;
+                currentEntity.ReceiverAddress = clientInfo.ReceiverAddress;
             }
 
             PageStockOutRepository.Save();
@@ -321,8 +368,8 @@ namespace ZhongDing.Web.Views.Sales
             if (!string.IsNullOrEmpty(txtComment.Text.Trim()))
             {
                 var appNote = new ApplicationNote();
-                appNote.WorkflowID = (int)EWorkflow.DBStockOut;
-                appNote.WorkflowStepID = (int)EWorkflowStep.NewDBStockOut;
+                appNote.WorkflowID = this.CurrentWorkFlowID;
+                appNote.WorkflowStepID = (int)EWorkflowStep.NewClientStockOut;
                 appNote.NoteTypeID = (int)EAppNoteType.Comment;
                 appNote.ApplicationID = currentEntity.ID;
                 appNote.Note = txtComment.Text.Trim();
@@ -333,11 +380,49 @@ namespace ZhongDing.Web.Views.Sales
             }
         }
 
+        private void ClearReceiverInfo()
+        {
+            lblClientCompanyRegistedAddress.Text = string.Empty;
+            lblReceiverName.Text = string.Empty;
+            lblReceiverPhone.Text = string.Empty;
+            lblReceiverAddress.Text = string.Empty;
+        }
+
         #endregion
 
-        #region Events
+        protected void rcbxClientUser_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            BindClientCompanies();
+        }
 
-        #region Grid Events
+        protected void ddlClientCompany_SelectedIndexChanged(object sender, DropDownListEventArgs e)
+        {
+            ClearReceiverInfo();
+
+            if (!string.IsNullOrEmpty(rcbxClientUser.SelectedValue)
+                && !string.IsNullOrEmpty(ddlClientCompany.SelectedValue))
+            {
+                int clientUserID;
+                int clientCompanyID;
+
+                if (int.TryParse(rcbxClientUser.SelectedValue, out clientUserID)
+                    && int.TryParse(ddlClientCompany.SelectedValue, out clientCompanyID))
+                {
+                    var clientInfo = PageClientInfoRepository.GetList(x => x.ClientUserID == clientUserID
+                        && x.ClientCompanyID == clientCompanyID).FirstOrDefault();
+
+                    if (clientInfo != null)
+                    {
+                        lblClientCompanyRegistedAddress.Text = clientInfo.ClientCompany == null
+                            ? string.Empty : clientInfo.ClientCompany.Address;
+
+                        lblReceiverName.Text = clientInfo.ReceiverName;
+                        lblReceiverPhone.Text = clientInfo.PhoneNumber;
+                        lblReceiverAddress.Text = clientInfo.ReceiverAddress;
+                    }
+                }
+            }
+        }
 
         protected void rgAppNotes_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
@@ -414,23 +499,6 @@ namespace ZhongDing.Web.Views.Sales
             rgStockOutDetails.Rebind();
         }
 
-        #endregion
-
-        #region Other Events
-
-        protected void rcbxDistributionCompany_ItemDataBound(object sender, RadComboBoxItemEventArgs e)
-        {
-            UIDropdownItem dataItem = (UIDropdownItem)e.Item.DataItem;
-
-            if (dataItem != null)
-                e.Item.Attributes["Extension"] = Utility.JsonSeralize(dataItem.Extension);
-        }
-
-
-        #endregion
-
-        #region Buttons Events
-
         protected void btnSave_Click(object sender, EventArgs e)
         {
             if (!IsValid) return;
@@ -445,9 +513,9 @@ namespace ZhongDing.Web.Views.Sales
             {
                 currentEntity = new StockOut();
                 currentEntity.Code = Utility.GenerateAutoSerialNo(PageStockOutRepository.GetMaxEntityID(),
-                GlobalConst.EntityAutoSerialNo.SerialNoPrefix.STOCK_OUT_DABAO);
+                GlobalConst.EntityAutoSerialNo.SerialNoPrefix.STOCK_OUT_CLIENT);
                 currentEntity.WorkflowStatusID = (int)EWorkflowStatus.TemporarySave;
-                currentEntity.ReceiverTypeID = (int)EReceiverType.DistributionCompany;
+                currentEntity.ReceiverTypeID = (int)EReceiverType.ClientUser;
                 currentEntity.CompanyID = CurrentUser.CompanyID;
                 PageStockOutRepository.Add(currentEntity);
             }
@@ -468,7 +536,6 @@ namespace ZhongDing.Web.Views.Sales
                 this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SAEVED_REFRESH);
             }
 
-            hdnGridCellValueChangedCount.Value = "0";
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
@@ -502,7 +569,6 @@ namespace ZhongDing.Web.Views.Sales
                         break;
                 }
 
-                hdnGridCellValueChangedCount.Value = "0";
             }
         }
 
@@ -517,25 +583,47 @@ namespace ZhongDing.Web.Views.Sales
                     var db = unitOfWork.GetDbModel();
 
                     IStockOutRepository stockOutRepository = new StockOutRepository();
-                    //IApplicationNoteRepository appNoteRepository = new ApplicationNoteRepository();
+                    ISalesOrderApplicationRepository salesOrderAppRepository = new SalesOrderApplicationRepository();
 
                     stockOutRepository.SetDbModel(db);
-                    //appNoteRepository.SetDbModel(db);
+                    salesOrderAppRepository.SetDbModel(db);
 
                     var currentEntity = stockOutRepository.GetByID(this.CurrentEntityID);
 
                     if (currentEntity != null)
                     {
+                        var salesOrderAppIDs = currentEntity.StockOutDetail.Where(x => x.IsDeleted == false)
+                            .Select(x => x.SalesOrderApplicationID).Distinct();
+
+                        foreach (var salesOrderAppID in salesOrderAppIDs)
+                        {
+                            var salesOrderApp = salesOrderAppRepository.GetByID(salesOrderAppID);
+
+                            if (salesOrderApp != null)
+                            {
+                                var salesTotalQty = salesOrderApp.SalesOrderAppDetail
+                                    .Where(x => x.IsDeleted == false).Sum(x => x.Count);
+
+                                var outTotalQty = salesOrderApp.StockOutDetail
+                                    .Where(x => x.IsDeleted == false).Sum(x => x.OutQty);
+
+                                var clientSaleApp = salesOrderApp.ClientSaleApplication.FirstOrDefault(x => x.IsDeleted == false);
+
+                                if (clientSaleApp != null)
+                                {
+                                    if (outTotalQty > 0)
+                                    {
+                                        if (salesTotalQty == outTotalQty)
+                                            clientSaleApp.WorkflowStatusID = (int)EWorkflowStatus.Completed;
+                                        else
+                                            clientSaleApp.WorkflowStatusID = (int)EWorkflowStatus.Shipping;
+                                    }
+                                }
+                            }
+                        }
+
                         currentEntity.WorkflowStatusID = (int)EWorkflowStatus.OutWarehouse;
                         currentEntity.OutDate = DateTime.Now;
-
-                        //var appNote = new ApplicationNote();
-                        //appNote.WorkflowID = (int)EWorkflow.DBStockOut;
-                        //appNote.WorkflowStepID = (int)EWorkflowStep.OutDBStockRoom;
-                        //appNote.NoteTypeID = (int)EAppNoteType.Comment;
-                        //appNote.ApplicationID = currentEntity.ID;
-                        //appNote.Note = "出库单已出库（由系统自动生成）";
-                        //appNoteRepository.Add(appNote);
 
                         unitOfWork.SaveChanges();
 
@@ -547,11 +635,6 @@ namespace ZhongDing.Web.Views.Sales
             }
         }
 
-        #endregion
-
-
-
-        #endregion
 
     }
 }

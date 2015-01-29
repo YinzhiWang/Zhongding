@@ -56,7 +56,7 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 审核大包配送申请单
         /// </summary>
-        AuditDBOrderRequest,
+        AuditDBOrderRequest = 10,
 
         /// <summary>
         /// 修改大包配送申请单
@@ -102,6 +102,21 @@ namespace ZhongDing.Common.Enums
         /// 修改客户订单
         /// </summary>
         EditClientOrder,
+
+        /// <summary>
+        /// 新增客户订单出库单
+        /// </summary>
+        NewClientStockOut = 20,
+
+        /// <summary>
+        /// 客户订单出库操作
+        /// </summary>
+        OutClientStockRoom,
+
+        /// <summary>
+        /// 修改客户订单出库单
+        /// </summary>
+        EditClientStockOut,
 
     }
 }

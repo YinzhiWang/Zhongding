@@ -542,3 +542,41 @@ ALTER TABLE [dbo].[WorkflowStep]
 
 COMMIT TRANSACTION
 ---- end --- 1/23/2015 -- 初始化订单类型、工作流状态关联数据(客户订单相关)数据 -- by lihong
+
+
+---- start --- 1/29/2015 -- 初始化订单类型、工作流状态关联数据(客户出库单相关)数据 -- by lihong
+SET NUMERIC_ROUNDABORT OFF
+GO
+SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+
+BEGIN TRANSACTION
+ALTER TABLE [dbo].[WorkflowStepStatus] DROP CONSTRAINT [FK_WorkflowStepStatus_WorkflowStatus]
+ALTER TABLE [dbo].[WorkflowStepStatus] DROP CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep]
+ALTER TABLE [dbo].[WorkflowStep] DROP CONSTRAINT [FK_WorkflowStep_Workflow]
+UPDATE [dbo].[WorkflowStep] SET [StepName]=N'大包出库单出库操作' WHERE [ID]=14
+UPDATE [dbo].[WorkflowStep] SET [StepName]=N'修改大包出库单' WHERE [ID]=15
+
+SET IDENTITY_INSERT [dbo].[Workflow] ON
+INSERT INTO [dbo].[Workflow] ([ID], [WorkflowName], [IsActive], [IsDeleted]) VALUES (7, N'客户订单出库单', 1, 0)
+SET IDENTITY_INSERT [dbo].[Workflow] OFF
+
+SET IDENTITY_INSERT [dbo].[WorkflowStep] ON
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (20, 7, N'客户订单出库单新增', 0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (21, 7, N'客户出库单出库操作', 0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (22, 7, N'修改客户订单出库单', 0)
+SET IDENTITY_INSERT [dbo].[WorkflowStep] OFF
+
+SET IDENTITY_INSERT [dbo].[WorkflowStepStatus] ON
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (29, 20, 1, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (30, 21, 12, 0)
+SET IDENTITY_INSERT [dbo].[WorkflowStepStatus] OFF
+
+ALTER TABLE [dbo].[WorkflowStepStatus]
+    ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStatus] FOREIGN KEY ([WorkflowStatusID]) REFERENCES [dbo].[WorkflowStatus] ([ID])
+ALTER TABLE [dbo].[WorkflowStepStatus]
+    ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep] FOREIGN KEY ([WorkflowStepID]) REFERENCES [dbo].[WorkflowStep] ([ID])
+ALTER TABLE [dbo].[WorkflowStep]
+    ADD CONSTRAINT [FK_WorkflowStep_Workflow] FOREIGN KEY ([WorkflowID]) REFERENCES [dbo].[Workflow] ([ID])
+COMMIT TRANSACTION
+---- end --- 1/29/2015 -- 初始化订单类型、工作流状态关联数据(客户出库单相关)数据 -- by lihong

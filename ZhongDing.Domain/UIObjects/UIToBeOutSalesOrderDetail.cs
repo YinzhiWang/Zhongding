@@ -39,6 +39,12 @@ namespace ZhongDing.Domain.UIObjects
         public int CurrentOutQty { get; set; }
 
         /// <summary>
+        /// 本次需开票数量
+        /// </summary>
+        /// <value>The current fax qty.</value>
+        public int CurrentFaxQty { get; set; }
+
+        /// <summary>
         /// 库存余量
         /// </summary>
         public int BalanceQty { get; set; }

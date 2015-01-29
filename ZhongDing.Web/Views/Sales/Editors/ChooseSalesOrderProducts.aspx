@@ -15,18 +15,6 @@
                     <telerik:AjaxUpdatedControl ControlID="rgSalesOrderAppDetails" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
-            <telerik:AjaxSetting AjaxControlID="btnSearch">
-                <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="tblSearch" />
-                    <telerik:AjaxUpdatedControl ControlID="rgSalesOrderAppDetails" LoadingPanelID="loadingPanel" />
-                </UpdatedControls>
-            </telerik:AjaxSetting>
-            <telerik:AjaxSetting AjaxControlID="btnReset">
-                <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="tblSearch" />
-                    <telerik:AjaxUpdatedControl ControlID="rgSalesOrderAppDetails" LoadingPanelID="loadingPanel" />
-                </UpdatedControls>
-            </telerik:AjaxSetting>
         </AjaxSettings>
     </telerik:RadAjaxManager>
 
@@ -45,7 +33,8 @@
                             AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false" AllowMultiRowSelection="true"
                             MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" Height="460" ShowHeader="true" ShowFooter="true"
                             ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                            OnNeedDataSource="rgSalesOrderAppDetails_NeedDataSource" OnItemDataBound="rgSalesOrderAppDetails_ItemDataBound">
+                            OnNeedDataSource="rgSalesOrderAppDetails_NeedDataSource" OnItemDataBound="rgSalesOrderAppDetails_ItemDataBound"
+                            OnColumnCreated="rgSalesOrderAppDetails_ColumnCreated">
                             <MasterTableView Width="100%" DataKeyNames="ID,SalesOrderApplicationID,ProductID,ProductSpecificationID" CommandItemDisplay="None"
                                 ShowHeadersWhenNoRecords="true" BackColor="#fafafa" ClientDataKeyNames="ID,ProductID,ProductSpecificationID,ToBeOutQty">
                                 <Columns>
@@ -88,13 +77,23 @@
                                         <ItemTemplate>
                                             <telerik:RadNumericTextBox runat="server" ID="txtCurrentOutQty" Type="Number" MaxLength="9" Width="80" ShowSpinButtons="true"
                                                 MinValue="1" MaxValue="99999999" NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator="">
-                                                <ClientEvents OnValueChanging="onCurrentOutQtyChanging" />
+                                                <ClientEvents OnValueChanging="onCurrentOutQtyChanging" OnValueChanged="onCurrentOutQtyChanged" />
+                                            </telerik:RadNumericTextBox>
+                                        </ItemTemplate>
+                                    </telerik:GridTemplateColumn>
+                                    <telerik:GridTemplateColumn UniqueName="CurrentTaxQty" HeaderText="需开票数量" DataField="CurrentTaxQty" SortExpression="CurrentTaxQty">
+                                        <HeaderStyle Width="100" />
+                                        <ItemStyle HorizontalAlign="Left" Width="100" />
+                                        <ItemTemplate>
+                                            <telerik:RadNumericTextBox runat="server" ID="txtCurrentTaxQty" Type="Number" MaxLength="9" Width="80" ShowSpinButtons="true"
+                                                MinValue="1" MaxValue="99999999" NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator="">
+                                                <ClientEvents OnValueChanging="onCurrentTaxQtyChanging" />
                                             </telerik:RadNumericTextBox>
                                         </ItemTemplate>
                                     </telerik:GridTemplateColumn>
                                     <telerik:GridTemplateColumn UniqueName="BalanceQty" HeaderText="库存数量" DataField="BalanceQty" SortExpression="BalanceQty" ReadOnly="true">
-                                        <HeaderStyle Width="80" />
-                                        <ItemStyle HorizontalAlign="Left" Width="80" />
+                                        <HeaderStyle Width="160" />
+                                        <ItemStyle HorizontalAlign="Left" Width="160" />
                                         <ItemTemplate>
                                             <asp:Label ID="lblBalanceQty" runat="server" Text='<%# Eval("BalanceQty") %>'></asp:Label>
                                         </ItemTemplate>
@@ -232,6 +231,9 @@
 
                     if (currentOutQty > extensionData.BalanceQty)
                         txtCurrentOutQty.set_value(extensionData.BalanceQty);
+
+                    var txtCurrentTaxQty = $telerik.findControl(gridItemElement, "txtCurrentTaxQty");
+                    txtCurrentTaxQty.set_value("");
                 }
             }
         }
@@ -279,6 +281,56 @@
                     radNotification.show();
 
                     eventArgs.set_cancel(true);
+                }
+            }
+        }
+
+        function onCurrentOutQtyChanged(sender, eventArgs) {
+            debugger;
+
+            var gridItem = sender.get_parent();
+
+            if (gridItem) {
+
+                var gridItemElement = gridItem.get_element();
+
+                var newValue = eventArgs.get_newValue();
+
+                if (newValue) {
+
+                    var txtCurrentTaxQty = $telerik.findControl(gridItemElement, "txtCurrentTaxQty");
+                    var currentTaxQty = txtCurrentTaxQty.get_value();
+
+                    if (currentTaxQty > parseInt(newValue)) {
+                        txtCurrentTaxQty.set_value(newValue);
+                    }
+                }
+            }
+        }
+
+        function onCurrentTaxQtyChanging(sender, eventArgs) {
+            var gridItem = sender.get_parent();
+
+            if (gridItem) {
+
+                var gridItemElement = gridItem.get_element();
+
+                var newValue = eventArgs.get_newValue();
+
+                if (newValue) {
+
+                    var txtCurrentOutQty = $telerik.findControl(gridItemElement, "txtCurrentOutQty");
+                    var currentOutQty = txtCurrentOutQty.get_value();
+
+                    if (newValue > currentOutQty) {
+
+                        var radNotification = $find("<%=radNotification.ClientID%>");
+
+                        radNotification.set_text("需开票数量不能大于本次发出数量：" + currentOutQty);
+                        radNotification.show();
+
+                        eventArgs.set_cancel(true);
+                    }
                 }
             }
         }
@@ -371,11 +423,17 @@
                     }
                     else {
                         if (curBalanceQty > toBeOutQty) {
-                            txtCurrentOutQty.set_value(toBeOutQty);
+
+                            if (currentOutQty > toBeOutQty)
+                                txtCurrentOutQty.set_value(toBeOutQty);
+
                             txtCurrentOutQty.set_maxValue(toBeOutQty);
                         }
                         else {
-                            txtCurrentOutQty.set_value(curBalanceQty);
+
+                            if (currentOutQty > curBalanceQty)
+                                txtCurrentOutQty.set_value(curBalanceQty);
+
                             txtCurrentOutQty.set_maxValue(curBalanceQty);
                         }
                     }

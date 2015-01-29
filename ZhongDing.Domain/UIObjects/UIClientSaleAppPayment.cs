@@ -24,6 +24,6 @@ namespace ZhongDing.Domain.UIObjects
         /// <summary>
         /// 到账日期
         /// </summary>
-        public DateTime PayDate { get; set; }
+        public DateTime? PayDate { get; set; }
     }
 }

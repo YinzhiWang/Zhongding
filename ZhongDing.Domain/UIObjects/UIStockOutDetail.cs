@@ -42,6 +42,11 @@ namespace ZhongDing.Domain.UIObjects
         public int OutQty { get; set; }
 
         /// <summary>
+        /// 需开票数量
+        /// </summary>
+        public int? TaxQty { get; set; }
+
+        /// <summary>
         /// 未出仓数量
         /// </summary>
         public int ToBeOutQty { get; set; }

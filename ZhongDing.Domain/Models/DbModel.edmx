@@ -678,7 +678,7 @@
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
-          <Property Name="PayDate" Type="datetime" Nullable="false" />
+          <Property Name="PayDate" Type="datetime" />
         </EntityType>
         <EntityType Name="aspnet_Membership">
           <Key>
@@ -7064,7 +7064,7 @@
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
-          <Property Type="DateTime" Name="PayDate" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="PayDate" Precision="3" />
           <NavigationProperty Name="BankAccount" Relationship="DbModel.FK_ApplicationPayment_FromBankAccount" FromRole="ApplicationPayment" ToRole="BankAccount" />
           <NavigationProperty Name="PaymentStatus" Relationship="DbModel.FK_ApplicationPayment_PaymentStatus" FromRole="ApplicationPayment" ToRole="PaymentStatus" />
           <NavigationProperty Name="PaymentType" Relationship="DbModel.FK_ApplicationPayment_PaymentType" FromRole="ApplicationPayment" ToRole="PaymentType" />

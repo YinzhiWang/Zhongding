@@ -44,6 +44,28 @@ namespace ZhongDing.Web.Views.Sales.Editors
             }
         }
 
+        /// <summary>
+        /// 客户ID
+        /// </summary>
+        private int? ClientUserID
+        {
+            get
+            {
+                return WebUtility.GetValueFromQueryString("ClientUserID");
+            }
+        }
+
+        /// <summary>
+        /// 客户商业单位ID
+        /// </summary>
+        private int? ClientCompanyID
+        {
+            get
+            {
+                return WebUtility.GetValueFromQueryString("ClientCompanyID");
+            }
+        }
+
         #endregion
 
         #region Members
@@ -159,9 +181,17 @@ namespace ZhongDing.Web.Views.Sales.Editors
                 }
                 else if (this.CurrentOwnerEntity.ReceiverTypeID == (int)EReceiverType.ClientUser)
                 {
+                    uiSearchObj.ClientUserID = this.ClientUserID.HasValue
+                    ? this.ClientUserID.Value : GlobalConst.INVALID_INT;
+
+                    uiSearchObj.ClientCompanyID = this.ClientCompanyID.HasValue
+                    ? this.ClientCompanyID.Value : GlobalConst.INVALID_INT;
+
                     saleOrderTypeIDs.Add((int)ESaleOrderType.AttractBusinessMode);
                     saleOrderTypeIDs.Add((int)ESaleOrderType.AttachedMode);
                 }
+
+                uiSearchObj.SaleOrderTypeIDs = saleOrderTypeIDs;
 
                 var salesOrderAppDetailIDs = CurrentOwnerEntity.StockOutDetail
                     .Where(x => x.IsDeleted == false).Select(x => x.SalesOrderAppDetailID).Distinct();
@@ -203,6 +233,15 @@ namespace ZhongDing.Web.Views.Sales.Editors
         protected void rgSalesOrderAppDetails_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
             BindSalesOrderAppDetails(false);
+        }
+
+        protected void rgSalesOrderAppDetails_ColumnCreated(object sender, GridColumnCreatedEventArgs e)
+        {
+            if (this.CurrentOwnerEntity != null
+                && this.CurrentOwnerEntity.ReceiverTypeID == (int)EReceiverType.ClientUser)
+                e.OwnerTableView.Columns.FindByUniqueName("CurrentTaxQty").Visible = true;
+            else
+                e.OwnerTableView.Columns.FindByUniqueName("CurrentTaxQty").Visible = false;
         }
 
         protected void rgSalesOrderAppDetails_ItemDataBound(object sender, GridItemEventArgs e)
@@ -260,6 +299,7 @@ namespace ZhongDing.Web.Views.Sales.Editors
 
                                         if (lblBalanceQty != null)
                                             lblBalanceQty.Text = sBalanceQty;
+
                                     }
                                 }
                             }
@@ -315,9 +355,16 @@ namespace ZhongDing.Web.Views.Sales.Editors
 
                             if (canOutStockInDetails.Count > 0)
                             {
+                                var txtCurrentTaxQty = (RadNumericTextBox)editableItem.FindControl("txtCurrentTaxQty");
+                                int needTaxQty = 0;
+
+                                if (txtCurrentTaxQty.Value.HasValue)
+                                    needTaxQty = Convert.ToInt32(txtCurrentTaxQty.Value.Value);
+
                                 var salesOrderAppDetail = PageSalesOrderAppDetailRepository.GetByID(salesOrderAppDetailID);
 
                                 int tempOutQty = needOutQty;
+                                int tempTaxQty = needTaxQty;
 
                                 foreach (var canOutStockInDetail in canOutStockInDetails.OrderBy(x => x.ExpirationDate))
                                 {
@@ -326,23 +373,41 @@ namespace ZhongDing.Web.Views.Sales.Editors
                                         && x.BatchNumber == canOutStockInDetail.BatchNumber && x.LicenseNumber == canOutStockInDetail.LicenseNumber);
 
                                     int curOutQty = 0;
+                                    int curTaxQty = 0;
 
                                     if (canOutStockInDetail.BalanceQty >= tempOutQty)
                                     {
                                         curOutQty = tempOutQty;
                                         tempOutQty = 0;
+
+                                        curTaxQty = tempTaxQty;
+                                        tempTaxQty = 0;
                                     }
                                     else
                                     {
                                         tempOutQty -= canOutStockInDetail.BalanceQty;
                                         curOutQty = canOutStockInDetail.BalanceQty;
+
+                                        if (tempTaxQty > 0)
+                                        {
+                                            tempTaxQty -= canOutStockInDetail.BalanceQty;
+
+                                            if ((tempTaxQty - canOutStockInDetail.BalanceQty) > 0)
+                                                curTaxQty = canOutStockInDetail.BalanceQty;
+                                            else if ((tempTaxQty - canOutStockInDetail.BalanceQty) == 0)
+                                                curTaxQty = tempTaxQty;
+                                        }
                                     }
 
                                     if (tempStockOutDetail != null)
                                     {
                                         tempStockOutDetail.OutQty += curOutQty;
-
                                         tempStockOutDetail.TotalSalesAmount = tempStockOutDetail.SalesPrice * tempStockOutDetail.OutQty;
+
+                                        if (tempStockOutDetail.TaxQty.HasValue)
+                                            tempStockOutDetail.TaxQty += curTaxQty;
+                                        else
+                                            tempStockOutDetail.TaxQty = curTaxQty;
                                     }
                                     else
                                     {
@@ -355,6 +420,7 @@ namespace ZhongDing.Web.Views.Sales.Editors
                                             WarehouseID = canOutStockInDetail.WarehouseID,
                                             SalesPrice = salesOrderAppDetail.SalesPrice,
                                             OutQty = curOutQty,
+                                            TaxQty = curTaxQty,
                                             BatchNumber = canOutStockInDetail.BatchNumber,
                                             ExpirationDate = canOutStockInDetail.ExpirationDate,
                                             LicenseNumber = canOutStockInDetail.LicenseNumber,
@@ -387,11 +453,6 @@ namespace ZhongDing.Web.Views.Sales.Editors
 
                 return;
             }
-        }
-
-        protected void btnSearch_Click(object sender, EventArgs e)
-        {
-            BindSalesOrderAppDetails(true);
         }
 
         protected void ddlWarehouse_ItemDataBound(object sender, DropDownListItemEventArgs e)

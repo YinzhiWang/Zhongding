@@ -123,7 +123,8 @@ namespace ZhongDing.Web.Views.Sales
             {
                 //CompanyID = CurrentUser.CompanyID,
                 BeginDate = rdpBeginDate.SelectedDate,
-                EndDate = rdpEndDate.SelectedDate
+                EndDate = rdpEndDate.SelectedDate,
+                ReceiverTypeID = (int)EReceiverType.DistributionCompany
             };
 
             IList<int> includeWorkflowStatusIDs = PageWorkflowStatusRepository

@@ -70,6 +70,7 @@
     <Compile Include="Enums\ECompareOperator.cs" />
     <Compile Include="Enums\EDeliveryMode.cs" />
     <Compile Include="Enums\EDepartmentType.cs" />
+    <Compile Include="Enums\EInvoiceType.cs" />
     <Compile Include="Enums\EMenuItem.cs" />
     <Compile Include="Enums\EMonthOfYear.cs" />
     <Compile Include="Enums\EOwnerType.cs" />

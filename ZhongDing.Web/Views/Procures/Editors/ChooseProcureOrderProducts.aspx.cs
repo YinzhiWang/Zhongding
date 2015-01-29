@@ -127,7 +127,7 @@ namespace ZhongDing.Web.Views.Procures.Editors
 
             int totalRecords;
 
-            var orderProducts = PageProcureOrderAppDetailRepository.GetUIList(uiSearchObj,
+            var orderProducts = PageProcureOrderAppDetailRepository.GetToBeInUIList(uiSearchObj,
                 rgSupplierProcureOrderDetails.CurrentPageIndex, rgSupplierProcureOrderDetails.PageSize, out totalRecords);
 
             rgSupplierProcureOrderDetails.DataSource = orderProducts.Where(x => x.ToBeInQty > 0).ToList();

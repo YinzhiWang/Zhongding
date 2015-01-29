@@ -16,7 +16,7 @@
     [CreatedBy]         INT             NULL,
     [LastModifiedOn]    DATETIME        NULL,
     [LastModifiedBy]    INT             NULL,
-    [PayDate]           DATETIME        CONSTRAINT [DF_ApplicationPayment_PayDate] DEFAULT (getdate()) NOT NULL,
+    [PayDate]           DATETIME        NULL,
     CONSTRAINT [PK_ApplicationPayment] PRIMARY KEY CLUSTERED ([ID] ASC),
     CONSTRAINT [FK_ApplicationPayment_FromBankAccount] FOREIGN KEY ([FromBankAccountID]) REFERENCES [dbo].[BankAccount] ([ID]),
     CONSTRAINT [FK_ApplicationPayment_PaymentStatus] FOREIGN KEY ([PaymentStatusID]) REFERENCES [dbo].[PaymentStatus] ([ID]),
@@ -24,6 +24,8 @@
     CONSTRAINT [FK_ApplicationPayment_ToBankAccount] FOREIGN KEY ([ToBankAccountID]) REFERENCES [dbo].[BankAccount] ([ID]),
     CONSTRAINT [FK_ApplicationPayment_Workflow] FOREIGN KEY ([WorkflowID]) REFERENCES [dbo].[Workflow] ([ID])
 );
+
+
 
 
 

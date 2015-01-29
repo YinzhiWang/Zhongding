@@ -1,4 +1,4 @@
-﻿<%@ Page Title="客户订单管理" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ClientSaleAppManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Sales.ClientSaleAppManagement" %>
+﻿<%@ Page Title="客户订单出库单管理" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ClientSaleAppStockOutManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Sales.ClientSaleAppStockOutManagement" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 
@@ -21,11 +21,6 @@
                     <telerik:AjaxUpdatedControl ControlID="rgEntities" LoadingPanelID="loadingPanel" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
-            <telerik:AjaxSetting AjaxControlID="rcbxClientUser">
-                <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="rcbxClientCompany" LoadingPanelID="loadingPanel" />
-                </UpdatedControls>
-            </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="rgEntities">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="rgEntities" LoadingPanelID="loadingPanel" />
@@ -38,7 +33,7 @@
     <div class="container">
         <div class="mws-panel grid_8">
             <div class="mws-panel-header">
-                <span class="mws-i-24 i-table-1">客户订单管理</span>
+                <span class="mws-i-24 i-table-1">客户订单出库单管理</span>
             </div>
             <div class="mws-panel-body">
                 <table runat="server" id="tblSearch" class="leftmargin10">
@@ -85,65 +80,69 @@
                     ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
                     OnNeedDataSource="rgEntities_NeedDataSource" OnDeleteCommand="rgEntities_DeleteCommand"
                     OnItemCreated="rgEntities_ItemCreated" OnColumnCreated="rgEntities_ColumnCreated"
-                    OnItemDataBound="rgEntities_ItemDataBound" OnItemCommand="rgEntities_ItemCommand" >
+                    OnItemDataBound="rgEntities_ItemDataBound">
                     <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
                         ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                         <Columns>
                             <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false">
                                 <ItemStyle HorizontalAlign="Left" Width="50" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="OrderCode" HeaderText="订单编号" DataField="OrderCode">
+                            <telerik:GridBoundColumn UniqueName="Code" HeaderText="出库单号" DataField="Code">
+                                <HeaderStyle Width="20%" />
+                                <ItemStyle HorizontalAlign="Left" Width="20%" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn UniqueName="ClientUserName" HeaderText="客户" DataField="ClientUserName">
+                                <HeaderStyle Width="100" />
+                                <ItemStyle HorizontalAlign="Left" Width="100" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn UniqueName="ClientCompany" HeaderText="商业单位" DataField="ClientCompany">
+                                <HeaderStyle Width="15%" />
                                 <ItemStyle HorizontalAlign="Left" Width="15%" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="OrderDate" HeaderText="订单日期" DataField="OrderDate" DataFormatString="{0:yyyy/MM/dd}">
-                                <ItemStyle HorizontalAlign="Left" Width="60" />
-                            </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="SaleOrderTypeName" HeaderText="订单类型" DataField="SaleOrderTypeName">
-                                <ItemStyle HorizontalAlign="Left" Width="60" />
-                            </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="ClientUserName" HeaderText="客户名称" DataField="ClientUserName">
+                            <telerik:GridBoundColumn UniqueName="CreatedBy" HeaderText="制单人" DataField="CreatedBy">
+                                <HeaderStyle Width="80" />
                                 <ItemStyle HorizontalAlign="Left" Width="80" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="ClientCompanyName" HeaderText="商业单位" DataField="ClientCompanyName">
-                                <ItemStyle HorizontalAlign="Left" />
+                            <telerik:GridBoundColumn UniqueName="ReceiverName" HeaderText="收货人" DataField="ReceiverName">
+                                <HeaderStyle Width="80" />
+                                <ItemStyle HorizontalAlign="Left" Width="80" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="CreatedBy" HeaderText="制单人" DataField="CreatedBy">
-                                <ItemStyle HorizontalAlign="Left" Width="40" />
+                            <telerik:GridBoundColumn UniqueName="ReceiverPhone" HeaderText="收货电话" DataField="ReceiverPhone">
+                                <HeaderStyle Width="140" />
+                                <ItemStyle HorizontalAlign="Left" Width="140" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn UniqueName="ReceiverAddress" HeaderText="收货地址" DataField="ReceiverAddress">
+                                <HeaderStyle Width="20%" />
+                                <ItemStyle HorizontalAlign="Left" Width="20%" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="WorkflowStatus" HeaderText="状态" DataField="WorkflowStatus">
-                                <ItemStyle HorizontalAlign="Left" Width="60" />
+                                <HeaderStyle Width="80" />
+                                <ItemStyle HorizontalAlign="Left" Width="80" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridTemplateColumn UniqueName="IconUrlOfGuarantee" HeaderText="担保" SortExpression="IconUrlOfGuarantee">
-                                <ItemStyle HorizontalAlign="Center" Width="40" />
-                                <ItemTemplate>
-                                    <asp:Image runat="server" ID="iconOfGuarantee" ImageUrl='<%# Page.ResolveUrl(DataBinder.Eval(Container.DataItem,"IconUrlOfGuarantee")!=null
-                                    ?DataBinder.Eval(Container.DataItem,"IconUrlOfGuarantee").ToString():string.Empty)%>'
-                                        Width="24" Height="24"
-                                        Visible='<%# DataBinder.Eval(Container.DataItem,"IsGuaranteed") %>' />
-                                </ItemTemplate>
-                            </telerik:GridTemplateColumn>
-                            <telerik:GridCheckBoxColumn UniqueName="IsStop" HeaderText="中止执行" DataField="IsStop">
-                                <HeaderStyle Width="60" />
-                                <ItemStyle HorizontalAlign="Left" Width="60" />
-                            </telerik:GridCheckBoxColumn>
                             <telerik:GridTemplateColumn UniqueName="Edit">
+                                <HeaderStyle Width="60" />
                                 <ItemStyle HorizontalAlign="Center" Width="60" />
                                 <ItemTemplate>
                                     <a href="javascript:void(0);" onclick="redirectToMaintenancePage(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">编辑</a>
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>
-                            <telerik:GridButtonColumn Text="中止" UniqueName="Stop" CommandName="Stop" ButtonType="LinkButton"
-                                HeaderStyle-Width="60" ItemStyle-Width="60" ItemStyle-HorizontalAlign="Center" ConfirmText="确认中止该条客户订单吗？" Visible="false" />
-                            <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton"
-                                HeaderStyle-Width="60" ItemStyle-Width="60" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" Visible="false" />
+                            <telerik:GridTemplateColumn UniqueName="Print" HeaderText="打印">
+                                <HeaderStyle HorizontalAlign="Center" Width="60" />
+                                <ItemStyle HorizontalAlign="Center" Width="60" />
+                                <ItemTemplate>
+                                    <a href="javascript:void(0);" onclick="openPrintPage(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">打印</a>
+                                </ItemTemplate>
+                            </telerik:GridTemplateColumn>
+                            <telerik:GridButtonColumn Text="删除" HeaderText="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton"
+                                HeaderStyle-Width="60" HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="60" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
                         </Columns>
                         <CommandItemTemplate>
                             <table class="width100-percent">
                                 <tr>
                                     <td>
                                         <asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
-                                            <input type="button" class="rgAdd" onclick="openSaleOrderTypeWin(); return false;" />
-                                            <a href="javascript:void(0)" onclick="openSaleOrderTypeWin(); return false;">添加</a>
+                                            <input type="button" class="rgAdd" onclick="redirectToMaintenancePage(-1); return false;" />
+                                            <a href="javascript:void(0)" onclick="redirectToMaintenancePage(-1); return false;">添加</a>
                                         </asp:Panel>
                                         <%--<asp:Panel ID="plExportCommand" runat="server" CssClass="width80 float-left">
                                             <input type="button" class="rgExpXLS" onclick="exportExcel(); return false;" />
@@ -173,43 +172,10 @@
             </div>
         </div>
     </div>
-
-    <telerik:RadWindow runat="server" ID="winSelectSaleOrderType" Width="400" Height="200"
-        Modal="true" Behaviors="Close" Title="选择订单类型">
-        <Localization Close="关闭" />
-        <ContentTemplate>
-            <div class="mws-panel grid_full" style="margin-bottom: 10px; margin-top: 10px;">
-                <div class="mws-panel-body">
-                    <div class="mws-form">
-                        <div class="mws-form-inline">
-                            <div class="mws-form-row">
-                                <label>选择订单类型</label>
-                                <div class="mws-form-item small  toppadding5">
-                                    <telerik:RadButton runat="server" ID="radioAttractBusinessMode" ButtonType="ToggleButton" ToggleType="Radio" AutoPostBack="false"
-                                        GroupName="SaleOrderType" Text="招商模式" Value="2" Checked="true">
-                                    </telerik:RadButton>
-                                    &nbsp;&nbsp;
-                                    <telerik:RadButton runat="server" ID="radioAttachedMode" ButtonType="ToggleButton" ToggleType="Radio" AutoPostBack="false"
-                                        GroupName="SaleOrderType" Text="挂靠模式" Value="3">
-                                    </telerik:RadButton>
-                                </div>
-                            </div>
-                            <div class="mws-button-row">
-                                <asp:Button ID="btnCreateOrder" runat="server" Text="新建订单" UseSubmitBehavior="false" CssClass="mws-button green" OnClientClick="createNewOrder();return false;" />
-                                <asp:Button ID="btnCancel" runat="server" Text="取消" UseSubmitBehavior="false" CssClass="mws-button green" OnClientClick="closeSaleOrderTypeWin();return false;" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </ContentTemplate>
-    </telerik:RadWindow>
-
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContent" runat="server">
     <script type="text/javascript">
         var gridOfRefresh = null;
-        var winSaleOrderType = null;
 
         function GetsGridObject(sender, eventArgs) {
             gridOfRefresh = sender;
@@ -221,47 +187,14 @@
 
         function redirectToMaintenancePage(id) {
             $.showLoading();
-            window.location.href = "ClientSaleAppMaintenance.aspx?EntityID=" + id;
+            window.location.href = "ClientSaleAppStockOutMaintenance.aspx?EntityID=" + id;
         }
 
-        function openSaleOrderTypeWin() {
-            if (winSaleOrderType) {
-                winSaleOrderType.show();
-                winSaleOrderType.center();
-            }
+        function openPrintPage(entityID) {
+
+            var targetUrl = $.getRootPath() + "Views/Sales/Printers/PrintStockOut.aspx?EntityID=" + entityID;
+
+            window.open(targetUrl, "_blank");
         }
-
-        function closeSaleOrderTypeWin() {
-            if (winSaleOrderType
-                && !winSaleOrderType.isClosed()) {
-                winSaleOrderType.close();
-            }
-        }
-
-        function createNewOrder() {
-
-            var saleOrderTypeID = 0;
-
-            var radioAttractBusinessMode = $find("<%= radioAttractBusinessMode.ClientID %>");
-            var radioAttachedMode = $find("<%= radioAttachedMode.ClientID %>");
-
-            if (radioAttractBusinessMode.get_checked() == true) {
-                saleOrderTypeID = ESaleOrderTypes.AttractBusinessMode;
-            }
-            else if (radioAttachedMode.get_checked() == true) {
-                saleOrderTypeID = ESaleOrderTypes.AttachedMode;
-            }
-
-            if (saleOrderTypeID > 0) {
-                $.showLoading();
-                window.location.href = "ClientSaleAppMaintenance.aspx?EntityID=-1&SaleOrderTypeID=" + saleOrderTypeID;
-            }
-        }
-
-        $(document).ready(function () {
-            winSaleOrderType = $find("<%=winSelectSaleOrderType.ClientID %>");
-
-        });
-
     </script>
 </asp:Content>
