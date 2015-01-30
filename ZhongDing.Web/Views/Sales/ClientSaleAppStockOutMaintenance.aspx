@@ -283,8 +283,8 @@
                                                         </ItemTemplate>
                                                     </telerik:GridTemplateColumn>
                                                     <telerik:GridBoundColumn UniqueName="BatchNumber" HeaderText="货品批号" DataField="BatchNumber" SortExpression="BatchNumber" ReadOnly="true">
-                                                        <HeaderStyle Width="160" />
-                                                        <ItemStyle HorizontalAlign="Left" Width="160" />
+                                                        <HeaderStyle Width="100" />
+                                                        <ItemStyle HorizontalAlign="Left" Width="100" />
                                                     </telerik:GridBoundColumn>
                                                     <telerik:GridBoundColumn UniqueName="ExpirationDate" HeaderText="过期日期" DataField="ExpirationDate" SortExpression="ExpirationDate" DataFormatString="{0:yyyy/MM/dd}" ReadOnly="true">
                                                         <HeaderStyle Width="80" />
@@ -295,8 +295,8 @@
                                                         <ItemStyle HorizontalAlign="Left" Width="160" />
                                                     </telerik:GridBoundColumn>
                                                     <telerik:GridBoundColumn UniqueName="TaxQty" HeaderText="需开票数量" DataField="TaxQty" SortExpression="TaxQty" ReadOnly="true">
-                                                        <HeaderStyle Width="100" />
-                                                        <ItemStyle HorizontalAlign="Left" Width="100" />
+                                                        <HeaderStyle Width="160" />
+                                                        <ItemStyle HorizontalAlign="Left" Width="160" />
                                                     </telerik:GridBoundColumn>
                                                     <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete"
                                                         ButtonType="LinkButton" ConfirmText="确认删除该条数据吗？">

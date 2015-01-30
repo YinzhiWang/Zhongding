@@ -602,7 +602,7 @@ namespace ZhongDing.Web.Views.Sales
                             if (salesOrderApp != null)
                             {
                                 var salesTotalQty = salesOrderApp.SalesOrderAppDetail
-                                    .Where(x => x.IsDeleted == false).Sum(x => x.Count);
+                                    .Where(x => x.IsDeleted == false).Sum(x => x.Count + (x.GiftCount.HasValue ? x.GiftCount.Value : 0));
 
                                 var outTotalQty = salesOrderApp.StockOutDetail
                                     .Where(x => x.IsDeleted == false).Sum(x => x.OutQty);

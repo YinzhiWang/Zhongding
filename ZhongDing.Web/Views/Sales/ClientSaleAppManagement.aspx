@@ -122,7 +122,7 @@
                                         Visible='<%# DataBinder.Eval(Container.DataItem,"IsGuaranteed") %>' />
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>
-                            <telerik:GridCheckBoxColumn UniqueName="IsStop" HeaderText="中止执行" DataField="IsStop">
+                            <telerik:GridCheckBoxColumn UniqueName="IsStop" HeaderText="中止执行?" DataField="IsStop">
                                 <HeaderStyle Width="60" />
                                 <ItemStyle HorizontalAlign="Left" Width="60" />
                             </telerik:GridCheckBoxColumn>
@@ -132,9 +132,9 @@
                                     <a href="javascript:void(0);" onclick="redirectToMaintenancePage(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">编辑</a>
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>
-                            <telerik:GridButtonColumn Text="中止" UniqueName="Stop" CommandName="Stop" ButtonType="LinkButton"
+                            <telerik:GridButtonColumn Text="中止" HeaderText="中止" UniqueName="Stop" CommandName="Stop" ButtonType="LinkButton"
                                 HeaderStyle-Width="60" ItemStyle-Width="60" ItemStyle-HorizontalAlign="Center" ConfirmText="确认中止该条客户订单吗？" Visible="false" />
-                            <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton"
+                            <telerik:GridButtonColumn Text="删除" HeaderText="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton"
                                 HeaderStyle-Width="60" ItemStyle-Width="60" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" Visible="false" />
                         </Columns>
                         <CommandItemTemplate>

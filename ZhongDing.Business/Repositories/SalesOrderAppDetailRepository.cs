@@ -484,7 +484,7 @@ namespace ZhongDing.Business.Repositories
                                   OutQty = DB.StockOutDetail.Any(x => x.IsDeleted == false && x.SalesOrderAppDetailID == q.ID)
                                    ? DB.StockOutDetail.Where(x => x.IsDeleted == false && x.SalesOrderAppDetailID == q.ID).Sum(x => x.OutQty) : 0,
 
-                                  ToBeOutQty = q.Count - (DB.StockOutDetail.Any(x => x.IsDeleted == false && x.SalesOrderAppDetailID == q.ID)
+                                  ToBeOutQty = (q.Count + (q.GiftCount.HasValue ? q.GiftCount.Value : 0)) - (DB.StockOutDetail.Any(x => x.IsDeleted == false && x.SalesOrderAppDetailID == q.ID)
                                   ? DB.StockOutDetail.Where(x => x.IsDeleted == false && x.SalesOrderAppDetailID == q.ID).Sum(x => x.OutQty) : 0),
 
                                   //BalanceQty = (DB.StockInDetail.Any(x => x.IsDeleted == false && x.ProductID == q.ProductID 

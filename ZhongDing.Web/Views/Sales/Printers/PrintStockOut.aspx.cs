@@ -79,11 +79,18 @@ namespace ZhongDing.Web.Views.Sales.Printers
                 if (CurrentEntity.ReceiverTypeID == (int)EReceiverType.DistributionCompany)
                 {
                     divDaBaoOrder.Visible = true;
-                    lblDistCompany.Text = this.CurrentEntity.DistributionCompany.Name;
+                    lblDistCompany.Text = this.CurrentEntity.DistributionCompany == null
+                        ? string.Empty : this.CurrentEntity.DistributionCompany.Name;
                 }
                 else if (CurrentEntity.ReceiverTypeID == (int)EReceiverType.ClientUser)
                 {
                     divClientUserOrder.Visible = true;
+
+                    lblClientUser.Text = this.CurrentEntity.ClientUser == null
+                        ? string.Empty : this.CurrentEntity.ClientUser.ClientName;
+
+                    lblClientCompany.Text = this.CurrentEntity.ClientCompany == null
+                        ? string.Empty : this.CurrentEntity.ClientCompany.Name;
                 }
 
                 lblBillDate.Text = CurrentEntity.BillDate.ToString("yyyy/MM/dd");

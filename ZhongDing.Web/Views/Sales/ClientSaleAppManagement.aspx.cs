@@ -224,6 +224,13 @@ namespace ZhongDing.Web.Views.Sales
 
             uiSearchObj.IncludeWorkflowStatusIDs = includeWorkflowStatusIDs;
 
+            if (!string.IsNullOrEmpty(rcbxWorkflowStatus.SelectedValue))
+            {
+                int workflowStatusID;
+                if (int.TryParse(rcbxWorkflowStatus.SelectedValue, out workflowStatusID))
+                    uiSearchObj.WorkflowStatusID = workflowStatusID;
+            }
+
             int totalRecords;
 
             var uiEntities = PageClientSalesAppRepository.GetUIList(uiSearchObj, rgEntities.CurrentPageIndex, rgEntities.PageSize, out totalRecords);

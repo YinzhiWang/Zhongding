@@ -263,7 +263,7 @@
                                                                     <telerik:GridBoundColumn UniqueName="CreatedBy" HeaderText="创建人" DataField="CreatedBy">
                                                                         <ItemStyle HorizontalAlign="Left" Width="15%" />
                                                                     </telerik:GridBoundColumn>
-                                                                    <telerik:GridBoundColumn UniqueName="Note" HeaderText="备注内容" DataField="Note">
+                                                                    <telerik:GridBoundColumn UniqueName="Note" HeaderText="审核意见" DataField="Note">
                                                                         <ItemStyle HorizontalAlign="Left" />
                                                                     </telerik:GridBoundColumn>
                                                                 </Columns>
