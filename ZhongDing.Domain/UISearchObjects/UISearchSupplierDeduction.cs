@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace ZhongDing.Domain.UISearchObjects
 {
-    public class UISearchApplicationPayment : UISearchWorkflowBase
+    public class UISearchSupplierDeduction : UISearchWorkflowBase
     {
-        public int ApplicationID { get; set; }
-
-        public int WorkflowID { get; set; }
+        public int SupplierRefundAppID { get; set; }
 
     }
 }

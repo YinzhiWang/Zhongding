@@ -536,7 +536,8 @@ namespace ZhongDing.Web.Views.Procures
                     {
                         var excludeItemValues = PageAppPaymentRepository
                         .GetList(x => x.ApplicationID == this.CurrentEntityID)
-                        .Select(x => x.FromBankAccountID).ToList();
+                        .Select(x => x.FromBankAccountID.HasValue ? x.FromBankAccountID.Value : GlobalConst.INVALID_INT)
+                        .ToList();
 
                         if (excludeItemValues.Count > 0)
                             uiSearchObj.ExcludeItemValues = excludeItemValues;
@@ -568,7 +569,8 @@ namespace ZhongDing.Web.Views.Procures
                     {
                         var excludeItemValues = PageAppPaymentRepository
                             .GetList(x => x.ApplicationID == this.CurrentEntityID)
-                            .Select(x => x.ToBankAccountID).ToList();
+                            .Select(x => x.ToBankAccountID.HasValue ? x.ToBankAccountID.Value : GlobalConst.INVALID_INT)
+                            .ToList();
 
                         if (excludeItemValues.Count > 0)
                             uiSearchObj.ExcludeItemValues = excludeItemValues;

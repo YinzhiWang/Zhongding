@@ -71,6 +71,8 @@
           <EntitySet Name="SupplierCertificate" EntityType="DbModel.Store.SupplierCertificate" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierContract" EntityType="DbModel.Store.SupplierContract" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierContractFile" EntityType="DbModel.Store.SupplierContractFile" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SupplierDeduction" EntityType="DbModel.Store.SupplierDeduction" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SupplierRefundApplication" EntityType="DbModel.Store.SupplierRefundApplication" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierTaskAssignment" EntityType="DbModel.Store.SupplierTaskAssignment" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UnitOfMeasurement" EntityType="DbModel.Store.UnitOfMeasurement" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserBonus" EntityType="DbModel.Store.UserBonus" store:Type="Tables" Schema="dbo" />
@@ -589,6 +591,30 @@
             <End Role="SupplierContract" EntitySet="SupplierContract" />
             <End Role="SupplierContractFile" EntitySet="SupplierContractFile" />
           </AssociationSet>
+          <AssociationSet Name="FK_SupplierDeduction_Supplier" Association="DbModel.Store.FK_SupplierDeduction_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="SupplierDeduction" EntitySet="SupplierDeduction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierDeduction_SupplierRefundApplication" Association="DbModel.Store.FK_SupplierDeduction_SupplierRefundApplication">
+            <End Role="SupplierRefundApplication" EntitySet="SupplierRefundApplication" />
+            <End Role="SupplierDeduction" EntitySet="SupplierDeduction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierRefundApplication_Company" Association="DbModel.Store.FK_SupplierRefundApplication_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="SupplierRefundApplication" EntitySet="SupplierRefundApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierRefundApplication_Product" Association="DbModel.Store.FK_SupplierRefundApplication_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="SupplierRefundApplication" EntitySet="SupplierRefundApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierRefundApplication_ProductSpecification" Association="DbModel.Store.FK_SupplierRefundApplication_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="SupplierRefundApplication" EntitySet="SupplierRefundApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierRefundApplication_Supplier" Association="DbModel.Store.FK_SupplierRefundApplication_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="SupplierRefundApplication" EntitySet="SupplierRefundApplication" />
+          </AssociationSet>
           <AssociationSet Name="FK_SupplierTaskAssignment_Supplier" Association="DbModel.Store.FK_SupplierTaskAssignment_Supplier">
             <End Role="Supplier" EntitySet="Supplier" />
             <End Role="SupplierTaskAssignment" EntitySet="SupplierTaskAssignment" />
@@ -664,9 +690,9 @@
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ApplicationID" Type="int" Nullable="false" />
           <Property Name="WorkflowID" Type="int" Nullable="false" />
-          <Property Name="FromBankAccountID" Type="int" Nullable="false" />
+          <Property Name="FromBankAccountID" Type="int" />
           <Property Name="FromAccount" Type="nvarchar" MaxLength="255" />
-          <Property Name="ToBankAccountID" Type="int" Nullable="false" />
+          <Property Name="ToBankAccountID" Type="int" />
           <Property Name="ToAccount" Type="nvarchar" MaxLength="255" />
           <Property Name="Amount" Type="money" />
           <Property Name="Fee" Type="money" />
@@ -1383,8 +1409,8 @@
           <Property Name="HighPrice" Type="money" />
           <Property Name="ActualProcurePrice" Type="money" />
           <Property Name="ActualSalePrice" Type="money" />
-          <Property Name="SupplierTaxRatio" Type="float" />
-          <Property Name="ClientTaxRatio" Type="float" />
+          <Property Name="SupplierTaxRatio" Type="decimal" Scale="8" />
+          <Property Name="ClientTaxRatio" Type="decimal" Scale="8" />
           <Property Name="Comment" Type="nvarchar" MaxLength="255" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
@@ -1640,6 +1666,37 @@
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
         </EntityType>
+        <EntityType Name="SupplierDeduction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierRefundAppID" Type="int" Nullable="false" />
+          <Property Name="SupplierID" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="DeductedDate" Type="datetime" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="SupplierRefundApplication">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyID" Type="int" Nullable="false" />
+          <Property Name="SupplierID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="ProductSpecificationID" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
         <EntityType Name="SupplierTaskAssignment">
           <Key>
             <PropertyRef Name="ID" />
@@ -1821,7 +1878,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ApplicationPayment_FromBankAccount">
-          <End Role="BankAccount" Type="DbModel.Store.BankAccount" Multiplicity="1" />
+          <End Role="BankAccount" Type="DbModel.Store.BankAccount" Multiplicity="0..1" />
           <End Role="ApplicationPayment" Type="DbModel.Store.ApplicationPayment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BankAccount">
@@ -1857,7 +1914,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ApplicationPayment_ToBankAccount">
-          <End Role="BankAccount" Type="DbModel.Store.BankAccount" Multiplicity="1" />
+          <End Role="BankAccount" Type="DbModel.Store.BankAccount" Multiplicity="0..1" />
           <End Role="ApplicationPayment" Type="DbModel.Store.ApplicationPayment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BankAccount">
@@ -3296,6 +3353,78 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SupplierDeduction_Supplier">
+          <End Role="Supplier" Type="DbModel.Store.Supplier" Multiplicity="1" />
+          <End Role="SupplierDeduction" Type="DbModel.Store.SupplierDeduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierDeduction">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierDeduction_SupplierRefundApplication">
+          <End Role="SupplierRefundApplication" Type="DbModel.Store.SupplierRefundApplication" Multiplicity="1" />
+          <End Role="SupplierDeduction" Type="DbModel.Store.SupplierDeduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplierRefundApplication">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierDeduction">
+              <PropertyRef Name="SupplierRefundAppID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierRefundApplication_Company">
+          <End Role="Company" Type="DbModel.Store.Company" Multiplicity="1" />
+          <End Role="SupplierRefundApplication" Type="DbModel.Store.SupplierRefundApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierRefundApplication">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierRefundApplication_Product">
+          <End Role="Product" Type="DbModel.Store.Product" Multiplicity="1" />
+          <End Role="SupplierRefundApplication" Type="DbModel.Store.SupplierRefundApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierRefundApplication">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierRefundApplication_ProductSpecification">
+          <End Role="ProductSpecification" Type="DbModel.Store.ProductSpecification" Multiplicity="1" />
+          <End Role="SupplierRefundApplication" Type="DbModel.Store.SupplierRefundApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierRefundApplication">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierRefundApplication_Supplier">
+          <End Role="Supplier" Type="DbModel.Store.Supplier" Multiplicity="1" />
+          <End Role="SupplierRefundApplication" Type="DbModel.Store.SupplierRefundApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierRefundApplication">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SupplierTaskAssignment_Supplier">
           <End Role="Supplier" Type="DbModel.Store.Supplier" Multiplicity="0..1" />
           <End Role="SupplierTaskAssignment" Type="DbModel.Store.SupplierTaskAssignment" Multiplicity="*" />
@@ -3583,11 +3712,6 @@
           <AssociationSet Name="FK_ClientInfoContact_ClientInfo" Association="DbModel.FK_ClientInfoContact_ClientInfo">
             <End Role="ClientInfo" EntitySet="ClientInfo" />
             <End Role="ClientInfoContact" EntitySet="ClientInfoContact" />
-          </AssociationSet>
-          <EntitySet Name="ProductHighPrice" EntityType="DbModel.ProductHighPrice" />
-          <AssociationSet Name="FK_ProductHighPrice_Product" Association="DbModel.FK_ProductHighPrice_Product">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="ProductHighPrice" EntitySet="ProductHighPrice" />
           </AssociationSet>
           <EntitySet Name="ProductBasicPrice" EntityType="DbModel.ProductBasicPrice" />
           <EntitySet Name="ProductDBPolicyPrice" EntityType="DbModel.ProductDBPolicyPrice" />
@@ -3945,10 +4069,6 @@
             <End Role="ProductSpecification" EntitySet="ProductSpecification" />
             <End Role="ProductDBPolicyPrice" EntitySet="ProductDBPolicyPrice" />
           </AssociationSet>
-          <AssociationSet Name="FK_ProductHighPrice_ProductSpecification" Association="DbModel.FK_ProductHighPrice_ProductSpecification">
-            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
-            <End Role="ProductHighPrice" EntitySet="ProductHighPrice" />
-          </AssociationSet>
           <AssociationSet Name="FK_ProductSpecification_UnitOfMeasurement" Association="DbModel.FK_ProductSpecification_UnitOfMeasurement">
             <End Role="UnitOfMeasurement" EntitySet="UnitOfMeasurement" />
             <End Role="ProductSpecification" EntitySet="ProductSpecification" />
@@ -4039,6 +4159,32 @@
             <End Role="SalesOrderAppDetail" EntitySet="SalesOrderAppDetail" />
             <End Role="StockOutDetail" EntitySet="StockOutDetail" />
           </AssociationSet>
+          <EntitySet Name="SupplierRefundApplication" EntityType="DbModel.SupplierRefundApplication" />
+          <AssociationSet Name="FK_SupplierRefundApplication_Company" Association="DbModel.FK_SupplierRefundApplication_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="SupplierRefundApplication" EntitySet="SupplierRefundApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierRefundApplication_Product" Association="DbModel.FK_SupplierRefundApplication_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="SupplierRefundApplication" EntitySet="SupplierRefundApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierRefundApplication_ProductSpecification" Association="DbModel.FK_SupplierRefundApplication_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="SupplierRefundApplication" EntitySet="SupplierRefundApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierRefundApplication_Supplier" Association="DbModel.FK_SupplierRefundApplication_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="SupplierRefundApplication" EntitySet="SupplierRefundApplication" />
+          </AssociationSet>
+          <EntitySet Name="ProductHighPrice" EntityType="DbModel.ProductHighPrice" />
+          <AssociationSet Name="FK_ProductHighPrice_Product" Association="DbModel.FK_ProductHighPrice_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductHighPrice" EntitySet="ProductHighPrice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductHighPrice_ProductSpecification" Association="DbModel.FK_ProductHighPrice_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="ProductHighPrice" EntitySet="ProductHighPrice" />
+          </AssociationSet>
           <EntitySet Name="ApplicationPayment" EntityType="DbModel.ApplicationPayment" />
           <AssociationSet Name="FK_ApplicationPayment_FromBankAccount" Association="DbModel.FK_ApplicationPayment_FromBankAccount">
             <End Role="BankAccount" EntitySet="BankAccount" />
@@ -4059,6 +4205,15 @@
           <AssociationSet Name="FK_ApplicationPayment_Workflow" Association="DbModel.FK_ApplicationPayment_Workflow">
             <End Role="Workflow" EntitySet="Workflow" />
             <End Role="ApplicationPayment" EntitySet="ApplicationPayment" />
+          </AssociationSet>
+          <EntitySet Name="SupplierDeduction" EntityType="DbModel.SupplierDeduction" />
+          <AssociationSet Name="FK_SupplierDeduction_Supplier" Association="DbModel.FK_SupplierDeduction_Supplier">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="SupplierDeduction" EntitySet="SupplierDeduction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierDeduction_SupplierRefundApplication" Association="DbModel.FK_SupplierDeduction_SupplierRefundApplication">
+            <End Role="SupplierRefundApplication" EntitySet="SupplierRefundApplication" />
+            <End Role="SupplierDeduction" EntitySet="SupplierDeduction" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
@@ -4239,6 +4394,7 @@
           <NavigationProperty Name="DaBaoRequestApplication" Relationship="DbModel.FK_DaBaoRequestApplication_Company" FromRole="Company" ToRole="DaBaoRequestApplication" />
           <NavigationProperty Name="StockOut" Relationship="DbModel.FK_StockOut_Company" FromRole="Company" ToRole="StockOut" />
           <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_Company" FromRole="Company" ToRole="ClientSaleApplication" />
+          <NavigationProperty Name="SupplierRefundApplication" Relationship="DbModel.FK_SupplierRefundApplication_Company" FromRole="Company" ToRole="SupplierRefundApplication" />
         </EntityType>
         <EntityType Name="OwnerType">
           <Key>
@@ -4274,7 +4430,6 @@
           <NavigationProperty Name="Supplier" Relationship="DbModel.FK_Product_Supplier" FromRole="Product" ToRole="Supplier" />
           <NavigationProperty Name="ProductCertificate" Relationship="DbModel.FK_ProductCertificate_Product" FromRole="Product" ToRole="ProductCertificate" />
           <NavigationProperty Name="DeptProductEvaluation" Relationship="DbModel.FK_DeptProductEvaluation_Product" FromRole="Product" ToRole="DeptProductEvaluation" />
-          <NavigationProperty Name="ProductHighPrice" Relationship="DbModel.FK_ProductHighPrice_Product" FromRole="Product" ToRole="ProductHighPrice" />
           <NavigationProperty Name="ProductBasicPrice" Relationship="DbModel.FK_ProductBasicPrice_Product" FromRole="Product" ToRole="ProductBasicPrice" />
           <NavigationProperty Name="ProductDBPolicyPrice" Relationship="DbModel.FK_ProductDBPolicyPrice_Product" FromRole="Product" ToRole="ProductDBPolicyPrice" />
           <NavigationProperty Name="Department" Relationship="DbModel.FK_Product_Department" FromRole="Product" ToRole="Department" />
@@ -4291,6 +4446,8 @@
           <NavigationProperty Name="ClientInfoProductSetting" Relationship="DbModel.FK_ClientInfoProductSetting_Product" FromRole="Product" ToRole="ClientInfoProductSetting" />
           <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_ProductSpecification_Product" FromRole="Product" ToRole="ProductSpecification" />
           <NavigationProperty Name="SalesOrderAppDetail" Relationship="DbModel.FK_SalesOrderAppDetail_Product" FromRole="Product" ToRole="SalesOrderAppDetail" />
+          <NavigationProperty Name="SupplierRefundApplication" Relationship="DbModel.FK_SupplierRefundApplication_Product" FromRole="Product" ToRole="SupplierRefundApplication" />
+          <NavigationProperty Name="ProductHighPrice" Relationship="DbModel.FK_ProductHighPrice_Product" FromRole="Product" ToRole="ProductHighPrice" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -4367,6 +4524,8 @@
           <NavigationProperty Name="SupplierContract" Relationship="DbModel.FK_SupplierContract_Supplier" FromRole="Supplier" ToRole="SupplierContract" />
           <NavigationProperty Name="ProcureOrderApplication" Relationship="DbModel.FK_ProcureOrderApplication_Supplier" FromRole="Supplier" ToRole="ProcureOrderApplication" />
           <NavigationProperty Name="StockIn" Relationship="DbModel.FK_StockIn_Supplier" FromRole="Supplier" ToRole="StockIn" />
+          <NavigationProperty Name="SupplierRefundApplication" Relationship="DbModel.FK_SupplierRefundApplication_Supplier" FromRole="Supplier" ToRole="SupplierRefundApplication" />
+          <NavigationProperty Name="SupplierDeduction" Relationship="DbModel.FK_SupplierDeduction_Supplier" FromRole="Supplier" ToRole="SupplierDeduction" />
         </EntityType>
         <EntityType Name="SupplierBankAccount">
           <Key>
@@ -4974,39 +5133,6 @@
             </Principal>
             <Dependent Role="ClientInfoContact">
               <PropertyRef Name="ClientInfoID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="ProductHighPrice">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="ProductID" Nullable="false" />
-          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
-          <Property Type="Decimal" Name="HighPrice" Precision="19" Scale="4" />
-          <Property Type="Decimal" Name="ActualProcurePrice" Precision="19" Scale="4" />
-          <Property Type="Decimal" Name="ActualSalePrice" Precision="19" Scale="4" />
-          <Property Type="Double" Name="SupplierTaxRatio" />
-          <Property Type="Double" Name="ClientTaxRatio" />
-          <Property Type="String" Name="Comment" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="Product" Relationship="DbModel.FK_ProductHighPrice_Product" FromRole="ProductHighPrice" ToRole="Product" />
-          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_ProductHighPrice_ProductSpecification" FromRole="ProductHighPrice" ToRole="ProductSpecification" />
-        </EntityType>
-        <Association Name="FK_ProductHighPrice_Product">
-          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
-          <End Type="DbModel.ProductHighPrice" Role="ProductHighPrice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ProductHighPrice">
-              <PropertyRef Name="ProductID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6556,12 +6682,13 @@
           <NavigationProperty Name="Product" Relationship="DbModel.FK_ProductSpecification_Product" FromRole="ProductSpecification" ToRole="Product" />
           <NavigationProperty Name="ProductBasicPrice" Relationship="DbModel.FK_ProductBasicPrice_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductBasicPrice" />
           <NavigationProperty Name="ProductDBPolicyPrice" Relationship="DbModel.FK_ProductDBPolicyPrice_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductDBPolicyPrice" />
-          <NavigationProperty Name="ProductHighPrice" Relationship="DbModel.FK_ProductHighPrice_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductHighPrice" />
           <NavigationProperty Name="UnitOfMeasurement" Relationship="DbModel.FK_ProductSpecification_UnitOfMeasurement" FromRole="ProductSpecification" ToRole="UnitOfMeasurement" />
           <NavigationProperty Name="StockInDetail" Relationship="DbModel.FK_StockInDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="StockInDetail" />
           <NavigationProperty Name="StockOutDetail" Relationship="DbModel.FK_StockOutDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="StockOutDetail" />
           <NavigationProperty Name="SupplierContract" Relationship="DbModel.FK_SupplierContract_ProductSpecification" FromRole="ProductSpecification" ToRole="SupplierContract" />
           <NavigationProperty Name="SalesOrderAppDetail" Relationship="DbModel.FK_SalesOrderAppDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="SalesOrderAppDetail" />
+          <NavigationProperty Name="SupplierRefundApplication" Relationship="DbModel.FK_SupplierRefundApplication_ProductSpecification" FromRole="ProductSpecification" ToRole="SupplierRefundApplication" />
+          <NavigationProperty Name="ProductHighPrice" Relationship="DbModel.FK_ProductHighPrice_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductHighPrice" />
         </EntityType>
         <Association Name="FK_ClientInfoProductSetting_ProductSpecification">
           <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
@@ -6655,18 +6782,6 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="ProductDBPolicyPrice">
-              <PropertyRef Name="ProductSpecificationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProductHighPrice_ProductSpecification">
-          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
-          <End Type="DbModel.ProductHighPrice" Role="ProductHighPrice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProductSpecification">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ProductHighPrice">
               <PropertyRef Name="ProductSpecificationID" />
             </Dependent>
           </ReferentialConstraint>
@@ -7043,6 +7158,119 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SupplierRefundApplication">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="CompanyID" Nullable="false" />
+          <Property Type="Int32" Name="SupplierID" Nullable="false" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Company" Relationship="DbModel.FK_SupplierRefundApplication_Company" FromRole="SupplierRefundApplication" ToRole="Company" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_SupplierRefundApplication_Product" FromRole="SupplierRefundApplication" ToRole="Product" />
+          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_SupplierRefundApplication_ProductSpecification" FromRole="SupplierRefundApplication" ToRole="ProductSpecification" />
+          <NavigationProperty Name="Supplier" Relationship="DbModel.FK_SupplierRefundApplication_Supplier" FromRole="SupplierRefundApplication" ToRole="Supplier" />
+          <NavigationProperty Name="SupplierDeduction" Relationship="DbModel.FK_SupplierDeduction_SupplierRefundApplication" FromRole="SupplierRefundApplication" ToRole="SupplierDeduction" />
+        </EntityType>
+        <Association Name="FK_SupplierRefundApplication_Company">
+          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="DbModel.SupplierRefundApplication" Role="SupplierRefundApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierRefundApplication">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierRefundApplication_Product">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DbModel.SupplierRefundApplication" Role="SupplierRefundApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierRefundApplication">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierRefundApplication_ProductSpecification">
+          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
+          <End Type="DbModel.SupplierRefundApplication" Role="SupplierRefundApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierRefundApplication">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierRefundApplication_Supplier">
+          <End Type="DbModel.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="DbModel.SupplierRefundApplication" Role="SupplierRefundApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierRefundApplication">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProductHighPrice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
+          <Property Type="Decimal" Name="HighPrice" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="ActualProcurePrice" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="ActualSalePrice" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="SupplierTaxRatio" Precision="18" Scale="8" />
+          <Property Type="Decimal" Name="ClientTaxRatio" Precision="18" Scale="8" />
+          <Property Type="String" Name="Comment" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_ProductHighPrice_Product" FromRole="ProductHighPrice" ToRole="Product" />
+          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_ProductHighPrice_ProductSpecification" FromRole="ProductHighPrice" ToRole="ProductSpecification" />
+        </EntityType>
+        <Association Name="FK_ProductHighPrice_Product">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DbModel.ProductHighPrice" Role="ProductHighPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductHighPrice">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductHighPrice_ProductSpecification">
+          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
+          <End Type="DbModel.ProductHighPrice" Role="ProductHighPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProductHighPrice">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="ApplicationPayment">
           <Key>
             <PropertyRef Name="ID" />
@@ -7050,9 +7278,9 @@
           <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Type="Int32" Name="ApplicationID" Nullable="false" />
           <Property Type="Int32" Name="WorkflowID" Nullable="false" />
-          <Property Type="Int32" Name="FromBankAccountID" Nullable="false" />
+          <Property Type="Int32" Name="FromBankAccountID" />
           <Property Type="String" Name="FromAccount" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="ToBankAccountID" Nullable="false" />
+          <Property Type="Int32" Name="ToBankAccountID" />
           <Property Type="String" Name="ToAccount" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Type="Decimal" Name="Amount" Precision="19" Scale="4" />
           <Property Type="Decimal" Name="Fee" Precision="19" Scale="4" />
@@ -7072,7 +7300,7 @@
           <NavigationProperty Name="Workflow" Relationship="DbModel.FK_ApplicationPayment_Workflow" FromRole="ApplicationPayment" ToRole="Workflow" />
         </EntityType>
         <Association Name="FK_ApplicationPayment_FromBankAccount">
-          <End Type="DbModel.BankAccount" Role="BankAccount" Multiplicity="1" />
+          <End Type="DbModel.BankAccount" Role="BankAccount" Multiplicity="0..1" />
           <End Type="DbModel.ApplicationPayment" Role="ApplicationPayment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BankAccount">
@@ -7108,7 +7336,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ApplicationPayment_ToBankAccount">
-          <End Type="DbModel.BankAccount" Role="BankAccount" Multiplicity="1" />
+          <End Type="DbModel.BankAccount" Role="BankAccount" Multiplicity="0..1" />
           <End Type="DbModel.ApplicationPayment" Role="ApplicationPayment" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="BankAccount">
@@ -7128,6 +7356,48 @@
             </Principal>
             <Dependent Role="ApplicationPayment">
               <PropertyRef Name="WorkflowID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SupplierDeduction">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="SupplierRefundAppID" Nullable="false" />
+          <Property Type="Int32" Name="SupplierID" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="DateTime" Name="DeductedDate" Precision="3" />
+          <Property Type="String" Name="Comment" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Supplier" Relationship="DbModel.FK_SupplierDeduction_Supplier" FromRole="SupplierDeduction" ToRole="Supplier" />
+          <NavigationProperty Name="SupplierRefundApplication" Relationship="DbModel.FK_SupplierDeduction_SupplierRefundApplication" FromRole="SupplierDeduction" ToRole="SupplierRefundApplication" />
+        </EntityType>
+        <Association Name="FK_SupplierDeduction_Supplier">
+          <End Type="DbModel.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="DbModel.SupplierDeduction" Role="SupplierDeduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierDeduction">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierDeduction_SupplierRefundApplication">
+          <End Type="DbModel.SupplierRefundApplication" Role="SupplierRefundApplication" Multiplicity="1" />
+          <End Type="DbModel.SupplierDeduction" Role="SupplierDeduction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplierRefundApplication">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierDeduction">
+              <PropertyRef Name="SupplierRefundAppID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7608,26 +7878,6 @@
                 <ScalarProperty Name="ClientCode" ColumnName="ClientCode" />
                 <ScalarProperty Name="ClientCompanyID" ColumnName="ClientCompanyID" />
                 <ScalarProperty Name="ClientUserID" ColumnName="ClientUserID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ProductHighPrice">
-            <EntityTypeMapping TypeName="DbModel.ProductHighPrice">
-              <MappingFragment StoreEntitySet="ProductHighPrice">
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="ClientTaxRatio" ColumnName="ClientTaxRatio" />
-                <ScalarProperty Name="SupplierTaxRatio" ColumnName="SupplierTaxRatio" />
-                <ScalarProperty Name="ActualSalePrice" ColumnName="ActualSalePrice" />
-                <ScalarProperty Name="ActualProcurePrice" ColumnName="ActualProcurePrice" />
-                <ScalarProperty Name="HighPrice" ColumnName="HighPrice" />
-                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -8326,6 +8576,42 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="SupplierRefundApplication">
+            <EntityTypeMapping TypeName="DbModel.SupplierRefundApplication">
+              <MappingFragment StoreEntitySet="SupplierRefundApplication">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductHighPrice">
+            <EntityTypeMapping TypeName="DbModel.ProductHighPrice">
+              <MappingFragment StoreEntitySet="ProductHighPrice">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="ClientTaxRatio" ColumnName="ClientTaxRatio" />
+                <ScalarProperty Name="SupplierTaxRatio" ColumnName="SupplierTaxRatio" />
+                <ScalarProperty Name="ActualSalePrice" ColumnName="ActualSalePrice" />
+                <ScalarProperty Name="ActualProcurePrice" ColumnName="ActualProcurePrice" />
+                <ScalarProperty Name="HighPrice" ColumnName="HighPrice" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ApplicationPayment">
             <EntityTypeMapping TypeName="DbModel.ApplicationPayment">
               <MappingFragment StoreEntitySet="ApplicationPayment">
@@ -8346,6 +8632,23 @@
                 <ScalarProperty Name="FromBankAccountID" ColumnName="FromBankAccountID" />
                 <ScalarProperty Name="WorkflowID" ColumnName="WorkflowID" />
                 <ScalarProperty Name="ApplicationID" ColumnName="ApplicationID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplierDeduction">
+            <EntityTypeMapping TypeName="DbModel.SupplierDeduction">
+              <MappingFragment StoreEntitySet="SupplierDeduction">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="DeductedDate" ColumnName="DeductedDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="SupplierRefundAppID" ColumnName="SupplierRefundAppID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -580,3 +580,33 @@ ALTER TABLE [dbo].[WorkflowStep]
     ADD CONSTRAINT [FK_WorkflowStep_Workflow] FOREIGN KEY ([WorkflowID]) REFERENCES [dbo].[Workflow] ([ID])
 COMMIT TRANSACTION
 ---- end --- 1/29/2015 -- 初始化订单类型、工作流状态关联数据(客户出库单相关)数据 -- by lihong
+
+
+---- start --- 2/4/2015 -- 初始化工作流状态关联数据(供应商返款)数据 -- by lihong
+SET NUMERIC_ROUNDABORT OFF
+GO
+SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+
+BEGIN TRANSACTION
+ALTER TABLE [dbo].[WorkflowStepStatus] DROP CONSTRAINT [FK_WorkflowStepStatus_WorkflowStatus]
+ALTER TABLE [dbo].[WorkflowStepStatus] DROP CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep]
+ALTER TABLE [dbo].[WorkflowStep] DROP CONSTRAINT [FK_WorkflowStep_Workflow]
+
+SET IDENTITY_INSERT [dbo].[Workflow] ON
+INSERT INTO [dbo].[Workflow] ([ID], [WorkflowName], [IsActive], [IsDeleted]) VALUES (8, N'供应商返款', 1, 0)
+SET IDENTITY_INSERT [dbo].[Workflow] OFF
+
+SET IDENTITY_INSERT [dbo].[WorkflowStep] ON
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (23, 8, N'修改供应商返款', 0)
+SET IDENTITY_INSERT [dbo].[WorkflowStep] OFF
+
+ALTER TABLE [dbo].[WorkflowStepStatus]
+    ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStatus] FOREIGN KEY ([WorkflowStatusID]) REFERENCES [dbo].[WorkflowStatus] ([ID])
+ALTER TABLE [dbo].[WorkflowStepStatus]
+    ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep] FOREIGN KEY ([WorkflowStepID]) REFERENCES [dbo].[WorkflowStep] ([ID])
+ALTER TABLE [dbo].[WorkflowStep]
+    ADD CONSTRAINT [FK_WorkflowStep_Workflow] FOREIGN KEY ([WorkflowID]) REFERENCES [dbo].[Workflow] ([ID])
+COMMIT TRANSACTION
+
+---- end --- 2/4/2015 -- 初始化工作流状态关联数据(供应商返款)数据 -- by lihong

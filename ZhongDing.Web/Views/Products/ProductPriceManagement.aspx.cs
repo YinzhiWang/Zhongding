@@ -329,9 +329,9 @@ namespace ZhongDing.Web.Views.Products
 
                             if (!string.IsNullOrEmpty(sSupplierTaxRatio))
                             {
-                                double dSupplierTaxRatio;
+                                decimal dSupplierTaxRatio;
 
-                                if (double.TryParse(sSupplierTaxRatio, out dSupplierTaxRatio))
+                                if (decimal.TryParse(sSupplierTaxRatio, out dSupplierTaxRatio))
                                     productPrice.SupplierTaxRatio = dSupplierTaxRatio / 100;
                             }
                             else
@@ -339,9 +339,9 @@ namespace ZhongDing.Web.Views.Products
 
                             if (!string.IsNullOrEmpty(sClientTaxRatio))
                             {
-                                double dClientTaxRatio;
+                                decimal dClientTaxRatio;
 
-                                if (double.TryParse(sClientTaxRatio, out dClientTaxRatio))
+                                if (decimal.TryParse(sClientTaxRatio, out dClientTaxRatio))
                                     productPrice.ClientTaxRatio = dClientTaxRatio / 100;
                             }
                             else

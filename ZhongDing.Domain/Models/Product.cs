@@ -19,7 +19,6 @@ namespace ZhongDing.Domain.Models
         {
             this.ProductCertificate = new HashSet<ProductCertificate>();
             this.DeptProductEvaluation = new HashSet<DeptProductEvaluation>();
-            this.ProductHighPrice = new HashSet<ProductHighPrice>();
             this.ProductBasicPrice = new HashSet<ProductBasicPrice>();
             this.ProductDBPolicyPrice = new HashSet<ProductDBPolicyPrice>();
             this.DeptMarketProduct = new HashSet<DeptMarketProduct>();
@@ -35,6 +34,8 @@ namespace ZhongDing.Domain.Models
             this.ClientInfoProductSetting = new HashSet<ClientInfoProductSetting>();
             this.ProductSpecification = new HashSet<ProductSpecification>();
             this.SalesOrderAppDetail = new HashSet<SalesOrderAppDetail>();
+            this.SupplierRefundApplication = new HashSet<SupplierRefundApplication>();
+            this.ProductHighPrice = new HashSet<ProductHighPrice>();
         }
     
         public int ID { get; set; }
@@ -68,7 +69,6 @@ namespace ZhongDing.Domain.Models
         public virtual Supplier Supplier { get; set; }
         public virtual ICollection<ProductCertificate> ProductCertificate { get; set; }
         public virtual ICollection<DeptProductEvaluation> DeptProductEvaluation { get; set; }
-        public virtual ICollection<ProductHighPrice> ProductHighPrice { get; set; }
         public virtual ICollection<ProductBasicPrice> ProductBasicPrice { get; set; }
         public virtual ICollection<ProductDBPolicyPrice> ProductDBPolicyPrice { get; set; }
         public virtual Department Department { get; set; }
@@ -85,5 +85,7 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
         public virtual ICollection<ProductSpecification> ProductSpecification { get; set; }
         public virtual ICollection<SalesOrderAppDetail> SalesOrderAppDetail { get; set; }
+        public virtual ICollection<SupplierRefundApplication> SupplierRefundApplication { get; set; }
+        public virtual ICollection<ProductHighPrice> ProductHighPrice { get; set; }
     }
 }

@@ -24,11 +24,12 @@ namespace ZhongDing.Domain.Models
             this.ProcureOrderAppDetail = new HashSet<ProcureOrderAppDetail>();
             this.ProductBasicPrice = new HashSet<ProductBasicPrice>();
             this.ProductDBPolicyPrice = new HashSet<ProductDBPolicyPrice>();
-            this.ProductHighPrice = new HashSet<ProductHighPrice>();
             this.StockInDetail = new HashSet<StockInDetail>();
             this.StockOutDetail = new HashSet<StockOutDetail>();
             this.SupplierContract = new HashSet<SupplierContract>();
             this.SalesOrderAppDetail = new HashSet<SalesOrderAppDetail>();
+            this.SupplierRefundApplication = new HashSet<SupplierRefundApplication>();
+            this.ProductHighPrice = new HashSet<ProductHighPrice>();
         }
     
         public int ID { get; set; }
@@ -62,11 +63,12 @@ namespace ZhongDing.Domain.Models
         public virtual Product Product { get; set; }
         public virtual ICollection<ProductBasicPrice> ProductBasicPrice { get; set; }
         public virtual ICollection<ProductDBPolicyPrice> ProductDBPolicyPrice { get; set; }
-        public virtual ICollection<ProductHighPrice> ProductHighPrice { get; set; }
         public virtual UnitOfMeasurement UnitOfMeasurement { get; set; }
         public virtual ICollection<StockInDetail> StockInDetail { get; set; }
         public virtual ICollection<StockOutDetail> StockOutDetail { get; set; }
         public virtual ICollection<SupplierContract> SupplierContract { get; set; }
         public virtual ICollection<SalesOrderAppDetail> SalesOrderAppDetail { get; set; }
+        public virtual ICollection<SupplierRefundApplication> SupplierRefundApplication { get; set; }
+        public virtual ICollection<ProductHighPrice> ProductHighPrice { get; set; }
     }
 }

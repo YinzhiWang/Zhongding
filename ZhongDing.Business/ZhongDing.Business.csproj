@@ -110,6 +110,8 @@
     <Compile Include="IRepositories\ISupplierCertificateRepository.cs" />
     <Compile Include="IRepositories\ISupplierContractFileRepository.cs" />
     <Compile Include="IRepositories\ISupplierContractRepository.cs" />
+    <Compile Include="IRepositories\ISupplierDeductionRepository.cs" />
+    <Compile Include="IRepositories\ISupplierRefundApplicationRepository.cs" />
     <Compile Include="IRepositories\ISupplierRepository.cs" />
     <Compile Include="IRepositories\ISupplierTaskAssignmentRepository.cs" />
     <Compile Include="IRepositories\IUnitOfMeasurementRepository.cs" />
@@ -179,6 +181,8 @@
     <Compile Include="Repositories\SupplierCertificateRepository.cs" />
     <Compile Include="Repositories\SupplierContractFileRepository.cs" />
     <Compile Include="Repositories\SupplierContractRepository.cs" />
+    <Compile Include="Repositories\SupplierDeductionRepository.cs" />
+    <Compile Include="Repositories\SupplierRefundApplicationRepository.cs" />
     <Compile Include="Repositories\SupplierRepository.cs" />
     <Compile Include="Repositories\SupplierTaskAssignmentRepository.cs" />
     <Compile Include="Repositories\UnitOfMeasurementRepository.cs" />

@@ -13,16 +13,13 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class ProductHighPrice : IEntityExtendedProperty
+    public partial class SupplierDeduction : IEntityExtendedProperty
     {
         public int ID { get; set; }
-        public int ProductID { get; set; }
-        public int ProductSpecificationID { get; set; }
-        public Nullable<decimal> HighPrice { get; set; }
-        public Nullable<decimal> ActualProcurePrice { get; set; }
-        public Nullable<decimal> ActualSalePrice { get; set; }
-        public Nullable<decimal> SupplierTaxRatio { get; set; }
-        public Nullable<decimal> ClientTaxRatio { get; set; }
+        public int SupplierRefundAppID { get; set; }
+        public int SupplierID { get; set; }
+        public decimal Amount { get; set; }
+        public Nullable<System.DateTime> DeductedDate { get; set; }
         public string Comment { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
@@ -40,7 +37,7 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual Product Product { get; set; }
-        public virtual ProductSpecification ProductSpecification { get; set; }
+        public virtual Supplier Supplier { get; set; }
+        public virtual SupplierRefundApplication SupplierRefundApplication { get; set; }
     }
 }

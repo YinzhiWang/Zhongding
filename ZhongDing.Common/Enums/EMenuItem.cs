@@ -143,5 +143,15 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         DBOrderStockOutManage,
 
+        /// <summary>
+        /// 返款管理
+        /// </summary>
+        RefundManage = 70,
+
+        /// <summary>
+        /// 供应商返款管理
+        /// </summary>
+        SupplierRefundsManage,
+
     }
 }

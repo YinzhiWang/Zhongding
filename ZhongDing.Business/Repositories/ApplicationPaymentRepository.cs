@@ -26,11 +26,20 @@ namespace ZhongDing.Business.Repositories
                 if (uiSearchObj.ID > 0)
                     whereFuncs.Add(x => x.ID.Equals(uiSearchObj.ID));
 
+                if (uiSearchObj.WorkflowID > 0)
+                    whereFuncs.Add(x => x.WorkflowID.Equals(uiSearchObj.WorkflowID));
+
                 if (uiSearchObj.ApplicationID > 0)
                     whereFuncs.Add(x => x.ApplicationID == uiSearchObj.ApplicationID);
 
-                if (uiSearchObj.WorkflowID > 0)
-                    whereFuncs.Add(x => x.WorkflowID.Equals(uiSearchObj.WorkflowID));
+                if (uiSearchObj.BeginDate.HasValue)
+                    whereFuncs.Add(x => x.PayDate >= uiSearchObj.BeginDate);
+
+                if (uiSearchObj.EndDate.HasValue)
+                {
+                    uiSearchObj.EndDate = uiSearchObj.EndDate.Value.AddDays(1);
+                    whereFuncs.Add(x => x.PayDate < uiSearchObj.EndDate);
+                }
             }
 
             query = GetList(whereFuncs);
@@ -38,6 +47,8 @@ namespace ZhongDing.Business.Repositories
             if (query != null)
             {
                 uiEntities = (from q in query
+                              join cu in DB.Users on q.CreatedBy equals cu.UserID into tempCU
+                              from tcu in tempCU.DefaultIfEmpty()
                               select new UIApplicationPayment()
                               {
                                   ID = q.ID,
@@ -46,7 +57,10 @@ namespace ZhongDing.Business.Repositories
                                   ToBankAccountID = q.ToBankAccountID,
                                   ToAccount = q.ToAccount,
                                   Amount = q.Amount,
-                                  Fee = q.Fee
+                                  Fee = q.Fee,
+                                  PayDate = q.PayDate,
+                                  Comment = q.Comment,
+                                  CreatedBy = tcu == null ? string.Empty : tcu.FullName
                               }).ToList();
             }
 
@@ -68,11 +82,20 @@ namespace ZhongDing.Business.Repositories
                 if (uiSearchObj.ID > 0)
                     whereFuncs.Add(x => x.ID.Equals(uiSearchObj.ID));
 
+                if (uiSearchObj.WorkflowID > 0)
+                    whereFuncs.Add(x => x.WorkflowID.Equals(uiSearchObj.WorkflowID));
+
                 if (uiSearchObj.ApplicationID > 0)
                     whereFuncs.Add(x => x.ApplicationID == uiSearchObj.ApplicationID);
 
-                if (uiSearchObj.WorkflowID > 0)
-                    whereFuncs.Add(x => x.WorkflowID.Equals(uiSearchObj.WorkflowID));
+                if (uiSearchObj.BeginDate.HasValue)
+                    whereFuncs.Add(x => x.PayDate >= uiSearchObj.BeginDate);
+
+                if (uiSearchObj.EndDate.HasValue)
+                {
+                    uiSearchObj.EndDate = uiSearchObj.EndDate.Value.AddDays(1);
+                    whereFuncs.Add(x => x.PayDate < uiSearchObj.EndDate);
+                }
             }
 
             query = GetList(pageIndex, pageSize, whereFuncs, out total);
@@ -80,6 +103,8 @@ namespace ZhongDing.Business.Repositories
             if (query != null)
             {
                 uiEntities = (from q in query
+                              join cu in DB.Users on q.CreatedBy equals cu.UserID into tempCU
+                              from tcu in tempCU.DefaultIfEmpty()
                               select new UIApplicationPayment()
                               {
                                   ID = q.ID,
@@ -88,7 +113,10 @@ namespace ZhongDing.Business.Repositories
                                   ToBankAccountID = q.ToBankAccountID,
                                   ToAccount = q.ToAccount,
                                   Amount = q.Amount,
-                                  Fee = q.Fee
+                                  Fee = q.Fee,
+                                  PayDate = q.PayDate,
+                                  Comment = q.Comment,
+                                  CreatedBy = tcu == null ? string.Empty : tcu.FullName
                               }).ToList();
             }
 

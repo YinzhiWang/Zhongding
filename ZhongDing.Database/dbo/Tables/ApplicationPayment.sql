@@ -2,9 +2,9 @@
     [ID]                INT             IDENTITY (1, 1) NOT NULL,
     [ApplicationID]     INT             NOT NULL,
     [WorkflowID]        INT             NOT NULL,
-    [FromBankAccountID] INT             NOT NULL,
+    [FromBankAccountID] INT             NULL,
     [FromAccount]       NVARCHAR (255)  NULL,
-    [ToBankAccountID]   INT             NOT NULL,
+    [ToBankAccountID]   INT             NULL,
     [ToAccount]         NVARCHAR (255)  NULL,
     [Amount]            MONEY           NULL,
     [Fee]               MONEY           NULL,
@@ -24,6 +24,8 @@
     CONSTRAINT [FK_ApplicationPayment_ToBankAccount] FOREIGN KEY ([ToBankAccountID]) REFERENCES [dbo].[BankAccount] ([ID]),
     CONSTRAINT [FK_ApplicationPayment_Workflow] FOREIGN KEY ([WorkflowID]) REFERENCES [dbo].[Workflow] ([ID])
 );
+
+
 
 
 

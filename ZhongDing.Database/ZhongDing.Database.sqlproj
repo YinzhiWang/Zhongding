@@ -370,6 +370,8 @@
     <Build Include="dbo\Tables\GuaranteeLog.sql" />
     <Build Include="dbo\Tables\ClientSaleAppBankAccount.sql" />
     <Build Include="dbo\Tables\SaleOrderType.sql" />
+    <Build Include="dbo\Tables\SupplierRefundApplication.sql" />
+    <Build Include="dbo\Tables\SupplierDeduction.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

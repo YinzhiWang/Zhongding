@@ -2618,6 +2618,8 @@
     <Content Include="Views\Products\ProductMaintenance.aspx" />
     <Content Include="Views\Products\ProductManagement.aspx" />
     <Content Include="Views\Products\ProductPriceManagement.aspx" />
+    <Content Include="Views\Refunds\SupplierRefundMaintenance.aspx" />
+    <Content Include="Views\Refunds\SupplierRefundManagement.aspx" />
     <Content Include="Views\Sales\ClientSaleAppMaintenance.aspx" />
     <Content Include="Views\Sales\ClientSaleAppManagement.aspx" />
     <Content Include="Views\Sales\ClientSaleAppStockOutMaintenance.aspx" />
@@ -3146,6 +3148,20 @@
     </Compile>
     <Compile Include="Views\Products\ProductPriceManagement.aspx.designer.cs">
       <DependentUpon>ProductPriceManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Refunds\SupplierRefundMaintenance.aspx.cs">
+      <DependentUpon>SupplierRefundMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Refunds\SupplierRefundMaintenance.aspx.designer.cs">
+      <DependentUpon>SupplierRefundMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Refunds\SupplierRefundManagement.aspx.cs">
+      <DependentUpon>SupplierRefundManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Refunds\SupplierRefundManagement.aspx.designer.cs">
+      <DependentUpon>SupplierRefundManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Sales\ClientSaleAppMaintenance.aspx.cs">
       <DependentUpon>ClientSaleAppMaintenance.aspx</DependentUpon>

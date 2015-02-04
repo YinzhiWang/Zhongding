@@ -1,4 +1,4 @@
-﻿<%@ Page Title="权限管理" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="WorkflowPermissionManagement.aspx.cs" Inherits="ZhongDing.Web.Views.HRM.WorkflowPermissionManagement" %>
+﻿<%@ Page Title="供应商返款管理" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SupplierRefundManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Refunds.SupplierRefundManagement" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 
@@ -21,14 +21,15 @@
                     <telerik:AjaxUpdatedControl ControlID="rgEntities" LoadingPanelID="loadingPanel" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
-            <telerik:AjaxSetting AjaxControlID="rcbxWorkflow">
-                <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="rcbxWorkflowStep" LoadingPanelID="loadingPanel" />
-                </UpdatedControls>
-            </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="rgEntities">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="rgEntities" LoadingPanelID="loadingPanel" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="rcbxCompany">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="rcbxWarehouse" />
+                    <telerik:AjaxUpdatedControl ControlID="rcbxProduct" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
         </AjaxSettings>
@@ -38,28 +39,42 @@
     <div class="container">
         <div class="mws-panel grid_8">
             <div class="mws-panel-header">
-                <span class="mws-i-24 i-table-1">权限管理</span>
+                <span class="mws-i-24 i-table-1">供应商返款管理</span>
             </div>
             <div class="mws-panel-body">
-                <table runat="server" id="tblSearch" class="leftmargin10 width60-percent">
+                <table runat="server" id="tblSearch" class="leftmargin10">
                     <tr class="height40">
-                        <th class="width60 middle-td right-td">工作流：</th>
-                        <td class="middle-td width25-percent">
-                            <telerik:RadComboBox runat="server" ID="rcbxWorkflow" Filter="Contains" AutoPostBack="true"
-                                AllowCustomText="true" Height="160px" Width="100%" EmptyMessage="--请选择--"
-                                OnSelectedIndexChanged="rcbxWorkflow_SelectedIndexChanged">
+                        <th class="width60 middle-td">账套：</th>
+                        <td class="middle-td">
+                            <table>
+                                <tr>
+                                    <td class="middle-td">
+                                        <telerik:RadComboBox runat="server" ID="rcbxCompany" Filter="Contains"
+                                            AllowCustomText="false" Height="160px" EmptyMessage="--请选择--" AutoPostBack="true"
+                                            OnSelectedIndexChanged="rcbxCompany_SelectedIndexChanged">
+                                        </telerik:RadComboBox>
+                                    </td>
+                                    <th class="width100 middle-td right-td rightpadding10">仓库：</th>
+                                    <td class="middle-td">
+                                        <telerik:RadComboBox runat="server" ID="rcbxWarehouse" Filter="Contains"
+                                            AllowCustomText="false" Height="160px" EmptyMessage="--请选择--">
+                                        </telerik:RadComboBox>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr class="height40">
+                        <th class="width60 middle-td">货品：</th>
+                        <td class="middle-td width40-percent">
+                            <telerik:RadComboBox runat="server" ID="rcbxProduct" Filter="Contains"
+                                AllowCustomText="false" Height="160px" Width="100%" EmptyMessage="--请选择--">
                             </telerik:RadComboBox>
                         </td>
-                        <th class="width70 middle-td right-td">操作权限：</th>
-                        <td class="middle-td width25-percent">
-                            <telerik:RadComboBox runat="server" ID="rcbxWorkflowStep" Filter="Contains"
-                                AllowCustomText="true" Height="160px" Width="100%" EmptyMessage="--请选择--">
-                            </telerik:RadComboBox>
-                        </td>
-                        <td class="middle-td leftpadding20 width60">
+                        <td class="middle-td leftpadding20" colspan="2">
                             <asp:Button ID="btnSearch" runat="server" Text="查询" CssClass="mws-button green" OnClick="btnSearch_Click" />
-                        </td>
-                        <td class="middle-td leftpadding20">
+                            &nbsp;&nbsp;
                             <asp:Button ID="btnReset" runat="server" Text="重置" CssClass="mws-button orange" OnClick="btnReset_Click" />
                         </td>
                     </tr>
@@ -68,57 +83,60 @@
                     AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
                     MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
                     ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                    OnNeedDataSource="rgEntities_NeedDataSource" OnDeleteCommand="rgEntities_DeleteCommand"
-                    OnItemCreated="rgEntities_ItemCreated" OnColumnCreated="rgEntities_ColumnCreated" OnItemDataBound="rgEntities_ItemDataBound">
+                    OnNeedDataSource="rgEntities_NeedDataSource" OnItemDataBound="rgEntities_ItemDataBound">
                     <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
                         ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                         <Columns>
                             <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false">
                                 <ItemStyle HorizontalAlign="Left" Width="50" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="WorkfolwName" HeaderText="工作流名称" DataField="WorkfolwName">
+                            <telerik:GridBoundColumn UniqueName="SupplierName" HeaderText="供应商" DataField="SupplierName">
+                                <HeaderStyle Width="15%" />
                                 <ItemStyle HorizontalAlign="Left" Width="15%" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="StepName" HeaderText="操作权限" DataField="StepName">
+                            <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品名称" DataField="ProductName">
+                                <HeaderStyle Width="15%" />
                                 <ItemStyle HorizontalAlign="Left" Width="15%" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="StepUserNames" HeaderText="用户" DataField="StepUserNames">
-                                <ItemStyle HorizontalAlign="Left" />
+                            <telerik:GridBoundColumn UniqueName="Specification" HeaderText="规格" DataField="Specification">
+                                <HeaderStyle Width="100" />
+                                <ItemStyle HorizontalAlign="Left" Width="100" />
                             </telerik:GridBoundColumn>
-                            <%--<telerik:GridBoundColumn UniqueName="CreatedBy" HeaderText="创建人" DataField="CreatedBy">
-                                <ItemStyle HorizontalAlign="Left" />
+                            <telerik:GridBoundColumn UniqueName="UnitName" HeaderText="单位" DataField="UnitName">
+                                <HeaderStyle Width="60" />
+                                <ItemStyle HorizontalAlign="Left" Width="60" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="CreatedOn" HeaderText="创建时间" DataField="CreatedOn" DataFormatString="{0:yyyy/MM/dd}">
-                                <ItemStyle HorizontalAlign="Left" />
+                            <telerik:GridBoundColumn UniqueName="TotalCount" HeaderText="订单数量" DataField="TotalCount">
+                                <HeaderStyle Width="100" />
+                                <ItemStyle HorizontalAlign="Left" Width="100" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="LastModifiedBy" HeaderText="修改人" DataField="LastModifiedBy">
-                                <ItemStyle HorizontalAlign="Left" />
+                            <telerik:GridBoundColumn UniqueName="TotalAmount" HeaderText="金额" DataField="TotalAmount" DataFormatString="{0:C2}">
+                                <HeaderStyle Width="100" />
+                                <ItemStyle HorizontalAlign="Left" Width="100" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="LastModifiedOn" HeaderText="修改时间" DataField="LastModifiedOn" DataFormatString="{0:yyyy/MM/dd}">
-                                <ItemStyle HorizontalAlign="Left" />
+                            <telerik:GridBoundColumn UniqueName="TotalNeedRefundAmount" HeaderText="应返款" DataField="TotalNeedRefundAmount" DataFormatString="{0:C2}">
+                                <HeaderStyle Width="100" />
+                                <ItemStyle HorizontalAlign="Left" Width="100" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridTemplateColumn UniqueName="View">
-                                <ItemStyle HorizontalAlign="Center" Width="30" />
+                            <telerik:GridBoundColumn UniqueName="TotalRefundedAmount" HeaderText="已返款" DataField="TotalRefundedAmount" DataFormatString="{0:C2}">
+                                <HeaderStyle Width="100" />
+                                <ItemStyle HorizontalAlign="Left" Width="100" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn UniqueName="TotalToBeRefundAmount" HeaderText="未返款" DataField="TotalToBeRefundAmount" DataFormatString="{0:C2}">
+                                <HeaderStyle Width="100" />
+                                <ItemStyle HorizontalAlign="Left" Width="100" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn UniqueName="CompanyName" HeaderText="账套" DataField="CompanyName">
+                                <HeaderStyle Width="10%" />
+                                <ItemStyle HorizontalAlign="Left" Width="10%" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridTemplateColumn UniqueName="Edit">
+                                <HeaderStyle Width="60" />
+                                <ItemStyle HorizontalAlign="Center" Width="60" />
                                 <ItemTemplate>
-                                    <a href="javascript:void(0)" onclick="redirectToMaintenancePage(<%#DataBinder.Eval(Container.DataItem,"ID")%>); return false;">
-                                        <u>查看</u></a>
-                                </ItemTemplate>
-                            </telerik:GridTemplateColumn>--%>
-                            <telerik:GridTemplateColumn UniqueName="Edit" HeaderStyle-Width="40">
-                                <ItemStyle HorizontalAlign="Center" Width="40" />
-                                <ItemTemplate>
-                                    <a href="javascript:void(0);" onclick="redirectToMaintenancePage(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">
-                                        <u>编辑</u></a>
+                                    <a href="javascript:void(0);" onclick="redirectToMaintenancePage(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">编辑</a>
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>
-                            <%--<telerik:GridTemplateColumn UniqueName="Audit">
-                                <ItemStyle HorizontalAlign="Center" Width="30" />
-                                <ItemTemplate>
-                                    <a href="javascript:void(0)" onclick="openAuditWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>); return false;">
-                                        <u>审核</u></a>
-                                </ItemTemplate>
-                            </telerik:GridTemplateColumn>--%>
-                            <%--<telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />--%>
                         </Columns>
                         <CommandItemTemplate>
                             <table class="width100-percent">
@@ -149,7 +167,7 @@
                             PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
                             FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
                     </MasterTableView>
-                    <ClientSettings>
+                    <ClientSettings EnableRowHoverStyle="true">
                         <ClientEvents OnGridCreated="GetsGridObject" />
                     </ClientSettings>
                 </telerik:RadGrid>
@@ -169,9 +187,11 @@
             gridOfRefresh.get_masterTableView().rebind();
         }
 
-        function redirectToMaintenancePage(id) {
+        function redirectToMaintenancePage(id, companyID, supplierID, productID, productSpecificationID) {
             $.showLoading();
-            window.location.href = "WorkflowPermissionMaintenance.aspx?EntityID=" + id;
+            window.location.href = "SupplierRefundMaintenance.aspx?EntityID=" + id + "&CompanyID=" + companyID
+                + "&SupplierID=" + supplierID + "&ProductID=" + productID + "&ProductSpecificationID=" + productSpecificationID;
         }
+
     </script>
 </asp:Content>

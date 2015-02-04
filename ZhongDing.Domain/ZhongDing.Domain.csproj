@@ -263,6 +263,12 @@
     <Compile Include="Models\SupplierContractFile.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SupplierDeduction.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SupplierRefundApplication.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SupplierTaskAssignment.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -342,6 +348,9 @@
     <Compile Include="UIObjects\UISupplierCertificate.cs" />
     <Compile Include="UIObjects\UISupplierContract.cs" />
     <Compile Include="UIObjects\UISupplierContractFile.cs" />
+    <Compile Include="UIObjects\UISupplierDeduction.cs" />
+    <Compile Include="UIObjects\UISupplierRefundApp.cs" />
+    <Compile Include="UIObjects\UISupplierRefundAppDetail.cs" />
     <Compile Include="UIObjects\UIToBeOutSalesOrderDetail.cs" />
     <Compile Include="UIObjects\UIUser.cs" />
     <Compile Include="UIObjects\UIWarehouse.cs" />
@@ -383,6 +392,8 @@
     <Compile Include="UISearchObjects\UISearchSupplier.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierContract.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierContractFile.cs" />
+    <Compile Include="UISearchObjects\UISearchSupplierDeduction.cs" />
+    <Compile Include="UISearchObjects\UISearchSupplierRefundApp.cs" />
     <Compile Include="UISearchObjects\UISearchToBeOutSalesOrderDetail.cs" />
     <Compile Include="UISearchObjects\UISearchUser.cs" />
     <Compile Include="UISearchObjects\UISearchWarehouse.cs" />

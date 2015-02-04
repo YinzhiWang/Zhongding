@@ -118,5 +118,10 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         EditClientStockOut,
 
+        /// <summary>
+        /// 修改供应商返款
+        /// </summary>
+        EditSupplierRefund,
+
     }
 }

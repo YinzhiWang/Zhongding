@@ -8,16 +8,18 @@ namespace ZhongDing.Domain.UIObjects
 {
     public class UIApplicationPayment : UIBase
     {
-        public int FromBankAccountID { get; set; }
+        public int? FromBankAccountID { get; set; }
 
         public string FromAccount { get; set; }
 
-        public int ToBankAccountID { get; set; }
+        public int? ToBankAccountID { get; set; }
 
         public string ToAccount { get; set; }
 
         public decimal? Amount { get; set; }
 
         public decimal? Fee { get; set; }
+
+        public DateTime? PayDate { get; set; }
     }
 }

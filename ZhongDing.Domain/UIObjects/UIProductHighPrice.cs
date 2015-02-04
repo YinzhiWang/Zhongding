@@ -14,8 +14,8 @@ namespace ZhongDing.Domain.UIObjects
 
         public decimal? ActualSalePrice { get; set; }
 
-        public double? SupplierTaxRatio { get; set; }
+        public decimal? SupplierTaxRatio { get; set; }
 
-        public double? ClientTaxRatio { get; set; }
+        public decimal? ClientTaxRatio { get; set; }
     }
 }

@@ -18,9 +18,9 @@ namespace ZhongDing.Domain.Models
         public int ID { get; set; }
         public int ApplicationID { get; set; }
         public int WorkflowID { get; set; }
-        public int FromBankAccountID { get; set; }
+        public Nullable<int> FromBankAccountID { get; set; }
         public string FromAccount { get; set; }
-        public int ToBankAccountID { get; set; }
+        public Nullable<int> ToBankAccountID { get; set; }
         public string ToAccount { get; set; }
         public Nullable<decimal> Amount { get; set; }
         public Nullable<decimal> Fee { get; set; }
