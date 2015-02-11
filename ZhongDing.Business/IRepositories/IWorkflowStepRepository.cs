@@ -35,5 +35,12 @@ namespace ZhongDing.Business.IRepositories
         /// <returns>IList{System.Int32}.</returns>
         IList<int> GetCanAccessUserIDsByID(int stepID);
 
+        /// <summary>
+        /// 根据工作流StepIDs获取可访问的用户IDs
+        /// </summary>
+        /// <param name="stepIDs">The step Ids.</param>
+        /// <returns>IList{System.Int32}.</returns>
+        IList<int> GetCanAccessUserIDsByIDs(IList<int> stepIDs);
+
     }
 }

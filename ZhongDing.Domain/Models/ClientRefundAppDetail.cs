@@ -13,19 +13,19 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class ClientUser : IEntityExtendedProperty
+    public partial class ClientRefundAppDetail : IEntityExtendedProperty
     {
-        public ClientUser()
-        {
-            this.ClientInfo = new HashSet<ClientInfo>();
-            this.DBContract = new HashSet<DBContract>();
-            this.StockOut = new HashSet<StockOut>();
-            this.ClientSaleApplication = new HashSet<ClientSaleApplication>();
-            this.ClientRefundApplication = new HashSet<ClientRefundApplication>();
-        }
-    
         public int ID { get; set; }
-        public string ClientName { get; set; }
+        public int ClientRefundAppID { get; set; }
+        public int WarehouseID { get; set; }
+        public int ProductID { get; set; }
+        public int ProductSpecificationID { get; set; }
+        public int Count { get; set; }
+        public decimal HighPrice { get; set; }
+        public decimal ActualSalePrice { get; set; }
+        public decimal TotalSalesAmount { get; set; }
+        public decimal ClientTaxRatio { get; set; }
+        public decimal RefundAmount { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -42,10 +42,9 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ICollection<ClientInfo> ClientInfo { get; set; }
-        public virtual ICollection<DBContract> DBContract { get; set; }
-        public virtual ICollection<StockOut> StockOut { get; set; }
-        public virtual ICollection<ClientSaleApplication> ClientSaleApplication { get; set; }
-        public virtual ICollection<ClientRefundApplication> ClientRefundApplication { get; set; }
+        public virtual ClientRefundApplication ClientRefundApplication { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual ProductSpecification ProductSpecification { get; set; }
+        public virtual Warehouse Warehouse { get; set; }
     }
 }

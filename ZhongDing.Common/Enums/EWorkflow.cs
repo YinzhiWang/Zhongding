@@ -46,5 +46,10 @@ namespace ZhongDing.Common.Enums
         /// 供应商返款
         /// </summary>
         SupplierRefunds,
+
+        /// <summary>
+        /// 客户返款
+        /// </summary>
+        ClientRefunds,
     }
 }

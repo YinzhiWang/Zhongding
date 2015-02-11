@@ -81,5 +81,15 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         Completed,
 
+        /// <summary>
+        /// 财务主管审核通过
+        /// </summary>
+        ApprovedByTreasurers,
+
+        /// <summary>
+        /// 部门经理审核通过
+        /// </summary>
+        ApprovedByDeptManagers,
+
     }
 }

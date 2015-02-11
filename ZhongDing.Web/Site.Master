@@ -123,8 +123,8 @@
                             <li data-level="1" data-menuitemid="70">
                                 <a href="#" class="mws-i-24 i-bills-stack">返款管理</a>
                                 <ul class="hide">
-                                    <li data-level="2" data-menuitemid="71"><a href="javascript:void(0);" onclick="redirectToPage('Views/Refunds/SupplierRefundManagement.aspx');">供应商返款</a></li>
-                                    <li data-level="2"><a href="#">客户付款</a></li>
+                                    <li data-level="2" data-menuitemid="71"><a href="javascript:void(0);" onclick="redirectToPage('Views/Refunds/SupplierRefundManagement.aspx');">供应商返款(高开高返)</a></li>
+                                    <li data-level="2" data-menuitemid="72"><a href="javascript:void(0);" onclick="redirectToPage('Views/Refunds/ClientRefundManagement.aspx');">客户返款(高开高返)</a></li>
                                 </ul>
                             </li>
 

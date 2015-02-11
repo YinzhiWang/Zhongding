@@ -18,6 +18,7 @@ namespace ZhongDing.Domain.Models
         public SaleOrderType()
         {
             this.SalesOrderApplication = new HashSet<SalesOrderApplication>();
+            this.ClientRefundApplication = new HashSet<ClientRefundApplication>();
         }
     
         public int ID { get; set; }
@@ -34,5 +35,6 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual ICollection<SalesOrderApplication> SalesOrderApplication { get; set; }
+        public virtual ICollection<ClientRefundApplication> ClientRefundApplication { get; set; }
     }
 }

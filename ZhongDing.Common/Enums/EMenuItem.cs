@@ -153,5 +153,10 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         SupplierRefundsManage,
 
+        /// <summary>
+        /// 客户返款管理
+        /// </summary>
+        ClientRefundsManage,
+
     }
 }

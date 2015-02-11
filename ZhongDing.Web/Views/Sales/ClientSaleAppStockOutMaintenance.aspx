@@ -98,7 +98,7 @@
                                 <label>商业单位</label>
                                 <div class="mws-form-item" runat="server" id="divClientCompanies">
                                     <telerik:RadDropDownList runat="server" ID="ddlClientCompany" Width="360"
-                                        EmptyMessage="--请选择--" AutoPostBack="true" OnSelectedIndexChanged="ddlClientCompany_SelectedIndexChanged">
+                                        AutoPostBack="true" OnSelectedIndexChanged="ddlClientCompany_SelectedIndexChanged">
                                     </telerik:RadDropDownList>
                                     <asp:RequiredFieldValidator ID="rfvClientCompany"
                                         runat="server"
@@ -121,7 +121,7 @@
                             <div class="float-left width50-percent">
                                 <label>发票类型</label>
                                 <div class="mws-form-item" runat="server" id="div1">
-                                    <telerik:RadDropDownList runat="server" ID="ddlInvoiceType" EmptyMessage="--请选择--">
+                                    <telerik:RadDropDownList runat="server" ID="ddlInvoiceType">
                                     </telerik:RadDropDownList>
                                     <asp:RequiredFieldValidator ID="rfvInvoiceType"
                                         runat="server"

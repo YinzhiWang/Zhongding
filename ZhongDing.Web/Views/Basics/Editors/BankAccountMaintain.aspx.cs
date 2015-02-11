@@ -243,7 +243,7 @@ namespace ZhongDing.Web.Views.Basics.Editors
                         bankAccount = new BankAccount()
                         {
                             CompanyID = CurrentUser.CompanyID,
-                            OwnerTypeID = (int)EOwnerType.Supplier
+                            OwnerTypeID = (int)EOwnerType.Client
                         };
 
                         ClientInfoBankAccount clientInfoBankAccount = new ClientInfoBankAccount();

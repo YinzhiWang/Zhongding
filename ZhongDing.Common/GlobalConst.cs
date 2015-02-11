@@ -425,7 +425,7 @@ namespace ZhongDing.Common
             /// </summary>
             public static readonly string CREATEDON_DESC = "CreatedOn DESC";
 
-        
+
         }
 
         #endregion
@@ -446,6 +446,26 @@ namespace ZhongDing.Common
             /// 发票
             /// </summary>
             public static readonly string INVOICE = "发票";
+        }
+
+        #endregion
+
+        #region 布尔类型汉语描述
+
+        /// <summary>
+        /// 常量类：布尔类型汉语描述
+        /// </summary>
+        public class BoolChineseDescription
+        {
+            /// <summary>
+            /// True：是
+            /// </summary>
+            public static readonly string TRUE = "是";
+
+            /// <summary>
+            /// False：否
+            /// </summary>
+            public static readonly string FALSE = "否";
         }
 
         #endregion

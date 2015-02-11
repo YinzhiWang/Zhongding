@@ -102,5 +102,7 @@ namespace ZhongDing.Domain.Models
         public DbSet<ProductHighPrice> ProductHighPrice { get; set; }
         public DbSet<ApplicationPayment> ApplicationPayment { get; set; }
         public DbSet<SupplierDeduction> SupplierDeduction { get; set; }
+        public DbSet<ClientRefundApplication> ClientRefundApplication { get; set; }
+        public DbSet<ClientRefundAppDetail> ClientRefundAppDetail { get; set; }
     }
 }

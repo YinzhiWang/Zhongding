@@ -372,6 +372,8 @@
     <Build Include="dbo\Tables\SaleOrderType.sql" />
     <Build Include="dbo\Tables\SupplierRefundApplication.sql" />
     <Build Include="dbo\Tables\SupplierDeduction.sql" />
+    <Build Include="dbo\Tables\ClientRefundApplication.sql" />
+    <Build Include="dbo\Tables\ClientRefundAppDetail.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

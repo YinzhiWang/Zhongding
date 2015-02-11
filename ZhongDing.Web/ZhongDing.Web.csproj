@@ -2618,6 +2618,8 @@
     <Content Include="Views\Products\ProductMaintenance.aspx" />
     <Content Include="Views\Products\ProductManagement.aspx" />
     <Content Include="Views\Products\ProductPriceManagement.aspx" />
+    <Content Include="Views\Refunds\ClientRefundMaintenance.aspx" />
+    <Content Include="Views\Refunds\ClientRefundManagement.aspx" />
     <Content Include="Views\Refunds\SupplierRefundMaintenance.aspx" />
     <Content Include="Views\Refunds\SupplierRefundManagement.aspx" />
     <Content Include="Views\Sales\ClientSaleAppMaintenance.aspx" />
@@ -3149,6 +3151,20 @@
     <Compile Include="Views\Products\ProductPriceManagement.aspx.designer.cs">
       <DependentUpon>ProductPriceManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Refunds\ClientRefundMaintenance.aspx.cs">
+      <DependentUpon>ClientRefundMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Refunds\ClientRefundMaintenance.aspx.designer.cs">
+      <DependentUpon>ClientRefundMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Refunds\ClientRefundManagement.aspx.cs">
+      <DependentUpon>ClientRefundManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Refunds\ClientRefundManagement.aspx.designer.cs">
+      <DependentUpon>ClientRefundManagement.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Refunds\SupplierRefundMaintenance.aspx.cs">
       <DependentUpon>SupplierRefundMaintenance.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3334,7 +3350,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

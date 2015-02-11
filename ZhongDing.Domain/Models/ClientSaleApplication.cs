@@ -19,6 +19,7 @@ namespace ZhongDing.Domain.Models
         {
             this.ClientSaleAppBankAccount = new HashSet<ClientSaleAppBankAccount>();
             this.GuaranteeLog = new HashSet<GuaranteeLog>();
+            this.ClientRefundApplication = new HashSet<ClientRefundApplication>();
         }
     
         public int ID { get; set; }
@@ -61,5 +62,6 @@ namespace ZhongDing.Domain.Models
         public virtual SalesOrderApplication SalesOrderApplication { get; set; }
         public virtual WorkflowStatus WorkflowStatus { get; set; }
         public virtual ICollection<GuaranteeLog> GuaranteeLog { get; set; }
+        public virtual ICollection<ClientRefundApplication> ClientRefundApplication { get; set; }
     }
 }

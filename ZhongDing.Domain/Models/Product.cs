@@ -36,6 +36,7 @@ namespace ZhongDing.Domain.Models
             this.SalesOrderAppDetail = new HashSet<SalesOrderAppDetail>();
             this.SupplierRefundApplication = new HashSet<SupplierRefundApplication>();
             this.ProductHighPrice = new HashSet<ProductHighPrice>();
+            this.ClientRefundAppDetail = new HashSet<ClientRefundAppDetail>();
         }
     
         public int ID { get; set; }
@@ -87,5 +88,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<SalesOrderAppDetail> SalesOrderAppDetail { get; set; }
         public virtual ICollection<SupplierRefundApplication> SupplierRefundApplication { get; set; }
         public virtual ICollection<ProductHighPrice> ProductHighPrice { get; set; }
+        public virtual ICollection<ClientRefundAppDetail> ClientRefundAppDetail { get; set; }
     }
 }

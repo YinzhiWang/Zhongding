@@ -123,5 +123,29 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         EditSupplierRefund,
 
+        /// <summary>
+        /// 新增客户返款
+        /// </summary>
+        NewClientRefund,
+
+        /// <summary>
+        /// 财务主管审核
+        /// </summary>
+        AuditClientRefundByTreasurers,
+
+        /// <summary>
+        /// 部门经理审核
+        /// </summary>
+        AuditClientRefundByDeptManagers,
+
+        /// <summary>
+        /// 出纳支付客户返款
+        /// </summary>
+        PayClientRefund,
+
+        /// <summary>
+        /// 修改客户返款
+        /// </summary>
+        EditClientRefund,
     }
 }
