@@ -195,7 +195,7 @@ namespace ZhongDing.Web.Views.Refunds
 
             if (!IsPostBack)
             {
-                //处理申请返款
+                //申请返款
                 ApplyClientRefundApp();
 
                 LoadCurrentEntity();
@@ -209,84 +209,94 @@ namespace ZhongDing.Web.Views.Refunds
             if (this.ClientSaleAppID.HasValue && this.ClientSaleAppID > 0
                 && (!this.CurrentEntityID.HasValue || (this.CurrentEntityID.HasValue && this.CurrentEntityID <= 0)))
             {
-                var clientSaleApp = PageClientSaleAppRepository.GetByID(this.ClientSaleAppID);
-
-                if (clientSaleApp != null && !clientSaleApp.ClientRefundApplication.Any(x => x.IsDeleted == false))
-                {
-                    if (clientSaleApp.IsGuaranteed && !clientSaleApp.GuaranteeLog.Any(x => x.IsDeleted == false && x.IsReceipted))
-                    {
-                        this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
-                        this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
-                        this.Master.BaseNotification.AutoCloseDelay = 1000;
-                        this.Master.BaseNotification.Show("该担保模式订单的担保款还未收回，不能申请返款");
-                    }
-
-                    if (clientSaleApp.SalesOrderApplication != null)
-                    {
-                        var clientRefundApp = new ClientRefundApplication
-                        {
-                            ClientSaleAppID = clientSaleApp.ID,
-                            CompanyID = clientSaleApp.CompanyID,
-                            ClientUserID = clientSaleApp.ClientUserID,
-                            ClientCompanyID = clientSaleApp.ClientCompanyID,
-                            SaleOrderTypeID = clientSaleApp.SalesOrderApplication.SaleOrderTypeID,
-                            DeliveryModeID = clientSaleApp.DeliveryModeID,
-                            OrderCode = clientSaleApp.SalesOrderApplication.OrderCode,
-                            OrderDate = clientSaleApp.SalesOrderApplication.OrderDate,
-                            IsStop = clientSaleApp.SalesOrderApplication.IsStop,
-                            WorkflowStatusID = (int)EWorkflowStatus.TemporarySave,
-                        };
-
-                        PageClientRefundAppRepository.Add(clientRefundApp);
-
-                        foreach (var item in clientSaleApp.SalesOrderApplication.SalesOrderAppDetail
-                            .Where(x => x.IsDeleted == false && x.Warehouse != null && x.Warehouse.SaleTypeID == (int)ESaleType.HighPrice))
-                        {
-                            var actualSalePrice = 0M;
-                            var clientTaxRatio = 0M;
-
-                            var productHighPrice = PageProductHighPriceRepository.GetList(x => x.IsDeleted == false
-                                && x.ProductID == item.ProductID && x.ProductSpecificationID == item.ProductSpecificationID)
-                                .FirstOrDefault();
-
-                            if (productHighPrice != null)
-                            {
-                                actualSalePrice = productHighPrice.ActualSalePrice.HasValue
-                                    ? productHighPrice.ActualSalePrice.Value : 0M;
-
-                                clientTaxRatio = productHighPrice.ClientTaxRatio.HasValue
-                                    ? productHighPrice.ClientTaxRatio.Value : 0M;
-                            }
-
-                            var clientRefundAppDetail = new ClientRefundAppDetail
-                            {
-                                WarehouseID = item.WarehouseID.Value,
-                                ProductID = item.ProductID,
-                                ProductSpecificationID = item.ProductSpecificationID,
-                                Count = item.Count,
-                                HighPrice = item.SalesPrice,
-                                ActualSalePrice = actualSalePrice,
-                                ClientTaxRatio = clientTaxRatio,
-                                TotalSalesAmount = item.TotalSalesAmount,
-                                RefundAmount = (item.SalesPrice - (item.SalesPrice - actualSalePrice) * clientTaxRatio - actualSalePrice) * item.Count
-                            };
-
-                            clientRefundApp.ClientRefundAppDetail.Add(clientRefundAppDetail);
-                        }
-
-                        clientRefundApp.RefundAmount = clientRefundApp.ClientRefundAppDetail.Sum(x => x.RefundAmount);
-
-                        PageClientRefundAppRepository.Save();
-
-                        Response.Redirect("ClientRefundMaintenance.aspx?EntityID=" + clientRefundApp.ID, true);
-                    }
-                }
-                else
+                if (!this.CanAccessUserIDs.Contains(CurrentUser.UserID))
                 {
                     this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
                     this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
                     this.Master.BaseNotification.AutoCloseDelay = 1000;
-                    this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_PARAMETER_ERROR_REDIRECT);
+                    this.Master.BaseNotification.Show("您没有权限申请客户返款");
+                }
+                else
+                {
+                    var clientSaleApp = PageClientSaleAppRepository.GetByID(this.ClientSaleAppID);
+
+                    if (clientSaleApp != null && !clientSaleApp.ClientRefundApplication.Any(x => x.IsDeleted == false))
+                    {
+                        if (clientSaleApp.IsGuaranteed && !clientSaleApp.GuaranteeLog.Any(x => x.IsDeleted == false && x.IsReceipted))
+                        {
+                            this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
+                            this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
+                            this.Master.BaseNotification.AutoCloseDelay = 1000;
+                            this.Master.BaseNotification.Show("该担保模式订单的担保款还未收回，不能申请返款");
+                        }
+
+                        if (clientSaleApp.SalesOrderApplication != null)
+                        {
+                            var clientRefundApp = new ClientRefundApplication
+                            {
+                                ClientSaleAppID = clientSaleApp.ID,
+                                CompanyID = clientSaleApp.CompanyID,
+                                ClientUserID = clientSaleApp.ClientUserID,
+                                ClientCompanyID = clientSaleApp.ClientCompanyID,
+                                SaleOrderTypeID = clientSaleApp.SalesOrderApplication.SaleOrderTypeID,
+                                DeliveryModeID = clientSaleApp.DeliveryModeID,
+                                OrderCode = clientSaleApp.SalesOrderApplication.OrderCode,
+                                OrderDate = clientSaleApp.SalesOrderApplication.OrderDate,
+                                IsStop = clientSaleApp.SalesOrderApplication.IsStop,
+                                WorkflowStatusID = (int)EWorkflowStatus.TemporarySave,
+                            };
+
+                            PageClientRefundAppRepository.Add(clientRefundApp);
+
+                            foreach (var item in clientSaleApp.SalesOrderApplication.SalesOrderAppDetail
+                                .Where(x => x.IsDeleted == false && x.Warehouse != null && x.Warehouse.SaleTypeID == (int)ESaleType.HighPrice))
+                            {
+                                var actualSalePrice = 0M;
+                                var clientTaxRatio = 0M;
+
+                                var productHighPrice = PageProductHighPriceRepository.GetList(x => x.IsDeleted == false
+                                    && x.ProductID == item.ProductID && x.ProductSpecificationID == item.ProductSpecificationID)
+                                    .FirstOrDefault();
+
+                                if (productHighPrice != null)
+                                {
+                                    actualSalePrice = productHighPrice.ActualSalePrice.HasValue
+                                        ? productHighPrice.ActualSalePrice.Value : 0M;
+
+                                    clientTaxRatio = productHighPrice.ClientTaxRatio.HasValue
+                                        ? productHighPrice.ClientTaxRatio.Value : 0M;
+                                }
+
+                                var clientRefundAppDetail = new ClientRefundAppDetail
+                                {
+                                    WarehouseID = item.WarehouseID.Value,
+                                    ProductID = item.ProductID,
+                                    ProductSpecificationID = item.ProductSpecificationID,
+                                    Count = item.Count,
+                                    HighPrice = item.SalesPrice,
+                                    ActualSalePrice = actualSalePrice,
+                                    ClientTaxRatio = clientTaxRatio,
+                                    TotalSalesAmount = item.TotalSalesAmount,
+                                    RefundAmount = (item.SalesPrice - (item.SalesPrice - actualSalePrice) * clientTaxRatio - actualSalePrice) * item.Count
+                                };
+
+                                clientRefundApp.ClientRefundAppDetail.Add(clientRefundAppDetail);
+                            }
+
+                            clientRefundApp.RefundAmount = clientRefundApp.ClientRefundAppDetail.Sum(x => x.RefundAmount);
+
+                            PageClientRefundAppRepository.Save();
+
+                            Response.Redirect("ClientRefundMaintenance.aspx?EntityID=" + clientRefundApp.ID, true);
+                        }
+                    }
+                    else
+                    {
+                        this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
+                        this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
+                        this.Master.BaseNotification.AutoCloseDelay = 1000;
+                        this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_PARAMETER_ERROR_REDIRECT);
+                    }
                 }
             }
         }
@@ -401,15 +411,10 @@ namespace ZhongDing.Web.Views.Refunds
             }
             else
             {
-                InitDefaultData();
-
-                if (!this.CanAccessUserIDs.Contains(CurrentUser.UserID))
-                {
-                    this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
-                    this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
-                    this.Master.BaseNotification.AutoCloseDelay = 1000;
-                    this.Master.BaseNotification.Show("您没有权限申请客户返款");
-                }
+                this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
+                this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
+                this.Master.BaseNotification.AutoCloseDelay = 1000;
+                this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_PARAMETER_ERROR_REDIRECT);
             }
         }
 
@@ -1001,6 +1006,7 @@ namespace ZhongDing.Web.Views.Refunds
 
                             unitOfWork.SaveChanges();
 
+                            this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_SUCCESS;
                             this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
                             this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_OPERATE_REDIRECT);
                         }
