@@ -43,6 +43,7 @@
           <EntitySet Name="DeptMarketProduct" EntityType="DbModel.Store.DeptMarketProduct" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DeptProductEvaluation" EntityType="DbModel.Store.DeptProductEvaluation" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DistributionCompany" EntityType="DbModel.Store.DistributionCompany" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="FactoryManagerRefundApplication" EntityType="DbModel.Store.FactoryManagerRefundApplication" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GuaranteeLog" EntityType="DbModel.Store.GuaranteeLog" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Hospital" EntityType="DbModel.Store.Hospital" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="InventoryHistory" EntityType="DbModel.Store.InventoryHistory" store:Type="Tables" Schema="dbo" />
@@ -400,6 +401,26 @@
           <AssociationSet Name="FK_DeptProductEvaluation_Product" Association="DbModel.Store.FK_DeptProductEvaluation_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="DeptProductEvaluation" EntitySet="DeptProductEvaluation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FactoryManagerRefundApplication_ClientUser" Association="DbModel.Store.FK_FactoryManagerRefundApplication_ClientUser">
+            <End Role="ClientUser" EntitySet="ClientUser" />
+            <End Role="FactoryManagerRefundApplication" EntitySet="FactoryManagerRefundApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FactoryManagerRefundApplication_Company" Association="DbModel.Store.FK_FactoryManagerRefundApplication_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="FactoryManagerRefundApplication" EntitySet="FactoryManagerRefundApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FactoryManagerRefundApplication_Product" Association="DbModel.Store.FK_FactoryManagerRefundApplication_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="FactoryManagerRefundApplication" EntitySet="FactoryManagerRefundApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FactoryManagerRefundApplication_ProductSpecification" Association="DbModel.Store.FK_FactoryManagerRefundApplication_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="FactoryManagerRefundApplication" EntitySet="FactoryManagerRefundApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FactoryManagerRefundApplication_WorkflowStatus" Association="DbModel.Store.FK_FactoryManagerRefundApplication_WorkflowStatus">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="FactoryManagerRefundApplication" EntitySet="FactoryManagerRefundApplication" />
           </AssociationSet>
           <AssociationSet Name="FK_GuaranteeLog_ClientSaleApplication" Association="DbModel.Store.FK_GuaranteeLog_ClientSaleApplication">
             <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
@@ -1292,6 +1313,28 @@
           <Property Name="ReceiverName" Type="nvarchar" MaxLength="50" />
           <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="Address" Type="nvarchar" MaxLength="255" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="FactoryManagerRefundApplication">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyID" Type="int" Nullable="false" />
+          <Property Name="ClientUserID" Type="int" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="ProductSpecificationID" Type="int" Nullable="false" />
+          <Property Name="BeginDate" Type="datetime" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
+          <Property Name="StockInQty" Type="int" Nullable="false" />
+          <Property Name="StockOutQty" Type="int" />
+          <Property Name="RefundPrice" Type="money" Nullable="false" />
+          <Property Name="RefundAmount" Type="money" Nullable="false" />
+          <Property Name="WorkflowStatusID" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
@@ -2859,6 +2902,66 @@
             </Principal>
             <Dependent Role="DeptProductEvaluation">
               <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FactoryManagerRefundApplication_ClientUser">
+          <End Role="ClientUser" Type="DbModel.Store.ClientUser" Multiplicity="0..1" />
+          <End Role="FactoryManagerRefundApplication" Type="DbModel.Store.FactoryManagerRefundApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FactoryManagerRefundApplication">
+              <PropertyRef Name="ClientUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FactoryManagerRefundApplication_Company">
+          <End Role="Company" Type="DbModel.Store.Company" Multiplicity="1" />
+          <End Role="FactoryManagerRefundApplication" Type="DbModel.Store.FactoryManagerRefundApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FactoryManagerRefundApplication">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FactoryManagerRefundApplication_Product">
+          <End Role="Product" Type="DbModel.Store.Product" Multiplicity="1" />
+          <End Role="FactoryManagerRefundApplication" Type="DbModel.Store.FactoryManagerRefundApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FactoryManagerRefundApplication">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FactoryManagerRefundApplication_ProductSpecification">
+          <End Role="ProductSpecification" Type="DbModel.Store.ProductSpecification" Multiplicity="1" />
+          <End Role="FactoryManagerRefundApplication" Type="DbModel.Store.FactoryManagerRefundApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FactoryManagerRefundApplication">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FactoryManagerRefundApplication_WorkflowStatus">
+          <End Role="WorkflowStatus" Type="DbModel.Store.WorkflowStatus" Multiplicity="1" />
+          <End Role="FactoryManagerRefundApplication" Type="DbModel.Store.FactoryManagerRefundApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FactoryManagerRefundApplication">
+              <PropertyRef Name="WorkflowStatusID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4462,6 +4565,27 @@
             <End Role="Warehouse" EntitySet="Warehouse" />
             <End Role="ClientRefundAppDetail" EntitySet="ClientRefundAppDetail" />
           </AssociationSet>
+          <EntitySet Name="FactoryManagerRefundApplication" EntityType="DbModel.FactoryManagerRefundApplication" />
+          <AssociationSet Name="FK_FactoryManagerRefundApplication_ClientUser" Association="DbModel.FK_FactoryManagerRefundApplication_ClientUser">
+            <End Role="ClientUser" EntitySet="ClientUser" />
+            <End Role="FactoryManagerRefundApplication" EntitySet="FactoryManagerRefundApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FactoryManagerRefundApplication_Company" Association="DbModel.FK_FactoryManagerRefundApplication_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="FactoryManagerRefundApplication" EntitySet="FactoryManagerRefundApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FactoryManagerRefundApplication_Product" Association="DbModel.FK_FactoryManagerRefundApplication_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="FactoryManagerRefundApplication" EntitySet="FactoryManagerRefundApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FactoryManagerRefundApplication_ProductSpecification" Association="DbModel.FK_FactoryManagerRefundApplication_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="FactoryManagerRefundApplication" EntitySet="FactoryManagerRefundApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FactoryManagerRefundApplication_WorkflowStatus" Association="DbModel.FK_FactoryManagerRefundApplication_WorkflowStatus">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="FactoryManagerRefundApplication" EntitySet="FactoryManagerRefundApplication" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -4643,6 +4767,7 @@
           <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_Company" FromRole="Company" ToRole="ClientSaleApplication" />
           <NavigationProperty Name="SupplierRefundApplication" Relationship="DbModel.FK_SupplierRefundApplication_Company" FromRole="Company" ToRole="SupplierRefundApplication" />
           <NavigationProperty Name="ClientRefundApplication" Relationship="DbModel.FK_ClientRefundApplication_Company" FromRole="Company" ToRole="ClientRefundApplication" />
+          <NavigationProperty Name="FactoryManagerRefundApplication" Relationship="DbModel.FK_FactoryManagerRefundApplication_Company" FromRole="Company" ToRole="FactoryManagerRefundApplication" />
         </EntityType>
         <EntityType Name="OwnerType">
           <Key>
@@ -4697,6 +4822,7 @@
           <NavigationProperty Name="SupplierRefundApplication" Relationship="DbModel.FK_SupplierRefundApplication_Product" FromRole="Product" ToRole="SupplierRefundApplication" />
           <NavigationProperty Name="ProductHighPrice" Relationship="DbModel.FK_ProductHighPrice_Product" FromRole="Product" ToRole="ProductHighPrice" />
           <NavigationProperty Name="ClientRefundAppDetail" Relationship="DbModel.FK_ClientRefundAppDetail_Product" FromRole="Product" ToRole="ClientRefundAppDetail" />
+          <NavigationProperty Name="FactoryManagerRefundApplication" Relationship="DbModel.FK_FactoryManagerRefundApplication_Product" FromRole="Product" ToRole="FactoryManagerRefundApplication" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -5303,6 +5429,7 @@
           <NavigationProperty Name="StockOut" Relationship="DbModel.FK_StockOut_ClientUser" FromRole="ClientUser" ToRole="StockOut" />
           <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_ClientUser" FromRole="ClientUser" ToRole="ClientSaleApplication" />
           <NavigationProperty Name="ClientRefundApplication" Relationship="DbModel.FK_ClientRefundApplication_ClientUser" FromRole="ClientUser" ToRole="ClientRefundApplication" />
+          <NavigationProperty Name="FactoryManagerRefundApplication" Relationship="DbModel.FK_FactoryManagerRefundApplication_ClientUser" FromRole="ClientUser" ToRole="FactoryManagerRefundApplication" />
         </EntityType>
         <Association Name="FK_ClientCompanyCertificate_ClientCompany">
           <End Type="DbModel.ClientCompany" Role="ClientCompany" Multiplicity="1" />
@@ -6080,6 +6207,7 @@
           <NavigationProperty Name="StockOut" Relationship="DbModel.FK_StockOut_WorkflowStatus" FromRole="WorkflowStatus" ToRole="StockOut" />
           <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_WorkflowStatus" FromRole="WorkflowStatus" ToRole="ClientSaleApplication" />
           <NavigationProperty Name="ClientRefundApplication" Relationship="DbModel.FK_ClientRefundApplication_WorkflowStatus" FromRole="WorkflowStatus" ToRole="ClientRefundApplication" />
+          <NavigationProperty Name="FactoryManagerRefundApplication" Relationship="DbModel.FK_FactoryManagerRefundApplication_WorkflowStatus" FromRole="WorkflowStatus" ToRole="FactoryManagerRefundApplication" />
         </EntityType>
         <EntityType Name="WorkflowStepStatus">
           <Key>
@@ -6943,6 +7071,7 @@
           <NavigationProperty Name="SupplierRefundApplication" Relationship="DbModel.FK_SupplierRefundApplication_ProductSpecification" FromRole="ProductSpecification" ToRole="SupplierRefundApplication" />
           <NavigationProperty Name="ProductHighPrice" Relationship="DbModel.FK_ProductHighPrice_ProductSpecification" FromRole="ProductSpecification" ToRole="ProductHighPrice" />
           <NavigationProperty Name="ClientRefundAppDetail" Relationship="DbModel.FK_ClientRefundAppDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="ClientRefundAppDetail" />
+          <NavigationProperty Name="FactoryManagerRefundApplication" Relationship="DbModel.FK_FactoryManagerRefundApplication_ProductSpecification" FromRole="ProductSpecification" ToRole="FactoryManagerRefundApplication" />
         </EntityType>
         <Association Name="FK_ClientInfoProductSetting_ProductSpecification">
           <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
@@ -7828,6 +7957,93 @@
             </Principal>
             <Dependent Role="ClientRefundAppDetail">
               <PropertyRef Name="WarehouseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="FactoryManagerRefundApplication">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="CompanyID" Nullable="false" />
+          <Property Type="Int32" Name="ClientUserID" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
+          <Property Type="DateTime" Name="BeginDate" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="EndDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="StockInQty" Nullable="false" />
+          <Property Type="Int32" Name="StockOutQty" />
+          <Property Type="Decimal" Name="RefundPrice" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="RefundAmount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="WorkflowStatusID" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="ClientUser" Relationship="DbModel.FK_FactoryManagerRefundApplication_ClientUser" FromRole="FactoryManagerRefundApplication" ToRole="ClientUser" />
+          <NavigationProperty Name="Company" Relationship="DbModel.FK_FactoryManagerRefundApplication_Company" FromRole="FactoryManagerRefundApplication" ToRole="Company" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_FactoryManagerRefundApplication_Product" FromRole="FactoryManagerRefundApplication" ToRole="Product" />
+          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_FactoryManagerRefundApplication_ProductSpecification" FromRole="FactoryManagerRefundApplication" ToRole="ProductSpecification" />
+          <NavigationProperty Name="WorkflowStatus" Relationship="DbModel.FK_FactoryManagerRefundApplication_WorkflowStatus" FromRole="FactoryManagerRefundApplication" ToRole="WorkflowStatus" />
+        </EntityType>
+        <Association Name="FK_FactoryManagerRefundApplication_ClientUser">
+          <End Type="DbModel.ClientUser" Role="ClientUser" Multiplicity="0..1" />
+          <End Type="DbModel.FactoryManagerRefundApplication" Role="FactoryManagerRefundApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FactoryManagerRefundApplication">
+              <PropertyRef Name="ClientUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FactoryManagerRefundApplication_Company">
+          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="DbModel.FactoryManagerRefundApplication" Role="FactoryManagerRefundApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FactoryManagerRefundApplication">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FactoryManagerRefundApplication_Product">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DbModel.FactoryManagerRefundApplication" Role="FactoryManagerRefundApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FactoryManagerRefundApplication">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FactoryManagerRefundApplication_ProductSpecification">
+          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
+          <End Type="DbModel.FactoryManagerRefundApplication" Role="FactoryManagerRefundApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FactoryManagerRefundApplication">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FactoryManagerRefundApplication_WorkflowStatus">
+          <End Type="DbModel.WorkflowStatus" Role="WorkflowStatus" Multiplicity="1" />
+          <End Type="DbModel.FactoryManagerRefundApplication" Role="FactoryManagerRefundApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FactoryManagerRefundApplication">
+              <PropertyRef Name="WorkflowStatusID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -9124,6 +9340,29 @@
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="WarehouseID" ColumnName="WarehouseID" />
                 <ScalarProperty Name="ClientRefundAppID" ColumnName="ClientRefundAppID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FactoryManagerRefundApplication">
+            <EntityTypeMapping TypeName="DbModel.FactoryManagerRefundApplication">
+              <MappingFragment StoreEntitySet="FactoryManagerRefundApplication">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="WorkflowStatusID" ColumnName="WorkflowStatusID" />
+                <ScalarProperty Name="RefundAmount" ColumnName="RefundAmount" />
+                <ScalarProperty Name="RefundPrice" ColumnName="RefundPrice" />
+                <ScalarProperty Name="StockOutQty" ColumnName="StockOutQty" />
+                <ScalarProperty Name="StockInQty" ColumnName="StockInQty" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="BeginDate" ColumnName="BeginDate" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ClientUserID" ColumnName="ClientUserID" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

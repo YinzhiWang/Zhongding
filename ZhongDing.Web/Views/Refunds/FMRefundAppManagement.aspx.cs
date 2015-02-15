@@ -12,21 +12,21 @@ using ZhongDing.Common.Enums;
 using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
 
-namespace ZhongDing.Web.Views.Sales
+namespace ZhongDing.Web.Views.Refunds
 {
-    public partial class ClientSaleAppManagement : WorkflowBasePage
+    public partial class FMRefundAppManagement : WorkflowBasePage
     {
         #region Members
 
-        private IClientSaleApplicationRepository _PageClientSalesAppRepository;
-        private IClientSaleApplicationRepository PageClientSalesAppRepository
+        private IFactoryManagerRefundAppRepository _PageFactoryManagerRefundAppRepository;
+        private IFactoryManagerRefundAppRepository PageFactoryManagerRefundAppRepository
         {
             get
             {
-                if (_PageClientSalesAppRepository == null)
-                    _PageClientSalesAppRepository = new ClientSaleApplicationRepository();
+                if (_PageFactoryManagerRefundAppRepository == null)
+                    _PageFactoryManagerRefundAppRepository = new FactoryManagerRefundAppRepository();
 
-                return _PageClientSalesAppRepository;
+                return _PageFactoryManagerRefundAppRepository;
             }
         }
 
@@ -42,15 +42,27 @@ namespace ZhongDing.Web.Views.Sales
             }
         }
 
-        private IClientCompanyRepository _PageClientCompanyRepository;
-        private IClientCompanyRepository PageClientCompanyRepository
+        private ICompanyRepository _PageCompanyRepository;
+        private ICompanyRepository PageCompanyRepository
         {
             get
             {
-                if (_PageClientCompanyRepository == null)
-                    _PageClientCompanyRepository = new ClientCompanyRepository();
+                if (_PageCompanyRepository == null)
+                    _PageCompanyRepository = new CompanyRepository();
 
-                return _PageClientCompanyRepository;
+                return _PageCompanyRepository;
+            }
+        }
+
+        private IProductRepository _PageProductRepository;
+        private IProductRepository PageProductRepository
+        {
+            get
+            {
+                if (_PageProductRepository == null)
+                    _PageProductRepository = new ProductRepository();
+
+                return _PageProductRepository;
             }
         }
 
@@ -60,7 +72,7 @@ namespace ZhongDing.Web.Views.Sales
             get
             {
                 if (_CanAddUserIDs == null)
-                    _CanAddUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.NewClientOrder);
+                    _CanAddUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.NewFMRefund);
 
                 return _CanAddUserIDs;
             }
@@ -72,21 +84,21 @@ namespace ZhongDing.Web.Views.Sales
             get
             {
                 if (_CanEditUserIDs == null)
-                    _CanEditUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.EditClientOrder);
+                    _CanEditUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.EditFMRefund);
 
                 return _CanEditUserIDs;
             }
         }
 
-        private IList<int> _CanStopUserIDs;
-        private IList<int> CanStopUserIDs
+        private IList<int> _CanAuditByTreasurersUserIDs;
+        private IList<int> CanAuditByTreasurersUserIDs
         {
             get
             {
-                if (_CanStopUserIDs == null)
-                    _CanStopUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.StopClientOrder);
+                if (_CanAuditByTreasurersUserIDs == null)
+                    _CanAuditByTreasurersUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.AuditFMRefundByTreasurers);
 
-                return _CanStopUserIDs;
+                return _CanAuditByTreasurersUserIDs;
             }
         }
 
@@ -94,24 +106,35 @@ namespace ZhongDing.Web.Views.Sales
 
         protected override int GetCurrentWorkFlowID()
         {
-            return (int)EWorkflow.ClientOrder;
+            return (int)EWorkflow.FactoryManagerRefunds;
         }
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.Master.MenuItemID = (int)EMenuItem.ClientOrderManage;
+            this.Master.MenuItemID = (int)EMenuItem.FactoryManagerRefundsManage;
 
             if (!IsPostBack)
             {
-                BindClientUsers();
+                BindCompanies();
 
-                BindClientCompanies();
+                BindClientUsers();
 
                 BindWorkflowStatus();
             }
         }
 
         #region Private Methods
+
+        private void BindCompanies()
+        {
+            var companies = PageCompanyRepository.GetDropdownItems();
+            rcbxCompany.DataSource = companies;
+            rcbxCompany.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+            rcbxCompany.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+            rcbxCompany.DataBind();
+
+            rcbxCompany.Items.Insert(0, new RadComboBoxItem("", ""));
+        }
 
         private void BindClientUsers()
         {
@@ -124,27 +147,27 @@ namespace ZhongDing.Web.Views.Sales
             rcbxClientUser.Items.Insert(0, new RadComboBoxItem("", ""));
         }
 
-        private void BindClientCompanies()
+        private void BindProducts()
         {
-            rcbxClientCompany.ClearSelection();
-            rcbxClientCompany.Items.Clear();
+            rcbxProduct.ClearSelection();
+            rcbxProduct.Items.Clear();
 
-            var uiSearchObj = new UISearchDropdownItem();
+            int companyID;
 
-            if (!string.IsNullOrEmpty(rcbxClientUser.SelectedValue))
+            if (int.TryParse(rcbxCompany.SelectedValue, out companyID))
             {
-                int clientUserID;
-                if (int.TryParse(rcbxClientUser.SelectedValue, out clientUserID))
-                    uiSearchObj.Extension = new UISearchExtension { ClientUserID = clientUserID };
+                var products = PageProductRepository.GetDropdownItems(new UISearchDropdownItem()
+                {
+                    Extension = new UISearchExtension { CompanyID = companyID }
+                });
+
+                rcbxProduct.DataSource = products;
+                rcbxProduct.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+                rcbxProduct.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+                rcbxProduct.DataBind();
+
+                rcbxProduct.Items.Insert(0, new RadComboBoxItem("", ""));
             }
-
-            var clientCompanies = PageClientCompanyRepository.GetDropdownItems(uiSearchObj);
-            rcbxClientCompany.DataSource = clientCompanies;
-            rcbxClientCompany.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
-            rcbxClientCompany.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
-            rcbxClientCompany.DataBind();
-
-            rcbxClientCompany.Items.Insert(0, new RadComboBoxItem("", ""));
         }
 
         private void BindWorkflowStatus()
@@ -155,9 +178,9 @@ namespace ZhongDing.Web.Views.Sales
             includeItemValues.Add((int)EWorkflowStatus.TemporarySave);
             includeItemValues.Add((int)EWorkflowStatus.Submit);
             includeItemValues.Add((int)EWorkflowStatus.ReturnBasicInfo);
-            includeItemValues.Add((int)EWorkflowStatus.ApprovedBasicInfo);
-            includeItemValues.Add((int)EWorkflowStatus.Shipping);
-            includeItemValues.Add((int)EWorkflowStatus.Completed);
+            includeItemValues.Add((int)EWorkflowStatus.ApprovedByTreasurers);
+            includeItemValues.Add((int)EWorkflowStatus.ApprovedByDeptManagers);
+            includeItemValues.Add((int)EWorkflowStatus.Paid);
             uiSearchObj.IncludeItemValues = includeItemValues;
 
             var workflowStatus = PageWorkflowStatusRepository.GetDropdownItems(uiSearchObj);
@@ -172,12 +195,18 @@ namespace ZhongDing.Web.Views.Sales
 
         private void BindEntities(bool isNeedRebind)
         {
-            var uiSearchObj = new UISearchClientSaleApplication
+            var uiSearchObj = new UISearchFactoryManagerRefundApp
             {
-                CompanyID = CurrentUser.CompanyID,
                 BeginDate = rdpBeginDate.SelectedDate,
                 EndDate = rdpEndDate.SelectedDate,
             };
+
+            if (!string.IsNullOrEmpty(rcbxCompany.SelectedValue))
+            {
+                int companyID;
+                if (int.TryParse(rcbxCompany.SelectedValue, out companyID))
+                    uiSearchObj.CompanyID = companyID;
+            }
 
             if (!string.IsNullOrEmpty(rcbxClientUser.SelectedValue))
             {
@@ -186,11 +215,11 @@ namespace ZhongDing.Web.Views.Sales
                     uiSearchObj.ClientUserID = clientUserID;
             }
 
-            if (!string.IsNullOrEmpty(rcbxClientCompany.SelectedValue))
+            if (!string.IsNullOrEmpty(rcbxProduct.SelectedValue))
             {
-                int clientCompanyID;
-                if (int.TryParse(rcbxClientCompany.SelectedValue, out clientCompanyID))
-                    uiSearchObj.ClientCompanyID = clientCompanyID;
+                int productID;
+                if (int.TryParse(rcbxProduct.SelectedValue, out productID))
+                    uiSearchObj.ProductID = productID;
             }
 
             IList<int> includeWorkflowStatusIDs = PageWorkflowStatusRepository
@@ -199,7 +228,7 @@ namespace ZhongDing.Web.Views.Sales
             if (includeWorkflowStatusIDs == null)
             {
                 includeWorkflowStatusIDs = new List<int>();
-                includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Completed);
+                includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Paid);
             }
             else
             {
@@ -214,14 +243,29 @@ namespace ZhongDing.Web.Views.Sales
                     if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ReturnBasicInfo))
                         includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ReturnBasicInfo);
 
-                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ApprovedBasicInfo))
-                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ApprovedBasicInfo);
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ApprovedByTreasurers))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ApprovedByTreasurers);
 
-                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Shipping))
-                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Shipping);
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ApprovedByDeptManagers))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ApprovedByDeptManagers);
 
-                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Completed))
-                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Completed);
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Paid))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Paid);
+                }
+
+                if (CanAuditByTreasurersUserIDs.Contains(CurrentUser.UserID))
+                {
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Submit))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Submit);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ApprovedByTreasurers))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ApprovedByTreasurers);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ApprovedByDeptManagers))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ApprovedByDeptManagers);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Paid))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Paid);
                 }
             }
 
@@ -236,7 +280,7 @@ namespace ZhongDing.Web.Views.Sales
 
             int totalRecords;
 
-            var uiEntities = PageClientSalesAppRepository.GetUIList(uiSearchObj, rgEntities.CurrentPageIndex, rgEntities.PageSize, out totalRecords);
+            var uiEntities = PageFactoryManagerRefundAppRepository.GetUIList(uiSearchObj, rgEntities.CurrentPageIndex, rgEntities.PageSize, out totalRecords);
 
             rgEntities.VirtualItemCount = totalRecords;
             rgEntities.DataSource = uiEntities;
@@ -247,45 +291,33 @@ namespace ZhongDing.Web.Views.Sales
 
         #endregion
 
-        protected void rcbxClientUser_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        protected void rcbxCompany_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            BindClientCompanies();
+            BindProducts();
         }
 
-        protected void rgEntities_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            BindEntities(true);
+        }
+
+        protected void btnReset_Click(object sender, EventArgs e)
+        {
+            rcbxCompany.ClearSelection();
+
+            rcbxClientUser.ClearSelection();
+
+            rcbxProduct.ClearSelection();
+            rcbxProduct.Items.Clear();
+
+            rcbxWorkflowStatus.ClearSelection();
+
+            BindEntities(true);
+        }
+
+        protected void rgEntities_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
             BindEntities(false);
-        }
-
-
-        protected void rgEntities_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)
-        {
-            if (e.Item is GridCommandItem)
-            {
-                GridCommandItem commandItem = e.Item as GridCommandItem;
-                Panel plAddCommand = commandItem.FindControl("plAddCommand") as Panel;
-
-                if (plAddCommand != null)
-                {
-                    if (this.CanAddUserIDs.Contains(CurrentUser.UserID))
-                        plAddCommand.Visible = true;
-                    else
-                        plAddCommand.Visible = false;
-                }
-            }
-        }
-
-        protected void rgEntities_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
-        {
-            if (this.CanAddUserIDs.Contains(CurrentUser.UserID) || CanEditUserIDs.Contains(CurrentUser.UserID))
-                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = true;
-            else
-                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = false;
-
-            if (this.CanStopUserIDs.Contains(CurrentUser.UserID))
-                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_STOP).Visible = true;
-            else
-                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_STOP).Visible = false;
         }
 
         protected void rgEntities_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
@@ -294,7 +326,7 @@ namespace ZhongDing.Web.Views.Sales
                 || e.Item.ItemType == GridItemType.AlternatingItem)
             {
                 GridDataItem gridDataItem = e.Item as GridDataItem;
-                var uiEntity = (UIClientSaleApplication)gridDataItem.DataItem;
+                var uiEntity = (UIFactoryManagerRefundApp)gridDataItem.DataItem;
 
                 if (uiEntity != null)
                 {
@@ -311,10 +343,17 @@ namespace ZhongDing.Web.Views.Sales
                         || uiEntity.CreatedByUserID == CurrentUser.UserID)
                         isCanEditUser = true;
 
+                    bool isShowPrintLink = false;
                     bool isShowDeleteLink = false;
-                    bool isShowStopLink = false;
 
                     EWorkflowStatus workflowStatus = (EWorkflowStatus)uiEntity.WorkflowStatusID;
+
+                    switch (workflowStatus)
+                    {
+                        case EWorkflowStatus.Paid:
+                            isShowPrintLink = true;
+                            break;
+                    }
 
                     if (CanEditUserIDs.Contains(CurrentUser.UserID))
                     {
@@ -344,12 +383,15 @@ namespace ZhongDing.Web.Views.Sales
                                     break;
 
                                 case EWorkflowStatus.Submit:
+                                case EWorkflowStatus.ApprovedByTreasurers:
                                     linkHtml += "审核";
                                     break;
 
-                                case EWorkflowStatus.ApprovedBasicInfo:
-                                case EWorkflowStatus.Shipping:
-                                case EWorkflowStatus.Completed:
+                                case EWorkflowStatus.ApprovedByDeptManagers:
+                                    linkHtml += "支付";
+                                    break;
+
+                                case EWorkflowStatus.Paid:
                                     linkHtml += "查看";
                                     break;
                             }
@@ -359,18 +401,6 @@ namespace ZhongDing.Web.Views.Sales
                     }
 
                     linkHtml += "</a>";
-
-                    if (this.CanStopUserIDs.Contains(CurrentUser.UserID)
-                        && uiEntity.IsStop == false)
-                    {
-                        switch (workflowStatus)
-                        {
-                            case EWorkflowStatus.ApprovedBasicInfo:
-                            case EWorkflowStatus.Shipping:
-                                isShowStopLink = true;
-                                break;
-                        }
-                    }
 
                     var editColumn = rgEntities.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT);
 
@@ -382,6 +412,16 @@ namespace ZhongDing.Web.Views.Sales
                             editCell.Text = linkHtml;
                     }
 
+                    var printColumn = rgEntities.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_PRINT);
+
+                    if (printColumn != null)
+                    {
+                        var printCell = gridDataItem.Cells[printColumn.OrderIndex];
+
+                        if (printCell != null && !isShowPrintLink)
+                            printCell.Text = string.Empty;
+                    }
+
                     var deleteColumn = rgEntities.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE);
 
                     if (deleteColumn != null)
@@ -391,16 +431,31 @@ namespace ZhongDing.Web.Views.Sales
                         if (deleteCell != null && !isShowDeleteLink)
                             deleteCell.Text = string.Empty;
                     }
+                }
+            }
+        }
 
-                    var stopColumn = rgEntities.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_STOP);
+        protected void rgEntities_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
+        {
+            if (this.CanAddUserIDs.Contains(CurrentUser.UserID) || CanEditUserIDs.Contains(CurrentUser.UserID))
+                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = true;
+            else
+                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = false;
+        }
 
-                    if (stopColumn != null)
-                    {
-                        var stopCell = gridDataItem.Cells[stopColumn.OrderIndex];
+        protected void rgEntities_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)
+        {
+            if (e.Item is GridCommandItem)
+            {
+                GridCommandItem commandItem = e.Item as GridCommandItem;
+                Panel plAddCommand = commandItem.FindControl("plAddCommand") as Panel;
 
-                        if (stopCell != null && !isShowStopLink)
-                            stopCell.Text = string.Empty;
-                    }
+                if (plAddCommand != null)
+                {
+                    if (this.CanAddUserIDs.Contains(CurrentUser.UserID))
+                        plAddCommand.Visible = true;
+                    else
+                        plAddCommand.Visible = false;
                 }
             }
         }
@@ -418,27 +473,17 @@ namespace ZhongDing.Web.Views.Sales
                 {
                     var db = unitOfWork.GetDbModel();
 
-                    IClientSaleApplicationRepository clientSalesAppRepository = new ClientSaleApplicationRepository();
+                    IFactoryManagerRefundAppRepository fmRefundAppRepository = new FactoryManagerRefundAppRepository();
                     IApplicationNoteRepository appNoteRepository = new ApplicationNoteRepository();
 
-                    clientSalesAppRepository.SetDbModel(db);
+                    fmRefundAppRepository.SetDbModel(db);
                     appNoteRepository.SetDbModel(db);
 
-                    var currentEntity = clientSalesAppRepository.GetByID(id);
+                    var currentEntity = fmRefundAppRepository.GetByID(id);
 
                     if (currentEntity != null)
                     {
-                        if (currentEntity.SalesOrderApplication != null)
-                        {
-                            foreach (var item in currentEntity.SalesOrderApplication.SalesOrderAppDetail)
-                            {
-                                item.IsDeleted = true;
-                            }
-
-                            currentEntity.SalesOrderApplication.IsDeleted = true;
-                        }
-
-                        clientSalesAppRepository.Delete(currentEntity);
+                        fmRefundAppRepository.Delete(currentEntity);
 
                         var appNotes = appNoteRepository.GetList(x => x.ApplicationID == currentEntity.ID);
                         foreach (var item in appNotes)
@@ -453,50 +498,5 @@ namespace ZhongDing.Web.Views.Sales
                 rgEntities.Rebind();
             }
         }
-
-        protected void rgEntities_ItemCommand(object sender, GridCommandEventArgs e)
-        {
-            if (e.CommandName == GlobalConst.GridColumnUniqueNames.COLUMN_STOP)
-            {
-                GridEditableItem editableItem = e.Item as GridEditableItem;
-
-                String sid = editableItem.GetDataKeyValue("ID").ToString();
-
-                int id = 0;
-                if (int.TryParse(sid, out id))
-                {
-                    var currentEntity = PageClientSalesAppRepository.GetByID(id);
-
-                    if (currentEntity != null)
-                    {
-                        currentEntity.SalesOrderApplication.IsStop = true;
-                        currentEntity.SalesOrderApplication.StoppedBy = CurrentUser.UserID;
-                        currentEntity.SalesOrderApplication.StoppedOn = DateTime.Now;
-
-                        PageClientSalesAppRepository.Save();
-                    }
-                }
-
-                rgEntities.Rebind();
-            }
-        }
-
-        protected void btnSearch_Click(object sender, EventArgs e)
-        {
-            BindEntities(true);
-        }
-
-        protected void btnReset_Click(object sender, EventArgs e)
-        {
-            rdpBeginDate.Clear();
-            rdpEndDate.Clear();
-
-            rcbxClientUser.ClearSelection();
-            rcbxClientCompany.ClearSelection();
-            rcbxWorkflowStatus.ClearSelection();
-
-            BindEntities(true);
-        }
-
     }
 }

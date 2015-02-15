@@ -208,11 +208,14 @@ namespace ZhongDing.Web.Views.Sales
 
         #endregion
 
+        protected override int GetCurrentWorkFlowID()
+        {
+            return (int)EWorkflow.ClientOrder;
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
             this.Master.MenuItemID = (int)EMenuItem.ClientOrderManage;
-            this.CurrentWorkFlowID = (int)EWorkflow.ClientOrder;
 
             if (this.SaleOrderTypeID.HasValue && this.SaleOrderTypeID > 0
                 && (this.SaleOrderTypeID == (int)ESaleOrderType.AttractBusinessMode

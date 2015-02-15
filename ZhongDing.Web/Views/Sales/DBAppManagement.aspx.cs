@@ -68,10 +68,14 @@ namespace ZhongDing.Web.Views.Sales
 
         #endregion
 
+        protected override int GetCurrentWorkFlowID()
+        {
+            return (int)EWorkflow.DBOrder;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             this.Master.MenuItemID = (int)EMenuItem.DBOrderManage;
-            this.CurrentWorkFlowID = (int)EWorkflow.DBOrder;
 
             if (!IsPostBack)
             {

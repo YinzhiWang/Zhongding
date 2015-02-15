@@ -129,12 +129,12 @@ namespace ZhongDing.Common.Enums
         NewClientRefund,
 
         /// <summary>
-        /// 财务主管审核
+        /// 财务主管审核（客户返款）
         /// </summary>
         AuditClientRefundByTreasurers,
 
         /// <summary>
-        /// 部门经理审核
+        /// 部门经理审核（客户返款）
         /// </summary>
         AuditClientRefundByDeptManagers,
 
@@ -147,5 +147,30 @@ namespace ZhongDing.Common.Enums
         /// 修改客户返款
         /// </summary>
         EditClientRefund,
+
+        /// <summary>
+        /// 新增厂家经理返款
+        /// </summary>
+        NewFMRefund,
+
+        /// <summary>
+        /// 财务主管审核（厂家经理返款）
+        /// </summary>
+        AuditFMRefundByTreasurers = 30,
+
+        /// <summary>
+        /// 部门经理审核（厂家经理返款）
+        /// </summary>
+        AuditFMRefundByDeptManagers,
+
+        /// <summary>
+        /// 出纳支付厂家经理返款
+        /// </summary>
+        PayFMRefund,
+
+        /// <summary>
+        /// 修改厂家经理返款
+        /// </summary>
+        EditFMRefund,
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using ZhongDing.Business.IRepositories;
 using ZhongDing.Business.Repositories;
+using ZhongDing.Common;
+using ZhongDing.Common.Enums;
 
 namespace ZhongDing.Web
 {
@@ -16,15 +18,14 @@ namespace ZhongDing.Web
         /// 当前工作流ID
         /// </summary>
         /// <value>The current work flow ID.</value>
-        public int CurrentWorkFlowID
+        protected int CurrentWorkFlowID
         {
             get
             {
+                if (_CurrentWorkflowID <= 0)
+                    _CurrentWorkflowID = GetCurrentWorkFlowID();
+
                 return _CurrentWorkflowID;
-            }
-            set
-            {
-                _CurrentWorkflowID = value;
             }
         }
 
@@ -74,6 +75,14 @@ namespace ZhongDing.Web
 
                 return _PageAppNoteRepository;
             }
+        }
+
+        /// <summary>
+        /// 虚方法：获取当前工作流ID
+        /// </summary>
+        protected virtual int GetCurrentWorkFlowID()
+        {
+            return GlobalConst.INVALID_INT;
         }
 
         #endregion

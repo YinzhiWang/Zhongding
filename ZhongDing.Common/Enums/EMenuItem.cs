@@ -158,5 +158,10 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         ClientRefundsManage,
 
+        /// <summary>
+        /// 厂家经理返款管理
+        /// </summary>
+        FactoryManagerRefundsManage,
+
     }
 }

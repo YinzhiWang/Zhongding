@@ -86,6 +86,7 @@
     <Compile Include="IRepositories\IDeptMarketRepository.cs" />
     <Compile Include="IRepositories\IDeptProductEvaluationRepository.cs" />
     <Compile Include="IRepositories\IDistributionCompanyRepository.cs" />
+    <Compile Include="IRepositories\IFactoryManagerRefundAppRepository.cs" />
     <Compile Include="IRepositories\IGenerateDropdownItems.cs" />
     <Compile Include="IRepositories\IHospitalRepository.cs" />
     <Compile Include="IRepositories\IInventoryHistoryRepository.cs" />
@@ -160,6 +161,7 @@
     <Compile Include="Repositories\DeptMarketRepository.cs" />
     <Compile Include="Repositories\DeptProductEvaluationRepository.cs" />
     <Compile Include="Repositories\DistributionCompanyRepository.cs" />
+    <Compile Include="Repositories\FactoryManagerRefundAppRepository.cs" />
     <Compile Include="Repositories\HospitalRepository.cs" />
     <Compile Include="Repositories\InventoryHistoryRepository.cs" />
     <Compile Include="Repositories\OwnerTypeRepository.cs" />

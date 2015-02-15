@@ -179,6 +179,9 @@
     <Compile Include="Models\DistributionCompany.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\FactoryManagerRefundApplication.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\GuaranteeLog.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -337,6 +340,7 @@
     <Compile Include="UIObjects\UIDeptProductSalesBonus.cs" />
     <Compile Include="UIObjects\UIDistributionCompany.cs" />
     <Compile Include="UIObjects\UIDropdownItem.cs" />
+    <Compile Include="UIObjects\UIFactoryManagerRefundApp.cs" />
     <Compile Include="UIObjects\UIHospital.cs" />
     <Compile Include="UIObjects\UIInventoryHistory.cs" />
     <Compile Include="UIObjects\UIProcureOrderAppDetail.cs" />
@@ -391,6 +395,7 @@
     <Compile Include="UISearchObjects\UISearchDistributionCompany.cs" />
     <Compile Include="UISearchObjects\UISearchDropdownItem.cs" />
     <Compile Include="UISearchObjects\UISearchExtension.cs" />
+    <Compile Include="UISearchObjects\UISearchFactoryManagerRefundApp.cs" />
     <Compile Include="UISearchObjects\UISearchHospital.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderAppDetail.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderApplication.cs" />

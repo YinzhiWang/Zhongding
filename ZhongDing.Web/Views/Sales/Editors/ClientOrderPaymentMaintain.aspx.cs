@@ -132,10 +132,13 @@ namespace ZhongDing.Web.Views.Sales.Editors
 
         #endregion
 
+        protected override int GetCurrentWorkFlowID()
+        {
+            return (int)EWorkflow.ClientOrder;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.CurrentWorkFlowID = (int)EWorkflow.ClientOrder;
-
             if (CurrentOwnerEntity == null
                 || CurrentOwnerEntity.DeliveryModeID == (int)EDeliveryMode.GuaranteeDelivery)
             {

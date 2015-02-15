@@ -71,10 +71,14 @@ namespace ZhongDing.Web.Views.Procures
 
         #endregion
 
+        protected override int GetCurrentWorkFlowID()
+        {
+            return (int)EWorkflow.ProcureOrder;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             this.Master.MenuItemID = (int)EMenuItem.ProcureOrderManage;
-            this.CurrentWorkFlowID = (int)EWorkflow.ProcureOrder;
 
             if (!IsPostBack)
             {

@@ -126,7 +126,7 @@
                                 <label>商业单位</label>
                                 <div class="mws-form-item" runat="server" id="divClientCompanies">
                                     <telerik:RadDropDownList runat="server" ID="ddlClientCompany" Width="360"
-                                        EmptyMessage="--请选择--" AutoPostBack="true" OnSelectedIndexChanged="ddlClientCompany_SelectedIndexChanged">
+                                        DefaultMessage="--请选择--" AutoPostBack="true" OnSelectedIndexChanged="ddlClientCompany_SelectedIndexChanged">
                                     </telerik:RadDropDownList>
                                     <asp:RequiredFieldValidator ID="rfvClientCompany"
                                         runat="server"
@@ -157,7 +157,7 @@
                         <div class="mws-form-row" id="divDeliveryMode">
                             <label>发货模式</label>
                             <div class="mws-form-item">
-                                <telerik:RadDropDownList runat="server" ID="ddlDeliveryMode" EmptyMessage="--请选择--"
+                                <telerik:RadDropDownList runat="server" ID="ddlDeliveryMode" DefaultMessage="--请选择--"
                                     OnClientSelectedIndexChanged="onClientSelectedDeliveryMode">
                                 </telerik:RadDropDownList>
                             </div>

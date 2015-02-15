@@ -651,3 +651,43 @@ ALTER TABLE [dbo].[WorkflowStep]
 COMMIT TRANSACTION
 
 ---- end --- 2/11/2015 -- 初始化工作流状态关联数据(客户返款)数据 -- by lihong
+
+---- start --- 2/15/2015 -- 初始化工作流状态关联数据(厂家经理返款)数据 -- by lihong
+SET NUMERIC_ROUNDABORT OFF
+GO
+SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+
+BEGIN TRANSACTION
+ALTER TABLE [dbo].[WorkflowStepStatus] DROP CONSTRAINT [FK_WorkflowStepStatus_WorkflowStatus]
+ALTER TABLE [dbo].[WorkflowStepStatus] DROP CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep]
+ALTER TABLE [dbo].[WorkflowStep] DROP CONSTRAINT [FK_WorkflowStep_Workflow]
+
+SET IDENTITY_INSERT [dbo].[Workflow] ON
+INSERT INTO [dbo].[Workflow] ([ID], [WorkflowName], [IsActive], [IsDeleted]) VALUES (10, N'厂家经理返款', 1, 0)
+SET IDENTITY_INSERT [dbo].[Workflow] OFF
+
+SET IDENTITY_INSERT [dbo].[WorkflowStep] ON
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (29, 10, N'厂家经理返款新增', 0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (30, 10, N'厂家经理返款财务主管审核', 0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (31, 10, N'厂家经理返款部门经理审核', 0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (32, 10, N'厂家经理返款出纳支付', 0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (33, 10, N'修改厂家经理返款', 0)
+SET IDENTITY_INSERT [dbo].[WorkflowStep] OFF
+
+SET IDENTITY_INSERT [dbo].[WorkflowStepStatus] ON
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (36, 29, 1, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (37, 29, 4, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (38, 30, 2, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (39, 31, 16, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (40, 32, 17, 0)
+SET IDENTITY_INSERT [dbo].[WorkflowStepStatus] OFF
+ALTER TABLE [dbo].[WorkflowStepStatus]
+    ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStatus] FOREIGN KEY ([WorkflowStatusID]) REFERENCES [dbo].[WorkflowStatus] ([ID])
+ALTER TABLE [dbo].[WorkflowStepStatus]
+    ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep] FOREIGN KEY ([WorkflowStepID]) REFERENCES [dbo].[WorkflowStep] ([ID])
+ALTER TABLE [dbo].[WorkflowStep]
+    ADD CONSTRAINT [FK_WorkflowStep_Workflow] FOREIGN KEY ([WorkflowID]) REFERENCES [dbo].[Workflow] ([ID])
+COMMIT TRANSACTION
+
+---- start --- 2/15/2015 -- 初始化工作流状态关联数据(厂家经理返款)数据 -- by lihong

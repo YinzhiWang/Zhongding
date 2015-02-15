@@ -106,11 +106,15 @@ namespace ZhongDing.Web.Views.Refunds
 
         #endregion
 
+        protected override int GetCurrentWorkFlowID()
+        {
+            return (int)EWorkflow.ClientRefunds;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             this.Master.MenuItemID = (int)EMenuItem.ClientRefundsManage;
-            this.CurrentWorkFlowID = (int)EWorkflow.ClientRefunds;
-
+            
             if (!IsPostBack)
             {
                 BindCompanies();

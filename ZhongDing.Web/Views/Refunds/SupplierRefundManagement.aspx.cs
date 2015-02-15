@@ -81,10 +81,14 @@ namespace ZhongDing.Web.Views.Refunds
 
         #endregion
 
+        protected override int GetCurrentWorkFlowID()
+        {
+            return (int)EWorkflow.SupplierRefunds;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             this.Master.MenuItemID = (int)EMenuItem.SupplierRefundsManage;
-            this.CurrentWorkFlowID = (int)EWorkflow.SupplierRefunds;
 
             if (!IsPostBack)
             {

@@ -2620,6 +2620,9 @@
     <Content Include="Views\Products\ProductPriceManagement.aspx" />
     <Content Include="Views\Refunds\ClientRefundMaintenance.aspx" />
     <Content Include="Views\Refunds\ClientRefundManagement.aspx" />
+    <Content Include="Views\Refunds\FMRefundAppMaintenance.aspx" />
+    <Content Include="Views\Refunds\FMRefundAppManagement.aspx" />
+    <Content Include="Views\Refunds\Printers\PrintFMRefundApp.aspx" />
     <Content Include="Views\Refunds\SupplierRefundMaintenance.aspx" />
     <Content Include="Views\Refunds\SupplierRefundManagement.aspx" />
     <Content Include="Views\Sales\ClientSaleAppMaintenance.aspx" />
@@ -3165,6 +3168,27 @@
     <Compile Include="Views\Refunds\ClientRefundManagement.aspx.designer.cs">
       <DependentUpon>ClientRefundManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Refunds\FMRefundAppMaintenance.aspx.cs">
+      <DependentUpon>FMRefundAppMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Refunds\FMRefundAppMaintenance.aspx.designer.cs">
+      <DependentUpon>FMRefundAppMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Refunds\FMRefundAppManagement.aspx.cs">
+      <DependentUpon>FMRefundAppManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Refunds\FMRefundAppManagement.aspx.designer.cs">
+      <DependentUpon>FMRefundAppManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Refunds\Printers\PrintFMRefundApp.aspx.cs">
+      <DependentUpon>PrintFMRefundApp.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Refunds\Printers\PrintFMRefundApp.aspx.designer.cs">
+      <DependentUpon>PrintFMRefundApp.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Refunds\SupplierRefundMaintenance.aspx.cs">
       <DependentUpon>SupplierRefundMaintenance.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3350,7 +3374,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
