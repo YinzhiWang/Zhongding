@@ -586,10 +586,12 @@ namespace ZhongDing.Web.Views.Refunds
                 return isSucceedSaved;
             }
 
+            var tempEndDate = rdpEndDate.SelectedDate.Value;
+
             var tempFMRefundAppCount = PageFMRefundAppRepository.GetList(x => x.ID != currentEntity.ID && x.CompanyID == companyID
                 && x.ProductID == productID && x.ProductSpecificationID == productSpecificationID
                 && ((beginDate >= x.BeginDate && beginDate <= x.EndDate)
-                || (endDate >= x.BeginDate && endDate <= x.EndDate))).Count();
+                || (tempEndDate >= x.BeginDate && tempEndDate <= x.EndDate))).Count();
 
             if (tempFMRefundAppCount > 0)
             {

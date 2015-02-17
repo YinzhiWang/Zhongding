@@ -56,5 +56,10 @@ namespace ZhongDing.Common.Enums
         /// 厂家经理返款
         /// </summary>
         FactoryManagerRefunds,
+
+        /// <summary>
+        /// 供应商任务返款
+        /// </summary>
+        SupplierTaskRefunds,
     }
 }

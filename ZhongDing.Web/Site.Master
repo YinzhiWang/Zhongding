@@ -126,6 +126,7 @@
                                     <li data-level="2" data-menuitemid="71"><a href="javascript:void(0);" onclick="redirectToPage('Views/Refunds/SupplierRefundManagement.aspx');">供应商返款(高开高返)</a></li>
                                     <li data-level="2" data-menuitemid="72"><a href="javascript:void(0);" onclick="redirectToPage('Views/Refunds/ClientRefundManagement.aspx');">客户返款(高开高返)</a></li>
                                     <li data-level="2" data-menuitemid="73"><a href="javascript:void(0);" onclick="redirectToPage('Views/Refunds/FMRefundAppManagement.aspx');">厂家经理返款</a></li>
+                                    <li data-level="2" data-menuitemid="74"><a href="javascript:void(0);" onclick="redirectToPage('Views/Refunds/SupplierTaskRefundManagement.aspx');">供应商任务返款</a></li>
 
                                 </ul>
                             </li>

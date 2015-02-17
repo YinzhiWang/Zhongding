@@ -28,10 +28,10 @@ namespace ZhongDing.Domain.Models
             this.StockOutDetail = new HashSet<StockOutDetail>();
             this.SupplierContract = new HashSet<SupplierContract>();
             this.SalesOrderAppDetail = new HashSet<SalesOrderAppDetail>();
-            this.SupplierRefundApplication = new HashSet<SupplierRefundApplication>();
             this.ProductHighPrice = new HashSet<ProductHighPrice>();
             this.ClientRefundAppDetail = new HashSet<ClientRefundAppDetail>();
             this.FactoryManagerRefundApplication = new HashSet<FactoryManagerRefundApplication>();
+            this.SupplierRefundApplication = new HashSet<SupplierRefundApplication>();
         }
     
         public int ID { get; set; }
@@ -70,9 +70,9 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<StockOutDetail> StockOutDetail { get; set; }
         public virtual ICollection<SupplierContract> SupplierContract { get; set; }
         public virtual ICollection<SalesOrderAppDetail> SalesOrderAppDetail { get; set; }
-        public virtual ICollection<SupplierRefundApplication> SupplierRefundApplication { get; set; }
         public virtual ICollection<ProductHighPrice> ProductHighPrice { get; set; }
         public virtual ICollection<ClientRefundAppDetail> ClientRefundAppDetail { get; set; }
         public virtual ICollection<FactoryManagerRefundApplication> FactoryManagerRefundApplication { get; set; }
+        public virtual ICollection<SupplierRefundApplication> SupplierRefundApplication { get; set; }
     }
 }

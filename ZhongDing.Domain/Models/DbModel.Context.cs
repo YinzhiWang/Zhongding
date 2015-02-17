@@ -98,12 +98,12 @@ namespace ZhongDing.Domain.Models
         public DbSet<SalesOrderApplication> SalesOrderApplication { get; set; }
         public DbSet<ClientSaleApplication> ClientSaleApplication { get; set; }
         public DbSet<SalesOrderAppDetail> SalesOrderAppDetail { get; set; }
-        public DbSet<SupplierRefundApplication> SupplierRefundApplication { get; set; }
         public DbSet<ProductHighPrice> ProductHighPrice { get; set; }
         public DbSet<ApplicationPayment> ApplicationPayment { get; set; }
         public DbSet<SupplierDeduction> SupplierDeduction { get; set; }
         public DbSet<ClientRefundApplication> ClientRefundApplication { get; set; }
         public DbSet<ClientRefundAppDetail> ClientRefundAppDetail { get; set; }
         public DbSet<FactoryManagerRefundApplication> FactoryManagerRefundApplication { get; set; }
+        public DbSet<SupplierRefundApplication> SupplierRefundApplication { get; set; }
     }
 }

@@ -9,10 +9,19 @@
     [CreatedBy]              INT      NULL,
     [LastModifiedOn]         DATETIME NULL,
     [LastModifiedBy]         INT      NULL,
+    [WorkflowID]             INT      NOT NULL,
+    [PaymentMethodID]        INT      NULL,
+    [BeginDate]              DATETIME NULL,
+    [EndDate]                DATETIME NULL,
+    [RefundAmount]           MONEY    NULL,
+    [RefundDate]             DATETIME NULL,
     CONSTRAINT [PK_SupplierRefundApplication] PRIMARY KEY CLUSTERED ([ID] ASC),
     CONSTRAINT [FK_SupplierRefundApplication_Company] FOREIGN KEY ([CompanyID]) REFERENCES [dbo].[Company] ([ID]),
     CONSTRAINT [FK_SupplierRefundApplication_Product] FOREIGN KEY ([ProductID]) REFERENCES [dbo].[Product] ([ID]),
     CONSTRAINT [FK_SupplierRefundApplication_ProductSpecification] FOREIGN KEY ([ProductSpecificationID]) REFERENCES [dbo].[ProductSpecification] ([ID]),
-    CONSTRAINT [FK_SupplierRefundApplication_Supplier] FOREIGN KEY ([SupplierID]) REFERENCES [dbo].[Supplier] ([ID])
+    CONSTRAINT [FK_SupplierRefundApplication_Supplier] FOREIGN KEY ([SupplierID]) REFERENCES [dbo].[Supplier] ([ID]),
+    CONSTRAINT [FK_SupplierRefundApplication_Workflow] FOREIGN KEY ([WorkflowID]) REFERENCES [dbo].[Workflow] ([ID])
 );
+
+
 

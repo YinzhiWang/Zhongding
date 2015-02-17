@@ -30,6 +30,12 @@ namespace ZhongDing.Domain.Models
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
+        public int WorkflowID { get; set; }
+        public Nullable<int> PaymentMethodID { get; set; }
+        public Nullable<System.DateTime> BeginDate { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
+        public Nullable<decimal> RefundAmount { get; set; }
+        public Nullable<System.DateTime> RefundDate { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -46,5 +52,6 @@ namespace ZhongDing.Domain.Models
         public virtual ProductSpecification ProductSpecification { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual ICollection<SupplierDeduction> SupplierDeduction { get; set; }
+        public virtual Workflow Workflow { get; set; }
     }
 }

@@ -2625,6 +2625,8 @@
     <Content Include="Views\Refunds\Printers\PrintFMRefundApp.aspx" />
     <Content Include="Views\Refunds\SupplierRefundMaintenance.aspx" />
     <Content Include="Views\Refunds\SupplierRefundManagement.aspx" />
+    <Content Include="Views\Refunds\SupplierTaskRefundMaintenance.aspx" />
+    <Content Include="Views\Refunds\SupplierTaskRefundManagement.aspx" />
     <Content Include="Views\Sales\ClientSaleAppMaintenance.aspx" />
     <Content Include="Views\Sales\ClientSaleAppManagement.aspx" />
     <Content Include="Views\Sales\ClientSaleAppStockOutMaintenance.aspx" />
@@ -3203,6 +3205,20 @@
     <Compile Include="Views\Refunds\SupplierRefundManagement.aspx.designer.cs">
       <DependentUpon>SupplierRefundManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Refunds\SupplierTaskRefundMaintenance.aspx.cs">
+      <DependentUpon>SupplierTaskRefundMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Refunds\SupplierTaskRefundMaintenance.aspx.designer.cs">
+      <DependentUpon>SupplierTaskRefundMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Refunds\SupplierTaskRefundManagement.aspx.cs">
+      <DependentUpon>SupplierTaskRefundManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Refunds\SupplierTaskRefundManagement.aspx.designer.cs">
+      <DependentUpon>SupplierTaskRefundManagement.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Sales\ClientSaleAppMaintenance.aspx.cs">
       <DependentUpon>ClientSaleAppMaintenance.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3374,7 +3390,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

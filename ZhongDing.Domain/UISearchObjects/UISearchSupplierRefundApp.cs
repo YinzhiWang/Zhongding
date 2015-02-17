@@ -8,6 +8,8 @@ namespace ZhongDing.Domain.UISearchObjects
 {
     public class UISearchSupplierRefundApp : UISearchWorkflowBase
     {
+        public int WorkflowID { get; set; }
+
         public int CompanyID { get; set; }
 
         public int SupplierID { get; set; }

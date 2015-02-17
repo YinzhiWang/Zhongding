@@ -459,7 +459,8 @@ namespace ZhongDing.Web.Views.Refunds
                                     CompanyID = this.CompanyID.Value,
                                     SupplierID = this.SupplierID.Value,
                                     ProductID = this.ProductID.Value,
-                                    ProductSpecificationID = this.ProductSpecificationID.Value
+                                    ProductSpecificationID = this.ProductSpecificationID.Value,
+                                    WorkflowID = this.CurrentWorkFlowID
                                 };
 
                                 PageSupplierRefundAppRepository.Add(supplierRefundApp);
@@ -689,7 +690,8 @@ namespace ZhongDing.Web.Views.Refunds
                                     CompanyID = this.CompanyID.Value,
                                     SupplierID = this.SupplierID.Value,
                                     ProductID = this.ProductID.Value,
-                                    ProductSpecificationID = this.ProductSpecificationID.Value
+                                    ProductSpecificationID = this.ProductSpecificationID.Value,
+                                    WorkflowID = this.CurrentWorkFlowID
                                 };
 
                                 PageSupplierRefundAppRepository.Add(supplierRefundApp);

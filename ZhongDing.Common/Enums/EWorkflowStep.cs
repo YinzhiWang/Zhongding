@@ -172,5 +172,10 @@ namespace ZhongDing.Common.Enums
         /// 修改厂家经理返款
         /// </summary>
         EditFMRefund,
+
+        /// <summary>
+        /// 修改供应商任务返款
+        /// </summary>
+        EditSupplierTaskRefund,
     }
 }

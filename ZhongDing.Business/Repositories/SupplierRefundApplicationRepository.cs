@@ -15,11 +15,6 @@ namespace ZhongDing.Business.Repositories
 {
     public class SupplierRefundApplicationRepository : BaseRepository<SupplierRefundApplication>, ISupplierRefundApplicationRepository
     {
-        public IList<UISupplierRefundApp> GetUIList(UISearchSupplierRefundApp uiSearchObj = null)
-        {
-            throw new NotImplementedException();
-        }
-
         public IList<UISupplierRefundApp> GetUIList(UISearchSupplierRefundApp uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
         {
             IList<UISupplierRefundApp> uiEntities = new List<UISupplierRefundApp>();
@@ -53,55 +48,6 @@ namespace ZhongDing.Business.Repositories
 
             if (baseQuery != null)
             {
-
-
-                //var testQuery = ((from q in baseQuery
-                //                  join php in DB.ProductHighPrice on new { q.ProductID, q.ProductSpecificationID }
-                //                    equals new { php.ProductID, php.ProductSpecificationID } into tempPHP
-                //                  from tphp in tempPHP.DefaultIfEmpty()
-                //                  select new
-                //                  {
-                //                      q.CompanyID,
-                //                      q.SupplierID,
-                //                      q.ProductID,
-                //                      q.ProductSpecificationID,
-                //                      q.ProcureCount,
-                //                      q.TotalAmount,
-                //                      //应返款
-                //                      NeedRefundAmount = (((q.ProcurePrice - (tphp == null ? q.ProcurePrice : (tphp.ActualProcurePrice.HasValue ? tphp.ActualProcurePrice.Value : 0))) * q.ProcureCount)
-                //                      - (((q.ProcurePrice - (tphp == null ? q.ProcurePrice : (tphp.ActualProcurePrice.HasValue ? tphp.ActualProcurePrice.Value : 0)))
-                //                          * q.ProcureCount
-                //                          * (tphp == null ? 0 : (tphp.SupplierTaxRatio.HasValue ? tphp.SupplierTaxRatio.Value : 1))))),
-                //                  })
-                //                   .GroupBy(x => new { x.SupplierID, x.ProductID, x.ProductSpecificationID, x.CompanyID })
-                //                   .Select(g => new
-                //                   {
-                //                       GroupKey = g.Key,
-                //                       TotalCount = g.Sum(x => x.ProcureCount),
-                //                       TotalAmount = g.Sum(x => x.TotalAmount),
-                //                       //应返款总额
-                //                       NeedRefundAmount = g.Sum(x => x.NeedRefundAmount),
-                //                       //已返款总额
-                //                       RefundedAmount = (from sra in DB.SupplierRefundApplication
-                //                                         join ap in DB.ApplicationPayment.Where(x => x.IsDeleted == false && x.WorkflowID == (int)EWorkflow.SupplierRefunds)
-                //                                         on sra.ID equals ap.ApplicationID
-                //                                         where sra.IsDeleted == false && sra.CompanyID == g.Key.CompanyID
-                //                                         && sra.SupplierID == g.Key.SupplierID && sra.ProductID == g.Key.ProductID
-                //                                         && sra.ProductSpecificationID == g.Key.ProductSpecificationID
-                //                                         select new { ap.Amount, ap.Fee })
-                //                                              .Sum(x => (x.Amount.HasValue ? x.Amount.Value : 0)
-                //                                                  + (x.Fee.HasValue ? x.Fee.Value : 0)),
-                //                       //已抵扣总额
-                //                       DeductedAmount = (from sd in DB.SupplierDeduction
-                //                                         join sra in DB.SupplierRefundApplication on sd.SupplierRefundAppID equals sra.ID
-                //                                         where sra.IsDeleted == false && sra.CompanyID == g.Key.CompanyID
-                //                                         && sra.SupplierID == g.Key.SupplierID && sra.ProductID == g.Key.ProductID
-                //                                         && sra.ProductSpecificationID == g.Key.ProductSpecificationID
-                //                                         select new { sd.Amount })
-                //                                         .Sum(x => x.Amount)
-                //                   })).ToList();
-
-
                 var query = (from gd in
                                  ((from q in baseQuery
                                    join php in DB.ProductHighPrice on new { q.ProductID, q.ProductSpecificationID }
@@ -133,7 +79,7 @@ namespace ZhongDing.Business.Repositories
                                        RefundedAmount = (from sra in DB.SupplierRefundApplication
                                                          join ap in DB.ApplicationPayment.Where(x => x.IsDeleted == false && x.WorkflowID == (int)EWorkflow.SupplierRefunds)
                                                          on sra.ID equals ap.ApplicationID
-                                                         where sra.IsDeleted == false && sra.CompanyID == g.Key.CompanyID
+                                                         where sra.IsDeleted == false && sra.CompanyID == g.Key.CompanyID && sra.WorkflowID == (int)EWorkflow.SupplierRefunds
                                                          && sra.SupplierID == g.Key.SupplierID && sra.ProductID == g.Key.ProductID
                                                          && sra.ProductSpecificationID == g.Key.ProductSpecificationID
                                                          select new { ap.Amount, ap.Fee })
@@ -142,7 +88,7 @@ namespace ZhongDing.Business.Repositories
                                        //已抵扣总额
                                        DeductedAmount = (from sd in DB.SupplierDeduction
                                                          join sra in DB.SupplierRefundApplication on sd.SupplierRefundAppID equals sra.ID
-                                                         where sra.IsDeleted == false && sra.CompanyID == g.Key.CompanyID
+                                                         where sra.IsDeleted == false && sra.CompanyID == g.Key.CompanyID && sra.WorkflowID == (int)EWorkflow.SupplierRefunds
                                                          && sra.SupplierID == g.Key.SupplierID && sra.ProductID == g.Key.ProductID
                                                          && sra.ProductSpecificationID == g.Key.ProductSpecificationID
                                                          select new { sd.Amount })
@@ -154,7 +100,8 @@ namespace ZhongDing.Business.Repositories
                              join c in DB.Company on gd.GroupKey.CompanyID equals c.ID
                              join uom in DB.UnitOfMeasurement on ps.UnitOfMeasurementID equals uom.ID into tempUOM
                              from tuom in tempUOM.DefaultIfEmpty()
-                             join sra in DB.SupplierRefundApplication on new
+                             join sra in DB.SupplierRefundApplication.Where(x => x.WorkflowID == (int)EWorkflow.SupplierRefunds)
+                             on new
                              {
                                  gd.GroupKey.SupplierID,
                                  gd.GroupKey.ProductID,
@@ -198,7 +145,6 @@ namespace ZhongDing.Business.Repositories
 
             return uiEntities;
         }
-
 
         public IList<UISupplierRefundAppDetail> GetDetails(UISearchSupplierRefundApp uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
         {
@@ -260,6 +206,82 @@ namespace ZhongDing.Business.Repositories
             totalRecords = total;
 
             return uiEntities;
+        }
+
+        public IList<UISupplierRefundApp> GetTaskRefunds(UISearchSupplierRefundApp uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
+        {
+            IList<UISupplierRefundApp> uiEntities = new List<UISupplierRefundApp>();
+
+            int total = 0;
+
+            IQueryable<SupplierRefundApplication> query = null;
+
+            var whereFuncs = new List<Expression<Func<SupplierRefundApplication, bool>>>();
+
+            whereFuncs.Add(x => x.WorkflowID == (int)EWorkflow.SupplierTaskRefunds);
+
+            if (uiSearchObj != null)
+            {
+                if (uiSearchObj.ID > 0)
+                    whereFuncs.Add(x => x.ID.Equals(uiSearchObj.ID));
+
+                if (uiSearchObj.CompanyID > 0)
+                    whereFuncs.Add(x => x.CompanyID.Equals(uiSearchObj.CompanyID));
+
+                if (uiSearchObj.SupplierID > 0)
+                    whereFuncs.Add(x => x.SupplierID.Equals(uiSearchObj.SupplierID));
+
+                if (uiSearchObj.ProductID > 0)
+                    whereFuncs.Add(x => x.ProductID.Equals(uiSearchObj.ProductID));
+
+                if (uiSearchObj.BeginDate.HasValue)
+                    whereFuncs.Add(x => x.RefundDate >= uiSearchObj.BeginDate);
+
+                if (uiSearchObj.EndDate.HasValue)
+                {
+                    uiSearchObj.EndDate = uiSearchObj.EndDate.Value.AddDays(1);
+                    whereFuncs.Add(x => x.RefundDate < uiSearchObj.EndDate);
+                }
+            }
+
+            query = GetList(pageIndex, pageSize, whereFuncs, GlobalConst.OrderByExpression.CREATEDON_DESC, out total);
+
+            if (query != null)
+            {
+                uiEntities = (from q in query
+                              join c in DB.Company on q.CompanyID equals c.ID
+                              join s in DB.Supplier on q.SupplierID equals s.ID
+                              join p in DB.Product on q.ProductID equals p.ID
+                              join ps in DB.ProductSpecification on q.ProductSpecificationID equals ps.ID
+                              join cbu in DB.Users on q.CreatedBy equals cbu.UserID into tempCBU
+                              from tcbu in tempCBU.DefaultIfEmpty()
+                              select new UISupplierRefundApp
+                              {
+                                  ID = q.ID,
+                                  CompanyName = c.CompanyName,
+                                  SupplierName = s.SupplierName,
+                                  ProductName = p.ProductName,
+                                  Specification = ps.Specification,
+                                  BeginDate = q.BeginDate,
+                                  EndDate = q.EndDate,
+                                  PaymentMethod = q.PaymentMethodID.HasValue 
+                                  ? (q.PaymentMethodID == (int)EPaymentMethod.BankTransfer 
+                                        ? GlobalConst.PaymentMethods.BANK_TRANSFER 
+                                        : (q.PaymentMethodID == (int)EPaymentMethod.Deduction 
+                                            ? GlobalConst.PaymentMethods.DEDUCATION : string.Empty)) 
+                                  : string.Empty,
+                                  RefundAmount = q.RefundAmount ?? 0M,
+                                  RefundDate = q.RefundDate,
+                                  CreatedBy = tcbu == null ? string.Empty : tcbu.FullName,
+                              }).ToList();
+
+
+            }
+
+            totalRecords = total;
+
+            return uiEntities;
+
         }
     }
 }

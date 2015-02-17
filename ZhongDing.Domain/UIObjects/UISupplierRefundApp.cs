@@ -60,5 +60,30 @@ namespace ZhongDing.Domain.UIObjects
         /// 未返款
         /// </summary>
         public decimal? TotalToBeRefundAmount { get; set; }
+
+        /// <summary>
+        /// 收款时间
+        /// </summary>
+        public DateTime? RefundDate { get; set; }
+
+        /// <summary>
+        /// 收款类型
+        /// </summary>
+        public string PaymentMethod { get; set; }
+
+        /// <summary>
+        /// 起始时间
+        /// </summary>
+        public DateTime? BeginDate { get; set; }
+
+        /// <summary>
+        /// 结束时间
+        /// </summary>
+        public DateTime? EndDate { get; set; }
+
+        /// <summary>
+        /// 收款金额
+        /// </summary>
+        public decimal RefundAmount { get; set; }
     }
 }
