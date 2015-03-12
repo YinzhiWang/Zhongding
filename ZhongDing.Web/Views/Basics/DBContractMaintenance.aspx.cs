@@ -450,6 +450,10 @@ namespace ZhongDing.Web.Views.Basics
             {
                 GridDataItem gridDataItem = e.Item as GridDataItem;
 
+                string sid = gridDataItem.GetDataKeyValue("ID").ToString();
+                int id = 0;
+                int.TryParse(sid, out id);
+
                 var rcbxHospital = (RadComboBox)e.Item.FindControl("rcbxHospital");
 
                 if (rcbxHospital != null)
@@ -460,7 +464,7 @@ namespace ZhongDing.Web.Views.Basics
                         && this.CurrentEntity.DBContractHospital.Count > 0)
                     {
                         uiSearchObj.ExcludeItemValues = this.CurrentEntity
-                            .DBContractHospital.Where(x => x.IsDeleted == false)
+                            .DBContractHospital.Where(x => x.IsDeleted == false && x.ID != id)
                             .Select(x => x.HospitalID).ToList();
                     }
 

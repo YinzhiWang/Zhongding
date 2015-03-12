@@ -19,5 +19,10 @@ namespace ZhongDing.Common.Enums
         /// 招商
         /// </summary>
         BusinessMedicine,
+
+        /// <summary>
+        /// 其他（如：人事部，行政部等）
+        /// </summary>
+        Other,
     }
 }

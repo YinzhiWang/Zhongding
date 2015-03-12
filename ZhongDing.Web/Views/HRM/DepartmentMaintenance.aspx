@@ -17,6 +17,7 @@
             <telerik:AjaxSetting AjaxControlID="rgDeptMarketDivisions">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="rgDeptMarketDivisions" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="hdnGridCellValueChangedCount" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="rgDeptProductEvaluations">

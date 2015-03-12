@@ -315,10 +315,13 @@ namespace ZhongDing.Web.Views.Procures
                             {
                                 case EWorkflowStatus.TemporarySave:
                                     if (isCanEditUser)
+                                    {
                                         linkHtml += "编辑";
+                                        isShowDeleteLink = true;
+                                    }
                                     else
                                         linkHtml += "查看";
-                                    isShowDeleteLink = true;
+
                                     break;
 
                                 case EWorkflowStatus.ToBeInWarehouse:

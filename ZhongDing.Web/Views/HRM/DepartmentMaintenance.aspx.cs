@@ -10,6 +10,7 @@ using ZhongDing.Business.Repositories;
 using ZhongDing.Common;
 using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
+using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
 
 namespace ZhongDing.Web.Views.HRM
@@ -115,19 +116,26 @@ namespace ZhongDing.Web.Views.HRM
                 ((int)EDepartmentType.BaseMedicine).ToString()));
             ddlDepartmentType.Items.Add(new DropDownListItem(GlobalConst.DepartmentTypes.BUSINESS_MEDICINE,
                 ((int)EDepartmentType.BusinessMedicine).ToString()));
+            ddlDepartmentType.Items.Add(new DropDownListItem(GlobalConst.DepartmentTypes.OTHER,
+                ((int)EDepartmentType.Other).ToString()));
 
             ddlDepartmentType.DataBind();
         }
 
         private void BindDepartmentUsers()
         {
-            var deptUsers = PageUsersRepository.GetDropdownItems(new UISearchDropdownItem()
+            IList<UIDropdownItem> deptUsers = new List<UIDropdownItem>();
+
+            if (this.CurrentEntityID > 0)
             {
-                Extension = new UISearchExtension()
+                deptUsers = PageUsersRepository.GetDropdownItems(new UISearchDropdownItem()
                 {
-                    DepartmentID = this.CurrentEntityID.HasValue ? this.CurrentEntityID.Value : GlobalConst.INVALID_INT
-                }
-            });
+                    Extension = new UISearchExtension()
+                    {
+                        DepartmentID = this.CurrentEntityID.HasValue ? this.CurrentEntityID.Value : GlobalConst.INVALID_INT
+                    }
+                });
+            }
 
             rcbxDirectorUser.DataSource = deptUsers;
             rcbxDirectorUser.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
@@ -506,6 +514,8 @@ namespace ZhongDing.Web.Views.HRM
                 if (int.TryParse(rcbxDirectorUser.SelectedValue, out directorUserID))
                     currentEntity.DirectorUserID = directorUserID;
             }
+            else
+                currentEntity.DirectorUserID = null;
 
             if (currentEntity.DepartmentTypeID == (int)EDepartmentType.BaseMedicine)
             {

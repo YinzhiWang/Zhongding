@@ -271,6 +271,11 @@ namespace ZhongDing.Common
             /// 招商
             /// </summary>
             public static readonly string BUSINESS_MEDICINE = "招商";
+
+            /// <summary>
+            /// 其他（如：人事部，行政部等）
+            /// </summary>
+            public static readonly string OTHER = "其他";
         }
 
         #endregion

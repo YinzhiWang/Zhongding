@@ -28,5 +28,13 @@ namespace ZhongDing.Business.IRepositories
         /// <returns>IList{UIDepartment}.</returns>
         IList<UIDepartment> GetUIList(UISearchDepartment uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
 
+        /// <summary>
+        /// 特定产品是否与该部门有关联
+        /// </summary>
+        /// <param name="departmentID">The department ID.</param>
+        /// <param name="productID">The product ID.</param>
+        /// <returns><c>true</c> if [is dept related with product] [the specified department ID]; otherwise, <c>false</c>.</returns>
+        bool IsDeptRelatedWithProduct(int departmentID, int productID);
+
     }
 }

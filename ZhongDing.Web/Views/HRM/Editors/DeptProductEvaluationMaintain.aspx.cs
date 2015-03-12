@@ -89,7 +89,15 @@ namespace ZhongDing.Web.Views.HRM.Editors
 
         private void BindProducts()
         {
-            var products = PageProductRepository.GetDropdownItems();
+            var uiSearchObj = new UISearchDropdownItem()
+            {
+                Extension = new UISearchExtension()
+                {
+                    DepartmentID = this.OwnerEntityID.Value
+                }
+            };
+
+            var products = PageProductRepository.GetDropdownItems(uiSearchObj);
 
             rcbxProducts.DataSource = products;
             rcbxProducts.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;

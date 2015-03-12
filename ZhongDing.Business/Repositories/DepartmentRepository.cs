@@ -48,7 +48,10 @@ namespace ZhongDing.Business.Repositories
                                   ID = q.ID,
                                   DepartmentName = q.DepartmentName,
                                   DepartmentType = q.DepartmentTypeID == (int)EDepartmentType.BaseMedicine
-                                  ? GlobalConst.DepartmentTypes.BASE_MEDICINE : GlobalConst.DepartmentTypes.BUSINESS_MEDICINE,
+                                  ? GlobalConst.DepartmentTypes.BASE_MEDICINE
+                                  : (q.DepartmentTypeID == (int)EDepartmentType.BusinessMedicine
+                                        ? GlobalConst.DepartmentTypes.BUSINESS_MEDICINE
+                                        : GlobalConst.DepartmentTypes.OTHER),
                                   DeptDistrict = tdd == null ? string.Empty : tdd.DistrictName,
                                   DirectorUserName = tdu == null ? string.Empty : tdu.FullName
                               }).ToList();
@@ -93,7 +96,10 @@ namespace ZhongDing.Business.Repositories
                                   ID = q.ID,
                                   DepartmentName = q.DepartmentName,
                                   DepartmentType = q.DepartmentTypeID == (int)EDepartmentType.BaseMedicine
-                                  ? GlobalConst.DepartmentTypes.BASE_MEDICINE : GlobalConst.DepartmentTypes.BUSINESS_MEDICINE,
+                                  ? GlobalConst.DepartmentTypes.BASE_MEDICINE 
+                                  : (q.DepartmentTypeID == (int)EDepartmentType.BusinessMedicine 
+                                        ? GlobalConst.DepartmentTypes.BUSINESS_MEDICINE 
+                                        : GlobalConst.DepartmentTypes.OTHER),
                                   DeptDistrict = tdd == null ? string.Empty : tdd.DistrictName,
                                   DirectorUserName = tdu == null ? string.Empty : tdu.FullName
                               }).ToList();
@@ -132,5 +138,24 @@ namespace ZhongDing.Business.Repositories
             return uiDropdownItems;
         }
 
+        public bool IsDeptRelatedWithProduct(int departmentID, int productID)
+        {
+            bool isRelated = false;
+
+            //是否在部门产品线里含有该产品
+            bool isDeptMarketProduct = DB.Users.Any(x => x.IsDeleted == false
+                && x.DepartmentID == departmentID
+                && x.DeptMarketDivision.Any(y =>
+                    y.DeptMarketProduct.Any(z => z.IsDeleted == false && z.ProductID == productID)));
+
+            //是否在部门考核产品含有该产品
+            bool isDeptProductEvaluation = DB.Department.Any(x => x.IsDeleted == false && x.ID == departmentID
+                && x.DeptProductEvaluation.Any(y => y.IsDeleted == false && y.ProductID == productID));
+
+            if (isDeptMarketProduct || isDeptProductEvaluation)
+                isRelated = true;
+
+            return isRelated;
+        }
     }
 }

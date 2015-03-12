@@ -344,11 +344,12 @@ namespace ZhongDing.Web.Views.Procures
                                 case EWorkflowStatus.TemporarySave:
                                 case EWorkflowStatus.ReturnBasicInfo:
                                     if (isCanEditUser)
+                                    {
                                         linkHtml += "编辑";
+                                        isShowDeleteLink = true;
+                                    }
                                     else
                                         linkHtml += "查看";
-
-                                    isShowDeleteLink = true;
                                     break;
 
                                 case EWorkflowStatus.Submit:
@@ -364,11 +365,13 @@ namespace ZhongDing.Web.Views.Procures
 
                                 case EWorkflowStatus.ReturnPaymentInfo:
                                     if (isCanEditUser)
+                                    {
                                         linkHtml += "维护支付信息";
+                                        isShowDeleteLink = true;
+                                    }
                                     else
                                         linkHtml += "查看";
 
-                                    isShowDeleteLink = true;
                                     break;
 
                                 case EWorkflowStatus.AuditingOfPaymentInfo:

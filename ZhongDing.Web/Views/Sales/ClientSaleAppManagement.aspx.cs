@@ -337,10 +337,12 @@ namespace ZhongDing.Web.Views.Sales
                                 case EWorkflowStatus.TemporarySave:
                                 case EWorkflowStatus.ReturnBasicInfo:
                                     if (isCanEditUser)
+                                    {
                                         linkHtml += "编辑";
+                                        isShowDeleteLink = true;
+                                    }
                                     else
                                         linkHtml += "查看";
-                                    isShowDeleteLink = true;
                                     break;
 
                                 case EWorkflowStatus.Submit:

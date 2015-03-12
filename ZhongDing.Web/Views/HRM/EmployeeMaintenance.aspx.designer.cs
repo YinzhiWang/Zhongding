@@ -175,15 +175,6 @@ namespace ZhongDing.Web.Views.HRM {
         protected global::Telerik.Web.UI.RadComboBox rcbxDepartment;
         
         /// <summary>
-        /// rfvDepartment control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDepartment;
-        
-        /// <summary>
         /// cvDepartment control.
         /// </summary>
         /// <remarks>

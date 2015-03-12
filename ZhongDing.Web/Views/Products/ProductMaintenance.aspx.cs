@@ -315,7 +315,26 @@ namespace ZhongDing.Web.Views.Products
             Product product = null;
 
             if (this.CurrentEntityID.HasValue && this.CurrentEntityID > 0)
+            {
                 product = PageProductRepository.GetByID(this.CurrentEntityID);
+
+                if (product.DepartmentID.HasValue && product.DepartmentID > 0)
+                {
+                    if (ddlProductCategory.SelectedValue == ((int)EProductCategory.BaseMedicine).ToString()
+                        || rcbxDepartment.SelectedValue != product.DepartmentID.ToString())
+                    {
+                        if (PageDepartmentRepository.IsDeptRelatedWithProduct(product.DepartmentID.Value, product.ID))
+                        {
+                            this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
+                            this.Master.BaseNotification.AutoCloseDelay = 1000;
+                            this.Master.BaseNotification.Height = 120;
+                            this.Master.BaseNotification.Show("该货品已在部门产品线设置或部门产品考核设置处使用，请先更改部门设置，再更新货品");
+
+                            return;
+                        }
+                    }
+                }
+            }
 
             if (product == null)
             {
@@ -357,11 +376,15 @@ namespace ZhongDing.Web.Views.Products
                     && this.CurrentEntityID > 0)
                 {
                     this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
+                    this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_SUCCESS;
+                    this.Master.BaseNotification.Height = 100;
                     this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SAEVED_REDIRECT);
                 }
                 else
                 {
                     this.Master.BaseNotification.OnClientHidden = "refreshMaintenancePage";
+                    this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_SUCCESS;
+                    this.Master.BaseNotification.Height = 100;
                     this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SAEVED_REFRESH);
                 }
             }

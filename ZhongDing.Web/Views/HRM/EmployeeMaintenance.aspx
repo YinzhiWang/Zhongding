@@ -98,9 +98,9 @@
                                     <telerik:RadComboBox runat="server" ID="rcbxDepartment" Filter="Contains" AllowCustomText="false"
                                         MarkFirstMatch="true" Height="160px" EmptyMessage="--请选择--">
                                     </telerik:RadComboBox>
-                                    <asp:RequiredFieldValidator ID="rfvDepartment" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="rcbxDepartment"
+<%--                                    <asp:RequiredFieldValidator ID="rfvDepartment" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="rcbxDepartment"
                                         ErrorMessage="请选择所属部门" Text="*" CssClass="field-validation-error">
-                                    </asp:RequiredFieldValidator>
+                                    </asp:RequiredFieldValidator>--%>
                                     <asp:CustomValidator ID="cvDepartment" runat="server" ErrorMessage="该部门不存在，请重新选择"
                                         ControlToValidate="rcbxDepartment" ValidationGroup="vgMaintenance" Display="Dynamic"
                                         Text="*" CssClass="field-validation-error" OnServerValidate="cvDepartment_ServerValidate">

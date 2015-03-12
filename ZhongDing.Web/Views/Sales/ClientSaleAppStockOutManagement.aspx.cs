@@ -360,7 +360,6 @@ namespace ZhongDing.Web.Views.Sales
                                     if (isCanEditUser)
                                     {
                                         columnEditLinkHtml += "编辑";
-
                                         isShowDeleteLink = true;
                                     }
                                     else
