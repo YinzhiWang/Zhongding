@@ -185,6 +185,7 @@ namespace ZhongDing.Web.Views.Procures.Editors
         {
             if (productID > 0)
             {
+                ddlProductSpecification.ClearSelection();
                 ddlProductSpecification.Items.Clear();
 
                 var productSpecifications = PageProductSpecificationRepository.GetDropdownItems(new UISearchDropdownItem()
@@ -196,6 +197,15 @@ namespace ZhongDing.Web.Views.Procures.Editors
                 ddlProductSpecification.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
                 ddlProductSpecification.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
                 ddlProductSpecification.DataBind();
+
+                if (!string.IsNullOrEmpty(ddlProductSpecification.SelectedValue)
+                    && !string.IsNullOrEmpty(rcbxWarehouse.SelectedValue))
+                {
+                    int warehouseID = Convert.ToInt32(rcbxWarehouse.SelectedValue);
+                    int productSpecificationID = Convert.ToInt32(ddlProductSpecification.SelectedValue);
+
+                    txtProcurePrice.DbValue = PageProcureOrderApplicationRepository.GetPrefillProcurePrice(warehouseID, productID, productSpecificationID);
+                }
             }
         }
 
@@ -303,6 +313,34 @@ namespace ZhongDing.Web.Views.Procures.Editors
                 && txtTaxAmount.Value > totalAmount)
             {
                 args.IsValid = false;
+            }
+        }
+
+        protected void rcbxWarehouse_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(e.Value)
+                && !string.IsNullOrEmpty(rcbxProduct.SelectedValue)
+                && !string.IsNullOrEmpty(ddlProductSpecification.SelectedValue))
+            {
+                int warehouseID = Convert.ToInt32(e.Value);
+                int productID = Convert.ToInt32(rcbxProduct.SelectedValue);
+                int productSpecificationID = Convert.ToInt32(ddlProductSpecification.SelectedValue);
+
+                txtProcurePrice.DbValue = PageProcureOrderApplicationRepository.GetPrefillProcurePrice(warehouseID, productID, productSpecificationID);
+            }
+        }
+
+        protected void ddlProductSpecification_SelectedIndexChanged(object sender, DropDownListEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(e.Value)
+                && !string.IsNullOrEmpty(rcbxProduct.SelectedValue)
+                && !string.IsNullOrEmpty(rcbxWarehouse.SelectedValue))
+            {
+                int warehouseID = Convert.ToInt32(rcbxWarehouse.SelectedValue);
+                int productID = Convert.ToInt32(rcbxProduct.SelectedValue);
+                int productSpecificationID = Convert.ToInt32(e.Value);
+
+                txtProcurePrice.DbValue = PageProcureOrderApplicationRepository.GetPrefillProcurePrice(warehouseID, productID, productSpecificationID);
             }
         }
     }

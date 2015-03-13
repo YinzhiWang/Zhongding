@@ -139,6 +139,15 @@ namespace ZhongDing.Web.Views.Procures.Editors {
         protected global::System.Web.UI.WebControls.Label lblUnitOfMeasurement;
         
         /// <summary>
+        /// divProcurePrice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divProcurePrice;
+        
+        /// <summary>
         /// txtProcurePrice control.
         /// </summary>
         /// <remarks>

@@ -28,5 +28,14 @@ namespace ZhongDing.Business.IRepositories
         /// <returns>IList{UIProcureOrderApplication}.</returns>
         IList<UIProcureOrderApplication> GetUIList(UISearchProcureOrderApplication uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
 
+        /// <summary>
+        /// 获取预填充的采购单价
+        /// </summary>
+        /// <param name="warehouse">The warehouse ID.</param>
+        /// <param name="productID">The product ID.</param>
+        /// <param name="productSpecificationID">The product specification ID.</param>
+        /// <returns>System.Nullable{System.Decimal}.</returns>
+        decimal? GetPrefillProcurePrice(int warehouseID, int productID, int productSpecificationID);
+
     }
 }

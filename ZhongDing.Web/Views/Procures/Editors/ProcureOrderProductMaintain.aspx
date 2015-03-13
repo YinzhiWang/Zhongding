@@ -12,6 +12,17 @@
             <telerik:AjaxSetting AjaxControlID="rcbxProduct">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="divProductSpecifications" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="divProcurePrice" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="rcbxWarehouse">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="divProcurePrice" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="ddlProductSpecification">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="divProcurePrice" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
         </AjaxSettings>
@@ -32,7 +43,8 @@
                             <label>入库仓库</label>
                             <div class="mws-form-item small">
                                 <telerik:RadComboBox runat="server" ID="rcbxWarehouse" Filter="Contains"
-                                    AllowCustomText="false" Height="160px" EmptyMessage="--请选择--">
+                                    AllowCustomText="false" Height="160px" EmptyMessage="--请选择--"
+                                    AutoPostBack="true" OnSelectedIndexChanged="rcbxWarehouse_SelectedIndexChanged">
                                 </telerik:RadComboBox>
                                 <telerik:RadToolTip ID="rttWarehouse" runat="server" TargetControlID="rcbxWarehouse" ShowEvent="OnClick"
                                     Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
@@ -67,7 +79,8 @@
                             <label>货品规格</label>
                             <div class="mws-form-item small" runat="server" id="divProductSpecifications">
                                 <telerik:RadDropDownList runat="server" ID="ddlProductSpecification" DefaultMessage="--请选择--"
-                                    OnItemDataBound="ddlProductSpecification_ItemDataBound" OnClientSelectedIndexChanged="onClientSelectedSpecification">
+                                    OnItemDataBound="ddlProductSpecification_ItemDataBound" OnClientSelectedIndexChanged="onClientSelectedSpecification"
+                                    AutoPostBack="true" OnSelectedIndexChanged="ddlProductSpecification_SelectedIndexChanged">
                                 </telerik:RadDropDownList>
                                 <telerik:RadToolTip ID="rttProductSpecification" runat="server" TargetControlID="ddlProductSpecification" ShowEvent="OnClick"
                                     Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
@@ -89,7 +102,7 @@
                         </div>
                     </div>
                     <div class="mws-form-row">
-                        <div class="float-left width50-percent">
+                        <div class="float-left width50-percent" runat="server" id="divProcurePrice">
                             <label>采购单价</label>
                             <div class="mws-form-item small">
                                 <telerik:RadNumericTextBox runat="server" ID="txtProcurePrice" CssClass="mws-textinput" Type="Currency" ShowSpinButtons="true"

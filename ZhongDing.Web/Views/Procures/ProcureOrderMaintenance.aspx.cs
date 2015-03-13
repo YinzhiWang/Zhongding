@@ -536,16 +536,16 @@ namespace ZhongDing.Web.Views.Procures
                         }
                     };
 
-                    if (e.Item.ItemIndex < 0)
-                    {
-                        var excludeItemValues = PageAppPaymentRepository
-                        .GetList(x => x.ApplicationID == this.CurrentEntityID)
-                        .Select(x => x.FromBankAccountID.HasValue ? x.FromBankAccountID.Value : GlobalConst.INVALID_INT)
-                        .ToList();
+                    //if (e.Item.ItemIndex < 0)
+                    //{
+                    //    var excludeItemValues = PageAppPaymentRepository
+                    //    .GetList(x => x.ApplicationID == this.CurrentEntityID)
+                    //    .Select(x => x.FromBankAccountID.HasValue ? x.FromBankAccountID.Value : GlobalConst.INVALID_INT)
+                    //    .ToList();
 
-                        if (excludeItemValues.Count > 0)
-                            uiSearchObj.ExcludeItemValues = excludeItemValues;
-                    }
+                    //    if (excludeItemValues.Count > 0)
+                    //        uiSearchObj.ExcludeItemValues = excludeItemValues;
+                    //}
 
                     var bankAccounts = PageBankAccountRepository.GetDropdownItems(uiSearchObj);
                     rcbxFromAccount.DataSource = bankAccounts;
@@ -569,16 +569,16 @@ namespace ZhongDing.Web.Views.Procures
                         }
                     };
 
-                    if (e.Item.ItemIndex < 0)
-                    {
-                        var excludeItemValues = PageAppPaymentRepository
-                            .GetList(x => x.ApplicationID == this.CurrentEntityID)
-                            .Select(x => x.ToBankAccountID.HasValue ? x.ToBankAccountID.Value : GlobalConst.INVALID_INT)
-                            .ToList();
+                    //if (e.Item.ItemIndex < 0)
+                    //{
+                    //    var excludeItemValues = PageAppPaymentRepository
+                    //        .GetList(x => x.ApplicationID == this.CurrentEntityID)
+                    //        .Select(x => x.ToBankAccountID.HasValue ? x.ToBankAccountID.Value : GlobalConst.INVALID_INT)
+                    //        .ToList();
 
-                        if (excludeItemValues.Count > 0)
-                            uiSearchObj.ExcludeItemValues = excludeItemValues;
-                    }
+                    //    if (excludeItemValues.Count > 0)
+                    //        uiSearchObj.ExcludeItemValues = excludeItemValues;
+                    //}
 
                     if (!string.IsNullOrEmpty(rcbxSupplier.SelectedValue))
                     {

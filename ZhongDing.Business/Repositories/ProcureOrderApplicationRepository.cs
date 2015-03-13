@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZhongDing.Business.IRepositories;
 using ZhongDing.Common;
+using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
@@ -157,6 +158,31 @@ namespace ZhongDing.Business.Repositories
             if (this.DB.ProcureOrderApplication.Count() > 0)
                 return this.DB.ProcureOrderApplication.Max(x => x.ID);
             else return null;
+        }
+
+        public decimal? GetPrefillProcurePrice(int warehouseID, int productID, int productSpecificationID)
+        {
+            //是否高价仓库
+            bool isHighSaleType = false;
+
+            var queryWarehouse = DB.Warehouse.FirstOrDefault(x => x.IsDeleted == false && x.ID == warehouseID);
+
+            if (queryWarehouse != null
+                && queryWarehouse.SaleTypeID == (int)ESaleType.HighPrice)
+                isHighSaleType = true;
+
+            if (isHighSaleType)
+            {
+                return DB.ProductHighPrice.Where(x => x.IsDeleted == false
+                    && x.ProductID == productID && x.ProductSpecificationID == productSpecificationID)
+                    .Select(x => x.HighPrice).FirstOrDefault();
+            }
+            else
+            {
+                return DB.ProductBasicPrice.Where(x => x.IsDeleted == false
+                    && x.ProductID == productID && x.ProductSpecificationID == productSpecificationID)
+                    .Select(x => x.ProcurePrice).FirstOrDefault();
+            }
         }
     }
 }

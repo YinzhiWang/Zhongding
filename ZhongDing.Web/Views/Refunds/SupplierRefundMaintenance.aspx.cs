@@ -355,16 +355,16 @@ namespace ZhongDing.Web.Views.Refunds
                         }
                     };
 
-                    if (e.Item.ItemIndex < 0)
-                    {
-                        var excludeItemValues = PageAppPaymentRepository
-                            .GetList(x => x.ApplicationID == this.CurrentEntityID)
-                            .Select(x => x.ToBankAccountID.HasValue ? x.ToBankAccountID.Value : GlobalConst.INVALID_INT)
-                            .ToList();
+                    //if (e.Item.ItemIndex < 0)
+                    //{
+                    //    var excludeItemValues = PageAppPaymentRepository
+                    //        .GetList(x => x.ApplicationID == this.CurrentEntityID)
+                    //        .Select(x => x.ToBankAccountID.HasValue ? x.ToBankAccountID.Value : GlobalConst.INVALID_INT)
+                    //        .ToList();
 
-                        if (excludeItemValues.Count > 0)
-                            uiSearchObj.ExcludeItemValues = excludeItemValues;
-                    }
+                    //    if (excludeItemValues.Count > 0)
+                    //        uiSearchObj.ExcludeItemValues = excludeItemValues;
+                    //}
 
                     var bankAccounts = PageBankAccountRepository.GetDropdownItems(uiSearchObj);
                     rcbxToAccount.DataSource = bankAccounts;
