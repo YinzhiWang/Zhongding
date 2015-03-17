@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZhongDing.Business.IRepositories;
 using ZhongDing.Common;
+using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
@@ -188,6 +189,26 @@ namespace ZhongDing.Business.Repositories
             if (this.DB.StockOut.Count() > 0)
                 return this.DB.StockOut.Max(x => x.ID);
             else return null;
+        }
+
+        public int? GetStockOutQty(UISearchStockOut uiSearchObj)
+        {
+            var query = (from sod in DB.StockOutDetail
+                         join so in DB.StockOut on sod.StockOutID equals so.ID
+                         where so.IsDeleted == false && so.ReceiverTypeID == (int)EReceiverType.ClientUser
+                         && so.CompanyID == uiSearchObj.CompanyID
+                         && so.ClientUserID == uiSearchObj.ClientUserID
+                         && so.ClientCompanyID == uiSearchObj.ClientCompanyID
+                         && sod.IsDeleted == false && sod.ProductID == uiSearchObj.ProductID
+                         && sod.ProductSpecificationID == uiSearchObj.ProductSpecificationID
+                         && sod.CreatedOn >= uiSearchObj.BeginDate
+                         && sod.CreatedOn < uiSearchObj.EndDate
+                         select sod);
+
+            if (query.Count() > 0)
+                return query.Sum(x => x.OutQty);
+
+            return null;
         }
     }
 }

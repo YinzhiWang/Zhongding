@@ -68,6 +68,7 @@
     <Compile Include="IRepositories\IClientRefundAppDetailRepository.cs" />
     <Compile Include="IRepositories\IClientRefundApplicationRepository.cs" />
     <Compile Include="IRepositories\IClientSaleApplicationRepository.cs" />
+    <Compile Include="IRepositories\IClientTaskRefundAppRepository.cs" />
     <Compile Include="IRepositories\IClientUserRepository.cs" />
     <Compile Include="IRepositories\ICompanyRepository.cs" />
     <Compile Include="IRepositories\IDaBaoApplicationRepository.cs" />
@@ -143,6 +144,7 @@
     <Compile Include="Repositories\ClientRefundAppDetailRepository.cs" />
     <Compile Include="Repositories\ClientRefundApplicationRepository.cs" />
     <Compile Include="Repositories\ClientSaleApplicationRepository.cs" />
+    <Compile Include="Repositories\ClientTaskRefundAppRepository.cs" />
     <Compile Include="Repositories\ClientUserRepository.cs" />
     <Compile Include="Repositories\CompanyRepository.cs" />
     <Compile Include="Repositories\DaBaoApplicationRepository.cs" />

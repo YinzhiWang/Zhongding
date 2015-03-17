@@ -110,6 +110,9 @@
     <Compile Include="Models\ClientSaleApplication.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClientTaskRefundApplication.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ClientUser.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -326,6 +329,7 @@
     <Compile Include="UIObjects\UIClientRefundApplication.cs" />
     <Compile Include="UIObjects\UIClientSaleApplication.cs" />
     <Compile Include="UIObjects\UIClientSaleAppPayment.cs" />
+    <Compile Include="UIObjects\UIClientTaskRefundApp.cs" />
     <Compile Include="UIObjects\UICompany.cs" />
     <Compile Include="UIObjects\UIDaBaoApplication.cs" />
     <Compile Include="UIObjects\UIDaBaoAppDetail.cs" />
@@ -381,6 +385,7 @@
     <Compile Include="UISearchObjects\UISearchClientRefundAppDetail.cs" />
     <Compile Include="UISearchObjects\UISearchClientRefundApplication.cs" />
     <Compile Include="UISearchObjects\UISearchClientSaleApplication.cs" />
+    <Compile Include="UISearchObjects\UISearchClientTaskRefundApp.cs" />
     <Compile Include="UISearchObjects\UISearchCompany.cs" />
     <Compile Include="UISearchObjects\UISearchDaBaoApplication.cs" />
     <Compile Include="UISearchObjects\UISearchDaBaoAppDetail.cs" />

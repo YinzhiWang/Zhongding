@@ -2620,6 +2620,8 @@
     <Content Include="Views\Products\ProductPriceManagement.aspx" />
     <Content Include="Views\Refunds\ClientRefundMaintenance.aspx" />
     <Content Include="Views\Refunds\ClientRefundManagement.aspx" />
+    <Content Include="Views\Refunds\ClientTaskRefundMaintenance.aspx" />
+    <Content Include="Views\Refunds\ClientTaskRefundManagement.aspx" />
     <Content Include="Views\Refunds\FMRefundAppMaintenance.aspx" />
     <Content Include="Views\Refunds\FMRefundAppManagement.aspx" />
     <Content Include="Views\Refunds\Printers\PrintFMRefundApp.aspx" />
@@ -3169,6 +3171,20 @@
     </Compile>
     <Compile Include="Views\Refunds\ClientRefundManagement.aspx.designer.cs">
       <DependentUpon>ClientRefundManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Refunds\ClientTaskRefundMaintenance.aspx.cs">
+      <DependentUpon>ClientTaskRefundMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Refunds\ClientTaskRefundMaintenance.aspx.designer.cs">
+      <DependentUpon>ClientTaskRefundMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Refunds\ClientTaskRefundManagement.aspx.cs">
+      <DependentUpon>ClientTaskRefundManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Refunds\ClientTaskRefundManagement.aspx.designer.cs">
+      <DependentUpon>ClientTaskRefundManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Refunds\FMRefundAppMaintenance.aspx.cs">
       <DependentUpon>FMRefundAppMaintenance.aspx</DependentUpon>

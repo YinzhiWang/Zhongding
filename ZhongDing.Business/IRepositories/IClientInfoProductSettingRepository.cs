@@ -28,6 +28,11 @@ namespace ZhongDing.Business.IRepositories
         /// <returns>IList{UIClientInfoProductSetting}.</returns>
         IList<UIClientInfoProductSetting> GetUIList(UISearchClientInfoProductSetting uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
 
-
+        /// <summary>
+        /// 根据查询条件获取一个实体
+        /// </summary>
+        /// <param name="uiSearchObj">The UI search obj.</param>
+        /// <returns>ClientInfoProductSetting.</returns>
+        ClientInfoProductSetting GetOneByCondistions(UISearchClientInfoProductSetting uiSearchObj);
     }
 }

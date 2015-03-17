@@ -54,7 +54,7 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 已入库
         /// </summary>
-        InWarehouse,
+        InWarehouse = 10,
 
         /// <summary>
         /// 已生成配送订单
@@ -91,5 +91,14 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         ApprovedByDeptManagers,
 
+        /// <summary>
+        /// 大区经理审核通过
+        /// </summary>
+        ApprovedByDistrictManagers,
+
+        /// <summary>
+        /// 市场总管审核通过
+        /// </summary>
+        ApprovedByMarketManagers
     }
 }

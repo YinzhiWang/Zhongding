@@ -6,12 +6,15 @@ using System.Threading.Tasks;
 
 namespace ZhongDing.Domain.UISearchObjects
 {
-    public class UISearchClientInfoProductSetting : UISearchBase
+    public class UISearchClientTaskRefundApp : UISearchWorkflowBase
     {
-        public int ClientInfoID { get; set; }
+        public int CompanyID { get; set; }
+
         public int ClientUserID { get; set; }
+
         public int ClientCompanyID { get; set; }
+
         public int ProductID { get; set; }
-        public int ProductSpecificationID { get; set; }
+
     }
 }

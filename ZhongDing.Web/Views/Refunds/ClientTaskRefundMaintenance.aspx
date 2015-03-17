@@ -1,4 +1,4 @@
-﻿<%@ Page Title="厂家经理返款维护" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="FMRefundAppMaintenance.aspx.cs" Inherits="ZhongDing.Web.Views.Refunds.FMRefundAppMaintenance" %>
+﻿<%@ Page Title="客户奖励返款维护" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ClientTaskRefundMaintenance.aspx.cs" Inherits="ZhongDing.Web.Views.Refunds.ClientTaskRefundMaintenance" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 
@@ -23,57 +23,40 @@
 
             <telerik:AjaxSetting AjaxControlID="rcbxCompany">
                 <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="divProducts" LoadingPanelID="loadingPanel" />
-                    <telerik:AjaxUpdatedControl ControlID="lblStockInQty" />
-                    <telerik:AjaxUpdatedControl ControlID="lblStockOutQty" />
-                    <telerik:AjaxUpdatedControl ControlID="txtRefundAmount" />
+                    <telerik:AjaxUpdatedControl ControlID="divFormContent" LoadingPanelID="loadingPanel" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="rcbxProduct">
                 <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="divProductSpecifications" LoadingPanelID="loadingPanel" />
-                    <telerik:AjaxUpdatedControl ControlID="lblStockInQty" />
-                    <telerik:AjaxUpdatedControl ControlID="lblStockOutQty" />
-                    <telerik:AjaxUpdatedControl ControlID="txtRefundAmount" />
-                </UpdatedControls>
-            </telerik:AjaxSetting>
-            <telerik:AjaxSetting AjaxControlID="rdpBeginDate">
-                <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="divEndDate" />
-                    <telerik:AjaxUpdatedControl ControlID="lblStockInQty" />
-                    <telerik:AjaxUpdatedControl ControlID="lblStockOutQty" />
-                    <telerik:AjaxUpdatedControl ControlID="txtRefundAmount" />
-                </UpdatedControls>
-            </telerik:AjaxSetting>
-            <telerik:AjaxSetting AjaxControlID="rdpEndDate">
-                <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="divBeginDate" />
-                    <telerik:AjaxUpdatedControl ControlID="lblStockInQty" />
-                    <telerik:AjaxUpdatedControl ControlID="lblStockOutQty" />
-                    <telerik:AjaxUpdatedControl ControlID="txtRefundAmount" />
-                </UpdatedControls>
-            </telerik:AjaxSetting>
-            <telerik:AjaxSetting AjaxControlID="rcbxClientUser">
-                <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="lblStockInQty" />
-                    <telerik:AjaxUpdatedControl ControlID="lblStockOutQty" />
-                    <telerik:AjaxUpdatedControl ControlID="txtRefundAmount" />
-                </UpdatedControls>
-            </telerik:AjaxSetting>
-            <telerik:AjaxSetting AjaxControlID="txtRefundPrice">
-                <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="lblStockInQty" />
-                    <telerik:AjaxUpdatedControl ControlID="lblStockOutQty" />
-                    <telerik:AjaxUpdatedControl ControlID="txtRefundAmount" />
+                    <telerik:AjaxUpdatedControl ControlID="divFormContent" LoadingPanelID="loadingPanel" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="ddlProductSpecification">
                 <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="lblStockInQty" />
-                    <telerik:AjaxUpdatedControl ControlID="lblStockOutQty" />
-                    <telerik:AjaxUpdatedControl ControlID="txtRefundAmount" />
+                    <telerik:AjaxUpdatedControl ControlID="divFormContent" LoadingPanelID="loadingPanel" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="rmypRefundDate">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="divFormContent" LoadingPanelID="loadingPanel" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="rcbxClientUser">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="divFormContent" LoadingPanelID="loadingPanel" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="rcbxClientCompany">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="divFormContent" LoadingPanelID="loadingPanel" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="txtRefundPrice">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="divFormContent" LoadingPanelID="loadingPanel" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+
             <telerik:AjaxSetting AjaxControlID="rgAppPayments">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="rgAppPayments" LoadingPanelID="loadingPanel" />
@@ -85,7 +68,7 @@
     <div class="container">
         <div class="mws-panel grid_full">
             <div class="mws-panel-header">
-                <span class="mws-i-24 i-sign-post">厂家经理返款维护</span>
+                <span class="mws-i-24 i-sign-post">客户奖励返款维护</span>
             </div>
             <div class="mws-panel-body">
                 <div class="mws-form">
@@ -109,154 +92,180 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mws-form-row">
-                            <div class="float-left width50-percent">
-                                <label>账套</label>
-                                <div class="mws-form-item">
-                                    <telerik:RadComboBox runat="server" ID="rcbxCompany" Filter="Contains"
-                                        AllowCustomText="false" Height="160px" EmptyMessage="--请选择--" AutoPostBack="true"
-                                        OnSelectedIndexChanged="rcbxCompany_SelectedIndexChanged">
-                                    </telerik:RadComboBox>
-                                    <asp:RequiredFieldValidator ID="rfvCompany"
-                                        runat="server"
-                                        ErrorMessage="请选择账套"
-                                        ControlToValidate="rcbxCompany"
-                                        Display="Dynamic" CssClass="field-validation-error"
-                                        ValidationGroup="vgMaintenance" Text="*">
-                                    </asp:RequiredFieldValidator>
+                        <div runat="server" id="divFormContent">
+                            <div class="mws-form-row">
+                                <div class="float-left width50-percent">
+                                    <label>账套</label>
+                                    <div class="mws-form-item">
+                                        <telerik:RadComboBox runat="server" ID="rcbxCompany" Filter="Contains"
+                                            AllowCustomText="false" Height="160px" EmptyMessage="--请选择--" AutoPostBack="true"
+                                            OnSelectedIndexChanged="rcbxCompany_SelectedIndexChanged">
+                                        </telerik:RadComboBox>
+                                        <asp:RequiredFieldValidator ID="rfvCompany"
+                                            runat="server"
+                                            ErrorMessage="请选择账套"
+                                            ControlToValidate="rcbxCompany"
+                                            Display="Dynamic" CssClass="field-validation-error"
+                                            ValidationGroup="vgMaintenance" Text="*">
+                                        </asp:RequiredFieldValidator>
+                                    </div>
+                                </div>
+                                <div class="float-left width50-percent">
+                                    <label>奖励年月</label>
+                                    <div class="mws-form-item">
+                                        <telerik:RadMonthYearPicker runat="server" ID="rmypRefundDate" Width="120"
+                                            EnableShadows="true"
+                                            MonthYearNavigationSettings-CancelButtonCaption="取消"
+                                            MonthYearNavigationSettings-OkButtonCaption="确定"
+                                            MonthYearNavigationSettings-TodayButtonCaption="今天"
+                                            MonthYearNavigationSettings-DateIsOutOfRangeMessage="日期超出范围"
+                                            MonthYearNavigationSettings-EnableScreenBoundaryDetection="true"
+                                            AutoPostBack="true" OnSelectedDateChanged="rmypRefundDate_SelectedDateChanged">
+                                        </telerik:RadMonthYearPicker>
+                                        <asp:RequiredFieldValidator ID="rfvRefundDate"
+                                            runat="server"
+                                            ErrorMessage="请选择奖励年月"
+                                            ControlToValidate="rmypRefundDate"
+                                            Display="Dynamic" CssClass="field-validation-error"
+                                            ValidationGroup="vgMaintenance" Text="*">
+                                        </asp:RequiredFieldValidator>
+                                        <asp:CustomValidator ID="cvRefundDate" runat="server"
+                                            ControlToValidate="rmypRefundDate" ValidationGroup="vgMaintenance" Display="Dynamic"
+                                            Text="*" CssClass="field-validation-error">
+                                        </asp:CustomValidator>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="float-left width50-percent">
-                                <label>客户</label>
-                                <div class="mws-form-item">
-                                    <telerik:RadComboBox runat="server" ID="rcbxClientUser" Filter="Contains" AllowCustomText="false"
-                                        MarkFirstMatch="true" Height="160px" EmptyMessage="--请选择--"
-                                        AutoPostBack="true" OnSelectedIndexChanged="rcbxClientUser_SelectedIndexChanged">
-                                    </telerik:RadComboBox>
+
+                            <div class="mws-form-row">
+                                <div class="float-left width50-percent">
+                                    <label>客户</label>
+                                    <div class="mws-form-item" runat="server" id="divClientUser">
+                                        <telerik:RadComboBox runat="server" ID="rcbxClientUser" Filter="Contains" AllowCustomText="false"
+                                            MarkFirstMatch="true" Height="160px" EmptyMessage="--请选择--"
+                                            AutoPostBack="true" OnSelectedIndexChanged="rcbxClientUser_SelectedIndexChanged">
+                                        </telerik:RadComboBox>
+                                        <asp:RequiredFieldValidator ID="rfvClientUser"
+                                            runat="server"
+                                            ErrorMessage="请选择客户"
+                                            ControlToValidate="rcbxClientUser"
+                                            Display="Dynamic" CssClass="field-validation-error"
+                                            ValidationGroup="vgMaintenance" Text="*">
+                                        </asp:RequiredFieldValidator>
+                                    </div>
+                                </div>
+                                <div class="float-left width50-percent">
+                                    <label>商业单位</label>
+                                    <div class="mws-form-item" runat="server" id="divClientCompany">
+                                        <telerik:RadComboBox runat="server" ID="rcbxClientCompany" Filter="Contains"
+                                            AllowCustomText="false" Height="160px" Width="100%" EmptyMessage="--请选择--"
+                                            AutoPostBack="true" OnSelectedIndexChanged="rcbxClientCompany_SelectedIndexChanged">
+                                        </telerik:RadComboBox>
+                                        <asp:RequiredFieldValidator ID="rfvClientCompany"
+                                            runat="server"
+                                            ErrorMessage="请选择商业单位"
+                                            ControlToValidate="rcbxClientCompany"
+                                            Display="Dynamic" CssClass="field-validation-error"
+                                            ValidationGroup="vgMaintenance" Text="*">
+                                        </asp:RequiredFieldValidator>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mws-form-row">
+                                <div class="float-left width50-percent">
+                                    <label>货品</label>
+                                    <div class="mws-form-item small" runat="server" id="divProducts">
+                                        <telerik:RadComboBox runat="server" ID="rcbxProduct" Filter="Contains" AutoPostBack="true"
+                                            AllowCustomText="false" Height="160px" Width="95%" EmptyMessage="--请选择--"
+                                            OnSelectedIndexChanged="rcbxProduct_SelectedIndexChanged">
+                                        </telerik:RadComboBox>
+                                        <asp:RequiredFieldValidator ID="rfvProduct"
+                                            runat="server"
+                                            ErrorMessage="请选择货品"
+                                            ControlToValidate="rcbxProduct"
+                                            Display="Dynamic" CssClass="field-validation-error"
+                                            ValidationGroup="vgMaintenance" Text="*">
+                                        </asp:RequiredFieldValidator>
+                                    </div>
+                                </div>
+                                <div class="float-left width50-percent">
+                                    <label>货品规格</label>
+                                    <div class="mws-form-item small" runat="server" id="divProductSpecifications">
+                                        <telerik:RadDropDownList runat="server" ID="ddlProductSpecification" DefaultMessage="--请选择--"
+                                            AutoPostBack="true" OnSelectedIndexChanged="ddlProductSpecification_SelectedIndexChanged">
+                                        </telerik:RadDropDownList>
+                                        <asp:RequiredFieldValidator ID="rfvProductSpecification"
+                                            runat="server"
+                                            ErrorMessage="请选择货品规格"
+                                            ControlToValidate="ddlProductSpecification"
+                                            Display="Dynamic" CssClass="field-validation-error"
+                                            ValidationGroup="vgMaintenance" Text="*">
+                                        </asp:RequiredFieldValidator>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mws-form-row">
+                                <div class="float-left width50-percent">
+                                    <label>任务量</label>
+                                    <div class="mws-form-item toppadding5">
+                                        <asp:Label ID="lblTaskQty" runat="server"></asp:Label>
+                                    </div>
+                                </div>
+                                <div class="float-left width50-percent">
+                                    <label>出库数量</label>
+                                    <div class="mws-form-item toppadding5">
+                                        <asp:Label ID="lblStockOutQty" runat="server"></asp:Label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mws-form-row">
+                                <div class="float-left width50-percent">
+                                    <label>是否有流向？</label>
+                                    <div class="mws-form-item toppadding5">
+                                        <asp:Label ID="lblUseFlowData" runat="server"></asp:Label>
+                                    </div>
+                                </div>
+                                <div class="float-left width50-percent">
+                                    <label>流回数量</label>
+                                    <div class="mws-form-item toppadding5">
+                                        <asp:Label ID="lblBackQty" runat="server"></asp:Label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mws-form-row">
+                                <div class="float-left width50-percent">
+                                    <label>返款单价</label>
+                                    <div class="mws-form-item small">
+                                        <telerik:RadNumericTextBox runat="server" ID="txtRefundPrice" CssClass="mws-textinput" Type="Currency" ShowSpinButtons="true"
+                                            NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator="" MinValue="0" MaxValue="999999999"
+                                            MaxLength="10" AutoPostBack="true" OnTextChanged="txtRefundPrice_TextChanged">
+                                        </telerik:RadNumericTextBox>
+                                        <asp:RequiredFieldValidator ID="rfvRefundPrice"
+                                            runat="server"
+                                            ErrorMessage="返款单价必填"
+                                            ControlToValidate="txtRefundPrice"
+                                            Display="Dynamic" CssClass="field-validation-error"
+                                            ValidationGroup="vgMaintenance" Text="*">
+                                        </asp:RequiredFieldValidator>
+                                    </div>
+                                </div>
+                                <div class="float-left width50-percent">
+                                    <label>应返金额</label>
+                                    <div class="mws-form-item small">
+                                        <telerik:RadNumericTextBox runat="server" ID="txtRefundAmount" CssClass="mws-textinput" Type="Currency"
+                                            NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator="" MinValue="0" MaxValue="999999999"
+                                            MaxLength="10" Enabled="false">
+                                        </telerik:RadNumericTextBox>
+                                        <asp:CustomValidator ID="cvRefundAmount" runat="server"
+                                            ControlToValidate="txtRefundAmount" ValidationGroup="vgMaintenance" Display="Dynamic"
+                                            Text="*" CssClass="field-validation-error">
+                                        </asp:CustomValidator>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="mws-form-row">
-                            <div class="float-left width50-percent">
-                                <label>货品</label>
-                                <div class="mws-form-item small" runat="server" id="divProducts">
-                                    <telerik:RadComboBox runat="server" ID="rcbxProduct" Filter="Contains" AutoPostBack="true"
-                                        AllowCustomText="false" Height="160px" Width="95%" EmptyMessage="--请选择--"
-                                        OnSelectedIndexChanged="rcbxProduct_SelectedIndexChanged">
-                                    </telerik:RadComboBox>
-                                    <asp:RequiredFieldValidator ID="rfvProduct"
-                                        runat="server"
-                                        ErrorMessage="请选择货品"
-                                        ControlToValidate="rcbxProduct"
-                                        Display="Dynamic" CssClass="field-validation-error"
-                                        ValidationGroup="vgMaintenance" Text="*">
-                                    </asp:RequiredFieldValidator>
-                                </div>
-                            </div>
-                            <div class="float-left width50-percent">
-                                <label>货品规格</label>
-                                <div class="mws-form-item small" runat="server" id="divProductSpecifications">
-                                    <telerik:RadDropDownList runat="server" ID="ddlProductSpecification" DefaultMessage="--请选择--"
-                                        AutoPostBack="true" OnSelectedIndexChanged="ddlProductSpecification_SelectedIndexChanged">
-                                    </telerik:RadDropDownList>
-                                    <asp:RequiredFieldValidator ID="rfvProductSpecification"
-                                        runat="server"
-                                        ErrorMessage="请选择货品规格"
-                                        ControlToValidate="ddlProductSpecification"
-                                        Display="Dynamic" CssClass="field-validation-error"
-                                        ValidationGroup="vgMaintenance" Text="*">
-                                    </asp:RequiredFieldValidator>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mws-form-row">
-                            <div class="float-left width50-percent">
-                                <label>结算起始日期</label>
-                                <div class="mws-form-item toppadding5" runat="server" id="divBeginDate">
-                                    <telerik:RadDatePicker runat="server" ID="rdpBeginDate"
-                                        Calendar-EnableShadows="true"
-                                        Calendar-FastNavigationSettings-CancelButtonCaption="取消"
-                                        Calendar-FastNavigationSettings-OkButtonCaption="确定"
-                                        Calendar-FastNavigationSettings-TodayButtonCaption="今天"
-                                        Calendar-FastNavigationSettings-DateIsOutOfRangeMessage="日期超出范围"
-                                        Calendar-FastNavigationSettings-DisableOutOfRangeMonths="true"
-                                        Calendar-FirstDayOfWeek="Monday" AutoPostBack="true"
-                                        OnSelectedDateChanged="rdpBeginDate_SelectedDateChanged">
-                                    </telerik:RadDatePicker>
-                                    <asp:CustomValidator ID="cvBeginDate" runat="server"
-                                        ControlToValidate="rdpBeginDate" ValidationGroup="vgMaintenance" Display="Dynamic"
-                                        Text="*" CssClass="field-validation-error">
-                                    </asp:CustomValidator>
-                                    <asp:RequiredFieldValidator ID="rfvBeginDate" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="rdpBeginDate"
-                                        ErrorMessage="结算起始日期必填" Text="*" Display="Dynamic" CssClass="field-validation-error">
-                                    </asp:RequiredFieldValidator>
-                                </div>
-                            </div>
-                            <div class="float-left width50-percent">
-                                <label>结算结束日期</label>
-                                <div class="mws-form-item toppadding5" runat="server" id="divEndDate">
-                                    <telerik:RadDatePicker runat="server" ID="rdpEndDate"
-                                        Calendar-EnableShadows="true"
-                                        Calendar-FastNavigationSettings-CancelButtonCaption="取消"
-                                        Calendar-FastNavigationSettings-OkButtonCaption="确定"
-                                        Calendar-FastNavigationSettings-TodayButtonCaption="今天"
-                                        Calendar-FastNavigationSettings-DateIsOutOfRangeMessage="日期超出范围"
-                                        Calendar-FastNavigationSettings-DisableOutOfRangeMonths="true"
-                                        Calendar-FirstDayOfWeek="Monday"
-                                        AutoPostBack="true" OnSelectedDateChanged="rdpEndDate_SelectedDateChanged">
-                                    </telerik:RadDatePicker>
-                                    <asp:RequiredFieldValidator ID="rfvEndDate" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="rdpEndDate"
-                                        ErrorMessage="结算结束日期必填" Text="*" CssClass="field-validation-error">
-                                    </asp:RequiredFieldValidator>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mws-form-row">
-                            <div class="float-left width50-percent">
-                                <label>入库数量</label>
-                                <div class="mws-form-item toppadding5">
-                                    <asp:Label ID="lblStockInQty" runat="server"></asp:Label>
-                                </div>
-                            </div>
-                            <div class="float-left width50-percent">
-                                <label>出库数量</label>
-                                <div class="mws-form-item toppadding5">
-                                    <asp:Label ID="lblStockOutQty" runat="server"></asp:Label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mws-form-row">
-                            <div class="float-left width50-percent">
-                                <label>返款单价</label>
-                                <div class="mws-form-item small">
-                                    <telerik:RadNumericTextBox runat="server" ID="txtRefundPrice" CssClass="mws-textinput" Type="Currency" ShowSpinButtons="true"
-                                        NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator="" MinValue="0" MaxValue="999999999"
-                                        MaxLength="10" AutoPostBack="true" OnTextChanged="txtRefundPrice_TextChanged">
-                                    </telerik:RadNumericTextBox>
-                                    <asp:RequiredFieldValidator ID="rfvRefundPrice"
-                                        runat="server"
-                                        ErrorMessage="返款单价必填"
-                                        ControlToValidate="txtRefundPrice"
-                                        Display="Dynamic" CssClass="field-validation-error"
-                                        ValidationGroup="vgMaintenance" Text="*">
-                                    </asp:RequiredFieldValidator>
-                                </div>
-                            </div>
-                            <div class="float-left width50-percent">
-                                <label>应返金额</label>
-                                <div class="mws-form-item small">
-                                    <telerik:RadNumericTextBox runat="server" ID="txtRefundAmount" CssClass="mws-textinput" Type="Currency"
-                                        NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator="" MinValue="0" MaxValue="999999999"
-                                        MaxLength="10" Enabled="false">
-                                    </telerik:RadNumericTextBox>
-                                    <asp:CustomValidator ID="cvRefundAmount" runat="server"
-                                        ControlToValidate="txtRefundAmount" ValidationGroup="vgMaintenance" Display="Dynamic"
-                                        Text="*" CssClass="field-validation-error">
-                                    </asp:CustomValidator>
-                                </div>
-                            </div>
-                        </div>
                         <div class="mws-form-row" runat="server" id="divComment">
                             <label>备注</label>
                             <div class="mws-form-item medium">
@@ -501,8 +510,7 @@
                             <asp:Button ID="btnAudit" runat="server" Text="审核通过" CssClass="mws-button green" CausesValidation="true" Visible="false" OnClick="btnAudit_Click" />
                             <asp:Button ID="btnReturn" runat="server" Text="退回" CssClass="mws-button orange" CausesValidation="true" Visible="false" OnClick="btnReturn_Click" />
                             <asp:Button ID="btnPay" runat="server" Text="确认支付" CssClass="mws-button green" CausesValidation="true" OnClick="btnPay_Click" Visible="false" />
-                            <asp:Button ID="btnPrint" runat="server" Text="打印" CssClass="mws-button green" CausesValidation="true" OnClientClick="openPrintPage();return false;" Visible="false" />
-                            <asp:Button ID="btnCancel" runat="server" Text="取消" UseSubmitBehavior="false" CssClass="mws-button green" OnClientClick="redirectToPage('Views/Refunds/FMRefundAppManagement.aspx');return false;" />
+                            <asp:Button ID="btnCancel" runat="server" Text="取消" UseSubmitBehavior="false" CssClass="mws-button green" OnClientClick="redirectToPage('Views/Refunds/ClientTaskRefundManagement.aspx');return false;" />
                         </div>
                     </div>
                 </div>
@@ -522,21 +530,14 @@
         var currentEntityID = -1;
 
         function redirectToManagementPage(sender, args) {
-            redirectToPage("Views/Refunds/FMRefundAppManagement.aspx");
+            redirectToPage("Views/Refunds/ClientTaskRefundManagement.aspx");
         }
 
         function refreshMaintenancePage(sender, args) {
 
             var currentEntityID = $("#<%= hdnCurrentEntityID.ClientID %>").val();
 
-            redirectToPage("Views/Refunds/FMRefundAppMaintenance.aspx?EntityID=" + currentEntityID);
-        }
-
-        function openPrintPage() {
-
-            var targetUrl = $.getRootPath() + "Views/Refunds/Printers/PrintFMRefundApp.aspx?EntityID=" + currentEntityID;
-
-            window.open(targetUrl, "_blank");
+            redirectToPage("Views/Refunds/ClientTaskRefundMaintenance.aspx?EntityID=" + currentEntityID);
         }
 
         $(document).ready(function () {
@@ -546,3 +547,4 @@
     </script>
 
 </asp:Content>
+

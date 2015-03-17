@@ -177,5 +177,40 @@ namespace ZhongDing.Common.Enums
         /// 修改供应商任务返款
         /// </summary>
         EditSupplierTaskRefund,
+
+        /// <summary>
+        /// 新增客户任务奖励返款
+        /// </summary>
+        NewClientTaskRefund,
+
+        /// <summary>
+        /// 大区经理审核（客户任务奖励返款）
+        /// </summary>
+        AuditCTRefundByDistrictManagers,
+
+        /// <summary>
+        /// 市场总管审核（客户任务奖励返款）
+        /// </summary>
+        AuditCTRefundByMarketManagers,
+
+        /// <summary>
+        /// 财务主管审核（客户任务奖励返款）
+        /// </summary>
+        AuditCTRefundByTreasurers,
+
+        /// <summary>
+        /// 部门领导审核（客户任务奖励返款）
+        /// </summary>
+        AuditCTRefundByDeptManagers,
+
+        /// <summary>
+        /// 出纳支付（客户任务奖励返款）
+        /// </summary>
+        PayCTRefund = 40,
+
+        /// <summary>
+        /// 修改客户任务奖励返款
+        /// </summary>
+        EditClientTaskRefund,
     }
 }

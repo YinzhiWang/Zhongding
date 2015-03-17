@@ -105,5 +105,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<ClientRefundAppDetail> ClientRefundAppDetail { get; set; }
         public DbSet<FactoryManagerRefundApplication> FactoryManagerRefundApplication { get; set; }
         public DbSet<SupplierRefundApplication> SupplierRefundApplication { get; set; }
+        public DbSet<ClientTaskRefundApplication> ClientTaskRefundApplication { get; set; }
     }
 }

@@ -13,21 +13,22 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class ClientUser : IEntityExtendedProperty
+    public partial class ClientTaskRefundApplication : IEntityExtendedProperty
     {
-        public ClientUser()
-        {
-            this.ClientInfo = new HashSet<ClientInfo>();
-            this.DBContract = new HashSet<DBContract>();
-            this.StockOut = new HashSet<StockOut>();
-            this.ClientSaleApplication = new HashSet<ClientSaleApplication>();
-            this.ClientRefundApplication = new HashSet<ClientRefundApplication>();
-            this.FactoryManagerRefundApplication = new HashSet<FactoryManagerRefundApplication>();
-            this.ClientTaskRefundApplication = new HashSet<ClientTaskRefundApplication>();
-        }
-    
         public int ID { get; set; }
-        public string ClientName { get; set; }
+        public int CompanyID { get; set; }
+        public int ClientUserID { get; set; }
+        public int ClientCompanyID { get; set; }
+        public int ProductID { get; set; }
+        public int ProductSpecificationID { get; set; }
+        public int TaskQty { get; set; }
+        public int StockOutQty { get; set; }
+        public Nullable<bool> UseFlowData { get; set; }
+        public Nullable<int> BackQty { get; set; }
+        public Nullable<decimal> RefundPrice { get; set; }
+        public Nullable<decimal> RefundAmount { get; set; }
+        public Nullable<System.DateTime> RefundDate { get; set; }
+        public int WorkflowStatusID { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -44,12 +45,11 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ICollection<ClientInfo> ClientInfo { get; set; }
-        public virtual ICollection<DBContract> DBContract { get; set; }
-        public virtual ICollection<StockOut> StockOut { get; set; }
-        public virtual ICollection<ClientSaleApplication> ClientSaleApplication { get; set; }
-        public virtual ICollection<ClientRefundApplication> ClientRefundApplication { get; set; }
-        public virtual ICollection<FactoryManagerRefundApplication> FactoryManagerRefundApplication { get; set; }
-        public virtual ICollection<ClientTaskRefundApplication> ClientTaskRefundApplication { get; set; }
+        public virtual ClientCompany ClientCompany { get; set; }
+        public virtual ClientUser ClientUser { get; set; }
+        public virtual Company Company { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual ProductSpecification ProductSpecification { get; set; }
+        public virtual WorkflowStatus WorkflowStatus { get; set; }
     }
 }

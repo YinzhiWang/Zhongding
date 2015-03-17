@@ -21,6 +21,8 @@ namespace ZhongDing.Business.Repositories
         private const string ENTITY_PROPERTY_ID = "ID";
         #endregion
 
+        private bool disposed = false;
+
         /// <summary>
         /// The db
         /// </summary>
@@ -93,10 +95,15 @@ namespace ZhongDing.Business.Repositories
         /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (disposing)
+            if (!this.disposed)
             {
-                db.Dispose();
+                if (disposing)
+                {
+                    db.Dispose();
+                }
             }
+
+            this.disposed = true;
         }
 
         /// <summary>
@@ -105,6 +112,8 @@ namespace ZhongDing.Business.Repositories
         public void Dispose()
         {
             Dispose(true);
+
+            GC.SuppressFinalize(this); 
         }
 
         /// <summary>

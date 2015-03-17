@@ -120,5 +120,20 @@ namespace ZhongDing.Business.Repositories
 
             return uiEntities;
         }
+
+        public ClientInfoProductSetting GetOneByCondistions(UISearchClientInfoProductSetting uiSearchObj)
+        {
+            var query = (from cips in DB.ClientInfoProductSetting
+                         join ci in DB.ClientInfo on cips.ClientInfoID equals ci.ID
+                         join p in DB.Product on cips.ProductID equals p.ID
+                         join ps in DB.ProductSpecification on cips.ProductSpecificationID equals ps.ID
+                         where cips.IsDeleted == false && ci.ClientUserID == uiSearchObj.ClientUserID
+                         && ci.ClientCompanyID == uiSearchObj.ClientCompanyID
+                         && cips.ProductID == uiSearchObj.ProductID
+                         && cips.ProductSpecificationID == uiSearchObj.ProductSpecificationID
+                         select cips).FirstOrDefault();
+
+            return query;
+        }
     }
 }

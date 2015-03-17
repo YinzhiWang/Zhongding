@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
-using Telerik.Web.UI.Calendar;
 using ZhongDing.Business.IRepositories;
 using ZhongDing.Business.Repositories;
 using ZhongDing.Common;
@@ -16,20 +15,20 @@ using ZhongDing.Domain.UISearchObjects;
 
 namespace ZhongDing.Web.Views.Refunds
 {
-    public partial class FMRefundAppMaintenance : WorkflowBasePage
+    public partial class ClientTaskRefundMaintenance : WorkflowBasePage
     {
 
         #region Members
 
-        private IFactoryManagerRefundAppRepository _PageFMRefundAppRepository;
-        private IFactoryManagerRefundAppRepository PageFMRefundAppRepository
+        private IClientTaskRefundAppRepository _PageClientTaskRefundAppRepository;
+        private IClientTaskRefundAppRepository PageClientTaskRefundAppRepository
         {
             get
             {
-                if (_PageFMRefundAppRepository == null)
-                    _PageFMRefundAppRepository = new FactoryManagerRefundAppRepository();
+                if (_PageClientTaskRefundAppRepository == null)
+                    _PageClientTaskRefundAppRepository = new ClientTaskRefundAppRepository();
 
-                return _PageFMRefundAppRepository;
+                return _PageClientTaskRefundAppRepository;
             }
         }
 
@@ -42,6 +41,42 @@ namespace ZhongDing.Web.Views.Refunds
                     _PageClientUserRepository = new ClientUserRepository();
 
                 return _PageClientUserRepository;
+            }
+        }
+
+        private IClientCompanyRepository _PageClientCompanyRepository;
+        private IClientCompanyRepository PageClientCompanyRepository
+        {
+            get
+            {
+                if (_PageClientCompanyRepository == null)
+                    _PageClientCompanyRepository = new ClientCompanyRepository();
+
+                return _PageClientCompanyRepository;
+            }
+        }
+
+        private IClientInfoRepository _PageClientInfoRepository;
+        private IClientInfoRepository PageClientInfoRepository
+        {
+            get
+            {
+                if (_PageClientInfoRepository == null)
+                    _PageClientInfoRepository = new ClientInfoRepository();
+
+                return _PageClientInfoRepository;
+            }
+        }
+
+        private IClientInfoProductSettingRepository _PageClientInfoPSRepository;
+        private IClientInfoProductSettingRepository PageClientInfoPSRepository
+        {
+            get
+            {
+                if (_PageClientInfoPSRepository == null)
+                    _PageClientInfoPSRepository = new ClientInfoProductSettingRepository();
+
+                return _PageClientInfoPSRepository;
             }
         }
 
@@ -105,6 +140,18 @@ namespace ZhongDing.Web.Views.Refunds
             }
         }
 
+        private IStockOutRepository _PageStockOutRepository;
+        private IStockOutRepository PageStockOutRepository
+        {
+            get
+            {
+                if (_PageStockOutRepository == null)
+                    _PageStockOutRepository = new StockOutRepository();
+
+                return _PageStockOutRepository;
+            }
+        }
+
         private IApplicationPaymentRepository _PageAppPaymentRepository;
         private IApplicationPaymentRepository PageAppPaymentRepository
         {
@@ -129,14 +176,14 @@ namespace ZhongDing.Web.Views.Refunds
             }
         }
 
-        private FactoryManagerRefundApplication _CurrentEntity;
-        private FactoryManagerRefundApplication CurrentEntity
+        private ClientTaskRefundApplication _CurrentEntity;
+        private ClientTaskRefundApplication CurrentEntity
         {
             get
             {
                 if (_CurrentEntity == null)
                     if (this.CurrentEntityID.HasValue && this.CurrentEntityID > 0)
-                        _CurrentEntity = PageFMRefundAppRepository.GetByID(this.CurrentEntityID);
+                        _CurrentEntity = PageClientTaskRefundAppRepository.GetByID(this.CurrentEntityID);
 
                 return _CurrentEntity;
             }
@@ -150,7 +197,7 @@ namespace ZhongDing.Web.Views.Refunds
                 if (_CanAccessUserIDs == null || _CanAccessUserIDs.Count == 0)
                 {
                     if (this.CurrentEntity == null)
-                        _CanAccessUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.NewFMRefund);
+                        _CanAccessUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.NewClientTaskRefund);
                     else
                         _CanAccessUserIDs = PageWorkflowStatusRepository.GetCanAccessUserIDsByID(this.CurrentWorkFlowID, this.CurrentEntity.WorkflowStatusID);
                 }
@@ -165,7 +212,7 @@ namespace ZhongDing.Web.Views.Refunds
             get
             {
                 if (_CanEditUserIDs == null)
-                    _CanEditUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.EditFMRefund);
+                    _CanEditUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.EditClientTaskRefund);
 
                 return _CanEditUserIDs;
             }
@@ -178,8 +225,10 @@ namespace ZhongDing.Web.Views.Refunds
             {
                 if (_CanAuditUserIDs == null)
                     _CanAuditUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByIDs(new List<int> {
-                        (int)EWorkflowStep.AuditFMRefundByTreasurers,
-                        (int)EWorkflowStep.AuditFMRefundByDeptManagers
+                        (int)EWorkflowStep.AuditCTRefundByDistrictManagers,
+                        (int)EWorkflowStep.AuditCTRefundByMarketManagers,
+                        (int)EWorkflowStep.AuditCTRefundByTreasurers,
+                        (int)EWorkflowStep.AuditCTRefundByDeptManagers
                     });
 
                 return _CanAuditUserIDs;
@@ -190,12 +239,13 @@ namespace ZhongDing.Web.Views.Refunds
 
         protected override int GetCurrentWorkFlowID()
         {
-            return (int)EWorkflow.FactoryManagerRefunds;
+            return (int)EWorkflow.ClientTaskRefunds;
         }
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.Master.MenuItemID = (int)EMenuItem.FactoryManagerRefundsManage;
+            this.Master.MenuItemID = (int)EMenuItem.ClientTaskRefundsManage;
 
             if (!IsPostBack)
             {
@@ -229,6 +279,28 @@ namespace ZhongDing.Web.Views.Refunds
             rcbxClientUser.DataBind();
 
             rcbxClientUser.Items.Insert(0, new RadComboBoxItem("", ""));
+        }
+        private void BindClientCompanies()
+        {
+            rcbxClientCompany.ClearSelection();
+            rcbxClientCompany.Items.Clear();
+
+            var uiSearchObj = new UISearchDropdownItem();
+
+            if (!string.IsNullOrEmpty(rcbxClientUser.SelectedValue))
+            {
+                int clientUserID;
+                if (int.TryParse(rcbxClientUser.SelectedValue, out clientUserID))
+                    uiSearchObj.Extension = new UISearchExtension { ClientUserID = clientUserID };
+            }
+
+            var clientCompanies = PageClientCompanyRepository.GetDropdownItems(uiSearchObj);
+            rcbxClientCompany.DataSource = clientCompanies;
+            rcbxClientCompany.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+            rcbxClientCompany.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+            rcbxClientCompany.DataBind();
+
+            rcbxClientCompany.Items.Insert(0, new RadComboBoxItem("", ""));
         }
 
         private void BindProducts()
@@ -289,8 +361,12 @@ namespace ZhongDing.Web.Views.Refunds
 
                 rcbxCompany.SelectedValue = CurrentEntity.CompanyID.ToString();
 
-                if (CurrentEntity.ClientUserID.HasValue && CurrentEntity.ClientUserID > 0)
+                if (CurrentEntity.ClientUserID > 0)
                     rcbxClientUser.SelectedValue = CurrentEntity.ClientUserID.ToString();
+
+                BindClientCompanies();
+                if (CurrentEntity.ClientCompanyID > 0)
+                    rcbxClientCompany.SelectedValue = CurrentEntity.ClientCompanyID.ToString();
 
                 BindProducts();
                 rcbxProduct.SelectedValue = CurrentEntity.ProductID.ToString();
@@ -298,24 +374,28 @@ namespace ZhongDing.Web.Views.Refunds
                 BindProductSpecifications();
                 ddlProductSpecification.SelectedValue = CurrentEntity.ProductSpecificationID.ToString();
 
-                rdpBeginDate.SelectedDate = CurrentEntity.BeginDate;
-                rdpEndDate.SelectedDate = CurrentEntity.EndDate;
-                lblStockInQty.Text = CurrentEntity.StockInQty.ToString();
+                rmypRefundDate.SelectedDate = CurrentEntity.RefundDate;
 
-                if (CurrentEntity.StockOutQty.HasValue)
+                if (CurrentEntity.TaskQty >= 0)
+                    lblTaskQty.Text = CurrentEntity.TaskQty.ToString();
+
+                if (CurrentEntity.StockOutQty >= 0)
                     lblStockOutQty.Text = CurrentEntity.StockOutQty.ToString();
+
+                if (CurrentEntity.UseFlowData == true)
+                {
+                    lblUseFlowData.Text = GlobalConst.BoolChineseDescription.TRUE;
+
+                    if (CurrentEntity.BackQty >= 0)
+                        lblBackQty.Text = CurrentEntity.BackQty.ToString();
+                }
+                else if (CurrentEntity.UseFlowData == false)
+                    lblUseFlowData.Text = GlobalConst.BoolChineseDescription.FALSE;
 
                 txtRefundPrice.DbValue = CurrentEntity.RefundPrice;
                 txtRefundAmount.DbValue = CurrentEntity.RefundAmount;
 
                 EWorkflowStatus workfolwStatus = (EWorkflowStatus)this.CurrentEntity.WorkflowStatusID;
-
-                switch (workfolwStatus)
-                {
-                    case EWorkflowStatus.Paid:
-                        btnPrint.Visible = true;
-                        break;
-                }
 
                 if (CanEditUserIDs.Contains(CurrentUser.UserID))
                 {
@@ -346,6 +426,8 @@ namespace ZhongDing.Web.Views.Refunds
 
                             break;
                         case EWorkflowStatus.Submit:
+                        case EWorkflowStatus.ApprovedByDistrictManagers:
+                        case EWorkflowStatus.ApprovedByMarketManagers:
                         case EWorkflowStatus.ApprovedByTreasurers:
                             #region 已提交或财务审核同，待审核
 
@@ -438,10 +520,10 @@ namespace ZhongDing.Web.Views.Refunds
         {
             rcbxCompany.Enabled = false;
             rcbxClientUser.Enabled = false;
+            rcbxClientCompany.Enabled = false;
             rcbxProduct.Enabled = false;
             ddlProductSpecification.Enabled = false;
-            rdpBeginDate.Enabled = false;
-            rdpEndDate.Enabled = false;
+            rmypRefundDate.Enabled = false;
             txtRefundPrice.Enabled = false;
 
             txtComment.Enabled = false;
@@ -466,163 +548,209 @@ namespace ZhongDing.Web.Views.Refunds
             lblCreateBy.Text = CurrentUser.FullName;
         }
 
-        /// <summary>
-        /// Cals the stock qty and refund amount.
-        /// </summary>
-        private void CalStockQtyAndRefundAmount()
+        private void BindProductOtherInfos(bool isNeedInitPrice = true)
         {
             if (!string.IsNullOrEmpty(rcbxCompany.SelectedValue)
+                && rmypRefundDate.SelectedDate.HasValue
+                && !string.IsNullOrEmpty(rcbxClientUser.SelectedValue)
+                && !string.IsNullOrEmpty(rcbxClientCompany.SelectedValue)
                 && !string.IsNullOrEmpty(rcbxProduct.SelectedValue)
-                && !string.IsNullOrEmpty(ddlProductSpecification.SelectedValue)
-                && rdpBeginDate.SelectedDate.HasValue
-                && rdpEndDate.SelectedDate.HasValue)
+                && !string.IsNullOrEmpty(ddlProductSpecification.SelectedValue))
             {
-                int companyID = int.Parse(rcbxCompany.SelectedValue);
-                int productID = int.Parse(rcbxProduct.SelectedValue);
-                int productSpecificationID = int.Parse(ddlProductSpecification.SelectedValue);
+                int companyID = Convert.ToInt32(rcbxCompany.SelectedValue);
+                int clientUserID = Convert.ToInt32(rcbxClientUser.SelectedValue);
+                int clientCompanyID = Convert.ToInt32(rcbxClientCompany.SelectedValue);
+                int productID = Convert.ToInt32(rcbxProduct.SelectedValue);
+                int productSpecificationID = Convert.ToInt32(ddlProductSpecification.SelectedValue);
 
-                DateTime beginDate = rdpBeginDate.SelectedDate.Value;
-                DateTime endDate = rdpEndDate.SelectedDate.Value.AddDays(1);
-
-                int stockInQty = 0;
-                int stockOutQty = 0;
-
-                var queryStockInQty = PageStockInDetailRepository.GetList(x => x.StockIn.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse
-                    && x.StockIn.Supplier.CompanyID == companyID && x.ProductID == productID && x.ProductSpecificationID == productSpecificationID
-                    && x.StockIn.EntryDate >= beginDate && x.StockIn.EntryDate < endDate);
-
-                if (queryStockInQty.Count() > 0)
-                    stockInQty = queryStockInQty.Sum(x => x.InQty);
-
-                lblStockInQty.Text = stockInQty.ToString();
-
-                if (!string.IsNullOrEmpty(rcbxClientUser.SelectedValue))
+                var clientProductSetting = PageClientInfoPSRepository.GetOneByCondistions(new UISearchClientInfoProductSetting
                 {
-                    int clientUserID = int.Parse(rcbxClientUser.SelectedValue);
+                    ClientUserID = clientUserID,
+                    ClientCompanyID = clientCompanyID,
+                    ProductID = productID,
+                    ProductSpecificationID = productSpecificationID
+                });
 
-                    var saleOrderTypeIDs = new List<int>
+                if (clientProductSetting != null)
+                {
+                    lblTaskQty.Text = clientProductSetting.MonthlyTask.HasValue
+                        ? clientProductSetting.MonthlyTask.ToString() : string.Empty;
+
+                    decimal? refundPrice;
+
+                    if (isNeedInitPrice)
+                        txtRefundPrice.DbValue = clientProductSetting.RefundPrice;
+
+                    refundPrice = (decimal?)txtRefundPrice.Value;
+
+                    if (clientProductSetting.UseFlowData)
                     {
-                        (int)ESaleOrderType.AttachedMode,
-                        (int)ESaleOrderType.AttractBusinessMode
-                    };
+                        lblUseFlowData.Text = GlobalConst.BoolChineseDescription.TRUE;
 
-                    var queryStockOutQty = PageStockOutDetailRepository.GetList(x => x.StockOut.CompanyID == companyID
-                        && x.ProductID == productID && x.ProductSpecificationID == productSpecificationID
-                        && x.StockOut.WorkflowStatusID == (int)EWorkflowStatus.OutWarehouse
-                        && x.StockOut.OutDate >= beginDate && x.StockOut.OutDate < endDate
-                        && saleOrderTypeIDs.Contains(x.SalesOrderApplication.SaleOrderTypeID)
-                        && x.SalesOrderApplication.ClientSaleApplication.Any(y => y.ClientUserID == clientUserID));
+                        //获取流回数量
+                        lblBackQty.Text = "0";
+                    }
+                    else
+                    {
+                        lblUseFlowData.Text = GlobalConst.BoolChineseDescription.FALSE;
+                    }
 
-                    if (queryStockOutQty.Count() > 0)
-                        stockOutQty = queryStockOutQty.Sum(x => x.OutQty);
-                }
+                    var refundDate = rmypRefundDate.SelectedDate.Value;
+                    var beginDate = new DateTime(refundDate.Year, refundDate.Month, 1);
+                    var endDate = beginDate.AddMonths(1);
 
-                lblStockOutQty.Text = stockOutQty.ToString();
+                    int? stockOutQty = PageStockOutRepository.GetStockOutQty(new UISearchStockOut
+                    {
+                        CompanyID = companyID,
+                        ClientUserID = clientUserID,
+                        ClientCompanyID = clientCompanyID,
+                        ProductID = productID,
+                        ProductSpecificationID = productSpecificationID,
+                        BeginDate = beginDate,
+                        EndDate = endDate
+                    });
 
-                if (txtRefundPrice.Value.HasValue)
-                {
-                    decimal refundAmount = (stockInQty - stockOutQty) * (decimal)(txtRefundPrice.Value ?? 0D);
+                    lblStockOutQty.Text = (stockOutQty ?? 0).ToString();
 
-                    txtRefundAmount.DbValue = refundAmount;
+                    if (stockOutQty.HasValue && stockOutQty > clientProductSetting.MonthlyTask)
+                    {
+                        //计算返款金额
+                        if (clientProductSetting.UseFlowData)
+                        {
+                            //实际本月流回数量* 返款价
+                            txtRefundAmount.DbValue = (refundPrice ?? 0M) * 0; //实际本月流回数量暂时用0
+                        }
+                        else
+                        {
+                            //月出库数量 * 返款价
+                            txtRefundAmount.DbValue = (refundPrice ?? 0M) * (stockOutQty ?? 0);
+                        }
+                    }
+                    else
+                        txtRefundAmount.DbValue = 0;
                 }
             }
         }
 
-        /// <summary>
-        /// 保存客户订单基本信息
-        /// </summary>
-        private bool SaveFMRefundAppBasicData(FactoryManagerRefundApplication currentEntity)
+        private void ResetProductOtherInfos()
+        {
+            lblTaskQty.Text = string.Empty;
+            lblStockOutQty.Text = string.Empty;
+            lblUseFlowData.Text = string.Empty;
+            lblBackQty.Text = string.Empty;
+
+            txtRefundPrice.DbValue = null;
+            txtRefundAmount.DbValue = null;
+        }
+
+        private bool SaveCTRefundAppBasicData(ClientTaskRefundApplication currentEntity)
         {
             bool isSucceedSaved = false;
 
             int companyID = int.Parse(rcbxCompany.SelectedValue);
+            int clientUserID = int.Parse(rcbxClientUser.SelectedValue);
+            int clientCompanyID = int.Parse(rcbxClientCompany.SelectedValue);
             int productID = int.Parse(rcbxProduct.SelectedValue);
             int productSpecificationID = int.Parse(ddlProductSpecification.SelectedValue);
             decimal refundPrice = (decimal)(txtRefundPrice.Value ?? 0D);
 
-            DateTime beginDate = rdpBeginDate.SelectedDate.Value;
-            DateTime endDate = rdpEndDate.SelectedDate.Value.AddDays(1);
+            DateTime tempRefundDate = rmypRefundDate.SelectedDate.Value;
+            DateTime refundDate = new DateTime(tempRefundDate.Year, tempRefundDate.Month, 1);
 
-            int stockInQty = 0;
+            int taskQty = 0;
             int stockOutQty = 0;
             decimal refundAmount = 0M;
 
-            var queryStockInQty = PageStockInDetailRepository.GetList(x => x.StockIn.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse
-                && x.StockIn.Supplier.CompanyID == companyID && x.ProductID == productID && x.ProductSpecificationID == productSpecificationID
-                && x.StockIn.EntryDate >= beginDate && x.StockIn.EntryDate < endDate);
-
-            if (queryStockInQty.Count() > 0)
-                stockInQty = queryStockInQty.Sum(x => x.InQty);
-
-            if (!string.IsNullOrEmpty(rcbxClientUser.SelectedValue))
+            var clientProductSetting = PageClientInfoPSRepository.GetOneByCondistions(new UISearchClientInfoProductSetting
             {
-                int clientUserID = int.Parse(rcbxClientUser.SelectedValue);
+                ClientUserID = clientUserID,
+                ClientCompanyID = clientCompanyID,
+                ProductID = productID,
+                ProductSpecificationID = productSpecificationID
+            });
 
-                currentEntity.ClientUserID = clientUserID;
+            if (clientProductSetting != null)
+            {
+                taskQty = clientProductSetting.MonthlyTask ?? 0;
 
-                var saleOrderTypeIDs = new List<int>
+                var beginDate = refundDate;
+                var endDate = beginDate.AddMonths(1);
+
+                var tempStockOutQty = PageStockOutRepository.GetStockOutQty(new UISearchStockOut
+                {
+                    CompanyID = companyID,
+                    ClientUserID = clientUserID,
+                    ClientCompanyID = clientCompanyID,
+                    ProductID = productID,
+                    ProductSpecificationID = productSpecificationID,
+                    BeginDate = beginDate,
+                    EndDate = endDate
+                });
+
+                stockOutQty = tempStockOutQty ?? 0;
+
+                if (stockOutQty > taskQty)
+                {
+                    //计算返款金额
+                    if (clientProductSetting.UseFlowData)
                     {
-                        (int)ESaleOrderType.AttachedMode,
-                        (int)ESaleOrderType.AttractBusinessMode
-                    };
+                        //实际本月流回数量* 返款价
+                        refundAmount = refundPrice * 0; //实际本月流回数量暂时用0
+                    }
+                    else
+                    {
+                        //月出库数量 * 返款价
+                        refundAmount = refundPrice * stockOutQty;
+                    }
+                }
 
-                var queryStockOutQty = PageStockOutDetailRepository.GetList(x => x.StockOut.CompanyID == companyID
-                    && x.ProductID == productID && x.ProductSpecificationID == productSpecificationID
-                    && x.StockOut.WorkflowStatusID == (int)EWorkflowStatus.OutWarehouse
-                    && x.StockOut.OutDate >= beginDate && x.StockOut.OutDate < endDate
-                    && saleOrderTypeIDs.Contains(x.SalesOrderApplication.SaleOrderTypeID)
-                    && x.SalesOrderApplication.ClientSaleApplication.Any(y => y.ClientUserID == clientUserID));
-
-                if (queryStockOutQty.Count() > 0)
-                    stockOutQty = queryStockOutQty.Sum(x => x.OutQty);
+                currentEntity.UseFlowData = clientProductSetting.UseFlowData;
+                currentEntity.BackQty = 0;//暂时用0
             }
 
-            refundAmount = (stockInQty - stockOutQty) * refundPrice;
-
-            if (refundAmount <= 0)
+            if (refundAmount <= 0M)
             {
                 cvRefundAmount.IsValid = false;
                 cvRefundAmount.ErrorMessage = "返款金额必须大于0";
                 return isSucceedSaved;
             }
 
-            var tempEndDate = rdpEndDate.SelectedDate.Value;
-
-            var tempFMRefundAppCount = PageFMRefundAppRepository.GetList(x => x.ID != currentEntity.ID && x.CompanyID == companyID
+            var tempCTRefundAppCount = PageClientTaskRefundAppRepository.GetList(x => x.ID != currentEntity.ID
+                && x.CompanyID == companyID && x.ClientUserID == clientUserID && x.ClientCompanyID == clientCompanyID
                 && x.ProductID == productID && x.ProductSpecificationID == productSpecificationID
-                && ((beginDate >= x.BeginDate && beginDate <= x.EndDate)
-                || (tempEndDate >= x.BeginDate && tempEndDate <= x.EndDate))).Count();
+                && x.RefundDate == refundDate).Count();
 
-            if (tempFMRefundAppCount > 0)
+            if (tempCTRefundAppCount > 0)
             {
-                cvBeginDate.IsValid = false;
-                cvBeginDate.ErrorMessage = "结算日期区间跟系统已有数据有重叠，请重新选择日期和其他条件";
+                cvRefundDate.IsValid = false;
+                cvRefundDate.ErrorMessage = "奖励年月跟系统已有数据有重叠，请重新选择日期或其他条件";
 
                 return isSucceedSaved;
             }
 
             currentEntity.CompanyID = companyID;
+            currentEntity.ClientUserID = clientUserID;
+            currentEntity.ClientCompanyID = clientCompanyID;
             currentEntity.ProductID = productID;
             currentEntity.ProductSpecificationID = productSpecificationID;
-            currentEntity.BeginDate = rdpBeginDate.SelectedDate.Value;
-            currentEntity.EndDate = rdpEndDate.SelectedDate.Value;
-            currentEntity.StockInQty = stockInQty;
+            currentEntity.TaskQty = taskQty;
             currentEntity.StockOutQty = stockOutQty;
             currentEntity.RefundPrice = refundPrice;
             currentEntity.RefundAmount = refundAmount;
+            currentEntity.RefundDate = refundDate;
 
-            PageFMRefundAppRepository.Save();
+            PageClientTaskRefundAppRepository.Save();
 
             if (!string.IsNullOrEmpty(txtComment.Text.Trim()))
             {
                 var appNote = new ApplicationNote();
-                appNote.WorkflowID = (int)EWorkflow.FactoryManagerRefunds;
+                appNote.WorkflowID = (int)EWorkflow.ClientTaskRefunds;
                 appNote.NoteTypeID = (int)EAppNoteType.Comment;
 
                 if (CanEditUserIDs.Contains(CurrentUser.UserID))
-                    appNote.WorkflowStepID = (int)EWorkflowStep.EditFMRefund;
+                    appNote.WorkflowStepID = (int)EWorkflowStep.EditClientTaskRefund;
                 else
-                    appNote.WorkflowStepID = (int)EWorkflowStep.NewFMRefund;
+                    appNote.WorkflowStepID = (int)EWorkflowStep.NewClientTaskRefund;
 
                 appNote.ApplicationID = currentEntity.ID;
                 appNote.Note = txtComment.Text.Trim();
@@ -636,13 +764,23 @@ namespace ZhongDing.Web.Views.Refunds
                 && CanAuditUserIDs.Contains(CurrentUser.UserID))
             {
                 var appNote = new ApplicationNote();
-                appNote.WorkflowID = (int)EWorkflow.FactoryManagerRefunds;
+                appNote.WorkflowID = (int)EWorkflow.ClientTaskRefunds;
                 appNote.NoteTypeID = (int)EAppNoteType.AuditOpinion;
 
                 if (currentEntity.WorkflowStatusID == (int)EWorkflowStatus.Submit)
-                    appNote.WorkflowStepID = (int)EWorkflowStep.AuditFMRefundByTreasurers;
-                else
-                    appNote.WorkflowStepID = (int)EWorkflowStep.AuditFMRefundByDeptManagers;
+                    appNote.WorkflowStepID = (int)EWorkflowStep.AuditCTRefundByDistrictManagers;
+                else if (currentEntity.WorkflowStatusID == (int)EWorkflowStatus.ApprovedByDistrictManagers)
+                {
+                    appNote.WorkflowStepID = (int)EWorkflowStep.AuditCTRefundByMarketManagers;
+                }
+                else if (currentEntity.WorkflowStatusID == (int)EWorkflowStatus.ApprovedByMarketManagers)
+                {
+                    appNote.WorkflowStepID = (int)EWorkflowStep.AuditCTRefundByTreasurers;
+                }
+                else if (currentEntity.WorkflowStatusID == (int)EWorkflowStatus.ApprovedByTreasurers)
+                {
+                    appNote.WorkflowStepID = (int)EWorkflowStep.AuditCTRefundByDeptManagers;
+                }
 
                 appNote.ApplicationID = currentEntity.ID;
                 appNote.Note = txtAuditComment.Text.Trim();
@@ -657,7 +795,7 @@ namespace ZhongDing.Web.Views.Refunds
             return isSucceedSaved;
         }
 
-        private bool UpdateFMRefundApp(FactoryManagerRefundApplication currentEntity, int oldWorkflowStatusID)
+        private bool UpdateClientTaskRefundApp(ClientTaskRefundApplication currentEntity, int oldWorkflowStatusID)
         {
             bool isSucceedSaved = false;
 
@@ -665,7 +803,18 @@ namespace ZhongDing.Web.Views.Refunds
 
             decimal refundAmount = 0M;
 
-            refundAmount = (currentEntity.StockInQty - currentEntity.StockOutQty ?? 0) * refundPrice;
+            //计算返款金额
+            if (currentEntity.UseFlowData.HasValue
+                && currentEntity.UseFlowData == true)
+            {
+                //实际本月流回数量* 返款价
+                refundAmount = refundPrice * currentEntity.BackQty ?? 0; //实际本月流回数量暂时用0
+            }
+            else
+            {
+                //月出库数量 * 返款价
+                refundAmount = refundPrice * currentEntity.StockOutQty;
+            }
 
             if (refundAmount <= 0M)
             {
@@ -677,19 +826,29 @@ namespace ZhongDing.Web.Views.Refunds
             currentEntity.RefundPrice = refundPrice;
             currentEntity.RefundAmount = refundAmount;
 
-            PageFMRefundAppRepository.Save();
+            PageClientTaskRefundAppRepository.Save();
 
             if (!string.IsNullOrEmpty(txtAuditComment.Text.Trim())
                 && CanAuditUserIDs.Contains(CurrentUser.UserID))
             {
                 var appNote = new ApplicationNote();
-                appNote.WorkflowID = (int)EWorkflow.FactoryManagerRefunds;
+                appNote.WorkflowID = (int)EWorkflow.ClientTaskRefunds;
                 appNote.NoteTypeID = (int)EAppNoteType.AuditOpinion;
 
                 if (oldWorkflowStatusID == (int)EWorkflowStatus.Submit)
-                    appNote.WorkflowStepID = (int)EWorkflowStep.AuditFMRefundByTreasurers;
+                    appNote.WorkflowStepID = (int)EWorkflowStep.AuditCTRefundByDistrictManagers;
+                else if (oldWorkflowStatusID == (int)EWorkflowStatus.ApprovedByDistrictManagers)
+                {
+                    appNote.WorkflowStepID = (int)EWorkflowStep.AuditCTRefundByMarketManagers;
+                }
+                else if (oldWorkflowStatusID == (int)EWorkflowStatus.ApprovedByMarketManagers)
+                {
+                    appNote.WorkflowStepID = (int)EWorkflowStep.AuditCTRefundByTreasurers;
+                }
                 else if (oldWorkflowStatusID == (int)EWorkflowStatus.ApprovedByTreasurers)
-                    appNote.WorkflowStepID = (int)EWorkflowStep.AuditFMRefundByDeptManagers;
+                {
+                    appNote.WorkflowStepID = (int)EWorkflowStep.AuditCTRefundByDeptManagers;
+                }
 
                 appNote.ApplicationID = currentEntity.ID;
                 appNote.Note = txtAuditComment.Text.Trim();
@@ -707,47 +866,46 @@ namespace ZhongDing.Web.Views.Refunds
 
         protected void rcbxCompany_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
+            ResetProductOtherInfos();
+
+            ddlProductSpecification.ClearSelection();
+            ddlProductSpecification.Items.Clear();
+
             BindProducts();
-
-            CalStockQtyAndRefundAmount();
         }
 
-        protected void rcbxProduct_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        protected void rcbxClientUser_SelectedIndexChanged(object sender, Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs e)
         {
+            ResetProductOtherInfos();
+
+            BindClientCompanies();
+        }
+
+        protected void rcbxProduct_SelectedIndexChanged(object sender, Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            ResetProductOtherInfos();
+
             BindProductSpecifications();
-
-            CalStockQtyAndRefundAmount();
         }
 
-        protected void rcbxClientUser_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        protected void ddlProductSpecification_SelectedIndexChanged(object sender, Telerik.Web.UI.DropDownListEventArgs e)
         {
-            CalStockQtyAndRefundAmount();
+            BindProductOtherInfos();
         }
 
-        protected void rdpBeginDate_SelectedDateChanged(object sender, SelectedDateChangedEventArgs e)
+        protected void rcbxClientCompany_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
-            if (e.NewDate.HasValue)
-                rdpEndDate.MinDate = e.NewDate.Value;
-
-            CalStockQtyAndRefundAmount();
+            BindProductOtherInfos();
         }
 
-        protected void rdpEndDate_SelectedDateChanged(object sender, SelectedDateChangedEventArgs e)
+        protected void rmypRefundDate_SelectedDateChanged(object sender, Telerik.Web.UI.Calendar.SelectedDateChangedEventArgs e)
         {
-            if (e.NewDate.HasValue)
-                rdpBeginDate.MaxDate = e.NewDate.Value;
-
-            CalStockQtyAndRefundAmount();
+            BindProductOtherInfos();
         }
 
         protected void txtRefundPrice_TextChanged(object sender, EventArgs e)
         {
-            CalStockQtyAndRefundAmount();
-        }
-
-        protected void ddlProductSpecification_SelectedIndexChanged(object sender, DropDownListEventArgs e)
-        {
-            CalStockQtyAndRefundAmount();
+            BindProductOtherInfos(false);
         }
 
         #region Grid events
@@ -969,25 +1127,34 @@ namespace ZhongDing.Web.Views.Refunds
                 }
             }
         }
+
         #endregion
 
         #endregion
+
+        #region Button events
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
+            if ((txtRefundAmount.Value ?? 0D) <= 0)
+            {
+                cvRefundAmount.IsValid = false;
+                cvRefundAmount.ErrorMessage = "返款金额必须大于0";
+            }
+
             if (!IsValid) return;
 
-            FactoryManagerRefundApplication currentEntity = this.CurrentEntity;
+            ClientTaskRefundApplication currentEntity = this.CurrentEntity;
 
             if (currentEntity == null)
             {
-                currentEntity = new FactoryManagerRefundApplication();
+                currentEntity = new ClientTaskRefundApplication();
                 currentEntity.WorkflowStatusID = (int)EWorkflowStatus.TemporarySave;
 
-                PageFMRefundAppRepository.Add(currentEntity);
+                PageClientTaskRefundAppRepository.Add(currentEntity);
             }
 
-            bool isSaved = SaveFMRefundAppBasicData(currentEntity);
+            bool isSaved = SaveCTRefundAppBasicData(currentEntity);
 
             if (isSaved)
             {
@@ -1004,6 +1171,7 @@ namespace ZhongDing.Web.Views.Refunds
                     this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SAEVED_REFRESH);
                 }
             }
+
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
@@ -1014,7 +1182,7 @@ namespace ZhongDing.Web.Views.Refunds
             {
                 this.CurrentEntity.WorkflowStatusID = (int)EWorkflowStatus.Submit;
 
-                bool isSaved = SaveFMRefundAppBasicData(this.CurrentEntity);
+                bool isSaved = SaveCTRefundAppBasicData(this.CurrentEntity);
 
                 if (isSaved)
                 {
@@ -1033,9 +1201,17 @@ namespace ZhongDing.Web.Views.Refunds
 
             var oldWorkflowStatusID = this.CurrentEntity.WorkflowStatusID;
 
-            switch (this.CurrentEntity.WorkflowStatusID)
+            switch (oldWorkflowStatusID)
             {
                 case (int)EWorkflowStatus.Submit:
+                    CurrentEntity.WorkflowStatusID = (int)EWorkflowStatus.ApprovedByDistrictManagers;
+                    break;
+
+                case (int)EWorkflowStatus.ApprovedByDistrictManagers:
+                    CurrentEntity.WorkflowStatusID = (int)EWorkflowStatus.ApprovedByMarketManagers;
+                    break;
+
+                case (int)EWorkflowStatus.ApprovedByMarketManagers:
                     CurrentEntity.WorkflowStatusID = (int)EWorkflowStatus.ApprovedByTreasurers;
                     break;
 
@@ -1044,7 +1220,7 @@ namespace ZhongDing.Web.Views.Refunds
                     break;
             }
 
-            bool isSaved = UpdateFMRefundApp(CurrentEntity, oldWorkflowStatusID);
+            bool isSaved = UpdateClientTaskRefundApp(CurrentEntity, oldWorkflowStatusID);
 
             if (isSaved)
             {
@@ -1064,7 +1240,7 @@ namespace ZhongDing.Web.Views.Refunds
 
             CurrentEntity.WorkflowStatusID = (int)EWorkflowStatus.ReturnBasicInfo;
 
-            bool isSaved = UpdateFMRefundApp(CurrentEntity, oldWorkflowStatusID);
+            bool isSaved = UpdateClientTaskRefundApp(CurrentEntity, oldWorkflowStatusID);
 
             if (isSaved)
             {
@@ -1075,28 +1251,26 @@ namespace ZhongDing.Web.Views.Refunds
 
         protected void btnPay_Click(object sender, EventArgs e)
         {
-
             if (CurrentEntity != null)
             {
                 using (IUnitOfWork unitOfWork = new UnitOfWork())
                 {
                     var db = unitOfWork.GetDbModel();
 
-                    IFactoryManagerRefundAppRepository fmRefundAppRepository = new FactoryManagerRefundAppRepository();
+                    IClientTaskRefundAppRepository ctRefundAppRepository = new ClientTaskRefundAppRepository();
                     IApplicationPaymentRepository appPaymentRepository = new ApplicationPaymentRepository();
 
-                    fmRefundAppRepository.SetDbModel(db);
+                    ctRefundAppRepository.SetDbModel(db);
                     appPaymentRepository.SetDbModel(db);
 
-                    var currentEntity = fmRefundAppRepository.GetByID(this.CurrentEntityID);
+                    var currentEntity = ctRefundAppRepository.GetByID(this.CurrentEntityID);
 
                     if (currentEntity != null)
                     {
-
                         var appPayments = appPaymentRepository.GetList(x => x.WorkflowID == CurrentWorkFlowID
                             && x.ApplicationID == CurrentEntity.ID).ToList();
 
-                        var totalRefundAmount = CurrentEntity.RefundAmount;
+                        var totalRefundAmount = CurrentEntity.RefundAmount ?? 0M;
 
                         var totalPayAmount = appPayments.Sum(x => (x.Amount ?? 0M) + (x.Fee ?? 0M));
 
@@ -1125,5 +1299,8 @@ namespace ZhongDing.Web.Views.Refunds
                 }
             }
         }
+
+        #endregion
+
     }
 }
