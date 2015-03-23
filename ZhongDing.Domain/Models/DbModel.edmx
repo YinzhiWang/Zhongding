@@ -78,6 +78,7 @@
           <EntitySet Name="SupplierDeduction" EntityType="DbModel.Store.SupplierDeduction" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierRefundApplication" EntityType="DbModel.Store.SupplierRefundApplication" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierTaskAssignment" EntityType="DbModel.Store.SupplierTaskAssignment" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TransportCompany" EntityType="DbModel.Store.TransportCompany" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UnitOfMeasurement" EntityType="DbModel.Store.UnitOfMeasurement" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserBonus" EntityType="DbModel.Store.UserBonus" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Users" EntityType="DbModel.Store.Users" store:Type="Tables" Schema="dbo" />
@@ -87,7 +88,7 @@
           <EntitySet Name="WorkflowStep" EntityType="DbModel.Store.WorkflowStep" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="WorkflowStepStatus" EntityType="DbModel.Store.WorkflowStepStatus" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="WorkflowStepUser" EntityType="DbModel.Store.WorkflowStepUser" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK__aspnet_Me__UserI__10566F31" Association="DbModel.Store.FK__aspnet_Me__UserI__10566F31">
+          <AssociationSet Name="FK__aspnet_Me__UserI__4B422AD5" Association="DbModel.Store.FK__aspnet_Me__UserI__4B422AD5">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
           </AssociationSet>
@@ -1900,6 +1901,23 @@
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
         </EntityType>
+        <EntityType Name="TransportCompany">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Telephone" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="CompanyAddress" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Driver" Type="nvarchar" MaxLength="50" />
+          <Property Name="DriverTelephone" Type="nvarchar" MaxLength="50" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="1000" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
         <EntityType Name="UnitOfMeasurement">
           <Key>
             <PropertyRef Name="ID" />
@@ -2016,7 +2034,7 @@
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
         </EntityType>
-        <Association Name="FK__aspnet_Me__UserI__10566F31">
+        <Association Name="FK__aspnet_Me__UserI__4B422AD5">
           <End Role="aspnet_Users" Type="DbModel.Store.aspnet_Users" Multiplicity="1" />
           <End Role="aspnet_Membership" Type="DbModel.Store.aspnet_Membership" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -4758,6 +4776,7 @@
             <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
             <End Role="ClientTaskRefundApplication" EntitySet="ClientTaskRefundApplication" />
           </AssociationSet>
+          <EntitySet Name="TransportCompany" EntityType="DbModel.TransportCompany" />
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -8347,6 +8366,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TransportCompany">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="CompanyName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Telephone" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="CompanyAddress" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Driver" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="DriverTelephone" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Remark" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -9694,6 +9730,24 @@
                 <ScalarProperty Name="ClientCompanyID" ColumnName="ClientCompanyID" />
                 <ScalarProperty Name="ClientUserID" ColumnName="ClientUserID" />
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransportCompany">
+            <EntityTypeMapping TypeName="DbModel.TransportCompany">
+              <MappingFragment StoreEntitySet="TransportCompany">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="DriverTelephone" ColumnName="DriverTelephone" />
+                <ScalarProperty Name="Driver" ColumnName="Driver" />
+                <ScalarProperty Name="CompanyAddress" ColumnName="CompanyAddress" />
+                <ScalarProperty Name="Telephone" ColumnName="Telephone" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

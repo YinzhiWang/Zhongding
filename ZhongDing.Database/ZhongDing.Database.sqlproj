@@ -376,6 +376,7 @@
     <Build Include="dbo\Tables\ClientRefundAppDetail.sql" />
     <Build Include="dbo\Tables\FactoryManagerRefundApplication.sql" />
     <Build Include="dbo\Tables\ClientTaskRefundApplication.sql" />
+    <Build Include="dbo\Tables\TransportCompany.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

@@ -2584,6 +2584,8 @@
     <Content Include="Views\Basics\ClientInfoManagement.aspx" />
     <Content Include="Views\Basics\ClientInfoProductFlowMaintenance.aspx" />
     <Content Include="Views\Basics\ClientInfoProductFlowManagement.aspx" />
+    <Content Include="Views\Basics\TransportCompanyMaintenance.aspx" />
+    <Content Include="Views\Basics\TransportCompanyManagement.aspx" />
     <Content Include="Views\Basics\DBContractMaintenance.aspx" />
     <Content Include="Views\Basics\DBContractManagement.aspx" />
     <Content Include="Views\Basics\DeptProductSalesPlanAndBonusMaintenance.aspx" />
@@ -2905,6 +2907,20 @@
     </Compile>
     <Compile Include="Views\Basics\CompanyManagement.aspx.designer.cs">
       <DependentUpon>CompanyManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\TransportCompanyMaintenance.aspx.cs">
+      <DependentUpon>TransportCompanyMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\TransportCompanyMaintenance.aspx.designer.cs">
+      <DependentUpon>TransportCompanyMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\TransportCompanyManagement.aspx.cs">
+      <DependentUpon>TransportCompanyManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\TransportCompanyManagement.aspx.designer.cs">
+      <DependentUpon>TransportCompanyManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Basics\DBContractMaintenance.aspx.cs">
       <DependentUpon>DBContractMaintenance.aspx</DependentUpon>
@@ -3406,7 +3422,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

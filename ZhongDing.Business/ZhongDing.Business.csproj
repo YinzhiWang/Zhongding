@@ -118,6 +118,7 @@
     <Compile Include="IRepositories\ISupplierRefundApplicationRepository.cs" />
     <Compile Include="IRepositories\ISupplierRepository.cs" />
     <Compile Include="IRepositories\ISupplierTaskAssignmentRepository.cs" />
+    <Compile Include="IRepositories\ITransportCompanyRepository.cs" />
     <Compile Include="IRepositories\IUnitOfMeasurementRepository.cs" />
     <Compile Include="IRepositories\IUnitOfWork.cs" />
     <Compile Include="IRepositories\IUsersRepository.cs" />
@@ -193,6 +194,7 @@
     <Compile Include="Repositories\SupplierRefundApplicationRepository.cs" />
     <Compile Include="Repositories\SupplierRepository.cs" />
     <Compile Include="Repositories\SupplierTaskAssignmentRepository.cs" />
+    <Compile Include="Repositories\TransportCompanyRepository.cs" />
     <Compile Include="Repositories\UnitOfMeasurementRepository.cs" />
     <Compile Include="Repositories\UnitOfWork.cs" />
     <Compile Include="Repositories\UsersRepository.cs" />

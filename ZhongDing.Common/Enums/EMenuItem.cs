@@ -62,7 +62,10 @@ namespace ZhongDing.Common.Enums
         /// 部门货品销售计划和提成策略管理
         /// </summary>
         DeptProductSalesPlanAndBonusManage,
-
+        /// <summary>
+        /// 物流公司管理
+        /// </summary>
+        TransportCompanyManage,
         /// <summary>
         /// 货品信息管理
         /// </summary>
@@ -172,6 +175,7 @@ namespace ZhongDing.Common.Enums
         /// 客户任务奖励返款管理
         /// </summary>
         ClientTaskRefundsManage,
+
 
     }
 }

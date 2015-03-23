@@ -252,6 +252,7 @@
         <AssociationConnector Association="DbModel.FK_ClientTaskRefundApplication_Product" />
         <AssociationConnector Association="DbModel.FK_ClientTaskRefundApplication_ProductSpecification" />
         <AssociationConnector Association="DbModel.FK_ClientTaskRefundApplication_WorkflowStatus" />
+        <EntityTypeShape EntityType="DbModel.TransportCompany" Width="1.5" PointX="11.375403105921766" PointY="12.918626105840609" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
