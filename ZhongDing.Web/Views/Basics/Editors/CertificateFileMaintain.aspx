@@ -17,7 +17,7 @@
                         <label>文件名称</label>
                         <div class="mws-form-item small">
                             <telerik:RadTextBox runat="server" ID="txtFileName" CssClass="mws-textinput" Width="40%" MaxLength="100"></telerik:RadTextBox>
-                            <telerik:RadToolTip ID="rttAccountName" runat="server" TargetControlID="txtFileName" ShowEvent="OnClick"
+                            <telerik:RadToolTip ID="rttFileName" runat="server" TargetControlID="txtFileName" ShowEvent="OnClick"
                                 Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
                             </telerik:RadToolTip>
                             <asp:RequiredFieldValidator ID="rfvAccountName" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="txtFileName"

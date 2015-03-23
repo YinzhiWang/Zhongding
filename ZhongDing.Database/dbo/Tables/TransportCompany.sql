@@ -11,6 +11,8 @@
     [CreatedBy]       INT             NULL,
     [LastModifiedOn]  DATETIME        NULL,
     [LastModifiedBy]  INT             NULL,
-    CONSTRAINT [PK__Transpor__3214EC270432E510] PRIMARY KEY CLUSTERED ([ID] ASC)
+    CONSTRAINT [PK_TransportCompany] PRIMARY KEY CLUSTERED ([ID] ASC)
 );
+
+
 

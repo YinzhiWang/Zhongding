@@ -38,5 +38,15 @@ namespace ZhongDing.Domain.UISearchObjects
         /// <value>The last modified by.</value>
         public int? LastModifiedBy { get; set; }
 
+        /// <summary>
+        /// 开始日期
+        /// </summary>
+        public DateTime? BeginDate { get; set; }
+
+        /// <summary>
+        /// 结束日期
+        /// </summary>
+        public DateTime? EndDate { get; set; }
+
     }
 }

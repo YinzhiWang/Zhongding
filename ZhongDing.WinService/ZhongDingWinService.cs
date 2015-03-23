@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ZhongDing.Common;
 using ZhongDing.Common.Enums;
+using ZhongDing.WinService.Lib;
 
 namespace ZhongDing.WinService
 {
@@ -38,6 +39,9 @@ namespace ZhongDing.WinService
         /// </summary>
         private bool isRunProcessCalculateInventory = false;
 
+        private bool isFirstRunProcessImportDCFlowData = true;
+        private bool isRunProcessImportDCFlowData = false;
+
 
         public ZhongDingWinService()
         {
@@ -60,6 +64,11 @@ namespace ZhongDing.WinService
             this.tmCalculateInventory.Start();
             Utility.WriteTrace(WIN_SERVICE_NAME + ": tmCalculateInventory.Start.");
 
+            this.tmImportDCFlowData.Enabled = true;
+            this.tmImportDCFlowData.Interval = initInterval;
+            this.tmImportDCFlowData.Start();
+            Utility.WriteTrace(WIN_SERVICE_NAME + ": tmImportDCFlowData.Start.");
+
         }
 
         protected override void OnStop()
@@ -72,6 +81,64 @@ namespace ZhongDing.WinService
 
             Utility.WriteTrace(WIN_SERVICE_NAME + ": tmCalculateInventory.Stop.");
         }
+
+        #region Private Methods
+
+        /// <summary>
+        /// Caculates the next run time.
+        /// </summary>
+        /// <param name="startTime">The start time.</param>
+        /// <param name="interval">The interval.</param>
+        /// <param name="dateInterval">The date interval.</param>
+        /// <returns>DateTime.</returns>
+        private DateTime CaculateNextRunTime(DateTime startTime, int interval, DateInterval dateInterval = DateInterval.Hour)
+        {
+            System.DateTime dtStart = startTime;
+            if (dtStart >= DateTime.Now)
+            {
+                return dtStart.AddMinutes(-1);
+            }
+            else
+            {
+                double dDiff = 0;
+
+                dDiff = DateAndTime.DateDiff(dateInterval, dtStart, DateTime.Now.AddMinutes(-1)) / interval;
+
+                System.DateTime sNext;
+
+                switch (dateInterval)
+                {
+                    case DateInterval.Day:
+                        sNext = dtStart.AddDays((dDiff + 1) * interval);
+                        break;
+                    case DateInterval.Hour:
+                        sNext = dtStart.AddHours((dDiff + 1) * interval);
+                        break;
+                    case DateInterval.Minute:
+                        sNext = dtStart.AddMinutes((dDiff + 1) * interval);
+                        break;
+                    case DateInterval.Month:
+                        sNext = dtStart.AddMonths(Convert.ToInt32((dDiff + 1)) * interval);
+                        break;
+                    case DateInterval.Second:
+                        sNext = dtStart.AddSeconds((dDiff + 1) * interval);
+                        break;
+                    case DateInterval.Year:
+                        sNext = dtStart.AddYears(Convert.ToInt32((dDiff + 1)) * interval);
+                        break;
+                    default:
+                        sNext = dtStart.AddHours((dDiff + 1) * interval);
+                        break;
+                }
+
+                return sNext;
+            }
+        }
+
+
+        #endregion
+
+        #region Events
 
         /// <summary>
         /// 计算每日库存服务
@@ -139,61 +206,12 @@ namespace ZhongDing.WinService
             }
         }
 
-
-        #region Private Methods
-
-        /// <summary>
-        /// Caculates the next run time.
-        /// </summary>
-        /// <param name="startTime">The start time.</param>
-        /// <param name="interval">The interval.</param>
-        /// <param name="dateInterval">The date interval.</param>
-        /// <returns>DateTime.</returns>
-        private DateTime CaculateNextRunTime(DateTime startTime, int interval, DateInterval dateInterval = DateInterval.Hour)
+        private void tmImportDCFlowData_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
-            System.DateTime dtStart = startTime;
-            if (dtStart >= DateTime.Now)
-            {
-                return dtStart.AddMinutes(-1);
-            }
-            else
-            {
-                double dDiff = 0;
 
-                dDiff = DateAndTime.DateDiff(dateInterval, dtStart, DateTime.Now.AddMinutes(-1)) / interval;
-
-                System.DateTime sNext;
-
-                switch (dateInterval)
-                {
-                    case DateInterval.Day:
-                        sNext = dtStart.AddDays((dDiff + 1) * interval);
-                        break;
-                    case DateInterval.Hour:
-                        sNext = dtStart.AddHours((dDiff + 1) * interval);
-                        break;
-                    case DateInterval.Minute:
-                        sNext = dtStart.AddMinutes((dDiff + 1) * interval);
-                        break;
-                    case DateInterval.Month:
-                        sNext = dtStart.AddMonths(Convert.ToInt32((dDiff + 1)) * interval);
-                        break;
-                    case DateInterval.Second:
-                        sNext = dtStart.AddSeconds((dDiff + 1) * interval);
-                        break;
-                    case DateInterval.Year:
-                        sNext = dtStart.AddYears(Convert.ToInt32((dDiff + 1)) * interval);
-                        break;
-                    default:
-                        sNext = dtStart.AddHours((dDiff + 1) * interval);
-                        break;
-                }
-
-                return sNext;
-            }
         }
 
-
         #endregion
+
     }
 }

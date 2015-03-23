@@ -28,3 +28,10 @@ var EPaymentMethods = {
     Deduction: 2
 };
 
+//导入数据类型
+var EImportDataTypes = {
+    DCFlowData: 1,
+    DCInventoryData: 2,
+    ProcureOrderData: 3
+};
+

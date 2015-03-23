@@ -10,7 +10,7 @@ using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UIObjects;
 
-namespace ZhongDing.WinService
+namespace ZhongDing.WinService.Lib
 {
     public class CalculateInventoryService
     {

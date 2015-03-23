@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using ZhongDing.Common;
 using ZhongDing.Common.Enums;
 using ZhongDing.WinService;
+using ZhongDing.WinService.Lib;
 
 namespace ZhongDing.WinServiceTest
 {
@@ -31,6 +32,11 @@ namespace ZhongDing.WinServiceTest
         private void btnCalculateInventory_Click(object sender, EventArgs e)
         {
             CalculateInventoryService.ProcessWork();
+        }
+
+        private void btnImportData_Click(object sender, EventArgs e)
+        {
+            ImportDataService.ProcessWork();
         }
 
     }

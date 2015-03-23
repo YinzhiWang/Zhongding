@@ -29,22 +29,31 @@
         private void InitializeComponent()
         {
             this.tmCalculateInventory = new System.Timers.Timer();
+            this.tmImportDCFlowData = new System.Timers.Timer();
             ((System.ComponentModel.ISupportInitialize)(this.tmCalculateInventory)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tmImportDCFlowData)).BeginInit();
             // 
             // tmCalculateInventory
             // 
             this.tmCalculateInventory.Enabled = true;
             this.tmCalculateInventory.Elapsed += new System.Timers.ElapsedEventHandler(this.tmCalculateInventory_Elapsed);
             // 
-            // ZhongDingService
+            // tmImportDCFlowData
+            // 
+            this.tmImportDCFlowData.Enabled = true;
+            this.tmImportDCFlowData.Elapsed += new System.Timers.ElapsedEventHandler(this.tmImportDCFlowData_Elapsed);
+            // 
+            // ZhongDingWinService
             // 
             this.ServiceName = "ZhongDing MIS Service";
             ((System.ComponentModel.ISupportInitialize)(this.tmCalculateInventory)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tmImportDCFlowData)).EndInit();
 
         }
 
         #endregion
 
         private System.Timers.Timer tmCalculateInventory;
+        private System.Timers.Timer tmImportDCFlowData;
     }
 }

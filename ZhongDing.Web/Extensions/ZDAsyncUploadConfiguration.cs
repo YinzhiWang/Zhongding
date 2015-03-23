@@ -6,6 +6,7 @@ using Telerik.Web.UI;
 
 namespace ZhongDing.Web.Extensions
 {
+    [Serializable]
     public class ZDAsyncUploadConfiguration : AsyncUploadConfiguration
     {
         private string uploadFilePath;
@@ -42,6 +43,16 @@ namespace ZhongDing.Web.Extensions
         {
             get { return supplierContractID; }
             set { supplierContractID = value; }
+        }
+
+        private int importDataTypeID;
+        /// <summary>
+        /// 导入数据类型
+        /// </summary>
+        public int ImportDataTypeID
+        {
+            get { return importDataTypeID; }
+            set { importDataTypeID = value; }
         }
     }
 }

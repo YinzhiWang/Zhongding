@@ -160,7 +160,7 @@ namespace ZhongDing.Web.Views.Basics.Editors
         /// </summary>
         private void InitUploadConfiguration()
         {
-            // Populate the default (base) upload configuration into an object of type BaoYuAsyncUploadConfiguration
+            // Populate the default (base) upload configuration into an object of type ZDAsyncUploadConfiguration
             ZDAsyncUploadConfiguration config =
                 radUploadFile.CreateDefaultUploadConfiguration<ZDAsyncUploadConfiguration>();
 

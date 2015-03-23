@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Practices.EnterpriseLibrary.Common, Version=6.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EnterpriseLibrary.Common.6.0.1304.0\lib\NET45\Microsoft.Practices.EnterpriseLibrary.Common.dll</HintPath>
@@ -48,6 +51,18 @@
     </Reference>
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OOXML">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.OOXML.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXml4Net">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.OpenXml4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="NPOI.OpenXmlFormats">
+      <HintPath>..\packages\NPOI.2.1.3.1\lib\net40\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -70,6 +85,9 @@
     <Compile Include="Enums\ECompareOperator.cs" />
     <Compile Include="Enums\EDeliveryMode.cs" />
     <Compile Include="Enums\EDepartmentType.cs" />
+    <Compile Include="Enums\EExcelType.cs" />
+    <Compile Include="Enums\EImportDataType.cs" />
+    <Compile Include="Enums\EImportStatus.cs" />
     <Compile Include="Enums\EInvoiceType.cs" />
     <Compile Include="Enums\EMenuItem.cs" />
     <Compile Include="Enums\EMonthOfYear.cs" />
@@ -87,6 +105,7 @@
     <Compile Include="Enums\EWorkflowStep.cs" />
     <Compile Include="Enums\LogCategory.cs" />
     <Compile Include="Enums\LogEventType.cs" />
+    <Compile Include="ExcelHelper.cs" />
     <Compile Include="GlobalConst.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemEnhance.cs" />

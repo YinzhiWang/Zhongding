@@ -31,13 +31,13 @@ namespace ZhongDing.Web.Views.Basics.Editors {
         protected global::Telerik.Web.UI.RadTextBox txtFileName;
         
         /// <summary>
-        /// rttAccountName control.
+        /// rttFileName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadToolTip rttAccountName;
+        protected global::Telerik.Web.UI.RadToolTip rttFileName;
         
         /// <summary>
         /// rfvAccountName control.

@@ -176,6 +176,20 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         ClientTaskRefundsManage,
 
+        /// <summary>
+        /// 数据导入管理
+        /// </summary>
+        ImportDataManage = 80,
+
+        /// <summary>
+        /// 商业客户销售流向
+        /// </summary>
+        ClientSaleFlowData,
+
+        /// <summary>
+        /// 配送公司流向
+        /// </summary>
+        DCFlowData,
 
     }
 }

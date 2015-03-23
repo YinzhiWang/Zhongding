@@ -29,6 +29,18 @@ namespace ZhongDing.Web.HttpHandle
             }
         }
 
+        private IDCImportFileLogRepository _PageDCImportFileLogRepository;
+        private IDCImportFileLogRepository PageDCImportFileLogRepository
+        {
+            get
+            {
+                if (_PageDCImportFileLogRepository == null)
+                    _PageDCImportFileLogRepository = new DCImportFileLogRepository();
+
+                return _PageDCImportFileLogRepository;
+            }
+        }
+
         #endregion
 
         public void ProcessRequest(HttpContext context)
@@ -84,9 +96,9 @@ namespace ZhongDing.Web.HttpHandle
                                     break;
                                 case EOwnerType.Supplier:
 
-                                    if (uploadedFile.SupplierContractFileID > 0)
+                                    if (uploadedFile.CurrentEntityID > 0)
                                     {
-                                        var supplierContractFile = PageSupplierContractFileRepository.GetByID(uploadedFile.SupplierContractFileID);
+                                        var supplierContractFile = PageSupplierContractFileRepository.GetByID(uploadedFile.CurrentEntityID);
 
                                         if (supplierContractFile != null)
                                         {
@@ -102,6 +114,33 @@ namespace ZhongDing.Web.HttpHandle
                                 case EOwnerType.Producer:
                                     break;
                                 case EOwnerType.Product:
+                                    break;
+                            }
+                        }
+                        else if (RequestData.UploadedFile.ImportDataTypeID > 0)
+                        {
+                            var importDataType = (EImportDataType)RequestData.UploadedFile.ImportDataTypeID;
+
+                            switch (importDataType)
+                            {
+                                case EImportDataType.DCFlowData:
+                                    if (uploadedFile.CurrentEntityID > 0)
+                                    {
+                                        var dcImportFileLog = PageDCImportFileLogRepository.GetByID(uploadedFile.CurrentEntityID);
+
+                                        if (dcImportFileLog != null)
+                                        {
+                                            dcImportFileLog.ImportFileLog.FilePath = string.Empty;
+
+                                            PageDCImportFileLogRepository.Save();
+                                        }
+                                    }
+                                    break;
+                                case EImportDataType.DCInventoryData:
+                                    break;
+                                case EImportDataType.ProcureOrderData:
+                                    break;
+                                case EImportDataType.StockInData:
                                     break;
                             }
                         }

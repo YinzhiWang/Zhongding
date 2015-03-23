@@ -152,6 +152,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DbModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\DCFlowData.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DCFlowDataDetail.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DCImportFileLog.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DCInventoryData.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Department.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -189,6 +201,15 @@
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Hospital.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ImportDataType.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ImportFileLog.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ImportStatus.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\InventoryHistory.cs">
@@ -338,6 +359,8 @@
     <Compile Include="UIObjects\UIDaBaoAppDetail.cs" />
     <Compile Include="UIObjects\UIDBContract.cs" />
     <Compile Include="UIObjects\UIDBContractHospital.cs" />
+    <Compile Include="UIObjects\UIDCFlowData.cs" />
+    <Compile Include="UIObjects\UIDCImportFileLog.cs" />
     <Compile Include="UIObjects\UIDepartment.cs" />
     <Compile Include="UIObjects\UIDeptMarketProduct.cs" />
     <Compile Include="UIObjects\UIDeptProductRecord.cs" />
@@ -349,6 +372,7 @@
     <Compile Include="UIObjects\UIDropdownItem.cs" />
     <Compile Include="UIObjects\UIFactoryManagerRefundApp.cs" />
     <Compile Include="UIObjects\UIHospital.cs" />
+    <Compile Include="UIObjects\UIImportFileLog.cs" />
     <Compile Include="UIObjects\UIInventoryHistory.cs" />
     <Compile Include="UIObjects\UIProcureOrderAppDetail.cs" />
     <Compile Include="UIObjects\UIProcureOrderApplication.cs" />
@@ -394,6 +418,8 @@
     <Compile Include="UISearchObjects\UISearchDaBaoApplication.cs" />
     <Compile Include="UISearchObjects\UISearchDaBaoAppDetail.cs" />
     <Compile Include="UISearchObjects\UISearchDBContract.cs" />
+    <Compile Include="UISearchObjects\UISearchDCFlowData.cs" />
+    <Compile Include="UISearchObjects\UISearchDCImportFileLog.cs" />
     <Compile Include="UISearchObjects\UISearchDepartment.cs" />
     <Compile Include="UISearchObjects\UISearchDeptMarketProduct.cs" />
     <Compile Include="UISearchObjects\UISearchDeptProductRecord.cs" />
@@ -406,6 +432,7 @@
     <Compile Include="UISearchObjects\UISearchExtension.cs" />
     <Compile Include="UISearchObjects\UISearchFactoryManagerRefundApp.cs" />
     <Compile Include="UISearchObjects\UISearchHospital.cs" />
+    <Compile Include="UISearchObjects\UISearchImportFileLog.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderAppDetail.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderApplication.cs" />
     <Compile Include="UISearchObjects\UISearchProduct.cs" />

@@ -2609,6 +2609,10 @@
     <Content Include="Views\HRM\EmployeeManagement.aspx" />
     <Content Include="Views\HRM\WorkflowPermissionMaintenance.aspx" />
     <Content Include="Views\HRM\WorkflowPermissionManagement.aspx" />
+    <Content Include="Views\Imports\DCFlowDataManagement.aspx" />
+    <Content Include="Views\Imports\DCFlowDataMaintenance.aspx" />
+    <Content Include="Views\Imports\Editors\UploadDCFlowDataFile.aspx" />
+    <Content Include="Views\Imports\ImportDCFlowData.aspx" />
     <Content Include="Views\Procures\Editors\ChooseProcureOrderProducts.aspx" />
     <Content Include="Views\Procures\Editors\ProcureOrderProductMaintain.aspx" />
     <Content Include="Views\Procures\Printers\PrintStockIn.aspx" />
@@ -3096,6 +3100,34 @@
     </Compile>
     <Compile Include="Views\HRM\WorkflowPermissionManagement.aspx.designer.cs">
       <DependentUpon>WorkflowPermissionManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Imports\DCFlowDataManagement.aspx.cs">
+      <DependentUpon>DCFlowDataManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\DCFlowDataManagement.aspx.designer.cs">
+      <DependentUpon>DCFlowDataManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Imports\DCFlowDataMaintenance.aspx.cs">
+      <DependentUpon>DCFlowDataMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\DCFlowDataMaintenance.aspx.designer.cs">
+      <DependentUpon>DCFlowDataMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Imports\Editors\UploadDCFlowDataFile.aspx.cs">
+      <DependentUpon>UploadDCFlowDataFile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\Editors\UploadDCFlowDataFile.aspx.designer.cs">
+      <DependentUpon>UploadDCFlowDataFile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Imports\ImportDCFlowData.aspx.cs">
+      <DependentUpon>ImportDCFlowData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\ImportDCFlowData.aspx.designer.cs">
+      <DependentUpon>ImportDCFlowData.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Procures\Editors\ChooseProcureOrderProducts.aspx.cs">
       <DependentUpon>ChooseProcureOrderProducts.aspx</DependentUpon>

@@ -26,12 +26,15 @@ namespace ZhongDing.Common
         private static readonly string CONFIGKEY_UPLOADFILEPATH_COMMON = "UploadFilePath.Common";
         private static readonly string CONFIGKEY_UPLOADFILEPATH_SUPPLIER_CONTRACT = "UploadFilePath.SupplierContract";
         private static readonly string CONFIGKEY_UPLOADFILEPATH_PRODUCT = "UploadFilePath.Product";
+        private static readonly string CONFIGKEY_UPLOADFILEPATH_DCFLOWDATA = "UploadFilePath.DCFlowData";
+
 
         private static readonly string CONFIGKEY_MEMBERSHIP_PASSWORDRESETLENGTH = "Membership.PasswordResetLength";
         private static readonly string CONFIGKEY_MEMBERSHIP_PASSWORDRESETNONALPHANUMERICCOUNT = "Membership.PasswordResetNonalphanumericCount";
         private static readonly string CONFIGKEY_MEMBERSHIP_LOCKEDOUTTIMEOUT = "Membership.LockedOutTimeout";
 
         private static readonly string CONFIGKEY_WEBSITE_ROOTURL = "Website.RootUrl";
+        private static readonly string CONFIGKEY_WEBSITE_ABSOLUTE_ROOT_PATH = "Website.AbsoluteRootPath";
 
         private static readonly string CONFIGKEY_MAX_GUARANTEE_AMOUNT = "MaxGuaranteeAmount";
 
@@ -178,6 +181,17 @@ namespace ZhongDing.Common
         }
 
         /// <summary>
+        /// 配送公司流向数据上传路径
+        /// </summary>
+        public static string UploadFilePathDCFlowData
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[CONFIGKEY_UPLOADFILEPATH_DCFLOWDATA];
+            }
+        }
+
+        /// <summary>
         /// 密码恢复时格式长度
         /// </summary>
         public static int PasswordResetLength
@@ -235,6 +249,17 @@ namespace ZhongDing.Common
             get
             {
                 return ConfigurationManager.AppSettings[CONFIGKEY_WEBSITE_ROOTURL];
+            }
+        }
+
+        /// <summary>
+        /// 系统部署后的根目录绝对路径.
+        /// </summary>
+        public static string WebsiteAbsoluteRootPath
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[CONFIGKEY_WEBSITE_ABSOLUTE_ROOT_PATH];
             }
         }
 

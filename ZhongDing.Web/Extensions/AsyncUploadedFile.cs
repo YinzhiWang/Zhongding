@@ -17,10 +17,14 @@ namespace ZhongDing.Web.Extensions
         public int OwnerTypeID { get; set; }
 
         /// <summary>
-        /// 供应商合同文件ID
+        /// 导入数据类型ID
         /// </summary>
-        /// <value>The supplier contract file ID.</value>
-        public int SupplierContractFileID { get; set; }
+        public int ImportDataTypeID { get; set; }
+
+        /// <summary>
+        /// 当前文件实体ID
+        /// </summary>
+        public int CurrentEntityID { get; set; }
 
         /// <summary>
         /// 文件名
@@ -33,5 +37,6 @@ namespace ZhongDing.Web.Extensions
         /// </summary>
         /// <value>The file path.</value>
         public string FilePath { get; set; }
+
     }
 }

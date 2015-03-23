@@ -132,11 +132,11 @@
                                 </ul>
                             </li>
 
-                            <li data-level="1">
+                            <li data-level="1" data-menuitemid="80">
                                 <a href="#" class="mws-i-24 i-link">数据导入</a>
                                 <ul class="hide">
                                     <li data-level="2"><a href="form_layouts.html">商业客户销售流向</a></li>
-                                    <li data-level="2"><a href="form_elements.html">配送公司流向</a></li>
+                                    <li data-level="2" data-menuitemid="82"><a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/DCFlowDataManagement.aspx');">配送公司流向</a></li>
                                     <li data-level="2"><a href="form_elements.html">配送公司库存数据</a></li>
                                     <li data-level="2"><a href="form_elements.html">采购订单导入</a></li>
                                     <li data-level="2"><a href="form_elements.html">收货入库单导入</a></li>
