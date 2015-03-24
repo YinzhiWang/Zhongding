@@ -475,5 +475,59 @@ namespace ZhongDing.Common
 
         #endregion
 
+        #region 导入数据Excel列名
+
+        /// <summary>
+        /// 导入数据Excel列名
+        /// </summary>
+        public class ImportDataColumns
+        {
+            #region 配送公司流向数据列名
+            /// <summary>
+            /// 货品编码列
+            /// </summary>
+            public static readonly string PRODUCT_CODE = "货品编码";
+
+            /// <summary>
+            /// 货品名称
+            /// </summary>
+            public static readonly string PRODUCT_NAME = "货品名称";
+
+            /// <summary>
+            /// 规格
+            /// </summary>
+            public static readonly string PRODUCT_SPECIFICATION = "规格";
+
+            /// <summary>
+            /// 基本单位
+            /// </summary>
+            public static readonly string UNIT_NAME = "基本单位";
+
+            /// <summary>
+            /// 生产企业
+            /// </summary>
+            public static readonly string FACTORY_NAME = "生产企业";
+
+            /// <summary>
+            /// 销售日期
+            /// </summary>
+            public static readonly string SALE_DATE = "销售日期";
+
+            /// <summary>
+            /// 销售数量
+            /// </summary>
+            public static readonly string SALE_QTY = "销售数量";
+
+            /// <summary>
+            /// 流向
+            /// </summary>
+            public static readonly string FLOW_TO = "流向";
+
+            #endregion
+
+        }
+
+        #endregion
+
     }
 }

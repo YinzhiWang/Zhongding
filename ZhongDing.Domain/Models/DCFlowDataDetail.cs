@@ -47,7 +47,7 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual DBContract DBContract { get; set; }
-        public virtual DCFlowData DCFlowData { get; set; }
         public virtual Hospital Hospital { get; set; }
+        public virtual DCFlowData DCFlowData { get; set; }
     }
 }

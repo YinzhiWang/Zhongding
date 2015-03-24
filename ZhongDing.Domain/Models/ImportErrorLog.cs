@@ -13,35 +13,26 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class Hospital : IEntityExtendedProperty
+    public partial class ImportErrorLog : IEntityExtendedProperty
     {
-        public Hospital()
-        {
-            this.DBContractHospital = new HashSet<DBContractHospital>();
-            this.DCFlowDataDetail = new HashSet<DCFlowDataDetail>();
-            this.DCFlowData = new HashSet<DCFlowData>();
-        }
-    
         public int ID { get; set; }
-        public string HospitalName { get; set; }
-        public bool IsDeleted { get; set; }
+        public int ImportFileLogID { get; set; }
+        public Nullable<int> ErrorRowIndex { get; set; }
+        public string ErrorRowData { get; set; }
+        public string ErrorMsg { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
-        public Nullable<System.DateTime> LastModifiedOn { get; set; }
-        public Nullable<int> LastModifiedBy { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
-    	public bool HasColumnIsDeleted { get { return true; } }
+    	public bool HasColumnIsDeleted { get { return false; } }
     	public bool HasColumnDeletedOn { get { return false; } }
     	public bool HasColumnCreatedOn { get { return true; } }
     	public bool HasColumnCreatedBy { get { return true; } }
-    	public bool HasColumnLastModifiedOn { get { return true; } }
-    	public bool HasColumnLastModifiedBy { get { return true; } }
+    	public bool HasColumnLastModifiedOn { get { return false; } }
+    	public bool HasColumnLastModifiedBy { get { return false; } }
     
     
-        public virtual ICollection<DBContractHospital> DBContractHospital { get; set; }
-        public virtual ICollection<DCFlowDataDetail> DCFlowDataDetail { get; set; }
-        public virtual ICollection<DCFlowData> DCFlowData { get; set; }
+        public virtual ImportFileLog ImportFileLog { get; set; }
     }
 }

@@ -206,6 +206,9 @@
     <Compile Include="Models\ImportDataType.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ImportErrorLog.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ImportFileLog.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>

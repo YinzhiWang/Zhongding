@@ -589,13 +589,12 @@ namespace ZhongDing.Web.Views.Basics
                     if (int.TryParse(hdnCurrentEditHospitalID.Value, out curEditHospitalID))
                     {
                         if (PageDBContractHospitalRepository.GetList(x => x.DBContract != null
-                            && x.DBContract.ClientUserID == CurrentEntity.ClientUserID
                             && x.DBContract.ProductID == CurrentEntity.ProductID
                             && x.DBContract.ProductSpecificationID == CurrentEntity.ProductSpecificationID
                             && x.DBContract.DBContractHospital.Any(y => y.HospitalID == curEditHospitalID)).Count() > 0)
                         {
                             if (cvHospitalName != null)
-                                cvHospitalName.ErrorMessage = "该客户同一种货品和规格已关联过该医院，请重新选择";
+                                cvHospitalName.ErrorMessage = "同一种货品和规格已关联过该医院，请重新选择";
                             args.IsValid = false;
                         }
                     }

@@ -384,6 +384,7 @@
     <Build Include="dbo\Tables\DCImportFileLog.sql" />
     <Build Include="dbo\Tables\DCFlowDataDetail.sql" />
     <Build Include="dbo\Tables\DCFlowData.sql" />
+    <Build Include="dbo\Tables\ImportErrorLog.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

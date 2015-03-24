@@ -14,13 +14,86 @@ namespace ZhongDing.Business.Repositories.Imports
 {
     public class ImportDataRepository : IImportDataRepository
     {
+        #region Members
+
+        private IDCFlowDataRepository _dCFlowDataRepository;
+        private IDCFlowDataRepository DCFlowDataRepository
+        {
+            get
+            {
+                if (_dCFlowDataRepository == null)
+                    _dCFlowDataRepository = new DCFlowDataRepository();
+
+                return _dCFlowDataRepository;
+            }
+        }
+
+        private IImportFileLogRepository _importFileLogRepository;
+        private IImportFileLogRepository ImportFileLogRepository
+        {
+            get
+            {
+                if (_importFileLogRepository == null)
+                    _importFileLogRepository = new ImportFileLogRepository();
+
+                return _importFileLogRepository;
+            }
+        }
+
+        private IProductRepository _productRepository;
+        private IProductRepository ProductRepository
+        {
+            get
+            {
+                if (_productRepository == null)
+                    _productRepository = new ProductRepository();
+
+                return _productRepository;
+            }
+        }
+
+        private IProductSpecificationRepository _productSpecificationRepository;
+        private IProductSpecificationRepository ProductSpecificationRepository
+        {
+            get
+            {
+                if (_productSpecificationRepository == null)
+                    _productSpecificationRepository = new ProductSpecificationRepository();
+
+                return _productSpecificationRepository;
+            }
+        }
+
+        private IHospitalRepository _hospitalRepository;
+        private IHospitalRepository HospitalRepository
+        {
+            get
+            {
+                if (_hospitalRepository == null)
+                    _hospitalRepository = new HospitalRepository();
+
+                return _hospitalRepository;
+            }
+        }
+
+        private IDBContractRepository _dBContractRepository;
+        private IDBContractRepository DBContractRepository
+        {
+            get
+            {
+                if (_dBContractRepository == null)
+                    _dBContractRepository = new DBContractRepository();
+
+                return _dBContractRepository;
+            }
+        }
+
+        #endregion
+
         public void ImportData()
         {
-            IImportFileLogRepository importFileLogRepository = new ImportFileLogRepository();
-
-            var toBeImportFileLogs = importFileLogRepository.GetList(x =>
-                //x.IsDeleted == false && 
-                !string.IsNullOrEmpty(x.FilePath)
+            var toBeImportFileLogs = ImportFileLogRepository.GetList(x =>
+                x.IsDeleted == false && !string.IsNullOrEmpty(x.FilePath)
                 && (x.ImportStatusID == (int)EImportStatus.ToBeImport
                     || x.ImportStatusID == (int)EImportStatus.ImportError)).ToList();
 
@@ -65,7 +138,7 @@ namespace ZhongDing.Business.Repositories.Imports
                     }
                 }
 
-                importFileLogRepository.Save();
+                ImportFileLogRepository.Save();
             }
         }
 
@@ -80,19 +153,139 @@ namespace ZhongDing.Business.Repositories.Imports
             if (ds != null && ds.Tables.Count > 0
                 && ds.Tables[0].Rows.Count > 0)
             {
-                //using (IUnitOfWork unitOfWork = new UnitOfWork())
-                //{
-                //    var db = unitOfWork.GetDbModel();
-                //}
-
                 fileLog.ImportBeginDate = DateTime.Now;
 
-                foreach (var row in ds.Tables[0].Rows)
+                string errorMsg;
+                int rowIndex = 0;
+                foreach (DataRow row in ds.Tables[0].Rows)
                 {
+                    errorMsg = string.Empty;
 
+                    try
+                    {
+                        rowIndex++;
+
+                        string productCode = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.PRODUCT_CODE]);
+                        string productName = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.PRODUCT_NAME]);
+                        string specification = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.PRODUCT_SPECIFICATION]);
+                        string unitName = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.UNIT_NAME]);
+                        string factoryName = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.FACTORY_NAME]);
+                        string tempSaleDate = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.SALE_DATE]);
+                        string tempSaleQty = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.SALE_QTY]);
+                        string flowTo = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.FLOW_TO]);
+
+                        DateTime saleDate;
+                        if (DateTime.TryParse(tempSaleDate, out saleDate))
+                        {
+                            int saleQty;
+                            if (int.TryParse(tempSaleQty, out saleQty))
+                            {
+                                var product = ProductRepository.GetList(x =>
+                                    x.ProductCode.ToLower().Equals(productCode.ToLower())).FirstOrDefault();
+
+                                if (product != null)
+                                {
+                                    var productSpecification = ProductSpecificationRepository
+                                        .GetList(x => x.Specification.ToLower().Equals(specification.ToLower()))
+                                        .FirstOrDefault();
+
+                                    if (productSpecification != null)
+                                    {
+                                        var hospital = HospitalRepository.GetList(x =>
+                                            x.HospitalName.ToLower().Equals(flowTo.ToLower())).FirstOrDefault();
+
+                                        DBContract dBContract = null;
+                                        bool isMatchedContract = false;
+
+                                        if (hospital != null)
+                                        {
+                                            dBContract = DBContractRepository.GetList(x =>
+                                                x.ProductID == product.ID && x.ProductSpecificationID == productSpecification.ID
+                                                && x.DBContractHospital.Any(y => y.HospitalID == hospital.ID)).FirstOrDefault();
+
+                                            if (dBContract != null)
+                                                isMatchedContract = true;
+                                        }
+
+                                        var dCFlowData = DCFlowDataRepository.GetList(x =>
+                                            x.DistributionCompanyID == fileLog.DCImportFileLog.DistributionCompanyID
+                                            && x.ProductID == product.ID && x.ProductSpecificationID == productSpecification.ID
+                                            && x.SaleDate == saleDate && x.SettlementDate == fileLog.DCImportFileLog.SettlementDate
+                                            && x.FlowTo == flowTo).FirstOrDefault();
+
+                                        //限制重复导入，如果存在就跳过该条记录
+                                        if (dCFlowData == null)
+                                        {
+                                            dCFlowData = new DCFlowData()
+                                            {
+                                                ImportFileLogID = fileLog.ID,
+                                                ProductID = product.ID,
+                                                ProductName = productName,
+                                                ProductCode = productCode,
+                                                ProductSpecificationID = productSpecification.ID,
+                                                ProductSpecification = specification,
+                                                SaleDate = saleDate,
+                                                SaleQty = saleQty,
+                                                SettlementDate = fileLog.DCImportFileLog.SettlementDate,
+                                                FlowTo = flowTo
+                                            };
+
+                                            fileLog.DCFlowData.Add(dCFlowData);
+
+                                            //找到匹配的协议
+                                            if (isMatchedContract)
+                                            {
+                                                dCFlowData.HospitalID = hospital.ID;
+
+                                                var dCFlowDataDetail = new DCFlowDataDetail()
+                                                {
+                                                    DBContractID = dBContract.ID,
+                                                    ClientUserID = dBContract.ClientUserID.HasValue
+                                                    ? dBContract.ClientUserID.Value : GlobalConst.INVALID_INT,
+
+                                                };
+                                            }
+                                            else
+                                            {
+
+                                            }
+                                        }
+                                        else
+                                            continue;
+                                    }
+                                    else
+                                        errorMsg += GlobalConst.ImportDataColumns.PRODUCT_SPECIFICATION + "不存在；";
+                                }
+                                else
+                                    errorMsg += GlobalConst.ImportDataColumns.PRODUCT_NAME + "不存在；";
+                            }
+                            else
+                                errorMsg += GlobalConst.ImportDataColumns.SALE_QTY + "格式错误；";
+                        }
+                        else
+                            errorMsg += GlobalConst.ImportDataColumns.SALE_DATE + "格式错误；";
+                    }
+                    catch (Exception exp)
+                    {
+                        Utility.WriteExceptionLog(exp);
+
+                        errorMsg += exp.Message;
+                    }
+
+                    if (errorMsg != string.Empty)
+                    {
+                        fileLog.ImportErrorLog.Add(new ImportErrorLog
+                        {
+                            ErrorRowIndex = rowIndex,
+                            ErrorMsg = errorMsg,
+                            ErrorRowData = row.ToString()
+                        });
+                    }
                 }
 
                 fileLog.ImportEndDate = DateTime.Now;
+
+                ImportFileLogRepository.Save();
             }
         }
 

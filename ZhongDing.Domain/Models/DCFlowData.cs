@@ -31,6 +31,11 @@ namespace ZhongDing.Domain.Models
         public System.DateTime SaleDate { get; set; }
         public int SaleQty { get; set; }
         public System.DateTime SettlementDate { get; set; }
+        public Nullable<int> HospitalID { get; set; }
+        public string FlowTo { get; set; }
+        public Nullable<bool> IsCorrectlyFlow { get; set; }
+        public Nullable<bool> IsOverwritten { get; set; }
+        public Nullable<int> OldDCFlowDataID { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
     
@@ -45,6 +50,7 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual DistributionCompany DistributionCompany { get; set; }
+        public virtual Hospital Hospital { get; set; }
         public virtual ImportFileLog ImportFileLog { get; set; }
         public virtual Product Product { get; set; }
         public virtual ProductSpecification ProductSpecification1 { get; set; }

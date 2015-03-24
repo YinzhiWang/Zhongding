@@ -7,7 +7,6 @@
     [ImportEndDate]    DATETIME        NULL,
     [ImportStatusID]   INT             NOT NULL,
     [ErrorMsg]         NVARCHAR (MAX)  NULL,
-    [ErrorRowIndex]    INT             NULL,
     [IsDeleted]        BIT             CONSTRAINT [DF_ImportFileLog_IsDeleted] DEFAULT ((0)) NOT NULL,
     [CreatedOn]        DATETIME        CONSTRAINT [DF_ImportFileLog_CreatedOn] DEFAULT (getdate()) NOT NULL,
     [CreatedBy]        INT             NULL,
@@ -17,4 +16,6 @@
     CONSTRAINT [FK_ImportFileLog_ImportDataType] FOREIGN KEY ([ImportDataTypeID]) REFERENCES [dbo].[ImportDataType] ([ID]),
     CONSTRAINT [FK_ImportFileLog_ImportStatus] FOREIGN KEY ([ImportStatusID]) REFERENCES [dbo].[ImportStatus] ([ID])
 );
+
+
 

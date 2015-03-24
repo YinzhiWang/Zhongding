@@ -107,12 +107,13 @@ namespace ZhongDing.Domain.Models
         public DbSet<SupplierRefundApplication> SupplierRefundApplication { get; set; }
         public DbSet<ClientTaskRefundApplication> ClientTaskRefundApplication { get; set; }
         public DbSet<TransportCompany> TransportCompany { get; set; }
-        public DbSet<DCFlowData> DCFlowData { get; set; }
         public DbSet<DCFlowDataDetail> DCFlowDataDetail { get; set; }
         public DbSet<DCImportFileLog> DCImportFileLog { get; set; }
         public DbSet<DCInventoryData> DCInventoryData { get; set; }
         public DbSet<ImportDataType> ImportDataType { get; set; }
-        public DbSet<ImportFileLog> ImportFileLog { get; set; }
         public DbSet<ImportStatus> ImportStatus { get; set; }
+        public DbSet<DCFlowData> DCFlowData { get; set; }
+        public DbSet<ImportFileLog> ImportFileLog { get; set; }
+        public DbSet<ImportErrorLog> ImportErrorLog { get; set; }
     }
 }
