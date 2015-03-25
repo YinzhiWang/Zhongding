@@ -273,6 +273,8 @@
         <AssociationConnector Association="DbModel.FK_ImportFileLog_ImportStatus" />
         <EntityTypeShape EntityType="DbModel.ImportErrorLog" Width="1.5" PointX="21.75" PointY="137.625" />
         <AssociationConnector Association="DbModel.FK_ImportErrorLog_ImportFileLog" />
+        <EntityTypeShape EntityType="DbModel.TransportFee" Width="1.5" PointX="1.3796444150524421" PointY="26.321028766371789" />
+        <AssociationConnector Association="DbModel.FK_TransportFee_TransportCompanyID" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

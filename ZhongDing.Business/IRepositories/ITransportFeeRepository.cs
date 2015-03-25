@@ -9,7 +9,7 @@ using ZhongDing.Domain.UISearchObjects;
 
 namespace ZhongDing.Business.IRepositories
 {
-    public interface ITransportCompanyRepository : IBaseRepository<TransportCompany>
+    public interface ITransportFeeRepository : IBaseRepository<TransportFee>
     {
 
         /// <summary>
@@ -19,12 +19,7 @@ namespace ZhongDing.Business.IRepositories
         /// <param name="pageIndex">当前页.</param>
         /// <param name="pageSize">每页条数.</param>
         /// <param name="totalRecords">总记录数.</param>
-        /// <returns>IList{UIWarehouse}.</returns>
-        IList<UITransportCompany> GetUIList(UISearchTransportCompany uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
-        /// <summary>
-        /// 获取DropdownItems
-        /// </summary>
-        /// <returns></returns>
-        IList<UIDropdownItem> GetDropdownItems();
+        /// <returns>IList{UITransportFee}.</returns>
+        IList<UITransportFee> GetUIList(UISearchTransportFee uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
     }
 }

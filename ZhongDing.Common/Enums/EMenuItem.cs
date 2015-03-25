@@ -115,6 +115,10 @@ namespace ZhongDing.Common.Enums
         /// 入库单管理
         /// </summary>
         StockInManage,
+        /// <summary>
+        /// 物流费用管理  入库
+        /// </summary>
+        TransportFeeManage_StockIn,
 
         /// <summary>
         /// 销售管理
@@ -145,6 +149,11 @@ namespace ZhongDing.Common.Enums
         /// 大包订单出库单管理
         /// </summary>
         DBOrderStockOutManage,
+        //担保收款
+        /// <summary>
+        /// 物流费用管理  出库
+        /// </summary>
+        TransportFeeManage_StockOut=67,
 
         /// <summary>
         /// 返款管理

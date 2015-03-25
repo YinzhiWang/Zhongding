@@ -34,4 +34,3 @@ var EImportDataTypes = {
     DCInventoryData: 2,
     ProcureOrderData: 3
 };
-

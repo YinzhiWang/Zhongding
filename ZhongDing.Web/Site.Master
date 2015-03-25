@@ -76,7 +76,7 @@
                                     <li data-level="2" data-menuitemid="10"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/DBContractManagement.aspx');">大包客户协议管理</a></li>
                                     <li data-level="2" data-menuitemid="11"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/ClientInfoProductFlowManagement.aspx');">商业客户流向管理</a></li>
                                     <li data-level="2" data-menuitemid="12"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/DeptProductSalesPlanAndBonusManagement.aspx');">部门销售计划及提成策略</a></li>
-                                 <li data-level="2" data-menuitemid="13"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/TransportCompanyManagement.aspx');">物流公司管理</a></li>
+                                    <li data-level="2" data-menuitemid="13"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/TransportCompanyManagement.aspx');">物流公司管理</a></li>
                                 </ul>
                             </li>
                             <li data-level="1" data-menuitemid="20"><a href="#" class="mws-i-24 i-price-tags">货品管理</a>
@@ -107,7 +107,9 @@
                                         </ul>--%>
                                     </li>
                                     <li data-level="2" data-menuitemid="52"><a href="javascript:void(0);" onclick="redirectToPage('Views/Procures/StockInManagement.aspx');">入库单</a></li>
-                                    <li data-level="2"><a href="#">物流费用管理</a></li>
+                                 
+                                    <li data-level="2" data-menuitemid="53"><a href="javascript:void(0);" onclick="redirectToPage('Views/Procures/TransportFeeManagement.aspx?TransportFeeType=StockIn');">物流费用管理</a></li>
+
                                 </ul>
                             </li>
                             <li data-level="1" data-menuitemid="60"><a href="table.html" class="mws-i-24 i-box-outgoing">销售订单管理</a>
@@ -117,8 +119,10 @@
                                     <li data-level="2" data-menuitemid="63"><a href="javascript:void(0);" onclick="redirectToPage('Views/Sales/DBAppRequestManagement.aspx');">大包配送申请单</a></li>
                                     <li data-level="2" data-menuitemid="64"><a href="javascript:void(0);" onclick="redirectToPage('Views/Sales/DBAppManagement.aspx');">大包配送订单</a></li>
                                     <li data-level="2" data-menuitemid="65"><a href="javascript:void(0);" onclick="redirectToPage('Views/Sales/DBStockOutManagement.aspx');">大包出库单</a></li>
-                                    <li data-level="2"><a href="#">担保收款</a></li>
-                                    <li data-level="2"><a href="#">物流费用管理</a></li>
+                                    <li data-level="2" data-menuitemid="66"><a href="#">担保收款</a></li>
+
+                                    <li data-level="2" data-menuitemid="67"><a href="javascript:void(0);" onclick="redirectToPage('Views/Procures/TransportFeeManagement.aspx?TransportFeeType=StockOut');">物流费用管理</a></li>
+
                                 </ul>
                             </li>
                             <li data-level="1" data-menuitemid="70">

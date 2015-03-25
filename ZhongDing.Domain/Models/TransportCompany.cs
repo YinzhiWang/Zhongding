@@ -15,6 +15,11 @@ namespace ZhongDing.Domain.Models
     [Serializable]
     public partial class TransportCompany : IEntityExtendedProperty
     {
+        public TransportCompany()
+        {
+            this.TransportFee = new HashSet<TransportFee>();
+        }
+    
         public int ID { get; set; }
         public string CompanyName { get; set; }
         public string Telephone { get; set; }
@@ -37,5 +42,7 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedOn { get { return true; } }
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
+    
+        public virtual ICollection<TransportFee> TransportFee { get; set; }
     }
 }

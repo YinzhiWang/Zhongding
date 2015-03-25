@@ -13,7 +13,7 @@ namespace ZhongDing.Business.Repositories
 {
     public class TransportCompanyRepository : BaseRepository<TransportCompany>, ITransportCompanyRepository
     {
-         
+
         public IList<UITransportCompany> GetUIList(UISearchTransportCompany uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
         {
             IList<UITransportCompany> uiWarehouses = new List<UITransportCompany>();
@@ -49,6 +49,17 @@ namespace ZhongDing.Business.Repositories
             totalRecords = total;
 
             return uiWarehouses;
+        }
+        public IList<UIDropdownItem> GetDropdownItems()
+        {
+            IList<UIDropdownItem> uiDropdownItems = new List<UIDropdownItem>();
+            uiDropdownItems = GetList().Select(x => new UIDropdownItem()
+            {
+                ItemValue = x.ID,
+                ItemText = x.CompanyName
+            }).ToList();
+
+            return uiDropdownItems;
         }
 
 

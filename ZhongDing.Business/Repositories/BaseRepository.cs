@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Dynamic;
 using System.Linq.Expressions;
@@ -67,12 +69,19 @@ namespace ZhongDing.Business.Repositories
             get
             {
                 if (db == null)
+                {
                     db = new DbModelContainer();
+                    db.Database.Log += DBLog;
+                }
 
                 return db;
             }
         }
-
+        private void DBLog(string log)
+        {
+            Debug.WriteLine("SQL:");
+            Debug.WriteLine(log);
+        }
         /// <summary>
         /// Gets user id from current http context.
         /// </summary>
@@ -598,8 +607,16 @@ namespace ZhongDing.Business.Repositories
                     }
                 }
             }
+            try
+            {
+                DB.SaveChanges();
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                Debug.WriteLine(dbEx.ToString());
+                throw dbEx;
+            }
 
-            DB.SaveChanges();
         }
 
         /// <summary>
