@@ -79,6 +79,7 @@
     <Compile Include="IRepositories\IDBContractHospitalRepository.cs" />
     <Compile Include="IRepositories\IDBContractRepository.cs" />
     <Compile Include="IRepositories\IDBContractTaskAssignmentRepository.cs" />
+    <Compile Include="IRepositories\IDCFlowDataDetailRepository.cs" />
     <Compile Include="IRepositories\IDCFlowDataRepository.cs" />
     <Compile Include="IRepositories\IDCImportFileLogRepository.cs" />
     <Compile Include="IRepositories\IDeptProductRecordRepository.cs" />
@@ -161,6 +162,7 @@
     <Compile Include="Repositories\DBContractHospitalRepository.cs" />
     <Compile Include="Repositories\DBContractRepository.cs" />
     <Compile Include="Repositories\DBContractTaskAssignmentRepository.cs" />
+    <Compile Include="Repositories\DCFlowDataDetailRepository.cs" />
     <Compile Include="Repositories\DCFlowDataRepository.cs" />
     <Compile Include="Repositories\DCImportFileLogRepository.cs" />
     <Compile Include="Repositories\DeptProductRecordRepository.cs" />

@@ -208,7 +208,63 @@ namespace ZhongDing.WinService
 
         private void tmImportDCFlowData_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
         {
+            this.tmImportDCFlowData.Stop();
 
+            Utility.WriteTrace("Start tmImportDCFlowData_Elapsed at：" + DateTime.Now);
+
+            try
+            {
+                if (isFirstRunProcessImportDCFlowData)
+                {
+                    DateTime dtNextRunTime = CaculateNextRunTime(WebConfig.ImportDataServiceStartTime, WebConfig.ImportDataServiceInterval, DateInterval.Minute);
+                    if (dtNextRunTime <= DateTime.Now)
+                    {
+                        isFirstRunProcessImportDCFlowData = false;
+
+                        if (tmImportDCFlowData.Interval == initInterval)
+                            tmImportDCFlowData.Interval = WebConfig.ImportDataServiceInterval * 1000 * 60 * 60;
+
+                        if (isRunProcessImportDCFlowData == false)
+                        {
+                            isRunProcessImportDCFlowData = true;
+
+                            ImportDataService.ProcessWork();
+
+                            Utility.WriteTrace(WIN_SERVICE_NAME + ": tmImportDCFlowData_Elapsed Processing has finished");
+
+                            isRunProcessImportDCFlowData = false;
+                        }
+                    }
+                }
+                else
+                {
+                    if (isRunProcessImportDCFlowData == false)
+                    {
+                        isRunProcessImportDCFlowData = true;
+
+                        ImportDataService.ProcessWork();
+
+                        Utility.WriteTrace(WIN_SERVICE_NAME + ": tmImportDCFlowData_Elapsed Processing has finished");
+
+                        isRunProcessImportDCFlowData = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                isRunProcessImportDCFlowData = false;
+
+                Utility.WriteTrace(WIN_SERVICE_NAME + ": tmImportDCFlowData_Elapsed Error:" + ex.Message);
+
+                Utility.WriteExceptionLog(ex);
+            }
+            finally
+            {
+
+                tmImportDCFlowData.Start();
+
+                Utility.WriteTrace("End tmImportDCFlowData_Elapsed at：" + DateTime.Now);
+            }
         }
 
         #endregion

@@ -1308,6 +1308,7 @@
           <Property Name="SaleDate" Type="datetime" Nullable="false" />
           <Property Name="SaleQty" Type="int" Nullable="false" />
           <Property Name="SettlementDate" Type="datetime" Nullable="false" />
+          <Property Name="FactoryName" Type="nvarchar" MaxLength="100" />
           <Property Name="HospitalID" Type="int" />
           <Property Name="FlowTo" Type="nvarchar" MaxLength="255" />
           <Property Name="IsCorrectlyFlow" Type="bit" />
@@ -1573,7 +1574,7 @@
           <Key>
             <PropertyRef Name="ID" />
           </Key>
-          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="ImportFileLogID" Type="int" Nullable="false" />
           <Property Name="ErrorRowIndex" Type="int" />
           <Property Name="ErrorRowData" Type="nvarchar(max)" />
@@ -1592,7 +1593,6 @@
           <Property Name="ImportBeginDate" Type="datetime" />
           <Property Name="ImportEndDate" Type="datetime" />
           <Property Name="ImportStatusID" Type="int" Nullable="false" />
-          <Property Name="ErrorMsg" Type="nvarchar(max)" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
@@ -5152,8 +5152,25 @@
             <End Role="Hospital" EntitySet="Hospital" />
             <End Role="DCFlowDataDetail" EntitySet="DCFlowDataDetail" />
           </AssociationSet>
-          <EntitySet Name="DCFlowData" EntityType="DbModel.DCFlowData" />
+          <EntitySet Name="ImportErrorLog" EntityType="DbModel.ImportErrorLog" />
           <EntitySet Name="ImportFileLog" EntityType="DbModel.ImportFileLog" />
+          <AssociationSet Name="FK_DCImportFileLog_ImportFileLog" Association="DbModel.FK_DCImportFileLog_ImportFileLog">
+            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
+            <End Role="DCImportFileLog" EntitySet="DCImportFileLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImportFileLog_ImportDataType" Association="DbModel.FK_ImportFileLog_ImportDataType">
+            <End Role="ImportDataType" EntitySet="ImportDataType" />
+            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImportErrorLog_ImportFileLog" Association="DbModel.FK_ImportErrorLog_ImportFileLog">
+            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
+            <End Role="ImportErrorLog" EntitySet="ImportErrorLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImportFileLog_ImportStatus" Association="DbModel.FK_ImportFileLog_ImportStatus">
+            <End Role="ImportStatus" EntitySet="ImportStatus" />
+            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
+          </AssociationSet>
+          <EntitySet Name="DCFlowData" EntityType="DbModel.DCFlowData" />
           <AssociationSet Name="FK_DCFlowData_DistributionCompany" Association="DbModel.FK_DCFlowData_DistributionCompany">
             <End Role="DistributionCompany" EntitySet="DistributionCompany" />
             <End Role="DCFlowData" EntitySet="DCFlowData" />
@@ -5177,23 +5194,6 @@
           <AssociationSet Name="FK_DCFlowDataDetail_DCFlowData" Association="DbModel.FK_DCFlowDataDetail_DCFlowData">
             <End Role="DCFlowData" EntitySet="DCFlowData" />
             <End Role="DCFlowDataDetail" EntitySet="DCFlowDataDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DCImportFileLog_ImportFileLog" Association="DbModel.FK_DCImportFileLog_ImportFileLog">
-            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
-            <End Role="DCImportFileLog" EntitySet="DCImportFileLog" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ImportFileLog_ImportDataType" Association="DbModel.FK_ImportFileLog_ImportDataType">
-            <End Role="ImportDataType" EntitySet="ImportDataType" />
-            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ImportFileLog_ImportStatus" Association="DbModel.FK_ImportFileLog_ImportStatus">
-            <End Role="ImportStatus" EntitySet="ImportStatus" />
-            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
-          </AssociationSet>
-          <EntitySet Name="ImportErrorLog" EntityType="DbModel.ImportErrorLog" />
-          <AssociationSet Name="FK_ImportErrorLog_ImportFileLog" Association="DbModel.FK_ImportErrorLog_ImportFileLog">
-            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
-            <End Role="ImportErrorLog" EntitySet="ImportErrorLog" />
           </AssociationSet>
           <EntitySet Name="TransportFee" EntityType="DbModel.TransportFee" />
           <AssociationSet Name="FK_TransportFee_TransportCompanyID" Association="DbModel.FK_TransportFee_TransportCompanyID">
@@ -8912,6 +8912,89 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ImportErrorLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ImportFileLogID" Nullable="false" />
+          <Property Type="Int32" Name="ErrorRowIndex" />
+          <Property Type="String" Name="ErrorRowData" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ErrorMsg" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <NavigationProperty Name="ImportFileLog" Relationship="DbModel.FK_ImportErrorLog_ImportFileLog" FromRole="ImportErrorLog" ToRole="ImportFileLog" />
+        </EntityType>
+        <EntityType Name="ImportFileLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ImportDataTypeID" Nullable="false" />
+          <Property Type="String" Name="FileName" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FilePath" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="ImportBeginDate" Precision="3" />
+          <Property Type="DateTime" Name="ImportEndDate" Precision="3" />
+          <Property Type="Int32" Name="ImportStatusID" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="DCImportFileLog" Relationship="DbModel.FK_DCImportFileLog_ImportFileLog" FromRole="ImportFileLog" ToRole="DCImportFileLog" />
+          <NavigationProperty Name="ImportDataType" Relationship="DbModel.FK_ImportFileLog_ImportDataType" FromRole="ImportFileLog" ToRole="ImportDataType" />
+          <NavigationProperty Name="ImportErrorLog" Relationship="DbModel.FK_ImportErrorLog_ImportFileLog" FromRole="ImportFileLog" ToRole="ImportErrorLog" />
+          <NavigationProperty Name="ImportStatus" Relationship="DbModel.FK_ImportFileLog_ImportStatus" FromRole="ImportFileLog" ToRole="ImportStatus" />
+          <NavigationProperty Name="DCFlowData" Relationship="DbModel.FK_DCFlowData_ImportFileLog" FromRole="ImportFileLog" ToRole="DCFlowData" />
+        </EntityType>
+        <Association Name="FK_DCImportFileLog_ImportFileLog">
+          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="1" />
+          <End Type="DbModel.DCImportFileLog" Role="DCImportFileLog" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ImportFileLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DCImportFileLog">
+              <PropertyRef Name="ImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImportFileLog_ImportDataType">
+          <End Type="DbModel.ImportDataType" Role="ImportDataType" Multiplicity="1" />
+          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportDataType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ImportFileLog">
+              <PropertyRef Name="ImportDataTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImportErrorLog_ImportFileLog">
+          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="1" />
+          <End Type="DbModel.ImportErrorLog" Role="ImportErrorLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportFileLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ImportErrorLog">
+              <PropertyRef Name="ImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImportFileLog_ImportStatus">
+          <End Type="DbModel.ImportStatus" Role="ImportStatus" Multiplicity="1" />
+          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ImportFileLog">
+              <PropertyRef Name="ImportStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="DCFlowData">
           <Key>
             <PropertyRef Name="ID" />
@@ -8927,6 +9010,7 @@
           <Property Type="DateTime" Name="SaleDate" Nullable="false" Precision="3" />
           <Property Type="Int32" Name="SaleQty" Nullable="false" />
           <Property Type="DateTime" Name="SettlementDate" Nullable="false" Precision="3" />
+          <Property Type="String" Name="FactoryName" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Type="Int32" Name="HospitalID" />
           <Property Type="String" Name="FlowTo" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Type="Boolean" Name="IsCorrectlyFlow" />
@@ -8940,29 +9024,6 @@
           <NavigationProperty Name="Product" Relationship="DbModel.FK_DCFlowData_Product" FromRole="DCFlowData" ToRole="Product" />
           <NavigationProperty Name="ProductSpecification1" Relationship="DbModel.FK_DCFlowData_ProductSpecification" FromRole="DCFlowData" ToRole="ProductSpecification" />
           <NavigationProperty Name="DCFlowDataDetail" Relationship="DbModel.FK_DCFlowDataDetail_DCFlowData" FromRole="DCFlowData" ToRole="DCFlowDataDetail" />
-        </EntityType>
-        <EntityType Name="ImportFileLog">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="ImportDataTypeID" Nullable="false" />
-          <Property Type="String" Name="FileName" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="FilePath" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="ImportBeginDate" Precision="3" />
-          <Property Type="DateTime" Name="ImportEndDate" Precision="3" />
-          <Property Type="Int32" Name="ImportStatusID" Nullable="false" />
-          <Property Type="String" Name="ErrorMsg" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="DCFlowData" Relationship="DbModel.FK_DCFlowData_ImportFileLog" FromRole="ImportFileLog" ToRole="DCFlowData" />
-          <NavigationProperty Name="DCImportFileLog" Relationship="DbModel.FK_DCImportFileLog_ImportFileLog" FromRole="ImportFileLog" ToRole="DCImportFileLog" />
-          <NavigationProperty Name="ImportDataType" Relationship="DbModel.FK_ImportFileLog_ImportDataType" FromRole="ImportFileLog" ToRole="ImportDataType" />
-          <NavigationProperty Name="ImportStatus" Relationship="DbModel.FK_ImportFileLog_ImportStatus" FromRole="ImportFileLog" ToRole="ImportStatus" />
-          <NavigationProperty Name="ImportErrorLog" Relationship="DbModel.FK_ImportErrorLog_ImportFileLog" FromRole="ImportFileLog" ToRole="ImportErrorLog" />
         </EntityType>
         <Association Name="FK_DCFlowData_DistributionCompany">
           <End Type="DbModel.DistributionCompany" Role="DistributionCompany" Multiplicity="0..1" />
@@ -9033,67 +9094,6 @@
             </Principal>
             <Dependent Role="DCFlowDataDetail">
               <PropertyRef Name="DCFlowDataID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DCImportFileLog_ImportFileLog">
-          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="1" />
-          <End Type="DbModel.DCImportFileLog" Role="DCImportFileLog" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="ImportFileLog">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DCImportFileLog">
-              <PropertyRef Name="ImportFileLogID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ImportFileLog_ImportDataType">
-          <End Type="DbModel.ImportDataType" Role="ImportDataType" Multiplicity="1" />
-          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportDataType">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ImportFileLog">
-              <PropertyRef Name="ImportDataTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ImportFileLog_ImportStatus">
-          <End Type="DbModel.ImportStatus" Role="ImportStatus" Multiplicity="1" />
-          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportStatus">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ImportFileLog">
-              <PropertyRef Name="ImportStatusID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="ImportErrorLog">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="Int32" Name="ImportFileLogID" Nullable="false" />
-          <Property Type="Int32" Name="ErrorRowIndex" />
-          <Property Type="String" Name="ErrorRowData" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ErrorMsg" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <NavigationProperty Name="ImportFileLog" Relationship="DbModel.FK_ImportErrorLog_ImportFileLog" FromRole="ImportErrorLog" ToRole="ImportFileLog" />
-        </EntityType>
-        <Association Name="FK_ImportErrorLog_ImportFileLog">
-          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="1" />
-          <End Type="DbModel.ImportErrorLog" Role="ImportErrorLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportFileLog">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ImportErrorLog">
-              <PropertyRef Name="ImportFileLogID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10576,26 +10576,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DCFlowData">
-            <EntityTypeMapping TypeName="DbModel.DCFlowData">
-              <MappingFragment StoreEntitySet="DCFlowData">
+          <EntitySetMapping Name="ImportErrorLog">
+            <EntityTypeMapping TypeName="DbModel.ImportErrorLog">
+              <MappingFragment StoreEntitySet="ImportErrorLog">
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="OldDCFlowDataID" ColumnName="OldDCFlowDataID" />
-                <ScalarProperty Name="IsOverwritten" ColumnName="IsOverwritten" />
-                <ScalarProperty Name="IsCorrectlyFlow" ColumnName="IsCorrectlyFlow" />
-                <ScalarProperty Name="FlowTo" ColumnName="FlowTo" />
-                <ScalarProperty Name="HospitalID" ColumnName="HospitalID" />
-                <ScalarProperty Name="SettlementDate" ColumnName="SettlementDate" />
-                <ScalarProperty Name="SaleQty" ColumnName="SaleQty" />
-                <ScalarProperty Name="SaleDate" ColumnName="SaleDate" />
-                <ScalarProperty Name="ProductSpecification" ColumnName="ProductSpecification" />
-                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
-                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ErrorMsg" ColumnName="ErrorMsg" />
+                <ScalarProperty Name="ErrorRowData" ColumnName="ErrorRowData" />
+                <ScalarProperty Name="ErrorRowIndex" ColumnName="ErrorRowIndex" />
                 <ScalarProperty Name="ImportFileLogID" ColumnName="ImportFileLogID" />
-                <ScalarProperty Name="DistributionCompanyID" ColumnName="DistributionCompanyID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -10608,7 +10597,6 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="ErrorMsg" ColumnName="ErrorMsg" />
                 <ScalarProperty Name="ImportStatusID" ColumnName="ImportStatusID" />
                 <ScalarProperty Name="ImportEndDate" ColumnName="ImportEndDate" />
                 <ScalarProperty Name="ImportBeginDate" ColumnName="ImportBeginDate" />
@@ -10619,15 +10607,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ImportErrorLog">
-            <EntityTypeMapping TypeName="DbModel.ImportErrorLog">
-              <MappingFragment StoreEntitySet="ImportErrorLog">
+          <EntitySetMapping Name="DCFlowData">
+            <EntityTypeMapping TypeName="DbModel.DCFlowData">
+              <MappingFragment StoreEntitySet="DCFlowData">
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="ErrorMsg" ColumnName="ErrorMsg" />
-                <ScalarProperty Name="ErrorRowData" ColumnName="ErrorRowData" />
-                <ScalarProperty Name="ErrorRowIndex" ColumnName="ErrorRowIndex" />
+                <ScalarProperty Name="OldDCFlowDataID" ColumnName="OldDCFlowDataID" />
+                <ScalarProperty Name="IsOverwritten" ColumnName="IsOverwritten" />
+                <ScalarProperty Name="IsCorrectlyFlow" ColumnName="IsCorrectlyFlow" />
+                <ScalarProperty Name="FlowTo" ColumnName="FlowTo" />
+                <ScalarProperty Name="HospitalID" ColumnName="HospitalID" />
+                <ScalarProperty Name="FactoryName" ColumnName="FactoryName" />
+                <ScalarProperty Name="SettlementDate" ColumnName="SettlementDate" />
+                <ScalarProperty Name="SaleQty" ColumnName="SaleQty" />
+                <ScalarProperty Name="SaleDate" ColumnName="SaleDate" />
+                <ScalarProperty Name="ProductSpecification" ColumnName="ProductSpecification" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ImportFileLogID" ColumnName="ImportFileLogID" />
+                <ScalarProperty Name="DistributionCompanyID" ColumnName="DistributionCompanyID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

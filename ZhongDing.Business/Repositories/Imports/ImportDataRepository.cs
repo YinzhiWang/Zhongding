@@ -154,25 +154,29 @@ namespace ZhongDing.Business.Repositories.Imports
                 && ds.Tables[0].Rows.Count > 0)
             {
                 fileLog.ImportBeginDate = DateTime.Now;
+                fileLog.ImportStatusID = (int)EImportStatus.Importing;
+
+                ImportFileLogRepository.Save();
 
                 string errorMsg;
+                int errorRowCount = 0;
                 int rowIndex = 0;
                 foreach (DataRow row in ds.Tables[0].Rows)
                 {
                     errorMsg = string.Empty;
 
+                    string productCode = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.PRODUCT_CODE]);
+                    string productName = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.PRODUCT_NAME]);
+                    string specification = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.PRODUCT_SPECIFICATION]);
+                    string unitName = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.UNIT_NAME]);
+                    string factoryName = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.FACTORY_NAME]);
+                    string tempSaleDate = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.SALE_DATE]);
+                    string tempSaleQty = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.SALE_QTY]);
+                    string flowTo = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.FLOW_TO]);
+
                     try
                     {
                         rowIndex++;
-
-                        string productCode = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.PRODUCT_CODE]);
-                        string productName = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.PRODUCT_NAME]);
-                        string specification = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.PRODUCT_SPECIFICATION]);
-                        string unitName = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.UNIT_NAME]);
-                        string factoryName = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.FACTORY_NAME]);
-                        string tempSaleDate = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.SALE_DATE]);
-                        string tempSaleQty = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.SALE_QTY]);
-                        string flowTo = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.FLOW_TO]);
 
                         DateTime saleDate;
                         if (DateTime.TryParse(tempSaleDate, out saleDate))
@@ -218,6 +222,7 @@ namespace ZhongDing.Business.Repositories.Imports
                                         {
                                             dCFlowData = new DCFlowData()
                                             {
+                                                DistributionCompanyID = fileLog.DCImportFileLog.DistributionCompanyID,
                                                 ImportFileLogID = fileLog.ID,
                                                 ProductID = product.ID,
                                                 ProductName = productName,
@@ -227,7 +232,9 @@ namespace ZhongDing.Business.Repositories.Imports
                                                 SaleDate = saleDate,
                                                 SaleQty = saleQty,
                                                 SettlementDate = fileLog.DCImportFileLog.SettlementDate,
-                                                FlowTo = flowTo
+                                                FlowTo = flowTo,
+                                                FactoryName = factoryName,
+                                                IsOverwritten = false
                                             };
 
                                             fileLog.DCFlowData.Add(dCFlowData);
@@ -236,19 +243,33 @@ namespace ZhongDing.Business.Repositories.Imports
                                             if (isMatchedContract)
                                             {
                                                 dCFlowData.HospitalID = hospital.ID;
+                                                dCFlowData.IsCorrectlyFlow = true;
 
                                                 var dCFlowDataDetail = new DCFlowDataDetail()
                                                 {
                                                     DBContractID = dBContract.ID,
+                                                    ContractCode = dBContract.ContractCode,
+                                                    IsTempContract = dBContract.IsTempContract,
+                                                    HospitalID = hospital.ID,
+                                                    HospitalName = hospital.HospitalName,
                                                     ClientUserID = dBContract.ClientUserID.HasValue
-                                                    ? dBContract.ClientUserID.Value : GlobalConst.INVALID_INT,
-
+                                                        ? dBContract.ClientUserID.Value : GlobalConst.INVALID_INT,
+                                                    ClientUserName = dBContract.ClientUser == null
+                                                        ? string.Empty : dBContract.ClientUser.ClientName,
+                                                    InChargeUserID = dBContract.InChargeUserID,
+                                                    InChargeUserFullName = dBContract.Users == null
+                                                        ? string.Empty : dBContract.Users.FullName,
+                                                    UnitOfMeasurementID = dBContract.ProductSpecification != null
+                                                        ? dBContract.ProductSpecification.UnitOfMeasurementID : null,
+                                                    UnitName = (dBContract.ProductSpecification != null && dBContract.ProductSpecification.UnitOfMeasurement != null)
+                                                        ? dBContract.ProductSpecification.UnitOfMeasurement.UnitName : string.Empty,
+                                                    SaleQty = saleQty
                                                 };
+
+                                                dCFlowData.DCFlowDataDetail.Add(dCFlowDataDetail);
                                             }
                                             else
-                                            {
-
-                                            }
+                                                dCFlowData.IsCorrectlyFlow = false;
                                         }
                                         else
                                             continue;
@@ -274,16 +295,33 @@ namespace ZhongDing.Business.Repositories.Imports
 
                     if (errorMsg != string.Empty)
                     {
+                        errorRowCount++;
+
                         fileLog.ImportErrorLog.Add(new ImportErrorLog
                         {
                             ErrorRowIndex = rowIndex,
                             ErrorMsg = errorMsg,
-                            ErrorRowData = row.ToString()
+                            ErrorRowData = GlobalConst.ImportDataColumns.PRODUCT_CODE + ":" + productCode + ", "
+                            + GlobalConst.ImportDataColumns.PRODUCT_NAME + ":" + productName + ", "
+                            + GlobalConst.ImportDataColumns.PRODUCT_SPECIFICATION + ":" + specification + ", "
+                            + GlobalConst.ImportDataColumns.UNIT_NAME + ":" + unitName + ", "
+                            + GlobalConst.ImportDataColumns.FACTORY_NAME + ":" + factoryName + ", "
+                            + GlobalConst.ImportDataColumns.SALE_DATE + ":" + tempSaleDate + ", "
+                            + GlobalConst.ImportDataColumns.SALE_QTY + ":" + tempSaleQty + ", "
+                            + GlobalConst.ImportDataColumns.FLOW_TO + ":" + flowTo
                         });
                     }
                 }
 
-                fileLog.ImportEndDate = DateTime.Now;
+                if (errorRowCount > 0)
+                {
+                    fileLog.ImportStatusID = (int)EImportStatus.ImportError;
+                }
+                else
+                {
+                    fileLog.ImportStatusID = (int)EImportStatus.Completed;
+                    fileLog.ImportEndDate = DateTime.Now;
+                }
 
                 ImportFileLogRepository.Save();
             }

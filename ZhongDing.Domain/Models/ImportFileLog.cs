@@ -17,8 +17,8 @@ namespace ZhongDing.Domain.Models
     {
         public ImportFileLog()
         {
-            this.DCFlowData = new HashSet<DCFlowData>();
             this.ImportErrorLog = new HashSet<ImportErrorLog>();
+            this.DCFlowData = new HashSet<DCFlowData>();
         }
     
         public int ID { get; set; }
@@ -28,7 +28,6 @@ namespace ZhongDing.Domain.Models
         public Nullable<System.DateTime> ImportBeginDate { get; set; }
         public Nullable<System.DateTime> ImportEndDate { get; set; }
         public int ImportStatusID { get; set; }
-        public string ErrorMsg { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -45,10 +44,10 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ICollection<DCFlowData> DCFlowData { get; set; }
         public virtual DCImportFileLog DCImportFileLog { get; set; }
         public virtual ImportDataType ImportDataType { get; set; }
-        public virtual ImportStatus ImportStatus { get; set; }
         public virtual ICollection<ImportErrorLog> ImportErrorLog { get; set; }
+        public virtual ImportStatus ImportStatus { get; set; }
+        public virtual ICollection<DCFlowData> DCFlowData { get; set; }
     }
 }

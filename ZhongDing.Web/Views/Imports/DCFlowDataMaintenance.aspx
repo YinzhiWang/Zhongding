@@ -5,6 +5,18 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <telerik:RadAjaxLoadingPanel ID="loadingPanel" runat="server">
+    </telerik:RadAjaxLoadingPanel>
+    <telerik:RadAjaxManager runat="server" ID="RadAjaxManager1">
+        <AjaxSettings>
+            <telerik:AjaxSetting AjaxControlID="rgDetails">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="rgDetails" LoadingPanelID="loadingPanel" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+        </AjaxSettings>
+    </telerik:RadAjaxManager>
+
     <div class="container">
         <div class="mws-panel grid_full">
             <div class="mws-panel-header">
@@ -75,10 +87,10 @@
                             </div>
                         </div>
                         <div class="mws-form-row">
-                            <!--协议数量分配 -->
+                            <!--提成分配 -->
                             <div class="mws-panel grid_8 mws-collapsible" data-collapseid="panel-payment" runat="server" id="divAppPayments">
                                 <div class="mws-panel-header">
-                                    <span class="mws-i-24 i-creditcard">协议分配</span>
+                                    <span class="mws-i-24 i-creditcard">流向提成</span>
                                 </div>
                                 <div class="mws-panel-body">
                                     <div class="mws-panel-content">
@@ -86,7 +98,7 @@
                                             AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
                                             MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true" ShowFooter="true"
                                             ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                                            OnNeedDataSource="rgDetails_NeedDataSource">
+                                            OnNeedDataSource="rgDetails_NeedDataSource" OnUpdateCommand="rgDetails_UpdateCommand">
                                             <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
                                                 ShowHeadersWhenNoRecords="true" BackColor="#fafafa" EditMode="InPlace">
                                                 <CommandItemSettings ShowAddNewRecordButton="false" RefreshText="刷新" />
@@ -99,7 +111,7 @@
                                                     <telerik:GridBoundColumn UniqueName="ClientUserName" HeaderText="客户" DataField="ClientUserName" ReadOnly="true">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
-                                                    <telerik:GridBoundColumn UniqueName="InChargeUserName" HeaderText="业务经理" DataField="InChargeUserName" ReadOnly="true">
+                                                    <telerik:GridBoundColumn UniqueName="InChargeUserFullName" HeaderText="业务经理" DataField="InChargeUserFullName" ReadOnly="true">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
                                                     <telerik:GridBoundColumn UniqueName="HospitalName" HeaderText="医院" DataField="HospitalName" ReadOnly="true">
@@ -119,12 +131,12 @@
                                                         </ItemTemplate>
                                                         <EditItemTemplate>
                                                             <div id="divGridCombox">
-                                                                <telerik:RadTextBox runat="server" ID="txtComment" Width="100%">
+                                                                <telerik:RadTextBox runat="server" ID="txtComment" Width="100%" MaxLength="500" Text='<%# Eval("Comment") %>'>
                                                                 </telerik:RadTextBox>
                                                             </div>
                                                         </EditItemTemplate>
                                                     </telerik:GridTemplateColumn>
-                                                    <telerik:GridEditCommandColumn UniqueName="Edit" ButtonType="LinkButton" InsertText="保存" EditText="编辑" UpdateText="更新" CancelText="取消" HeaderStyle-Width="80" ItemStyle-Width="80">
+                                                    <telerik:GridEditCommandColumn UniqueName="Edit" ButtonType="LinkButton" InsertText="保存" EditText="修改备注" UpdateText="更新" CancelText="取消" HeaderStyle-Width="80" ItemStyle-Width="80">
                                                     </telerik:GridEditCommandColumn>
                                                 </Columns>
                                                 <NoRecordsTemplate>
@@ -145,8 +157,8 @@
                         </div>
 
                         <div class="mws-button-row">
-                            <asp:Button ID="btnImport" runat="server" Text="导入流向数据" CssClass="mws-button green" UseSubmitBehavior="false" CausesValidation="false" />
-                            <asp:Button ID="btnSave" runat="server" Text="保存" CssClass="mws-button green" CausesValidation="true" ValidationGroup="vgMaintenance" OnClick="btnSave_Click" />
+                            <asp:Button ID="btnCorrect" runat="server" Text="纠正流向" CssClass="mws-button green" UseSubmitBehavior="false" CausesValidation="false" />
+                            <asp:Button ID="btnImport" runat="server" Text="导入医院流向" CssClass="mws-button green" UseSubmitBehavior="false" CausesValidation="false" />
                             <asp:Button ID="btnCancel" runat="server" Text="返回" UseSubmitBehavior="false" CssClass="mws-button green" OnClientClick="redirectToPage('Views/Imports/DCFlowDataManagement.aspx');return false;" />
                         </div>
                     </div>
@@ -157,4 +169,11 @@
 
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContent" runat="server">
+    <script type="text/javascript">
+
+        function redirectToManagementPage(sender, args) {
+            redirectToPage("Views/Imports/DCFlowDataManagement.aspx");
+        }
+
+    </script>
 </asp:Content>

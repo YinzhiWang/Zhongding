@@ -366,6 +366,7 @@
     <Compile Include="UIObjects\UIDBContract.cs" />
     <Compile Include="UIObjects\UIDBContractHospital.cs" />
     <Compile Include="UIObjects\UIDCFlowData.cs" />
+    <Compile Include="UIObjects\UIDCFlowDataDetail.cs" />
     <Compile Include="UIObjects\UIDCImportFileLog.cs" />
     <Compile Include="UIObjects\UIDepartment.cs" />
     <Compile Include="UIObjects\UIDeptMarketProduct.cs" />
@@ -426,6 +427,7 @@
     <Compile Include="UISearchObjects\UISearchDaBaoAppDetail.cs" />
     <Compile Include="UISearchObjects\UISearchDBContract.cs" />
     <Compile Include="UISearchObjects\UISearchDCFlowData.cs" />
+    <Compile Include="UISearchObjects\UISearchDCFlowDataDetail.cs" />
     <Compile Include="UISearchObjects\UISearchDCImportFileLog.cs" />
     <Compile Include="UISearchObjects\UISearchDepartment.cs" />
     <Compile Include="UISearchObjects\UISearchDeptMarketProduct.cs" />

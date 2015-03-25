@@ -47,11 +47,21 @@ namespace ZhongDing.Common
         /// </summary>
         private static readonly string CONFIGKEY_CALCULATEINVENTORY_SERVICE_STARTTIME = "CalculateInventoryService.StartTime";
 
-
         /// <summary>
         /// 计算库存服务运行的周期
         /// </summary>
         private static readonly string CONFIGKEY_CALCULATEINVENTORY_SERVICE_INTERVAl = "CalculateInventoryService.Interval";
+
+        /// <summary>
+        /// 导入数据服务运行的开始时间
+        /// </summary>
+        private static readonly string CONFIGKEY_IMPORTDATA_SERVICE_STARTTIME = "ImportDataService.StartTime";
+
+        /// <summary>
+        /// 导入数据服务运行的周期
+        /// </summary>
+        private static readonly string CONFIGKEY_IMPORTDATA_SERVICE_INTERVAl = "ImportDataService.Interval";
+
 
         #endregion
 
@@ -309,6 +319,41 @@ namespace ZhongDing.Common
             get
             {
                 var sInterval = ConfigurationManager.AppSettings[CONFIGKEY_CALCULATEINVENTORY_SERVICE_INTERVAl];
+
+                int iInerval;
+                if (int.TryParse(sInterval, out iInerval))
+                    return iInerval;
+                else
+                    return GlobalConst.WIN_SERVICE_DEFAULT_INTERVAl;
+            }
+        }
+
+        /// <summary>
+        /// 导入数据服务运行的开始时间
+        /// </summary>
+        public static DateTime ImportDataServiceStartTime
+        {
+            get
+            {
+                try
+                {
+                    return DateTime.Parse(ConfigurationManager.AppSettings[CONFIGKEY_IMPORTDATA_SERVICE_STARTTIME]);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 导入数据服务运行的周期
+        /// </summary>
+        public static int ImportDataServiceInterval
+        {
+            get
+            {
+                var sInterval = ConfigurationManager.AppSettings[CONFIGKEY_IMPORTDATA_SERVICE_INTERVAl];
 
                 int iInerval;
                 if (int.TryParse(sInterval, out iInerval))

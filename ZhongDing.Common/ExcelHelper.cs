@@ -66,23 +66,36 @@ namespace ZhongDing.Common
                                 for (int k = (sheet.FirstRowNum + 1); k <= sheet.LastRowNum; k++)
                                 {
                                     HSSFRow row = (HSSFRow)sheet.GetRow(k);
+
+                                    if (row == null) continue;
+
+                                    if (row.FirstCellNum < 0) break;
+
                                     DataRow dataRow = table.NewRow();
-                                    int n = 0;
-                                    bool addrow = false;
+
+                                    int emptyCellCount = 0;
+
                                     for (int l = row.FirstCellNum; l < cellCount; l++)
                                     {
-                                        if (row.GetCell(l) != null)
-                                            dataRow[l] = row.GetCell(l).ToString();
-                                        if (row.GetCell(l) != null && n == 0)
+                                        var cell = row.GetCell(l);
+                                        if (cell != null)
                                         {
-                                            if (!string.IsNullOrEmpty(row.GetCell(l).ToString()))
-                                            {
-                                                addrow = true;
-                                            }
-                                            n++;
+                                            if (cell.CellType == NPOI.SS.UserModel.CellType.Numeric)
+                                                if (HSSFDateUtil.IsCellDateFormatted(cell))
+                                                    dataRow[l] = cell.DateCellValue;
+                                                else
+                                                    dataRow[l] = cell.NumericCellValue;
+                                            else
+                                                dataRow[l] = row.GetCell(l).ToString();
+
+                                            if (string.IsNullOrEmpty(row.GetCell(l).ToString()))
+                                                emptyCellCount++;
                                         }
+                                        else
+                                            emptyCellCount++;
                                     }
-                                    if (addrow)
+
+                                    if (emptyCellCount != cellCount)
                                         table.Rows.Add(dataRow);
                                 }
 
@@ -136,32 +149,37 @@ namespace ZhongDing.Common
 
                                     if (row == null) continue;
 
+                                    if (row.FirstCellNum < 0) break;
+
                                     DataRow dataRow = table.NewRow();
 
-                                    int n = 0;
-                                    bool addrow = false;
-
-                                    if (row.FirstCellNum < 0) break;
+                                    int emptyCellCount = 0;
 
                                     for (int l = row.FirstCellNum; l < cellCount; l++)
                                     {
-                                        if (row.GetCell(l) != null)
-                                            dataRow[l] = row.GetCell(l).ToString();
-                                        if (row.GetCell(l) != null && n == 0)
+                                        var cell = row.GetCell(l);
+                                        if (cell != null)
                                         {
-                                            if (!string.IsNullOrEmpty(row.GetCell(l).ToString()))
-                                            {
-                                                addrow = true;
-                                            }
-                                            n++;
+                                            if (cell.CellType == NPOI.SS.UserModel.CellType.Numeric)
+                                                if (HSSFDateUtil.IsCellDateFormatted(cell))
+                                                    dataRow[l] = cell.DateCellValue;
+                                                else
+                                                    dataRow[l] = cell.NumericCellValue;
+                                            else
+                                                dataRow[l] = row.GetCell(l).ToString();
+
+                                            if (string.IsNullOrEmpty(row.GetCell(l).ToString()))
+                                                emptyCellCount++;
                                         }
+                                        else
+                                            emptyCellCount++;
                                     }
-                                    if (addrow)
+
+                                    if (emptyCellCount != cellCount)
                                         table.Rows.Add(dataRow);
                                 }
 
                                 dsExcelData.Tables.Add(table);
-
                             }
                         }
                     }

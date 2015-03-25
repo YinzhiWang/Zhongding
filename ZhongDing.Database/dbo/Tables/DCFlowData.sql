@@ -10,6 +10,7 @@
     [SaleDate]               DATETIME       NOT NULL,
     [SaleQty]                INT            NOT NULL,
     [SettlementDate]         DATETIME       NOT NULL,
+    [FactoryName]            NVARCHAR (100) NULL,
     [HospitalID]             INT            NULL,
     [FlowTo]                 NVARCHAR (255) NULL,
     [IsCorrectlyFlow]        BIT            NULL,
@@ -24,6 +25,8 @@
     CONSTRAINT [FK_DCFlowData_Product] FOREIGN KEY ([ProductID]) REFERENCES [dbo].[Product] ([ID]),
     CONSTRAINT [FK_DCFlowData_ProductSpecification] FOREIGN KEY ([ProductSpecificationID]) REFERENCES [dbo].[ProductSpecification] ([ID])
 );
+
+
 
 
 

@@ -2611,6 +2611,7 @@
     <Content Include="Views\HRM\WorkflowPermissionManagement.aspx" />
     <Content Include="Views\Imports\DCFlowDataManagement.aspx" />
     <Content Include="Views\Imports\DCFlowDataMaintenance.aspx" />
+    <Content Include="Views\Imports\Editors\CorrectFlowData.aspx" />
     <Content Include="Views\Imports\Editors\UploadDCFlowDataFile.aspx" />
     <Content Include="Views\Imports\ImportDCFlowData.aspx" />
     <Content Include="Views\Procures\Editors\ChooseProcureOrderProducts.aspx" />
@@ -3116,6 +3117,13 @@
     </Compile>
     <Compile Include="Views\Imports\DCFlowDataMaintenance.aspx.designer.cs">
       <DependentUpon>DCFlowDataMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Imports\Editors\CorrectFlowData.aspx.cs">
+      <DependentUpon>CorrectFlowData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\Editors\CorrectFlowData.aspx.designer.cs">
+      <DependentUpon>CorrectFlowData.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Imports\Editors\UploadDCFlowDataFile.aspx.cs">
       <DependentUpon>UploadDCFlowDataFile.aspx</DependentUpon>

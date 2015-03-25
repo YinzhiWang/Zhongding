@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [dbo].[ImportErrorLog] (
-    [ID]              INT            NOT NULL,
+    [ID]              INT            IDENTITY (1, 1) NOT NULL,
     [ImportFileLogID] INT            NOT NULL,
     [ErrorRowIndex]   INT            NULL,
     [ErrorRowData]    NVARCHAR (MAX) NULL,
@@ -9,4 +9,6 @@
     CONSTRAINT [PK_ImportErrorLog] PRIMARY KEY CLUSTERED ([ID] ASC),
     CONSTRAINT [FK_ImportErrorLog_ImportFileLog] FOREIGN KEY ([ImportFileLogID]) REFERENCES [dbo].[ImportFileLog] ([ID])
 );
+
+
 

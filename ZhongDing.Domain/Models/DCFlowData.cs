@@ -31,6 +31,7 @@ namespace ZhongDing.Domain.Models
         public System.DateTime SaleDate { get; set; }
         public int SaleQty { get; set; }
         public System.DateTime SettlementDate { get; set; }
+        public string FactoryName { get; set; }
         public Nullable<int> HospitalID { get; set; }
         public string FlowTo { get; set; }
         public Nullable<bool> IsCorrectlyFlow { get; set; }

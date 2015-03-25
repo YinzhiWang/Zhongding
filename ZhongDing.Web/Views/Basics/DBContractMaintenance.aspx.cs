@@ -450,9 +450,12 @@ namespace ZhongDing.Web.Views.Basics
             {
                 GridDataItem gridDataItem = e.Item as GridDataItem;
 
-                string sid = gridDataItem.GetDataKeyValue("ID").ToString();
                 int id = 0;
-                int.TryParse(sid, out id);
+                if (e.Item.ItemIndex >= 0)
+                {
+                    string sid = gridDataItem.GetDataKeyValue("ID").ToString();
+                    int.TryParse(sid, out id);
+                }
 
                 var rcbxHospital = (RadComboBox)e.Item.FindControl("rcbxHospital");
 
