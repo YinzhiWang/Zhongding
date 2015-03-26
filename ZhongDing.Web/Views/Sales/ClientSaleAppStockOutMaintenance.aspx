@@ -341,6 +341,81 @@
                             </div>
                         </div>
 
+                        <div class="mws-form-row" runat="server" id="div2">
+                            <div class="mws-panel grid_8 mws-collapsible" data-collapseid="panel-procure-order">
+                                <div class="mws-panel-header">
+                                    <span class="mws-i-24 i-creditcard">物流信息</span>
+                                </div>
+                                <div class="mws-panel-body">
+                                    <div class="mws-panel-content">
+                                        <div class="validate-message-wrapper bottommargin10" runat="server" id="div3">
+                                        </div>
+                                        <telerik:RadGrid ID="rgTransportFees" runat="server" PageSize="10"
+                                            AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
+                                            MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
+                                            ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
+                                            OnNeedDataSource="rgTransportFees_NeedDataSource"  
+                                             >
+                                            <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
+                                                ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
+                                                <Columns>
+                                                    <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false">
+                                                        <ItemStyle HorizontalAlign="Left" Width="50" />
+                                                    </telerik:GridBoundColumn>
+
+                                                    <telerik:GridBoundColumn UniqueName="TransportCompanyName" HeaderText="物流公司" DataField="TransportCompanyName">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="TransportCompanyNumber" HeaderText="物流编号" DataField="TransportCompanyNumber">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+
+                                                    <telerik:GridBoundColumn UniqueName="SendDate" HeaderText="发货时间" DataField="SendDate">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+
+
+                                                    <telerik:GridBoundColumn UniqueName="Fee" HeaderText="费用" DataField="Fee"  DataFormatString="￥{0:f2}">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+
+
+
+                                                    <telerik:GridBoundColumn UniqueName="Remark" HeaderText="备注" DataField="Remark">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+                                                   
+                                                </Columns>
+                                                <CommandItemTemplate>
+                                                    <table class="width100-percent">
+                                                        <tr>
+                                                            <td></td>
+                                                            <td class="right-td rightpadding10">
+                                                                <input type="button" class="rgRefresh" onclick="refreshGrid(); return false;" />
+                                                                <a href="javascript:void(0);" onclick="refreshGrid(); return false;">刷新</a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </CommandItemTemplate>
+                                                <NoRecordsTemplate>
+                                                    没有任何数据
+                                                </NoRecordsTemplate>
+                                                <ItemStyle Height="30" />
+                                                <AlternatingItemStyle BackColor="#f2f2f2" />
+                                                <PagerStyle PagerTextFormat="{4} 第{0}页/共{1}页, 第{2}-{3}条 共{5}条"
+                                                    PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
+                                                    FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
+                                            </MasterTableView>
+                                            <ClientSettings>
+                                                <ClientEvents OnGridCreated="GetsGridObject" />
+                                            </ClientSettings>
+                                        </telerik:RadGrid>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
                         <div class="mws-button-row">
                             <asp:Button ID="btnSave" runat="server" Text="保存" CssClass="mws-button green" CausesValidation="true" ValidationGroup="vgMaintenance" OnClientClick="return checkGridCellValueChanged();" OnClick="btnSave_Click" />
                             <asp:Button ID="btnSubmit" runat="server" Text="提交" CssClass="mws-button green" CausesValidation="true" OnClientClick="return checkGridCellValueChanged();" OnClick="btnSubmit_Click" />
@@ -406,7 +481,7 @@
 
         function openChooseOrderProductWindow() {
             $.showLoading();
-            
+
             var clientUserID = $find("<%= rcbxClientUser.ClientID %>").get_value();
             var clientCompanyID = $find("<%= ddlClientCompany.ClientID %>").get_selectedItem().get_value();
 

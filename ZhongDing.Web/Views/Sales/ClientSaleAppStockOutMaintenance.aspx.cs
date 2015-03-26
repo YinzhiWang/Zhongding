@@ -77,7 +77,17 @@ namespace ZhongDing.Web.Views.Sales
                 return _PageClientInfoRepository;
             }
         }
+        private ITransportFeeRepository _PageTransportFeeRepository;
+        private ITransportFeeRepository PageTransportFeeRepository
+        {
+            get
+            {
+                if (_PageTransportFeeRepository == null)
+                    _PageTransportFeeRepository = new TransportFeeRepository();
 
+                return _PageTransportFeeRepository;
+            }
+        }
 
         private StockOut _CurrentEntity;
         private StockOut CurrentEntity
@@ -638,6 +648,20 @@ namespace ZhongDing.Web.Views.Sales
             }
         }
 
+        private void BindTransportFee(bool isNeedRebind)
+        {
 
+            var uiTransportFees = PageTransportFeeRepository.GetUIListForSaleAppStockOut(CurrentEntityID.Value);
+            rgTransportFees.DataSource = uiTransportFees;
+
+            if (isNeedRebind)
+                rgTransportFees.Rebind();
+        }
+
+
+        protected void rgTransportFees_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
+        {
+            BindTransportFee(false);
+        }
     }
 }

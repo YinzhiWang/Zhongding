@@ -283,6 +283,33 @@ namespace ZhongDing.Web.Views.Sales {
         protected global::Telerik.Web.UI.RadGrid rgStockOutDetails;
         
         /// <summary>
+        /// div2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div2;
+        
+        /// <summary>
+        /// div3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div3;
+        
+        /// <summary>
+        /// rgTransportFees control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid rgTransportFees;
+        
+        /// <summary>
         /// btnSave control.
         /// </summary>
         /// <remarks>

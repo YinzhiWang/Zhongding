@@ -188,3 +188,6 @@ UpgradeLog*.htm
 
 # Microsoft Fakes
 FakesAssemblies/
+/ZhongDing.Web/App_Data/RadUploadTemp
+/ZhongDing.Web/UploadFiles/SupplierContract/1/1/20150325203740976875.pdf
+/ZhongDing.Web/web - Copy.config

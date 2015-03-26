@@ -39,6 +39,27 @@ namespace ZhongDing.Web.Views.Procures
                 return _PageTransportFeeRepository;
             }
         }
+        private ITransportFeeStockInRepository _PageTransportFeeStockInRepository;
+        private ITransportFeeStockInRepository PageTransportFeeStockInRepository
+        {
+            get
+            {
+                if (_PageTransportFeeStockInRepository == null)
+                    _PageTransportFeeStockInRepository = new TransportFeeStockInRepository();
+                return _PageTransportFeeStockInRepository;
+            }
+        }
+        private ITransportFeeStockOutRepository _PageTransportFeeStockOutRepository;
+        private ITransportFeeStockOutRepository PageTransportFeeStockOutRepository
+        {
+            get
+            {
+                if (_PageTransportFeeStockOutRepository == null)
+                    _PageTransportFeeStockOutRepository = new TransportFeeStockOutRepository();
+                return _PageTransportFeeStockOutRepository;
+            }
+        }
+
         public ETransportFeeType TransportFeeType
         {
             get
@@ -57,11 +78,13 @@ namespace ZhongDing.Web.Views.Procures
             {
                 this.Master.MenuItemID = (int)EMenuItem.TransportFeeManage_StockIn;
                 rbtnStockIn.Checked = true;
+              
             }
             else
             {
                 this.Master.MenuItemID = (int)EMenuItem.TransportFeeManage_StockOut;
                 rbtnStockOut.Checked = true;
+              
             }
 
 
@@ -82,14 +105,24 @@ namespace ZhongDing.Web.Views.Procures
 
                 if (currentEntity != null)
                 {
+                    hdnCurrentEntityID.Value = currentEntity.ID.ToString();
+
+                    rbtnStockOut.Enabled = rbtnStockIn.Enabled = false;
                     if (currentEntity.TransportFeeType == (int)ETransportFeeType.StockIn)
                     {
                         rbtnStockIn.Checked = true;
+                        rbtnStockOut.Visible = false;
+                        rgStockOuts.Visible = false;
+                        rgStockIns.Visible = true;
                     }
                     else
                     {
                         rbtnStockOut.Checked = true;
+                        rbtnStockIn.Visible = false;
+                        rgStockIns.Visible = false;
+                        rgStockOuts.Visible = true;
                     }
+
                     BindTransportCompanys(currentEntity.TransportCompanyID);
 
                     txtTransportCompanyNumber.Text = currentEntity.TransportCompanyNumber;
@@ -154,6 +187,7 @@ namespace ZhongDing.Web.Views.Procures
 
             if (currentEntity != null)
             {
+
                 currentEntity.TransportCompanyID = rcbxTransportCompany.SelectedValue.ToInt();
                 currentEntity.TransportCompanyNumber = txtTransportCompanyNumber.Text;
                 currentEntity.TransportFeeType = rbtnStockIn.Checked ? ((int)ETransportFeeType.StockIn) : ((int)ETransportFeeType.StockOut);
@@ -202,6 +236,61 @@ namespace ZhongDing.Web.Views.Procures
             {
                 txtDriver.Text = txtDriverTelephone.Text = string.Empty;
 
+            }
+        }
+
+
+
+        //Grid
+        protected void rgStockIns_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
+        {
+            if (this.CurrentEntityID.HasValue
+                 && this.CurrentEntityID > 0)
+            {
+                int totalRecords;
+                var stockIns = PageTransportFeeStockInRepository.GetTransportFeeStockInsByTransportFeeID(CurrentEntityID.Value, out totalRecords);
+                rgStockIns.DataSource = stockIns;
+                rgStockIns.VirtualItemCount = totalRecords;
+            }
+
+        }
+
+        protected void rgStockIns_DeleteCommand(object sender, Telerik.Web.UI.GridCommandEventArgs e)
+        {
+            GridEditableItem editableItem = e.Item as GridEditableItem;
+
+            var transportFeeStockInId = editableItem.GetDataKeyValue("ID").ToIntOrNull();
+            if (transportFeeStockInId.HasValue && transportFeeStockInId.Value > 0)
+            {
+                PageTransportFeeStockInRepository.DeleteByID(transportFeeStockInId);
+                PageTransportFeeStockInRepository.Save();
+                rgStockIns.Rebind();
+            }
+        }
+        //Grid
+        protected void rgStockOuts_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
+        {
+            if (this.CurrentEntityID.HasValue
+                 && this.CurrentEntityID > 0)
+            {
+                int totalRecords;
+                var stockOuts = PageTransportFeeStockOutRepository.GetTransportFeeStockOutsByTransportFeeID(CurrentEntityID.Value, out totalRecords);
+                rgStockOuts.DataSource = stockOuts;
+                rgStockOuts.VirtualItemCount = totalRecords;
+            }
+
+        }
+
+        protected void rgStockOuts_DeleteCommand(object sender, Telerik.Web.UI.GridCommandEventArgs e)
+        {
+            GridEditableItem editableItem = e.Item as GridEditableItem;
+
+            var transportFeeStockInId = editableItem.GetDataKeyValue("ID").ToIntOrNull();
+            if (transportFeeStockInId.HasValue && transportFeeStockInId.Value > 0)
+            {
+                PageTransportFeeStockInRepository.DeleteByID(transportFeeStockInId);
+                PageTransportFeeStockInRepository.Save();
+                rgStockOuts.Rebind();
             }
         }
     }

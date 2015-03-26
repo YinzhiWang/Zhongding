@@ -2617,6 +2617,8 @@
     <Content Include="Views\Imports\Editors\UploadDCFlowDataFile.aspx" />
     <Content Include="Views\Imports\ImportDCFlowData.aspx" />
     <Content Include="Views\Procures\Editors\ChooseProcureOrderProducts.aspx" />
+    <Content Include="Views\Procures\Editors\ChooseStockInForTransportFee.aspx" />
+    <Content Include="Views\Procures\Editors\ChooseStockOutForTransportFee.aspx" />
     <Content Include="Views\Procures\Editors\ProcureOrderProductMaintain.aspx" />
     <Content Include="Views\Procures\Printers\PrintStockIn.aspx" />
     <Content Include="Views\Procures\ProcureOrderMaintenance.aspx" />
@@ -3164,6 +3166,20 @@
     <Compile Include="Views\Procures\Editors\ChooseProcureOrderProducts.aspx.designer.cs">
       <DependentUpon>ChooseProcureOrderProducts.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Procures\Editors\ChooseStockInForTransportFee.aspx.cs">
+      <DependentUpon>ChooseStockInForTransportFee.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Procures\Editors\ChooseStockInForTransportFee.aspx.designer.cs">
+      <DependentUpon>ChooseStockInForTransportFee.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Procures\Editors\ChooseStockOutForTransportFee.aspx.cs">
+      <DependentUpon>ChooseStockOutForTransportFee.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Procures\Editors\ChooseStockOutForTransportFee.aspx.designer.cs">
+      <DependentUpon>ChooseStockOutForTransportFee.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Procures\Editors\ProcureOrderProductMaintain.aspx.cs">
       <DependentUpon>ProcureOrderProductMaintain.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3496,7 +3512,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

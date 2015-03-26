@@ -314,6 +314,12 @@
     <Compile Include="Models\TransportFee.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TransportFeeStockIn.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TransportFeeStockOut.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UnitOfMeasurement.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -405,6 +411,8 @@
     <Compile Include="UIObjects\UIToBeOutSalesOrderDetail.cs" />
     <Compile Include="UIObjects\UITransportCompany.cs" />
     <Compile Include="UIObjects\UITransportFee.cs" />
+    <Compile Include="UIObjects\UITransportFeeStockIn.cs" />
+    <Compile Include="UIObjects\UITransportFeeStockOut.cs" />
     <Compile Include="UIObjects\UIUser.cs" />
     <Compile Include="UIObjects\UIWarehouse.cs" />
     <Compile Include="UIObjects\UIWorkflowBase.cs" />

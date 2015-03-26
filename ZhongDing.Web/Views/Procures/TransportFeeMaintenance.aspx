@@ -180,6 +180,124 @@
                                 </telerik:RadTextBox>
                             </div>
                         </div>
+                        <div class="mws-form-row" runat="server" id="divOtherSections">
+                            <div class="mws-panel grid_8 mws-collapsible" data-collapseid="panel-product-specification">
+                                <div class="mws-panel-header">
+                                    <span class="mws-i-24 i-creditcard">关联单据</span>
+                                </div>
+                                <div class="mws-panel-body">
+                                    <div class="mws-panel-content">
+                                        <telerik:RadGrid ID="rgStockIns" runat="server" PageSize="10"
+                                            AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false"
+                                            MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
+                                            ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
+                                            OnNeedDataSource="rgStockIns_NeedDataSource" OnDeleteCommand="rgStockIns_DeleteCommand">
+                                            <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
+                                                ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
+                                                <Columns>
+                                                    <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="Code" HeaderText="入库单编号" DataField="Code">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+
+                                                    <telerik:GridBoundColumn UniqueName="EntryDate" HeaderText="入库日期" DataField="EntryDate">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+
+                                                    <telerik:GridBoundColumn UniqueName="CreatedByText" HeaderText="操作人" DataField="CreatedByText">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+
+                                                    <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
+                                                </Columns>
+                                                <CommandItemTemplate>
+                                                    <table class="width100-percent">
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
+                                                                    <input type="button" class="rgAdd" onclick="openSelectStockInWindow(); return false;" />
+                                                                    <a href="javascript:void(0)" onclick="openSelectStockInWindow(); return false;">添加</a>
+                                                                </asp:Panel>
+                                                            </td>
+                                                            <td class="right-td rightpadding10">
+                                                                <input type="button" class="rgRefresh" onclick="refreshGrid(gridClientIDs.gridStockIns); return false;" />
+                                                                <a href="javascript:void(0);" onclick="refreshGrid(gridClientIDs.gridStockIns); return false;">刷新</a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </CommandItemTemplate>
+                                                <NoRecordsTemplate>
+                                                    没有任何数据
+                                                </NoRecordsTemplate>
+                                                <ItemStyle Height="30" />
+                                                <AlternatingItemStyle BackColor="#f2f2f2" />
+                                                <PagerStyle PagerTextFormat="{4} 第{0}页/共{1}页, 第{2}-{3}条 共{5}条"
+                                                    PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
+                                                    FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
+                                            </MasterTableView>
+                                        </telerik:RadGrid>
+
+                                        <telerik:RadGrid ID="rgStockOuts" runat="server" PageSize="10"
+                                            AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false"
+                                            MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
+                                            ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
+                                            OnNeedDataSource="rgStockOuts_NeedDataSource" OnDeleteCommand="rgStockOuts_DeleteCommand">
+                                            <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
+                                                ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
+                                                <Columns>
+                                                    <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="Code" HeaderText="出库单编号" DataField="Code">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+
+                                                    <telerik:GridBoundColumn UniqueName="ReceiverName" HeaderText="收货人" DataField="ReceiverName">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+
+                                                    <telerik:GridBoundColumn UniqueName="ReceiverPhone" HeaderText="收货电话" DataField="ReceiverPhone">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="ReceiverAddress" HeaderText="收货地址" DataField="ReceiverAddress">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+
+                                                    <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
+                                                </Columns>
+                                                <CommandItemTemplate>
+                                                    <table class="width100-percent">
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
+                                                                    <input type="button" class="rgAdd" onclick="openSelectStockOutWindow(); return false;" />
+                                                                    <a href="javascript:void(0)" onclick="openSelectStockOutWindow(); return false;">添加</a>
+                                                                </asp:Panel>
+                                                            </td>
+                                                            <td class="right-td rightpadding10">
+                                                                <input type="button" class="rgRefresh" onclick="refreshGrid(gridClientIDs.gridStockOuts); return false;" />
+                                                                <a href="javascript:void(0);" onclick="refreshGrid(gridClientIDs.gridStockIns); return false;">刷新</a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </CommandItemTemplate>
+                                                <NoRecordsTemplate>
+                                                    没有任何数据
+                                                </NoRecordsTemplate>
+                                                <ItemStyle Height="30" />
+                                                <AlternatingItemStyle BackColor="#f2f2f2" />
+                                                <PagerStyle PagerTextFormat="{4} 第{0}页/共{1}页, 第{2}-{3}条 共{5}条"
+                                                    PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
+                                                    FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
+                                            </MasterTableView>
+                                        </telerik:RadGrid>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
                         <div class="height20"></div>
                     </div>
                     <div class="mws-button-row">
@@ -192,12 +310,43 @@
         </div>
 
     </div>
+    <asp:HiddenField ID="hdnCurrentEntityID" runat="server" Value="-1" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContent" runat="server">
     <script type="text/javascript">
+        var gridClientIDs = {
+            gridStockIns: "<%= rgStockIns.ClientID %>",
+            gridStockOuts: "<%= rgStockOuts.ClientID %>",
+        };
 
+        function refreshGrid(gridClientID) {
+            var gridObj = $find(gridClientID);
+
+            if (gridObj)
+                gridObj.get_masterTableView().rebind();
+        }
+
+        function openSelectStockInWindow() {
+            $.showLoading();
+
+            var currentEntityID = $("#<%= hdnCurrentEntityID.ClientID %>").val();
+
+            var targetUrl = $.getRootPath() + "Views/Procures/Editors/ChooseStockInForTransportFee.aspx?OwnerEntityID=" + currentEntityID + "&GridClientID=" + gridClientIDs.gridStockIns;
+
+            $.openRadWindow(targetUrl, "winChooseStockInForTransportFee", true, 1000, 660);
+        }
+        function openSelectStockOutWindow() {
+            $.showLoading();
+
+            var currentEntityID = $("#<%= hdnCurrentEntityID.ClientID %>").val();
+
+            var targetUrl = $.getRootPath() + "Views/Procures/Editors/ChooseStockOutForTransportFee.aspx?OwnerEntityID=" + currentEntityID + "&GridClientID=" + gridClientIDs.gridStockOuts;
+
+            $.openRadWindow(targetUrl, "winChooseStockOutForTransportFee", true, 1000, 660);
+        }
         function onClientHidden(sender, args) {
-            redirectToPage("Views/Procures/TransportFeeManagement.aspx");
+            var transportFeeType = $.getQueryString("TransportFeeType");
+            redirectToPage('Views/Procures/TransportFeeManagement.aspx?TransportFeeType=' + transportFeeType);
         }
 
         function onClientBlur(sender, args) {

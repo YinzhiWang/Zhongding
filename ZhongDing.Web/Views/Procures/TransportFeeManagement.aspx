@@ -109,7 +109,7 @@
                             </telerik:GridBoundColumn>
 
 
-                            <telerik:GridBoundColumn UniqueName="Fee" HeaderText="费用" DataField="Fee">
+                            <telerik:GridBoundColumn UniqueName="Fee" HeaderText="费用" DataField="Fee" DataFormatString="￥{0:f2}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="SendDate" HeaderText="发货时间" DataField="SendDate">

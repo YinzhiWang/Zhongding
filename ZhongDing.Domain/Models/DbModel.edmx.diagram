@@ -275,6 +275,8 @@
         <AssociationConnector Association="DbModel.FK_DCFlowDataDetail_Hospital" />
         <EntityTypeShape EntityType="DbModel.TransportFee" Width="1.5" PointX="3" PointY="1" />
         <AssociationConnector Association="DbModel.FK_TransportFee_TransportCompanyID" />
+        <EntityTypeShape EntityType="DbModel.TransportFeeStockIn" Width="1.5" PointX="7.6893634012385093" PointY="4.5367364755537061" />
+        <EntityTypeShape EntityType="DbModel.TransportFeeStockOut" Width="1.5" PointX="2.3991979893293225" PointY="9.7389578268579" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

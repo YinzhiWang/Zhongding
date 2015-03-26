@@ -116,5 +116,7 @@ namespace ZhongDing.Domain.Models
         public DbSet<DCFlowData> DCFlowData { get; set; }
         public DbSet<DCFlowDataDetail> DCFlowDataDetail { get; set; }
         public DbSet<TransportFee> TransportFee { get; set; }
+        public DbSet<TransportFeeStockIn> TransportFeeStockIn { get; set; }
+        public DbSet<TransportFeeStockOut> TransportFeeStockOut { get; set; }
     }
 }

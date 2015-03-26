@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\DynamicLinq.cs" />
+    <Compile Include="IRepositories\ITransportFeeStockOutRepository.cs" />
     <Compile Include="IRepositories\IAccountTypeRepository.cs" />
     <Compile Include="IRepositories\IApplicationNoteRepository.cs" />
     <Compile Include="IRepositories\IApplicationPaymentRepository.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="IRepositories\ISupplierTaskAssignmentRepository.cs" />
     <Compile Include="IRepositories\ITransportCompanyRepository.cs" />
     <Compile Include="IRepositories\ITransportFeeRepository.cs" />
+    <Compile Include="IRepositories\ITransportFeeStockInRepository.cs" />
     <Compile Include="IRepositories\IUnitOfMeasurementRepository.cs" />
     <Compile Include="IRepositories\IUnitOfWork.cs" />
     <Compile Include="IRepositories\IUsersRepository.cs" />
@@ -209,6 +211,8 @@
     <Compile Include="Repositories\SupplierTaskAssignmentRepository.cs" />
     <Compile Include="Repositories\TransportCompanyRepository.cs" />
     <Compile Include="Repositories\TransportFeeRepository.cs" />
+    <Compile Include="Repositories\TransportFeeStockInRepository.cs" />
+    <Compile Include="Repositories\TransportFeeStockOutRepository.cs" />
     <Compile Include="Repositories\UnitOfMeasurementRepository.cs" />
     <Compile Include="Repositories\UnitOfWork.cs" />
     <Compile Include="Repositories\UsersRepository.cs" />
