@@ -12,6 +12,7 @@
     [InChargeUserFullName] NVARCHAR (50)   NULL,
     [UnitOfMeasurementID]  INT             NULL,
     [UnitName]             NVARCHAR (50)   NULL,
+    [SaleDate]             DATETIME        NOT NULL,
     [SaleQty]              INT             NOT NULL,
     [Comment]              NVARCHAR (1000) NULL,
     [IsDeleted]            BIT             CONSTRAINT [DF_DCFlowDataDetail_IsDeleted] DEFAULT ((0)) NOT NULL,
@@ -24,4 +25,6 @@
     CONSTRAINT [FK_DCFlowDataDetail_DCFlowData] FOREIGN KEY ([DCFlowDataID]) REFERENCES [dbo].[DCFlowData] ([ID]),
     CONSTRAINT [FK_DCFlowDataDetail_Hospital] FOREIGN KEY ([HospitalID]) REFERENCES [dbo].[Hospital] ([ID])
 );
+
+
 

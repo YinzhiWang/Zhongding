@@ -94,8 +94,7 @@ namespace ZhongDing.Business.Repositories.Imports
         {
             var toBeImportFileLogs = ImportFileLogRepository.GetList(x =>
                 x.IsDeleted == false && !string.IsNullOrEmpty(x.FilePath)
-                && (x.ImportStatusID == (int)EImportStatus.ToBeImport
-                    || x.ImportStatusID == (int)EImportStatus.ImportError)).ToList();
+                && x.ImportStatusID == (int)EImportStatus.ToBeImport).ToList();
 
             foreach (var fileLog in toBeImportFileLogs)
             {
@@ -168,7 +167,6 @@ namespace ZhongDing.Business.Repositories.Imports
                     string productCode = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.PRODUCT_CODE]);
                     string productName = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.PRODUCT_NAME]);
                     string specification = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.PRODUCT_SPECIFICATION]);
-                    string unitName = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.UNIT_NAME]);
                     string factoryName = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.FACTORY_NAME]);
                     string tempSaleDate = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.SALE_DATE]);
                     string tempSaleQty = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.SALE_QTY]);
@@ -263,6 +261,7 @@ namespace ZhongDing.Business.Repositories.Imports
                                                         ? dBContract.ProductSpecification.UnitOfMeasurementID : null,
                                                     UnitName = (dBContract.ProductSpecification != null && dBContract.ProductSpecification.UnitOfMeasurement != null)
                                                         ? dBContract.ProductSpecification.UnitOfMeasurement.UnitName : string.Empty,
+                                                    SaleDate = saleDate,
                                                     SaleQty = saleQty
                                                 };
 
@@ -304,7 +303,6 @@ namespace ZhongDing.Business.Repositories.Imports
                             ErrorRowData = GlobalConst.ImportDataColumns.PRODUCT_CODE + ":" + productCode + ", "
                             + GlobalConst.ImportDataColumns.PRODUCT_NAME + ":" + productName + ", "
                             + GlobalConst.ImportDataColumns.PRODUCT_SPECIFICATION + ":" + specification + ", "
-                            + GlobalConst.ImportDataColumns.UNIT_NAME + ":" + unitName + ", "
                             + GlobalConst.ImportDataColumns.FACTORY_NAME + ":" + factoryName + ", "
                             + GlobalConst.ImportDataColumns.SALE_DATE + ":" + tempSaleDate + ", "
                             + GlobalConst.ImportDataColumns.SALE_QTY + ":" + tempSaleQty + ", "

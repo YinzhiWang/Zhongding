@@ -2611,7 +2611,9 @@
     <Content Include="Views\HRM\WorkflowPermissionManagement.aspx" />
     <Content Include="Views\Imports\DCFlowDataManagement.aspx" />
     <Content Include="Views\Imports\DCFlowDataMaintenance.aspx" />
-    <Content Include="Views\Imports\Editors\CorrectFlowData.aspx" />
+    <Content Include="Views\Imports\Editors\CorrectDCFlowData.aspx" />
+    <Content Include="Views\Imports\Editors\ImportDCHospitalFlowData.aspx" />
+    <Content Include="Views\Imports\Editors\ViewOverwrittenDCFlowData.aspx" />
     <Content Include="Views\Imports\Editors\UploadDCFlowDataFile.aspx" />
     <Content Include="Views\Imports\ImportDCFlowData.aspx" />
     <Content Include="Views\Procures\Editors\ChooseProcureOrderProducts.aspx" />
@@ -2657,6 +2659,8 @@
     <Content Include="WebServices\SupplierWS.asmx" />
     <Content Include="HttpHandle\AsyncUploadFileHandler.ashx" />
     <Content Include="HttpHandle\AsyncOperateFileHandler.ashx" />
+    <Content Include="Content\Templates\XXXX配送公司医院流向数据%28XXXX年XX月%29.xlsx" />
+    <Content Include="Content\Templates\XXXX配送公司流向数据%28XXXX年XX月%29.xlsx" />
     <None Include="Scripts\jquery-1.11.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\jquery-1.11.1.min.js" />
@@ -3118,12 +3122,26 @@
     <Compile Include="Views\Imports\DCFlowDataMaintenance.aspx.designer.cs">
       <DependentUpon>DCFlowDataMaintenance.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Views\Imports\Editors\CorrectFlowData.aspx.cs">
-      <DependentUpon>CorrectFlowData.aspx</DependentUpon>
+    <Compile Include="Views\Imports\Editors\CorrectDCFlowData.aspx.cs">
+      <DependentUpon>CorrectDCFlowData.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Views\Imports\Editors\CorrectFlowData.aspx.designer.cs">
-      <DependentUpon>CorrectFlowData.aspx</DependentUpon>
+    <Compile Include="Views\Imports\Editors\CorrectDCFlowData.aspx.designer.cs">
+      <DependentUpon>CorrectDCFlowData.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Imports\Editors\ImportDCHospitalFlowData.aspx.cs">
+      <DependentUpon>ImportDCHospitalFlowData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\Editors\ImportDCHospitalFlowData.aspx.designer.cs">
+      <DependentUpon>ImportDCHospitalFlowData.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Imports\Editors\ViewOverwrittenDCFlowData.aspx.cs">
+      <DependentUpon>ViewOverwrittenDCFlowData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\Editors\ViewOverwrittenDCFlowData.aspx.designer.cs">
+      <DependentUpon>ViewOverwrittenDCFlowData.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Imports\Editors\UploadDCFlowDataFile.aspx.cs">
       <DependentUpon>UploadDCFlowDataFile.aspx</DependentUpon>

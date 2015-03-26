@@ -99,7 +99,8 @@ namespace ZhongDing.Web.Views.Imports
             var uiSearchObj = new UISearchDCFlowData()
             {
                 BeginDate = rdpBeginDate.SelectedDate,
-                EndDate = rdpEndDate.SelectedDate
+                EndDate = rdpEndDate.SelectedDate,
+                ExcludeOverwritten = true
             };
 
             if (!string.IsNullOrEmpty(rcbxDistributionCompany.SelectedValue))

@@ -18,8 +18,8 @@ namespace ZhongDing.Domain.Models
         public Hospital()
         {
             this.DBContractHospital = new HashSet<DBContractHospital>();
-            this.DCFlowDataDetail = new HashSet<DCFlowDataDetail>();
             this.DCFlowData = new HashSet<DCFlowData>();
+            this.DCFlowDataDetail = new HashSet<DCFlowDataDetail>();
         }
     
         public int ID { get; set; }
@@ -41,7 +41,7 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual ICollection<DBContractHospital> DBContractHospital { get; set; }
-        public virtual ICollection<DCFlowDataDetail> DCFlowDataDetail { get; set; }
         public virtual ICollection<DCFlowData> DCFlowData { get; set; }
+        public virtual ICollection<DCFlowDataDetail> DCFlowDataDetail { get; set; }
     }
 }

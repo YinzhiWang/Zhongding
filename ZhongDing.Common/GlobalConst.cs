@@ -525,6 +525,11 @@ namespace ZhongDing.Common
 
             #endregion
 
+            /// <summary>
+            /// 备注
+            /// </summary>
+            public static readonly string COMMENT = "备注";
+
         }
 
         #endregion

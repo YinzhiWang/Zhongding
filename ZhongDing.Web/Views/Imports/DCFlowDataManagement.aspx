@@ -87,8 +87,8 @@
                                     <asp:Button ID="btnSearch" runat="server" Text="查询" CssClass="mws-button green" OnClick="btnSearch_Click" />
                                     &nbsp;&nbsp;
                                     <asp:Button ID="btnReset" runat="server" Text="重置" CssClass="mws-button orange" OnClick="btnReset_Click" />
-                                    &nbsp;&nbsp;&nbsp;&nbsp;
-                                    <asp:Button ID="btnImportData" runat="server" Text="导入数据" CssClass="mws-button green" OnClientClick="redirectToImportPage(); return false;" />
+                                    &nbsp;&nbsp;
+                                    <asp:Button ID="btnImportData" runat="server" Text="导入流向数据" CssClass="mws-button green" OnClientClick="redirectToImportPage(); return false;" />
                                 </div>
                             </div>
                         </div>

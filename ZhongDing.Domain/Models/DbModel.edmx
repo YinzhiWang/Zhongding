@@ -97,7 +97,7 @@
           <EntitySet Name="WorkflowStep" EntityType="DbModel.Store.WorkflowStep" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="WorkflowStepStatus" EntityType="DbModel.Store.WorkflowStepStatus" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="WorkflowStepUser" EntityType="DbModel.Store.WorkflowStepUser" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK__aspnet_Me__UserI__4B422AD5" Association="DbModel.Store.FK__aspnet_Me__UserI__4B422AD5">
+          <AssociationSet Name="FK__aspnet_Me__UserI__10566F31" Association="DbModel.Store.FK__aspnet_Me__UserI__10566F31">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
           </AssociationSet>
@@ -1334,6 +1334,7 @@
           <Property Name="InChargeUserFullName" Type="nvarchar" MaxLength="50" />
           <Property Name="UnitOfMeasurementID" Type="int" />
           <Property Name="UnitName" Type="nvarchar" MaxLength="50" />
+          <Property Name="SaleDate" Type="datetime" Nullable="false" />
           <Property Name="SaleQty" Type="int" Nullable="false" />
           <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
@@ -2240,7 +2241,7 @@
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
         </EntityType>
-        <Association Name="FK__aspnet_Me__UserI__4B422AD5">
+        <Association Name="FK__aspnet_Me__UserI__10566F31">
           <End Role="aspnet_Users" Type="DbModel.Store.aspnet_Users" Multiplicity="1" />
           <End Role="aspnet_Membership" Type="DbModel.Store.aspnet_Membership" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -5139,19 +5140,10 @@
             <End Role="ClientTaskRefundApplication" EntitySet="ClientTaskRefundApplication" />
           </AssociationSet>
           <EntitySet Name="TransportCompany" EntityType="DbModel.TransportCompany" />
-          <EntitySet Name="DCFlowDataDetail" EntityType="DbModel.DCFlowDataDetail" />
           <EntitySet Name="DCImportFileLog" EntityType="DbModel.DCImportFileLog" />
           <EntitySet Name="DCInventoryData" EntityType="DbModel.DCInventoryData" />
           <EntitySet Name="ImportDataType" EntityType="DbModel.ImportDataType" />
           <EntitySet Name="ImportStatus" EntityType="DbModel.ImportStatus" />
-          <AssociationSet Name="FK_DCFlowDataDetail_DBContract" Association="DbModel.FK_DCFlowDataDetail_DBContract">
-            <End Role="DBContract" EntitySet="DBContract" />
-            <End Role="DCFlowDataDetail" EntitySet="DCFlowDataDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DCFlowDataDetail_Hospital" Association="DbModel.FK_DCFlowDataDetail_Hospital">
-            <End Role="Hospital" EntitySet="Hospital" />
-            <End Role="DCFlowDataDetail" EntitySet="DCFlowDataDetail" />
-          </AssociationSet>
           <EntitySet Name="ImportErrorLog" EntityType="DbModel.ImportErrorLog" />
           <EntitySet Name="ImportFileLog" EntityType="DbModel.ImportFileLog" />
           <AssociationSet Name="FK_DCImportFileLog_ImportFileLog" Association="DbModel.FK_DCImportFileLog_ImportFileLog">
@@ -5191,8 +5183,17 @@
             <End Role="ProductSpecification" EntitySet="ProductSpecification" />
             <End Role="DCFlowData" EntitySet="DCFlowData" />
           </AssociationSet>
+          <EntitySet Name="DCFlowDataDetail" EntityType="DbModel.DCFlowDataDetail" />
+          <AssociationSet Name="FK_DCFlowDataDetail_DBContract" Association="DbModel.FK_DCFlowDataDetail_DBContract">
+            <End Role="DBContract" EntitySet="DBContract" />
+            <End Role="DCFlowDataDetail" EntitySet="DCFlowDataDetail" />
+          </AssociationSet>
           <AssociationSet Name="FK_DCFlowDataDetail_DCFlowData" Association="DbModel.FK_DCFlowDataDetail_DCFlowData">
             <End Role="DCFlowData" EntitySet="DCFlowData" />
+            <End Role="DCFlowDataDetail" EntitySet="DCFlowDataDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DCFlowDataDetail_Hospital" Association="DbModel.FK_DCFlowDataDetail_Hospital">
+            <End Role="Hospital" EntitySet="Hospital" />
             <End Role="DCFlowDataDetail" EntitySet="DCFlowDataDetail" />
           </AssociationSet>
           <EntitySet Name="TransportFee" EntityType="DbModel.TransportFee" />
@@ -6651,8 +6652,8 @@
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="DBContractHospital" Relationship="DbModel.FK_DBContractHospital_Hospital" FromRole="Hospital" ToRole="DBContractHospital" />
-          <NavigationProperty Name="DCFlowDataDetail" Relationship="DbModel.FK_DCFlowDataDetail_Hospital" FromRole="Hospital" ToRole="DCFlowDataDetail" />
           <NavigationProperty Name="DCFlowData" Relationship="DbModel.FK_DCFlowData_Hospital" FromRole="Hospital" ToRole="DCFlowData" />
+          <NavigationProperty Name="DCFlowDataDetail" Relationship="DbModel.FK_DCFlowDataDetail_Hospital" FromRole="Hospital" ToRole="DCFlowDataDetail" />
         </EntityType>
         <Association Name="FK_DBContract_ClientUser">
           <End Type="DbModel.ClientUser" Role="ClientUser" Multiplicity="0..1" />
@@ -8813,34 +8814,6 @@
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="TransportFee" Relationship="DbModel.FK_TransportFee_TransportCompanyID" FromRole="TransportCompany" ToRole="TransportFee" />
         </EntityType>
-        <EntityType Name="DCFlowDataDetail">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="DCFlowDataID" Nullable="false" />
-          <Property Type="Int32" Name="DBContractID" Nullable="false" />
-          <Property Type="String" Name="ContractCode" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsTempContract" />
-          <Property Type="Int32" Name="HospitalID" Nullable="false" />
-          <Property Type="String" Name="HospitalName" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="ClientUserID" Nullable="false" />
-          <Property Type="String" Name="ClientUserName" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="InChargeUserID" />
-          <Property Type="String" Name="InChargeUserFullName" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="UnitOfMeasurementID" />
-          <Property Type="String" Name="UnitName" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="SaleQty" Nullable="false" />
-          <Property Type="String" Name="Comment" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DCFlowDataDetail_DBContract" FromRole="DCFlowDataDetail" ToRole="DBContract" />
-          <NavigationProperty Name="Hospital" Relationship="DbModel.FK_DCFlowDataDetail_Hospital" FromRole="DCFlowDataDetail" ToRole="Hospital" />
-          <NavigationProperty Name="DCFlowData" Relationship="DbModel.FK_DCFlowDataDetail_DCFlowData" FromRole="DCFlowDataDetail" ToRole="DCFlowData" />
-        </EntityType>
         <EntityType Name="DCImportFileLog">
           <Key>
             <PropertyRef Name="ImportFileLogID" />
@@ -8888,30 +8861,6 @@
           <Property Type="String" Name="StatusName" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ImportFileLog" Relationship="DbModel.FK_ImportFileLog_ImportStatus" FromRole="ImportStatus" ToRole="ImportFileLog" />
         </EntityType>
-        <Association Name="FK_DCFlowDataDetail_DBContract">
-          <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="1" />
-          <End Type="DbModel.DCFlowDataDetail" Role="DCFlowDataDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DBContract">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DCFlowDataDetail">
-              <PropertyRef Name="DBContractID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DCFlowDataDetail_Hospital">
-          <End Type="DbModel.Hospital" Role="Hospital" Multiplicity="1" />
-          <End Type="DbModel.DCFlowDataDetail" Role="DCFlowDataDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Hospital">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DCFlowDataDetail">
-              <PropertyRef Name="HospitalID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="ImportErrorLog">
           <Key>
             <PropertyRef Name="ID" />
@@ -9085,6 +9034,47 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="DCFlowDataDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DCFlowDataID" Nullable="false" />
+          <Property Type="Int32" Name="DBContractID" Nullable="false" />
+          <Property Type="String" Name="ContractCode" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsTempContract" />
+          <Property Type="Int32" Name="HospitalID" Nullable="false" />
+          <Property Type="String" Name="HospitalName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ClientUserID" Nullable="false" />
+          <Property Type="String" Name="ClientUserName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="InChargeUserID" />
+          <Property Type="String" Name="InChargeUserFullName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="UnitOfMeasurementID" />
+          <Property Type="String" Name="UnitName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="SaleDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="SaleQty" Nullable="false" />
+          <Property Type="String" Name="Comment" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DCFlowDataDetail_DBContract" FromRole="DCFlowDataDetail" ToRole="DBContract" />
+          <NavigationProperty Name="DCFlowData" Relationship="DbModel.FK_DCFlowDataDetail_DCFlowData" FromRole="DCFlowDataDetail" ToRole="DCFlowData" />
+          <NavigationProperty Name="Hospital" Relationship="DbModel.FK_DCFlowDataDetail_Hospital" FromRole="DCFlowDataDetail" ToRole="Hospital" />
+        </EntityType>
+        <Association Name="FK_DCFlowDataDetail_DBContract">
+          <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="1" />
+          <End Type="DbModel.DCFlowDataDetail" Role="DCFlowDataDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DBContract">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DCFlowDataDetail">
+              <PropertyRef Name="DBContractID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DCFlowDataDetail_DCFlowData">
           <End Type="DbModel.DCFlowData" Role="DCFlowData" Multiplicity="1" />
           <End Type="DbModel.DCFlowDataDetail" Role="DCFlowDataDetail" Multiplicity="*" />
@@ -9094,6 +9084,18 @@
             </Principal>
             <Dependent Role="DCFlowDataDetail">
               <PropertyRef Name="DCFlowDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCFlowDataDetail_Hospital">
+          <End Type="DbModel.Hospital" Role="Hospital" Multiplicity="1" />
+          <End Type="DbModel.DCFlowDataDetail" Role="DCFlowDataDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DCFlowDataDetail">
+              <PropertyRef Name="HospitalID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10502,32 +10504,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DCFlowDataDetail">
-            <EntityTypeMapping TypeName="DbModel.DCFlowDataDetail">
-              <MappingFragment StoreEntitySet="DCFlowDataDetail">
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="SaleQty" ColumnName="SaleQty" />
-                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
-                <ScalarProperty Name="UnitOfMeasurementID" ColumnName="UnitOfMeasurementID" />
-                <ScalarProperty Name="InChargeUserFullName" ColumnName="InChargeUserFullName" />
-                <ScalarProperty Name="InChargeUserID" ColumnName="InChargeUserID" />
-                <ScalarProperty Name="ClientUserName" ColumnName="ClientUserName" />
-                <ScalarProperty Name="ClientUserID" ColumnName="ClientUserID" />
-                <ScalarProperty Name="HospitalName" ColumnName="HospitalName" />
-                <ScalarProperty Name="HospitalID" ColumnName="HospitalID" />
-                <ScalarProperty Name="IsTempContract" ColumnName="IsTempContract" />
-                <ScalarProperty Name="ContractCode" ColumnName="ContractCode" />
-                <ScalarProperty Name="DBContractID" ColumnName="DBContractID" />
-                <ScalarProperty Name="DCFlowDataID" ColumnName="DCFlowDataID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="DCImportFileLog">
             <EntityTypeMapping TypeName="DbModel.DCImportFileLog">
               <MappingFragment StoreEntitySet="DCImportFileLog">
@@ -10628,6 +10604,33 @@
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ImportFileLogID" ColumnName="ImportFileLogID" />
                 <ScalarProperty Name="DistributionCompanyID" ColumnName="DistributionCompanyID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DCFlowDataDetail">
+            <EntityTypeMapping TypeName="DbModel.DCFlowDataDetail">
+              <MappingFragment StoreEntitySet="DCFlowDataDetail">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="SaleQty" ColumnName="SaleQty" />
+                <ScalarProperty Name="SaleDate" ColumnName="SaleDate" />
+                <ScalarProperty Name="UnitName" ColumnName="UnitName" />
+                <ScalarProperty Name="UnitOfMeasurementID" ColumnName="UnitOfMeasurementID" />
+                <ScalarProperty Name="InChargeUserFullName" ColumnName="InChargeUserFullName" />
+                <ScalarProperty Name="InChargeUserID" ColumnName="InChargeUserID" />
+                <ScalarProperty Name="ClientUserName" ColumnName="ClientUserName" />
+                <ScalarProperty Name="ClientUserID" ColumnName="ClientUserID" />
+                <ScalarProperty Name="HospitalName" ColumnName="HospitalName" />
+                <ScalarProperty Name="HospitalID" ColumnName="HospitalID" />
+                <ScalarProperty Name="IsTempContract" ColumnName="IsTempContract" />
+                <ScalarProperty Name="ContractCode" ColumnName="ContractCode" />
+                <ScalarProperty Name="DBContractID" ColumnName="DBContractID" />
+                <ScalarProperty Name="DCFlowDataID" ColumnName="DCFlowDataID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

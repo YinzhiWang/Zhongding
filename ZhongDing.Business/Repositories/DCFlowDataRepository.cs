@@ -35,6 +35,9 @@ namespace ZhongDing.Business.Repositories
                 if (uiSearchObj.ProductID > 0)
                     whereFuncs.Add(x => x.ProductID == uiSearchObj.ProductID);
 
+                if (uiSearchObj.ExcludeOverwritten)
+                    whereFuncs.Add(x => (!x.IsOverwritten.HasValue || (x.IsOverwritten == false)));
+
                 if (uiSearchObj.BeginDate.HasValue)
                     whereFuncs.Add(x => x.SaleDate >= uiSearchObj.BeginDate);
 

@@ -74,6 +74,8 @@ namespace ZhongDing.Web.Views.Imports
 
                 if (currentEntity != null)
                 {
+                    hdnCurrentEntityID.Value = currentEntity.ID.ToString();
+
                     lblDistributionCompany.Text = currentEntity.DistributionCompany == null
                         ? string.Empty : currentEntity.DistributionCompany.Name;
                     lblSaleDate.Text = currentEntity.SaleDate.ToString("yyyy/MM/dd");
@@ -92,10 +94,16 @@ namespace ZhongDing.Web.Views.Imports
                         btnCorrect.Visible = false;
                         btnImport.Visible = false;
                     }
+
+                    if (currentEntity.OldDCFlowDataID.HasValue
+                        && currentEntity.OldDCFlowDataID > 0)
+                    {
+                        btnViewOverwritten.Visible = true;
+                        hdnOldDCFlowDataID.Value = currentEntity.OldDCFlowDataID.ToString();
+                    }
                 }
             }
         }
-
 
         #endregion
 

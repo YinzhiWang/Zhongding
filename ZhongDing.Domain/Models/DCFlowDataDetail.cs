@@ -28,6 +28,7 @@ namespace ZhongDing.Domain.Models
         public string InChargeUserFullName { get; set; }
         public Nullable<int> UnitOfMeasurementID { get; set; }
         public string UnitName { get; set; }
+        public System.DateTime SaleDate { get; set; }
         public int SaleQty { get; set; }
         public string Comment { get; set; }
         public bool IsDeleted { get; set; }
@@ -47,7 +48,7 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual DBContract DBContract { get; set; }
-        public virtual Hospital Hospital { get; set; }
         public virtual DCFlowData DCFlowData { get; set; }
+        public virtual Hospital Hospital { get; set; }
     }
 }

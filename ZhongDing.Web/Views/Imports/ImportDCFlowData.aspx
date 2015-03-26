@@ -93,6 +93,10 @@
                                     <asp:Button ID="btnSearch" runat="server" Text="查询" CssClass="mws-button green" OnClick="btnSearch_Click" />
                                     &nbsp;&nbsp;
                                     <asp:Button ID="btnReset" runat="server" Text="重置" CssClass="mws-button orange" OnClick="btnReset_Click" />
+                                    &nbsp;&nbsp;
+                                    <asp:Button ID="btnCancel" runat="server" Text="返回" UseSubmitBehavior="false" CssClass="mws-button green" OnClientClick="redirectToPage('Views/Imports/DCFlowDataManagement.aspx');return false;" />
+                                    &nbsp;&nbsp;
+                                    <asp:HyperLink ID="hlkModelExcel" runat="server" NavigateUrl="~/Content/Templates/XXXX配送公司流向数据(XXXX年XX月).xlsx">Excel模板下载</asp:HyperLink>
                                 </div>
                             </div>
                         </div>
@@ -126,8 +130,8 @@
                                         <telerik:GridBoundColumn UniqueName="ImportStatus" HeaderText="状态" DataField="ImportStatus">
                                             <ItemStyle HorizontalAlign="Left" />
                                         </telerik:GridBoundColumn>
-                                        <telerik:GridTemplateColumn UniqueName="Edit">
-                                            <HeaderStyle Width="60" />
+                                        <telerik:GridTemplateColumn UniqueName="Edit" HeaderText="编辑">
+                                            <HeaderStyle HorizontalAlign="Center" Width="60" />
                                             <ItemStyle HorizontalAlign="Center" Width="60" />
                                             <ItemTemplate>
                                                 <a href="javascript:void(0);" onclick="openUploadFileWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">编辑</a>

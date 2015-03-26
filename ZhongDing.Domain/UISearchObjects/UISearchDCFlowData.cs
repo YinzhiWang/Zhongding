@@ -11,5 +11,10 @@ namespace ZhongDing.Domain.UISearchObjects
         public int DistributionCompanyID { get; set; }
 
         public int ProductID { get; set; }
+
+        /// <summary>
+        /// 是否排除被覆盖的数据
+        /// </summary>
+        public bool ExcludeOverwritten { get; set; }
     }
 }

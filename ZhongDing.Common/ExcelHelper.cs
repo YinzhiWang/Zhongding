@@ -81,14 +81,25 @@ namespace ZhongDing.Common
                                         if (cell != null)
                                         {
                                             if (cell.CellType == NPOI.SS.UserModel.CellType.Numeric)
+                                            {
                                                 if (HSSFDateUtil.IsCellDateFormatted(cell))
-                                                    dataRow[l] = cell.DateCellValue;
+                                                {
+                                                    try
+                                                    {
+                                                        dataRow[l] = cell.DateCellValue;
+                                                    }
+                                                    catch (Exception)
+                                                    {
+                                                        dataRow[l] = cell.NumericCellValue;
+                                                    }
+                                                }
                                                 else
                                                     dataRow[l] = cell.NumericCellValue;
+                                            }
                                             else
-                                                dataRow[l] = row.GetCell(l).ToString();
+                                                dataRow[l] = cell.ToString();
 
-                                            if (string.IsNullOrEmpty(row.GetCell(l).ToString()))
+                                            if (string.IsNullOrEmpty(Utility.GetValueFromObject(dataRow[l])))
                                                 emptyCellCount++;
                                         }
                                         else
@@ -161,14 +172,25 @@ namespace ZhongDing.Common
                                         if (cell != null)
                                         {
                                             if (cell.CellType == NPOI.SS.UserModel.CellType.Numeric)
+                                            {
                                                 if (HSSFDateUtil.IsCellDateFormatted(cell))
-                                                    dataRow[l] = cell.DateCellValue;
+                                                {
+                                                    try
+                                                    {
+                                                        dataRow[l] = cell.DateCellValue;
+                                                    }
+                                                    catch (Exception)
+                                                    {
+                                                        dataRow[l] = cell.NumericCellValue;
+                                                    }
+                                                }
                                                 else
                                                     dataRow[l] = cell.NumericCellValue;
+                                            }
                                             else
-                                                dataRow[l] = row.GetCell(l).ToString();
+                                                dataRow[l] = cell.ToString();
 
-                                            if (string.IsNullOrEmpty(row.GetCell(l).ToString()))
+                                            if (string.IsNullOrEmpty(Utility.GetValueFromObject(dataRow[l])))
                                                 emptyCellCount++;
                                         }
                                         else

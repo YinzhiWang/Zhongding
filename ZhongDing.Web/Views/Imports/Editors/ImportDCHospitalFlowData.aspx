@@ -1,4 +1,4 @@
-﻿<%@ Page Title="纠正流向数据" Language="C#" MasterPageFile="~/Site.Window.Master" AutoEventWireup="true" CodeBehind="CorrectFlowData.aspx.cs" Inherits="ZhongDing.Web.Views.Imports.Editors.CorrectFlowData" %>
+﻿<%@ Page Title="导入医院流向数据" Language="C#" MasterPageFile="~/Site.Window.Master" AutoEventWireup="true" CodeBehind="ImportDCHospitalFlowData.aspx.cs" Inherits="ZhongDing.Web.Views.Imports.Editors.ImportDCHospitalFlowData" %>
 
 <%@ MasterType VirtualPath="~/Site.Window.Master" %>
 
@@ -16,32 +16,31 @@
                         </div>
                     </div>
                     <div class="mws-form-row">
-                        <label>流向医院</label>
-                        <div class="mws-form-item">
-                            <telerik:RadComboBox runat="server" ID="rcbxHospital" Filter="Contains"
-                                AllowCustomText="false" Height="160px" EmptyMessage="--请选择--">
-                            </telerik:RadComboBox>
-                            <telerik:RadToolTip ID="rttHospital" runat="server" TargetControlID="rcbxHospital" ShowEvent="OnClick"
-                                Position="MiddleRight" RelativeTo="Element" Text="该项是必选项" AutoCloseDelay="0">
-                            </telerik:RadToolTip>
-                            <asp:RequiredFieldValidator ID="rfvHospital" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="rcbxHospital"
-                                ErrorMessage="请选择配送公司" Text="*" CssClass="field-validation-error">
-                            </asp:RequiredFieldValidator>
+                        <label>文件</label>
+                        <div class="mws-form-item toppadding5">
+                            <asp:FileUpload ID="FileExcel" runat="server" AllowMultiple="false" />
+                            <asp:CustomValidator ID="cvUploadFile" runat="server" Display="Dynamic"
+                                ValidationGroup="vgMaintenance" Text="*" ControlToValidate="FileExcel"
+                                CssClass="field-validation-error">
+                            </asp:CustomValidator>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <asp:HyperLink ID="hlkModelExcel" runat="server" NavigateUrl="~/Content/Templates/XXXX配送公司医院流向数据(XXXX年XX月).xlsx">Excel模板下载</asp:HyperLink>
                         </div>
                     </div>
                     <div class="mws-button-row">
-                        <asp:Button ID="btnSave" runat="server" Text="保存" CssClass="mws-button green" CausesValidation="true" ValidationGroup="vgMaintenance" OnClick="btnSave_Click" />
+                        <asp:Button ID="btnImport" runat="server" Text="导入" CssClass="mws-button green" CausesValidation="true" ValidationGroup="vgMaintenance" OnClick="btnImport_Click" />
                         <asp:Button ID="btnCancel" runat="server" Text="取消" UseSubmitBehavior="false" CssClass="mws-button green" OnClientClick="closeWindow(false);return false;" />
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
     <asp:HiddenField ID="hdnGridClientID" runat="server" />
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContent" runat="server">
-
     <script type="text/javascript">
+
         function closeWindow(needRebindGrid) {
 
             var oWin = $.getRadWindow();

@@ -10,52 +10,79 @@
 namespace ZhongDing.Web.Views.Imports.Editors {
     
     
-    public partial class CorrectFlowData {
+    public partial class ViewOverwrittenDCFlowData {
         
         /// <summary>
-        /// vsMaintenance control.
+        /// lblDistributionCompany control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ValidationSummary vsMaintenance;
+        protected global::System.Web.UI.WebControls.Label lblDistributionCompany;
         
         /// <summary>
-        /// rcbxHospital control.
+        /// lblSaleDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbxHospital;
+        protected global::System.Web.UI.WebControls.Label lblSaleDate;
         
         /// <summary>
-        /// rttHospital control.
+        /// lblProductCode control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadToolTip rttHospital;
+        protected global::System.Web.UI.WebControls.Label lblProductCode;
         
         /// <summary>
-        /// rfvHospital control.
+        /// lblProductName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvHospital;
+        protected global::System.Web.UI.WebControls.Label lblProductName;
         
         /// <summary>
-        /// btnSave control.
+        /// lblSpecification control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSave;
+        protected global::System.Web.UI.WebControls.Label lblSpecification;
+        
+        /// <summary>
+        /// lblFactoryName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFactoryName;
+        
+        /// <summary>
+        /// lblSaleQty control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSaleQty;
+        
+        /// <summary>
+        /// lblFlow control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFlow;
         
         /// <summary>
         /// btnCancel control.
@@ -65,15 +92,6 @@ namespace ZhongDing.Web.Views.Imports.Editors {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCancel;
-        
-        /// <summary>
-        /// hdnGridClientID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnGridClientID;
         
         /// <summary>
         /// Master property.

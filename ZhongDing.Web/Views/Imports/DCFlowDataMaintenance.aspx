@@ -83,6 +83,9 @@
                                 <label>流向</label>
                                 <div class="mws-form-item toppadding5">
                                     <asp:Label ID="lblFlow" runat="server"></asp:Label>
+                                    &nbsp;&nbsp;
+                                    <asp:Button ID="btnViewOverwritten" runat="server" Text="查看被覆盖数据" CssClass="mws-button green" Visible="false"
+                                        UseSubmitBehavior="false" CausesValidation="false" OnClientClick="openViewOverwrittenWindow();return false;" />
                                 </div>
                             </div>
                         </div>
@@ -157,8 +160,8 @@
                         </div>
 
                         <div class="mws-button-row">
-                            <asp:Button ID="btnCorrect" runat="server" Text="纠正流向" CssClass="mws-button green" UseSubmitBehavior="false" CausesValidation="false" />
-                            <asp:Button ID="btnImport" runat="server" Text="导入医院流向" CssClass="mws-button green" UseSubmitBehavior="false" CausesValidation="false" />
+                            <asp:Button ID="btnCorrect" runat="server" Text="纠正流向" CssClass="mws-button green" UseSubmitBehavior="false" CausesValidation="false" OnClientClick="openCorrectFlowDataWindow();return false;" />
+                            <asp:Button ID="btnImport" runat="server" Text="导入医院流向" CssClass="mws-button green" UseSubmitBehavior="false" CausesValidation="false" OnClientClick="openImportDetailsWindow();return false;" />
                             <asp:Button ID="btnCancel" runat="server" Text="返回" UseSubmitBehavior="false" CssClass="mws-button green" OnClientClick="redirectToPage('Views/Imports/DCFlowDataManagement.aspx');return false;" />
                         </div>
                     </div>
@@ -167,13 +170,53 @@
         </div>
     </div>
 
+    <asp:HiddenField ID="hdnOldDCFlowDataID" runat="server" Value="-1" />
+
+    <asp:HiddenField ID="hdnCurrentEntityID" runat="server" Value="-1" />
+
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContent" runat="server">
     <script type="text/javascript">
+        var currentEntityID = -1;
+
+        var gridClientIDs = {
+            gridDetails: "<%= rgDetails.ClientID %>"
+        };
 
         function redirectToManagementPage(sender, args) {
             redirectToPage("Views/Imports/DCFlowDataManagement.aspx");
         }
+
+        function openCorrectFlowDataWindow() {
+            $.showLoading();
+
+            var targetUrl = $.getRootPath() + "Views/Imports/Editors/CorrectDCFlowData.aspx?OwnerEntityID=" + currentEntityID;
+
+            $.openRadWindow(targetUrl, "winCorrectFlowData", true, 800, 330);
+        }
+
+        function openViewOverwrittenWindow() {
+            $.showLoading();
+
+            var oldDCFlowDataID = $("#<%= hdnOldDCFlowDataID.ClientID %>").val();
+
+            var targetUrl = $.getRootPath() + "Views/Imports/Editors/ViewOverwrittenDCFlowData.aspx?EntityID=" + oldDCFlowDataID;
+
+            $.openRadWindow(targetUrl, "winViewOverwritten", true, 800, 330);
+        }
+
+        function openImportDetailsWindow() {
+            $.showLoading();
+
+            var targetUrl = $.getRootPath() + "Views/Imports/Editors/ImportDCHospitalFlowData.aspx?OwnerEntityID=" + currentEntityID
+                + "&GridClientID=" + gridClientIDs.gridDetails;
+
+            $.openRadWindow(targetUrl, "winImportDetails", true, 800, 240);
+        }
+
+        $(document).ready(function () {
+            currentEntityID = $("#<%= hdnCurrentEntityID.ClientID %>").val();
+        });
 
     </script>
 </asp:Content>
