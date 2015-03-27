@@ -106,8 +106,7 @@
                                 AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
                                 MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
                                 ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                                OnNeedDataSource="rgEntities_NeedDataSource" OnItemDataBound="rgEntities_ItemDataBound"
-                                OnDeleteCommand="rgEntities_DeleteCommand">
+                                OnNeedDataSource="rgEntities_NeedDataSource">
                                 <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
                                     ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                                     <Columns>
@@ -130,15 +129,13 @@
                                         <telerik:GridBoundColumn UniqueName="ImportStatus" HeaderText="状态" DataField="ImportStatus">
                                             <ItemStyle HorizontalAlign="Left" />
                                         </telerik:GridBoundColumn>
-                                        <telerik:GridTemplateColumn UniqueName="Edit" HeaderText="编辑">
+                                        <telerik:GridTemplateColumn UniqueName="View" HeaderText="查看">
                                             <HeaderStyle HorizontalAlign="Center" Width="60" />
                                             <ItemStyle HorizontalAlign="Center" Width="60" />
                                             <ItemTemplate>
-                                                <a href="javascript:void(0);" onclick="openUploadFileWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">编辑</a>
+                                                <a href="javascript:void(0);" onclick="redirectToMaintenancePage(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">查看</a>
                                             </ItemTemplate>
                                         </telerik:GridTemplateColumn>
-                                        <telerik:GridButtonColumn UniqueName="Delete" Text="删除" HeaderText="删除" CommandName="Delete" ButtonType="LinkButton"
-                                            HeaderStyle-Width="60" HeaderStyle-HorizontalAlign="Center" ItemStyle-Width="60" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
                                     </Columns>
                                     <CommandItemTemplate>
                                         <table class="width100-percent">
@@ -191,7 +188,7 @@
 
         function redirectToMaintenancePage(id) {
             $.showLoading();
-            window.location.href = "DCFlowDataMaintenance.aspx?EntityID=" + id;
+            window.location.href = "ImportDCFlowDataDetails.aspx?EntityID=" + id;
         }
 
         function openUploadFileWindow(id) {

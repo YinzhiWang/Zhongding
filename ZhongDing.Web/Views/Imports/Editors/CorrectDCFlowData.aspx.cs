@@ -210,7 +210,6 @@ namespace ZhongDing.Web.Views.Imports.Editors
                                 {
                                     HospitalID = hospitalID,
                                     DistributionCompanyID = oldDCFlowData.DistributionCompanyID,
-                                    ImportFileLogID = oldDCFlowData.ImportFileLogID,
                                     ProductID = product.ID,
                                     ProductName = productName,
                                     ProductCode = productCode,

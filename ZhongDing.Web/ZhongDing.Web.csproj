@@ -2616,6 +2616,7 @@
     <Content Include="Views\Imports\Editors\ViewOverwrittenDCFlowData.aspx" />
     <Content Include="Views\Imports\Editors\UploadDCFlowDataFile.aspx" />
     <Content Include="Views\Imports\ImportDCFlowData.aspx" />
+    <Content Include="Views\Imports\ImportDCFlowDataDetails.aspx" />
     <Content Include="Views\Procures\Editors\ChooseProcureOrderProducts.aspx" />
     <Content Include="Views\Procures\Editors\ChooseStockInForTransportFee.aspx" />
     <Content Include="Views\Procures\Editors\ChooseStockOutForTransportFee.aspx" />
@@ -3158,6 +3159,13 @@
     </Compile>
     <Compile Include="Views\Imports\ImportDCFlowData.aspx.designer.cs">
       <DependentUpon>ImportDCFlowData.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Imports\ImportDCFlowDataDetails.aspx.cs">
+      <DependentUpon>ImportDCFlowDataDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\ImportDCFlowDataDetails.aspx.designer.cs">
+      <DependentUpon>ImportDCFlowDataDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Procures\Editors\ChooseProcureOrderProducts.aspx.cs">
       <DependentUpon>ChooseProcureOrderProducts.aspx</DependentUpon>

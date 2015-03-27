@@ -24,5 +24,7 @@ namespace ZhongDing.Domain.UIObjects
 
         public string FactoryName { get; set; }
 
+        public string FlowTo { get; set; }
+
     }
 }

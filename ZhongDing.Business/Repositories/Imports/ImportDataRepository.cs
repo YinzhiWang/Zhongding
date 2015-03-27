@@ -152,6 +152,8 @@ namespace ZhongDing.Business.Repositories.Imports
             if (ds != null && ds.Tables.Count > 0
                 && ds.Tables[0].Rows.Count > 0)
             {
+                int totalCount = ds.Tables[0].Rows.Count;
+
                 fileLog.ImportBeginDate = DateTime.Now;
                 fileLog.ImportStatusID = (int)EImportStatus.Importing;
 
@@ -320,6 +322,10 @@ namespace ZhongDing.Business.Repositories.Imports
                     fileLog.ImportStatusID = (int)EImportStatus.Completed;
                     fileLog.ImportEndDate = DateTime.Now;
                 }
+
+                fileLog.TotalCount = totalCount;
+                fileLog.FailedCount = errorRowCount;
+                fileLog.SucceedCount = totalCount - errorRowCount;
 
                 ImportFileLogRepository.Save();
             }

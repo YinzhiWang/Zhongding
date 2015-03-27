@@ -23,10 +23,11 @@ namespace ZhongDing.Domain.Models
         public int ID { get; set; }
         public string CertificateType1 { get; set; }
         public Nullable<int> OwnerTypeID { get; set; }
+        public bool IsDeleted { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
-    	public bool HasColumnIsDeleted { get { return false; } }
+    	public bool HasColumnIsDeleted { get { return true; } }
     	public bool HasColumnDeletedOn { get { return false; } }
     	public bool HasColumnCreatedOn { get { return false; } }
     	public bool HasColumnCreatedBy { get { return false; } }

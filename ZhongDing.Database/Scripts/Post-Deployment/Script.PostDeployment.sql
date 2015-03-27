@@ -760,3 +760,17 @@ ALTER TABLE [dbo].[WorkflowStep]
     ADD CONSTRAINT [FK_WorkflowStep_Workflow] FOREIGN KEY ([WorkflowID]) REFERENCES [dbo].[Workflow] ([ID])
 COMMIT TRANSACTION
 ---- end --- 3/17/2015 -- 初始化工作流状态关联数据(客户奖励返款)数据 -- by lihong
+
+---- start --- 3/27/2015 -- 删除CertificateType药品再注册批件 -- by lihong
+----20150326客户反馈:批准文号和注册批件/再注册批件可以放在一起填写
+SET NUMERIC_ROUNDABORT OFF
+GO
+SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+BEGIN TRANSACTION
+ALTER TABLE [dbo].[CertificateType] DROP CONSTRAINT [FK_CertificateType_OwnerType]
+UPDATE [dbo].[CertificateType] SET [IsDeleted]=1 WHERE [ID]=31
+ALTER TABLE [dbo].[CertificateType]
+    ADD CONSTRAINT [FK_CertificateType_OwnerType] FOREIGN KEY ([OwnerTypeID]) REFERENCES [dbo].[OwnerType] ([ID])
+COMMIT TRANSACTION
+---- end --- 3/27/2015 -- 删除CertificateType药品再注册批件 -- by lihong

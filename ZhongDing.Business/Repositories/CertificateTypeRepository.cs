@@ -16,7 +16,8 @@ namespace ZhongDing.Business.Repositories
             IList<UICertificateType> uiCertificateTypes = new List<UICertificateType>();
 
             uiCertificateTypes = (from ct in DB.CertificateType
-                                  where ct.OwnerTypeID == ownerTypeID
+                                  where ct.IsDeleted == false 
+                                  && ct.OwnerTypeID == ownerTypeID
                                   select new UICertificateType()
                                   {
                                       ID = ct.ID,

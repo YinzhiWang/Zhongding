@@ -12,6 +12,8 @@ namespace ZhongDing.Domain.UISearchObjects
 
         public int ProductID { get; set; }
 
+        public int ImportFileLogID { get; set; }
+
         /// <summary>
         /// 是否排除被覆盖的数据
         /// </summary>

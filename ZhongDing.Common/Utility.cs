@@ -163,15 +163,21 @@ namespace ZhongDing.Common
             if (!string.IsNullOrWhiteSpace(originalStr))
             {
                 if (originalStr.Length > cutLength)
-                    cutStr = originalStr.Substring(0, cutLength);
+                {
+                    if (isContainEllipses)
+                    {
+                        if (cutLength > 3)
+                            cutLength = cutLength - 3;
+                        else
+                            cutLength = 3 - cutLength;
+
+                        cutStr = originalStr.Substring(0, cutLength) + "...";
+                    }
+                    else
+                        cutStr = originalStr.Substring(0, cutLength);
+                }
                 else
                     cutStr = originalStr;
-            }
-
-            if (isContainEllipses
-                && !string.IsNullOrWhiteSpace(cutStr))
-            {
-                cutStr += "...";
             }
 
             return cutStr;

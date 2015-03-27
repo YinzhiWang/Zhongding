@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[DCFlowData] (
     [ID]                     INT            IDENTITY (1, 1) NOT NULL,
     [DistributionCompanyID]  INT            NULL,
-    [ImportFileLogID]        INT            NOT NULL,
+    [ImportFileLogID]        INT            NULL,
     [ProductID]              INT            NOT NULL,
     [ProductName]            NVARCHAR (255) NULL,
     [ProductCode]            NVARCHAR (50)  NULL,
@@ -25,6 +25,8 @@
     CONSTRAINT [FK_DCFlowData_Product] FOREIGN KEY ([ProductID]) REFERENCES [dbo].[Product] ([ID]),
     CONSTRAINT [FK_DCFlowData_ProductSpecification] FOREIGN KEY ([ProductSpecificationID]) REFERENCES [dbo].[ProductSpecification] ([ID])
 );
+
+
 
 
 

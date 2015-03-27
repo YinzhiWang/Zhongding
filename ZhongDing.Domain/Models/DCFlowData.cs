@@ -22,7 +22,7 @@ namespace ZhongDing.Domain.Models
     
         public int ID { get; set; }
         public Nullable<int> DistributionCompanyID { get; set; }
-        public int ImportFileLogID { get; set; }
+        public Nullable<int> ImportFileLogID { get; set; }
         public int ProductID { get; set; }
         public string ProductName { get; set; }
         public string ProductCode { get; set; }

@@ -29,6 +29,9 @@ namespace ZhongDing.Business.Repositories
                 if (uiSearchObj.ID > 0)
                     whereFuncs.Add(x => x.ID.Equals(uiSearchObj.ID));
 
+                if (uiSearchObj.ImportFileLogID > 0)
+                    whereFuncs.Add(x => x.ImportFileLogID == uiSearchObj.ImportFileLogID);
+
                 if (uiSearchObj.DistributionCompanyID > 0)
                     whereFuncs.Add(x => x.DistributionCompanyID == uiSearchObj.DistributionCompanyID);
 
@@ -70,7 +73,7 @@ namespace ZhongDing.Business.Repositories
                                   UnitName = tum == null ? string.Empty : tum.UnitName,
                                   SaleQty = q.SaleQty,
                                   FactoryName = s.FactoryName,
-
+                                  FlowTo = q.FlowTo
                               }).ToList();
             }
 

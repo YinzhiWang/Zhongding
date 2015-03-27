@@ -954,6 +954,7 @@
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="CertificateType" Type="nvarchar" MaxLength="50" />
           <Property Name="OwnerTypeID" Type="int" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ClientCompany">
           <Key>
@@ -1301,7 +1302,7 @@
           </Key>
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="DistributionCompanyID" Type="int" />
-          <Property Name="ImportFileLogID" Type="int" Nullable="false" />
+          <Property Name="ImportFileLogID" Type="int" />
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="ProductName" Type="nvarchar" MaxLength="255" />
           <Property Name="ProductCode" Type="nvarchar" MaxLength="50" />
@@ -1596,6 +1597,9 @@
           <Property Name="ImportBeginDate" Type="datetime" />
           <Property Name="ImportEndDate" Type="datetime" />
           <Property Name="ImportStatusID" Type="int" Nullable="false" />
+          <Property Name="TotalCount" Type="int" />
+          <Property Name="SucceedCount" Type="int" />
+          <Property Name="FailedCount" Type="int" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
@@ -3158,7 +3162,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DCFlowData_ImportFileLog">
-          <End Role="ImportFileLog" Type="DbModel.Store.ImportFileLog" Multiplicity="1" />
+          <End Role="ImportFileLog" Type="DbModel.Store.ImportFileLog" Multiplicity="0..1" />
           <End Role="DCFlowData" Type="DbModel.Store.DCFlowData" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ImportFileLog">
@@ -4428,7 +4432,6 @@
           <EntitySet Name="aspnet_Users" EntityType="DbModel.aspnet_Users" />
           <EntitySet Name="BankAccount" EntityType="DbModel.BankAccount" />
           <EntitySet Name="Certificate" EntityType="DbModel.Certificate" />
-          <EntitySet Name="CertificateType" EntityType="DbModel.CertificateType" />
           <EntitySet Name="ClientInfoBankAccount" EntityType="DbModel.ClientInfoBankAccount" />
           <EntitySet Name="ClientInfoContact" EntityType="DbModel.ClientInfoContact" />
           <EntitySet Name="Company" EntityType="DbModel.Company" />
@@ -4476,10 +4479,6 @@
             <End Role="BankAccount" EntitySet="BankAccount" />
             <End Role="SupplierBankAccount" EntitySet="SupplierBankAccount" />
           </AssociationSet>
-          <AssociationSet Name="FK_Certificate_CertificateType" Association="DbModel.FK_Certificate_CertificateType">
-            <End Role="CertificateType" EntitySet="CertificateType" />
-            <End Role="Certificate" EntitySet="Certificate" />
-          </AssociationSet>
           <AssociationSet Name="FK_CertificateFile_OwnerType" Association="DbModel.FK_CertificateFile_OwnerType">
             <End Role="OwnerType" EntitySet="OwnerType" />
             <End Role="Certificate" EntitySet="Certificate" />
@@ -4487,10 +4486,6 @@
           <AssociationSet Name="FK_ProductCertificate_Certificate" Association="DbModel.FK_ProductCertificate_Certificate">
             <End Role="Certificate" EntitySet="Certificate" />
             <End Role="ProductCertificate" EntitySet="ProductCertificate" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CertificateType_OwnerType" Association="DbModel.FK_CertificateType_OwnerType">
-            <End Role="OwnerType" EntitySet="OwnerType" />
-            <End Role="CertificateType" EntitySet="CertificateType" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Company" Association="DbModel.FK_Product_Company">
             <End Role="Company" EntitySet="Company" />
@@ -5173,24 +5168,20 @@
           <EntitySet Name="ImportDataType" EntityType="DbModel.ImportDataType" />
           <EntitySet Name="ImportStatus" EntityType="DbModel.ImportStatus" />
           <EntitySet Name="ImportErrorLog" EntityType="DbModel.ImportErrorLog" />
-          <EntitySet Name="ImportFileLog" EntityType="DbModel.ImportFileLog" />
-          <AssociationSet Name="FK_DCImportFileLog_ImportFileLog" Association="DbModel.FK_DCImportFileLog_ImportFileLog">
-            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
-            <End Role="DCImportFileLog" EntitySet="DCImportFileLog" />
+          <EntitySet Name="TransportFee" EntityType="DbModel.TransportFee" />
+          <AssociationSet Name="FK_TransportFee_TransportCompanyID" Association="DbModel.FK_TransportFee_TransportCompanyID">
+            <End Role="TransportCompany" EntitySet="TransportCompany" />
+            <End Role="TransportFee" EntitySet="TransportFee" />
           </AssociationSet>
-          <AssociationSet Name="FK_ImportFileLog_ImportDataType" Association="DbModel.FK_ImportFileLog_ImportDataType">
-            <End Role="ImportDataType" EntitySet="ImportDataType" />
-            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ImportErrorLog_ImportFileLog" Association="DbModel.FK_ImportErrorLog_ImportFileLog">
-            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
-            <End Role="ImportErrorLog" EntitySet="ImportErrorLog" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ImportFileLog_ImportStatus" Association="DbModel.FK_ImportFileLog_ImportStatus">
-            <End Role="ImportStatus" EntitySet="ImportStatus" />
-            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
-          </AssociationSet>
+          <EntitySet Name="TransportFeeStockIn" EntityType="DbModel.TransportFeeStockIn" />
+          <EntitySet Name="TransportFeeStockOut" EntityType="DbModel.TransportFeeStockOut" />
           <EntitySet Name="DCFlowData" EntityType="DbModel.DCFlowData" />
+          <EntitySet Name="DCFlowDataDetail" EntityType="DbModel.DCFlowDataDetail" />
+          <EntitySet Name="ImportFileLog" EntityType="DbModel.ImportFileLog" />
+          <AssociationSet Name="FK_DCFlowDataDetail_DBContract" Association="DbModel.FK_DCFlowDataDetail_DBContract">
+            <End Role="DBContract" EntitySet="DBContract" />
+            <End Role="DCFlowDataDetail" EntitySet="DCFlowDataDetail" />
+          </AssociationSet>
           <AssociationSet Name="FK_DCFlowData_DistributionCompany" Association="DbModel.FK_DCFlowData_DistributionCompany">
             <End Role="DistributionCompany" EntitySet="DistributionCompany" />
             <End Role="DCFlowData" EntitySet="DCFlowData" />
@@ -5211,11 +5202,6 @@
             <End Role="ProductSpecification" EntitySet="ProductSpecification" />
             <End Role="DCFlowData" EntitySet="DCFlowData" />
           </AssociationSet>
-          <EntitySet Name="DCFlowDataDetail" EntityType="DbModel.DCFlowDataDetail" />
-          <AssociationSet Name="FK_DCFlowDataDetail_DBContract" Association="DbModel.FK_DCFlowDataDetail_DBContract">
-            <End Role="DBContract" EntitySet="DBContract" />
-            <End Role="DCFlowDataDetail" EntitySet="DCFlowDataDetail" />
-          </AssociationSet>
           <AssociationSet Name="FK_DCFlowDataDetail_DCFlowData" Association="DbModel.FK_DCFlowDataDetail_DCFlowData">
             <End Role="DCFlowData" EntitySet="DCFlowData" />
             <End Role="DCFlowDataDetail" EntitySet="DCFlowDataDetail" />
@@ -5224,13 +5210,31 @@
             <End Role="Hospital" EntitySet="Hospital" />
             <End Role="DCFlowDataDetail" EntitySet="DCFlowDataDetail" />
           </AssociationSet>
-          <EntitySet Name="TransportFee" EntityType="DbModel.TransportFee" />
-          <AssociationSet Name="FK_TransportFee_TransportCompanyID" Association="DbModel.FK_TransportFee_TransportCompanyID">
-            <End Role="TransportCompany" EntitySet="TransportCompany" />
-            <End Role="TransportFee" EntitySet="TransportFee" />
+          <AssociationSet Name="FK_DCImportFileLog_ImportFileLog" Association="DbModel.FK_DCImportFileLog_ImportFileLog">
+            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
+            <End Role="DCImportFileLog" EntitySet="DCImportFileLog" />
           </AssociationSet>
-          <EntitySet Name="TransportFeeStockIn" EntityType="DbModel.TransportFeeStockIn" />
-          <EntitySet Name="TransportFeeStockOut" EntityType="DbModel.TransportFeeStockOut" />
+          <AssociationSet Name="FK_ImportFileLog_ImportDataType" Association="DbModel.FK_ImportFileLog_ImportDataType">
+            <End Role="ImportDataType" EntitySet="ImportDataType" />
+            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImportErrorLog_ImportFileLog" Association="DbModel.FK_ImportErrorLog_ImportFileLog">
+            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
+            <End Role="ImportErrorLog" EntitySet="ImportErrorLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ImportFileLog_ImportStatus" Association="DbModel.FK_ImportFileLog_ImportStatus">
+            <End Role="ImportStatus" EntitySet="ImportStatus" />
+            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
+          </AssociationSet>
+          <EntitySet Name="CertificateType" EntityType="DbModel.CertificateType" />
+          <AssociationSet Name="FK_Certificate_CertificateType" Association="DbModel.FK_Certificate_CertificateType">
+            <End Role="CertificateType" EntitySet="CertificateType" />
+            <End Role="Certificate" EntitySet="Certificate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CertificateType_OwnerType" Association="DbModel.FK_CertificateType_OwnerType">
+            <End Role="OwnerType" EntitySet="OwnerType" />
+            <End Role="CertificateType" EntitySet="CertificateType" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -5336,21 +5340,11 @@
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="CertificateType" Relationship="DbModel.FK_Certificate_CertificateType" FromRole="Certificate" ToRole="CertificateType" />
           <NavigationProperty Name="OwnerType" Relationship="DbModel.FK_CertificateFile_OwnerType" FromRole="Certificate" ToRole="OwnerType" />
           <NavigationProperty Name="ProductCertificate" Relationship="DbModel.FK_ProductCertificate_Certificate" FromRole="Certificate" ToRole="ProductCertificate" />
           <NavigationProperty Name="ClientCompanyCertificate" Relationship="DbModel.FK_ClientCompanyCertificate_Certificate" FromRole="Certificate" ToRole="ClientCompanyCertificate" />
           <NavigationProperty Name="SupplierCertificate" Relationship="DbModel.FK_SupplierCertificate_Certificate" FromRole="Certificate" ToRole="SupplierCertificate" />
-        </EntityType>
-        <EntityType Name="CertificateType">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="String" Name="CertificateType1" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="OwnerTypeID" />
-          <NavigationProperty Name="Certificate" Relationship="DbModel.FK_Certificate_CertificateType" FromRole="CertificateType" ToRole="Certificate" />
-          <NavigationProperty Name="OwnerType" Relationship="DbModel.FK_CertificateType_OwnerType" FromRole="CertificateType" ToRole="OwnerType" />
+          <NavigationProperty Name="CertificateType" Relationship="DbModel.FK_Certificate_CertificateType" FromRole="Certificate" ToRole="CertificateType" />
         </EntityType>
         <EntityType Name="ClientInfoBankAccount">
           <Key>
@@ -5736,18 +5730,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Certificate_CertificateType">
-          <End Type="DbModel.CertificateType" Role="CertificateType" Multiplicity="0..1" />
-          <End Type="DbModel.Certificate" Role="Certificate" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CertificateType">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Certificate">
-              <PropertyRef Name="CertificateTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_CertificateFile_OwnerType">
           <End Type="DbModel.OwnerType" Role="OwnerType" Multiplicity="0..1" />
           <End Type="DbModel.Certificate" Role="Certificate" Multiplicity="*" />
@@ -5769,18 +5751,6 @@
             </Principal>
             <Dependent Role="ProductCertificate">
               <PropertyRef Name="CertificateID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CertificateType_OwnerType">
-          <End Type="DbModel.OwnerType" Role="OwnerType" Multiplicity="0..1" />
-          <End Type="DbModel.CertificateType" Role="CertificateType" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OwnerType">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="CertificateType">
-              <PropertyRef Name="OwnerTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8904,231 +8874,6 @@
           <Property Type="Int32" Name="CreatedBy" />
           <NavigationProperty Name="ImportFileLog" Relationship="DbModel.FK_ImportErrorLog_ImportFileLog" FromRole="ImportErrorLog" ToRole="ImportFileLog" />
         </EntityType>
-        <EntityType Name="ImportFileLog">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="ImportDataTypeID" Nullable="false" />
-          <Property Type="String" Name="FileName" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="FilePath" MaxLength="2000" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="ImportBeginDate" Precision="3" />
-          <Property Type="DateTime" Name="ImportEndDate" Precision="3" />
-          <Property Type="Int32" Name="ImportStatusID" Nullable="false" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="DCImportFileLog" Relationship="DbModel.FK_DCImportFileLog_ImportFileLog" FromRole="ImportFileLog" ToRole="DCImportFileLog" />
-          <NavigationProperty Name="ImportDataType" Relationship="DbModel.FK_ImportFileLog_ImportDataType" FromRole="ImportFileLog" ToRole="ImportDataType" />
-          <NavigationProperty Name="ImportErrorLog" Relationship="DbModel.FK_ImportErrorLog_ImportFileLog" FromRole="ImportFileLog" ToRole="ImportErrorLog" />
-          <NavigationProperty Name="ImportStatus" Relationship="DbModel.FK_ImportFileLog_ImportStatus" FromRole="ImportFileLog" ToRole="ImportStatus" />
-          <NavigationProperty Name="DCFlowData" Relationship="DbModel.FK_DCFlowData_ImportFileLog" FromRole="ImportFileLog" ToRole="DCFlowData" />
-        </EntityType>
-        <Association Name="FK_DCImportFileLog_ImportFileLog">
-          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="1" />
-          <End Type="DbModel.DCImportFileLog" Role="DCImportFileLog" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="ImportFileLog">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DCImportFileLog">
-              <PropertyRef Name="ImportFileLogID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ImportFileLog_ImportDataType">
-          <End Type="DbModel.ImportDataType" Role="ImportDataType" Multiplicity="1" />
-          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportDataType">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ImportFileLog">
-              <PropertyRef Name="ImportDataTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ImportErrorLog_ImportFileLog">
-          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="1" />
-          <End Type="DbModel.ImportErrorLog" Role="ImportErrorLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportFileLog">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ImportErrorLog">
-              <PropertyRef Name="ImportFileLogID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ImportFileLog_ImportStatus">
-          <End Type="DbModel.ImportStatus" Role="ImportStatus" Multiplicity="1" />
-          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportStatus">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ImportFileLog">
-              <PropertyRef Name="ImportStatusID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="DCFlowData">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="DistributionCompanyID" />
-          <Property Type="Int32" Name="ImportFileLogID" Nullable="false" />
-          <Property Type="Int32" Name="ProductID" Nullable="false" />
-          <Property Type="String" Name="ProductName" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ProductCode" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
-          <Property Type="String" Name="ProductSpecification" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="SaleDate" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="SaleQty" Nullable="false" />
-          <Property Type="DateTime" Name="SettlementDate" Nullable="false" Precision="3" />
-          <Property Type="String" Name="FactoryName" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="HospitalID" />
-          <Property Type="String" Name="FlowTo" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsCorrectlyFlow" />
-          <Property Type="Boolean" Name="IsOverwritten" />
-          <Property Type="Int32" Name="OldDCFlowDataID" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <NavigationProperty Name="DistributionCompany" Relationship="DbModel.FK_DCFlowData_DistributionCompany" FromRole="DCFlowData" ToRole="DistributionCompany" />
-          <NavigationProperty Name="Hospital" Relationship="DbModel.FK_DCFlowData_Hospital" FromRole="DCFlowData" ToRole="Hospital" />
-          <NavigationProperty Name="ImportFileLog" Relationship="DbModel.FK_DCFlowData_ImportFileLog" FromRole="DCFlowData" ToRole="ImportFileLog" />
-          <NavigationProperty Name="Product" Relationship="DbModel.FK_DCFlowData_Product" FromRole="DCFlowData" ToRole="Product" />
-          <NavigationProperty Name="ProductSpecification1" Relationship="DbModel.FK_DCFlowData_ProductSpecification" FromRole="DCFlowData" ToRole="ProductSpecification" />
-          <NavigationProperty Name="DCFlowDataDetail" Relationship="DbModel.FK_DCFlowDataDetail_DCFlowData" FromRole="DCFlowData" ToRole="DCFlowDataDetail" />
-        </EntityType>
-        <Association Name="FK_DCFlowData_DistributionCompany">
-          <End Type="DbModel.DistributionCompany" Role="DistributionCompany" Multiplicity="0..1" />
-          <End Type="DbModel.DCFlowData" Role="DCFlowData" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DistributionCompany">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DCFlowData">
-              <PropertyRef Name="DistributionCompanyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DCFlowData_Hospital">
-          <End Type="DbModel.Hospital" Role="Hospital" Multiplicity="0..1" />
-          <End Type="DbModel.DCFlowData" Role="DCFlowData" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Hospital">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DCFlowData">
-              <PropertyRef Name="HospitalID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DCFlowData_ImportFileLog">
-          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="1" />
-          <End Type="DbModel.DCFlowData" Role="DCFlowData" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportFileLog">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DCFlowData">
-              <PropertyRef Name="ImportFileLogID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DCFlowData_Product">
-          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
-          <End Type="DbModel.DCFlowData" Role="DCFlowData" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DCFlowData">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DCFlowData_ProductSpecification">
-          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
-          <End Type="DbModel.DCFlowData" Role="DCFlowData" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProductSpecification">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DCFlowData">
-              <PropertyRef Name="ProductSpecificationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="DCFlowDataDetail">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="DCFlowDataID" Nullable="false" />
-          <Property Type="Int32" Name="DBContractID" Nullable="false" />
-          <Property Type="String" Name="ContractCode" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsTempContract" />
-          <Property Type="Int32" Name="HospitalID" Nullable="false" />
-          <Property Type="String" Name="HospitalName" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="ClientUserID" Nullable="false" />
-          <Property Type="String" Name="ClientUserName" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="InChargeUserID" />
-          <Property Type="String" Name="InChargeUserFullName" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="UnitOfMeasurementID" />
-          <Property Type="String" Name="UnitName" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="SaleDate" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="SaleQty" Nullable="false" />
-          <Property Type="String" Name="Comment" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DCFlowDataDetail_DBContract" FromRole="DCFlowDataDetail" ToRole="DBContract" />
-          <NavigationProperty Name="DCFlowData" Relationship="DbModel.FK_DCFlowDataDetail_DCFlowData" FromRole="DCFlowDataDetail" ToRole="DCFlowData" />
-          <NavigationProperty Name="Hospital" Relationship="DbModel.FK_DCFlowDataDetail_Hospital" FromRole="DCFlowDataDetail" ToRole="Hospital" />
-        </EntityType>
-        <Association Name="FK_DCFlowDataDetail_DBContract">
-          <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="1" />
-          <End Type="DbModel.DCFlowDataDetail" Role="DCFlowDataDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DBContract">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DCFlowDataDetail">
-              <PropertyRef Name="DBContractID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DCFlowDataDetail_DCFlowData">
-          <End Type="DbModel.DCFlowData" Role="DCFlowData" Multiplicity="1" />
-          <End Type="DbModel.DCFlowDataDetail" Role="DCFlowDataDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DCFlowData">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DCFlowDataDetail">
-              <PropertyRef Name="DCFlowDataID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DCFlowDataDetail_Hospital">
-          <End Type="DbModel.Hospital" Role="Hospital" Multiplicity="1" />
-          <End Type="DbModel.DCFlowDataDetail" Role="DCFlowDataDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Hospital">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DCFlowDataDetail">
-              <PropertyRef Name="HospitalID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="TransportFee">
           <Key>
             <PropertyRef Name="ID" />
@@ -9191,6 +8936,269 @@
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
         </EntityType>
+        <EntityType Name="DCFlowData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DistributionCompanyID" />
+          <Property Type="Int32" Name="ImportFileLogID" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="String" Name="ProductName" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ProductCode" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
+          <Property Type="String" Name="ProductSpecification" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="SaleDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="SaleQty" Nullable="false" />
+          <Property Type="DateTime" Name="SettlementDate" Nullable="false" Precision="3" />
+          <Property Type="String" Name="FactoryName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="HospitalID" />
+          <Property Type="String" Name="FlowTo" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsCorrectlyFlow" />
+          <Property Type="Boolean" Name="IsOverwritten" />
+          <Property Type="Int32" Name="OldDCFlowDataID" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <NavigationProperty Name="DistributionCompany" Relationship="DbModel.FK_DCFlowData_DistributionCompany" FromRole="DCFlowData" ToRole="DistributionCompany" />
+          <NavigationProperty Name="Hospital" Relationship="DbModel.FK_DCFlowData_Hospital" FromRole="DCFlowData" ToRole="Hospital" />
+          <NavigationProperty Name="ImportFileLog" Relationship="DbModel.FK_DCFlowData_ImportFileLog" FromRole="DCFlowData" ToRole="ImportFileLog" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_DCFlowData_Product" FromRole="DCFlowData" ToRole="Product" />
+          <NavigationProperty Name="ProductSpecification1" Relationship="DbModel.FK_DCFlowData_ProductSpecification" FromRole="DCFlowData" ToRole="ProductSpecification" />
+          <NavigationProperty Name="DCFlowDataDetail" Relationship="DbModel.FK_DCFlowDataDetail_DCFlowData" FromRole="DCFlowData" ToRole="DCFlowDataDetail" />
+        </EntityType>
+        <EntityType Name="DCFlowDataDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DCFlowDataID" Nullable="false" />
+          <Property Type="Int32" Name="DBContractID" Nullable="false" />
+          <Property Type="String" Name="ContractCode" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsTempContract" />
+          <Property Type="Int32" Name="HospitalID" Nullable="false" />
+          <Property Type="String" Name="HospitalName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ClientUserID" Nullable="false" />
+          <Property Type="String" Name="ClientUserName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="InChargeUserID" />
+          <Property Type="String" Name="InChargeUserFullName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="UnitOfMeasurementID" />
+          <Property Type="String" Name="UnitName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="SaleDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="SaleQty" Nullable="false" />
+          <Property Type="String" Name="Comment" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DCFlowDataDetail_DBContract" FromRole="DCFlowDataDetail" ToRole="DBContract" />
+          <NavigationProperty Name="DCFlowData" Relationship="DbModel.FK_DCFlowDataDetail_DCFlowData" FromRole="DCFlowDataDetail" ToRole="DCFlowData" />
+          <NavigationProperty Name="Hospital" Relationship="DbModel.FK_DCFlowDataDetail_Hospital" FromRole="DCFlowDataDetail" ToRole="Hospital" />
+        </EntityType>
+        <EntityType Name="ImportFileLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ImportDataTypeID" Nullable="false" />
+          <Property Type="String" Name="FileName" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FilePath" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="ImportBeginDate" Precision="3" />
+          <Property Type="DateTime" Name="ImportEndDate" Precision="3" />
+          <Property Type="Int32" Name="ImportStatusID" Nullable="false" />
+          <Property Type="Int32" Name="TotalCount" />
+          <Property Type="Int32" Name="SucceedCount" />
+          <Property Type="Int32" Name="FailedCount" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="DCFlowData" Relationship="DbModel.FK_DCFlowData_ImportFileLog" FromRole="ImportFileLog" ToRole="DCFlowData" />
+          <NavigationProperty Name="DCImportFileLog" Relationship="DbModel.FK_DCImportFileLog_ImportFileLog" FromRole="ImportFileLog" ToRole="DCImportFileLog" />
+          <NavigationProperty Name="ImportDataType" Relationship="DbModel.FK_ImportFileLog_ImportDataType" FromRole="ImportFileLog" ToRole="ImportDataType" />
+          <NavigationProperty Name="ImportErrorLog" Relationship="DbModel.FK_ImportErrorLog_ImportFileLog" FromRole="ImportFileLog" ToRole="ImportErrorLog" />
+          <NavigationProperty Name="ImportStatus" Relationship="DbModel.FK_ImportFileLog_ImportStatus" FromRole="ImportFileLog" ToRole="ImportStatus" />
+        </EntityType>
+        <Association Name="FK_DCFlowDataDetail_DBContract">
+          <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="1" />
+          <End Type="DbModel.DCFlowDataDetail" Role="DCFlowDataDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DBContract">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DCFlowDataDetail">
+              <PropertyRef Name="DBContractID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCFlowData_DistributionCompany">
+          <End Type="DbModel.DistributionCompany" Role="DistributionCompany" Multiplicity="0..1" />
+          <End Type="DbModel.DCFlowData" Role="DCFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCompany">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DCFlowData">
+              <PropertyRef Name="DistributionCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCFlowData_Hospital">
+          <End Type="DbModel.Hospital" Role="Hospital" Multiplicity="0..1" />
+          <End Type="DbModel.DCFlowData" Role="DCFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DCFlowData">
+              <PropertyRef Name="HospitalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCFlowData_ImportFileLog">
+          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="0..1" />
+          <End Type="DbModel.DCFlowData" Role="DCFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportFileLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DCFlowData">
+              <PropertyRef Name="ImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCFlowData_Product">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DbModel.DCFlowData" Role="DCFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DCFlowData">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCFlowData_ProductSpecification">
+          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
+          <End Type="DbModel.DCFlowData" Role="DCFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DCFlowData">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCFlowDataDetail_DCFlowData">
+          <End Type="DbModel.DCFlowData" Role="DCFlowData" Multiplicity="1" />
+          <End Type="DbModel.DCFlowDataDetail" Role="DCFlowDataDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DCFlowData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DCFlowDataDetail">
+              <PropertyRef Name="DCFlowDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCFlowDataDetail_Hospital">
+          <End Type="DbModel.Hospital" Role="Hospital" Multiplicity="1" />
+          <End Type="DbModel.DCFlowDataDetail" Role="DCFlowDataDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DCFlowDataDetail">
+              <PropertyRef Name="HospitalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCImportFileLog_ImportFileLog">
+          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="1" />
+          <End Type="DbModel.DCImportFileLog" Role="DCImportFileLog" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ImportFileLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DCImportFileLog">
+              <PropertyRef Name="ImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImportFileLog_ImportDataType">
+          <End Type="DbModel.ImportDataType" Role="ImportDataType" Multiplicity="1" />
+          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportDataType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ImportFileLog">
+              <PropertyRef Name="ImportDataTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImportErrorLog_ImportFileLog">
+          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="1" />
+          <End Type="DbModel.ImportErrorLog" Role="ImportErrorLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportFileLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ImportErrorLog">
+              <PropertyRef Name="ImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ImportFileLog_ImportStatus">
+          <End Type="DbModel.ImportStatus" Role="ImportStatus" Multiplicity="1" />
+          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ImportFileLog">
+              <PropertyRef Name="ImportStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CertificateType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="CertificateType1" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="OwnerTypeID" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <NavigationProperty Name="Certificate" Relationship="DbModel.FK_Certificate_CertificateType" FromRole="CertificateType" ToRole="Certificate" />
+          <NavigationProperty Name="OwnerType" Relationship="DbModel.FK_CertificateType_OwnerType" FromRole="CertificateType" ToRole="OwnerType" />
+        </EntityType>
+        <Association Name="FK_Certificate_CertificateType">
+          <End Type="DbModel.CertificateType" Role="CertificateType" Multiplicity="0..1" />
+          <End Type="DbModel.Certificate" Role="Certificate" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CertificateType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Certificate">
+              <PropertyRef Name="CertificateTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CertificateType_OwnerType">
+          <End Type="DbModel.OwnerType" Role="OwnerType" Multiplicity="0..1" />
+          <End Type="DbModel.CertificateType" Role="CertificateType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="OwnerType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CertificateType">
+              <PropertyRef Name="OwnerTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -9291,15 +9299,6 @@
                 <ScalarProperty Name="IsGotten" ColumnName="IsGotten" />
                 <ScalarProperty Name="OwnerTypeID" ColumnName="OwnerTypeID" />
                 <ScalarProperty Name="CertificateTypeID" ColumnName="CertificateTypeID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CertificateType">
-            <EntityTypeMapping TypeName="DbModel.CertificateType">
-              <MappingFragment StoreEntitySet="CertificateType">
-                <ScalarProperty Name="OwnerTypeID" ColumnName="OwnerTypeID" />
-                <ScalarProperty Name="CertificateType1" ColumnName="CertificateType" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -10621,20 +10620,54 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ImportFileLog">
-            <EntityTypeMapping TypeName="DbModel.ImportFileLog">
-              <MappingFragment StoreEntitySet="ImportFileLog">
+          <EntitySetMapping Name="TransportFee">
+            <EntityTypeMapping TypeName="DbModel.TransportFee">
+              <MappingFragment StoreEntitySet="TransportFee">
                 <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
                 <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="ImportStatusID" ColumnName="ImportStatusID" />
-                <ScalarProperty Name="ImportEndDate" ColumnName="ImportEndDate" />
-                <ScalarProperty Name="ImportBeginDate" ColumnName="ImportBeginDate" />
-                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
-                <ScalarProperty Name="FileName" ColumnName="FileName" />
-                <ScalarProperty Name="ImportDataTypeID" ColumnName="ImportDataTypeID" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="SendDate" ColumnName="SendDate" />
+                <ScalarProperty Name="Fee" ColumnName="Fee" />
+                <ScalarProperty Name="EndPlaceTelephone" ColumnName="EndPlaceTelephone" />
+                <ScalarProperty Name="EndPlace" ColumnName="EndPlace" />
+                <ScalarProperty Name="StartPlaceTelephone" ColumnName="StartPlaceTelephone" />
+                <ScalarProperty Name="StartPlace" ColumnName="StartPlace" />
+                <ScalarProperty Name="DriverTelephone" ColumnName="DriverTelephone" />
+                <ScalarProperty Name="Driver" ColumnName="Driver" />
+                <ScalarProperty Name="TransportCompanyNumber" ColumnName="TransportCompanyNumber" />
+                <ScalarProperty Name="TransportCompanyID" ColumnName="TransportCompanyID" />
+                <ScalarProperty Name="TransportFeeType" ColumnName="TransportFeeType" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransportFeeStockIn">
+            <EntityTypeMapping TypeName="DbModel.TransportFeeStockIn">
+              <MappingFragment StoreEntitySet="TransportFeeStockIn">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="StockInID" ColumnName="StockInID" />
+                <ScalarProperty Name="TransportFeeID" ColumnName="TransportFeeID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransportFeeStockOut">
+            <EntityTypeMapping TypeName="DbModel.TransportFeeStockOut">
+              <MappingFragment StoreEntitySet="TransportFeeStockOut">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="StockOutID" ColumnName="StockOutID" />
+                <ScalarProperty Name="TransportFeeID" ColumnName="TransportFeeID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -10691,54 +10724,33 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TransportFee">
-            <EntityTypeMapping TypeName="DbModel.TransportFee">
-              <MappingFragment StoreEntitySet="TransportFee">
+          <EntitySetMapping Name="ImportFileLog">
+            <EntityTypeMapping TypeName="DbModel.ImportFileLog">
+              <MappingFragment StoreEntitySet="ImportFileLog">
                 <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
                 <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Remark" ColumnName="Remark" />
-                <ScalarProperty Name="SendDate" ColumnName="SendDate" />
-                <ScalarProperty Name="Fee" ColumnName="Fee" />
-                <ScalarProperty Name="EndPlaceTelephone" ColumnName="EndPlaceTelephone" />
-                <ScalarProperty Name="EndPlace" ColumnName="EndPlace" />
-                <ScalarProperty Name="StartPlaceTelephone" ColumnName="StartPlaceTelephone" />
-                <ScalarProperty Name="StartPlace" ColumnName="StartPlace" />
-                <ScalarProperty Name="DriverTelephone" ColumnName="DriverTelephone" />
-                <ScalarProperty Name="Driver" ColumnName="Driver" />
-                <ScalarProperty Name="TransportCompanyNumber" ColumnName="TransportCompanyNumber" />
-                <ScalarProperty Name="TransportCompanyID" ColumnName="TransportCompanyID" />
-                <ScalarProperty Name="TransportFeeType" ColumnName="TransportFeeType" />
+                <ScalarProperty Name="FailedCount" ColumnName="FailedCount" />
+                <ScalarProperty Name="SucceedCount" ColumnName="SucceedCount" />
+                <ScalarProperty Name="TotalCount" ColumnName="TotalCount" />
+                <ScalarProperty Name="ImportStatusID" ColumnName="ImportStatusID" />
+                <ScalarProperty Name="ImportEndDate" ColumnName="ImportEndDate" />
+                <ScalarProperty Name="ImportBeginDate" ColumnName="ImportBeginDate" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="ImportDataTypeID" ColumnName="ImportDataTypeID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="TransportFeeStockIn">
-            <EntityTypeMapping TypeName="DbModel.TransportFeeStockIn">
-              <MappingFragment StoreEntitySet="TransportFeeStockIn">
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <EntitySetMapping Name="CertificateType">
+            <EntityTypeMapping TypeName="DbModel.CertificateType">
+              <MappingFragment StoreEntitySet="CertificateType">
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="StockInID" ColumnName="StockInID" />
-                <ScalarProperty Name="TransportFeeID" ColumnName="TransportFeeID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="TransportFeeStockOut">
-            <EntityTypeMapping TypeName="DbModel.TransportFeeStockOut">
-              <MappingFragment StoreEntitySet="TransportFeeStockOut">
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="StockOutID" ColumnName="StockOutID" />
-                <ScalarProperty Name="TransportFeeID" ColumnName="TransportFeeID" />
+                <ScalarProperty Name="OwnerTypeID" ColumnName="OwnerTypeID" />
+                <ScalarProperty Name="CertificateType1" ColumnName="CertificateType" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

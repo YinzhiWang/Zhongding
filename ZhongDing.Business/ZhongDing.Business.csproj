@@ -96,6 +96,7 @@
     <Compile Include="IRepositories\IFactoryManagerRefundAppRepository.cs" />
     <Compile Include="IRepositories\IGenerateDropdownItems.cs" />
     <Compile Include="IRepositories\IHospitalRepository.cs" />
+    <Compile Include="IRepositories\IImportErrorLogRepository.cs" />
     <Compile Include="IRepositories\IImportFileLogRepository.cs" />
     <Compile Include="IRepositories\IImportDataRepository.cs" />
     <Compile Include="IRepositories\IInventoryHistoryRepository.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="Repositories\DistributionCompanyRepository.cs" />
     <Compile Include="Repositories\FactoryManagerRefundAppRepository.cs" />
     <Compile Include="Repositories\HospitalRepository.cs" />
+    <Compile Include="Repositories\ImportErrorLogRepository.cs" />
     <Compile Include="Repositories\ImportFileLogRepository.cs" />
     <Compile Include="Repositories\Imports\ImportDataRepository.cs" />
     <Compile Include="Repositories\InventoryHistoryRepository.cs" />

@@ -385,6 +385,7 @@
     <Compile Include="UIObjects\UIDropdownItem.cs" />
     <Compile Include="UIObjects\UIFactoryManagerRefundApp.cs" />
     <Compile Include="UIObjects\UIHospital.cs" />
+    <Compile Include="UIObjects\UIImportErrorLog.cs" />
     <Compile Include="UIObjects\UIImportFileLog.cs" />
     <Compile Include="UIObjects\UIInventoryHistory.cs" />
     <Compile Include="UIObjects\UIProcureOrderAppDetail.cs" />
@@ -449,6 +450,7 @@
     <Compile Include="UISearchObjects\UISearchExtension.cs" />
     <Compile Include="UISearchObjects\UISearchFactoryManagerRefundApp.cs" />
     <Compile Include="UISearchObjects\UISearchHospital.cs" />
+    <Compile Include="UISearchObjects\UISearchImportErrorLog.cs" />
     <Compile Include="UISearchObjects\UISearchImportFileLog.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderAppDetail.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderApplication.cs" />

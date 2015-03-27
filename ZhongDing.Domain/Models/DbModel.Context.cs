@@ -31,7 +31,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<aspnet_Users> aspnet_Users { get; set; }
         public DbSet<BankAccount> BankAccount { get; set; }
         public DbSet<Certificate> Certificate { get; set; }
-        public DbSet<CertificateType> CertificateType { get; set; }
         public DbSet<ClientInfoBankAccount> ClientInfoBankAccount { get; set; }
         public DbSet<ClientInfoContact> ClientInfoContact { get; set; }
         public DbSet<Company> Company { get; set; }
@@ -112,11 +111,12 @@ namespace ZhongDing.Domain.Models
         public DbSet<ImportDataType> ImportDataType { get; set; }
         public DbSet<ImportStatus> ImportStatus { get; set; }
         public DbSet<ImportErrorLog> ImportErrorLog { get; set; }
-        public DbSet<ImportFileLog> ImportFileLog { get; set; }
-        public DbSet<DCFlowData> DCFlowData { get; set; }
-        public DbSet<DCFlowDataDetail> DCFlowDataDetail { get; set; }
         public DbSet<TransportFee> TransportFee { get; set; }
         public DbSet<TransportFeeStockIn> TransportFeeStockIn { get; set; }
         public DbSet<TransportFeeStockOut> TransportFeeStockOut { get; set; }
+        public DbSet<DCFlowData> DCFlowData { get; set; }
+        public DbSet<DCFlowDataDetail> DCFlowDataDetail { get; set; }
+        public DbSet<ImportFileLog> ImportFileLog { get; set; }
+        public DbSet<CertificateType> CertificateType { get; set; }
     }
 }
