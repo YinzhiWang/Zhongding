@@ -268,8 +268,10 @@
                                                         <ItemTemplate>
                                                             <span>
                                                                 <%#DataBinder.Eval(Container.DataItem,"IsNeedAlert")!=null
-                                                                        ?(Convert.ToBoolean( DataBinder.Eval(Container.DataItem,"IsNeedAlert").ToString())==true ? "X":
-                                                                        string.Empty):string.Empty%>
+                                                                        ?(Convert.ToBoolean( DataBinder.Eval(Container.DataItem,"IsNeedAlert").ToString())==true 
+                                                                            ? ZhongDing.Common.GlobalConst.BoolChineseDescription.TRUE
+                                                                            : ZhongDing.Common.GlobalConst.BoolChineseDescription.FALSE)
+                                                                        :string.Empty%>
                                                             </span>
                                                         </ItemTemplate>
                                                     </telerik:GridTemplateColumn>
