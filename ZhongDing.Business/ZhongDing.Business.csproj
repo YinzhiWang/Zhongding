@@ -130,6 +130,7 @@
     <Compile Include="IRepositories\ITransportCompanyRepository.cs" />
     <Compile Include="IRepositories\ITransportFeeRepository.cs" />
     <Compile Include="IRepositories\ITransportFeeStockInRepository.cs" />
+    <Compile Include="IRepositories\ITransportFeeStockOutSmsReminderRepository.cs" />
     <Compile Include="IRepositories\IUnitOfMeasurementRepository.cs" />
     <Compile Include="IRepositories\IUnitOfWork.cs" />
     <Compile Include="IRepositories\IUsersRepository.cs" />
@@ -215,6 +216,7 @@
     <Compile Include="Repositories\TransportFeeRepository.cs" />
     <Compile Include="Repositories\TransportFeeStockInRepository.cs" />
     <Compile Include="Repositories\TransportFeeStockOutRepository.cs" />
+    <Compile Include="Repositories\TransportFeeStockOutSmsReminderRepository.cs" />
     <Compile Include="Repositories\UnitOfMeasurementRepository.cs" />
     <Compile Include="Repositories\UnitOfWork.cs" />
     <Compile Include="Repositories\UsersRepository.cs" />

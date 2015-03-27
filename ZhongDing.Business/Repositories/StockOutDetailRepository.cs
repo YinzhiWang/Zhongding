@@ -176,5 +176,38 @@ namespace ZhongDing.Business.Repositories
 
             return uiEntities;
         }
+
+        public IList<UIStockOutDetail> GetUIListForSmsReminder(UISearchStockOutDetail uiSearchObj)
+        {
+            IList<UIStockOutDetail> uiEntities = new List<UIStockOutDetail>();
+
+            IQueryable<StockOutDetail> query = null;
+
+            List<Expression<Func<StockOutDetail, bool>>> whereFuncs = new List<Expression<Func<StockOutDetail, bool>>>();
+            if (uiSearchObj != null)
+            {
+                if (uiSearchObj.StockOutID > 0)
+                    whereFuncs.Add(x => x.StockOutID == uiSearchObj.StockOutID);
+            }
+            query = GetList(whereFuncs);
+
+            if (query != null)
+            {
+                uiEntities = (from q in query
+                              join p in DB.Product on q.ProductID equals p.ID
+                              join ps in DB.ProductSpecification on q.ProductSpecificationID equals ps.ID
+                              join um in DB.UnitOfMeasurement on ps.UnitOfMeasurementID equals um.ID into tempUM
+                              from tum in tempUM.DefaultIfEmpty()
+                              select new UIStockOutDetail()
+                              {
+                                  ID = q.ID,
+                                  ProductName = p.ProductName,
+                                  NumberOfPackages = q.OutQty / (ps.NumberInLargePackage.HasValue ? ps.NumberInLargePackage.Value : 1),
+                                  UnitOfMeasurement = tum == null ? string.Empty : tum.UnitName,
+                              }).ToList();
+            }
+
+            return uiEntities;
+        }
     }
 }

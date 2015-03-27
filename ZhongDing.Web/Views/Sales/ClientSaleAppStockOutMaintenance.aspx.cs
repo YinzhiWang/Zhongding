@@ -11,6 +11,7 @@ using ZhongDing.Common;
 using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UISearchObjects;
+using ZhongDing.Common.Extension;
 
 namespace ZhongDing.Web.Views.Sales
 {
@@ -88,7 +89,17 @@ namespace ZhongDing.Web.Views.Sales
                 return _PageTransportFeeRepository;
             }
         }
+        private ITransportFeeStockOutRepository _PageTransportFeeStockOutRepository;
+        private ITransportFeeStockOutRepository PageTransportFeeStockOutRepository 
+        {
+            get
+            {
+                if (_PageTransportFeeStockOutRepository == null)
+                    _PageTransportFeeStockOutRepository = new TransportFeeStockOutRepository();
 
+                return _PageTransportFeeStockOutRepository;
+            }
+        }
         private StockOut _CurrentEntity;
         private StockOut CurrentEntity
         {
@@ -210,6 +221,8 @@ namespace ZhongDing.Web.Views.Sales
 
             if (this.CurrentEntity != null)
             {
+                rgTransportFees.Visible = true;
+
                 //只能操作客户订单出库单
                 if (this.CurrentEntity.ReceiverTypeID != (int)EReceiverType.ClientUser)
                 {
@@ -320,6 +333,8 @@ namespace ZhongDing.Web.Views.Sales
 
             txtCode.Text = Utility.GenerateAutoSerialNo(PageStockOutRepository.GetMaxEntityID(),
                 GlobalConst.EntityAutoSerialNo.SerialNoPrefix.STOCK_OUT_CLIENT);
+
+            divTransportFees.Visible = false;
         }
 
         /// <summary>
@@ -353,6 +368,7 @@ namespace ZhongDing.Web.Views.Sales
         {
             btnOutStock.Visible = isShow;
         }
+
 
         /// <summary>
         /// 保存出库单基本信息
@@ -650,12 +666,14 @@ namespace ZhongDing.Web.Views.Sales
 
         private void BindTransportFee(bool isNeedRebind)
         {
+            if (CurrentEntityID.BiggerThanZero())
+            {
+                var uiTransportFees = PageTransportFeeStockOutRepository.GetUIListForSaleAppStockOut(CurrentEntityID.Value);
+                rgTransportFees.DataSource = uiTransportFees;
 
-            var uiTransportFees = PageTransportFeeRepository.GetUIListForSaleAppStockOut(CurrentEntityID.Value);
-            rgTransportFees.DataSource = uiTransportFees;
-
-            if (isNeedRebind)
-                rgTransportFees.Rebind();
+                if (isNeedRebind)
+                    rgTransportFees.Rebind();
+            }
         }
 
 

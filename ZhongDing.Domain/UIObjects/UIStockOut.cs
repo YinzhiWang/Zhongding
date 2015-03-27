@@ -21,6 +21,6 @@ namespace ZhongDing.Domain.UIObjects
         public string ReceiverPhone { get; set; }
 
         public string ReceiverAddress { get; set; }
-
+ 
     }
 }

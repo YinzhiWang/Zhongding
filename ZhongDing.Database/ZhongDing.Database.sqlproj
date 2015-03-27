@@ -388,6 +388,7 @@
     <Build Include="dbo\Tables\TransportFee.sql" />
     <Build Include="dbo\Tables\TransportFeeStockOut.sql" />
     <Build Include="dbo\Tables\TransportFeeStockIn.sql" />
+    <Build Include="dbo\Tables\TransportFeeStockOutSmsReminder.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

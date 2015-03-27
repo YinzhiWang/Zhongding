@@ -320,6 +320,9 @@
     <Compile Include="Models\TransportFeeStockOut.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\TransportFeeStockOutSmsReminder.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UnitOfMeasurement.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>

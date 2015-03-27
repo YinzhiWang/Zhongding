@@ -46,12 +46,13 @@ namespace ZhongDing.Web.Views.Procures
             if (TransportFeeType == ETransportFeeType.StockIn)
             {
                 this.Master.MenuItemID = (int)EMenuItem.TransportFeeManage_StockIn;
+                rcbxTransportFeeType.SelectedValue = ((int)ETransportFeeType.StockIn).ToString();
 
             }
             else
             {
                 this.Master.MenuItemID = (int)EMenuItem.TransportFeeManage_StockOut;
-
+                rcbxTransportFeeType.SelectedValue = ((int)ETransportFeeType.StockOut).ToString();
             }
 
         }

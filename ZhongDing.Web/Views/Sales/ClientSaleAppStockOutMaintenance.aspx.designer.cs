@@ -283,13 +283,13 @@ namespace ZhongDing.Web.Views.Sales {
         protected global::Telerik.Web.UI.RadGrid rgStockOutDetails;
         
         /// <summary>
-        /// div2 control.
+        /// divTransportFees control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl div2;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divTransportFees;
         
         /// <summary>
         /// div3 control.

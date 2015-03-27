@@ -277,6 +277,11 @@
         <EntityTypeShape EntityType="DbModel.CertificateType" Width="1.5" PointX="11" PointY="140.5" />
         <AssociationConnector Association="DbModel.FK_Certificate_CertificateType" />
         <AssociationConnector Association="DbModel.FK_CertificateType_OwnerType" />
+        <EntityTypeShape EntityType="DbModel.TransportFeeStockOutSmsReminder" Width="1.5" PointX="6.98625424829603" PointY="10.690966506810378" />
+        <AssociationConnector Association="DbModel.FK_TransportFeeStockOut_StockOutID" />
+        <AssociationConnector Association="DbModel.FK_TransportFeeStockOut_TransportFeeID" />
+        <AssociationConnector Association="DbModel.FK_TransportFeeStockOut_TransportFeeStockOutSmsReminderID" />
+        <AssociationConnector Association="DbModel.FK_TransportFeeStockOutSmsReminder_TransportFeeStockOutID" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

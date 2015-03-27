@@ -61,6 +61,15 @@ namespace ZhongDing.Common
         /// 导入数据服务运行的周期
         /// </summary>
         private static readonly string CONFIGKEY_IMPORTDATA_SERVICE_INTERVAl = "ImportDataService.Interval";
+        /// <summary>
+        /// 一下是云通讯 SKD Config
+        /// </summary>
+        private static readonly string CONFIGKEY_YunTongXun_ACCOUNT_SID = "YunTongXun.ACCOUNT_SID";
+        private static readonly string CONFIGKEY_YunTongXun_AUTH_TOKEN = "YunTongXun.AUTH_TOKEN";
+        private static readonly string CONFIGKEY_YunTongXun_APP_ID = "YunTongXun.APP_ID";
+        private static readonly string CONFIGKEY_YunTongXun_TemplateId_StockOutReminder = "YunTongXun.TemplateId_StockOutReminder";
+        private static readonly string CONFIGKEY_YunTongXun_CCPRestSDK_Address = "YunTongXun.CCPRestSDK_Address";
+        private static readonly string CONFIGKEY_YunTongXun_CCPRestSDK_Port = "YunTongXun.CCPRestSDK_Port";
 
 
         #endregion
@@ -360,6 +369,52 @@ namespace ZhongDing.Common
                     return iInerval;
                 else
                     return GlobalConst.WIN_SERVICE_DEFAULT_INTERVAl;
+            }
+        }
+
+        #endregion
+
+        #region 云通讯
+        public static string YunTongXun_ACCOUNT_SID
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[CONFIGKEY_YunTongXun_ACCOUNT_SID];
+            }
+        }
+        public static string YunTongXun_AUTH_TOKEN
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[CONFIGKEY_YunTongXun_AUTH_TOKEN];
+            }
+        }
+        public static string YunTongXun_APP_ID
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[CONFIGKEY_YunTongXun_APP_ID];
+            }
+        }
+        public static string YunTongXun_TemplateId_StockOutReminder
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[CONFIGKEY_YunTongXun_TemplateId_StockOutReminder];
+            }
+        }
+        public static string YunTongXun_CCPRestSDK_Address
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[CONFIGKEY_YunTongXun_CCPRestSDK_Address];
+            }
+        }
+        public static string YunTongXun_CCPRestSDK_Port
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[CONFIGKEY_YunTongXun_CCPRestSDK_Port];
             }
         }
 

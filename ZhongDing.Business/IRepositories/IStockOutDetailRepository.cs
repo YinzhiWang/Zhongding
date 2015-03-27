@@ -27,6 +27,11 @@ namespace ZhongDing.Business.IRepositories
         /// <param name="totalRecords">总记录数.</param>
         /// <returns>IList{UIStockOutDetail}.</returns>
         IList<UIStockOutDetail> GetUIList(UISearchStockOutDetail uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
-
+        /// <summary>
+        /// 获取短信提醒的数据
+        /// </summary>
+        /// <param name="uiSearchObj"></param>
+        /// <returns></returns>
+        IList<UIStockOutDetail> GetUIListForSmsReminder(UISearchStockOutDetail uiSearchObj);
     }
 }

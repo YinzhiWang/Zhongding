@@ -149,7 +149,7 @@ namespace ZhongDing.Business.Repositories
             }
 
             query = GetList(pageIndex, pageSize, whereFuncs, GlobalConst.OrderByExpression.CREATEDON_DESC, out total);
-
+            DateTime? lastStockOutSmsReminderDate = null;
             if (query != null)
             {
                 uiEntities = (from q in query
@@ -162,6 +162,7 @@ namespace ZhongDing.Business.Repositories
                               from tcc in tempCC.DefaultIfEmpty()
                               join cb in DB.Users on q.CreatedBy equals cb.UserID into tempCB
                               from tcb in tempCB.DefaultIfEmpty()
+                             
                               select new UIStockOut()
                               {
                                   ID = q.ID,
@@ -175,7 +176,8 @@ namespace ZhongDing.Business.Repositories
                                   ReceiverPhone = q.ReceiverPhone,
                                   ReceiverAddress = q.ReceiverAddress,
                                   CreatedByUserID = q.CreatedBy,
-                                  CreatedBy = tcb == null ? string.Empty : tcb.FullName
+                                  CreatedBy = tcb == null ? string.Empty : tcb.FullName,
+                              
                               }).ToList();
             }
 

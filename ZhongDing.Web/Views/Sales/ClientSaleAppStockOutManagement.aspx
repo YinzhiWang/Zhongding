@@ -119,6 +119,7 @@
                                 <HeaderStyle Width="80" />
                                 <ItemStyle HorizontalAlign="Left" Width="80" />
                             </telerik:GridBoundColumn>
+                          
                             <telerik:GridTemplateColumn UniqueName="Edit">
                                 <HeaderStyle Width="60" />
                                 <ItemStyle HorizontalAlign="Center" Width="60" />
@@ -175,6 +176,10 @@
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContent" runat="server">
     <script type="text/javascript">
+        var gridClientIDs = {
+            gridEntities: "<%= rgEntities.ClientID %>"
+              
+          };
         var gridOfRefresh = null;
 
         function GetsGridObject(sender, eventArgs) {
@@ -196,5 +201,6 @@
 
             window.open(targetUrl, "_blank");
         }
+      
     </script>
 </asp:Content>

@@ -341,7 +341,7 @@
                             </div>
                         </div>
 
-                        <div class="mws-form-row" runat="server" id="div2">
+                        <div class="mws-form-row" runat="server" id="divTransportFees">
                             <div class="mws-panel grid_8 mws-collapsible" data-collapseid="panel-procure-order">
                                 <div class="mws-panel-header">
                                     <span class="mws-i-24 i-creditcard">物流信息</span>
@@ -354,8 +354,7 @@
                                             AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
                                             MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
                                             ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                                            OnNeedDataSource="rgTransportFees_NeedDataSource"  
-                                             >
+                                            OnNeedDataSource="rgTransportFees_NeedDataSource">
                                             <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
                                                 ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                                                 <Columns>
@@ -375,16 +374,26 @@
                                                     </telerik:GridBoundColumn>
 
 
-                                                    <telerik:GridBoundColumn UniqueName="Fee" HeaderText="费用" DataField="Fee"  DataFormatString="￥{0:f2}">
+                                                    <telerik:GridBoundColumn UniqueName="Fee" HeaderText="费用" DataField="Fee" DataFormatString="￥{0:f2}">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
 
-
+                                                    <telerik:GridBoundColumn UniqueName="LastTransportFeeStockOutSmsReminderDate" HeaderText="上次提醒时间" DataField="LastTransportFeeStockOutSmsReminderDate">
+                                                        <HeaderStyle Width="80" />
+                                                        <ItemStyle HorizontalAlign="Left" Width="120" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridTemplateColumn UniqueName="SmsReminder">
+                                                        <HeaderStyle Width="60" />
+                                                        <ItemStyle HorizontalAlign="Center" Width="60" />
+                                                        <ItemTemplate>
+                                                            <a href="javascript:void(0);" onclick="openStockOutSmsReminderWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">短信提醒</a>
+                                                        </ItemTemplate>
+                                                    </telerik:GridTemplateColumn>
 
                                                     <telerik:GridBoundColumn UniqueName="Remark" HeaderText="备注" DataField="Remark">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
-                                                   
+
                                                 </Columns>
                                                 <CommandItemTemplate>
                                                     <table class="width100-percent">
@@ -451,9 +460,15 @@
 
         var gridClientIDs = {
             gridStockOutDetails: "<%= rgStockOutDetails.ClientID %>",
+            gridTransportFees: "<%= rgTransportFees.ClientID %>"
+            
 
         };
+        var gridOfRefresh = null;
 
+        function GetsGridObject(sender, eventArgs) {
+            gridOfRefresh = sender;
+        }
         function refreshGrid(gridClientID) {
             var gridObj = $find(gridClientID);
 
@@ -681,7 +696,15 @@
                 }
             }
         }
+        function openStockOutSmsReminderWindow(id) {
+            $.showLoading();
 
+            var currentEntityID = id;
+
+            var targetUrl = $.getRootPath() + "Views/Sales/Editors/StockOutSmsReminder.aspx?OwnerEntityID=" + currentEntityID + "&GridClientID=" + gridClientIDs.gridTransportFees;
+
+            $.openRadWindow(targetUrl, "winStockOutSmsReminderWindow", true, 700, 400);
+        }
         $(document).ready(function () {
             currentEntityID = $("#<%= hdnCurrentEntityID.ClientID %>").val();
         });

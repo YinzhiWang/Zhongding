@@ -18,6 +18,7 @@ namespace ZhongDing.Domain.Models
         public StockOut()
         {
             this.StockOutDetail = new HashSet<StockOutDetail>();
+            this.TransportFeeStockOut = new HashSet<TransportFeeStockOut>();
         }
     
         public int ID { get; set; }
@@ -56,5 +57,6 @@ namespace ZhongDing.Domain.Models
         public virtual DistributionCompany DistributionCompany { get; set; }
         public virtual WorkflowStatus WorkflowStatus { get; set; }
         public virtual ICollection<StockOutDetail> StockOutDetail { get; set; }
+        public virtual ICollection<TransportFeeStockOut> TransportFeeStockOut { get; set; }
     }
 }

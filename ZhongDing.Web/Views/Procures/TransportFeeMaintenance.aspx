@@ -262,7 +262,17 @@
                                                     <telerik:GridBoundColumn UniqueName="ReceiverAddress" HeaderText="收货地址" DataField="ReceiverAddress">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
-
+                                                    <telerik:GridBoundColumn UniqueName="LastTransportFeeStockOutSmsReminderDate" HeaderText="上次提醒时间" DataField="LastTransportFeeStockOutSmsReminderDate">
+                                                        <HeaderStyle Width="80" />
+                                                        <ItemStyle HorizontalAlign="Left" Width="120" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridTemplateColumn UniqueName="SmsReminder">
+                                                        <HeaderStyle Width="60" />
+                                                        <ItemStyle HorizontalAlign="Center" Width="60" />
+                                                        <ItemTemplate>
+                                                            <a href="javascript:void(0);" onclick="openStockOutSmsReminderWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">短信提醒</a>
+                                                        </ItemTemplate>
+                                                    </telerik:GridTemplateColumn>
                                                     <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
                                                 </Columns>
                                                 <CommandItemTemplate>
@@ -356,6 +366,16 @@
         function onBtnCancelClick() {
             var transportFeeType = $.getQueryString("TransportFeeType");
             redirectToPage('Views/Procures/TransportFeeManagement.aspx?TransportFeeType=' + transportFeeType);
+        }
+
+        function openStockOutSmsReminderWindow(id) {
+            $.showLoading();
+
+            var currentEntityID = id;
+
+            var targetUrl = $.getRootPath() + "Views/Sales/Editors/StockOutSmsReminder.aspx?OwnerEntityID=" + currentEntityID + "&GridClientID=" + gridClientIDs.gridStockOuts;
+
+            $.openRadWindow(targetUrl, "winStockOutSmsReminderWindow", true, 700, 400);
         }
     </script>
 </asp:Content>

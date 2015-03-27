@@ -13,5 +13,9 @@ namespace ZhongDing.Business.IRepositories
         IList<UITransportFeeStockOut> GetTransportFeeStockOutsByTransportFeeID(int transportFeeID, out int totalRecords);
 
         bool ExistByTransportFeeIdAndStockOutID(int transportFeeId, int stockOutID);
+
+
+        IList<UITransportFeeStockOut> GetUIListForSaleAppStockOut(int stockOutID);
+
     }
 }

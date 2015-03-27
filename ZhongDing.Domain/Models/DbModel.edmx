@@ -90,6 +90,7 @@
           <EntitySet Name="TransportFee" EntityType="DbModel.Store.TransportFee" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="TransportFeeStockIn" EntityType="DbModel.Store.TransportFeeStockIn" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="TransportFeeStockOut" EntityType="DbModel.Store.TransportFeeStockOut" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="TransportFeeStockOutSmsReminder" EntityType="DbModel.Store.TransportFeeStockOutSmsReminder" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UnitOfMeasurement" EntityType="DbModel.Store.UnitOfMeasurement" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserBonus" EntityType="DbModel.Store.UserBonus" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Users" EntityType="DbModel.Store.Users" store:Type="Tables" Schema="dbo" />
@@ -778,6 +779,22 @@
           <AssociationSet Name="FK_TransportFee_TransportCompanyID" Association="DbModel.Store.FK_TransportFee_TransportCompanyID">
             <End Role="TransportCompany" EntitySet="TransportCompany" />
             <End Role="TransportFee" EntitySet="TransportFee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransportFeeStockOut_StockOutID" Association="DbModel.Store.FK_TransportFeeStockOut_StockOutID">
+            <End Role="StockOut" EntitySet="StockOut" />
+            <End Role="TransportFeeStockOut" EntitySet="TransportFeeStockOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransportFeeStockOut_TransportFeeID" Association="DbModel.Store.FK_TransportFeeStockOut_TransportFeeID">
+            <End Role="TransportFee" EntitySet="TransportFee" />
+            <End Role="TransportFeeStockOut" EntitySet="TransportFeeStockOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransportFeeStockOut_TransportFeeStockOutSmsReminderID" Association="DbModel.Store.FK_TransportFeeStockOut_TransportFeeStockOutSmsReminderID">
+            <End Role="TransportFeeStockOutSmsReminder" EntitySet="TransportFeeStockOutSmsReminder" />
+            <End Role="TransportFeeStockOut" EntitySet="TransportFeeStockOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransportFeeStockOutSmsReminder_TransportFeeStockOutID" Association="DbModel.Store.FK_TransportFeeStockOutSmsReminder_TransportFeeStockOutID">
+            <End Role="TransportFeeStockOut" EntitySet="TransportFeeStockOut" />
+            <End Role="TransportFeeStockOutSmsReminder" EntitySet="TransportFeeStockOutSmsReminder" />
           </AssociationSet>
           <AssociationSet Name="FK_Users_aspnet_Users" Association="DbModel.Store.FK_Users_aspnet_Users">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
@@ -2151,6 +2168,22 @@
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="TransportFeeID" Type="int" Nullable="false" />
           <Property Name="StockOutID" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="TransportFeeStockOutSmsReminderID" Type="int" />
+        </EntityType>
+        <EntityType Name="TransportFeeStockOutSmsReminder">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TransportFeeStockOutID" Type="int" Nullable="false" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="MobileNumber" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="Content" Type="nvarchar" Nullable="false" MaxLength="256" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
@@ -4313,6 +4346,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TransportFeeStockOut_StockOutID">
+          <End Role="StockOut" Type="DbModel.Store.StockOut" Multiplicity="1" />
+          <End Role="TransportFeeStockOut" Type="DbModel.Store.TransportFeeStockOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockOut">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TransportFeeStockOut">
+              <PropertyRef Name="StockOutID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransportFeeStockOut_TransportFeeID">
+          <End Role="TransportFee" Type="DbModel.Store.TransportFee" Multiplicity="1" />
+          <End Role="TransportFeeStockOut" Type="DbModel.Store.TransportFeeStockOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransportFee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TransportFeeStockOut">
+              <PropertyRef Name="TransportFeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransportFeeStockOut_TransportFeeStockOutSmsReminderID">
+          <End Role="TransportFeeStockOutSmsReminder" Type="DbModel.Store.TransportFeeStockOutSmsReminder" Multiplicity="0..1" />
+          <End Role="TransportFeeStockOut" Type="DbModel.Store.TransportFeeStockOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransportFeeStockOutSmsReminder">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TransportFeeStockOut">
+              <PropertyRef Name="TransportFeeStockOutSmsReminderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransportFeeStockOutSmsReminder_TransportFeeStockOutID">
+          <End Role="TransportFeeStockOut" Type="DbModel.Store.TransportFeeStockOut" Multiplicity="1" />
+          <End Role="TransportFeeStockOutSmsReminder" Type="DbModel.Store.TransportFeeStockOutSmsReminder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransportFeeStockOut">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TransportFeeStockOutSmsReminder">
+              <PropertyRef Name="TransportFeeStockOutID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Users_aspnet_Users">
           <End Role="aspnet_Users" Type="DbModel.Store.aspnet_Users" Multiplicity="0..1" />
           <End Role="Users" Type="DbModel.Store.Users" Multiplicity="*" />
@@ -5234,6 +5315,23 @@
           <AssociationSet Name="FK_CertificateType_OwnerType" Association="DbModel.FK_CertificateType_OwnerType">
             <End Role="OwnerType" EntitySet="OwnerType" />
             <End Role="CertificateType" EntitySet="CertificateType" />
+          </AssociationSet>
+          <EntitySet Name="TransportFeeStockOutSmsReminder" EntityType="DbModel.TransportFeeStockOutSmsReminder" />
+          <AssociationSet Name="FK_TransportFeeStockOut_StockOutID" Association="DbModel.FK_TransportFeeStockOut_StockOutID">
+            <End Role="StockOut" EntitySet="StockOut" />
+            <End Role="TransportFeeStockOut" EntitySet="TransportFeeStockOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransportFeeStockOut_TransportFeeID" Association="DbModel.FK_TransportFeeStockOut_TransportFeeID">
+            <End Role="TransportFee" EntitySet="TransportFee" />
+            <End Role="TransportFeeStockOut" EntitySet="TransportFeeStockOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransportFeeStockOut_TransportFeeStockOutSmsReminderID" Association="DbModel.FK_TransportFeeStockOut_TransportFeeStockOutSmsReminderID">
+            <End Role="TransportFeeStockOutSmsReminder" EntitySet="TransportFeeStockOutSmsReminder" />
+            <End Role="TransportFeeStockOut" EntitySet="TransportFeeStockOut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TransportFeeStockOutSmsReminder_TransportFeeStockOutID" Association="DbModel.FK_TransportFeeStockOutSmsReminder_TransportFeeStockOutID">
+            <End Role="TransportFeeStockOut" EntitySet="TransportFeeStockOut" />
+            <End Role="TransportFeeStockOutSmsReminder" EntitySet="TransportFeeStockOutSmsReminder" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
@@ -7410,6 +7508,7 @@
           <NavigationProperty Name="DistributionCompany" Relationship="DbModel.FK_StockOut_DistributionCompany" FromRole="StockOut" ToRole="DistributionCompany" />
           <NavigationProperty Name="WorkflowStatus" Relationship="DbModel.FK_StockOut_WorkflowStatus" FromRole="StockOut" ToRole="WorkflowStatus" />
           <NavigationProperty Name="StockOutDetail" Relationship="DbModel.FK_StockOutDetail_StockOut" FromRole="StockOut" ToRole="StockOutDetail" />
+          <NavigationProperty Name="TransportFeeStockOut" Relationship="DbModel.FK_TransportFeeStockOut_StockOutID" FromRole="StockOut" ToRole="TransportFeeStockOut" />
         </EntityType>
         <Association Name="FK_StockOut_ClientCompany">
           <End Type="DbModel.ClientCompany" Role="ClientCompany" Multiplicity="0..1" />
@@ -8897,6 +8996,7 @@
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="TransportCompany" Relationship="DbModel.FK_TransportFee_TransportCompanyID" FromRole="TransportFee" ToRole="TransportCompany" />
+          <NavigationProperty Name="TransportFeeStockOut" Relationship="DbModel.FK_TransportFeeStockOut_TransportFeeID" FromRole="TransportFee" ToRole="TransportFeeStockOut" />
         </EntityType>
         <Association Name="FK_TransportFee_TransportCompanyID">
           <End Type="DbModel.TransportCompany" Role="TransportCompany" Multiplicity="1" />
@@ -8935,6 +9035,11 @@
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
+          <Property Type="Int32" Name="TransportFeeStockOutSmsReminderID" />
+          <NavigationProperty Name="StockOut" Relationship="DbModel.FK_TransportFeeStockOut_StockOutID" FromRole="TransportFeeStockOut" ToRole="StockOut" />
+          <NavigationProperty Name="TransportFee" Relationship="DbModel.FK_TransportFeeStockOut_TransportFeeID" FromRole="TransportFeeStockOut" ToRole="TransportFee" />
+          <NavigationProperty Name="TransportFeeStockOutSmsReminder" Relationship="DbModel.FK_TransportFeeStockOut_TransportFeeStockOutSmsReminderID" FromRole="TransportFeeStockOut" ToRole="TransportFeeStockOutSmsReminder" />
+          <NavigationProperty Name="TransportFeeStockOutSmsReminder1" Relationship="DbModel.FK_TransportFeeStockOutSmsReminder_TransportFeeStockOutID" FromRole="TransportFeeStockOut" ToRole="TransportFeeStockOutSmsReminder" />
         </EntityType>
         <EntityType Name="DCFlowData">
           <Key>
@@ -9196,6 +9301,71 @@
             </Principal>
             <Dependent Role="CertificateType">
               <PropertyRef Name="OwnerTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TransportFeeStockOutSmsReminder">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="TransportFeeStockOutID" Nullable="false" />
+          <Property Type="Int32" Name="Status" Nullable="false" />
+          <Property Type="String" Name="Content" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="TransportFeeStockOut" Relationship="DbModel.FK_TransportFeeStockOut_TransportFeeStockOutSmsReminderID" FromRole="TransportFeeStockOutSmsReminder" ToRole="TransportFeeStockOut" />
+          <Property Type="String" Name="MobileNumber" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="TransportFeeStockOut1" Relationship="DbModel.FK_TransportFeeStockOutSmsReminder_TransportFeeStockOutID" FromRole="TransportFeeStockOutSmsReminder" ToRole="TransportFeeStockOut" />
+        </EntityType>
+        <Association Name="FK_TransportFeeStockOut_StockOutID">
+          <End Type="DbModel.StockOut" Role="StockOut" Multiplicity="1" />
+          <End Type="DbModel.TransportFeeStockOut" Role="TransportFeeStockOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockOut">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TransportFeeStockOut">
+              <PropertyRef Name="StockOutID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransportFeeStockOut_TransportFeeID">
+          <End Type="DbModel.TransportFee" Role="TransportFee" Multiplicity="1" />
+          <End Type="DbModel.TransportFeeStockOut" Role="TransportFeeStockOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransportFee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TransportFeeStockOut">
+              <PropertyRef Name="TransportFeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransportFeeStockOut_TransportFeeStockOutSmsReminderID">
+          <End Type="DbModel.TransportFeeStockOutSmsReminder" Role="TransportFeeStockOutSmsReminder" Multiplicity="0..1" />
+          <End Type="DbModel.TransportFeeStockOut" Role="TransportFeeStockOut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransportFeeStockOutSmsReminder">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TransportFeeStockOut">
+              <PropertyRef Name="TransportFeeStockOutSmsReminderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TransportFeeStockOutSmsReminder_TransportFeeStockOutID">
+          <End Type="DbModel.TransportFeeStockOut" Role="TransportFeeStockOut" Multiplicity="1" />
+          <End Type="DbModel.TransportFeeStockOutSmsReminder" Role="TransportFeeStockOutSmsReminder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransportFeeStockOut">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="TransportFeeStockOutSmsReminder">
+              <PropertyRef Name="TransportFeeStockOutID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10661,6 +10831,7 @@
           <EntitySetMapping Name="TransportFeeStockOut">
             <EntityTypeMapping TypeName="DbModel.TransportFeeStockOut">
               <MappingFragment StoreEntitySet="TransportFeeStockOut">
+                <ScalarProperty Name="TransportFeeStockOutSmsReminderID" ColumnName="TransportFeeStockOutSmsReminderID" />
                 <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
                 <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -10751,6 +10922,22 @@
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="OwnerTypeID" ColumnName="OwnerTypeID" />
                 <ScalarProperty Name="CertificateType1" ColumnName="CertificateType" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TransportFeeStockOutSmsReminder">
+            <EntityTypeMapping TypeName="DbModel.TransportFeeStockOutSmsReminder">
+              <MappingFragment StoreEntitySet="TransportFeeStockOutSmsReminder">
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TransportFeeStockOutID" ColumnName="TransportFeeStockOutID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

@@ -15,6 +15,11 @@ namespace ZhongDing.Domain.Models
     [Serializable]
     public partial class TransportFeeStockOut : IEntityExtendedProperty
     {
+        public TransportFeeStockOut()
+        {
+            this.TransportFeeStockOutSmsReminder1 = new HashSet<TransportFeeStockOutSmsReminder>();
+        }
+    
         public int ID { get; set; }
         public int TransportFeeID { get; set; }
         public int StockOutID { get; set; }
@@ -23,6 +28,7 @@ namespace ZhongDing.Domain.Models
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
+        public Nullable<int> TransportFeeStockOutSmsReminderID { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -33,5 +39,10 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedOn { get { return true; } }
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
+    
+        public virtual StockOut StockOut { get; set; }
+        public virtual TransportFee TransportFee { get; set; }
+        public virtual TransportFeeStockOutSmsReminder TransportFeeStockOutSmsReminder { get; set; }
+        public virtual ICollection<TransportFeeStockOutSmsReminder> TransportFeeStockOutSmsReminder1 { get; set; }
     }
 }

@@ -77,22 +77,5 @@ namespace ZhongDing.Business.Repositories
 
 
 
-        public IList<UITransportFee> GetUIListForSaleAppStockOut(int stockOutID)
-        {
-            var query = from transportFeeStockOut in DB.TransportFeeStockOut
-                        join transportFee in DB.TransportFee on transportFeeStockOut.TransportFeeID equals transportFee.ID
-                        join transportCompany in DB.TransportCompany on transportFee.TransportCompanyID equals transportCompany.ID
-                        where transportFeeStockOut.IsDeleted == false && transportFee.IsDeleted == false
-                        select new UITransportFee()
-                        {
-                            ID = transportFee.ID,
-                            Fee = transportFee.Fee,
-                            Remark = transportFee.Remark,
-                            SendDate = transportFee.SendDate,
-                            TransportCompanyNumber = transportFee.TransportCompanyNumber,
-                            TransportCompanyName = transportCompany.CompanyName,
-                        };
-            return query.ToList();
-        }
     }
 }
