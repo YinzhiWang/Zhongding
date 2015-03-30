@@ -107,7 +107,7 @@
                                         </ul>--%>
                                     </li>
                                     <li data-level="2" data-menuitemid="52"><a href="javascript:void(0);" onclick="redirectToPage('Views/Procures/StockInManagement.aspx');">入库单</a></li>
-                                 
+
                                     <li data-level="2" data-menuitemid="53"><a href="javascript:void(0);" onclick="redirectToPage('Views/Procures/TransportFeeManagement.aspx?TransportFeeType=StockIn');">物流费用管理</a></li>
 
                                 </ul>
@@ -150,7 +150,21 @@
                                     <li data-level="2"><a href="form_elements.html">大包出库单导入</a></li>
                                 </ul>
                             </li>
+                            <li data-level="1" data-menuitemid="80">
+                                <a href="#" class="mws-i-24 i-link">报表管理</a>
+                                <ul class="hide">
+                                    <li data-level="2" data-menuitemid="100"><a href="form_layouts.html">采购订单报表</a></li>
+                                    <li data-level="2" data-menuitemid="101">
+                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/DCFlowDataManagement.aspx');">采购付款明细表</a>
+                                    </li>
+                                    <li data-level="2" data-menuitemid="102">
+                                        <a href="form_elements.html">销售订单报表</a>
+                                    </li>
+                                    <li data-level="2" data-menuitemid="103">
+                                        <a href="form_elements.html">出库明细表</a></li>
 
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                     <!-- End Navigation -->

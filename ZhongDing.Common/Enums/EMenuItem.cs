@@ -153,7 +153,7 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 物流费用管理  出库
         /// </summary>
-        TransportFeeManage_StockOut=67,
+        TransportFeeManage_StockOut = 67,
 
         /// <summary>
         /// 返款管理
@@ -199,6 +199,23 @@ namespace ZhongDing.Common.Enums
         /// 配送公司流向
         /// </summary>
         DCFlowData,
+
+        /// <summary>
+        /// 采购订单报表
+        /// </summary>
+        ProcureOrderReportManage = 100,
+        /// <summary>
+        /// 采购订单付款报表
+        /// </summary>
+        ProcureOrderPaymentReportManage,
+        /// <summary>
+        /// 销售订单报表
+        /// </summary>
+        ClientSaleAppReportManage,
+        /// <summary>
+        /// 出库明细报表
+        /// </summary>
+        StockOutDetailReportManage
 
     }
 }
