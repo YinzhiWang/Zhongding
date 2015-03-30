@@ -86,6 +86,7 @@
     <Compile Include="Enums\EDeliveryMode.cs" />
     <Compile Include="Enums\EDepartmentType.cs" />
     <Compile Include="Enums\EExcelType.cs" />
+    <Compile Include="Enums\EHospitalType.cs" />
     <Compile Include="Enums\EImportDataType.cs" />
     <Compile Include="Enums\EImportStatus.cs" />
     <Compile Include="Enums\EInvoiceType.cs" />

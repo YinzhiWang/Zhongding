@@ -13,17 +13,15 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class DeptMarket : IEntityExtendedProperty
+    public partial class HospitalType : IEntityExtendedProperty
     {
-        public DeptMarket()
+        public HospitalType()
         {
-            this.ClientInfoProductSetting = new HashSet<ClientInfoProductSetting>();
             this.ClientFlowData = new HashSet<ClientFlowData>();
         }
     
         public int ID { get; set; }
-        public int DeptDistrictID { get; set; }
-        public string MarketName { get; set; }
+        public string TypeName { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -35,8 +33,6 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return false; } }
     
     
-        public virtual DeptDistrict DeptDistrict { get; set; }
-        public virtual ICollection<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
         public virtual ICollection<ClientFlowData> ClientFlowData { get; set; }
     }
 }

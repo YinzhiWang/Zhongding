@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\DynamicLinq.cs" />
+    <Compile Include="IRepositories\IClientFlowDataRepository.cs" />
     <Compile Include="IRepositories\ITransportFeeStockOutRepository.cs" />
     <Compile Include="IRepositories\IAccountTypeRepository.cs" />
     <Compile Include="IRepositories\IApplicationNoteRepository.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="Repositories\CertificateTypeRepository.cs" />
     <Compile Include="Repositories\ClientCompanyCertificateRepository.cs" />
     <Compile Include="Repositories\ClientCompanyRepository.cs" />
+    <Compile Include="Repositories\ClientFlowDataRepository.cs" />
     <Compile Include="Repositories\ClientInfoBankAccountRepository.cs" />
     <Compile Include="Repositories\ClientInfoContactRepository.cs" />
     <Compile Include="Repositories\ClientInfoProductSettingRepository.cs" />

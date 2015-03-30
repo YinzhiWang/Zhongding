@@ -86,6 +86,12 @@
     <Compile Include="Models\ClientCompanyCertificate.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClientFlowData.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClientImportFileLog.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ClientInfo.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -164,6 +170,9 @@
     <Compile Include="Models\DCInventoryData.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DCInventoryFlowData.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Department.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -201,6 +210,9 @@
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Hospital.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\HospitalType.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ImportDataType.cs">
@@ -359,6 +371,7 @@
     <Compile Include="UIObjects\UICertificate.cs" />
     <Compile Include="UIObjects\UICertificateType.cs" />
     <Compile Include="UIObjects\UIClientCompany.cs" />
+    <Compile Include="UIObjects\UIClientFlowData.cs" />
     <Compile Include="UIObjects\UIClientInfo.cs" />
     <Compile Include="UIObjects\UIClientInfoBankAccount.cs" />
     <Compile Include="UIObjects\UIClientInfoContact.cs" />
@@ -427,6 +440,7 @@
     <Compile Include="UISearchObjects\UISearchBase.cs" />
     <Compile Include="UISearchObjects\UISearchCertificate.cs" />
     <Compile Include="UISearchObjects\UISearchClientCompany.cs" />
+    <Compile Include="UISearchObjects\UISearchClientFlowData.cs" />
     <Compile Include="UISearchObjects\UISearchClientInfo.cs" />
     <Compile Include="UISearchObjects\UISearchClientInfoProductSetting.cs" />
     <Compile Include="UISearchObjects\UISearchClientNeedRefundOrder.cs" />

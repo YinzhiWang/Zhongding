@@ -13,30 +13,33 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class DeptMarket : IEntityExtendedProperty
+    public partial class DCInventoryFlowData : IEntityExtendedProperty
     {
-        public DeptMarket()
-        {
-            this.ClientInfoProductSetting = new HashSet<ClientInfoProductSetting>();
-            this.ClientFlowData = new HashSet<ClientFlowData>();
-        }
-    
         public int ID { get; set; }
-        public int DeptDistrictID { get; set; }
-        public string MarketName { get; set; }
+        public Nullable<int> DistributionCompanyID { get; set; }
+        public Nullable<int> ImportFileLogID { get; set; }
+        public int ProductID { get; set; }
+        public string ProductName { get; set; }
+        public string ProductCode { get; set; }
+        public int ProductSpecificationID { get; set; }
+        public string ProductSpecification { get; set; }
+        public System.DateTime SettlementDate { get; set; }
+        public int BalanceQty { get; set; }
+        public System.DateTime CreatedOn { get; set; }
+        public Nullable<int> CreatedBy { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
     	public bool HasColumnIsDeleted { get { return false; } }
     	public bool HasColumnDeletedOn { get { return false; } }
-    	public bool HasColumnCreatedOn { get { return false; } }
-    	public bool HasColumnCreatedBy { get { return false; } }
+    	public bool HasColumnCreatedOn { get { return true; } }
+    	public bool HasColumnCreatedBy { get { return true; } }
     	public bool HasColumnLastModifiedOn { get { return false; } }
     	public bool HasColumnLastModifiedBy { get { return false; } }
     
     
-        public virtual DeptDistrict DeptDistrict { get; set; }
-        public virtual ICollection<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
-        public virtual ICollection<ClientFlowData> ClientFlowData { get; set; }
+        public virtual ImportFileLog ImportFileLog { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual ProductSpecification ProductSpecification1 { get; set; }
     }
 }

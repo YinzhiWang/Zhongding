@@ -17,6 +17,8 @@
           <EntitySet Name="CertificateType" EntityType="DbModel.Store.CertificateType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ClientCompany" EntityType="DbModel.Store.ClientCompany" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ClientCompanyCertificate" EntityType="DbModel.Store.ClientCompanyCertificate" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ClientFlowData" EntityType="DbModel.Store.ClientFlowData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ClientImportFileLog" EntityType="DbModel.Store.ClientImportFileLog" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ClientInfo" EntityType="DbModel.Store.ClientInfo" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ClientInfoBankAccount" EntityType="DbModel.Store.ClientInfoBankAccount" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ClientInfoContact" EntityType="DbModel.Store.ClientInfoContact" store:Type="Tables" Schema="dbo" />
@@ -38,6 +40,7 @@
           <EntitySet Name="DCFlowDataDetail" EntityType="DbModel.Store.DCFlowDataDetail" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DCImportFileLog" EntityType="DbModel.Store.DCImportFileLog" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DCInventoryData" EntityType="DbModel.Store.DCInventoryData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DCInventoryFlowData" EntityType="DbModel.Store.DCInventoryFlowData" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Department" EntityType="DbModel.Store.Department" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DepartmentProductRecord" EntityType="DbModel.Store.DepartmentProductRecord" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DepartmentProductSalesBonus" EntityType="DbModel.Store.DepartmentProductSalesBonus" store:Type="Tables" Schema="dbo" />
@@ -51,6 +54,7 @@
           <EntitySet Name="FactoryManagerRefundApplication" EntityType="DbModel.Store.FactoryManagerRefundApplication" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GuaranteeLog" EntityType="DbModel.Store.GuaranteeLog" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Hospital" EntityType="DbModel.Store.Hospital" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="HospitalType" EntityType="DbModel.Store.HospitalType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ImportDataType" EntityType="DbModel.Store.ImportDataType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ImportErrorLog" EntityType="DbModel.Store.ImportErrorLog" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ImportFileLog" EntityType="DbModel.Store.ImportFileLog" store:Type="Tables" Schema="dbo" />
@@ -167,6 +171,42 @@
           <AssociationSet Name="FK_ClientCompanyCertificate_ClientCompany" Association="DbModel.Store.FK_ClientCompanyCertificate_ClientCompany">
             <End Role="ClientCompany" EntitySet="ClientCompany" />
             <End Role="ClientCompanyCertificate" EntitySet="ClientCompanyCertificate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientFlowData_ClientCompany" Association="DbModel.Store.FK_ClientFlowData_ClientCompany">
+            <End Role="ClientCompany" EntitySet="ClientCompany" />
+            <End Role="ClientFlowData" EntitySet="ClientFlowData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientFlowData_ClientUser" Association="DbModel.Store.FK_ClientFlowData_ClientUser">
+            <End Role="ClientUser" EntitySet="ClientUser" />
+            <End Role="ClientFlowData" EntitySet="ClientFlowData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientFlowData_DeptMarket" Association="DbModel.Store.FK_ClientFlowData_DeptMarket">
+            <End Role="DeptMarket" EntitySet="DeptMarket" />
+            <End Role="ClientFlowData" EntitySet="ClientFlowData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientFlowData_Hospital" Association="DbModel.Store.FK_ClientFlowData_Hospital">
+            <End Role="Hospital" EntitySet="Hospital" />
+            <End Role="ClientFlowData" EntitySet="ClientFlowData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientFlowData_HospitalType" Association="DbModel.Store.FK_ClientFlowData_HospitalType">
+            <End Role="HospitalType" EntitySet="HospitalType" />
+            <End Role="ClientFlowData" EntitySet="ClientFlowData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientFlowData_ImportFileLog" Association="DbModel.Store.FK_ClientFlowData_ImportFileLog">
+            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
+            <End Role="ClientFlowData" EntitySet="ClientFlowData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientFlowData_Product" Association="DbModel.Store.FK_ClientFlowData_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ClientFlowData" EntitySet="ClientFlowData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientFlowData_ProductSpecification" Association="DbModel.Store.FK_ClientFlowData_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="ClientFlowData" EntitySet="ClientFlowData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientImportFileLog_ImportFileLog" Association="DbModel.Store.FK_ClientImportFileLog_ImportFileLog">
+            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
+            <End Role="ClientImportFileLog" EntitySet="ClientImportFileLog" />
           </AssociationSet>
           <AssociationSet Name="FK_ClientInfo_ClientCompany" Association="DbModel.Store.FK_ClientInfo_ClientCompany">
             <End Role="ClientCompany" EntitySet="ClientCompany" />
@@ -423,6 +463,18 @@
           <AssociationSet Name="FK_DCImportFileLog_ImportFileLog" Association="DbModel.Store.FK_DCImportFileLog_ImportFileLog">
             <End Role="ImportFileLog" EntitySet="ImportFileLog" />
             <End Role="DCImportFileLog" EntitySet="DCImportFileLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DCInventoryFlowData_ImportFileLog" Association="DbModel.Store.FK_DCInventoryFlowData_ImportFileLog">
+            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
+            <End Role="DCInventoryFlowData" EntitySet="DCInventoryFlowData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DCInventoryFlowData_Product" Association="DbModel.Store.FK_DCInventoryFlowData_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="DCInventoryFlowData" EntitySet="DCInventoryFlowData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DCInventoryFlowData_ProductSpecification" Association="DbModel.Store.FK_DCInventoryFlowData_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="DCInventoryFlowData" EntitySet="DCInventoryFlowData" />
           </AssociationSet>
           <AssociationSet Name="FK_Department_DeptDistrict" Association="DbModel.Store.FK_Department_DeptDistrict">
             <End Role="DeptDistrict" EntitySet="DeptDistrict" />
@@ -1001,6 +1053,45 @@
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
         </EntityType>
+        <EntityType Name="ClientFlowData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ImportFileLogID" Type="int" />
+          <Property Name="ClientUserID" Type="int" Nullable="false" />
+          <Property Name="ClientCompanyID" Type="int" Nullable="false" />
+          <Property Name="SettlementDate" Type="datetime" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="255" />
+          <Property Name="ProductCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProductSpecificationID" Type="int" Nullable="false" />
+          <Property Name="ProductSpecification" Type="nvarchar" MaxLength="50" />
+          <Property Name="SaleDate" Type="datetime" Nullable="false" />
+          <Property Name="SaleQty" Type="int" Nullable="false" />
+          <Property Name="FactoryName" Type="nvarchar" MaxLength="100" />
+          <Property Name="HospitalID" Type="int" />
+          <Property Name="FlowTo" Type="nvarchar" MaxLength="255" />
+          <Property Name="HospitalTypeID" Type="int" />
+          <Property Name="DeptMarketID" Type="int" />
+          <Property Name="MarketName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="ClientImportFileLog">
+          <Key>
+            <PropertyRef Name="ImportFileLogID" />
+          </Key>
+          <Property Name="ImportFileLogID" Type="int" Nullable="false" />
+          <Property Name="ClientUserID" Type="int" Nullable="false" />
+          <Property Name="ClientCompanyID" Type="int" Nullable="false" />
+          <Property Name="SettlementDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
         <EntityType Name="ClientInfo">
           <Key>
             <PropertyRef Name="ID" />
@@ -1393,6 +1484,23 @@
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
         </EntityType>
+        <EntityType Name="DCInventoryFlowData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="DistributionCompanyID" Type="int" />
+          <Property Name="ImportFileLogID" Type="int" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="255" />
+          <Property Name="ProductCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProductSpecificationID" Type="int" Nullable="false" />
+          <Property Name="ProductSpecification" Type="nvarchar" MaxLength="50" />
+          <Property Name="SettlementDate" Type="datetime" Nullable="false" />
+          <Property Name="BalanceQty" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+        </EntityType>
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="ID" />
@@ -1583,6 +1691,13 @@
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="HospitalType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="TypeName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="ImportDataType">
           <Key>
@@ -2510,6 +2625,114 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ClientFlowData_ClientCompany">
+          <End Role="ClientCompany" Type="DbModel.Store.ClientCompany" Multiplicity="1" />
+          <End Role="ClientFlowData" Type="DbModel.Store.ClientFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientCompany">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientFlowData">
+              <PropertyRef Name="ClientCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientFlowData_ClientUser">
+          <End Role="ClientUser" Type="DbModel.Store.ClientUser" Multiplicity="1" />
+          <End Role="ClientFlowData" Type="DbModel.Store.ClientFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientFlowData">
+              <PropertyRef Name="ClientUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientFlowData_DeptMarket">
+          <End Role="DeptMarket" Type="DbModel.Store.DeptMarket" Multiplicity="0..1" />
+          <End Role="ClientFlowData" Type="DbModel.Store.ClientFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeptMarket">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientFlowData">
+              <PropertyRef Name="DeptMarketID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientFlowData_Hospital">
+          <End Role="Hospital" Type="DbModel.Store.Hospital" Multiplicity="0..1" />
+          <End Role="ClientFlowData" Type="DbModel.Store.ClientFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientFlowData">
+              <PropertyRef Name="HospitalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientFlowData_HospitalType">
+          <End Role="HospitalType" Type="DbModel.Store.HospitalType" Multiplicity="0..1" />
+          <End Role="ClientFlowData" Type="DbModel.Store.ClientFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HospitalType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientFlowData">
+              <PropertyRef Name="HospitalTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientFlowData_ImportFileLog">
+          <End Role="ImportFileLog" Type="DbModel.Store.ImportFileLog" Multiplicity="0..1" />
+          <End Role="ClientFlowData" Type="DbModel.Store.ClientFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportFileLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientFlowData">
+              <PropertyRef Name="ImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientFlowData_Product">
+          <End Role="Product" Type="DbModel.Store.Product" Multiplicity="1" />
+          <End Role="ClientFlowData" Type="DbModel.Store.ClientFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientFlowData">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientFlowData_ProductSpecification">
+          <End Role="ProductSpecification" Type="DbModel.Store.ProductSpecification" Multiplicity="1" />
+          <End Role="ClientFlowData" Type="DbModel.Store.ClientFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientFlowData">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientImportFileLog_ImportFileLog">
+          <End Role="ImportFileLog" Type="DbModel.Store.ImportFileLog" Multiplicity="1" />
+          <End Role="ClientImportFileLog" Type="DbModel.Store.ClientImportFileLog" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ImportFileLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientImportFileLog">
+              <PropertyRef Name="ImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ClientInfo_ClientCompany">
           <End Role="ClientCompany" Type="DbModel.Store.ClientCompany" Multiplicity="1" />
           <End Role="ClientInfo" Type="DbModel.Store.ClientInfo" Multiplicity="*" />
@@ -3275,6 +3498,42 @@
             </Principal>
             <Dependent Role="DCImportFileLog">
               <PropertyRef Name="ImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCInventoryFlowData_ImportFileLog">
+          <End Role="ImportFileLog" Type="DbModel.Store.ImportFileLog" Multiplicity="0..1" />
+          <End Role="DCInventoryFlowData" Type="DbModel.Store.DCInventoryFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportFileLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DCInventoryFlowData">
+              <PropertyRef Name="ImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCInventoryFlowData_Product">
+          <End Role="Product" Type="DbModel.Store.Product" Multiplicity="1" />
+          <End Role="DCInventoryFlowData" Type="DbModel.Store.DCInventoryFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DCInventoryFlowData">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCInventoryFlowData_ProductSpecification">
+          <End Role="ProductSpecification" Type="DbModel.Store.ProductSpecification" Multiplicity="1" />
+          <End Role="DCInventoryFlowData" Type="DbModel.Store.DCInventoryFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DCInventoryFlowData">
+              <PropertyRef Name="ProductSpecificationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5316,7 +5575,6 @@
             <End Role="OwnerType" EntitySet="OwnerType" />
             <End Role="CertificateType" EntitySet="CertificateType" />
           </AssociationSet>
-          <EntitySet Name="TransportFeeStockOutSmsReminder" EntityType="DbModel.TransportFeeStockOutSmsReminder" />
           <AssociationSet Name="FK_TransportFeeStockOut_StockOutID" Association="DbModel.FK_TransportFeeStockOut_StockOutID">
             <End Role="StockOut" EntitySet="StockOut" />
             <End Role="TransportFeeStockOut" EntitySet="TransportFeeStockOut" />
@@ -5325,6 +5583,59 @@
             <End Role="TransportFee" EntitySet="TransportFee" />
             <End Role="TransportFeeStockOut" EntitySet="TransportFeeStockOut" />
           </AssociationSet>
+          <EntitySet Name="ClientFlowData" EntityType="DbModel.ClientFlowData" />
+          <EntitySet Name="DCInventoryFlowData" EntityType="DbModel.DCInventoryFlowData" />
+          <EntitySet Name="HospitalType" EntityType="DbModel.HospitalType" />
+          <AssociationSet Name="FK_ClientFlowData_ClientCompany" Association="DbModel.FK_ClientFlowData_ClientCompany">
+            <End Role="ClientCompany" EntitySet="ClientCompany" />
+            <End Role="ClientFlowData" EntitySet="ClientFlowData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientFlowData_ClientUser" Association="DbModel.FK_ClientFlowData_ClientUser">
+            <End Role="ClientUser" EntitySet="ClientUser" />
+            <End Role="ClientFlowData" EntitySet="ClientFlowData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientFlowData_DeptMarket" Association="DbModel.FK_ClientFlowData_DeptMarket">
+            <End Role="DeptMarket" EntitySet="DeptMarket" />
+            <End Role="ClientFlowData" EntitySet="ClientFlowData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientFlowData_Hospital" Association="DbModel.FK_ClientFlowData_Hospital">
+            <End Role="Hospital" EntitySet="Hospital" />
+            <End Role="ClientFlowData" EntitySet="ClientFlowData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientFlowData_HospitalType" Association="DbModel.FK_ClientFlowData_HospitalType">
+            <End Role="HospitalType" EntitySet="HospitalType" />
+            <End Role="ClientFlowData" EntitySet="ClientFlowData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientFlowData_ImportFileLog" Association="DbModel.FK_ClientFlowData_ImportFileLog">
+            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
+            <End Role="ClientFlowData" EntitySet="ClientFlowData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientFlowData_Product" Association="DbModel.FK_ClientFlowData_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ClientFlowData" EntitySet="ClientFlowData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientFlowData_ProductSpecification" Association="DbModel.FK_ClientFlowData_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="ClientFlowData" EntitySet="ClientFlowData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DCInventoryFlowData_ImportFileLog" Association="DbModel.FK_DCInventoryFlowData_ImportFileLog">
+            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
+            <End Role="DCInventoryFlowData" EntitySet="DCInventoryFlowData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DCInventoryFlowData_Product" Association="DbModel.FK_DCInventoryFlowData_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="DCInventoryFlowData" EntitySet="DCInventoryFlowData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DCInventoryFlowData_ProductSpecification" Association="DbModel.FK_DCInventoryFlowData_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="DCInventoryFlowData" EntitySet="DCInventoryFlowData" />
+          </AssociationSet>
+          <EntitySet Name="ClientImportFileLog" EntityType="DbModel.ClientImportFileLog" />
+          <AssociationSet Name="FK_ClientImportFileLog_ImportFileLog" Association="DbModel.FK_ClientImportFileLog_ImportFileLog">
+            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
+            <End Role="ClientImportFileLog" EntitySet="ClientImportFileLog" />
+          </AssociationSet>
+          <EntitySet Name="TransportFeeStockOutSmsReminder" EntityType="DbModel.TransportFeeStockOutSmsReminder" />
           <AssociationSet Name="FK_TransportFeeStockOut_TransportFeeStockOutSmsReminderID" Association="DbModel.FK_TransportFeeStockOut_TransportFeeStockOutSmsReminderID">
             <End Role="TransportFeeStockOutSmsReminder" EntitySet="TransportFeeStockOutSmsReminder" />
             <End Role="TransportFeeStockOut" EntitySet="TransportFeeStockOut" />
@@ -5563,6 +5874,8 @@
           <NavigationProperty Name="SupplierRefundApplication" Relationship="DbModel.FK_SupplierRefundApplication_Product" FromRole="Product" ToRole="SupplierRefundApplication" />
           <NavigationProperty Name="ClientTaskRefundApplication" Relationship="DbModel.FK_ClientTaskRefundApplication_Product" FromRole="Product" ToRole="ClientTaskRefundApplication" />
           <NavigationProperty Name="DCFlowData" Relationship="DbModel.FK_DCFlowData_Product" FromRole="Product" ToRole="DCFlowData" />
+          <NavigationProperty Name="ClientFlowData" Relationship="DbModel.FK_ClientFlowData_Product" FromRole="Product" ToRole="ClientFlowData" />
+          <NavigationProperty Name="DCInventoryFlowData" Relationship="DbModel.FK_DCInventoryFlowData_Product" FromRole="Product" ToRole="DCInventoryFlowData" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -6130,6 +6443,7 @@
           <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_ClientCompany" FromRole="ClientCompany" ToRole="ClientSaleApplication" />
           <NavigationProperty Name="ClientRefundApplication" Relationship="DbModel.FK_ClientRefundApplication_ClientCompany" FromRole="ClientCompany" ToRole="ClientRefundApplication" />
           <NavigationProperty Name="ClientTaskRefundApplication" Relationship="DbModel.FK_ClientTaskRefundApplication_ClientCompany" FromRole="ClientCompany" ToRole="ClientTaskRefundApplication" />
+          <NavigationProperty Name="ClientFlowData" Relationship="DbModel.FK_ClientFlowData_ClientCompany" FromRole="ClientCompany" ToRole="ClientFlowData" />
         </EntityType>
         <EntityType Name="ClientUser">
           <Key>
@@ -6149,6 +6463,7 @@
           <NavigationProperty Name="ClientRefundApplication" Relationship="DbModel.FK_ClientRefundApplication_ClientUser" FromRole="ClientUser" ToRole="ClientRefundApplication" />
           <NavigationProperty Name="FactoryManagerRefundApplication" Relationship="DbModel.FK_FactoryManagerRefundApplication_ClientUser" FromRole="ClientUser" ToRole="FactoryManagerRefundApplication" />
           <NavigationProperty Name="ClientTaskRefundApplication" Relationship="DbModel.FK_ClientTaskRefundApplication_ClientUser" FromRole="ClientUser" ToRole="ClientTaskRefundApplication" />
+          <NavigationProperty Name="ClientFlowData" Relationship="DbModel.FK_ClientFlowData_ClientUser" FromRole="ClientUser" ToRole="ClientFlowData" />
         </EntityType>
         <Association Name="FK_ClientCompanyCertificate_ClientCompany">
           <End Type="DbModel.ClientCompany" Role="ClientCompany" Multiplicity="1" />
@@ -6461,6 +6776,7 @@
           <Property Type="String" Name="MarketName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="DeptDistrict" Relationship="DbModel.FK_DeptMarket_DeptDistrict" FromRole="DeptMarket" ToRole="DeptDistrict" />
           <NavigationProperty Name="ClientInfoProductSetting" Relationship="DbModel.FK_ClientInfoProductSetting_DeptMarket" FromRole="DeptMarket" ToRole="ClientInfoProductSetting" />
+          <NavigationProperty Name="ClientFlowData" Relationship="DbModel.FK_ClientFlowData_DeptMarket" FromRole="DeptMarket" ToRole="ClientFlowData" />
         </EntityType>
         <Association Name="FK_DeptMarket_DeptDistrict">
           <End Type="DbModel.DeptDistrict" Role="DeptDistrict" Multiplicity="1" />
@@ -6752,6 +7068,7 @@
           <NavigationProperty Name="DBContractHospital" Relationship="DbModel.FK_DBContractHospital_Hospital" FromRole="Hospital" ToRole="DBContractHospital" />
           <NavigationProperty Name="DCFlowData" Relationship="DbModel.FK_DCFlowData_Hospital" FromRole="Hospital" ToRole="DCFlowData" />
           <NavigationProperty Name="DCFlowDataDetail" Relationship="DbModel.FK_DCFlowDataDetail_Hospital" FromRole="Hospital" ToRole="DCFlowDataDetail" />
+          <NavigationProperty Name="ClientFlowData" Relationship="DbModel.FK_ClientFlowData_Hospital" FromRole="Hospital" ToRole="ClientFlowData" />
         </EntityType>
         <Association Name="FK_DBContract_ClientUser">
           <End Type="DbModel.ClientUser" Role="ClientUser" Multiplicity="0..1" />
@@ -7799,6 +8116,8 @@
           <NavigationProperty Name="SupplierRefundApplication" Relationship="DbModel.FK_SupplierRefundApplication_ProductSpecification" FromRole="ProductSpecification" ToRole="SupplierRefundApplication" />
           <NavigationProperty Name="ClientTaskRefundApplication" Relationship="DbModel.FK_ClientTaskRefundApplication_ProductSpecification" FromRole="ProductSpecification" ToRole="ClientTaskRefundApplication" />
           <NavigationProperty Name="DCFlowData" Relationship="DbModel.FK_DCFlowData_ProductSpecification" FromRole="ProductSpecification" ToRole="DCFlowData" />
+          <NavigationProperty Name="ClientFlowData" Relationship="DbModel.FK_ClientFlowData_ProductSpecification" FromRole="ProductSpecification" ToRole="ClientFlowData" />
+          <NavigationProperty Name="DCInventoryFlowData" Relationship="DbModel.FK_DCInventoryFlowData_ProductSpecification" FromRole="ProductSpecification" ToRole="DCInventoryFlowData" />
         </EntityType>
         <Association Name="FK_ClientInfoProductSetting_ProductSpecification">
           <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
@@ -9040,7 +9359,7 @@
           <NavigationProperty Name="TransportFee" Relationship="DbModel.FK_TransportFeeStockOut_TransportFeeID" FromRole="TransportFeeStockOut" ToRole="TransportFee" />
           <NavigationProperty Name="TransportFeeStockOutSmsReminder" Relationship="DbModel.FK_TransportFeeStockOut_TransportFeeStockOutSmsReminderID" FromRole="TransportFeeStockOut" ToRole="TransportFeeStockOutSmsReminder" />
           <NavigationProperty Name="TransportFeeStockOutSmsReminder1" Relationship="DbModel.FK_TransportFeeStockOutSmsReminder_TransportFeeStockOutID" FromRole="TransportFeeStockOut" ToRole="TransportFeeStockOutSmsReminder" />
-        </EntityType>
+          </EntityType>
         <EntityType Name="DCFlowData">
           <Key>
             <PropertyRef Name="ID" />
@@ -9124,6 +9443,9 @@
           <NavigationProperty Name="ImportDataType" Relationship="DbModel.FK_ImportFileLog_ImportDataType" FromRole="ImportFileLog" ToRole="ImportDataType" />
           <NavigationProperty Name="ImportErrorLog" Relationship="DbModel.FK_ImportErrorLog_ImportFileLog" FromRole="ImportFileLog" ToRole="ImportErrorLog" />
           <NavigationProperty Name="ImportStatus" Relationship="DbModel.FK_ImportFileLog_ImportStatus" FromRole="ImportFileLog" ToRole="ImportStatus" />
+          <NavigationProperty Name="ClientFlowData" Relationship="DbModel.FK_ClientFlowData_ImportFileLog" FromRole="ImportFileLog" ToRole="ClientFlowData" />
+          <NavigationProperty Name="DCInventoryFlowData" Relationship="DbModel.FK_DCInventoryFlowData_ImportFileLog" FromRole="ImportFileLog" ToRole="DCInventoryFlowData" />
+          <NavigationProperty Name="ClientImportFileLog" Relationship="DbModel.FK_ClientImportFileLog_ImportFileLog" FromRole="ImportFileLog" ToRole="ClientImportFileLog" />
         </EntityType>
         <Association Name="FK_DCFlowDataDetail_DBContract">
           <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="1" />
@@ -9304,23 +9626,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="TransportFeeStockOutSmsReminder">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="TransportFeeStockOutID" Nullable="false" />
-          <Property Type="Int32" Name="Status" Nullable="false" />
-          <Property Type="String" Name="Content" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="TransportFeeStockOut" Relationship="DbModel.FK_TransportFeeStockOut_TransportFeeStockOutSmsReminderID" FromRole="TransportFeeStockOutSmsReminder" ToRole="TransportFeeStockOut" />
-          <Property Type="String" Name="MobileNumber" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="TransportFeeStockOut1" Relationship="DbModel.FK_TransportFeeStockOutSmsReminder_TransportFeeStockOutID" FromRole="TransportFeeStockOutSmsReminder" ToRole="TransportFeeStockOut" />
-        </EntityType>
         <Association Name="FK_TransportFeeStockOut_StockOutID">
           <End Type="DbModel.StockOut" Role="StockOut" Multiplicity="1" />
           <End Type="DbModel.TransportFeeStockOut" Role="TransportFeeStockOut" Multiplicity="*" />
@@ -9345,6 +9650,243 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ClientFlowData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ImportFileLogID" />
+          <Property Type="Int32" Name="ClientUserID" Nullable="false" />
+          <Property Type="Int32" Name="ClientCompanyID" Nullable="false" />
+          <Property Type="DateTime" Name="SettlementDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="String" Name="ProductName" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ProductCode" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
+          <Property Type="String" Name="ProductSpecification" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="SaleDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="SaleQty" Nullable="false" />
+          <Property Type="String" Name="FactoryName" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="HospitalID" />
+          <Property Type="String" Name="FlowTo" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="HospitalTypeID" />
+          <Property Type="Int32" Name="DeptMarketID" />
+          <Property Type="String" Name="MarketName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <NavigationProperty Name="ClientCompany" Relationship="DbModel.FK_ClientFlowData_ClientCompany" FromRole="ClientFlowData" ToRole="ClientCompany" />
+          <NavigationProperty Name="ClientUser" Relationship="DbModel.FK_ClientFlowData_ClientUser" FromRole="ClientFlowData" ToRole="ClientUser" />
+          <NavigationProperty Name="DeptMarket" Relationship="DbModel.FK_ClientFlowData_DeptMarket" FromRole="ClientFlowData" ToRole="DeptMarket" />
+          <NavigationProperty Name="Hospital" Relationship="DbModel.FK_ClientFlowData_Hospital" FromRole="ClientFlowData" ToRole="Hospital" />
+          <NavigationProperty Name="HospitalType" Relationship="DbModel.FK_ClientFlowData_HospitalType" FromRole="ClientFlowData" ToRole="HospitalType" />
+          <NavigationProperty Name="ImportFileLog" Relationship="DbModel.FK_ClientFlowData_ImportFileLog" FromRole="ClientFlowData" ToRole="ImportFileLog" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_ClientFlowData_Product" FromRole="ClientFlowData" ToRole="Product" />
+          <NavigationProperty Name="ProductSpecification1" Relationship="DbModel.FK_ClientFlowData_ProductSpecification" FromRole="ClientFlowData" ToRole="ProductSpecification" />
+        </EntityType>
+        <EntityType Name="DCInventoryFlowData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="DistributionCompanyID" />
+          <Property Type="Int32" Name="ImportFileLogID" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="String" Name="ProductName" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ProductCode" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
+          <Property Type="String" Name="ProductSpecification" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="SettlementDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="BalanceQty" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <NavigationProperty Name="ImportFileLog" Relationship="DbModel.FK_DCInventoryFlowData_ImportFileLog" FromRole="DCInventoryFlowData" ToRole="ImportFileLog" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_DCInventoryFlowData_Product" FromRole="DCInventoryFlowData" ToRole="Product" />
+          <NavigationProperty Name="ProductSpecification1" Relationship="DbModel.FK_DCInventoryFlowData_ProductSpecification" FromRole="DCInventoryFlowData" ToRole="ProductSpecification" />
+        </EntityType>
+        <EntityType Name="HospitalType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="TypeName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ClientFlowData" Relationship="DbModel.FK_ClientFlowData_HospitalType" FromRole="HospitalType" ToRole="ClientFlowData" />
+        </EntityType>
+        <Association Name="FK_ClientFlowData_ClientCompany">
+          <End Type="DbModel.ClientCompany" Role="ClientCompany" Multiplicity="1" />
+          <End Type="DbModel.ClientFlowData" Role="ClientFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientCompany">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientFlowData">
+              <PropertyRef Name="ClientCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientFlowData_ClientUser">
+          <End Type="DbModel.ClientUser" Role="ClientUser" Multiplicity="1" />
+          <End Type="DbModel.ClientFlowData" Role="ClientFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientFlowData">
+              <PropertyRef Name="ClientUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientFlowData_DeptMarket">
+          <End Type="DbModel.DeptMarket" Role="DeptMarket" Multiplicity="0..1" />
+          <End Type="DbModel.ClientFlowData" Role="ClientFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DeptMarket">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientFlowData">
+              <PropertyRef Name="DeptMarketID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientFlowData_Hospital">
+          <End Type="DbModel.Hospital" Role="Hospital" Multiplicity="0..1" />
+          <End Type="DbModel.ClientFlowData" Role="ClientFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientFlowData">
+              <PropertyRef Name="HospitalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientFlowData_HospitalType">
+          <End Type="DbModel.HospitalType" Role="HospitalType" Multiplicity="0..1" />
+          <End Type="DbModel.ClientFlowData" Role="ClientFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="HospitalType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientFlowData">
+              <PropertyRef Name="HospitalTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientFlowData_ImportFileLog">
+          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="0..1" />
+          <End Type="DbModel.ClientFlowData" Role="ClientFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportFileLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientFlowData">
+              <PropertyRef Name="ImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientFlowData_Product">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DbModel.ClientFlowData" Role="ClientFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientFlowData">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientFlowData_ProductSpecification">
+          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
+          <End Type="DbModel.ClientFlowData" Role="ClientFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientFlowData">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCInventoryFlowData_ImportFileLog">
+          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="0..1" />
+          <End Type="DbModel.DCInventoryFlowData" Role="DCInventoryFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportFileLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DCInventoryFlowData">
+              <PropertyRef Name="ImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCInventoryFlowData_Product">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DbModel.DCInventoryFlowData" Role="DCInventoryFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DCInventoryFlowData">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCInventoryFlowData_ProductSpecification">
+          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
+          <End Type="DbModel.DCInventoryFlowData" Role="DCInventoryFlowData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DCInventoryFlowData">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ClientImportFileLog">
+          <Key>
+            <PropertyRef Name="ImportFileLogID" />
+          </Key>
+          <Property Type="Int32" Name="ImportFileLogID" Nullable="false" />
+          <Property Type="Int32" Name="ClientUserID" Nullable="false" />
+          <Property Type="Int32" Name="ClientCompanyID" Nullable="false" />
+          <Property Type="DateTime" Name="SettlementDate" Nullable="false" Precision="3" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="ImportFileLog" Relationship="DbModel.FK_ClientImportFileLog_ImportFileLog" FromRole="ClientImportFileLog" ToRole="ImportFileLog" />
+        </EntityType>
+        <Association Name="FK_ClientImportFileLog_ImportFileLog">
+          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="1" />
+          <End Type="DbModel.ClientImportFileLog" Role="ClientImportFileLog" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="ImportFileLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientImportFileLog">
+              <PropertyRef Name="ImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TransportFeeStockOutSmsReminder">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="TransportFeeStockOutID" Nullable="false" />
+          <Property Type="Int32" Name="Status" Nullable="false" />
+          <Property Type="String" Name="MobileNumber" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Content" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="TransportFeeStockOut" Relationship="DbModel.FK_TransportFeeStockOut_TransportFeeStockOutSmsReminderID" FromRole="TransportFeeStockOutSmsReminder" ToRole="TransportFeeStockOut" />
+          <NavigationProperty Name="TransportFeeStockOut1" Relationship="DbModel.FK_TransportFeeStockOutSmsReminder_TransportFeeStockOutID" FromRole="TransportFeeStockOutSmsReminder" ToRole="TransportFeeStockOut" />
+        </EntityType>
         <Association Name="FK_TransportFeeStockOut_TransportFeeStockOutSmsReminderID">
           <End Type="DbModel.TransportFeeStockOutSmsReminder" Role="TransportFeeStockOutSmsReminder" Multiplicity="0..1" />
           <End Type="DbModel.TransportFeeStockOut" Role="TransportFeeStockOut" Multiplicity="*" />
@@ -10926,16 +11468,83 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ClientFlowData">
+            <EntityTypeMapping TypeName="DbModel.ClientFlowData">
+              <MappingFragment StoreEntitySet="ClientFlowData">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="MarketName" ColumnName="MarketName" />
+                <ScalarProperty Name="DeptMarketID" ColumnName="DeptMarketID" />
+                <ScalarProperty Name="HospitalTypeID" ColumnName="HospitalTypeID" />
+                <ScalarProperty Name="FlowTo" ColumnName="FlowTo" />
+                <ScalarProperty Name="HospitalID" ColumnName="HospitalID" />
+                <ScalarProperty Name="FactoryName" ColumnName="FactoryName" />
+                <ScalarProperty Name="SaleQty" ColumnName="SaleQty" />
+                <ScalarProperty Name="SaleDate" ColumnName="SaleDate" />
+                <ScalarProperty Name="ProductSpecification" ColumnName="ProductSpecification" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="SettlementDate" ColumnName="SettlementDate" />
+                <ScalarProperty Name="ClientCompanyID" ColumnName="ClientCompanyID" />
+                <ScalarProperty Name="ClientUserID" ColumnName="ClientUserID" />
+                <ScalarProperty Name="ImportFileLogID" ColumnName="ImportFileLogID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DCInventoryFlowData">
+            <EntityTypeMapping TypeName="DbModel.DCInventoryFlowData">
+              <MappingFragment StoreEntitySet="DCInventoryFlowData">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="BalanceQty" ColumnName="BalanceQty" />
+                <ScalarProperty Name="SettlementDate" ColumnName="SettlementDate" />
+                <ScalarProperty Name="ProductSpecification" ColumnName="ProductSpecification" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ImportFileLogID" ColumnName="ImportFileLogID" />
+                <ScalarProperty Name="DistributionCompanyID" ColumnName="DistributionCompanyID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="HospitalType">
+            <EntityTypeMapping TypeName="DbModel.HospitalType">
+              <MappingFragment StoreEntitySet="HospitalType">
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientImportFileLog">
+            <EntityTypeMapping TypeName="DbModel.ClientImportFileLog">
+              <MappingFragment StoreEntitySet="ClientImportFileLog">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="SettlementDate" ColumnName="SettlementDate" />
+                <ScalarProperty Name="ClientCompanyID" ColumnName="ClientCompanyID" />
+                <ScalarProperty Name="ClientUserID" ColumnName="ClientUserID" />
+                <ScalarProperty Name="ImportFileLogID" ColumnName="ImportFileLogID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="TransportFeeStockOutSmsReminder">
             <EntityTypeMapping TypeName="DbModel.TransportFeeStockOutSmsReminder">
               <MappingFragment StoreEntitySet="TransportFeeStockOutSmsReminder">
-                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
                 <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
                 <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="MobileNumber" ColumnName="MobileNumber" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="TransportFeeStockOutID" ColumnName="TransportFeeStockOutID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />

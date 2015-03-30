@@ -13,18 +13,12 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class TransportFeeStockOutSmsReminder : IEntityExtendedProperty
+    public partial class ClientImportFileLog : IEntityExtendedProperty
     {
-        public TransportFeeStockOutSmsReminder()
-        {
-            this.TransportFeeStockOut = new HashSet<TransportFeeStockOut>();
-        }
-    
-        public int ID { get; set; }
-        public int TransportFeeStockOutID { get; set; }
-        public int Status { get; set; }
-        public string MobileNumber { get; set; }
-        public string Content { get; set; }
+        public int ImportFileLogID { get; set; }
+        public int ClientUserID { get; set; }
+        public int ClientCompanyID { get; set; }
+        public System.DateTime SettlementDate { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -32,7 +26,7 @@ namespace ZhongDing.Domain.Models
         public Nullable<int> LastModifiedBy { get; set; }
     
     	// Implements IEntityExtendedProperty
-    	public string DefaultOrderColumnName { get { return "id"; } }
+    	public string DefaultOrderColumnName { get { return "importfilelogid"; } }
     	public bool HasColumnIsDeleted { get { return true; } }
     	public bool HasColumnDeletedOn { get { return false; } }
     	public bool HasColumnCreatedOn { get { return true; } }
@@ -41,7 +35,6 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ICollection<TransportFeeStockOut> TransportFeeStockOut { get; set; }
-        public virtual TransportFeeStockOut TransportFeeStockOut1 { get; set; }
+        public virtual ImportFileLog ImportFileLog { get; set; }
     }
 }
