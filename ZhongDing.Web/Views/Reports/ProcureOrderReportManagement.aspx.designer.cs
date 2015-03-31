@@ -103,6 +103,15 @@ namespace ZhongDing.Web.Views.Reports {
         protected global::System.Web.UI.WebControls.Button btnReset;
         
         /// <summary>
+        /// btnExport control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnExport;
+        
+        /// <summary>
         /// rgProcureOrderReports control.
         /// </summary>
         /// <remarks>
@@ -110,6 +119,15 @@ namespace ZhongDing.Web.Views.Reports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid rgProcureOrderReports;
+        
+        /// <summary>
+        /// btnExportHidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnExportHidden;
         
         /// <summary>
         /// Master property.

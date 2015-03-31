@@ -9,9 +9,11 @@ using ZhongDing.Common.Enums;
 
 using NPOI.HSSF.UserModel;
 using NPOI.XSSF.UserModel;
+using NPOI.SS.UserModel;
 
 namespace ZhongDing.Common
 {
+
     /// <summary>
     /// Class ExcelHelper
     /// </summary>
@@ -258,5 +260,74 @@ namespace ZhongDing.Common
 
             return ConvertExcelToDataSet(stream, excelType);
         }
+
+        /// <summary>
+        /// Model 转 Excel
+        /// </summary>
+        /// <typeparam name="T">泛型List</typeparam>
+        /// <param name="items">Model集合</param>
+        /// <param name="headerSimpleName">Excel的列名(Model属性与自定义列名的映射集合，这里的集合顺序就是将来显示出来的Excel列的顺序，调整这里即可调整Excel列的顺序)</param>
+        /// <param name="fileName">导出的文件存放名字</param>
+        /// <returns></returns>
+        public static bool RenderToExcel<T>(IList<T> items, IList<ExcelHeader> headerSimpleName, string fileName)
+        {
+            MemoryStream ms = new MemoryStream();
+
+            IWorkbook workbook = new HSSFWorkbook();
+            {
+                ISheet sheet = workbook.CreateSheet();
+                {
+                    IRow headerRow = sheet.CreateRow(0);
+
+                    // handling header.
+                    foreach (var column in headerSimpleName)
+                        headerRow.CreateCell(headerSimpleName.IndexOf(column)).SetCellValue(column.Name);//If Caption not set, returns the ColumnName value
+
+                    // handling value.
+                    int rowIndex = 1;
+
+                    foreach (var row in items)
+                    {
+                        IRow dataRow = sheet.CreateRow(rowIndex);
+
+                        var properties = row.GetType().GetProperties();
+                        int columnIndex = 0;
+                        foreach (var column in headerSimpleName)
+                        {
+                            var cellValue = properties.First(x => x.Name == column.Key).GetValue(row, null);
+                            var cellValueText = cellValue == null ? string.Empty : cellValue.ToString();
+                            dataRow.CreateCell(columnIndex).SetCellValue(cellValueText);
+                            columnIndex++;
+                        }
+
+                        rowIndex++;
+                    }
+
+                    workbook.Write(ms);
+                    ms.Flush();
+                    ms.Position = 0;
+                }
+            }
+            SaveToFile(ms, fileName);
+            return true;
+        }
+
+        static void SaveToFile(MemoryStream ms, string fileName)
+        {
+            using (FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+            {
+                byte[] data = ms.ToArray();
+
+                fs.Write(data, 0, data.Length);
+                fs.Flush();
+
+                data = null;
+            }
+        }
+    }
+    public class ExcelHeader
+    {
+        public string Key { get; set; }
+        public string Name { get; set; }
     }
 }

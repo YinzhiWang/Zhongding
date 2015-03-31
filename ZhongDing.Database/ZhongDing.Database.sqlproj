@@ -393,6 +393,7 @@
     <Build Include="dbo\Tables\DCInventoryFlowData.sql" />
     <Build Include="dbo\Tables\ClientFlowData.sql" />
     <Build Include="dbo\Tables\ClientImportFileLog.sql" />
+    <Build Include="dbo\Stored Procedures\GetProcureOrderReport.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

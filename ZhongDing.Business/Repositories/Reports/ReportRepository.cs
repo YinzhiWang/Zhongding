@@ -73,9 +73,25 @@ namespace ZhongDing.Business.Repositories.Reports
             return this.DB.Database.SqlQuery<UICompany>("exec GetCompanyList").ToList();
         }
 
-        public IList<UIProcureOrderReport> GetProcureOrderReport()
+        public IList<UIProcureOrderReport> GetProcureOrderReport(Domain.UISearchObjects.UISearchProcureOrderReport uiSearchObj)
         {
-            return this.DB.Database.SqlQuery<UIProcureOrderReport>("exec GetProcureOrderReport").ToList();
+            SqlParameter totalRecordSqlParameter = new SqlParameter() { ParameterName = "@totalRecord", DbType = System.Data.DbType.Int32, Direction = System.Data.ParameterDirection.Output };
+            List<SqlParameter> parameters = new List<SqlParameter>() {
+                new SqlParameter(){ ParameterName="@pageSize",Value=10000000,Size=4},
+                new SqlParameter(){ ParameterName="@pageIndex", Value=0,Size=4},
+                totalRecordSqlParameter
+            };
+
+            string sql = "exec GetProcureOrderReport @pageSize,@pageIndex,@orderDateStart,@orderDateEnd,@supplierId,@productId,@totalRecord out";
+            parameters.Add(new SqlParameter() { ParameterName = "@orderDateStart", SqlDbType = SqlDbType.DateTime, Size = 256, Value = uiSearchObj.BeginDate.HasValue ? (object)uiSearchObj.BeginDate.Value : DBNull.Value });
+
+            parameters.Add(new SqlParameter() { ParameterName = "@orderDateEnd", SqlDbType = SqlDbType.DateTime, Size = 256, Value = uiSearchObj.EndDate.HasValue ? (object)uiSearchObj.EndDate.Value : DBNull.Value });
+
+            parameters.Add(new SqlParameter() { ParameterName = "@supplierId", Size = 4, Value = uiSearchObj.SupplierId.HasValue ? (object)uiSearchObj.SupplierId.Value : DBNull.Value });
+
+            parameters.Add(new SqlParameter() { ParameterName = "@productId", Size = 4, Value = uiSearchObj.ProductId.HasValue ? (object)uiSearchObj.ProductId.Value : DBNull.Value });
+            var result = this.DB.Database.SqlQuery<UIProcureOrderReport>(sql, parameters.ToArray()).ToList();
+            return result;
         }
 
         public IList<UIProcureOrderReport> GetProcureOrderReport(Domain.UISearchObjects.UISearchProcureOrderReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
@@ -96,8 +112,6 @@ namespace ZhongDing.Business.Repositories.Reports
             parameters.Add(new SqlParameter() { ParameterName = "@supplierId", Size = 4, Value = uiSearchObj.SupplierId.HasValue ? (object)uiSearchObj.SupplierId.Value : DBNull.Value });
 
             parameters.Add(new SqlParameter() { ParameterName = "@productId", Size = 4, Value = uiSearchObj.ProductId.HasValue ? (object)uiSearchObj.ProductId.Value : DBNull.Value });
-
-
 
             var result = this.DB.Database.SqlQuery<UIProcureOrderReport>(sql, parameters.ToArray()).ToList();
             totalRecords = totalRecordSqlParameter.Value.ToInt();

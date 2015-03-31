@@ -33,6 +33,7 @@
     <div class="container">
         <div class="mws-panel grid_8">
             <div class="mws-panel-header">
+
                 <span class="mws-i-24 i-table-1" id="lblTitle" runat="server">采购订单报表</span>
             </div>
             <div class="mws-panel-body">
@@ -58,13 +59,16 @@
                         <th class="width60 middle-td">货品：</th>
                         <td class="middle-td width280-percent">
                             <telerik:RadComboBox runat="server" ID="rcbxProduct" Filter="Contains"
-                                AllowCustomText="false"  Width="260" EmptyMessage="--请选择--">
+                                AllowCustomText="false" Width="260" EmptyMessage="--请选择--">
                             </telerik:RadComboBox>
                         </td>
                         <td class="middle-td leftpadding20">
                             <asp:Button ID="btnSearch" runat="server" Text="查询" CssClass="mws-button green" OnClick="btnSearch_Click" />
                             &nbsp;&nbsp;&nbsp;&nbsp;
                                 <asp:Button ID="btnReset" runat="server" Text="重置" CssClass="mws-button orange" OnClick="btnReset_Click" />
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                              <asp:Button ID="btnExport" runat="server" Text="导出" CssClass="mws-button green" OnClientClick="exportExcel();return false;" />
+
                         </td>
 
                     </tr>
@@ -177,6 +181,9 @@
             </div>
         </div>
     </div>
+    <div style="display: none;">
+        <asp:Button ID="btnExportHidden" runat="server" Text="导出" CssClass="mws-button green" OnClick="btnExport_Click" />
+    </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContent" runat="server">
     <script type="text/javascript">
@@ -194,6 +201,9 @@
             $.showLoading();
             var ProcureOrderReportType = $.getQueryString("ProcureOrderReportType");
             window.location.href = "ProcureOrderReportMaintenance.aspx?ProcureOrderReportType=" + ProcureOrderReportType + "&EntityID=" + id;
+        }
+        function exportExcel() {
+            $("#<%=btnExportHidden.ClientID%>").click();
         }
     </script>
 </asp:Content>

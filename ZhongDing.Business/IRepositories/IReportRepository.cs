@@ -10,7 +10,7 @@ namespace ZhongDing.Business.IRepositories
     public interface IReportRepository
     {
         IList<UICompany> GetCompanyReport();
-        IList<UIProcureOrderReport> GetProcureOrderReport();
+        IList<UIProcureOrderReport> GetProcureOrderReport(Domain.UISearchObjects.UISearchProcureOrderReport uiSearchObj);
 
         IList<UIProcureOrderReport> GetProcureOrderReport(Domain.UISearchObjects.UISearchProcureOrderReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
     }

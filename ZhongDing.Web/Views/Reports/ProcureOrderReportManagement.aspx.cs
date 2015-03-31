@@ -12,6 +12,7 @@ using ZhongDing.Common;
 using ZhongDing.Common.Enums;
 using ZhongDing.Domain.UISearchObjects;
 using ZhongDing.Common.Extension;
+using ZhongDing.Domain.UIObjects;
 
 namespace ZhongDing.Web.Views.Reports
 {
@@ -70,10 +71,10 @@ namespace ZhongDing.Web.Views.Reports
         {
             UISearchProcureOrderReport uiSearchObj = new UISearchProcureOrderReport()
             {
-                 BeginDate=rdpBeginDate.SelectedDate,
-                  EndDate=rdpEndDate.SelectedDate,
-                   SupplierId=rcbxSupplier.SelectedValue.ToIntOrNull(),
-                    ProductId=rcbxProduct.SelectedValue.ToIntOrNull()
+                BeginDate = rdpBeginDate.SelectedDate,
+                EndDate = rdpEndDate.SelectedDate,
+                SupplierId = rcbxSupplier.SelectedValue.ToIntOrNull(),
+                ProductId = rcbxProduct.SelectedValue.ToIntOrNull()
 
             };
 
@@ -180,5 +181,49 @@ namespace ZhongDing.Web.Views.Reports
 
             rcbxProduct.Items.Insert(0, new RadComboBoxItem("", ""));
         }
+
+        protected void btnExport_Click(object sender, EventArgs e)
+        {
+            /*
+             微软为Response对象提供了一个新的方法TransmitFile来解决使用Response.BinaryWrite
+            下载超过400mb的文件时导致Aspnet_wp.exe进程回收而无法成功下载的问题。
+            代码如下：
+             */
+            UISearchProcureOrderReport uiSearchObj = new UISearchProcureOrderReport()
+            {
+                BeginDate = rdpBeginDate.SelectedDate,
+                EndDate = rdpEndDate.SelectedDate,
+                SupplierId = rcbxSupplier.SelectedValue.ToIntOrNull(),
+                ProductId = rcbxProduct.SelectedValue.ToIntOrNull()
+
+            };
+
+            var uiProcureOrderReports = PageReportRepository.GetProcureOrderReport(uiSearchObj);
+            var excelPath = Server.MapPath("~/App_Data/") + "Excel.xls";
+            ExcelHelper.RenderToExcel<UIProcureOrderReport>(uiProcureOrderReports,
+                new List<ExcelHeader>() {
+                    new ExcelHeader() { Key = "OrderDate", Name = "订单日期" },
+                    new ExcelHeader(){ Key="OrderCode", Name="订单号"},
+                    new ExcelHeader(){ Key="SupplierName", Name="供应商"},
+                    new ExcelHeader(){ Key="WarehouseName", Name="仓库"},
+                    new ExcelHeader(){ Key="ProductCode", Name="货品编号"},
+                    new ExcelHeader(){ Key="CategoryName", Name="货品类别"},
+                    new ExcelHeader(){ Key="ProductName", Name="货品名称"},
+                    new ExcelHeader(){ Key="Specification", Name="规格"},
+                    new ExcelHeader(){ Key="UnitName", Name="基本单位"},
+                    new ExcelHeader(){ Key="ProcurePrice", Name="采购单价"},
+                    new ExcelHeader(){ Key="ProcureCount", Name="数量"},
+                    new ExcelHeader(){ Key="TotalAmount", Name="金额"},
+                }, excelPath);
+
+            Response.ContentType = "application/x-zip-compressed";
+            Response.AddHeader("Content-Disposition", "attachment;filename=Excel.xls");
+            string filename = excelPath;
+            Response.TransmitFile(filename);
+        }
+
+
+
+
     }
 }
