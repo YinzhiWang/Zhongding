@@ -2647,6 +2647,7 @@
     <Content Include="Views\Refunds\SupplierRefundManagement.aspx" />
     <Content Include="Views\Refunds\SupplierTaskRefundMaintenance.aspx" />
     <Content Include="Views\Refunds\SupplierTaskRefundManagement.aspx" />
+    <Content Include="Views\Reports\ProcureOrderReportManagement.aspx" />
     <Content Include="Views\Sales\ClientSaleAppMaintenance.aspx" />
     <Content Include="Views\Sales\ClientSaleAppManagement.aspx" />
     <Content Include="Views\Sales\ClientSaleAppStockOutMaintenance.aspx" />
@@ -3383,6 +3384,13 @@
     <Compile Include="Views\Refunds\SupplierTaskRefundManagement.aspx.designer.cs">
       <DependentUpon>SupplierTaskRefundManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Reports\ProcureOrderReportManagement.aspx.cs">
+      <DependentUpon>ProcureOrderReportManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reports\ProcureOrderReportManagement.aspx.designer.cs">
+      <DependentUpon>ProcureOrderReportManagement.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Sales\ClientSaleAppMaintenance.aspx.cs">
       <DependentUpon>ClientSaleAppMaintenance.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3537,9 +3545,7 @@
       <LastGenOutput>RadGrid.Main.zh-CN.designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Reports\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

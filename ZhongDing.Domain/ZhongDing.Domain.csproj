@@ -407,6 +407,7 @@
     <Compile Include="UIObjects\UIInventoryHistory.cs" />
     <Compile Include="UIObjects\UIProcureOrderAppDetail.cs" />
     <Compile Include="UIObjects\UIProcureOrderApplication.cs" />
+    <Compile Include="UIObjects\UIProcureOrderReport.cs" />
     <Compile Include="UIObjects\UIProduct.cs" />
     <Compile Include="UIObjects\UIProductBasicPrice.cs" />
     <Compile Include="UIObjects\UIProductDBPolicyPrice.cs" />
@@ -473,6 +474,7 @@
     <Compile Include="UISearchObjects\UISearchImportFileLog.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderAppDetail.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderApplication.cs" />
+    <Compile Include="UISearchObjects\UISearchProcureOrderReport.cs" />
     <Compile Include="UISearchObjects\UISearchProduct.cs" />
     <Compile Include="UISearchObjects\UISearchProductSpecification.cs" />
     <Compile Include="UISearchObjects\UISearchSalesOrderAppDetail.cs" />
