@@ -14,5 +14,7 @@ namespace ZhongDing.Domain.UISearchObjects
 
         public string FileName { get; set; }
 
+        public DateTime? SettlementDate { get; set; }
+
     }
 }

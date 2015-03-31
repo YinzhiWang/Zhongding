@@ -13,7 +13,7 @@ using ZhongDing.Domain.UISearchObjects;
 
 namespace ZhongDing.Web.Views.Imports
 {
-    public partial class ImportDCFlowDataDetails : BasePage
+    public partial class ImportClientFlowDataDetails : BasePage
     {
         #region Members
 
@@ -41,15 +41,15 @@ namespace ZhongDing.Web.Views.Imports
             }
         }
 
-        private IDCFlowDataRepository _PageDCFlowDataRepository;
-        private IDCFlowDataRepository PageDCFlowDataRepository
+        private IClientFlowDataRepository _PageClientFlowDataRepository;
+        private IClientFlowDataRepository PageClientFlowDataRepository
         {
             get
             {
-                if (_PageDCFlowDataRepository == null)
-                    _PageDCFlowDataRepository = new DCFlowDataRepository();
+                if (_PageClientFlowDataRepository == null)
+                    _PageClientFlowDataRepository = new ClientFlowDataRepository();
 
-                return _PageDCFlowDataRepository;
+                return _PageClientFlowDataRepository;
             }
         }
 
@@ -63,7 +63,7 @@ namespace ZhongDing.Web.Views.Imports
                     {
                         _CurrentEntity = PageImportFileLogRepository.GetByID(this.CurrentEntityID);
 
-                        if (_CurrentEntity != null && _CurrentEntity.ImportDataTypeID != (int)EImportDataType.DCFlowData)
+                        if (_CurrentEntity != null && _CurrentEntity.ImportDataTypeID != (int)EImportDataType.ClientFlowData)
                             _CurrentEntity = null;
                     }
 
@@ -79,12 +79,12 @@ namespace ZhongDing.Web.Views.Imports
             {
                 this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
                 this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
-                this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_OPERATE_REDIRECT);
+                this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_PARAMETER_ERROR_REDIRECT);
 
                 return;
             }
 
-            this.Master.MenuItemID = (int)EMenuItem.DCFlowData;
+            this.Master.MenuItemID = (int)EMenuItem.ClientSaleFlowData;
 
             if (!IsPostBack)
             {
@@ -98,6 +98,12 @@ namespace ZhongDing.Web.Views.Imports
             {
                 lblFileName.Text = CurrentEntity.FileName;
                 lblFilePath.Text = CurrentEntity.FilePath;
+                lblClientUser.Text = (CurrentEntity.ClientImportFileLog != null && CurrentEntity.ClientImportFileLog.ClientUser != null)
+                    ? CurrentEntity.ClientImportFileLog.ClientUser.ClientName : string.Empty;
+
+                lblClientCompany.Text = (CurrentEntity.ClientImportFileLog != null && CurrentEntity.ClientImportFileLog.ClientCompany != null)
+                    ? CurrentEntity.ClientImportFileLog.ClientCompany.Name : string.Empty;
+
                 lblImportBeginDate.Text = CurrentEntity.ImportBeginDate.HasValue
                     ? CurrentEntity.ImportBeginDate.Value.ToString("yyyy/MM/dd HH:mm:ss") : string.Empty;
                 lblImportEndDate.Text = CurrentEntity.ImportEndDate.HasValue
@@ -115,7 +121,7 @@ namespace ZhongDing.Web.Views.Imports
 
         protected void rgSucceedLogs_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
-            var uiSearchObj = new UISearchDCFlowData()
+            var uiSearchObj = new UISearchClientFlowData()
             {
                 ImportFileLogID = this.CurrentEntityID.HasValue
                 ? this.CurrentEntityID.Value : GlobalConst.INVALID_INT
@@ -123,7 +129,7 @@ namespace ZhongDing.Web.Views.Imports
 
             int totalRecords;
 
-            var entities = PageDCFlowDataRepository.GetUIList(uiSearchObj, rgSucceedLogs.CurrentPageIndex, rgSucceedLogs.PageSize, out totalRecords);
+            var entities = PageClientFlowDataRepository.GetUIList(uiSearchObj, rgSucceedLogs.CurrentPageIndex, rgSucceedLogs.PageSize, out totalRecords);
 
             rgSucceedLogs.VirtualItemCount = totalRecords;
 

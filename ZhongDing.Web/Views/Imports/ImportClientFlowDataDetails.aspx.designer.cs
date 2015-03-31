@@ -7,10 +7,28 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ZhongDing.Web.Views.Imports.Editors {
+namespace ZhongDing.Web.Views.Imports {
     
     
-    public partial class UploadDCFlowDataFile {
+    public partial class ImportClientFlowDataDetails {
+        
+        /// <summary>
+        /// loadingPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadAjaxLoadingPanel loadingPanel;
+        
+        /// <summary>
+        /// RadAjaxManager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadAjaxManager RadAjaxManager1;
         
         /// <summary>
         /// vsMaintenance control.
@@ -22,112 +40,139 @@ namespace ZhongDing.Web.Views.Imports.Editors {
         protected global::System.Web.UI.WebControls.ValidationSummary vsMaintenance;
         
         /// <summary>
-        /// rmypSettlementDate control.
+        /// lblFileName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadMonthYearPicker rmypSettlementDate;
+        protected global::System.Web.UI.WebControls.Label lblFileName;
         
         /// <summary>
-        /// rttSettlementDate control.
+        /// lblFilePath control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadToolTip rttSettlementDate;
+        protected global::System.Web.UI.WebControls.Label lblFilePath;
         
         /// <summary>
-        /// rfvSettlementDate control.
+        /// lblClientUser control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvSettlementDate;
+        protected global::System.Web.UI.WebControls.Label lblClientUser;
         
         /// <summary>
-        /// cvSettlementDate control.
+        /// lblClientCompany control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator cvSettlementDate;
+        protected global::System.Web.UI.WebControls.Label lblClientCompany;
         
         /// <summary>
-        /// rcbxDistributionCompany control.
+        /// lblImportBeginDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbxDistributionCompany;
+        protected global::System.Web.UI.WebControls.Label lblImportBeginDate;
         
         /// <summary>
-        /// rttDistributionCompany control.
+        /// lblImportEndDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadToolTip rttDistributionCompany;
+        protected global::System.Web.UI.WebControls.Label lblImportEndDate;
         
         /// <summary>
-        /// rfvDistributionCompany control.
+        /// lblTotalCount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDistributionCompany;
+        protected global::System.Web.UI.WebControls.Label lblTotalCount;
         
         /// <summary>
-        /// txtFileName control.
+        /// lblSucceedCount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtFileName;
+        protected global::System.Web.UI.WebControls.Label lblSucceedCount;
         
         /// <summary>
-        /// rttAccountName control.
+        /// lblFailedCount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadToolTip rttAccountName;
+        protected global::System.Web.UI.WebControls.Label lblFailedCount;
         
         /// <summary>
-        /// rfvFileName control.
+        /// tabStripPrices control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvFileName;
+        protected global::Telerik.Web.UI.RadTabStrip tabStripPrices;
         
         /// <summary>
-        /// radUploadFile control.
+        /// multiPageImportLogs control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadAsyncUpload radUploadFile;
+        protected global::Telerik.Web.UI.RadMultiPage multiPageImportLogs;
         
         /// <summary>
-        /// btnSave control.
+        /// pvSucceedLogs control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnSave;
+        protected global::Telerik.Web.UI.RadPageView pvSucceedLogs;
+        
+        /// <summary>
+        /// rgSucceedLogs control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid rgSucceedLogs;
+        
+        /// <summary>
+        /// pvFailedLogs control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadPageView pvFailedLogs;
+        
+        /// <summary>
+        /// rgFailedLogs control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid rgFailedLogs;
         
         /// <summary>
         /// btnCancel control.
@@ -139,50 +184,14 @@ namespace ZhongDing.Web.Views.Imports.Editors {
         protected global::System.Web.UI.WebControls.Button btnCancel;
         
         /// <summary>
-        /// hdnEntityID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnEntityID;
-        
-        /// <summary>
-        /// hdnFilePath control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnFilePath;
-        
-        /// <summary>
-        /// hdnFileName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnFileName;
-        
-        /// <summary>
-        /// hdnGridClientID control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HiddenField hdnGridClientID;
-        
-        /// <summary>
         /// Master property.
         /// </summary>
         /// <remarks>
         /// Auto-generated property.
         /// </remarks>
-        public new ZhongDing.Web.Site_Window Master {
+        public new ZhongDing.Web.SiteMaster Master {
             get {
-                return ((ZhongDing.Web.Site_Window)(base.Master));
+                return ((ZhongDing.Web.SiteMaster)(base.Master));
             }
         }
     }

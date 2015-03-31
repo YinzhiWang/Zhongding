@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace ZhongDing.Domain.UIObjects
 {
-    public class UIDCImportFileLog : UIImportFileLog
+    public class UIClientImportFileLog : UIImportFileLog
     {
-        public string DistributionCompanyName { get; set; }
+        public string ClientUserName { get; set; }
+
+        public string ClientCompanyName { get; set; }
 
     }
 }

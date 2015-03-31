@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace ZhongDing.Domain.UISearchObjects
 {
-    public class UISearchDCImportFileLog : UISearchImportFileLog
+    public class UISearchClientImportFileLog : UISearchImportFileLog
     {
-        public int DistributionCompanyID { get; set; }
+        public int ClientUserID { get; set; }
+
+        public int ClientCompanyID { get; set; }
 
     }
 }

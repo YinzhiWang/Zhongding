@@ -10,7 +10,25 @@
 namespace ZhongDing.Web.Views.Imports.Editors {
     
     
-    public partial class UploadDCFlowDataFile {
+    public partial class UploadClientFlowDataFile {
+        
+        /// <summary>
+        /// loadingPanel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadAjaxLoadingPanel loadingPanel;
+        
+        /// <summary>
+        /// RadAjaxManager1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadAjaxManager RadAjaxManager1;
         
         /// <summary>
         /// vsMaintenance control.
@@ -58,31 +76,58 @@ namespace ZhongDing.Web.Views.Imports.Editors {
         protected global::System.Web.UI.WebControls.CustomValidator cvSettlementDate;
         
         /// <summary>
-        /// rcbxDistributionCompany control.
+        /// rcbxClientUser control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbxDistributionCompany;
+        protected global::Telerik.Web.UI.RadComboBox rcbxClientUser;
         
         /// <summary>
-        /// rttDistributionCompany control.
+        /// rttClientUser control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadToolTip rttDistributionCompany;
+        protected global::Telerik.Web.UI.RadToolTip rttClientUser;
         
         /// <summary>
-        /// rfvDistributionCompany control.
+        /// rfvClientUser control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvDistributionCompany;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvClientUser;
+        
+        /// <summary>
+        /// rcbxClientCompany control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadComboBox rcbxClientCompany;
+        
+        /// <summary>
+        /// rttClientCompany control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadToolTip rttClientCompany;
+        
+        /// <summary>
+        /// rfvClientCompany control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvClientCompany;
         
         /// <summary>
         /// txtFileName control.
@@ -94,13 +139,13 @@ namespace ZhongDing.Web.Views.Imports.Editors {
         protected global::Telerik.Web.UI.RadTextBox txtFileName;
         
         /// <summary>
-        /// rttAccountName control.
+        /// rttFileName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadToolTip rttAccountName;
+        protected global::Telerik.Web.UI.RadToolTip rttFileName;
         
         /// <summary>
         /// rfvFileName control.
@@ -119,6 +164,15 @@ namespace ZhongDing.Web.Views.Imports.Editors {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadAsyncUpload radUploadFile;
+        
+        /// <summary>
+        /// cvFileName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cvFileName;
         
         /// <summary>
         /// btnSave control.

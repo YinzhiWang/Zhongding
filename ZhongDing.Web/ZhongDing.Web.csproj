@@ -2614,8 +2614,11 @@
     <Content Include="Views\Imports\DCFlowDataMaintenance.aspx" />
     <Content Include="Views\Imports\Editors\CorrectDCFlowData.aspx" />
     <Content Include="Views\Imports\Editors\ImportDCHospitalFlowData.aspx" />
+    <Content Include="Views\Imports\Editors\UploadClientFlowDataFile.aspx" />
     <Content Include="Views\Imports\Editors\ViewOverwrittenDCFlowData.aspx" />
     <Content Include="Views\Imports\Editors\UploadDCFlowDataFile.aspx" />
+    <Content Include="Views\Imports\ImportClientFlowData.aspx" />
+    <Content Include="Views\Imports\ImportClientFlowDataDetails.aspx" />
     <Content Include="Views\Imports\ImportDCFlowData.aspx" />
     <Content Include="Views\Imports\ImportDCFlowDataDetails.aspx" />
     <Content Include="Views\Procures\Editors\ChooseProcureOrderProducts.aspx" />
@@ -2666,6 +2669,7 @@
     <Content Include="HttpHandle\AsyncOperateFileHandler.ashx" />
     <Content Include="Content\Templates\XXXX配送公司医院流向数据%28XXXX年XX月%29.xlsx" />
     <Content Include="Content\Templates\XXXX配送公司流向数据%28XXXX年XX月%29.xlsx" />
+    <Content Include="Content\Templates\XXXX客户流向数据%28XXXX年XX月%29.xlsx" />
     <None Include="Scripts\jquery-1.11.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\jquery-1.11.1.min.js" />
@@ -3148,6 +3152,13 @@
     <Compile Include="Views\Imports\Editors\ImportDCHospitalFlowData.aspx.designer.cs">
       <DependentUpon>ImportDCHospitalFlowData.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Imports\Editors\UploadClientFlowDataFile.aspx.cs">
+      <DependentUpon>UploadClientFlowDataFile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\Editors\UploadClientFlowDataFile.aspx.designer.cs">
+      <DependentUpon>UploadClientFlowDataFile.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Imports\Editors\ViewOverwrittenDCFlowData.aspx.cs">
       <DependentUpon>ViewOverwrittenDCFlowData.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3161,6 +3172,20 @@
     </Compile>
     <Compile Include="Views\Imports\Editors\UploadDCFlowDataFile.aspx.designer.cs">
       <DependentUpon>UploadDCFlowDataFile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Imports\ImportClientFlowData.aspx.cs">
+      <DependentUpon>ImportClientFlowData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\ImportClientFlowData.aspx.designer.cs">
+      <DependentUpon>ImportClientFlowData.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Imports\ImportClientFlowDataDetails.aspx.cs">
+      <DependentUpon>ImportClientFlowDataDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\ImportClientFlowDataDetails.aspx.designer.cs">
+      <DependentUpon>ImportClientFlowDataDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Imports\ImportDCFlowData.aspx.cs">
       <DependentUpon>ImportDCFlowData.aspx</DependentUpon>
@@ -3538,7 +3563,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

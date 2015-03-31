@@ -121,7 +121,7 @@ namespace ZhongDing.Domain.Models
         public DbSet<ClientFlowData> ClientFlowData { get; set; }
         public DbSet<DCInventoryFlowData> DCInventoryFlowData { get; set; }
         public DbSet<HospitalType> HospitalType { get; set; }
-        public DbSet<ClientImportFileLog> ClientImportFileLog { get; set; }
         public DbSet<TransportFeeStockOutSmsReminder> TransportFeeStockOutSmsReminder { get; set; }
+        public DbSet<ClientImportFileLog> ClientImportFileLog { get; set; }
     }
 }

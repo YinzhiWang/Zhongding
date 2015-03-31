@@ -372,6 +372,7 @@
     <Compile Include="UIObjects\UICertificateType.cs" />
     <Compile Include="UIObjects\UIClientCompany.cs" />
     <Compile Include="UIObjects\UIClientFlowData.cs" />
+    <Compile Include="UIObjects\UIClientImportFileLog.cs" />
     <Compile Include="UIObjects\UIClientInfo.cs" />
     <Compile Include="UIObjects\UIClientInfoBankAccount.cs" />
     <Compile Include="UIObjects\UIClientInfoContact.cs" />
@@ -441,6 +442,7 @@
     <Compile Include="UISearchObjects\UISearchCertificate.cs" />
     <Compile Include="UISearchObjects\UISearchClientCompany.cs" />
     <Compile Include="UISearchObjects\UISearchClientFlowData.cs" />
+    <Compile Include="UISearchObjects\UISearchClientImportFileLog.cs" />
     <Compile Include="UISearchObjects\UISearchClientInfo.cs" />
     <Compile Include="UISearchObjects\UISearchClientInfoProductSetting.cs" />
     <Compile Include="UISearchObjects\UISearchClientNeedRefundOrder.cs" />

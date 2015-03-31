@@ -1,10 +1,22 @@
-﻿<%@ Page Title="上传配送公司流向数据文件" Language="C#" MasterPageFile="~/Site.Window.Master" AutoEventWireup="true" CodeBehind="UploadDCFlowDataFile.aspx.cs" Inherits="ZhongDing.Web.Views.Imports.Editors.UploadDCFlowDataFile" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Window.Master" AutoEventWireup="true" CodeBehind="UploadClientFlowDataFile.aspx.cs" Inherits="ZhongDing.Web.Views.Imports.Editors.UploadClientFlowDataFile" %>
 
 <%@ MasterType VirtualPath="~/Site.Window.Master" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <telerik:RadAjaxLoadingPanel ID="loadingPanel" runat="server">
+    </telerik:RadAjaxLoadingPanel>
+    <telerik:RadAjaxManager runat="server" ID="RadAjaxManager1">
+        <AjaxSettings>
+            <telerik:AjaxSetting AjaxControlID="rcbxClientUser">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="rcbxClientCompany" LoadingPanelID="loadingPanel" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+
+        </AjaxSettings>
+    </telerik:RadAjaxManager>
 
     <div class="mws-panel grid_full" style="margin-bottom: 10px;">
 
@@ -17,38 +29,53 @@
                         </div>
                     </div>
                     <div class="mws-form-row">
-                        <div class="float-left width40-percent">
-                            <label>结算年月</label>
-                            <div class="mws-form-item small">
-                                <telerik:RadMonthYearPicker runat="server" ID="rmypSettlementDate" Width="120"
-                                    EnableShadows="true"
-                                    MonthYearNavigationSettings-CancelButtonCaption="取消"
-                                    MonthYearNavigationSettings-OkButtonCaption="确定"
-                                    MonthYearNavigationSettings-TodayButtonCaption="今天"
-                                    MonthYearNavigationSettings-DateIsOutOfRangeMessage="日期超出范围"
-                                    MonthYearNavigationSettings-EnableScreenBoundaryDetection="true">
-                                </telerik:RadMonthYearPicker>
-                                <telerik:RadToolTip ID="rttSettlementDate" runat="server" TargetControlID="rmypSettlementDate" ShowEvent="OnClick"
-                                    Position="MiddleRight" RelativeTo="Element" Text="该项是必选项" AutoCloseDelay="0">
+                        <label>结算年月</label>
+                        <div class="mws-form-item small">
+                            <telerik:RadMonthYearPicker runat="server" ID="rmypSettlementDate" Width="120"
+                                EnableShadows="true"
+                                MonthYearNavigationSettings-CancelButtonCaption="取消"
+                                MonthYearNavigationSettings-OkButtonCaption="确定"
+                                MonthYearNavigationSettings-TodayButtonCaption="今天"
+                                MonthYearNavigationSettings-DateIsOutOfRangeMessage="日期超出范围"
+                                MonthYearNavigationSettings-EnableScreenBoundaryDetection="true">
+                            </telerik:RadMonthYearPicker>
+                            <telerik:RadToolTip ID="rttSettlementDate" runat="server" TargetControlID="rmypSettlementDate" ShowEvent="OnClick"
+                                Position="MiddleRight" RelativeTo="Element" Text="该项是必选项" AutoCloseDelay="0">
+                            </telerik:RadToolTip>
+                            <asp:RequiredFieldValidator ID="rfvSettlementDate" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="rmypSettlementDate"
+                                ErrorMessage="请选择结算年月" Text="*" CssClass="field-validation-error">
+                            </asp:RequiredFieldValidator>
+                            <asp:CustomValidator ID="cvSettlementDate" runat="server" ControlToValidate="rmypSettlementDate" ValidationGroup="vgMaintenance"
+                                Text="*" CssClass="field-validation-error"></asp:CustomValidator>
+                        </div>
+                    </div>
+                    <div class="mws-form-row">
+                        <div class="float-left width50-percent">
+                            <label>客户</label>
+                            <div class="mws-form-item">
+                                <telerik:RadComboBox runat="server" ID="rcbxClientUser" Filter="Contains"
+                                    AllowCustomText="false" Height="160px" EmptyMessage="--请选择--"
+                                    AutoPostBack="true" OnSelectedIndexChanged="rcbxClientUser_SelectedIndexChanged">
+                                </telerik:RadComboBox>
+                                <telerik:RadToolTip ID="rttClientUser" runat="server" TargetControlID="rcbxClientUser" ShowEvent="OnClick"
+                                    Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
                                 </telerik:RadToolTip>
-                                <asp:RequiredFieldValidator ID="rfvSettlementDate" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="rmypSettlementDate"
-                                    ErrorMessage="请选择结算年月" Text="*" CssClass="field-validation-error">
+                                <asp:RequiredFieldValidator ID="rfvClientUser" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="rcbxClientUser"
+                                    ErrorMessage="请选择客户" Text="*" CssClass="field-validation-error">
                                 </asp:RequiredFieldValidator>
-                                <asp:CustomValidator ID="cvSettlementDate" runat="server" ControlToValidate="rmypSettlementDate" ValidationGroup="vgMaintenance"
-                                    Text="*" CssClass="field-validation-error"></asp:CustomValidator>
                             </div>
                         </div>
-                        <div class="float-left">
-                            <label class="leftpadding20">配送公司</label>
-                            <div class="mws-form-item small">
-                                <telerik:RadComboBox runat="server" ID="rcbxDistributionCompany" Filter="Contains"
-                                    AllowCustomText="false" Height="160px" EmptyMessage="--请选择--">
+                        <div class="float-left width50-percent">
+                            <label class="leftpadding10">商业单位</label>
+                            <div class="mws-form-item">
+                                <telerik:RadComboBox runat="server" ID="rcbxClientCompany" Filter="Contains"
+                                    AllowCustomText="false" Height="160px" Width="90%" EmptyMessage="--请选择--">
                                 </telerik:RadComboBox>
-                                <telerik:RadToolTip ID="rttDistributionCompany" runat="server" TargetControlID="rcbxDistributionCompany" ShowEvent="OnClick"
-                                    Position="MiddleRight" RelativeTo="Element" Text="该项是必选项" AutoCloseDelay="0">
+                                <telerik:RadToolTip ID="rttClientCompany" runat="server" TargetControlID="rcbxClientCompany" ShowEvent="OnClick"
+                                    Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
                                 </telerik:RadToolTip>
-                                <asp:RequiredFieldValidator ID="rfvDistributionCompany" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="rcbxDistributionCompany"
-                                    ErrorMessage="请选择配送公司" Text="*" CssClass="field-validation-error">
+                                <asp:RequiredFieldValidator ID="rfvClientCompany" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="rcbxClientCompany"
+                                    ErrorMessage="请选择商业单位" Text="*" CssClass="field-validation-error">
                                 </asp:RequiredFieldValidator>
                             </div>
                         </div>
@@ -57,17 +84,18 @@
                         <label>文件名</label>
                         <div class="mws-form-item small">
                             <telerik:RadTextBox runat="server" ID="txtFileName" CssClass="mws-textinput" Width="40%" MaxLength="100"></telerik:RadTextBox>
-                            <telerik:RadToolTip ID="rttAccountName" runat="server" TargetControlID="txtFileName" ShowEvent="OnClick"
+                            <telerik:RadToolTip ID="rttFileName" runat="server" TargetControlID="txtFileName" ShowEvent="OnClick"
                                 Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
                             </telerik:RadToolTip>
                             <asp:RequiredFieldValidator ID="rfvFileName" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="txtFileName"
                                 ErrorMessage="文件名必填" Text="*" CssClass="field-validation-error">
                             </asp:RequiredFieldValidator>
+
                         </div>
                     </div>
                     <div class="mws-form-row">
                         <label>选择文件</label>
-                        <div class="mws-form-item  medium">
+                        <div class="mws-form-item large">
                             <telerik:RadAsyncUpload runat="server" ID="radUploadFile" AllowedFileExtensions="xls,xlsx"
                                 MaxFileInputsCount="1" MultipleFileSelection="Disabled" MaxFileSize="5120000"
                                 OnClientFileUploading="onFileUploading" OnClientValidationFailed="onValidationFailed"
@@ -76,6 +104,8 @@
                                 OnFileUploaded="radUploadFile_FileUploaded" Width="95%">
                                 <Localization Select="选择" Cancel="取消" Remove="移除" />
                             </telerik:RadAsyncUpload>
+                            <asp:CustomValidator ID="cvFileName" runat="server" ValidationGroup="vgMaintenance"
+                                Text="*" CssClass="field-validation-error"></asp:CustomValidator>
                         </div>
                     </div>
                     <div class="mws-button-row">
@@ -256,3 +286,4 @@
 
     </script>
 </asp:Content>
+

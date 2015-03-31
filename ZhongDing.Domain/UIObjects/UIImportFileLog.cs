@@ -8,6 +8,8 @@ namespace ZhongDing.Domain.UIObjects
 {
     public class UIImportFileLog : UIBase
     {
+        public DateTime SettlementDate { get; set; }
+
         public string FileName { get; set; }
 
         public string FilePath { get; set; }

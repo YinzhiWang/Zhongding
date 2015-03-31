@@ -774,3 +774,17 @@ ALTER TABLE [dbo].[CertificateType]
     ADD CONSTRAINT [FK_CertificateType_OwnerType] FOREIGN KEY ([OwnerTypeID]) REFERENCES [dbo].[OwnerType] ([ID])
 COMMIT TRANSACTION
 ---- end --- 3/27/2015 -- 删除CertificateType药品再注册批件 -- by lihong
+
+---- start --- 3/31/2015 -- 初始化医院性质数据 -- by lihong
+SET NUMERIC_ROUNDABORT OFF
+GO
+SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+
+BEGIN TRANSACTION
+SET IDENTITY_INSERT [dbo].[HospitalType] ON
+INSERT INTO [dbo].[HospitalType] ([ID], [TypeName]) VALUES (1, N'基药')
+INSERT INTO [dbo].[HospitalType] ([ID], [TypeName]) VALUES (2, N'招商')
+SET IDENTITY_INSERT [dbo].[HospitalType] OFF
+COMMIT TRANSACTION
+---- end --- 3/31/2015 -- 初始化医院性质数据 -- by lihong

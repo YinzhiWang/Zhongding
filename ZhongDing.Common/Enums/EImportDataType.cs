@@ -22,6 +22,11 @@ namespace ZhongDing.Common.Enums
         DCInventoryData,
 
         /// <summary>
+        /// 商业客户流向数据
+        /// </summary>
+        ClientFlowData,
+
+        /// <summary>
         /// 采购订单数据
         /// </summary>
         ProcureOrderData,
