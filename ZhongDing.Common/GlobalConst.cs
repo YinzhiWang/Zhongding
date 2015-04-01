@@ -455,6 +455,27 @@ namespace ZhongDing.Common
 
         #endregion
 
+        #region 医院性质
+
+        /// <summary>
+        /// 常量类：医院性质
+        /// </summary>
+        public class HospitalTypes
+        {
+            /// <summary>
+            /// 基药
+            /// </summary>
+            public static readonly string BASE_MEDICINE = "基药";
+
+            /// <summary>
+            /// 招商
+            /// </summary>
+            public static readonly string BUSINESS_MEDICINE = "招商";
+
+        }
+
+        #endregion
+
         #region 布尔类型汉语描述
 
         /// <summary>
@@ -482,7 +503,7 @@ namespace ZhongDing.Common
         /// </summary>
         public class ImportDataColumns
         {
-            #region 配送公司流向数据列名
+            #region 流向数据列名
             /// <summary>
             /// 货品编码列
             /// </summary>
@@ -523,12 +544,29 @@ namespace ZhongDing.Common
             /// </summary>
             public static readonly string FLOW_TO = "流向";
 
-            #endregion
-
             /// <summary>
             /// 备注
             /// </summary>
             public static readonly string COMMENT = "备注";
+
+            /// <summary>
+            /// 医院
+            /// </summary>
+            public static readonly string HOSPITAL_NAME = "医院";
+
+            /// <summary>
+            /// 医院性质
+            /// </summary>
+            public static readonly string HOSPITAL_TYPE = "医院性质";
+
+            /// <summary>
+            /// 区域
+            /// </summary>
+            public static readonly string MARKET_NAME = "区域";
+
+            #endregion
+
+
 
         }
 

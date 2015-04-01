@@ -28,6 +28,18 @@ namespace ZhongDing.Business.Repositories.Imports
             }
         }
 
+        private IClientFlowDataRepository _clientFlowDataRepository;
+        private IClientFlowDataRepository ClientFlowDataRepository
+        {
+            get
+            {
+                if (_clientFlowDataRepository == null)
+                    _clientFlowDataRepository = new ClientFlowDataRepository();
+
+                return _clientFlowDataRepository;
+            }
+        }
+
         private IImportFileLogRepository _importFileLogRepository;
         private IImportFileLogRepository ImportFileLogRepository
         {
@@ -88,6 +100,18 @@ namespace ZhongDing.Business.Repositories.Imports
             }
         }
 
+        private IDeptMarketRepository _deptMarketRepository;
+        private IDeptMarketRepository DeptMarketRepository
+        {
+            get
+            {
+                if (_deptMarketRepository == null)
+                    _deptMarketRepository = new DeptMarketRepository();
+
+                return _deptMarketRepository;
+            }
+        }
+
         #endregion
 
         public void ImportData()
@@ -130,6 +154,11 @@ namespace ZhongDing.Business.Repositories.Imports
 
                         case EImportDataType.DCInventoryData:
                             break;
+
+                        case EImportDataType.ClientFlowData:
+                            SaveClientFlowData(fileLog, dsData);
+                            break;
+
                         case EImportDataType.ProcureOrderData:
                             break;
                         case EImportDataType.StockInData:
@@ -146,7 +175,6 @@ namespace ZhongDing.Business.Repositories.Imports
         /// <summary>
         /// 保存导入的配送公司流向数据
         /// </summary>
-        /// <param name="ds">The ds.</param>
         private void SaveDCFlowData(ImportFileLog fileLog, DataSet ds)
         {
             if (ds != null && ds.Tables.Count > 0
@@ -273,7 +301,7 @@ namespace ZhongDing.Business.Repositories.Imports
                                                 dCFlowData.IsCorrectlyFlow = false;
                                         }
                                         else
-                                            continue;
+                                            errorMsg += "该条数据在数据库中已存在；";
                                     }
                                     else
                                         errorMsg += GlobalConst.ImportDataColumns.PRODUCT_SPECIFICATION + "不存在；";
@@ -309,6 +337,178 @@ namespace ZhongDing.Business.Repositories.Imports
                             + GlobalConst.ImportDataColumns.SALE_DATE + ":" + tempSaleDate + ", "
                             + GlobalConst.ImportDataColumns.SALE_QTY + ":" + tempSaleQty + ", "
                             + GlobalConst.ImportDataColumns.FLOW_TO + ":" + flowTo
+                        });
+                    }
+                }
+
+                if (errorRowCount > 0)
+                {
+                    fileLog.ImportStatusID = (int)EImportStatus.ImportError;
+                }
+                else
+                {
+                    fileLog.ImportStatusID = (int)EImportStatus.Completed;
+                    fileLog.ImportEndDate = DateTime.Now;
+                }
+
+                fileLog.TotalCount = totalCount;
+                fileLog.FailedCount = errorRowCount;
+                fileLog.SucceedCount = totalCount - errorRowCount;
+
+                ImportFileLogRepository.Save();
+            }
+        }
+
+        /// <summary>
+        /// 保存导入的客户流向数据
+        /// </summary>
+        private void SaveClientFlowData(ImportFileLog fileLog, DataSet ds)
+        {
+            if (ds != null && ds.Tables.Count > 0
+                && ds.Tables[0].Rows.Count > 0)
+            {
+                int totalCount = ds.Tables[0].Rows.Count;
+
+                fileLog.ImportBeginDate = DateTime.Now;
+                fileLog.ImportStatusID = (int)EImportStatus.Importing;
+
+                ImportFileLogRepository.Save();
+
+                string errorMsg;
+                int errorRowCount = 0;
+                int rowIndex = 0;
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    errorMsg = string.Empty;
+
+                    string productCode = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.PRODUCT_CODE]);
+                    string productName = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.PRODUCT_NAME]);
+                    string specification = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.PRODUCT_SPECIFICATION]);
+                    string factoryName = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.FACTORY_NAME]);
+                    string tempSaleDate = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.SALE_DATE]);
+                    string tempSaleQty = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.SALE_QTY]);
+                    string hospitalName = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.HOSPITAL_NAME]);
+                    string hospitalType = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.HOSPITAL_TYPE]);
+                    string marketName = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.MARKET_NAME]);
+
+                    try
+                    {
+                        rowIndex++;
+
+                        DateTime saleDate;
+                        if (DateTime.TryParse(tempSaleDate, out saleDate))
+                        {
+                            int saleQty;
+                            if (int.TryParse(tempSaleQty, out saleQty))
+                            {
+                                var product = ProductRepository.GetList(x =>
+                                    x.ProductCode.ToLower().Equals(productCode.ToLower())).FirstOrDefault();
+
+                                if (product != null)
+                                {
+                                    var productSpecification = ProductSpecificationRepository
+                                        .GetList(x => x.Specification.ToLower().Equals(specification.ToLower()))
+                                        .FirstOrDefault();
+
+                                    if (productSpecification != null)
+                                    {
+                                        var hospital = HospitalRepository.GetList(x =>
+                                            x.HospitalName.ToLower().Equals(hospitalName.ToLower())).FirstOrDefault();
+
+                                        if (hospital != null)
+                                        {
+                                            int hospitalTypeID = 0;
+                                            if (hospitalType.Equals(GlobalConst.HospitalTypes.BASE_MEDICINE))
+                                                hospitalTypeID = (int)EHospitalType.BaseMedicine;
+                                            else if (hospitalType.Equals(GlobalConst.HospitalTypes.BUSINESS_MEDICINE))
+                                                hospitalTypeID = (int)EHospitalType.BusinessMedicine;
+
+                                            if (hospitalTypeID > 0)
+                                            {
+                                                var clientFlowData = ClientFlowDataRepository.GetList(x =>
+                                                    x.ClientUserID == fileLog.ClientImportFileLog.ClientUserID
+                                                    && x.ClientCompanyID == fileLog.ClientImportFileLog.ClientCompanyID
+                                                    && x.ProductID == product.ID && x.ProductSpecificationID == productSpecification.ID
+                                                    && x.SaleDate == saleDate && x.SettlementDate == fileLog.ClientImportFileLog.SettlementDate
+                                                    && x.FlowTo == hospitalName).FirstOrDefault();
+
+                                                //限制重复导入，如果存在就跳过该条记录
+                                                if (clientFlowData == null)
+                                                {
+                                                    var deptMarket = DeptMarketRepository
+                                                    .GetList(x => x.MarketName.ToLower().Equals(marketName.ToLower()))
+                                                    .FirstOrDefault();
+
+                                                    clientFlowData = new ClientFlowData()
+                                                    {
+                                                        ClientUserID = fileLog.ClientImportFileLog.ClientUserID,
+                                                        ClientCompanyID = fileLog.ClientImportFileLog.ClientCompanyID,
+                                                        ImportFileLogID = fileLog.ID,
+                                                        ProductID = product.ID,
+                                                        ProductName = productName,
+                                                        ProductCode = productCode,
+                                                        ProductSpecificationID = productSpecification.ID,
+                                                        ProductSpecification = specification,
+                                                        SaleDate = saleDate,
+                                                        SaleQty = saleQty,
+                                                        SettlementDate = fileLog.ClientImportFileLog.SettlementDate,
+                                                        FlowTo = hospitalName,
+                                                        FactoryName = factoryName,
+                                                        HospitalID = hospital.ID,
+                                                        HospitalTypeID = hospitalTypeID,
+                                                        MarketName = marketName
+                                                    };
+
+                                                    if (deptMarket != null)
+                                                        clientFlowData.DeptMarketID = deptMarket.ID;
+
+                                                    fileLog.ClientFlowData.Add(clientFlowData);
+                                                }
+                                                else
+                                                    errorMsg += "该条数据在数据库中已存在；";
+                                            }
+                                            else
+                                                errorMsg += GlobalConst.ImportDataColumns.HOSPITAL_TYPE + "不存在；";
+                                        }
+                                        else
+                                            errorMsg += GlobalConst.ImportDataColumns.HOSPITAL_NAME + "不存在；";
+                                    }
+                                    else
+                                        errorMsg += GlobalConst.ImportDataColumns.PRODUCT_SPECIFICATION + "不存在；";
+                                }
+                                else
+                                    errorMsg += GlobalConst.ImportDataColumns.PRODUCT_NAME + "不存在；";
+                            }
+                            else
+                                errorMsg += GlobalConst.ImportDataColumns.SALE_QTY + "格式错误；";
+                        }
+                        else
+                            errorMsg += GlobalConst.ImportDataColumns.SALE_DATE + "格式错误；";
+                    }
+                    catch (Exception exp)
+                    {
+                        Utility.WriteExceptionLog(exp);
+
+                        errorMsg += exp.Message;
+                    }
+
+                    if (errorMsg != string.Empty)
+                    {
+                        errorRowCount++;
+
+                        fileLog.ImportErrorLog.Add(new ImportErrorLog
+                        {
+                            ErrorRowIndex = rowIndex,
+                            ErrorMsg = errorMsg,
+                            ErrorRowData = GlobalConst.ImportDataColumns.PRODUCT_CODE + ":" + productCode + ", "
+                            + GlobalConst.ImportDataColumns.PRODUCT_NAME + ":" + productName + ", "
+                            + GlobalConst.ImportDataColumns.PRODUCT_SPECIFICATION + ":" + specification + ", "
+                            + GlobalConst.ImportDataColumns.FACTORY_NAME + ":" + factoryName + ", "
+                            + GlobalConst.ImportDataColumns.SALE_DATE + ":" + tempSaleDate + ", "
+                            + GlobalConst.ImportDataColumns.SALE_QTY + ":" + tempSaleQty + ", "
+                            + GlobalConst.ImportDataColumns.HOSPITAL_NAME + ":" + hospitalName + ", "
+                            + GlobalConst.ImportDataColumns.HOSPITAL_TYPE + ":" + hospitalType + ", "
+                            + GlobalConst.ImportDataColumns.MARKET_NAME + ":" + marketName
                         });
                     }
                 }

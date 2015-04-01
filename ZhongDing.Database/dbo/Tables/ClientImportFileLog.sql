@@ -9,6 +9,10 @@
     [LastModifiedOn]  DATETIME NULL,
     [LastModifiedBy]  INT      NULL,
     CONSTRAINT [PK_ClientImportFileLog] PRIMARY KEY CLUSTERED ([ImportFileLogID] ASC),
+    CONSTRAINT [FK_ClientImportFileLog_ClientCompany] FOREIGN KEY ([ClientCompanyID]) REFERENCES [dbo].[ClientCompany] ([ID]),
+    CONSTRAINT [FK_ClientImportFileLog_ClientUser] FOREIGN KEY ([ClientUserID]) REFERENCES [dbo].[ClientUser] ([ID]),
     CONSTRAINT [FK_ClientImportFileLog_ImportFileLog] FOREIGN KEY ([ImportFileLogID]) REFERENCES [dbo].[ImportFileLog] ([ID])
 );
+
+
 

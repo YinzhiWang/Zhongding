@@ -114,8 +114,8 @@
                                     ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                                     <Columns>
                                         <telerik:GridBoundColumn UniqueName="SaleDate" HeaderText="销售日期" DataField="SaleDate" DataFormatString="{0:yyyy/MM/dd}">
-                                            <HeaderStyle Width="100" />
-                                            <ItemStyle HorizontalAlign="Left" Width="100" />
+                                            <HeaderStyle Width="80" />
+                                            <ItemStyle HorizontalAlign="Left" Width="80" />
                                         </telerik:GridBoundColumn>
                                         <telerik:GridBoundColumn UniqueName="ClientUserName" HeaderText="客户" DataField="ClientUserName">
                                             <HeaderStyle Width="5%" />
@@ -142,28 +142,21 @@
                                             <ItemStyle HorizontalAlign="Left" Width="100" />
                                         </telerik:GridBoundColumn>
                                         <telerik:GridBoundColumn UniqueName="FactoryName" HeaderText="生产企业" DataField="FactoryName">
-                                            <HeaderStyle Width="15%" />
-                                            <ItemStyle HorizontalAlign="Left" Width="15%" />
+                                            <HeaderStyle Width="10%" />
+                                            <ItemStyle HorizontalAlign="Left" Width="10%" />
                                         </telerik:GridBoundColumn>
                                         <telerik:GridBoundColumn UniqueName="FlowTo" HeaderText="医院" DataField="FlowTo">
-                                            <HeaderStyle Width="15%" />
-                                            <ItemStyle HorizontalAlign="Left" Width="15%" />
+                                            <HeaderStyle Width="10%" />
+                                            <ItemStyle HorizontalAlign="Left" Width="10%" />
                                         </telerik:GridBoundColumn>
                                         <telerik:GridBoundColumn UniqueName="HospitalType" HeaderText="医院性质" DataField="HospitalType">
-                                            <HeaderStyle Width="80" />
-                                            <ItemStyle HorizontalAlign="Left" Width="80" />
+                                            <HeaderStyle Width="100" />
+                                            <ItemStyle HorizontalAlign="Left" Width="100" />
                                         </telerik:GridBoundColumn>
                                         <telerik:GridBoundColumn UniqueName="MarketName" HeaderText="地区" DataField="MarketName">
                                             <HeaderStyle Width="100" />
                                             <ItemStyle HorizontalAlign="Left" Width="100" />
                                         </telerik:GridBoundColumn>
-                                        <telerik:GridTemplateColumn UniqueName="Edit">
-                                            <HeaderStyle Width="60" />
-                                            <ItemStyle HorizontalAlign="Center" Width="60" />
-                                            <ItemTemplate>
-                                                <a href="javascript:void(0);" onclick="redirectToMaintenancePage(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">编辑</a>
-                                            </ItemTemplate>
-                                        </telerik:GridTemplateColumn>
                                     </Columns>
                                     <CommandItemTemplate>
                                         <table class="width100-percent">

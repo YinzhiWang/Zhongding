@@ -79,7 +79,7 @@ namespace ZhongDing.Web.Views.Imports
             {
                 this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
                 this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
-                this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_OPERATE_REDIRECT);
+                this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_PARAMETER_ERROR_REDIRECT);
 
                 return;
             }
