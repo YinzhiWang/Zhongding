@@ -2647,6 +2647,9 @@
     <Content Include="Views\Refunds\SupplierRefundManagement.aspx" />
     <Content Include="Views\Refunds\SupplierTaskRefundMaintenance.aspx" />
     <Content Include="Views\Refunds\SupplierTaskRefundManagement.aspx" />
+    <Content Include="Views\Reports\ClientSaleAppReportManagement.aspx" />
+    <Content Include="Views\Reports\StockOutDetailReportManagement.aspx" />
+    <Content Include="Views\Reports\ProcureOrderApplicationPaymentReportManagement.aspx" />
     <Content Include="Views\Reports\ProcureOrderReportManagement.aspx" />
     <Content Include="Views\Sales\ClientSaleAppMaintenance.aspx" />
     <Content Include="Views\Sales\ClientSaleAppManagement.aspx" />
@@ -3384,6 +3387,27 @@
     <Compile Include="Views\Refunds\SupplierTaskRefundManagement.aspx.designer.cs">
       <DependentUpon>SupplierTaskRefundManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Reports\ClientSaleAppReportManagement.aspx.cs">
+      <DependentUpon>ClientSaleAppReportManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reports\ClientSaleAppReportManagement.aspx.designer.cs">
+      <DependentUpon>ClientSaleAppReportManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\StockOutDetailReportManagement.aspx.cs">
+      <DependentUpon>StockOutDetailReportManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reports\StockOutDetailReportManagement.aspx.designer.cs">
+      <DependentUpon>StockOutDetailReportManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\ProcureOrderApplicationPaymentReportManagement.aspx.cs">
+      <DependentUpon>ProcureOrderApplicationPaymentReportManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reports\ProcureOrderApplicationPaymentReportManagement.aspx.designer.cs">
+      <DependentUpon>ProcureOrderApplicationPaymentReportManagement.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Reports\ProcureOrderReportManagement.aspx.cs">
       <DependentUpon>ProcureOrderReportManagement.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3569,7 +3593,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -52,6 +52,7 @@ namespace ZhongDing.Common
         /// </summary>
         public static readonly decimal DEFAULT_MAX_GUARANTEE_AMOUNT = 50000;
 
+        public static readonly DateTime? DATETIME_NULL_VALUE = null;
         #endregion
 
         #region Win service consts

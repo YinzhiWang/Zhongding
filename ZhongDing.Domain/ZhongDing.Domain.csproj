@@ -382,6 +382,7 @@
     <Compile Include="UIObjects\UIClientRefundApplication.cs" />
     <Compile Include="UIObjects\UIClientSaleApplication.cs" />
     <Compile Include="UIObjects\UIClientSaleAppPayment.cs" />
+    <Compile Include="UIObjects\UIClientSaleAppReport.cs" />
     <Compile Include="UIObjects\UIClientTaskRefundApp.cs" />
     <Compile Include="UIObjects\UICompany.cs" />
     <Compile Include="UIObjects\UIDaBaoApplication.cs" />
@@ -407,6 +408,7 @@
     <Compile Include="UIObjects\UIInventoryHistory.cs" />
     <Compile Include="UIObjects\UIProcureOrderAppDetail.cs" />
     <Compile Include="UIObjects\UIProcureOrderApplication.cs" />
+    <Compile Include="UIObjects\UIProcureOrderApplicationPaymentReport.cs" />
     <Compile Include="UIObjects\UIProcureOrderReport.cs" />
     <Compile Include="UIObjects\UIProduct.cs" />
     <Compile Include="UIObjects\UIProductBasicPrice.cs" />
@@ -419,6 +421,7 @@
     <Compile Include="UIObjects\UIStockInDetail.cs" />
     <Compile Include="UIObjects\UIStockOut.cs" />
     <Compile Include="UIObjects\UIStockOutDetail.cs" />
+    <Compile Include="UIObjects\UIStockOutDetailReport.cs" />
     <Compile Include="UIObjects\UISupplier.cs" />
     <Compile Include="UIObjects\UISupplierBankAccount.cs" />
     <Compile Include="UIObjects\UISupplierCertificate.cs" />
@@ -450,6 +453,7 @@
     <Compile Include="UISearchObjects\UISearchClientRefundAppDetail.cs" />
     <Compile Include="UISearchObjects\UISearchClientRefundApplication.cs" />
     <Compile Include="UISearchObjects\UISearchClientSaleApplication.cs" />
+    <Compile Include="UISearchObjects\UISearchClientSaleAppReport.cs" />
     <Compile Include="UISearchObjects\UISearchClientTaskRefundApp.cs" />
     <Compile Include="UISearchObjects\UISearchCompany.cs" />
     <Compile Include="UISearchObjects\UISearchDaBaoApplication.cs" />
@@ -474,6 +478,7 @@
     <Compile Include="UISearchObjects\UISearchImportFileLog.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderAppDetail.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderApplication.cs" />
+    <Compile Include="UISearchObjects\UISearchProcureOrderApplicationPaymentReport.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderReport.cs" />
     <Compile Include="UISearchObjects\UISearchProduct.cs" />
     <Compile Include="UISearchObjects\UISearchProductSpecification.cs" />
@@ -482,6 +487,7 @@
     <Compile Include="UISearchObjects\UISearchStockInDetail.cs" />
     <Compile Include="UISearchObjects\UISearchStockOut.cs" />
     <Compile Include="UISearchObjects\UISearchStockOutDetail.cs" />
+    <Compile Include="UISearchObjects\UISearchStockOutDetailReport.cs" />
     <Compile Include="UISearchObjects\UISearchSupplier.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierContract.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierContractFile.cs" />

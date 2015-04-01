@@ -1,4 +1,5 @@
-﻿-- =============================================
+﻿
+-- =============================================
 -- Author:		<Author,,Name>
 -- Create date: <Create Date,,>
 -- Description:	<Description,,>
@@ -7,11 +8,11 @@ CREATE PROCEDURE [dbo].[GetProcureOrderReport]
 	-- Add the parameters for the stored procedure here
     @pageSize INT = 10 ,
     @pageIndex INT = 0 ,
-	 @orderDateStart DATETIME = NULL ,
-    @orderDateEnd DATETIME = NULL ,
+    @beginDate DATETIME = NULL ,
+    @endDate DATETIME = NULL ,
     @supplierId INT = NULL ,
     @productId INT = NULL ,
-	   @totalRecord INT = 0 OUTPUT
+    @totalRecord INT = 0 OUTPUT
 AS
     BEGIN
 	-- SET NOCOUNT ON added to prevent extra result sets from
@@ -46,11 +47,12 @@ AS
                             JOIN dbo.ProductCategory ON dbo.Product.CategoryID = dbo.ProductCategory.ID
                             JOIN dbo.ProductSpecification ON dbo.ProcureOrderAppDetail.ProductSpecificationID = dbo.ProductSpecification.ID
                             JOIN dbo.UnitOfMeasurement ON dbo.ProductSpecification.UnitOfMeasurementID = dbo.UnitOfMeasurement.ID
-                  WHERE     ( @orderDateStart IS NULL
-                              OR dbo.ProcureOrderApplication.OrderDate >= @orderDateStart
-                            )
-                            AND ( @orderDateEnd IS NULL
-                                  OR dbo.ProcureOrderApplication.OrderDate <= @orderDateEnd
+                  WHERE     dbo.ProcureOrderAppDetail.IsDeleted = 0
+                            AND ( @beginDate IS NULL
+                                  OR dbo.ProcureOrderApplication.OrderDate >= @beginDate
+                                )
+                            AND ( @endDate IS NULL
+                                  OR dbo.ProcureOrderApplication.OrderDate < @endDate
                                 )
                             AND ( @supplierId IS NULL
                                   OR dbo.ProcureOrderApplication.SupplierID = @supplierId
@@ -62,26 +64,27 @@ AS
         WHERE   temp.rowId BETWEEN @startRecord AND @endRecord
 		
 
-        SET  @totalRecord =(SELECT COUNT(dbo.ProcureOrderAppDetail.ID)
-        FROM    dbo.ProcureOrderAppDetail
-                JOIN dbo.ProcureOrderApplication ON dbo.ProcureOrderAppDetail.ProcureOrderApplicationID = dbo.ProcureOrderApplication.ID
-                JOIN dbo.Supplier ON dbo.ProcureOrderApplication.SupplierID = dbo.Supplier.ID
-                JOIN dbo.Warehouse ON dbo.ProcureOrderAppDetail.WarehouseID = dbo.Warehouse.ID
-                JOIN dbo.Product ON dbo.ProcureOrderAppDetail.ProductID = dbo.Product.ID
-                JOIN dbo.ProductCategory ON dbo.Product.CategoryID = dbo.ProductCategory.ID
-                JOIN dbo.ProductSpecification ON dbo.ProcureOrderAppDetail.ProductSpecificationID = dbo.ProductSpecification.ID
-                JOIN dbo.UnitOfMeasurement ON dbo.ProductSpecification.UnitOfMeasurementID = dbo.UnitOfMeasurement.ID
-        WHERE   ( @orderDateStart IS NULL
-                  OR dbo.ProcureOrderApplication.OrderDate >= @orderDateStart
-                )
-                AND ( @orderDateEnd IS NULL
-                      OR dbo.ProcureOrderApplication.OrderDate <= @orderDateEnd
-                    )
-                AND ( @supplierId IS NULL
-                      OR dbo.ProcureOrderApplication.SupplierID = @supplierId
-                    )
-                AND ( @productId IS NULL
-                      OR dbo.ProcureOrderAppDetail.ProductID = @productId
-                    )
-					)
+        SET @totalRecord = ( SELECT COUNT(dbo.ProcureOrderAppDetail.ID)
+                             FROM   dbo.ProcureOrderAppDetail
+                                    JOIN dbo.ProcureOrderApplication ON dbo.ProcureOrderAppDetail.ProcureOrderApplicationID = dbo.ProcureOrderApplication.ID
+                                    JOIN dbo.Supplier ON dbo.ProcureOrderApplication.SupplierID = dbo.Supplier.ID
+                                    JOIN dbo.Warehouse ON dbo.ProcureOrderAppDetail.WarehouseID = dbo.Warehouse.ID
+                                    JOIN dbo.Product ON dbo.ProcureOrderAppDetail.ProductID = dbo.Product.ID
+                                    JOIN dbo.ProductCategory ON dbo.Product.CategoryID = dbo.ProductCategory.ID
+                                    JOIN dbo.ProductSpecification ON dbo.ProcureOrderAppDetail.ProductSpecificationID = dbo.ProductSpecification.ID
+                                    JOIN dbo.UnitOfMeasurement ON dbo.ProductSpecification.UnitOfMeasurementID = dbo.UnitOfMeasurement.ID
+                             WHERE  dbo.ProcureOrderAppDetail.IsDeleted = 0
+                                    AND ( @beginDate IS NULL
+                                          OR dbo.ProcureOrderApplication.OrderDate >= @beginDate
+                                        )
+                                    AND ( @endDate IS NULL
+                                          OR dbo.ProcureOrderApplication.OrderDate < @endDate
+                                        )
+                                    AND ( @supplierId IS NULL
+                                          OR dbo.ProcureOrderApplication.SupplierID = @supplierId
+                                        )
+                                    AND ( @productId IS NULL
+                                          OR dbo.ProcureOrderAppDetail.ProductID = @productId
+                                        )
+                           )
     END

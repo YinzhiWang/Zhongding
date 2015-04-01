@@ -156,13 +156,13 @@
                                     <li data-level="2" data-menuitemid="100">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/ProcureOrderReportManagement.aspx');">采购订单报表</a></li>
                                     <li data-level="2" data-menuitemid="101">
-                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/ProcureOrderReportManagement.aspx');">采购付款明细表</a>
+                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/ProcureOrderApplicationPaymentReportManagement.aspx');">采购付款明细表</a>
                                     </li>
                                     <li data-level="2" data-menuitemid="102">
-                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/ProcureOrderReportManagement.aspx');">销售订单报表</a>
+                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/ClientSaleAppReportManagement.aspx');">销售订单报表</a>
                                     </li>
                                     <li data-level="2" data-menuitemid="103">
-                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/ProcureOrderReportManagement.aspx');">出库明细表</a></li>
+                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/StockOutDetailReportManagement.aspx');">出库明细表</a></li>
 
                                 </ul>
                             </li>

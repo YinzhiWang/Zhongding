@@ -16,7 +16,7 @@ using ZhongDing.Domain.UIObjects;
 
 namespace ZhongDing.Web.Views.Reports
 {
-    public partial class ProcureOrderReportManagement : BasePage
+    public partial class ProcureOrderApplicationPaymentReportManagement : BasePage
     {
         #region Members
         private IReportRepository _PageReportRepository;
@@ -59,79 +59,81 @@ namespace ZhongDing.Web.Views.Reports
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            this.Master.MenuItemID = (int)EMenuItem.ProcureOrderReportManage;
+            this.Master.MenuItemID = (int)EMenuItem.ProcureOrderPaymentReportManage;
             if (!IsPostBack)
             {
                 BindSuppliers();
-                BindProducts();
+
             }
 
         }
-        private void BindProcureOrderReport(bool isNeedRebind)
+        private void BindProcureOrderApplicationPaymentReport(bool isNeedRebind)
         {
-            UISearchProcureOrderReport uiSearchObj = new UISearchProcureOrderReport()
+            UISearchProcureOrderApplicationPaymentReport uiSearchObj = new UISearchProcureOrderApplicationPaymentReport()
             {
                 BeginDate = rdpBeginDate.SelectedDate.HasValue ? rdpBeginDate.SelectedDate : GlobalConst.DATETIME_NULL_VALUE,
                 EndDate = rdpEndDate.SelectedDate.HasValue ? rdpEndDate.SelectedDate.Value.AddDays(1) : GlobalConst.DATETIME_NULL_VALUE,
                 SupplierId = rcbxSupplier.SelectedValue.ToIntOrNull(),
-                ProductId = rcbxProduct.SelectedValue.ToIntOrNull()
+
 
             };
 
             int totalRecords = 0;
 
-            var uiProcureOrderReports = PageReportRepository.GetProcureOrderReport(uiSearchObj, rgProcureOrderReports.CurrentPageIndex, rgProcureOrderReports.PageSize, out totalRecords);
+            var uiProcureOrderApplicationPaymentReports = PageReportRepository.GetProcureOrderApplicationPaymentReport(uiSearchObj, rgProcureOrderApplicationPaymentReports.CurrentPageIndex, rgProcureOrderApplicationPaymentReports.PageSize, out totalRecords);
 
-            rgProcureOrderReports.VirtualItemCount = totalRecords;
+            rgProcureOrderApplicationPaymentReports.VirtualItemCount = totalRecords;
 
-            rgProcureOrderReports.DataSource = uiProcureOrderReports;
+            rgProcureOrderApplicationPaymentReports.DataSource = uiProcureOrderApplicationPaymentReports;
 
             if (isNeedRebind)
-                rgProcureOrderReports.Rebind();
+                rgProcureOrderApplicationPaymentReports.Rebind();
         }
 
 
-        protected void rgProcureOrderReports_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
+        protected void rgProcureOrderApplicationPaymentReports_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
-            BindProcureOrderReport(false);
+            BindProcureOrderApplicationPaymentReport(false);
         }
 
-        protected void rgProcureOrderReports_DeleteCommand(object sender, GridCommandEventArgs e)
+        protected void rgProcureOrderApplicationPaymentReports_DeleteCommand(object sender, GridCommandEventArgs e)
         {
             GridEditableItem editableItem = e.Item as GridEditableItem;
 
             String sid = editableItem.GetDataKeyValue("ID").ToString();
 
 
-            rgProcureOrderReports.Rebind();
+            rgProcureOrderApplicationPaymentReports.Rebind();
         }
 
-        protected void rgProcureOrderReports_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)
+        protected void rgProcureOrderApplicationPaymentReports_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
 
         }
 
-        protected void rgProcureOrderReports_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
+        protected void rgProcureOrderApplicationPaymentReports_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
         {
 
         }
 
-        protected void rgProcureOrderReports_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
+        protected void rgProcureOrderApplicationPaymentReports_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
 
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            BindProcureOrderReport(true);
+            BindProcureOrderApplicationPaymentReport(true);
         }
 
         protected void btnReset_Click(object sender, EventArgs e)
         {
             rdpBeginDate.SelectedDate = rdpEndDate.SelectedDate = null;
-            rcbxProduct.SelectedValue = rcbxSupplier.SelectedValue = string.Empty;
-            rcbxProduct.Text = rcbxSupplier.Text = string.Empty;
-            BindProcureOrderReport(true);
+            rcbxSupplier.SelectedValue = string.Empty;
+            rcbxSupplier.Text = string.Empty;
+
+
+            BindProcureOrderApplicationPaymentReport(true);
         }
 
         private void BindSuppliers()
@@ -159,29 +161,12 @@ namespace ZhongDing.Web.Views.Reports
                 var supplierID = e.Value.ToIntOrNull();
                 if (supplierID.BiggerThanZero())
                 {
-                    BindProducts(supplierID.Value);
-                    rcbxProduct.SelectedIndex = 0;
-                    rcbxProduct.Text = string.Empty;
+
+
                 }
             }
         }
-        private void BindProducts(int supplierID = 0)
-        {
-            var products = PageProductRepository.GetDropdownItems(new UISearchDropdownItem()
-            {
-                Extension = new UISearchExtension
-                {
-                    SupplierID = supplierID,
-                }
-            });
 
-            rcbxProduct.DataSource = products;
-            rcbxProduct.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
-            rcbxProduct.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
-            rcbxProduct.DataBind();
-
-            rcbxProduct.Items.Insert(0, new RadComboBoxItem("", ""));
-        }
 
         protected void btnExport_Click(object sender, EventArgs e)
         {
@@ -190,31 +175,26 @@ namespace ZhongDing.Web.Views.Reports
             下载超过400mb的文件时导致Aspnet_wp.exe进程回收而无法成功下载的问题。
             代码如下：
              */
-            UISearchProcureOrderReport uiSearchObj = new UISearchProcureOrderReport()
+
+            UISearchProcureOrderApplicationPaymentReport uiSearchObj = new UISearchProcureOrderApplicationPaymentReport()
             {
                 BeginDate = rdpBeginDate.SelectedDate.HasValue ? rdpBeginDate.SelectedDate : GlobalConst.DATETIME_NULL_VALUE,
                 EndDate = rdpEndDate.SelectedDate.HasValue ? rdpEndDate.SelectedDate.Value.AddDays(1) : GlobalConst.DATETIME_NULL_VALUE,
                 SupplierId = rcbxSupplier.SelectedValue.ToIntOrNull(),
-                ProductId = rcbxProduct.SelectedValue.ToIntOrNull()
+
 
             };
 
-            var uiProcureOrderReports = PageReportRepository.GetProcureOrderReport(uiSearchObj);
+            var uiProcureOrderApplicationPaymentReports = PageReportRepository.GetProcureOrderApplicationPaymentReport(uiSearchObj);
             var excelPath = Server.MapPath("~/App_Data/") + "Excel.xls";
-            ExcelHelper.RenderToExcel<UIProcureOrderReport>(uiProcureOrderReports,
+            ExcelHelper.RenderToExcel<UIProcureOrderApplicationPaymentReport>(uiProcureOrderApplicationPaymentReports,
                 new List<ExcelHeader>() {
-                    new ExcelHeader() { Key = "OrderDate", Name = "订单日期" },
+                    new ExcelHeader() { Key = "PayDate", Name = "付款日期" },
                     new ExcelHeader(){ Key="OrderCode", Name="订单号"},
-                    new ExcelHeader(){ Key="SupplierName", Name="供应商"},
-                    new ExcelHeader(){ Key="WarehouseName", Name="仓库"},
-                    new ExcelHeader(){ Key="ProductCode", Name="货品编号"},
-                    new ExcelHeader(){ Key="CategoryName", Name="货品类别"},
-                    new ExcelHeader(){ Key="ProductName", Name="货品名称"},
-                    new ExcelHeader(){ Key="Specification", Name="规格"},
-                    new ExcelHeader(){ Key="UnitName", Name="基本单位"},
-                    new ExcelHeader(){ Key="ProcurePrice", Name="采购单价"},
-                    new ExcelHeader(){ Key="ProcureCount", Name="数量"},
-                    new ExcelHeader(){ Key="TotalAmount", Name="金额"},
+                    new ExcelHeader(){ Key="Amount", Name="金额"},
+                    new ExcelHeader(){ Key="FromAccount", Name="支出账号"},
+                    new ExcelHeader(){ Key="ToAccount", Name="收款户名"},
+               
                 }, excelPath);
 
             Response.ContentType = "application/x-zip-compressed";
