@@ -1,5 +1,4 @@
-﻿<%@ Page Title="配送公司流向数据导入" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ImportDCFlowData.aspx.cs" Inherits="ZhongDing.Web.Views.Imports.ImportDCFlowData" %>
-
+﻿<%@ Page Title="配送公司库存数据" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DCInventoryDataManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Imports.DCInventoryDataManagement" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 
@@ -34,7 +33,7 @@
     <div class="container">
         <div class="mws-panel grid_8">
             <div class="mws-panel-header">
-                <span class="mws-i-24 i-table-1">配送公司流向数据导入</span>
+                <span class="mws-i-24 i-table-1">配送公司库存数据</span>
             </div>
             <div class="mws-panel-body">
                 <div class="mws-form">
@@ -42,9 +41,26 @@
                         <div runat="server" id="divSearch">
                             <div class="mws-form-row">
                                 <div class="float-left width40-percent">
-                                    <label>结算年月</label>
+                                    <label>配送公司</label>
                                     <div class="mws-form-item">
-                                        <telerik:RadMonthYearPicker runat="server" ID="rmypSettlementDate" Width="120"
+                                        <telerik:RadComboBox runat="server" ID="rcbxDistributionCompany" Filter="Contains"
+                                            AllowCustomText="false" Height="160px" EmptyMessage="--请选择--">
+                                        </telerik:RadComboBox>
+                                    </div>
+                                </div>
+                                <div class="float-left">
+                                    <label class="leftpadding10">结算年月</label>
+                                    <div class="mws-form-item">
+                                        <telerik:RadMonthYearPicker runat="server" ID="rdpBeginDate" Width="120"
+                                            EnableShadows="true"
+                                            MonthYearNavigationSettings-CancelButtonCaption="取消"
+                                            MonthYearNavigationSettings-OkButtonCaption="确定"
+                                            MonthYearNavigationSettings-TodayButtonCaption="今天"
+                                            MonthYearNavigationSettings-DateIsOutOfRangeMessage="日期超出范围"
+                                            MonthYearNavigationSettings-EnableScreenBoundaryDetection="true">
+                                        </telerik:RadMonthYearPicker>
+                                        -&nbsp;&nbsp;
+                                        <telerik:RadMonthYearPicker runat="server" ID="rdpEndDate" Width="120"
                                             EnableShadows="true"
                                             MonthYearNavigationSettings-CancelButtonCaption="取消"
                                             MonthYearNavigationSettings-OkButtonCaption="确定"
@@ -54,37 +70,13 @@
                                         </telerik:RadMonthYearPicker>
                                     </div>
                                 </div>
-                                <div class="float-left">
-                                    <label class="leftpadding10">配送公司</label>
-                                    <div class="mws-form-item">
-                                        <telerik:RadComboBox runat="server" ID="rcbxDistributionCompany" Filter="Contains"
-                                            AllowCustomText="false" Height="160px" EmptyMessage="--请选择--">
-                                        </telerik:RadComboBox>
-                                    </div>
-                                </div>
                             </div>
                             <div class="mws-form-row">
-                                <label>执行时间</label>
+                                <label>货品</label>
                                 <div class="mws-form-item">
-                                    <telerik:RadDatePicker runat="server" ID="rdpBeginDate" Width="120"
-                                        Calendar-EnableShadows="true"
-                                        Calendar-FastNavigationSettings-CancelButtonCaption="取消"
-                                        Calendar-FastNavigationSettings-OkButtonCaption="确定"
-                                        Calendar-FastNavigationSettings-TodayButtonCaption="今天"
-                                        Calendar-FastNavigationSettings-DateIsOutOfRangeMessage="日期超出范围"
-                                        Calendar-FastNavigationSettings-DisableOutOfRangeMonths="true"
-                                        Calendar-FirstDayOfWeek="Monday">
-                                    </telerik:RadDatePicker>
-                                    -&nbsp;&nbsp;
-                                        <telerik:RadDatePicker runat="server" ID="rdpEndDate" Width="120"
-                                            Calendar-EnableShadows="true"
-                                            Calendar-FastNavigationSettings-CancelButtonCaption="取消"
-                                            Calendar-FastNavigationSettings-OkButtonCaption="确定"
-                                            Calendar-FastNavigationSettings-TodayButtonCaption="今天"
-                                            Calendar-FastNavigationSettings-DateIsOutOfRangeMessage="日期超出范围"
-                                            Calendar-FastNavigationSettings-DisableOutOfRangeMonths="true"
-                                            Calendar-FirstDayOfWeek="Monday">
-                                        </telerik:RadDatePicker>
+                                    <telerik:RadComboBox runat="server" ID="rcbxProduct" Filter="Contains"
+                                        AllowCustomText="false" Height="160px" Width="60%" EmptyMessage="--请选择--">
+                                    </telerik:RadComboBox>
                                 </div>
                             </div>
                             <div class="mws-form-row">
@@ -94,9 +86,7 @@
                                     &nbsp;&nbsp;
                                     <asp:Button ID="btnReset" runat="server" Text="重置" CssClass="mws-button orange" OnClick="btnReset_Click" />
                                     &nbsp;&nbsp;
-                                    <asp:Button ID="btnCancel" runat="server" Text="返回" UseSubmitBehavior="false" CssClass="mws-button green" OnClientClick="redirectToPage('Views/Imports/DCFlowDataManagement.aspx');return false;" />
-                                    &nbsp;&nbsp;
-                                    <asp:HyperLink ID="hlkModelExcel" runat="server" NavigateUrl="~/Content/Templates/XXXX配送公司流向数据(XXXX年XX月).xlsx">Excel模板下载</asp:HyperLink>
+                                    <asp:Button ID="btnImportData" runat="server" Text="导入库存数据" CssClass="mws-button green" OnClientClick="redirectToImportPage(); return false;" />
                                 </div>
                             </div>
                         </div>
@@ -115,37 +105,30 @@
                                             <ItemStyle HorizontalAlign="Left" Width="100" />
                                         </telerik:GridBoundColumn>
                                         <telerik:GridBoundColumn UniqueName="DistributionCompanyName" HeaderText="配送公司" DataField="DistributionCompanyName">
-                                            <HeaderStyle Width="20%" />
-                                            <ItemStyle HorizontalAlign="Left" Width="20%" />
+                                            <HeaderStyle Width="10%" />
+                                            <ItemStyle HorizontalAlign="Left" Width="10%" />
                                         </telerik:GridBoundColumn>
-                                        <telerik:GridBoundColumn UniqueName="ImportBeginDate" HeaderText="导入开始时间" DataField="ImportBeginDate" DataFormatString="{0:yyyy/MM/dd HH:mm:ss}">
+                                        <telerik:GridBoundColumn UniqueName="ProductCode" HeaderText="货品编码" DataField="ProductCode">
+                                            <HeaderStyle Width="100" />
+                                            <ItemStyle HorizontalAlign="Left" Width="100" />
+                                        </telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品名称" DataField="ProductName">
                                             <HeaderStyle Width="15%" />
                                             <ItemStyle HorizontalAlign="Left" Width="15%" />
                                         </telerik:GridBoundColumn>
-                                        <telerik:GridBoundColumn UniqueName="ImportEndDate" HeaderText="导入结束时间" DataField="ImportEndDate" DataFormatString="{0:yyyy/MM/dd HH:mm:ss}">
-                                            <HeaderStyle Width="15%" />
-                                            <ItemStyle HorizontalAlign="Left" Width="15%" />
+                                        <telerik:GridBoundColumn UniqueName="Specification" HeaderText="规格" DataField="Specification">
+                                            <HeaderStyle Width="100" />
+                                            <ItemStyle HorizontalAlign="Left" Width="100" />
                                         </telerik:GridBoundColumn>
-                                        <telerik:GridBoundColumn UniqueName="ImportStatus" HeaderText="状态" DataField="ImportStatus">
-                                            <ItemStyle HorizontalAlign="Left" />
+                                        <telerik:GridBoundColumn UniqueName="BalanceQty" HeaderText="库存数量" DataField="BalanceQty">
+                                            <HeaderStyle Width="100" />
+                                            <ItemStyle HorizontalAlign="Left" Width="100" />
                                         </telerik:GridBoundColumn>
-                                        <telerik:GridTemplateColumn UniqueName="View" HeaderText="查看">
-                                            <HeaderStyle HorizontalAlign="Center" Width="60" />
-                                            <ItemStyle HorizontalAlign="Center" Width="60" />
-                                            <ItemTemplate>
-                                                <a href="javascript:void(0);" onclick="redirectToMaintenancePage(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">查看</a>
-                                            </ItemTemplate>
-                                        </telerik:GridTemplateColumn>
                                     </Columns>
                                     <CommandItemTemplate>
                                         <table class="width100-percent">
                                             <tr>
-                                                <td>
-                                                    <asp:Panel ID="plAddCommand" runat="server" CssClass="width120 float-left">
-                                                        <input type="button" class="rgAdd" onclick="openUploadFileWindow(-1); return false;" />
-                                                        <a href="javascript:void(0)" onclick="openUploadFileWindow(-1); return false;">新增导入</a>
-                                                    </asp:Panel>
-                                                </td>
+                                                <td></td>
                                                 <td class="right-td rightpadding10">
                                                     <input type="button" class="rgRefresh" onclick="refreshGrid(); return false;" />
                                                     <a href="javascript:void(0);" onclick="refreshGrid(); return false;">刷新</a>
@@ -186,21 +169,11 @@
             gridOfRefresh.get_masterTableView().rebind();
         }
 
-        function redirectToMaintenancePage(id) {
+        function redirectToImportPage() {
             $.showLoading();
-            window.location.href = "ImportDCFlowDataDetails.aspx?EntityID=" + id;
-        }
-
-        function openUploadFileWindow(id) {
-            $.showLoading();
-
-            var targetUrl = $.getRootPath() + "Views/Imports/Editors/UploadDCFlowDataFile.aspx?EntityID=" + id
-                + "&GridClientID=" + "<%= rgEntities.ClientID %>";
-
-            $.openRadWindow(targetUrl, "winUploadFile", true, 800, 300);
+            window.location.href = "ImportDCInventoryData.aspx";
         }
 
     </script>
 </asp:Content>
-
 

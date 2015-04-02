@@ -2612,15 +2612,19 @@
     <Content Include="Views\Imports\ClientFlowDataManagement.aspx" />
     <Content Include="Views\Imports\DCFlowDataManagement.aspx" />
     <Content Include="Views\Imports\DCFlowDataMaintenance.aspx" />
+    <Content Include="Views\Imports\DCInventoryDataManagement.aspx" />
     <Content Include="Views\Imports\Editors\CorrectDCFlowData.aspx" />
     <Content Include="Views\Imports\Editors\ImportDCHospitalFlowData.aspx" />
     <Content Include="Views\Imports\Editors\UploadClientFlowDataFile.aspx" />
+    <Content Include="Views\Imports\Editors\UploadDCInventoryDataFile.aspx" />
     <Content Include="Views\Imports\Editors\ViewOverwrittenDCFlowData.aspx" />
     <Content Include="Views\Imports\Editors\UploadDCFlowDataFile.aspx" />
     <Content Include="Views\Imports\ImportClientFlowData.aspx" />
     <Content Include="Views\Imports\ImportClientFlowDataDetails.aspx" />
     <Content Include="Views\Imports\ImportDCFlowData.aspx" />
     <Content Include="Views\Imports\ImportDCFlowDataDetails.aspx" />
+    <Content Include="Views\Imports\ImportDCInventoryData.aspx" />
+    <Content Include="Views\Imports\ImportDCInventoryDataDetails.aspx" />
     <Content Include="Views\Procures\Editors\ChooseProcureOrderProducts.aspx" />
     <Content Include="Views\Procures\Editors\ChooseStockInForTransportFee.aspx" />
     <Content Include="Views\Procures\Editors\ChooseStockOutForTransportFee.aspx" />
@@ -2675,6 +2679,7 @@
     <Content Include="Content\Templates\XXXX配送公司医院流向数据%28XXXX年XX月%29.xlsx" />
     <Content Include="Content\Templates\XXXX配送公司流向数据%28XXXX年XX月%29.xlsx" />
     <Content Include="Content\Templates\XXXX客户流向数据%28XXXX年XX月%29.xlsx" />
+    <Content Include="Content\Templates\XXXX配送公司库存数据%28XXXX年XX月%29.xlsx" />
     <None Include="Scripts\jquery-1.11.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\jquery-1.11.1.min.js" />
@@ -3143,6 +3148,13 @@
     <Compile Include="Views\Imports\DCFlowDataMaintenance.aspx.designer.cs">
       <DependentUpon>DCFlowDataMaintenance.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Imports\DCInventoryDataManagement.aspx.cs">
+      <DependentUpon>DCInventoryDataManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\DCInventoryDataManagement.aspx.designer.cs">
+      <DependentUpon>DCInventoryDataManagement.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Imports\Editors\CorrectDCFlowData.aspx.cs">
       <DependentUpon>CorrectDCFlowData.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3163,6 +3175,13 @@
     </Compile>
     <Compile Include="Views\Imports\Editors\UploadClientFlowDataFile.aspx.designer.cs">
       <DependentUpon>UploadClientFlowDataFile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Imports\Editors\UploadDCInventoryDataFile.aspx.cs">
+      <DependentUpon>UploadDCInventoryDataFile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\Editors\UploadDCInventoryDataFile.aspx.designer.cs">
+      <DependentUpon>UploadDCInventoryDataFile.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Imports\Editors\ViewOverwrittenDCFlowData.aspx.cs">
       <DependentUpon>ViewOverwrittenDCFlowData.aspx</DependentUpon>
@@ -3205,6 +3224,20 @@
     </Compile>
     <Compile Include="Views\Imports\ImportDCFlowDataDetails.aspx.designer.cs">
       <DependentUpon>ImportDCFlowDataDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Imports\ImportDCInventoryData.aspx.cs">
+      <DependentUpon>ImportDCInventoryData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\ImportDCInventoryData.aspx.designer.cs">
+      <DependentUpon>ImportDCInventoryData.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Imports\ImportDCInventoryDataDetails.aspx.cs">
+      <DependentUpon>ImportDCInventoryDataDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\ImportDCInventoryDataDetails.aspx.designer.cs">
+      <DependentUpon>ImportDCInventoryDataDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Procures\Editors\ChooseProcureOrderProducts.aspx.cs">
       <DependentUpon>ChooseProcureOrderProducts.aspx</DependentUpon>

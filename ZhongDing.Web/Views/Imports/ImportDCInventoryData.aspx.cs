@@ -9,13 +9,13 @@ using ZhongDing.Business.IRepositories;
 using ZhongDing.Business.Repositories;
 using ZhongDing.Common;
 using ZhongDing.Common.Enums;
-using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
 
 namespace ZhongDing.Web.Views.Imports
 {
-    public partial class ImportDCFlowData : BasePage
+    public partial class ImportDCInventoryData : BasePage
     {
+
         #region Members
 
         private IDCImportFileLogRepository _PageDCImportFileLogRepository;
@@ -47,7 +47,7 @@ namespace ZhongDing.Web.Views.Imports
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.Master.MenuItemID = (int)EMenuItem.DCFlowData;
+            this.Master.MenuItemID = (int)EMenuItem.DCInventoryData;
 
             if (!IsPostBack)
             {
@@ -73,7 +73,7 @@ namespace ZhongDing.Web.Views.Imports
         {
             var uiSearchObj = new UISearchDCImportFileLog()
             {
-                ImportDataTypeID = (int)EImportDataType.DCFlowData,
+                ImportDataTypeID = (int)EImportDataType.DCInventoryData,
                 BeginDate = rdpBeginDate.SelectedDate,
                 EndDate = rdpEndDate.SelectedDate
             };

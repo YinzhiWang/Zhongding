@@ -9,24 +9,23 @@ using ZhongDing.Business.IRepositories;
 using ZhongDing.Business.Repositories;
 using ZhongDing.Common;
 using ZhongDing.Common.Enums;
-using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
 
 namespace ZhongDing.Web.Views.Imports
 {
-    public partial class ImportDCFlowData : BasePage
+    public partial class DCInventoryDataManagement : BasePage
     {
         #region Members
 
-        private IDCImportFileLogRepository _PageDCImportFileLogRepository;
-        private IDCImportFileLogRepository PageDCImportFileLogRepository
+        private IDCInventoryDataRepository _PageDCInventoryDataRepository;
+        private IDCInventoryDataRepository PageDCInventoryDataRepository
         {
             get
             {
-                if (_PageDCImportFileLogRepository == null)
-                    _PageDCImportFileLogRepository = new DCImportFileLogRepository();
+                if (_PageDCInventoryDataRepository == null)
+                    _PageDCInventoryDataRepository = new DCInventoryDataRepository();
 
-                return _PageDCImportFileLogRepository;
+                return _PageDCInventoryDataRepository;
             }
         }
 
@@ -42,16 +41,30 @@ namespace ZhongDing.Web.Views.Imports
             }
         }
 
-        #endregion
+        private IProductRepository _PageProductRepository;
+        private IProductRepository PageProductRepository
+        {
+            get
+            {
+                if (_PageProductRepository == null)
+                    _PageProductRepository = new ProductRepository();
 
+                return _PageProductRepository;
+            }
+        }
+
+
+        #endregion
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.Master.MenuItemID = (int)EMenuItem.DCFlowData;
+            this.Master.MenuItemID = (int)EMenuItem.DCInventoryData;
 
             if (!IsPostBack)
             {
                 BindDistributionCompanies();
+
+                BindProducts();
             }
         }
 
@@ -69,20 +82,26 @@ namespace ZhongDing.Web.Views.Imports
             rcbxDistributionCompany.Items.Insert(0, new RadComboBoxItem("", ""));
         }
 
+        private void BindProducts()
+        {
+            var products = PageProductRepository.GetDropdownItems();
+
+            rcbxProduct.DataSource = products;
+            rcbxProduct.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+            rcbxProduct.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+            rcbxProduct.DataBind();
+
+            rcbxProduct.Items.Insert(0, new RadComboBoxItem("", ""));
+        }
+
         private void BindEntities(bool isNeedRebind)
         {
-            var uiSearchObj = new UISearchDCImportFileLog()
-            {
-                ImportDataTypeID = (int)EImportDataType.DCFlowData,
-                BeginDate = rdpBeginDate.SelectedDate,
-                EndDate = rdpEndDate.SelectedDate
-            };
+            var uiSearchObj = new UISearchDCInventoryData();
 
-            if (rmypSettlementDate.SelectedDate.HasValue)
-            {
-                var tempDate = rmypSettlementDate.SelectedDate.Value;
-                uiSearchObj.SettlementDate = new DateTime(tempDate.Year, tempDate.Month, 1);
-            }
+            if (rdpBeginDate.SelectedDate.HasValue)
+                uiSearchObj.BeginDate = new DateTime(rdpBeginDate.SelectedDate.Value.Year, rdpBeginDate.SelectedDate.Value.Month, 1);
+            if (rdpEndDate.SelectedDate.HasValue)
+                uiSearchObj.EndDate = new DateTime(rdpEndDate.SelectedDate.Value.Year, rdpEndDate.SelectedDate.Value.Month, 1);
 
             if (!string.IsNullOrEmpty(rcbxDistributionCompany.SelectedValue))
             {
@@ -91,9 +110,16 @@ namespace ZhongDing.Web.Views.Imports
                     uiSearchObj.DistributionCompanyID = distributionCompanyID;
             }
 
+            if (!string.IsNullOrEmpty(rcbxProduct.SelectedValue))
+            {
+                int productID;
+                if (int.TryParse(rcbxProduct.SelectedValue, out productID))
+                    uiSearchObj.ProductID = productID;
+            }
+
             int totalRecords;
 
-            var entities = PageDCImportFileLogRepository.GetUIList(uiSearchObj, rgEntities.CurrentPageIndex, rgEntities.PageSize, out totalRecords);
+            var entities = PageDCInventoryDataRepository.GetUIList(uiSearchObj, rgEntities.CurrentPageIndex, rgEntities.PageSize, out totalRecords);
 
             rgEntities.VirtualItemCount = totalRecords;
 
@@ -117,14 +143,14 @@ namespace ZhongDing.Web.Views.Imports
 
         protected void btnReset_Click(object sender, EventArgs e)
         {
-            rmypSettlementDate.Clear();
+            rcbxDistributionCompany.ClearSelection();
+            rcbxProduct.ClearSelection();
 
             rdpBeginDate.Clear();
             rdpEndDate.Clear();
 
-            rcbxDistributionCompany.ClearSelection();
-
             BindEntities(true);
         }
+
     }
 }

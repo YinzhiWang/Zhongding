@@ -15,8 +15,9 @@ using ZhongDing.Web.Extensions;
 
 namespace ZhongDing.Web.Views.Imports.Editors
 {
-    public partial class UploadDCFlowDataFile : BasePage
+    public partial class UploadDCInventoryDataFile : BasePage
     {
+
         #region Members
         private IDCImportFileLogRepository _PageDCImportFileLogRepository;
         private IDCImportFileLogRepository PageDCImportFileLogRepository
@@ -141,8 +142,8 @@ namespace ZhongDing.Web.Views.Imports.Editors
             ZDAsyncUploadConfiguration config =
                 radUploadFile.CreateDefaultUploadConfiguration<ZDAsyncUploadConfiguration>();
 
-            config.ImportDataTypeID = (int)EImportDataType.DCFlowData;
-            config.UploadFilePath = WebConfig.UploadFilePathDCFlowData;
+            config.ImportDataTypeID = (int)EImportDataType.DCInventoryData;
+            config.UploadFilePath = WebConfig.UploadFilePathDCInventoryData;
 
             // The upload configuration will be available in the handler
             radUploadFile.UploadConfiguration = config;
@@ -170,7 +171,7 @@ namespace ZhongDing.Web.Views.Imports.Editors
                 var tempImportFileLogCount = PageDCImportFileLogRepository
                     .GetList(x => x.IsDeleted == false && x.ImportFileLogID != this.CurrentEntityID
                         && x.DistributionCompanyID == distributionCompanyID
-                        && x.ImportFileLog.ImportDataTypeID == (int)EImportDataType.DCFlowData
+                        && x.ImportFileLog.ImportDataTypeID == (int)EImportDataType.DCInventoryData
                         && x.SettlementDate == settlementDate).Count();
 
                 if (tempImportFileLogCount > 0)
@@ -193,7 +194,7 @@ namespace ZhongDing.Web.Views.Imports.Editors
 
                 var importFileLog = new ImportFileLog()
                 {
-                    ImportDataTypeID = (int)EImportDataType.DCFlowData,
+                    ImportDataTypeID = (int)EImportDataType.DCInventoryData,
                     ImportStatusID = (int)EImportStatus.ToBeImport
                 };
 

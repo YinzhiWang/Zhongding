@@ -1,5 +1,4 @@
-﻿<%@ Page Title="配送公司流向数据导入" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ImportDCFlowData.aspx.cs" Inherits="ZhongDing.Web.Views.Imports.ImportDCFlowData" %>
-
+﻿<%@ Page Title="配送公司库存数据导入" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ImportDCInventoryData.aspx.cs" Inherits="ZhongDing.Web.Views.Imports.ImportDCInventoryData" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 
@@ -34,7 +33,7 @@
     <div class="container">
         <div class="mws-panel grid_8">
             <div class="mws-panel-header">
-                <span class="mws-i-24 i-table-1">配送公司流向数据导入</span>
+                <span class="mws-i-24 i-table-1">配送公司库存数据导入</span>
             </div>
             <div class="mws-panel-body">
                 <div class="mws-form">
@@ -94,9 +93,9 @@
                                     &nbsp;&nbsp;
                                     <asp:Button ID="btnReset" runat="server" Text="重置" CssClass="mws-button orange" OnClick="btnReset_Click" />
                                     &nbsp;&nbsp;
-                                    <asp:Button ID="btnCancel" runat="server" Text="返回" UseSubmitBehavior="false" CssClass="mws-button green" OnClientClick="redirectToPage('Views/Imports/DCFlowDataManagement.aspx');return false;" />
+                                    <asp:Button ID="btnCancel" runat="server" Text="返回" UseSubmitBehavior="false" CssClass="mws-button green" OnClientClick="redirectToPage('Views/Imports/DCInventoryDataManagement.aspx');return false;" />
                                     &nbsp;&nbsp;
-                                    <asp:HyperLink ID="hlkModelExcel" runat="server" NavigateUrl="~/Content/Templates/XXXX配送公司流向数据(XXXX年XX月).xlsx">Excel模板下载</asp:HyperLink>
+                                    <asp:HyperLink ID="hlkModelExcel" runat="server" NavigateUrl="~/Content/Templates/XXXX配送公司库存数据(XXXX年XX月).xlsx">Excel模板下载</asp:HyperLink>
                                 </div>
                             </div>
                         </div>
@@ -188,13 +187,13 @@
 
         function redirectToMaintenancePage(id) {
             $.showLoading();
-            window.location.href = "ImportDCFlowDataDetails.aspx?EntityID=" + id;
+            window.location.href = "ImportDCInventoryDataDetails.aspx?EntityID=" + id;
         }
 
         function openUploadFileWindow(id) {
             $.showLoading();
 
-            var targetUrl = $.getRootPath() + "Views/Imports/Editors/UploadDCFlowDataFile.aspx?EntityID=" + id
+            var targetUrl = $.getRootPath() + "Views/Imports/Editors/UploadDCInventoryDataFile.aspx?EntityID=" + id
                 + "&GridClientID=" + "<%= rgEntities.ClientID %>";
 
             $.openRadWindow(targetUrl, "winUploadFile", true, 800, 300);
