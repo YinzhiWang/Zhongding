@@ -27,6 +27,7 @@ namespace ZhongDing.Common
         private static readonly string CONFIGKEY_UPLOADFILEPATH_SUPPLIER_CONTRACT = "UploadFilePath.SupplierContract";
         private static readonly string CONFIGKEY_UPLOADFILEPATH_PRODUCT = "UploadFilePath.Product";
         private static readonly string CONFIGKEY_UPLOADFILEPATH_DCFLOWDATA = "UploadFilePath.DCFlowData";
+        private static readonly string CONFIGKEY_UPLOADFILEPATH_DCINVENTORYDATA = "UploadFilePath.DCInventoryData";
         private static readonly string CONFIGKEY_UPLOADFILEPATH_CLIENTFLOWDATA = "UploadFilePath.ClientFlowData";
 
 
@@ -209,6 +210,17 @@ namespace ZhongDing.Common
             get
             {
                 return ConfigurationManager.AppSettings[CONFIGKEY_UPLOADFILEPATH_DCFLOWDATA];
+            }
+        }
+
+        /// <summary>
+        /// 配送公司库存数据上传路径
+        /// </summary>
+        public static string UploadFilePathDCInventoryData
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[CONFIGKEY_UPLOADFILEPATH_DCINVENTORYDATA];
             }
         }
 

@@ -390,7 +390,6 @@
     <Build Include="dbo\Tables\TransportFeeStockIn.sql" />
     <Build Include="dbo\Tables\TransportFeeStockOutSmsReminder.sql" />
     <Build Include="dbo\Tables\HospitalType.sql" />
-    <Build Include="dbo\Tables\DCInventoryFlowData.sql" />
     <Build Include="dbo\Tables\ClientFlowData.sql" />
     <Build Include="dbo\Tables\ClientImportFileLog.sql" />
     <Build Include="dbo\Stored Procedures\GetProcureOrderReport.sql" />

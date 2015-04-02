@@ -8,6 +8,9 @@
     [LastModifiedOn]        DATETIME NULL,
     [LastModifiedBy]        INT      NULL,
     CONSTRAINT [PK_DCImportFileLog] PRIMARY KEY CLUSTERED ([ImportFileLogID] ASC),
+    CONSTRAINT [FK_DCImportFileLog_DistributionCompany] FOREIGN KEY ([DistributionCompanyID]) REFERENCES [dbo].[DistributionCompany] ([ID]),
     CONSTRAINT [FK_DCImportFileLog_ImportFileLog] FOREIGN KEY ([ImportFileLogID]) REFERENCES [dbo].[ImportFileLog] ([ID])
 );
+
+
 

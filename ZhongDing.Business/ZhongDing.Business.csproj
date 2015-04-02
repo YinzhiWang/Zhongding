@@ -55,6 +55,7 @@
     <Compile Include="Extensions\DynamicLinq.cs" />
     <Compile Include="IRepositories\IClientFlowDataRepository.cs" />
     <Compile Include="IRepositories\IClientImportFileLogRepository.cs" />
+    <Compile Include="IRepositories\IDCInventoryDataRepository.cs" />
     <Compile Include="IRepositories\ITransportFeeStockOutRepository.cs" />
     <Compile Include="IRepositories\IAccountTypeRepository.cs" />
     <Compile Include="IRepositories\IApplicationNoteRepository.cs" />
@@ -173,6 +174,7 @@
     <Compile Include="Repositories\DCFlowDataDetailRepository.cs" />
     <Compile Include="Repositories\DCFlowDataRepository.cs" />
     <Compile Include="Repositories\DCImportFileLogRepository.cs" />
+    <Compile Include="Repositories\DCInventoryDataRepository.cs" />
     <Compile Include="Repositories\DeptProductRecordRepository.cs" />
     <Compile Include="Repositories\DeptProductSalesBonusRepository.cs" />
     <Compile Include="Repositories\DeptProductSalesPlanRepository.cs" />

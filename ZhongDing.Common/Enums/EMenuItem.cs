@@ -201,6 +201,11 @@ namespace ZhongDing.Common.Enums
         DCFlowData,
 
         /// <summary>
+        /// 配送公司库存
+        /// </summary>
+        DCInventoryData,
+
+        /// <summary>
         /// 采购订单报表
         /// </summary>
         ProcureOrderReportManage = 100,
