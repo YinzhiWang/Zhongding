@@ -163,6 +163,9 @@
                                     </li>
                                     <li data-level="2" data-menuitemid="103">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/StockOutDetailReportManagement.aspx');">出库明细表</a></li>
+                                    <li data-level="2" data-menuitemid="104">
+                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/StockInDetailReportManagement.aspx');">入库明细表</a></li>
+
 
                                 </ul>
                             </li>

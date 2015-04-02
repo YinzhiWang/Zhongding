@@ -27,6 +27,7 @@ AS
         SELECT  *
         FROM    ( SELECT    ROW_NUMBER() OVER ( ORDER BY dbo.ApplicationPayment.ID ) AS rowId ,
                             dbo.ApplicationPayment.PayDate ,
+							dbo.ProcureOrderApplication.ID AS ProcureOrderApplicationID,
                             dbo.ProcureOrderApplication.OrderCode ,
                             dbo.ApplicationPayment.Amount ,
                             dbo.ApplicationPayment.FromAccount ,

@@ -10,6 +10,7 @@ namespace ZhongDing.Domain.UIObjects
     {
         public int ID { get; set; }
         public DateTime? PayDate { get; set; }
+        public int ProcureOrderApplicationID { get; set; }
         public string OrderCode { get; set; }
         public decimal Amount { get; set; }
         public string FromAccount { get; set; }

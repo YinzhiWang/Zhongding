@@ -34,7 +34,7 @@
         <div class="mws-panel grid_8">
             <div class="mws-panel-header">
 
-                <span class="mws-i-24 i-table-1" id="lblTitle" runat="server">采购订单报表</span>
+                <span class="mws-i-24 i-table-1" id="lblTitle" runat="server">出库明细报表</span>
             </div>
             <div class="mws-panel-body">
                 <table runat="server" id="tblSearch" class="leftmargin10">
@@ -92,6 +92,11 @@
                     OnItemCreated="rgStockOutDetailReports_ItemCreated" OnColumnCreated="rgStockOutDetailReports_ColumnCreated" OnItemDataBound="rgStockOutDetailReports_ItemDataBound">
                     <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
                         ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
+                         <ColumnGroups>
+                            <telerik:GridColumnGroup Name="StockOutCount" HeaderText="出库数量"  HeaderStyle-Font-Size="Small"
+                                HeaderStyle-HorizontalAlign="Center" />
+                          
+                        </ColumnGroups>
                         <Columns>
                             <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false">
                                 <ItemStyle HorizontalAlign="Left" />
@@ -151,11 +156,11 @@
                             </telerik:GridBoundColumn>
 
                           
-                            <telerik:GridBoundColumn UniqueName="OutQty" HeaderText="出库数量" DataField="OutQty">
+                            <telerik:GridBoundColumn UniqueName="OutQty" HeaderText="出库数量" DataField="OutQty"  ColumnGroupName="StockOutCount">
                                 <ItemStyle HorizontalAlign="Left" Width="100px" />
                                 <HeaderStyle Width="100px" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="NumberOfPackages" HeaderText="件数" DataField="NumberOfPackages">
+                            <telerik:GridBoundColumn UniqueName="NumberOfPackages" HeaderText="件数" DataField="NumberOfPackages"  ColumnGroupName="StockOutCount">
                                 <ItemStyle HorizontalAlign="Left" Width="60px" />
                                 <HeaderStyle Width="60px" />
                             </telerik:GridBoundColumn>

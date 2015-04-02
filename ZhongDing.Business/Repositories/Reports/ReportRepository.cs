@@ -11,6 +11,7 @@ using ZhongDing.Domain.UIObjects;
 using ZhongDing.Common.Extension;
 using System.Data.Entity.Core.Objects;
 using ZhongDing.Domain.UISearchObjects;
+using ZhongDing.Common.Extension;
 
 namespace ZhongDing.Business.Repositories.Reports
 {
@@ -112,6 +113,27 @@ namespace ZhongDing.Business.Repositories.Reports
             parameters.Add(new SqlParameter() { ParameterName = "@productId", Size = 4, Value = uiSearchObj.ProductId.HasValue ? (object)uiSearchObj.ProductId.Value : DBNull.Value });
 
             result = this.DB.Database.SqlQuery<UIProcureOrderReport>(sql, parameters.ToArray()).ToList();
+
+
+            result.ForEach(x =>
+            {
+                x.AlreadyInNumberOfPackages = (decimal)x.AlreadyInQty / (decimal)x.NumberInLargePackage;
+                if (x.ProcureOrderApplicationIsStop)
+                {
+                    x.StopInQty = x.ProcureCount - x.AlreadyInQty;
+                    x.StopInQtyProcurePrice = x.StopInQty * x.ProcurePrice;
+                    x.StopInNumberOfPackages = (decimal)x.StopInQty / (decimal)x.NumberInLargePackage;
+                }
+                else
+                {
+                    x.NotInQty = x.ProcureCount - x.AlreadyInQty;
+                    x.NotInQtyProcurePrice = x.NotInQty * x.ProcurePrice;
+                    x.NotInNumberOfPackages = (decimal)x.NotInQty / (decimal)x.NumberInLargePackage;
+               
+                }
+
+            });
+
             totalRecords = totalRecordSqlParameter.Value.ToInt();
         }
         #endregion
@@ -223,5 +245,41 @@ namespace ZhongDing.Business.Repositories.Reports
             result = this.DB.Database.SqlQuery<UIStockOutDetailReport>(sql, parameters.ToArray()).ToList();
             totalRecords = totalRecordSqlParameter.Value.ToInt();
         }
+
+
+        public IList<UIStockInDetailReport> GetStockInDetailReport(UISearchStockInDetailReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
+        {
+            List<UIStockInDetailReport> result = null;
+            BuildStockInDetailReport(uiSearchObj, pageIndex, pageSize, out totalRecords, out result);
+            return result;
+        }
+
+        public IList<UIStockInDetailReport> GetStockInDetailReport(UISearchStockInDetailReport uiSearchObj)
+        {
+            List<UIStockInDetailReport> result = null;
+            int totalRecords = 0;
+            BuildStockInDetailReport(uiSearchObj, 0, 10000000, out totalRecords, out result);
+            return result;
+        }
+        private void BuildStockInDetailReport(UISearchStockInDetailReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords, out List<UIStockInDetailReport> result)
+        {
+            SqlParameter totalRecordSqlParameter = new SqlParameter() { ParameterName = "@totalRecord", DbType = System.Data.DbType.Int32, Direction = System.Data.ParameterDirection.Output };
+            List<SqlParameter> parameters = new List<SqlParameter>() {
+                new SqlParameter(){ ParameterName="@pageSize",Value=pageSize,Size=4},
+                new SqlParameter(){ ParameterName="@pageIndex", Value=pageIndex,Size=4},
+                totalRecordSqlParameter
+            };
+
+            string sql = "exec GetStockInDetailReport @pageSize,@pageIndex,@beginDate,@endDate,@supplierId,@productId,@batchNumber,@totalRecord out";
+            parameters.Add(new SqlParameter() { ParameterName = "@beginDate", SqlDbType = SqlDbType.DateTime, Size = 256, Value = uiSearchObj.BeginDate.HasValue ? (object)uiSearchObj.BeginDate.Value : DBNull.Value });
+            parameters.Add(new SqlParameter() { ParameterName = "@endDate", SqlDbType = SqlDbType.DateTime, Size = 256, Value = uiSearchObj.EndDate.HasValue ? (object)uiSearchObj.EndDate.Value : DBNull.Value });
+            parameters.Add(new SqlParameter() { ParameterName = "@supplierId", Size = 4, Value = uiSearchObj.SupplierId.HasValue ? (object)uiSearchObj.SupplierId.Value : DBNull.Value });
+            parameters.Add(new SqlParameter() { ParameterName = "@productId", Size = 4, Value = uiSearchObj.ProductId.HasValue ? (object)uiSearchObj.ProductId.Value : DBNull.Value });
+            parameters.Add(new SqlParameter() { ParameterName = "@batchNumber", SqlDbType = SqlDbType.NVarChar, Size = 256, Value = uiSearchObj.BatchNumber.HasValue() ? (object)uiSearchObj.BatchNumber : DBNull.Value });
+
+            result = this.DB.Database.SqlQuery<UIStockInDetailReport>(sql, parameters.ToArray()).ToList();
+            totalRecords = totalRecordSqlParameter.Value.ToInt();
+        }
+
     }
 }

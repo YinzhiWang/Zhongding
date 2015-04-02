@@ -236,7 +236,7 @@ namespace ZhongDing.Web.Views.Reports
             };
 
             var uiClientSaleAppReports = PageReportRepository.GetClientSaleAppReport(uiSearchObj);
-            var excelPath = Server.MapPath("~/App_Data/") + "Excel.xls";
+            var excelPath = Server.MapPath("~/App_Data/") + "TempExcel.xls";
             ExcelHelper.RenderToExcel<UIClientSaleAppReport>(uiClientSaleAppReports,
                 new List<ExcelHeader>() {
                     new ExcelHeader() { Key = "OrderDate", Name = "订单日期" },
@@ -254,7 +254,7 @@ namespace ZhongDing.Web.Views.Reports
                 }, excelPath);
 
             Response.ContentType = "application/x-zip-compressed";
-            Response.AddHeader("Content-Disposition", "attachment;filename=Excel.xls");
+            Response.AddHeader("Content-Disposition", "attachment;filename=" + "销售订单报表".UrlEncode() + ".xls");
             string filename = excelPath;
             Response.TransmitFile(filename);
         }

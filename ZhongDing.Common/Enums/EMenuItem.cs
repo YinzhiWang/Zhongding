@@ -215,7 +215,12 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 出库明细报表
         /// </summary>
-        StockOutDetailReportManage
+        StockOutDetailReportManage,
+        /// <summary>
+        /// 入库明细报表
+        /// </summary>
+        StockInDetailReportManage
+
 
     }
 }

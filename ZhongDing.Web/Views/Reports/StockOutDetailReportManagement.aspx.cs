@@ -248,7 +248,7 @@ namespace ZhongDing.Web.Views.Reports
             };
 
             var uiStockOutDetailReports = PageReportRepository.GetStockOutDetailReport(uiSearchObj);
-            var excelPath = Server.MapPath("~/App_Data/") + "Excel.xls";
+            var excelPath = Server.MapPath("~/App_Data/") + "TempExcel.xls";
             ExcelHelper.RenderToExcel<UIStockOutDetailReport>(uiStockOutDetailReports,
                 new List<ExcelHeader>() {
                     new ExcelHeader() { Key = "OutDate", Name = "出库日期" },
@@ -271,7 +271,7 @@ namespace ZhongDing.Web.Views.Reports
                 }, excelPath);
 
             Response.ContentType = "application/x-zip-compressed";
-            Response.AddHeader("Content-Disposition", "attachment;filename=Excel.xls");
+            Response.AddHeader("Content-Disposition", "attachment;filename=" + "出库明细报表".UrlEncode() + ".xls");
             string filename = excelPath;
             Response.TransmitFile(filename);
         }

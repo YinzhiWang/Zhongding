@@ -186,7 +186,7 @@ namespace ZhongDing.Web.Views.Reports
             };
 
             var uiProcureOrderApplicationPaymentReports = PageReportRepository.GetProcureOrderApplicationPaymentReport(uiSearchObj);
-            var excelPath = Server.MapPath("~/App_Data/") + "Excel.xls";
+            var excelPath = Server.MapPath("~/App_Data/") + "TempExcel.xls";
             ExcelHelper.RenderToExcel<UIProcureOrderApplicationPaymentReport>(uiProcureOrderApplicationPaymentReports,
                 new List<ExcelHeader>() {
                     new ExcelHeader() { Key = "PayDate", Name = "付款日期" },
@@ -198,7 +198,7 @@ namespace ZhongDing.Web.Views.Reports
                 }, excelPath);
 
             Response.ContentType = "application/x-zip-compressed";
-            Response.AddHeader("Content-Disposition", "attachment;filename=Excel.xls");
+            Response.AddHeader("Content-Disposition", "attachment;filename=" + "采购付款明细表".UrlEncode() + ".xls");
             string filename = excelPath;
             Response.TransmitFile(filename);
         }

@@ -21,5 +21,21 @@ namespace ZhongDing.Domain.UIObjects
         public int ProcureCount { get; set; }
         public decimal ProcurePrice { get; set; }
         public decimal TotalAmount { get; set; }
+
+        public int AlreadyInQty { get; set; }
+        public decimal AlreadyInQtyProcurePrice { get; set; }
+        public int NumberInLargePackage { get; set; }
+        public decimal AlreadyInNumberOfPackages { get; set; }
+
+        public int StopInQty { get; set; }
+        public decimal StopInQtyProcurePrice { get; set; }
+        public decimal StopInNumberOfPackages { get; set; }
+
+        public int NotInQty { get; set; }
+        public decimal NotInQtyProcurePrice { get; set; }
+        public decimal NotInNumberOfPackages { get; set; }
+
+        public bool ProcureOrderApplicationIsStop { get; set; }
+
     }
 }

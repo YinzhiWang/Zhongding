@@ -419,6 +419,7 @@
     <Compile Include="UIObjects\UISalesOrderAppDetail.cs" />
     <Compile Include="UIObjects\UIStockIn.cs" />
     <Compile Include="UIObjects\UIStockInDetail.cs" />
+    <Compile Include="UIObjects\UIStockInDetailReport.cs" />
     <Compile Include="UIObjects\UIStockOut.cs" />
     <Compile Include="UIObjects\UIStockOutDetail.cs" />
     <Compile Include="UIObjects\UIStockOutDetailReport.cs" />
@@ -485,6 +486,7 @@
     <Compile Include="UISearchObjects\UISearchSalesOrderAppDetail.cs" />
     <Compile Include="UISearchObjects\UISearchStockIn.cs" />
     <Compile Include="UISearchObjects\UISearchStockInDetail.cs" />
+    <Compile Include="UISearchObjects\UISearchStockInDetailReport.cs" />
     <Compile Include="UISearchObjects\UISearchStockOut.cs" />
     <Compile Include="UISearchObjects\UISearchStockOutDetail.cs" />
     <Compile Include="UISearchObjects\UISearchStockOutDetailReport.cs" />
