@@ -20,7 +20,7 @@ namespace ZhongDing.Domain.Models
             this.DCFlowData = new HashSet<DCFlowData>();
             this.ImportErrorLog = new HashSet<ImportErrorLog>();
             this.ClientFlowData = new HashSet<ClientFlowData>();
-            this.DCInventoryFlowData = new HashSet<DCInventoryFlowData>();
+            this.DCInventoryData = new HashSet<DCInventoryData>();
         }
     
         public int ID { get; set; }
@@ -50,12 +50,12 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual ICollection<DCFlowData> DCFlowData { get; set; }
-        public virtual DCImportFileLog DCImportFileLog { get; set; }
         public virtual ImportDataType ImportDataType { get; set; }
         public virtual ICollection<ImportErrorLog> ImportErrorLog { get; set; }
         public virtual ImportStatus ImportStatus { get; set; }
         public virtual ICollection<ClientFlowData> ClientFlowData { get; set; }
-        public virtual ICollection<DCInventoryFlowData> DCInventoryFlowData { get; set; }
         public virtual ClientImportFileLog ClientImportFileLog { get; set; }
+        public virtual ICollection<DCInventoryData> DCInventoryData { get; set; }
+        public virtual DCImportFileLog DCImportFileLog { get; set; }
     }
 }

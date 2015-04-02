@@ -106,8 +106,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<SupplierRefundApplication> SupplierRefundApplication { get; set; }
         public DbSet<ClientTaskRefundApplication> ClientTaskRefundApplication { get; set; }
         public DbSet<TransportCompany> TransportCompany { get; set; }
-        public DbSet<DCImportFileLog> DCImportFileLog { get; set; }
-        public DbSet<DCInventoryData> DCInventoryData { get; set; }
         public DbSet<ImportDataType> ImportDataType { get; set; }
         public DbSet<ImportStatus> ImportStatus { get; set; }
         public DbSet<ImportErrorLog> ImportErrorLog { get; set; }
@@ -119,9 +117,10 @@ namespace ZhongDing.Domain.Models
         public DbSet<ImportFileLog> ImportFileLog { get; set; }
         public DbSet<CertificateType> CertificateType { get; set; }
         public DbSet<ClientFlowData> ClientFlowData { get; set; }
-        public DbSet<DCInventoryFlowData> DCInventoryFlowData { get; set; }
         public DbSet<HospitalType> HospitalType { get; set; }
         public DbSet<TransportFeeStockOutSmsReminder> TransportFeeStockOutSmsReminder { get; set; }
         public DbSet<ClientImportFileLog> ClientImportFileLog { get; set; }
+        public DbSet<DCInventoryData> DCInventoryData { get; set; }
+        public DbSet<DCImportFileLog> DCImportFileLog { get; set; }
     }
 }

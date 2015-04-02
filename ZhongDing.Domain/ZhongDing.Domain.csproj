@@ -170,9 +170,6 @@
     <Compile Include="Models\DCInventoryData.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\DCInventoryFlowData.cs">
-      <DependentUpon>DbModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Department.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -392,6 +389,7 @@
     <Compile Include="UIObjects\UIDCFlowData.cs" />
     <Compile Include="UIObjects\UIDCFlowDataDetail.cs" />
     <Compile Include="UIObjects\UIDCImportFileLog.cs" />
+    <Compile Include="UIObjects\UIDCInventoryData.cs" />
     <Compile Include="UIObjects\UIDepartment.cs" />
     <Compile Include="UIObjects\UIDeptMarketProduct.cs" />
     <Compile Include="UIObjects\UIDeptProductRecord.cs" />
@@ -463,6 +461,7 @@
     <Compile Include="UISearchObjects\UISearchDCFlowData.cs" />
     <Compile Include="UISearchObjects\UISearchDCFlowDataDetail.cs" />
     <Compile Include="UISearchObjects\UISearchDCImportFileLog.cs" />
+    <Compile Include="UISearchObjects\UISearchDCInventoryData.cs" />
     <Compile Include="UISearchObjects\UISearchDepartment.cs" />
     <Compile Include="UISearchObjects\UISearchDeptMarketProduct.cs" />
     <Compile Include="UISearchObjects\UISearchDeptProductRecord.cs" />

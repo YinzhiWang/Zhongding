@@ -34,6 +34,7 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
+        public virtual DistributionCompany DistributionCompany { get; set; }
         public virtual ImportFileLog ImportFileLog { get; set; }
     }
 }

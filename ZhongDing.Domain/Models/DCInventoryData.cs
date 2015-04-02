@@ -23,8 +23,8 @@ namespace ZhongDing.Domain.Models
         public string ProductCode { get; set; }
         public int ProductSpecificationID { get; set; }
         public string ProductSpecification { get; set; }
-        public string UnitName { get; set; }
-        public Nullable<int> Qty { get; set; }
+        public System.DateTime SettlementDate { get; set; }
+        public Nullable<int> BalanceQty { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
     
@@ -37,5 +37,10 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedOn { get { return false; } }
     	public bool HasColumnLastModifiedBy { get { return false; } }
     
+    
+        public virtual DistributionCompany DistributionCompany { get; set; }
+        public virtual ImportFileLog ImportFileLog { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual ProductSpecification ProductSpecification1 { get; set; }
     }
 }
