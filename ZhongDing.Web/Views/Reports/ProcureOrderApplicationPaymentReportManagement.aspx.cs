@@ -192,8 +192,8 @@ namespace ZhongDing.Web.Views.Reports
                     new ExcelHeader() { Key = "PayDate", Name = "付款日期" },
                     new ExcelHeader(){ Key="OrderCode", Name="订单号"},
                     new ExcelHeader(){ Key="Amount", Name="金额"},
-                    new ExcelHeader(){ Key="FromAccount", Name="支出账号"},
-                    new ExcelHeader(){ Key="ToAccount", Name="收款户名"},
+                    new ExcelHeader(){ Key="FromAccount", Name="支出账号", Width=50},
+                    new ExcelHeader(){ Key="ToAccount", Name="收款户名", Width=50},
                
                 }, excelPath);
 

@@ -205,6 +205,26 @@ namespace ZhongDing.Business.Repositories.Reports
             parameters.Add(new SqlParameter() { ParameterName = "@productId", Size = 4, Value = uiSearchObj.ProductId.HasValue ? (object)uiSearchObj.ProductId.Value : DBNull.Value });
 
             result = this.DB.Database.SqlQuery<UIClientSaleAppReport>(sql, parameters.ToArray()).ToList();
+
+            result.ForEach(x =>
+            {
+                x.AlreadyOutNumberOfPackages = (decimal)x.AlreadyOutQty / (decimal)x.NumberInLargePackage;
+                if (x.SalesOrderApplicationIsStop)
+                {
+                    x.StopOutQty = x.Count - x.AlreadyOutQty;
+                    x.StopOutQtySalesPricePrice = x.StopOutQty * x.SalesPrice;
+                    x.StopOutNumberOfPackages = (decimal)x.StopOutQty / (decimal)x.NumberInLargePackage;
+                }
+                else
+                {
+                    x.NotOutQty = x.Count - x.AlreadyOutQty;
+                    x.NotOutQtySalesPricePrice = x.NotOutQty * x.SalesPrice;
+                    x.NotOutNumberOfPackages = (decimal)x.NotOutQty / (decimal)x.NumberInLargePackage;
+
+                }
+
+            });
+
             totalRecords = totalRecordSqlParameter.Value.ToInt();
         }
         #endregion

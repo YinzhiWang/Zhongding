@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -83,7 +85,56 @@ namespace ZhongDing.Common.Extension
             return result;
         }
 
-     
+        public static string GetName<T>(this object obj, Expression<Func<T>> propertyExpression)
+        {
+            if (propertyExpression != null)
+            {
+                MemberExpression body = propertyExpression.Body as MemberExpression;
+                if (body != null)
+                {
+                    PropertyInfo property = body.Member as PropertyInfo;
+                    if (property != null)
+                    {
+                        return property.Name;
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Argument is not a property", "propertyExpression");
+                    }
+                }
+                else
+                {
+                    throw new ArgumentException("Invalid argument", "propertyExpression");
+                }
+            }
+            else
+            {
+                throw new ArgumentNullException("propertyExpression");
+            }
+        }
+
+        // We need to add this overload to cover scenarios 
+        // when a method has a void return type.
+        public static string GetName(this object obj, Expression<Action> e)
+        {
+            string typeName = obj.GetType().ToString();
+            string memberName = string.Empty;
+
+            memberName = obj.GetName(e.Body);
+            return string.Format("{0}-{1}", typeName, memberName);
+        }
+
+        private static string GetName(this object obj, Expression body)
+        {
+            var member = body as MemberExpression;
+            if (member != null) return member.Member.ToString();
+
+            var method = body as MethodCallExpression;
+            if (method != null) return method.Method.ToString();
+
+            throw new ArgumentException(
+                "'" + body + "': not a member access");
+        }
 
     }
 }

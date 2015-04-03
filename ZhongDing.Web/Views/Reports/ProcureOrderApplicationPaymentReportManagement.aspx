@@ -85,11 +85,7 @@
                                 <ItemStyle HorizontalAlign="Left" Width="100px" />
                                 <HeaderStyle Width="100px" />
                             </telerik:GridBoundColumn>
-
-                            <telerik:GridBoundColumn UniqueName="OrderCode" HeaderText="订单号" DataField="OrderCode">
-                                <ItemStyle HorizontalAlign="Left" Width="160px" />
-                                <HeaderStyle Width="160px" />
-                            </telerik:GridBoundColumn>
+ 
                             <telerik:GridTemplateColumn UniqueName="OrderCode" HeaderText="订单号" DataField="OrderCode">
                                 <ItemStyle HorizontalAlign="Left" Width="160px" />
                                 <HeaderStyle Width="160px" />

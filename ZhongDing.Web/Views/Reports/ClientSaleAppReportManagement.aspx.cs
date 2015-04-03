@@ -13,6 +13,7 @@ using ZhongDing.Common.Enums;
 using ZhongDing.Domain.UISearchObjects;
 using ZhongDing.Common.Extension;
 using ZhongDing.Domain.UIObjects;
+using ZhongDing.Common.NPOIHelper.Excel;
 
 namespace ZhongDing.Web.Views.Reports
 {
@@ -237,22 +238,125 @@ namespace ZhongDing.Web.Views.Reports
 
             var uiClientSaleAppReports = PageReportRepository.GetClientSaleAppReport(uiSearchObj);
             var excelPath = Server.MapPath("~/App_Data/") + "TempExcel.xls";
-            ExcelHelper.RenderToExcel<UIClientSaleAppReport>(uiClientSaleAppReports,
-                new List<ExcelHeader>() {
-                    new ExcelHeader() { Key = "OrderDate", Name = "订单日期" },
-                    new ExcelHeader(){ Key="OrderCode", Name="订单号"},
-                    new ExcelHeader(){ Key="ClientName", Name="客户"},
-                    new ExcelHeader(){ Key="ClientCompanyName", Name="商业单位"},
-                    new ExcelHeader(){ Key="CategoryName", Name="货品类别"},
-                    new ExcelHeader(){ Key="ProductCode", Name="货品编号"},
-                    new ExcelHeader(){ Key="ProductName", Name="货品名称"},
-                    new ExcelHeader(){ Key="Specification", Name="规格"},
-                    new ExcelHeader(){ Key="UnitName", Name="基本单位"},
-                    new ExcelHeader(){ Key="SalesPrice", Name="数量"},
-                    new ExcelHeader(){ Key="Count", Name="销售单价"},
-                    new ExcelHeader(){ Key="TotalSalesAmount", Name="金额"},
-                }, excelPath);
+            //ExcelHelper.RenderToExcel<UIClientSaleAppReport>(uiClientSaleAppReports,
+            //    new List<ExcelHeader>() {
+            //        new ExcelHeader() { Key = "OrderDate", Name = "订单日期" },
+            //        new ExcelHeader(){ Key="OrderCode", Name="订单号"},
+            //        new ExcelHeader(){ Key="ClientName", Name="客户"},
+            //        new ExcelHeader(){ Key="ClientCompanyName", Name="商业单位"},
+            //        new ExcelHeader(){ Key="CategoryName", Name="货品类别"},
+            //        new ExcelHeader(){ Key="ProductCode", Name="货品编号"},
+            //        new ExcelHeader(){ Key="ProductName", Name="货品名称"},
+            //        new ExcelHeader(){ Key="Specification", Name="规格"},
+            //        new ExcelHeader(){ Key="UnitName", Name="基本单位"},
+            //        new ExcelHeader(){ Key="SalesPrice", Name="数量"},
+            //        new ExcelHeader(){ Key="Count", Name="销售单价"},
+            //        new ExcelHeader(){ Key="TotalSalesAmount", Name="金额"},
+            //    }, excelPath);
+            NPOIHelper nPOIHelper = new Common.NPOIHelper.Excel.NPOIHelper();
+            UIClientSaleAppReport model = new UIClientSaleAppReport();
 
+            List<ExcelHeader> excelHeaders = new List<ExcelHeader>() { 
+                new ExcelHeader(model.GetName(() => model.OrderDate),"订单日期"), 
+                new ExcelHeader(model.GetName(() => model.OrderCode),"订单号"),
+                new ExcelHeader(model.GetName(() => model.ClientName),"客户"),
+                new ExcelHeader(model.GetName(() => model.ClientCompanyName),"商业单位"),
+                new ExcelHeader(model.GetName(() => model.CategoryName),"货品类别"),
+                new ExcelHeader(model.GetName(() => model.ProductCode),"货品编号"),
+                new ExcelHeader(model.GetName(() => model.ProductName),"货品名称"),
+                new ExcelHeader(model.GetName(() => model.Specification),"规格"),
+                new ExcelHeader(model.GetName(() => model.UnitName),"基本单位"),
+                new ExcelHeader(model.GetName(() => model.SalesPrice),"销售单价"),
+                new ExcelHeader(model.GetName(() => model.Count),"数量"),
+                new ExcelHeader(model.GetName(() => model.TotalSalesAmount),"金额"),
+
+                new ExcelHeader(model.GetName(() => model.AlreadyOutQty),"基本数量"),
+                new ExcelHeader(model.GetName(() => model.AlreadyOutNumberOfPackages),"件数"),
+                new ExcelHeader(model.GetName(() => model.AlreadyOutQtySalesPricePrice),"金额"),
+                new ExcelHeader(model.GetName(() => model.StopOutQty),"基本数量"),
+                new ExcelHeader(model.GetName(() => model.StopOutNumberOfPackages),"件数"),
+                new ExcelHeader(model.GetName(() => model.StopOutQtySalesPricePrice),"金额"),
+                new ExcelHeader(model.GetName(() => model.NotOutQty),"基本数量"),
+                new ExcelHeader(model.GetName(() => model.NotOutNumberOfPackages),"件数"),
+                new ExcelHeader(model.GetName(() => model.NotOutQtySalesPricePrice),"金额")
+            };
+            Queue<ExcelHeader> excelHeadersQueue = new Queue<ExcelHeader>(excelHeaders);
+            Root excelRoot = new Root()
+            {
+                root = new HeadInfo()
+                {
+                    rowspan = 2,
+                    sheetname = "销售订单报表",
+                    defaultheight = null,
+                    defaultwidth = 20,
+                    head = new List<AttributeList>(){
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,0,0"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,1,1"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,2,2"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,3,3"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,4,4"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,5,5"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,6,6"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,7,7"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,8,8"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,9,9"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,10,10"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,11,11"},
+
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="1,1,12,12"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="1,1,13,13"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="1,1,14,14"},
+
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="1,1,15,15"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="1,1,16,16"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="1,1,17,17"},
+
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="1,1,18,18"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="1,1,19,19"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="1,1,20,20"},
+
+                    new AttributeList(){ title="已执行数量", cellregion="0,0,12,14"},
+                    new AttributeList(){ title="终止数量", cellregion="0,0,15,17"},
+                    new AttributeList(){ title="未执行数量", cellregion="0,0,18,20"},
+
+                    }
+                }
+            };
+
+            List<Func<UIClientSaleAppReport, string>> fieldFuncs = new List<Func<UIClientSaleAppReport, string>>();
+
+            fieldFuncs.Add(x => x.OrderDate.ToString("yyyy/MM/dd"));
+            fieldFuncs.Add(x => x.OrderCode);
+            fieldFuncs.Add(x => x.ClientName);
+            fieldFuncs.Add(x => x.ClientCompanyName);
+            fieldFuncs.Add(x => x.CategoryName);
+            fieldFuncs.Add(x => x.ProductCode);
+            fieldFuncs.Add(x => x.ProductName);
+            fieldFuncs.Add(x => x.Specification);
+            fieldFuncs.Add(x => x.UnitName);
+            fieldFuncs.Add(x => x.SalesPrice.ToString());
+            fieldFuncs.Add(x => x.Count.ToString());
+            fieldFuncs.Add(x => x.TotalSalesAmount.ToString());
+
+            fieldFuncs.Add(x => x.AlreadyOutQty.ToString());
+            fieldFuncs.Add(x => x.AlreadyOutNumberOfPackages.ToString());
+            fieldFuncs.Add(x => x.AlreadyOutQtySalesPricePrice.ToString());
+
+            fieldFuncs.Add(x => x.StopOutQty.ToString());
+            fieldFuncs.Add(x => x.StopOutNumberOfPackages.ToString());
+            fieldFuncs.Add(x => x.StopOutQtySalesPricePrice.ToString());
+
+            fieldFuncs.Add(x => x.NotOutQty.ToString());
+            fieldFuncs.Add(x => x.NotOutNumberOfPackages.ToString());
+            fieldFuncs.Add(x => x.NotOutQtySalesPricePrice.ToString());
+
+
+            nPOIHelper.ExportToExcel<UIClientSaleAppReport>(
+                (List<UIClientSaleAppReport>)uiClientSaleAppReports,
+                excelPath,
+                excelHeaders.Select(x => x.Key).ToArray(),
+                excelRoot,
+                fieldFuncs.ToArray());
             Response.ContentType = "application/x-zip-compressed";
             Response.AddHeader("Content-Disposition", "attachment;filename=" + "销售订单报表".UrlEncode() + ".xls");
             string filename = excelPath;

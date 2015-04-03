@@ -13,6 +13,7 @@ using ZhongDing.Common.Enums;
 using ZhongDing.Domain.UISearchObjects;
 using ZhongDing.Common.Extension;
 using ZhongDing.Domain.UIObjects;
+using ZhongDing.Common.NPOIHelper.Excel;
 
 namespace ZhongDing.Web.Views.Reports
 {
@@ -201,21 +202,141 @@ namespace ZhongDing.Web.Views.Reports
 
             var uiProcureOrderReports = PageReportRepository.GetProcureOrderReport(uiSearchObj);
             var excelPath = Server.MapPath("~/App_Data/") + "TempExcel.xls";
-            ExcelHelper.RenderToExcel<UIProcureOrderReport>(uiProcureOrderReports,
-                new List<ExcelHeader>() {
-                    new ExcelHeader() { Key = "OrderDate", Name = "订单日期" },
-                    new ExcelHeader(){ Key="OrderCode", Name="订单号"},
-                    new ExcelHeader(){ Key="SupplierName", Name="供应商"},
-                    new ExcelHeader(){ Key="WarehouseName", Name="仓库"},
-                    new ExcelHeader(){ Key="ProductCode", Name="货品编号"},
-                    new ExcelHeader(){ Key="CategoryName", Name="货品类别"},
-                    new ExcelHeader(){ Key="ProductName", Name="货品名称"},
-                    new ExcelHeader(){ Key="Specification", Name="规格"},
-                    new ExcelHeader(){ Key="UnitName", Name="基本单位"},
-                    new ExcelHeader(){ Key="ProcurePrice", Name="采购单价"},
-                    new ExcelHeader(){ Key="ProcureCount", Name="数量"},
-                    new ExcelHeader(){ Key="TotalAmount", Name="金额"},
-                }, excelPath);
+            //ExcelHelper.RenderToExcel<UIProcureOrderReport>(uiProcureOrderReports,
+            //    new List<ExcelHeader>() {
+            //        new ExcelHeader() { Key = "OrderDate", Name = "订单日期" },
+            //        new ExcelHeader(){ Key="OrderCode", Name="订单号"},
+            //        new ExcelHeader(){ Key="SupplierName", Name="供应商"},
+            //        new ExcelHeader(){ Key="WarehouseName", Name="仓库"},
+            //        new ExcelHeader(){ Key="ProductCode", Name="货品编号"},
+            //        new ExcelHeader(){ Key="CategoryName", Name="货品类别"},
+            //        new ExcelHeader(){ Key="ProductName", Name="货品名称"},
+            //        new ExcelHeader(){ Key="Specification", Name="规格"},
+            //        new ExcelHeader(){ Key="UnitName", Name="基本单位"},
+            //        new ExcelHeader(){ Key="ProcurePrice", Name="采购单价"},
+            //        new ExcelHeader(){ Key="ProcureCount", Name="数量"},
+            //        new ExcelHeader(){ Key="TotalAmount", Name="金额"},
+            //        new ExcelHeader(){ Key="AlreadyInQty", Name="基本数量"},
+            //        new ExcelHeader(){ Key="AlreadyInNumberOfPackages", Name="件数"},
+            //        new ExcelHeader(){ Key="AlreadyInQtyProcurePrice", Name="金额"},
+            //        new ExcelHeader(){ Key="StopInQty", Name="基本数量"},
+            //        new ExcelHeader(){ Key="StopInNumberOfPackages", Name="件数"},
+            //        new ExcelHeader(){ Key="StopInQtyProcurePrice", Name="金额"},
+            //        new ExcelHeader(){ Key="NotInQty", Name="基本数量"},
+            //        new ExcelHeader(){ Key="NotInNumberOfPackages", Name="件数"},
+            //        new ExcelHeader(){ Key="NotInQtyProcurePrice", Name="金额"}
+            //    }, excelPath);
+
+
+
+            //"rowspan": 2, 
+            //"sheetname": "按商机类型分类", 
+            //"defaultwidth": 12, 
+            //"defaultheight": 35, 
+            NPOIHelper nPOIHelper = new Common.NPOIHelper.Excel.NPOIHelper();
+            UIProcureOrderReport model = new UIProcureOrderReport();
+
+            List<ExcelHeader> excelHeaders = new List<ExcelHeader>() { 
+                new ExcelHeader(model.GetName(() => model.OrderDate),"订单日期"), 
+                new ExcelHeader(model.GetName(() => model.OrderCode),"订单号"),
+                new ExcelHeader(model.GetName(() => model.SupplierName),"供应商"),
+                new ExcelHeader(model.GetName(() => model.WarehouseName),"仓库"),
+                new ExcelHeader(model.GetName(() => model.ProductCode),"货品编号"),
+                new ExcelHeader(model.GetName(() => model.CategoryName),"货品类别"),
+                new ExcelHeader(model.GetName(() => model.ProductName),"货品名称"),
+                new ExcelHeader(model.GetName(() => model.Specification),"规格"),
+                new ExcelHeader(model.GetName(() => model.UnitName),"基本单位"),
+                new ExcelHeader(model.GetName(() => model.ProcurePrice),"采购单价"),
+                new ExcelHeader(model.GetName(() => model.ProcureCount),"数量"),
+                new ExcelHeader(model.GetName(() => model.TotalAmount),"金额"),
+                new ExcelHeader(model.GetName(() => model.AlreadyInQty),"基本数量"),
+                new ExcelHeader(model.GetName(() => model.AlreadyInNumberOfPackages),"件数"),
+                new ExcelHeader(model.GetName(() => model.AlreadyInQtyProcurePrice),"金额"),
+                new ExcelHeader(model.GetName(() => model.StopInQty),"基本数量"),
+                new ExcelHeader(model.GetName(() => model.StopInNumberOfPackages),"件数"),
+                new ExcelHeader(model.GetName(() => model.StopInQtyProcurePrice),"金额"),
+                new ExcelHeader(model.GetName(() => model.NotInQty),"基本数量"),
+                new ExcelHeader(model.GetName(() => model.NotInNumberOfPackages),"件数"),
+                new ExcelHeader(model.GetName(() => model.NotInQtyProcurePrice),"金额")
+            };
+            Queue<ExcelHeader> excelHeadersQueue = new Queue<ExcelHeader>(excelHeaders);
+            Root excelRoot = new Root()
+            {
+                root = new HeadInfo()
+                {
+                    rowspan = 2,
+                    sheetname = "采购订单报表",
+                    defaultheight = null,
+                    defaultwidth = 20,
+                    head = new List<AttributeList>(){
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,0,0"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,1,1"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,2,2"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,3,3"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,4,4"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,5,5"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,6,6"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,7,7"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,8,8"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,9,9"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,10,10"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,11,11"},
+
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="1,1,12,12"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="1,1,13,13"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="1,1,14,14"},
+
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="1,1,15,15"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="1,1,16,16"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="1,1,17,17"},
+
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="1,1,18,18"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="1,1,19,19"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="1,1,20,20"},
+
+                    new AttributeList(){ title="已执行数量", cellregion="0,0,12,14"},
+                    new AttributeList(){ title="终止数量", cellregion="0,0,15,17"},
+                    new AttributeList(){ title="未执行数量", cellregion="0,0,18,20"},
+
+                    }
+                }
+            };
+
+            List<Func<UIProcureOrderReport, string>> fieldFuncs = new List<Func<UIProcureOrderReport, string>>();
+
+            fieldFuncs.Add(x => x.OrderDate.ToString("yyyy/MM/dd"));
+            fieldFuncs.Add(x => x.OrderCode);
+            fieldFuncs.Add(x => x.SupplierName);
+            fieldFuncs.Add(x => x.WarehouseName);
+            fieldFuncs.Add(x => x.ProductCode);
+            fieldFuncs.Add(x => x.CategoryName);
+            fieldFuncs.Add(x => x.ProductName);
+            fieldFuncs.Add(x => x.Specification);
+            fieldFuncs.Add(x => x.UnitName);
+            fieldFuncs.Add(x => x.ProcurePrice.ToString());
+            fieldFuncs.Add(x => x.ProcureCount.ToString());
+            fieldFuncs.Add(x => x.TotalAmount.ToString());
+
+            fieldFuncs.Add(x => x.AlreadyInQty.ToString());
+            fieldFuncs.Add(x => x.AlreadyInNumberOfPackages.ToString());
+            fieldFuncs.Add(x => x.AlreadyInQtyProcurePrice.ToString());
+
+            fieldFuncs.Add(x => x.StopInQty.ToString());
+            fieldFuncs.Add(x => x.StopInNumberOfPackages.ToString());
+            fieldFuncs.Add(x => x.StopInQtyProcurePrice.ToString());
+
+            fieldFuncs.Add(x => x.NotInQty.ToString());
+            fieldFuncs.Add(x => x.NotInNumberOfPackages.ToString());
+            fieldFuncs.Add(x => x.NotInQtyProcurePrice.ToString());
+
+
+            nPOIHelper.ExportToExcel<UIProcureOrderReport>(
+                (List<UIProcureOrderReport>)uiProcureOrderReports,
+                excelPath,
+                excelHeaders.Select(x => x.Key).ToArray(),
+                excelRoot,
+                fieldFuncs.ToArray());
+
 
             Response.ContentType = "application/x-zip-compressed";
             Response.AddHeader("Content-Disposition", "attachment;filename=" + "采购订单报表".UrlEncode() + ".xls");

@@ -21,5 +21,20 @@ namespace ZhongDing.Domain.UIObjects
         public int Count { get; set; }
         public decimal SalesPrice { get; set; }
         public decimal TotalSalesAmount { get; set; }
+
+        public int AlreadyOutQty { get; set; }
+        public decimal AlreadyOutQtySalesPricePrice { get; set; }
+        public int NumberInLargePackage { get; set; }
+        public decimal AlreadyOutNumberOfPackages { get; set; }
+
+        public int StopOutQty { get; set; }
+        public decimal StopOutQtySalesPricePrice { get; set; }
+        public decimal StopOutNumberOfPackages { get; set; }
+
+        public int NotOutQty { get; set; }
+        public decimal NotOutQtySalesPricePrice { get; set; }
+        public decimal NotOutNumberOfPackages { get; set; }
+
+        public bool SalesOrderApplicationIsStop { get; set; }
     }
 }

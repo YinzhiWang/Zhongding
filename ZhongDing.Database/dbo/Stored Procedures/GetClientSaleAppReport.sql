@@ -38,7 +38,20 @@ AS
                             dbo.UnitOfMeasurement.UnitName ,
                             dbo.SalesOrderAppDetail.Count ,
                             dbo.SalesOrderAppDetail.SalesPrice ,
-                            dbo.SalesOrderAppDetail.TotalSalesAmount
+                            dbo.SalesOrderAppDetail.TotalSalesAmount ,
+                            ISNULL(( SELECT SUM(dbo.StockOutDetail.OutQty)
+                                     FROM   dbo.StockOutDetail
+                                     WHERE  dbo.StockOutDetail.IsDeleted = 0
+                                            AND dbo.StockOutDetail.SalesOrderAppDetailID = dbo.SalesOrderAppDetail.ID
+                                   ), 0) AS AlreadyOutQty ,
+                            ISNULL(( SELECT SUM(dbo.StockOutDetail.SalesPrice
+                                                * dbo.StockOutDetail.OutQty)
+                                     FROM   dbo.StockOutDetail
+                                     WHERE  dbo.StockOutDetail.IsDeleted = 0
+                                            AND dbo.StockOutDetail.SalesOrderAppDetailID = dbo.SalesOrderAppDetail.ID
+                                   ), 0) AS AlreadyOutQtyProcurePrice ,
+                            dbo.ProductSpecification.NumberInLargePackage ,
+                            SalesOrderApplication.IsStop AS SalesOrderApplicationIsStop
                   FROM      dbo.SalesOrderAppDetail
                             JOIN dbo.SalesOrderApplication ON dbo.SalesOrderApplication.ID = dbo.SalesOrderAppDetail.SalesOrderApplicationID
                             JOIN dbo.ClientSaleApplication ON dbo.ClientSaleApplication.SalesOrderApplicationID = dbo.SalesOrderApplication.ID

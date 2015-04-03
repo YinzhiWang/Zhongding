@@ -10,6 +10,8 @@ using ZhongDing.Common.Enums;
 using NPOI.HSSF.UserModel;
 using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
+using NPOI.SS.Util;
+using NPOI.HSSF.Util;
 
 namespace ZhongDing.Common
 {
@@ -262,7 +264,7 @@ namespace ZhongDing.Common
         }
 
         /// <summary>
-        /// Model 转 Excel
+        /// Model 转 Excel  这里是简单的数据表头，如果要输出复杂的表头格式请使用 NPOIHelper
         /// </summary>
         /// <typeparam name="T">泛型List</typeparam>
         /// <param name="items">Model集合</param>
@@ -280,9 +282,20 @@ namespace ZhongDing.Common
                     IRow headerRow = sheet.CreateRow(0);
 
                     // handling header.
-                    foreach (var column in headerSimpleName)
-                        headerRow.CreateCell(headerSimpleName.IndexOf(column)).SetCellValue(column.Name);//If Caption not set, returns the ColumnName value
-
+                    var headerCellStyle = GetCellStyle(workbook);
+                    foreach (var excelHeader in headerSimpleName)
+                    {
+                        int columnIndex = headerSimpleName.IndexOf(excelHeader);
+                        ICell cell = headerRow.CreateCell(columnIndex);
+                        cell.SetCellValue(excelHeader.Name);//If Caption not set, returns the ColumnName value
+                        cell.CellStyle = headerCellStyle;
+                    }
+                    // handling header.
+                    foreach (var excelHeader in headerSimpleName)
+                    {
+                        int columnIndex = headerSimpleName.IndexOf(excelHeader);
+                        sheet.SetColumnWidth(columnIndex, excelHeader.Width * 256);
+                    }
                     // handling value.
                     int rowIndex = 1;
 
@@ -292,11 +305,13 @@ namespace ZhongDing.Common
 
                         var properties = row.GetType().GetProperties();
                         int columnIndex = 0;
-                        foreach (var column in headerSimpleName)
+                        foreach (var excelHeader in headerSimpleName)
                         {
-                            var cellValue = properties.First(x => x.Name == column.Key).GetValue(row, null);
+                            var cellValue = properties.First(x => x.Name == excelHeader.Key).GetValue(row, null);
                             var cellValueText = cellValue == null ? string.Empty : cellValue.ToString();
-                            dataRow.CreateCell(columnIndex).SetCellValue(cellValueText);
+                            ICell cell = dataRow.CreateCell(columnIndex);
+                            cell.SetCellValue(cellValueText);
+
                             columnIndex++;
                         }
 
@@ -311,7 +326,28 @@ namespace ZhongDing.Common
             SaveToFile(ms, fileName);
             return true;
         }
+        private static HSSFCellStyle GetCellStyle(IWorkbook workbook)
+        {
+            HSSFCellStyle style = (HSSFCellStyle)workbook.CreateCellStyle();
+            //this.XlPalette = this.Workbook.GetCustomPalette();
+            style.Alignment = HorizontalAlignment.Center;
+            style.VerticalAlignment = VerticalAlignment.Center;
+            style.FillPattern = FillPattern.SolidForeground;// FillPatternType.SOLID_FOREGROUND;
 
+            style.FillForegroundColor = HSSFColor.Grey25Percent.Index;// HSSFColor.GREY_25_PERCENT.index;
+
+            HSSFFont font = (HSSFFont)workbook.CreateFont();
+            font.Color = ((short)8);
+
+            font.FontHeightInPoints = ((short)12);
+            font.Boldweight = 400;
+            font.FontName = "黑体";
+            font.IsItalic = false;
+            //font.IsStrikeout = al.IsStrikeout.HasValue && al.IsStrikeout.Value;
+            font.Underline = FontUnderlineType.None;
+            style.SetFont(font);
+            return style;
+        }
         static void SaveToFile(MemoryStream ms, string fileName)
         {
             using (FileStream fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
@@ -324,10 +360,40 @@ namespace ZhongDing.Common
                 data = null;
             }
         }
+        /// <summary>
+        /// 合并单元格
+        /// </summary>
+        /// <param name="sheet">要合并单元格所在的sheet</param>
+        /// <param name="rowstart">开始行的索引</param>
+        /// <param name="rowend">结束行的索引</param>
+        /// <param name="colstart">开始列的索引</param>
+        /// <param name="colend">结束列的索引</param>
+        public static void SetCellRangeAddress(ISheet sheet, int rowstart, int rowend, int colstart, int colend)
+        {
+            CellRangeAddress cellRangeAddress = new CellRangeAddress(rowstart, rowend, colstart, colend);
+            sheet.AddMergedRegion(cellRangeAddress);
+        }
+
+
     }
     public class ExcelHeader
     {
+        public ExcelHeader()
+        {
+            Width = 20;
+        }
+        public ExcelHeader(string key, string name)
+            : base()
+        {
+            this.Key = key;
+            this.Name = name;
+
+        }
         public string Key { get; set; }
         public string Name { get; set; }
+        /// <summary>
+        /// 列宽度，单位是字符数量 默认20个字符
+        /// </summary>
+        public int Width { get; set; }
     }
 }
