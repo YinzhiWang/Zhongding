@@ -35,5 +35,25 @@ namespace ZhongDing.Common.Enums
         /// 入库单数据
         /// </summary>
         StockInData,
+
+        /// <summary>
+        /// 客户订单数据
+        /// </summary>
+        ClientOrderData,
+
+        /// <summary>
+        /// 客户出库单数据
+        /// </summary>
+        ClinetStockOutData,
+
+        /// <summary>
+        /// 大包订单数据
+        /// </summary>
+        DBOrderData,
+
+        /// <summary>
+        /// 大包出库单数据
+        /// </summary>
+        DBStockOutData,
     }
 }

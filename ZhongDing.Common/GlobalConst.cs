@@ -565,6 +565,11 @@ namespace ZhongDing.Common
             /// </summary>
             public static readonly string MARKET_NAME = "区域";
 
+            /// <summary>
+            /// 库存数量
+            /// </summary>
+            public static readonly string INVENTORY_BALANCE_QTY = "库存数量";
+
             #endregion
 
 

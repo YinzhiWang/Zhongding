@@ -28,6 +28,18 @@ namespace ZhongDing.Business.Repositories.Imports
             }
         }
 
+        private IDCInventoryDataRepository _dcInventoryDataRepository;
+        private IDCInventoryDataRepository DCInventoryDataRepository
+        {
+            get
+            {
+                if (_dcInventoryDataRepository == null)
+                    _dcInventoryDataRepository = new DCInventoryDataRepository();
+
+                return _dcInventoryDataRepository;
+            }
+        }
+
         private IClientFlowDataRepository _clientFlowDataRepository;
         private IClientFlowDataRepository ClientFlowDataRepository
         {
@@ -153,6 +165,7 @@ namespace ZhongDing.Business.Repositories.Imports
                             break;
 
                         case EImportDataType.DCInventoryData:
+                            SaveDCInventoryData(fileLog, dsData);
                             break;
 
                         case EImportDataType.ClientFlowData:
@@ -509,6 +522,128 @@ namespace ZhongDing.Business.Repositories.Imports
                             + GlobalConst.ImportDataColumns.HOSPITAL_NAME + ":" + hospitalName + ", "
                             + GlobalConst.ImportDataColumns.HOSPITAL_TYPE + ":" + hospitalType + ", "
                             + GlobalConst.ImportDataColumns.MARKET_NAME + ":" + marketName
+                        });
+                    }
+                }
+
+                if (errorRowCount > 0)
+                {
+                    fileLog.ImportStatusID = (int)EImportStatus.ImportError;
+                }
+                else
+                {
+                    fileLog.ImportStatusID = (int)EImportStatus.Completed;
+                    fileLog.ImportEndDate = DateTime.Now;
+                }
+
+                fileLog.TotalCount = totalCount;
+                fileLog.FailedCount = errorRowCount;
+                fileLog.SucceedCount = totalCount - errorRowCount;
+
+                ImportFileLogRepository.Save();
+            }
+        }
+
+
+        /// <summary>
+        /// 保存配送公司库存数据
+        /// </summary>
+        private void SaveDCInventoryData(ImportFileLog fileLog, DataSet ds)
+        {
+            if (ds != null && ds.Tables.Count > 0
+                && ds.Tables[0].Rows.Count > 0)
+            {
+                int totalCount = ds.Tables[0].Rows.Count;
+
+                fileLog.ImportBeginDate = DateTime.Now;
+                fileLog.ImportStatusID = (int)EImportStatus.Importing;
+
+                ImportFileLogRepository.Save();
+
+                string errorMsg;
+                int errorRowCount = 0;
+                int rowIndex = 0;
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {
+                    errorMsg = string.Empty;
+
+                    string productCode = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.PRODUCT_CODE]);
+                    string productName = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.PRODUCT_NAME]);
+                    string specification = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.PRODUCT_SPECIFICATION]);
+                    string tempBalanceQty = Utility.GetValueFromObject(row[GlobalConst.ImportDataColumns.INVENTORY_BALANCE_QTY]);
+
+                    try
+                    {
+                        rowIndex++;
+
+                        int balanceQty;
+                        if (int.TryParse(tempBalanceQty, out balanceQty))
+                        {
+                            var product = ProductRepository.GetList(x =>
+                                x.ProductCode.ToLower().Equals(productCode.ToLower())).FirstOrDefault();
+
+                            if (product != null)
+                            {
+                                var productSpecification = ProductSpecificationRepository
+                                    .GetList(x => x.Specification.ToLower().Equals(specification.ToLower()))
+                                    .FirstOrDefault();
+
+                                if (productSpecification != null)
+                                {
+                                    var inventoryData = DCInventoryDataRepository.GetList(x =>
+                                                 x.DistributionCompanyID == fileLog.DCImportFileLog.DistributionCompanyID
+                                                 && x.ProductID == product.ID && x.ProductSpecificationID == productSpecification.ID
+                                                 && x.SettlementDate == fileLog.DCImportFileLog.SettlementDate).FirstOrDefault();
+
+                                    //限制重复导入，如果存在就跳过该条记录
+                                    if (inventoryData == null)
+                                    {
+                                        inventoryData = new DCInventoryData()
+                                        {
+                                            DistributionCompanyID = fileLog.DCImportFileLog.DistributionCompanyID,
+                                            SettlementDate = fileLog.DCImportFileLog.SettlementDate,
+                                            ImportFileLogID = fileLog.ID,
+                                            ProductID = product.ID,
+                                            ProductName = productName,
+                                            ProductCode = productCode,
+                                            ProductSpecificationID = productSpecification.ID,
+                                            ProductSpecification = specification,
+                                            BalanceQty = balanceQty
+                                        };
+
+                                        fileLog.DCInventoryData.Add(inventoryData);
+                                    }
+                                    else
+                                        errorMsg += "该条数据在数据库中已存在；";
+                                }
+                                else
+                                    errorMsg += GlobalConst.ImportDataColumns.PRODUCT_SPECIFICATION + "不存在；";
+                            }
+                            else
+                                errorMsg += GlobalConst.ImportDataColumns.PRODUCT_NAME + "不存在；";
+                        }
+                        else
+                            errorMsg += GlobalConst.ImportDataColumns.SALE_QTY + "格式错误；";
+                    }
+                    catch (Exception exp)
+                    {
+                        Utility.WriteExceptionLog(exp);
+
+                        errorMsg += exp.Message;
+                    }
+
+                    if (errorMsg != string.Empty)
+                    {
+                        errorRowCount++;
+
+                        fileLog.ImportErrorLog.Add(new ImportErrorLog
+                        {
+                            ErrorRowIndex = rowIndex,
+                            ErrorMsg = errorMsg,
+                            ErrorRowData = GlobalConst.ImportDataColumns.PRODUCT_CODE + ":" + productCode + ", "
+                            + GlobalConst.ImportDataColumns.PRODUCT_NAME + ":" + productName + ", "
+                            + GlobalConst.ImportDataColumns.PRODUCT_SPECIFICATION + ":" + specification + ", "
+                            + GlobalConst.ImportDataColumns.INVENTORY_BALANCE_QTY + ":" + tempBalanceQty
                         });
                     }
                 }
