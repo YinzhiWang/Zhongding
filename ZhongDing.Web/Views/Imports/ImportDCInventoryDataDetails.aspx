@@ -123,8 +123,7 @@
                                                         <ItemStyle HorizontalAlign="Left" Width="100" />
                                                     </telerik:GridBoundColumn>
                                                     <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品名称" DataField="ProductName">
-                                                        <HeaderStyle Width="15%" />
-                                                        <ItemStyle HorizontalAlign="Left" Width="15%" />
+                                                        <ItemStyle HorizontalAlign="Left"/>
                                                     </telerik:GridBoundColumn>
                                                     <telerik:GridBoundColumn UniqueName="Specification" HeaderText="规格" DataField="Specification">
                                                         <HeaderStyle Width="100" />

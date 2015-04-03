@@ -396,7 +396,7 @@
     <Build Include="dbo\Stored Procedures\GetProcureOrderApplicationPaymentReport.sql" />
     <Build Include="dbo\Stored Procedures\GetClientSaleAppReport.sql" />
     <Build Include="dbo\Stored Procedures\GetStockOutDetailReport.sql" />
-    <Build Include="dbo\Stored Procedures\GetStockInDetailReport_1.sql" />
+    <Build Include="dbo\Stored Procedures\GetStockInDetailReport.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

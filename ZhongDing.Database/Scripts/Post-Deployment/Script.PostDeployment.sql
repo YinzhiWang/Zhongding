@@ -788,3 +788,24 @@ INSERT INTO [dbo].[HospitalType] ([ID], [TypeName]) VALUES (2, N'招商')
 SET IDENTITY_INSERT [dbo].[HospitalType] OFF
 COMMIT TRANSACTION
 ---- end --- 3/31/2015 -- 初始化医院性质数据 -- by lihong
+
+---- start --- 4/3/2015 -- 初始化导入数据类型数据 -- by lihong
+SET NUMERIC_ROUNDABORT OFF
+GO
+SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+
+BEGIN TRANSACTION
+SET IDENTITY_INSERT [dbo].[ImportDataType] ON
+INSERT INTO [dbo].[ImportDataType] ([ID], [TypeName]) VALUES (1, N'配送公司流向数据')
+INSERT INTO [dbo].[ImportDataType] ([ID], [TypeName]) VALUES (2, N'配送公司库存数据')
+INSERT INTO [dbo].[ImportDataType] ([ID], [TypeName]) VALUES (3, N'商业客户流向数据')
+INSERT INTO [dbo].[ImportDataType] ([ID], [TypeName]) VALUES (4, N'采购订单数据')
+INSERT INTO [dbo].[ImportDataType] ([ID], [TypeName]) VALUES (5, N'收货入库单数据')
+INSERT INTO [dbo].[ImportDataType] ([ID], [TypeName]) VALUES (6, N'客户订单数据')
+INSERT INTO [dbo].[ImportDataType] ([ID], [TypeName]) VALUES (7, N'客户出库单数据')
+INSERT INTO [dbo].[ImportDataType] ([ID], [TypeName]) VALUES (8, N'大包订单数据')
+INSERT INTO [dbo].[ImportDataType] ([ID], [TypeName]) VALUES (9, N'大包出库单数据')
+SET IDENTITY_INSERT [dbo].[ImportDataType] OFF
+COMMIT TRANSACTION
+---- start --- 4/3/2015 -- 初始化导入数据类型数据 -- by lihong
