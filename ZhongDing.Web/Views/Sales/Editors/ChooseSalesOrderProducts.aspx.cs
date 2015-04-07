@@ -418,6 +418,7 @@ namespace ZhongDing.Web.Views.Sales.Editors
                                             ProductID = canOutStockInDetail.ProductID,
                                             ProductSpecificationID = canOutStockInDetail.ProductSpecificationID,
                                             WarehouseID = canOutStockInDetail.WarehouseID,
+                                            ProcurePrice = canOutStockInDetail.ProcurePrice,
                                             SalesPrice = salesOrderAppDetail.SalesPrice,
                                             OutQty = curOutQty,
                                             TaxQty = curTaxQty,

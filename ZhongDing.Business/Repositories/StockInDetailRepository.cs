@@ -217,7 +217,8 @@ namespace ZhongDing.Business.Repositories
                                   NumberOfPackages = q.InQty / (ps.NumberInLargePackage.HasValue ? ps.NumberInLargePackage.Value : 1),
                                   BatchNumber = q.BatchNumber,
                                   ExpirationDate = q.ExpirationDate,
-                                  LicenseNumber = q.LicenseNumber
+                                  LicenseNumber = q.LicenseNumber,
+                                  ProcurePrice = q.ProcurePrice
                               }).ToList();
             }
 

@@ -29,7 +29,6 @@ namespace ZhongDing.Domain.Models
             this.ProcureOrderAppDetail = new HashSet<ProcureOrderAppDetail>();
             this.StockInDetail = new HashSet<StockInDetail>();
             this.DaBaoRequestAppDetail = new HashSet<DaBaoRequestAppDetail>();
-            this.StockOutDetail = new HashSet<StockOutDetail>();
             this.InventoryHistory = new HashSet<InventoryHistory>();
             this.ClientInfoProductSetting = new HashSet<ClientInfoProductSetting>();
             this.ProductSpecification = new HashSet<ProductSpecification>();
@@ -42,6 +41,7 @@ namespace ZhongDing.Domain.Models
             this.DCFlowData = new HashSet<DCFlowData>();
             this.ClientFlowData = new HashSet<ClientFlowData>();
             this.DCInventoryData = new HashSet<DCInventoryData>();
+            this.StockOutDetail = new HashSet<StockOutDetail>();
         }
     
         public int ID { get; set; }
@@ -86,7 +86,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<ProcureOrderAppDetail> ProcureOrderAppDetail { get; set; }
         public virtual ICollection<StockInDetail> StockInDetail { get; set; }
         public virtual ICollection<DaBaoRequestAppDetail> DaBaoRequestAppDetail { get; set; }
-        public virtual ICollection<StockOutDetail> StockOutDetail { get; set; }
         public virtual ICollection<InventoryHistory> InventoryHistory { get; set; }
         public virtual ICollection<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
         public virtual ICollection<ProductSpecification> ProductSpecification { get; set; }
@@ -99,5 +98,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<DCFlowData> DCFlowData { get; set; }
         public virtual ICollection<ClientFlowData> ClientFlowData { get; set; }
         public virtual ICollection<DCInventoryData> DCInventoryData { get; set; }
+        public virtual ICollection<StockOutDetail> StockOutDetail { get; set; }
     }
 }

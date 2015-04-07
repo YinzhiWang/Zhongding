@@ -19,10 +19,10 @@ namespace ZhongDing.Domain.Models
         {
             this.ProcureOrderAppDetail = new HashSet<ProcureOrderAppDetail>();
             this.StockInDetail = new HashSet<StockInDetail>();
-            this.StockOutDetail = new HashSet<StockOutDetail>();
             this.InventoryHistory = new HashSet<InventoryHistory>();
             this.SalesOrderAppDetail = new HashSet<SalesOrderAppDetail>();
             this.ClientRefundAppDetail = new HashSet<ClientRefundAppDetail>();
+            this.StockOutDetail = new HashSet<StockOutDetail>();
         }
     
         public int ID { get; set; }
@@ -52,9 +52,9 @@ namespace ZhongDing.Domain.Models
         public virtual SaleType SaleType { get; set; }
         public virtual ICollection<ProcureOrderAppDetail> ProcureOrderAppDetail { get; set; }
         public virtual ICollection<StockInDetail> StockInDetail { get; set; }
-        public virtual ICollection<StockOutDetail> StockOutDetail { get; set; }
         public virtual ICollection<InventoryHistory> InventoryHistory { get; set; }
         public virtual ICollection<SalesOrderAppDetail> SalesOrderAppDetail { get; set; }
         public virtual ICollection<ClientRefundAppDetail> ClientRefundAppDetail { get; set; }
+        public virtual ICollection<StockOutDetail> StockOutDetail { get; set; }
     }
 }

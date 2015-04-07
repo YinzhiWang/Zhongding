@@ -21,6 +21,7 @@ namespace ZhongDing.Domain.Models
         public int SalesOrderAppDetailID { get; set; }
         public int ProductID { get; set; }
         public int ProductSpecificationID { get; set; }
+        public decimal ProcurePrice { get; set; }
         public decimal SalesPrice { get; set; }
         public int OutQty { get; set; }
         public decimal TotalSalesAmount { get; set; }
@@ -46,10 +47,10 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual Product Product { get; set; }
-        public virtual Warehouse Warehouse { get; set; }
-        public virtual StockOut StockOut { get; set; }
         public virtual ProductSpecification ProductSpecification { get; set; }
-        public virtual SalesOrderApplication SalesOrderApplication { get; set; }
         public virtual SalesOrderAppDetail SalesOrderAppDetail { get; set; }
+        public virtual SalesOrderApplication SalesOrderApplication { get; set; }
+        public virtual StockOut StockOut { get; set; }
+        public virtual Warehouse Warehouse { get; set; }
     }
 }

@@ -5,6 +5,7 @@
     [SalesOrderAppDetailID]   INT            NOT NULL,
     [ProductID]               INT            NOT NULL,
     [ProductSpecificationID]  INT            NOT NULL,
+    [ProcurePrice]            MONEY          NOT NULL,
     [SalesPrice]              MONEY          NOT NULL,
     [OutQty]                  INT            NOT NULL,
     [TotalSalesAmount]        MONEY          NOT NULL,
@@ -26,6 +27,8 @@
     CONSTRAINT [FK_StockOutDetail_StockOut] FOREIGN KEY ([StockOutID]) REFERENCES [dbo].[StockOut] ([ID]),
     CONSTRAINT [FK_StockOutDetail_Warehouse] FOREIGN KEY ([WarehouseID]) REFERENCES [dbo].[Warehouse] ([ID])
 );
+
+
 
 
 

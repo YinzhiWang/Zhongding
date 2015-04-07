@@ -84,7 +84,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<DaBaoApplication> DaBaoApplication { get; set; }
         public DbSet<DaBaoRequestApplication> DaBaoRequestApplication { get; set; }
         public DbSet<DaBaoRequestAppDetail> DaBaoRequestAppDetail { get; set; }
-        public DbSet<StockOutDetail> StockOutDetail { get; set; }
         public DbSet<StockOut> StockOut { get; set; }
         public DbSet<InventoryHistory> InventoryHistory { get; set; }
         public DbSet<ApplicationNote> ApplicationNote { get; set; }
@@ -122,5 +121,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<ClientImportFileLog> ClientImportFileLog { get; set; }
         public DbSet<DCInventoryData> DCInventoryData { get; set; }
         public DbSet<DCImportFileLog> DCImportFileLog { get; set; }
+        public DbSet<StockOutDetail> StockOutDetail { get; set; }
     }
 }
