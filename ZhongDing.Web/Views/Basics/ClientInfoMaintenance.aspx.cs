@@ -122,6 +122,16 @@ namespace ZhongDing.Web.Views.Basics
                     txtFax.Text = clientInfo.Fax;
                     txtReceiverAddress.Text = clientInfo.ReceiverAddress;
                     txtReceiptAddress.Text = clientInfo.ReceiptAddress;
+
+                    if (clientInfo.BankAccount != null)
+                    {
+                        var bankAccount = clientInfo.BankAccount;
+
+                        txtAccountName.Text = bankAccount.AccountName;
+                        txtBankBranchName.Text = bankAccount.BankBranchName;
+                        txtAccount.Text = bankAccount.Account;
+                        txtComment.Text = bankAccount.Comment;
+                    }
                 }
                 else
                 {
@@ -196,6 +206,19 @@ namespace ZhongDing.Web.Views.Basics
             }
         }
 
+        protected void cvAccount_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            if (!string.IsNullOrEmpty(args.Value.Trim()))
+            {
+                if (!Utility.IsValidAccountNumber(args.Value.Trim()))
+                {
+                    cvAccount.ErrorMessage = "帐号无效，请重新输入";
+
+                    args.IsValid = false;
+                }
+            }
+        }
+
         protected void rgContacts_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
             rgContacts.DataSource = PageClientInfoRepository.GetContacts(this.CurrentEntityID);
@@ -243,6 +266,24 @@ namespace ZhongDing.Web.Views.Basics
                     cvDiffClientCompany.IsValid = false;
             }
 
+            if (!string.IsNullOrEmpty(txtAccountName.Text.Trim())
+                || !string.IsNullOrEmpty(txtBankBranchName.Text.Trim())
+                || !string.IsNullOrEmpty(txtAccount.Text.Trim())
+                || !string.IsNullOrEmpty(txtComment.Text.Trim()))
+            {
+                if (string.IsNullOrEmpty(txtAccountName.Text.Trim()))
+                    cvAccountName.IsValid = false;
+
+                if (string.IsNullOrEmpty(txtBankBranchName.Text.Trim()))
+                    cvBankBranchName.IsValid = false;
+
+                if (string.IsNullOrEmpty(txtAccount.Text.Trim()))
+                {
+                    cvAccount.IsValid = false;
+                    cvAccount.ErrorMessage = "请输入银行账号";
+                }
+            }
+
             if (!IsValid) return;
 
             ClientInfo clientInfo = null;
@@ -288,6 +329,28 @@ namespace ZhongDing.Web.Views.Basics
             clientInfo.ReceiverAddress = txtReceiverAddress.Text.Trim();
             clientInfo.ReceiptAddress = txtReceiptAddress.Text.Trim();
 
+            if (!string.IsNullOrEmpty(txtAccountName.Text.Trim())
+                && !string.IsNullOrEmpty(txtBankBranchName.Text.Trim())
+                && !string.IsNullOrEmpty(txtAccount.Text.Trim()))
+            {
+                var bankAccount = clientInfo.BankAccount;
+
+                if (bankAccount == null)
+                {
+                    bankAccount = new BankAccount()
+                    {
+                        OwnerTypeID = (int)EOwnerType.Client
+                    };
+
+                    clientInfo.BankAccount = bankAccount;
+                }
+
+                bankAccount.AccountName = txtAccountName.Text.Trim();
+                bankAccount.BankBranchName = txtBankBranchName.Text.Trim();
+                bankAccount.Account = txtAccount.Text.Trim();
+                bankAccount.Comment = txtComment.Text.Trim();
+            }
+
             PageClientInfoRepository.Save();
 
             hdnCurrentEntityID.Value = clientInfo.ID.ToString();
@@ -328,6 +391,9 @@ namespace ZhongDing.Web.Views.Basics
 
                     if (clientInfo != null)
                     {
+                        if (clientInfo.BankAccount != null)
+                            clientInfo.BankAccount.IsDeleted = true;
+
                         foreach (var clientInfoBA in clientInfo.ClientInfoBankAccount)
                         {
                             if (clientInfoBA != null)

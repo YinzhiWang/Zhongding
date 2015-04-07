@@ -18,13 +18,13 @@ namespace ZhongDing.Domain.Models
         public ClientCompany()
         {
             this.ClientCompanyCertificate = new HashSet<ClientCompanyCertificate>();
-            this.ClientInfo = new HashSet<ClientInfo>();
             this.StockOut = new HashSet<StockOut>();
             this.ClientSaleApplication = new HashSet<ClientSaleApplication>();
             this.ClientRefundApplication = new HashSet<ClientRefundApplication>();
             this.ClientTaskRefundApplication = new HashSet<ClientTaskRefundApplication>();
             this.ClientFlowData = new HashSet<ClientFlowData>();
             this.ClientImportFileLog = new HashSet<ClientImportFileLog>();
+            this.ClientInfo = new HashSet<ClientInfo>();
         }
     
         public int ID { get; set; }
@@ -49,12 +49,12 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual ICollection<ClientCompanyCertificate> ClientCompanyCertificate { get; set; }
-        public virtual ICollection<ClientInfo> ClientInfo { get; set; }
         public virtual ICollection<StockOut> StockOut { get; set; }
         public virtual ICollection<ClientSaleApplication> ClientSaleApplication { get; set; }
         public virtual ICollection<ClientRefundApplication> ClientRefundApplication { get; set; }
         public virtual ICollection<ClientTaskRefundApplication> ClientTaskRefundApplication { get; set; }
         public virtual ICollection<ClientFlowData> ClientFlowData { get; set; }
         public virtual ICollection<ClientImportFileLog> ClientImportFileLog { get; set; }
+        public virtual ICollection<ClientInfo> ClientInfo { get; set; }
     }
 }

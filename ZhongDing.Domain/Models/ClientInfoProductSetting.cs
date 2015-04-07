@@ -42,10 +42,10 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ClientInfo ClientInfo { get; set; }
         public virtual Department Department { get; set; }
         public virtual DeptMarket DeptMarket { get; set; }
         public virtual Product Product { get; set; }
         public virtual ProductSpecification ProductSpecification { get; set; }
+        public virtual ClientInfo ClientInfo { get; set; }
     }
 }

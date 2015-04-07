@@ -24,7 +24,6 @@
     </telerik:RadAjaxManager>
 
     <div class="container">
-
         <div class="mws-panel grid_full">
             <div class="mws-panel-header">
                 <span class="mws-i-24 i-sign-post">客户维护</span>
@@ -220,6 +219,71 @@
                                                     FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
                                             </MasterTableView>
                                         </telerik:RadGrid>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--大包银行账户 -->
+                            <div class="mws-panel grid_8 mws-collapsible" data-collapseid="panel-db-bank">
+                                <div class="mws-panel-header">
+                                    <span class="mws-i-24 i-creditcard">大包银行账户</span>
+                                </div>
+                                <div class="mws-panel-body">
+                                    <div class="mws-form">
+                                        <div class="mws-form-inline">
+                                            <div class="mws-form-row">
+                                                <div class="float-left width50-percent">
+                                                    <label>户名</label>
+                                                    <div class="mws-form-item small">
+                                                        <telerik:RadTextBox runat="server" ID="txtAccountName" CssClass="mws-textinput" MaxLength="100"></telerik:RadTextBox>
+                                                        <asp:CustomValidator ID="cvAccountName" runat="server" ControlToValidate="txtAccountName" ValidationGroup="vgMaintenance"
+                                                            Text="*" CssClass="field-validation-error" ErrorMessage="请输入户名"></asp:CustomValidator>
+                                                    </div>
+                                                </div>
+                                                <div class="float-left">
+                                                    <label>开户行</label>
+                                                    <div class="mws-form-item small">
+                                                        <telerik:RadTextBox runat="server" ID="txtBankBranchName" CssClass="mws-textinput" MaxLength="200"></telerik:RadTextBox>
+                                                        <asp:CustomValidator ID="cvBankBranchName" runat="server" ControlToValidate="txtAccount" ValidationGroup="vgMaintenance"
+                                                            Text="*" CssClass="field-validation-error" ErrorMessage="请输入开户行"></asp:CustomValidator>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mws-form-row">
+                                                <label>账号</label>
+                                                <div class="mws-form-item small">
+                                                    <telerik:RadTextBox runat="server" ID="txtAccount" ShowButton="false" CssClass="mws-textinput" Width="40%" MaxLength="24">
+                                                    </telerik:RadTextBox>
+                                                    <telerik:RadToolTip ID="rttAccount" runat="server" TargetControlID="txtAccount" ShowEvent="OnClick"
+                                                        Position="MiddleRight" RelativeTo="Element" AutoCloseDelay="0">
+                                                        <div>
+                                                            <p>帐号为16-19位数字，或如下格式:</p>
+                                                            <ol style="margin-left: 20px">
+                                                                <li>0000 0000 0000 [4-7位数字]</li>
+                                                                <li>0000-0000-0000-[4-7位数字]</li>
+                                                                <li>0000 0000 0000 0000 000</li>
+                                                                <li>0000-0000-0000-0000-000</li>
+                                                            </ol>
+                                                        </div>
+                                                    </telerik:RadToolTip>
+
+                                                    <asp:RegularExpressionValidator ID="revAccount" runat="server" ValidationGroup="vgMaintenance"
+                                                        ControlToValidate="txtAccount" ErrorMessage="帐号格式不正确，请重新输入" CssClass="field-validation-error"
+                                                        ValidationExpression="^\d{16,19}$|^\d{6}[- ]\d{10,13}$|^\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{4,7}$|^\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{3}$" Text="*"></asp:RegularExpressionValidator>
+                                                    <asp:CustomValidator ID="cvAccount" runat="server" ControlToValidate="txtAccount" ValidationGroup="vgMaintenance" OnServerValidate="cvAccount_ServerValidate"
+                                                        Text="*" CssClass="field-validation-error" ErrorMessage="帐号无效，请重新输入"></asp:CustomValidator>
+                                                </div>
+                                            </div>
+                                            <div class="mws-form-row">
+                                                <label>备注</label>
+                                                <div class="mws-form-item medium">
+                                                    <telerik:RadTextBox runat="server" ID="txtComment" Width="90%" MaxLength="1000"
+                                                        TextMode="MultiLine" Height="80">
+                                                    </telerik:RadTextBox>
+                                                </div>
+                                            </div>
+                                            <div class="mws-form-row"></div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -13,10 +13,14 @@
     [CreatedBy]       INT            NULL,
     [LastModifiedOn]  DATETIME       NULL,
     [LastModifiedBy]  INT            NULL,
+    [DBBankAccountID] INT            NULL,
     CONSTRAINT [PK_ClientInfo] PRIMARY KEY CLUSTERED ([ID] ASC),
+    CONSTRAINT [FK_ClientInfo_BankAccount] FOREIGN KEY ([DBBankAccountID]) REFERENCES [dbo].[BankAccount] ([ID]),
     CONSTRAINT [FK_ClientInfo_ClientCompany] FOREIGN KEY ([ClientCompanyID]) REFERENCES [dbo].[ClientCompany] ([ID]),
     CONSTRAINT [FK_ClientInfo_ClientUser] FOREIGN KEY ([ClientUserID]) REFERENCES [dbo].[ClientUser] ([ID])
 );
+
+
 
 
 
