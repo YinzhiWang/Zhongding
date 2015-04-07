@@ -266,6 +266,7 @@ namespace ZhongDing.Web.Views.Reports
                     new ExcelHeader(){ Key="NumberOfPackages", Name="件数"},
                     new ExcelHeader(){ Key="BatchNumber", Name="批号"},
                     new ExcelHeader(){ Key="ExpirationDate", Name="有效期"},
+                    new ExcelHeader(){ Key="ProcurePrice", Name="采购单价"},
                     new ExcelHeader(){ Key="SalesPrice", Name="销售单价"},
                     new ExcelHeader(){ Key="TotalSalesAmount", Name="销售货款"}
                 }, excelPath);

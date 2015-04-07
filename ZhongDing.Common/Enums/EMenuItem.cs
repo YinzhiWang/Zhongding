@@ -204,11 +204,14 @@ namespace ZhongDing.Common.Enums
         /// 配送公司库存
         /// </summary>
         DCInventoryData,
-
+        /// <summary>
+        /// 报表管理
+        /// </summary>
+        ReportManage = 100,
         /// <summary>
         /// 采购订单报表
         /// </summary>
-        ProcureOrderReportManage = 100,
+        ProcureOrderReportManage,
         /// <summary>
         /// 采购订单付款报表
         /// </summary>
@@ -224,7 +227,11 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 入库明细报表
         /// </summary>
-        StockInDetailReportManage
+        StockInDetailReportManage,
+        /// <summary>
+        /// 发票管理
+        /// </summary>
+        InvoiceManage = 150
 
 
     }

@@ -107,8 +107,8 @@
                             </telerik:GridBoundColumn>
 
                             <telerik:GridBoundColumn UniqueName="StockOutCode" HeaderText="出库单号" DataField="StockOutCode">
-                                <ItemStyle HorizontalAlign="Left" Width="160px" />
-                                <HeaderStyle Width="160px" />
+                                <ItemStyle HorizontalAlign="Left" Width="180px" />
+                                <HeaderStyle Width="180px" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="SalesOrderApplicationOrderCode" HeaderText="销售订单号" DataField="SalesOrderApplicationOrderCode">
                                 <ItemStyle HorizontalAlign="Left" Width="160px" />
@@ -173,7 +173,11 @@
                                 <ItemStyle HorizontalAlign="Left" Width="100px" />
                                 <HeaderStyle Width="100px" />
                             </telerik:GridBoundColumn>
-
+                             <telerik:GridBoundColumn UniqueName="ProcurePrice" HeaderText="采购单价" DataField="ProcurePrice" DataFormatString="￥{0:f2}">
+                                <ItemStyle HorizontalAlign="Left" Width="100px" />
+                                <HeaderStyle Width="100px" />
+                            </telerik:GridBoundColumn>
+                            
                               <telerik:GridBoundColumn UniqueName="SalesPrice" HeaderText="销售单价" DataField="SalesPrice" DataFormatString="￥{0:f2}">
                                 <ItemStyle HorizontalAlign="Left" Width="100px" />
                                 <HeaderStyle Width="100px" />

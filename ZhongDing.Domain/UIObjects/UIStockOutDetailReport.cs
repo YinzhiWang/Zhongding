@@ -26,5 +26,6 @@ namespace ZhongDing.Domain.UIObjects
         public DateTime? ExpirationDate { get; set; }
         public decimal SalesPrice { get; set; }
         public decimal TotalSalesAmount { get; set; }
+        public decimal ProcurePrice { get; set; }
     }
 }
