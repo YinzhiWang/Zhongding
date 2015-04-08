@@ -99,6 +99,12 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 市场总管审核通过
         /// </summary>
-        ApprovedByMarketManagers
+        ApprovedByMarketManagers,
+
+        /// <summary>
+        /// 未结算（待结算）
+        /// </summary>
+        ToBeSettle,
+
     }
 }

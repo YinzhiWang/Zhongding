@@ -13,23 +13,18 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class DCFlowDataDetail : IEntityExtendedProperty
+    public partial class DBClientSettlement : IEntityExtendedProperty
     {
+        public DBClientSettlement()
+        {
+            this.DBClientSettleBonus = new HashSet<DBClientSettleBonus>();
+        }
+    
         public int ID { get; set; }
-        public int DCFlowDataID { get; set; }
-        public int DBContractID { get; set; }
-        public string ContractCode { get; set; }
-        public Nullable<bool> IsTempContract { get; set; }
-        public int HospitalID { get; set; }
-        public string HospitalName { get; set; }
-        public int ClientUserID { get; set; }
-        public string ClientUserName { get; set; }
-        public Nullable<int> InChargeUserID { get; set; }
-        public string InChargeUserFullName { get; set; }
-        public Nullable<int> UnitOfMeasurementID { get; set; }
-        public string UnitName { get; set; }
-        public System.DateTime SaleDate { get; set; }
-        public int SaleQty { get; set; }
+        public System.DateTime SettlementDate { get; set; }
+        public int HospitalTypeID { get; set; }
+        public int WorkflowStatusID { get; set; }
+        public Nullable<System.DateTime> SettlementOperateDate { get; set; }
         public string Comment { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
@@ -47,8 +42,8 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual DCFlowData DCFlowData { get; set; }
-        public virtual Hospital Hospital { get; set; }
-        public virtual DBContract DBContract { get; set; }
+        public virtual ICollection<DBClientSettleBonus> DBClientSettleBonus { get; set; }
+        public virtual HospitalType HospitalType { get; set; }
+        public virtual WorkflowStatus WorkflowStatus { get; set; }
     }
 }

@@ -13,29 +13,26 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class DBContract : IEntityExtendedProperty
+    public partial class DBClientBonus : IEntityExtendedProperty
     {
-        public DBContract()
+        public DBClientBonus()
         {
-            this.DBClientBonus = new HashSet<DBClientBonus>();
-            this.DBContractHospital = new HashSet<DBContractHospital>();
-            this.DBContractTaskAssignment = new HashSet<DBContractTaskAssignment>();
-            this.DCFlowDataDetail = new HashSet<DCFlowDataDetail>();
+            this.DBClientSettleBonus = new HashSet<DBClientSettleBonus>();
         }
     
         public int ID { get; set; }
-        public string ContractCode { get; set; }
-        public Nullable<int> ClientUserID { get; set; }
-        public Nullable<bool> IsTempContract { get; set; }
-        public Nullable<int> DepartmentID { get; set; }
-        public Nullable<int> InChargeUserID { get; set; }
-        public Nullable<int> ProductID { get; set; }
-        public Nullable<int> ProductSpecificationID { get; set; }
-        public Nullable<double> PromotionExpense { get; set; }
-        public Nullable<System.DateTime> ContractExpDate { get; set; }
-        public Nullable<bool> IsNew { get; set; }
-        public Nullable<int> HospitalTypeID { get; set; }
-        public string Comment { get; set; }
+        public int DBContractID { get; set; }
+        public int ClientUserID { get; set; }
+        public int HospitalID { get; set; }
+        public System.DateTime SettlementDate { get; set; }
+        public int ProductID { get; set; }
+        public int ProductSpecificationID { get; set; }
+        public Nullable<decimal> PromotionExpense { get; set; }
+        public int SaleQty { get; set; }
+        public Nullable<decimal> CommisionAmount { get; set; }
+        public Nullable<decimal> PerformanceAmount { get; set; }
+        public Nullable<bool> IsSettled { get; set; }
+        public Nullable<System.DateTime> SettledDate { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -53,14 +50,10 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual ClientUser ClientUser { get; set; }
-        public virtual ICollection<DBClientBonus> DBClientBonus { get; set; }
-        public virtual Department Department { get; set; }
-        public virtual HospitalType HospitalType { get; set; }
+        public virtual Hospital Hospital { get; set; }
         public virtual Product Product { get; set; }
         public virtual ProductSpecification ProductSpecification { get; set; }
-        public virtual Users Users { get; set; }
-        public virtual ICollection<DBContractHospital> DBContractHospital { get; set; }
-        public virtual ICollection<DBContractTaskAssignment> DBContractTaskAssignment { get; set; }
-        public virtual ICollection<DCFlowDataDetail> DCFlowDataDetail { get; set; }
+        public virtual ICollection<DBClientSettleBonus> DBClientSettleBonus { get; set; }
+        public virtual DBContract DBContract { get; set; }
     }
 }

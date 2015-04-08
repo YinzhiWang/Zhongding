@@ -18,6 +18,8 @@ namespace ZhongDing.Domain.Models
         public HospitalType()
         {
             this.ClientFlowData = new HashSet<ClientFlowData>();
+            this.DBClientSettlement = new HashSet<DBClientSettlement>();
+            this.DBContract = new HashSet<DBContract>();
         }
     
         public int ID { get; set; }
@@ -34,5 +36,7 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual ICollection<ClientFlowData> ClientFlowData { get; set; }
+        public virtual ICollection<DBClientSettlement> DBClientSettlement { get; set; }
+        public virtual ICollection<DBContract> DBContract { get; set; }
     }
 }

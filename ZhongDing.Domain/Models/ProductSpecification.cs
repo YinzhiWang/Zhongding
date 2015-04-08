@@ -19,7 +19,6 @@ namespace ZhongDing.Domain.Models
         {
             this.ClientInfoProductSetting = new HashSet<ClientInfoProductSetting>();
             this.DaBaoRequestAppDetail = new HashSet<DaBaoRequestAppDetail>();
-            this.DBContract = new HashSet<DBContract>();
             this.InventoryHistory = new HashSet<InventoryHistory>();
             this.ProcureOrderAppDetail = new HashSet<ProcureOrderAppDetail>();
             this.ProductBasicPrice = new HashSet<ProductBasicPrice>();
@@ -36,6 +35,8 @@ namespace ZhongDing.Domain.Models
             this.ClientFlowData = new HashSet<ClientFlowData>();
             this.DCInventoryData = new HashSet<DCInventoryData>();
             this.StockOutDetail = new HashSet<StockOutDetail>();
+            this.DBClientBonus = new HashSet<DBClientBonus>();
+            this.DBContract = new HashSet<DBContract>();
         }
     
         public int ID { get; set; }
@@ -63,7 +64,6 @@ namespace ZhongDing.Domain.Models
     
         public virtual ICollection<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
         public virtual ICollection<DaBaoRequestAppDetail> DaBaoRequestAppDetail { get; set; }
-        public virtual ICollection<DBContract> DBContract { get; set; }
         public virtual ICollection<InventoryHistory> InventoryHistory { get; set; }
         public virtual ICollection<ProcureOrderAppDetail> ProcureOrderAppDetail { get; set; }
         public virtual Product Product { get; set; }
@@ -82,5 +82,7 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<ClientFlowData> ClientFlowData { get; set; }
         public virtual ICollection<DCInventoryData> DCInventoryData { get; set; }
         public virtual ICollection<StockOutDetail> StockOutDetail { get; set; }
+        public virtual ICollection<DBClientBonus> DBClientBonus { get; set; }
+        public virtual ICollection<DBContract> DBContract { get; set; }
     }
 }

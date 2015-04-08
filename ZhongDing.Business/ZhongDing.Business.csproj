@@ -55,6 +55,9 @@
     <Compile Include="Extensions\DynamicLinq.cs" />
     <Compile Include="IRepositories\IClientFlowDataRepository.cs" />
     <Compile Include="IRepositories\IClientImportFileLogRepository.cs" />
+    <Compile Include="IRepositories\IDBClientBonusRepository.cs" />
+    <Compile Include="IRepositories\IDBClientSettleBonusRepository.cs" />
+    <Compile Include="IRepositories\IDBClientSettlementRepository.cs" />
     <Compile Include="IRepositories\IDCInventoryDataRepository.cs" />
     <Compile Include="IRepositories\ITransportFeeStockOutRepository.cs" />
     <Compile Include="IRepositories\IAccountTypeRepository.cs" />
@@ -168,6 +171,9 @@
     <Compile Include="Repositories\DaBaoApplicationRepository.cs" />
     <Compile Include="Repositories\DaBaoRequestAppDetailRepository.cs" />
     <Compile Include="Repositories\DaBaoRequestApplicationRepository.cs" />
+    <Compile Include="Repositories\DBClientBonusRepository.cs" />
+    <Compile Include="Repositories\DBClientSettleBonusRepository.cs" />
+    <Compile Include="Repositories\DBClientSettlementRepository.cs" />
     <Compile Include="Repositories\DBContractHospitalRepository.cs" />
     <Compile Include="Repositories\DBContractRepository.cs" />
     <Compile Include="Repositories\DBContractTaskAssignmentRepository.cs" />

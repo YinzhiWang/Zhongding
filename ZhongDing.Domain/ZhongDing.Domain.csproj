@@ -134,6 +134,15 @@
     <Compile Include="Models\DaBaoRequestApplication.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DBClientBonus.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DBClientSettleBonus.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DBClientSettlement.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DBContract.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>

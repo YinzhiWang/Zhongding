@@ -218,10 +218,10 @@ namespace ZhongDing.Web.Views.Basics
 
         private void BindHospitalTypes()
         {
-            ddlHospitalType.Items.Add(new DropDownListItem(GlobalConst.DepartmentTypes.BASE_MEDICINE,
-                ((int)EDepartmentType.BaseMedicine).ToString()));
-            ddlHospitalType.Items.Add(new DropDownListItem(GlobalConst.DepartmentTypes.BUSINESS_MEDICINE,
-                ((int)EDepartmentType.BusinessMedicine).ToString()));
+            ddlHospitalType.Items.Add(new DropDownListItem(GlobalConst.HospitalTypes.BASE_MEDICINE,
+                ((int)EHospitalType.BaseMedicine).ToString()));
+            ddlHospitalType.Items.Add(new DropDownListItem(GlobalConst.HospitalTypes.BUSINESS_MEDICINE,
+                ((int)EHospitalType.BusinessMedicine).ToString()));
 
             ddlHospitalType.DataBind();
         }

@@ -34,7 +34,7 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual DBContract DBContract { get; set; }
         public virtual Hospital Hospital { get; set; }
+        public virtual DBContract DBContract { get; set; }
     }
 }

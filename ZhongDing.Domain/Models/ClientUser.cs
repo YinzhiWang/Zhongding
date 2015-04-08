@@ -17,7 +17,6 @@ namespace ZhongDing.Domain.Models
     {
         public ClientUser()
         {
-            this.DBContract = new HashSet<DBContract>();
             this.StockOut = new HashSet<StockOut>();
             this.ClientSaleApplication = new HashSet<ClientSaleApplication>();
             this.ClientRefundApplication = new HashSet<ClientRefundApplication>();
@@ -26,6 +25,8 @@ namespace ZhongDing.Domain.Models
             this.ClientFlowData = new HashSet<ClientFlowData>();
             this.ClientImportFileLog = new HashSet<ClientImportFileLog>();
             this.ClientInfo = new HashSet<ClientInfo>();
+            this.DBClientBonus = new HashSet<DBClientBonus>();
+            this.DBContract = new HashSet<DBContract>();
         }
     
         public int ID { get; set; }
@@ -46,7 +47,6 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ICollection<DBContract> DBContract { get; set; }
         public virtual ICollection<StockOut> StockOut { get; set; }
         public virtual ICollection<ClientSaleApplication> ClientSaleApplication { get; set; }
         public virtual ICollection<ClientRefundApplication> ClientRefundApplication { get; set; }
@@ -55,5 +55,7 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<ClientFlowData> ClientFlowData { get; set; }
         public virtual ICollection<ClientImportFileLog> ClientImportFileLog { get; set; }
         public virtual ICollection<ClientInfo> ClientInfo { get; set; }
+        public virtual ICollection<DBClientBonus> DBClientBonus { get; set; }
+        public virtual ICollection<DBContract> DBContract { get; set; }
     }
 }

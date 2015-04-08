@@ -66,7 +66,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<DepartmentProductSalesPlan> DepartmentProductSalesPlan { get; set; }
         public DbSet<SupplierContract> SupplierContract { get; set; }
         public DbSet<SupplierContractFile> SupplierContractFile { get; set; }
-        public DbSet<DBContract> DBContract { get; set; }
         public DbSet<DBContractHospital> DBContractHospital { get; set; }
         public DbSet<Hospital> Hospital { get; set; }
         public DbSet<WorkflowStepUser> WorkflowStepUser { get; set; }
@@ -122,5 +121,9 @@ namespace ZhongDing.Domain.Models
         public DbSet<DCImportFileLog> DCImportFileLog { get; set; }
         public DbSet<StockOutDetail> StockOutDetail { get; set; }
         public DbSet<ClientInfo> ClientInfo { get; set; }
+        public DbSet<DBClientBonus> DBClientBonus { get; set; }
+        public DbSet<DBClientSettleBonus> DBClientSettleBonus { get; set; }
+        public DbSet<DBClientSettlement> DBClientSettlement { get; set; }
+        public DbSet<DBContract> DBContract { get; set; }
     }
 }

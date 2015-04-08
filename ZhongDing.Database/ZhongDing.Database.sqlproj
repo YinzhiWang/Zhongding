@@ -397,6 +397,9 @@
     <Build Include="dbo\Stored Procedures\GetClientSaleAppReport.sql" />
     <Build Include="dbo\Stored Procedures\GetStockOutDetailReport.sql" />
     <Build Include="dbo\Stored Procedures\GetStockInDetailReport.sql" />
+    <Build Include="dbo\Tables\DBClientSettlement.sql" />
+    <Build Include="dbo\Tables\DBClientSettleBonus.sql" />
+    <Build Include="dbo\Tables\DBClientBonus.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />
