@@ -231,7 +231,11 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 发票管理
         /// </summary>
-        InvoiceManage = 150
+        InvoiceManage = 150,
+        /// <summary>
+        /// 供应商发票管理
+        /// </summary>
+        SupplierInvoiceManage
 
 
     }

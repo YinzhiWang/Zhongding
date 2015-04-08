@@ -48,7 +48,8 @@ AS
                             dbo.StockOutDetail.BatchNumber ,
                             dbo.StockOutDetail.ExpirationDate ,
                             dbo.StockOutDetail.SalesPrice ,
-                            dbo.StockOutDetail.TotalSalesAmount
+                            dbo.StockOutDetail.TotalSalesAmount,
+							dbo.StockOutDetail.ProcurePrice
                   FROM      dbo.StockOutDetail
                             JOIN dbo.StockOut ON dbo.StockOut.ID = dbo.StockOutDetail.StockOutID
                             JOIN dbo.SalesOrderApplication ON dbo.SalesOrderApplication.ID = dbo.StockOutDetail.SalesOrderApplicationID

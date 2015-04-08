@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div class="mws-form-row" style="padding-top: 0px; padding-left: 0px; padding-right: 1px;">
-                        <telerik:RadGrid ID="rgSalesOrderAppDetails" runat="server" PageSize="10"
+                        <telerik:RadGrid ID="rgSalesOrderAppDetails" runat="server" PageSize="10"  AllowCustomPaging="true"
                             AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false" AllowMultiRowSelection="true"
                             MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" Height="460" ShowHeader="true" ShowFooter="true"
                             ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"

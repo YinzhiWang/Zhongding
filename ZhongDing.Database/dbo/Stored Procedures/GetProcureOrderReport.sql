@@ -50,7 +50,8 @@ AS
                                      WHERE  dbo.StockInDetail.IsDeleted = 0
                                             AND dbo.StockInDetail.ProcureOrderAppDetailID = dbo.ProcureOrderAppDetail.ID
                                    ), 0) AS AlreadyInQtyProcurePrice ,
-                            dbo.ProductSpecification.NumberInLargePackage
+                            dbo.ProductSpecification.NumberInLargePackage,
+							ProcureOrderApplication.IsStop AS ProcureOrderApplicationIsStop
                   FROM      dbo.ProcureOrderAppDetail
                             JOIN dbo.ProcureOrderApplication ON dbo.ProcureOrderAppDetail.ProcureOrderApplicationID = dbo.ProcureOrderApplication.ID
                             JOIN dbo.Supplier ON dbo.ProcureOrderApplication.SupplierID = dbo.Supplier.ID

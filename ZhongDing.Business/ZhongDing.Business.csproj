@@ -59,6 +59,8 @@
     <Compile Include="IRepositories\IDBClientSettleBonusRepository.cs" />
     <Compile Include="IRepositories\IDBClientSettlementRepository.cs" />
     <Compile Include="IRepositories\IDCInventoryDataRepository.cs" />
+    <Compile Include="IRepositories\ISupplierInvoiceDetailRepository.cs" />
+    <Compile Include="IRepositories\ISupplierInvoiceRepository.cs" />
     <Compile Include="IRepositories\ITransportFeeStockOutRepository.cs" />
     <Compile Include="IRepositories\IAccountTypeRepository.cs" />
     <Compile Include="IRepositories\IApplicationNoteRepository.cs" />
@@ -221,6 +223,8 @@
     <Compile Include="Repositories\SupplierContractFileRepository.cs" />
     <Compile Include="Repositories\SupplierContractRepository.cs" />
     <Compile Include="Repositories\SupplierDeductionRepository.cs" />
+    <Compile Include="Repositories\SupplierInvoiceDetailRepository.cs" />
+    <Compile Include="Repositories\SupplierInvoiceRepository.cs" />
     <Compile Include="Repositories\SupplierRefundApplicationRepository.cs" />
     <Compile Include="Repositories\SupplierRepository.cs" />
     <Compile Include="Repositories\SupplierTaskAssignmentRepository.cs" />

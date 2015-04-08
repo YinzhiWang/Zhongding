@@ -50,5 +50,13 @@ namespace ZhongDing.Domain.UIObjects
 
         public string LicenseNumber { get; set; }
 
+        public string ProcureOrderApplicationOrderCode { get; set; }
+
+        public DateTime ProcureOrderApplicationOrderDate { get; set; }
+
+        public decimal NotTaxAmount { get; set; }
+
+
+        public decimal SupplierInvoiceDetailTotalAmount { get; set; }
     }
 }

@@ -90,6 +90,8 @@
           <EntitySet Name="SupplierContract" EntityType="DbModel.Store.SupplierContract" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierContractFile" EntityType="DbModel.Store.SupplierContractFile" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierDeduction" EntityType="DbModel.Store.SupplierDeduction" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SupplierInvoice" EntityType="DbModel.Store.SupplierInvoice" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SupplierInvoiceDetail" EntityType="DbModel.Store.SupplierInvoiceDetail" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierRefundApplication" EntityType="DbModel.Store.SupplierRefundApplication" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierTaskAssignment" EntityType="DbModel.Store.SupplierTaskAssignment" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="TransportCompany" EntityType="DbModel.Store.TransportCompany" store:Type="Tables" Schema="dbo" />
@@ -861,6 +863,22 @@
           <AssociationSet Name="FK_SupplierDeduction_SupplierRefundApplication" Association="DbModel.Store.FK_SupplierDeduction_SupplierRefundApplication">
             <End Role="SupplierRefundApplication" EntitySet="SupplierRefundApplication" />
             <End Role="SupplierDeduction" EntitySet="SupplierDeduction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierInvoice_CompanyID" Association="DbModel.Store.FK_SupplierInvoice_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="SupplierInvoice" EntitySet="SupplierInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierInvoice_SupplierID" Association="DbModel.Store.FK_SupplierInvoice_SupplierID">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="SupplierInvoice" EntitySet="SupplierInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierInvoiceDetail_ProcureOrderAppDetailID" Association="DbModel.Store.FK_SupplierInvoiceDetail_ProcureOrderAppDetailID">
+            <End Role="ProcureOrderAppDetail" EntitySet="ProcureOrderAppDetail" />
+            <End Role="SupplierInvoiceDetail" EntitySet="SupplierInvoiceDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierInvoiceDetail_SupplierInvoiceID" Association="DbModel.Store.FK_SupplierInvoiceDetail_SupplierInvoiceID">
+            <End Role="SupplierInvoice" EntitySet="SupplierInvoice" />
+            <End Role="SupplierInvoiceDetail" EntitySet="SupplierInvoiceDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_SupplierRefundApplication_Company" Association="DbModel.Store.FK_SupplierRefundApplication_Company">
             <End Role="Company" EntitySet="Company" />
@@ -2284,6 +2302,36 @@
           <Property Name="Amount" Type="money" Nullable="false" />
           <Property Name="DeductedDate" Type="datetime" />
           <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="SupplierInvoice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyID" Type="int" Nullable="false" />
+          <Property Name="SupplierID" Type="int" Nullable="false" />
+          <Property Name="InvoiceDate" Type="datetime" Nullable="false" />
+          <Property Name="InvoiceNumber" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="SupplierInvoiceDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierInvoiceID" Type="int" Nullable="false" />
+          <Property Name="ProcureOrderAppDetailID" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
@@ -4793,6 +4841,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SupplierInvoice_CompanyID">
+          <End Role="Company" Type="DbModel.Store.Company" Multiplicity="1" />
+          <End Role="SupplierInvoice" Type="DbModel.Store.SupplierInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierInvoice">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierInvoice_SupplierID">
+          <End Role="Supplier" Type="DbModel.Store.Supplier" Multiplicity="1" />
+          <End Role="SupplierInvoice" Type="DbModel.Store.SupplierInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierInvoice">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierInvoiceDetail_ProcureOrderAppDetailID">
+          <End Role="ProcureOrderAppDetail" Type="DbModel.Store.ProcureOrderAppDetail" Multiplicity="1" />
+          <End Role="SupplierInvoiceDetail" Type="DbModel.Store.SupplierInvoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProcureOrderAppDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierInvoiceDetail">
+              <PropertyRef Name="ProcureOrderAppDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierInvoiceDetail_SupplierInvoiceID">
+          <End Role="SupplierInvoice" Type="DbModel.Store.SupplierInvoice" Multiplicity="1" />
+          <End Role="SupplierInvoiceDetail" Type="DbModel.Store.SupplierInvoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplierInvoice">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierInvoiceDetail">
+              <PropertyRef Name="SupplierInvoiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SupplierRefundApplication_Company">
           <End Role="Company" Type="DbModel.Store.Company" Multiplicity="1" />
           <End Role="SupplierRefundApplication" Type="DbModel.Store.SupplierRefundApplication" Multiplicity="*" />
@@ -5990,6 +6086,24 @@
             <End Role="DBContract" EntitySet="DBContract" />
             <End Role="DCFlowDataDetail" EntitySet="DCFlowDataDetail" />
           </AssociationSet>
+          <EntitySet Name="SupplierInvoice" EntityType="DbModel.SupplierInvoice" />
+          <EntitySet Name="SupplierInvoiceDetail" EntityType="DbModel.SupplierInvoiceDetail" />
+          <AssociationSet Name="FK_SupplierInvoice_CompanyID" Association="DbModel.FK_SupplierInvoice_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="SupplierInvoice" EntitySet="SupplierInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierInvoiceDetail_ProcureOrderAppDetailID" Association="DbModel.FK_SupplierInvoiceDetail_ProcureOrderAppDetailID">
+            <End Role="ProcureOrderAppDetail" EntitySet="ProcureOrderAppDetail" />
+            <End Role="SupplierInvoiceDetail" EntitySet="SupplierInvoiceDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierInvoice_SupplierID" Association="DbModel.FK_SupplierInvoice_SupplierID">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="SupplierInvoice" EntitySet="SupplierInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierInvoiceDetail_SupplierInvoiceID" Association="DbModel.FK_SupplierInvoiceDetail_SupplierInvoiceID">
+            <End Role="SupplierInvoice" EntitySet="SupplierInvoice" />
+            <End Role="SupplierInvoiceDetail" EntitySet="SupplierInvoiceDetail" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -6164,6 +6278,7 @@
           <NavigationProperty Name="FactoryManagerRefundApplication" Relationship="DbModel.FK_FactoryManagerRefundApplication_Company" FromRole="Company" ToRole="FactoryManagerRefundApplication" />
           <NavigationProperty Name="SupplierRefundApplication" Relationship="DbModel.FK_SupplierRefundApplication_Company" FromRole="Company" ToRole="SupplierRefundApplication" />
           <NavigationProperty Name="ClientTaskRefundApplication" Relationship="DbModel.FK_ClientTaskRefundApplication_Company" FromRole="Company" ToRole="ClientTaskRefundApplication" />
+          <NavigationProperty Name="SupplierInvoice" Relationship="DbModel.FK_SupplierInvoice_CompanyID" FromRole="Company" ToRole="SupplierInvoice" />
         </EntityType>
         <EntityType Name="OwnerType">
           <Key>
@@ -6302,6 +6417,7 @@
           <NavigationProperty Name="StockIn" Relationship="DbModel.FK_StockIn_Supplier" FromRole="Supplier" ToRole="StockIn" />
           <NavigationProperty Name="SupplierDeduction" Relationship="DbModel.FK_SupplierDeduction_Supplier" FromRole="Supplier" ToRole="SupplierDeduction" />
           <NavigationProperty Name="SupplierRefundApplication" Relationship="DbModel.FK_SupplierRefundApplication_Supplier" FromRole="Supplier" ToRole="SupplierRefundApplication" />
+          <NavigationProperty Name="SupplierInvoice" Relationship="DbModel.FK_SupplierInvoice_SupplierID" FromRole="Supplier" ToRole="SupplierInvoice" />
         </EntityType>
         <EntityType Name="SupplierBankAccount">
           <Key>
@@ -7488,6 +7604,7 @@
           <NavigationProperty Name="ProcureOrderApplication" Relationship="DbModel.FK_ProcureOrderAppDetail_ProcureOrderApplication" FromRole="ProcureOrderAppDetail" ToRole="ProcureOrderApplication" />
           <NavigationProperty Name="StockInDetail" Relationship="DbModel.FK_StockInDetail_ProcureOrderAppDetail" FromRole="ProcureOrderAppDetail" ToRole="StockInDetail" />
           <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_ProcureOrderAppDetail_ProductSpecification" FromRole="ProcureOrderAppDetail" ToRole="ProductSpecification" />
+          <NavigationProperty Name="SupplierInvoiceDetail" Relationship="DbModel.FK_SupplierInvoiceDetail_ProcureOrderAppDetailID" FromRole="ProcureOrderAppDetail" ToRole="SupplierInvoiceDetail" />
         </EntityType>
         <Association Name="FK_ProcureOrderAppDetail_Product">
           <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
@@ -10509,6 +10626,89 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SupplierInvoice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="CompanyID" Nullable="false" />
+          <Property Type="Int32" Name="SupplierID" Nullable="false" />
+          <Property Type="DateTime" Name="InvoiceDate" Nullable="false" Precision="3" />
+          <Property Type="String" Name="InvoiceNumber" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Company" Relationship="DbModel.FK_SupplierInvoice_CompanyID" FromRole="SupplierInvoice" ToRole="Company" />
+          <NavigationProperty Name="Supplier" Relationship="DbModel.FK_SupplierInvoice_SupplierID" FromRole="SupplierInvoice" ToRole="Supplier" />
+          <NavigationProperty Name="SupplierInvoiceDetail" Relationship="DbModel.FK_SupplierInvoiceDetail_SupplierInvoiceID" FromRole="SupplierInvoice" ToRole="SupplierInvoiceDetail" />
+        </EntityType>
+        <EntityType Name="SupplierInvoiceDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="SupplierInvoiceID" Nullable="false" />
+          <Property Type="Int32" Name="ProcureOrderAppDetailID" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="ProcureOrderAppDetail" Relationship="DbModel.FK_SupplierInvoiceDetail_ProcureOrderAppDetailID" FromRole="SupplierInvoiceDetail" ToRole="ProcureOrderAppDetail" />
+          <NavigationProperty Name="SupplierInvoice" Relationship="DbModel.FK_SupplierInvoiceDetail_SupplierInvoiceID" FromRole="SupplierInvoiceDetail" ToRole="SupplierInvoice" />
+        </EntityType>
+        <Association Name="FK_SupplierInvoice_CompanyID">
+          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="DbModel.SupplierInvoice" Role="SupplierInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierInvoice">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierInvoiceDetail_ProcureOrderAppDetailID">
+          <End Type="DbModel.ProcureOrderAppDetail" Role="ProcureOrderAppDetail" Multiplicity="1" />
+          <End Type="DbModel.SupplierInvoiceDetail" Role="SupplierInvoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProcureOrderAppDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierInvoiceDetail">
+              <PropertyRef Name="ProcureOrderAppDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierInvoice_SupplierID">
+          <End Type="DbModel.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="DbModel.SupplierInvoice" Role="SupplierInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierInvoice">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierInvoiceDetail_SupplierInvoiceID">
+          <End Type="DbModel.SupplierInvoice" Role="SupplierInvoice" Multiplicity="1" />
+          <End Type="DbModel.SupplierInvoiceDetail" Role="SupplierInvoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplierInvoice">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierInvoiceDetail">
+              <PropertyRef Name="SupplierInvoiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -12189,6 +12389,38 @@
                 <ScalarProperty Name="IsTempContract" ColumnName="IsTempContract" />
                 <ScalarProperty Name="ClientUserID" ColumnName="ClientUserID" />
                 <ScalarProperty Name="ContractCode" ColumnName="ContractCode" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplierInvoice">
+            <EntityTypeMapping TypeName="DbModel.SupplierInvoice">
+              <MappingFragment StoreEntitySet="SupplierInvoice">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplierInvoiceDetail">
+            <EntityTypeMapping TypeName="DbModel.SupplierInvoiceDetail">
+              <MappingFragment StoreEntitySet="SupplierInvoiceDetail">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="ProcureOrderAppDetailID" ColumnName="ProcureOrderAppDetailID" />
+                <ScalarProperty Name="SupplierInvoiceID" ColumnName="SupplierInvoiceID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

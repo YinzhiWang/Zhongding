@@ -125,5 +125,7 @@ namespace ZhongDing.Domain.Models
         public DbSet<DBClientSettleBonus> DBClientSettleBonus { get; set; }
         public DbSet<DBClientSettlement> DBClientSettlement { get; set; }
         public DbSet<DBContract> DBContract { get; set; }
+        public DbSet<SupplierInvoice> SupplierInvoice { get; set; }
+        public DbSet<SupplierInvoiceDetail> SupplierInvoiceDetail { get; set; }
     }
 }

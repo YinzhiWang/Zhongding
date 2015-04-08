@@ -9,7 +9,7 @@ using ZhongDing.Domain.UISearchObjects;
 
 namespace ZhongDing.Business.IRepositories
 {
-    public interface IProcureOrderAppDetailRepository: IBaseRepository<ProcureOrderAppDetail>
+    public interface IProcureOrderAppDetailRepository : IBaseRepository<ProcureOrderAppDetail>
     {
         /// <summary>
         /// 获取UI List，不分页
@@ -47,5 +47,15 @@ namespace ZhongDing.Business.IRepositories
         /// <param name="totalRecords">总记录数.</param>
         /// <returns>IList{UIProcureOrderAppDetail}.</returns>
         IList<UIProcureOrderAppDetail> GetToBeInUIList(UISearchProcureOrderAppDetail uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
+        /// <summary>
+        /// 获取供应商发票 新增 选择货品的 List
+        /// </summary>
+        /// <param name="uiSearchObj"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="totalRecords"></param>
+        /// <returns></returns>
+        IList<UIProcureOrderAppDetail> GetSupplierInvoiceChooseProcureOrderAppDetailUIList(UISearchProcureOrderAppDetail uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
+
     }
 }

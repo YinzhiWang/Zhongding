@@ -106,7 +106,7 @@
                                 <HeaderStyle Width="100px" />
                             </telerik:GridBoundColumn>
 
-                            <telerik:GridBoundColumn UniqueName="StockOutCode" HeaderText="出库单号" DataField="StockOutCode">
+                            <telerik:GridBoundColumn UniqueName="StockOutCode" HeaderText="出库单    号" DataField="StockOutCode">
                                 <ItemStyle HorizontalAlign="Left" Width="180px" />
                                 <HeaderStyle Width="180px" />
                             </telerik:GridBoundColumn>
