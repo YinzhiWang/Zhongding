@@ -34,6 +34,7 @@
           <EntitySet Name="DaBaoRequestAppDetail" EntityType="DbModel.Store.DaBaoRequestAppDetail" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DaBaoRequestApplication" EntityType="DbModel.Store.DaBaoRequestApplication" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DBClientBonus" EntityType="DbModel.Store.DBClientBonus" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DBClientBonusHospital" EntityType="DbModel.Store.DBClientBonusHospital" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DBClientSettleBonus" EntityType="DbModel.Store.DBClientSettleBonus" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DBClientSettlement" EntityType="DbModel.Store.DBClientSettlement" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DBContract" EntityType="DbModel.Store.DBContract" store:Type="Tables" Schema="dbo" />
@@ -420,10 +421,6 @@
             <End Role="DBContract" EntitySet="DBContract" />
             <End Role="DBClientBonus" EntitySet="DBClientBonus" />
           </AssociationSet>
-          <AssociationSet Name="FK_DBClientBonus_Hospital" Association="DbModel.Store.FK_DBClientBonus_Hospital">
-            <End Role="Hospital" EntitySet="Hospital" />
-            <End Role="DBClientBonus" EntitySet="DBClientBonus" />
-          </AssociationSet>
           <AssociationSet Name="FK_DBClientBonus_Product" Association="DbModel.Store.FK_DBClientBonus_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="DBClientBonus" EntitySet="DBClientBonus" />
@@ -431,6 +428,14 @@
           <AssociationSet Name="FK_DBClientBonus_ProductSpecification" Association="DbModel.Store.FK_DBClientBonus_ProductSpecification">
             <End Role="ProductSpecification" EntitySet="ProductSpecification" />
             <End Role="DBClientBonus" EntitySet="DBClientBonus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DBClientBonusHospital_DBClientBonus" Association="DbModel.Store.FK_DBClientBonusHospital_DBClientBonus">
+            <End Role="DBClientBonus" EntitySet="DBClientBonus" />
+            <End Role="DBClientBonusHospital" EntitySet="DBClientBonusHospital" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DBClientBonusHospital_Hospital" Association="DbModel.Store.FK_DBClientBonusHospital_Hospital">
+            <End Role="Hospital" EntitySet="Hospital" />
+            <End Role="DBClientBonusHospital" EntitySet="DBClientBonusHospital" />
           </AssociationSet>
           <AssociationSet Name="FK_DBClientSettleBonus_DBClientBonus" Association="DbModel.Store.FK_DBClientSettleBonus_DBClientBonus">
             <End Role="DBClientBonus" EntitySet="DBClientBonus" />
@@ -1441,13 +1446,12 @@
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="DBContractID" Type="int" Nullable="false" />
           <Property Name="ClientUserID" Type="int" Nullable="false" />
-          <Property Name="HospitalID" Type="int" Nullable="false" />
           <Property Name="SettlementDate" Type="datetime" Nullable="false" />
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="ProductSpecificationID" Type="int" Nullable="false" />
           <Property Name="PromotionExpense" Type="money" />
           <Property Name="SaleQty" Type="int" Nullable="false" />
-          <Property Name="CommisionAmount" Type="money" />
+          <Property Name="BonusAmount" Type="money" />
           <Property Name="PerformanceAmount" Type="money" />
           <Property Name="IsSettled" Type="bit" />
           <Property Name="SettledDate" Type="datetime" />
@@ -1456,6 +1460,16 @@
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="DBClientBonusHospital">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DBClientBonusID" Type="int" Nullable="false" />
+          <Property Name="HospitalID" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="DBClientSettleBonus">
           <Key>
@@ -1503,7 +1517,7 @@
           <Property Name="InChargeUserID" Type="int" />
           <Property Name="ProductID" Type="int" />
           <Property Name="ProductSpecificationID" Type="int" />
-          <Property Name="PromotionExpense" Type="float" />
+          <Property Name="PromotionExpense" Type="money" />
           <Property Name="ContractExpDate" Type="datetime" />
           <Property Name="IsNew" Type="bit" />
           <Property Name="HospitalTypeID" Type="int" />
@@ -3509,18 +3523,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DBClientBonus_Hospital">
-          <End Role="Hospital" Type="DbModel.Store.Hospital" Multiplicity="1" />
-          <End Role="DBClientBonus" Type="DbModel.Store.DBClientBonus" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Hospital">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DBClientBonus">
-              <PropertyRef Name="HospitalID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DBClientBonus_Product">
           <End Role="Product" Type="DbModel.Store.Product" Multiplicity="1" />
           <End Role="DBClientBonus" Type="DbModel.Store.DBClientBonus" Multiplicity="*" />
@@ -3542,6 +3544,30 @@
             </Principal>
             <Dependent Role="DBClientBonus">
               <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DBClientBonusHospital_DBClientBonus">
+          <End Role="DBClientBonus" Type="DbModel.Store.DBClientBonus" Multiplicity="1" />
+          <End Role="DBClientBonusHospital" Type="DbModel.Store.DBClientBonusHospital" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DBClientBonus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBClientBonusHospital">
+              <PropertyRef Name="DBClientBonusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DBClientBonusHospital_Hospital">
+          <End Role="Hospital" Type="DbModel.Store.Hospital" Multiplicity="1" />
+          <End Role="DBClientBonusHospital" Type="DbModel.Store.DBClientBonusHospital" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBClientBonusHospital">
+              <PropertyRef Name="HospitalID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6010,29 +6036,8 @@
             <End Role="ClientInfo" EntitySet="ClientInfo" />
             <End Role="ClientInfoProductSetting" EntitySet="ClientInfoProductSetting" />
           </AssociationSet>
-          <EntitySet Name="DBClientBonus" EntityType="DbModel.DBClientBonus" />
           <EntitySet Name="DBClientSettleBonus" EntityType="DbModel.DBClientSettleBonus" />
           <EntitySet Name="DBClientSettlement" EntityType="DbModel.DBClientSettlement" />
-          <AssociationSet Name="FK_DBClientBonus_ClientUser" Association="DbModel.FK_DBClientBonus_ClientUser">
-            <End Role="ClientUser" EntitySet="ClientUser" />
-            <End Role="DBClientBonus" EntitySet="DBClientBonus" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DBClientBonus_Hospital" Association="DbModel.FK_DBClientBonus_Hospital">
-            <End Role="Hospital" EntitySet="Hospital" />
-            <End Role="DBClientBonus" EntitySet="DBClientBonus" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DBClientBonus_Product" Association="DbModel.FK_DBClientBonus_Product">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="DBClientBonus" EntitySet="DBClientBonus" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DBClientBonus_ProductSpecification" Association="DbModel.FK_DBClientBonus_ProductSpecification">
-            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
-            <End Role="DBClientBonus" EntitySet="DBClientBonus" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DBClientSettleBonus_DBClientBonus" Association="DbModel.FK_DBClientSettleBonus_DBClientBonus">
-            <End Role="DBClientBonus" EntitySet="DBClientBonus" />
-            <End Role="DBClientSettleBonus" EntitySet="DBClientSettleBonus" />
-          </AssociationSet>
           <AssociationSet Name="FK_DBClientSettleBonus_DBClientSettlement" Association="DbModel.FK_DBClientSettleBonus_DBClientSettlement">
             <End Role="DBClientSettlement" EntitySet="DBClientSettlement" />
             <End Role="DBClientSettleBonus" EntitySet="DBClientSettleBonus" />
@@ -6045,7 +6050,31 @@
             <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
             <End Role="DBClientSettlement" EntitySet="DBClientSettlement" />
           </AssociationSet>
+          <EntitySet Name="SupplierInvoice" EntityType="DbModel.SupplierInvoice" />
+          <EntitySet Name="SupplierInvoiceDetail" EntityType="DbModel.SupplierInvoiceDetail" />
+          <AssociationSet Name="FK_SupplierInvoice_CompanyID" Association="DbModel.FK_SupplierInvoice_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="SupplierInvoice" EntitySet="SupplierInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierInvoiceDetail_ProcureOrderAppDetailID" Association="DbModel.FK_SupplierInvoiceDetail_ProcureOrderAppDetailID">
+            <End Role="ProcureOrderAppDetail" EntitySet="ProcureOrderAppDetail" />
+            <End Role="SupplierInvoiceDetail" EntitySet="SupplierInvoiceDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierInvoice_SupplierID" Association="DbModel.FK_SupplierInvoice_SupplierID">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="SupplierInvoice" EntitySet="SupplierInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierInvoiceDetail_SupplierInvoiceID" Association="DbModel.FK_SupplierInvoiceDetail_SupplierInvoiceID">
+            <End Role="SupplierInvoice" EntitySet="SupplierInvoice" />
+            <End Role="SupplierInvoiceDetail" EntitySet="SupplierInvoiceDetail" />
+          </AssociationSet>
+          <EntitySet Name="DBClientBonus" EntityType="DbModel.DBClientBonus" />
+          <EntitySet Name="DBClientBonusHospital" EntityType="DbModel.DBClientBonusHospital" />
           <EntitySet Name="DBContract" EntityType="DbModel.DBContract" />
+          <AssociationSet Name="FK_DBClientBonus_ClientUser" Association="DbModel.FK_DBClientBonus_ClientUser">
+            <End Role="ClientUser" EntitySet="ClientUser" />
+            <End Role="DBClientBonus" EntitySet="DBClientBonus" />
+          </AssociationSet>
           <AssociationSet Name="FK_DBContract_ClientUser" Association="DbModel.FK_DBContract_ClientUser">
             <End Role="ClientUser" EntitySet="ClientUser" />
             <End Role="DBContract" EntitySet="DBContract" />
@@ -6053,6 +6082,26 @@
           <AssociationSet Name="FK_DBClientBonus_DBContract" Association="DbModel.FK_DBClientBonus_DBContract">
             <End Role="DBContract" EntitySet="DBContract" />
             <End Role="DBClientBonus" EntitySet="DBClientBonus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DBClientBonus_Product" Association="DbModel.FK_DBClientBonus_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="DBClientBonus" EntitySet="DBClientBonus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DBClientBonus_ProductSpecification" Association="DbModel.FK_DBClientBonus_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="DBClientBonus" EntitySet="DBClientBonus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DBClientBonusHospital_DBClientBonus" Association="DbModel.FK_DBClientBonusHospital_DBClientBonus">
+            <End Role="DBClientBonus" EntitySet="DBClientBonus" />
+            <End Role="DBClientBonusHospital" EntitySet="DBClientBonusHospital" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DBClientSettleBonus_DBClientBonus" Association="DbModel.FK_DBClientSettleBonus_DBClientBonus">
+            <End Role="DBClientBonus" EntitySet="DBClientBonus" />
+            <End Role="DBClientSettleBonus" EntitySet="DBClientSettleBonus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DBClientBonusHospital_Hospital" Association="DbModel.FK_DBClientBonusHospital_Hospital">
+            <End Role="Hospital" EntitySet="Hospital" />
+            <End Role="DBClientBonusHospital" EntitySet="DBClientBonusHospital" />
           </AssociationSet>
           <AssociationSet Name="FK_DBContract_Department" Association="DbModel.FK_DBContract_Department">
             <End Role="Department" EntitySet="Department" />
@@ -6085,24 +6134,6 @@
           <AssociationSet Name="FK_DCFlowDataDetail_DBContract" Association="DbModel.FK_DCFlowDataDetail_DBContract">
             <End Role="DBContract" EntitySet="DBContract" />
             <End Role="DCFlowDataDetail" EntitySet="DCFlowDataDetail" />
-          </AssociationSet>
-          <EntitySet Name="SupplierInvoice" EntityType="DbModel.SupplierInvoice" />
-          <EntitySet Name="SupplierInvoiceDetail" EntityType="DbModel.SupplierInvoiceDetail" />
-          <AssociationSet Name="FK_SupplierInvoice_CompanyID" Association="DbModel.FK_SupplierInvoice_CompanyID">
-            <End Role="Company" EntitySet="Company" />
-            <End Role="SupplierInvoice" EntitySet="SupplierInvoice" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SupplierInvoiceDetail_ProcureOrderAppDetailID" Association="DbModel.FK_SupplierInvoiceDetail_ProcureOrderAppDetailID">
-            <End Role="ProcureOrderAppDetail" EntitySet="ProcureOrderAppDetail" />
-            <End Role="SupplierInvoiceDetail" EntitySet="SupplierInvoiceDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SupplierInvoice_SupplierID" Association="DbModel.FK_SupplierInvoice_SupplierID">
-            <End Role="Supplier" EntitySet="Supplier" />
-            <End Role="SupplierInvoice" EntitySet="SupplierInvoice" />
-          </AssociationSet>
-          <AssociationSet Name="FK_SupplierInvoiceDetail_SupplierInvoiceID" Association="DbModel.FK_SupplierInvoiceDetail_SupplierInvoiceID">
-            <End Role="SupplierInvoice" EntitySet="SupplierInvoice" />
-            <End Role="SupplierInvoiceDetail" EntitySet="SupplierInvoiceDetail" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
@@ -7435,7 +7466,7 @@
           <NavigationProperty Name="DCFlowData" Relationship="DbModel.FK_DCFlowData_Hospital" FromRole="Hospital" ToRole="DCFlowData" />
           <NavigationProperty Name="DCFlowDataDetail" Relationship="DbModel.FK_DCFlowDataDetail_Hospital" FromRole="Hospital" ToRole="DCFlowDataDetail" />
           <NavigationProperty Name="ClientFlowData" Relationship="DbModel.FK_ClientFlowData_Hospital" FromRole="Hospital" ToRole="ClientFlowData" />
-          <NavigationProperty Name="DBClientBonus" Relationship="DbModel.FK_DBClientBonus_Hospital" FromRole="Hospital" ToRole="DBClientBonus" />
+          <NavigationProperty Name="DBClientBonusHospital" Relationship="DbModel.FK_DBClientBonusHospital_Hospital" FromRole="Hospital" ToRole="DBClientBonusHospital" />
         </EntityType>
         <Association Name="FK_DBContractHospital_Hospital">
           <End Type="DbModel.Hospital" Role="Hospital" Multiplicity="1" />
@@ -10309,35 +10340,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="DBClientBonus">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="DBContractID" Nullable="false" />
-          <Property Type="Int32" Name="ClientUserID" Nullable="false" />
-          <Property Type="Int32" Name="HospitalID" Nullable="false" />
-          <Property Type="DateTime" Name="SettlementDate" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="ProductID" Nullable="false" />
-          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
-          <Property Type="Decimal" Name="PromotionExpense" Precision="19" Scale="4" />
-          <Property Type="Int32" Name="SaleQty" Nullable="false" />
-          <Property Type="Decimal" Name="CommisionAmount" Precision="19" Scale="4" />
-          <Property Type="Decimal" Name="PerformanceAmount" Precision="19" Scale="4" />
-          <Property Type="Boolean" Name="IsSettled" />
-          <Property Type="DateTime" Name="SettledDate" Precision="3" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="ClientUser" Relationship="DbModel.FK_DBClientBonus_ClientUser" FromRole="DBClientBonus" ToRole="ClientUser" />
-          <NavigationProperty Name="Hospital" Relationship="DbModel.FK_DBClientBonus_Hospital" FromRole="DBClientBonus" ToRole="Hospital" />
-          <NavigationProperty Name="Product" Relationship="DbModel.FK_DBClientBonus_Product" FromRole="DBClientBonus" ToRole="Product" />
-          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_DBClientBonus_ProductSpecification" FromRole="DBClientBonus" ToRole="ProductSpecification" />
-          <NavigationProperty Name="DBClientSettleBonus" Relationship="DbModel.FK_DBClientSettleBonus_DBClientBonus" FromRole="DBClientBonus" ToRole="DBClientSettleBonus" />
-          <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBClientBonus_DBContract" FromRole="DBClientBonus" ToRole="DBContract" />
-        </EntityType>
         <EntityType Name="DBClientSettleBonus">
           <Key>
             <PropertyRef Name="ID" />
@@ -10355,8 +10357,8 @@
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="DBClientBonus" Relationship="DbModel.FK_DBClientSettleBonus_DBClientBonus" FromRole="DBClientSettleBonus" ToRole="DBClientBonus" />
           <NavigationProperty Name="DBClientSettlement" Relationship="DbModel.FK_DBClientSettleBonus_DBClientSettlement" FromRole="DBClientSettleBonus" ToRole="DBClientSettlement" />
+          <NavigationProperty Name="DBClientBonus" Relationship="DbModel.FK_DBClientSettleBonus_DBClientBonus" FromRole="DBClientSettleBonus" ToRole="DBClientBonus" />
         </EntityType>
         <EntityType Name="DBClientSettlement">
           <Key>
@@ -10377,66 +10379,6 @@
           <NavigationProperty Name="HospitalType" Relationship="DbModel.FK_DBClientSettlement_HospitalType" FromRole="DBClientSettlement" ToRole="HospitalType" />
           <NavigationProperty Name="WorkflowStatus" Relationship="DbModel.FK_DBClientSettlement_WorkflowStatus" FromRole="DBClientSettlement" ToRole="WorkflowStatus" />
         </EntityType>
-        <Association Name="FK_DBClientBonus_ClientUser">
-          <End Type="DbModel.ClientUser" Role="ClientUser" Multiplicity="1" />
-          <End Type="DbModel.DBClientBonus" Role="DBClientBonus" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ClientUser">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DBClientBonus">
-              <PropertyRef Name="ClientUserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DBClientBonus_Hospital">
-          <End Type="DbModel.Hospital" Role="Hospital" Multiplicity="1" />
-          <End Type="DbModel.DBClientBonus" Role="DBClientBonus" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Hospital">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DBClientBonus">
-              <PropertyRef Name="HospitalID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DBClientBonus_Product">
-          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
-          <End Type="DbModel.DBClientBonus" Role="DBClientBonus" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DBClientBonus">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DBClientBonus_ProductSpecification">
-          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
-          <End Type="DbModel.DBClientBonus" Role="DBClientBonus" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProductSpecification">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DBClientBonus">
-              <PropertyRef Name="ProductSpecificationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DBClientSettleBonus_DBClientBonus">
-          <End Type="DbModel.DBClientBonus" Role="DBClientBonus" Multiplicity="1" />
-          <End Type="DbModel.DBClientSettleBonus" Role="DBClientSettleBonus" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DBClientBonus">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DBClientSettleBonus">
-              <PropertyRef Name="DBClientBonusID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DBClientSettleBonus_DBClientSettlement">
           <End Type="DbModel.DBClientSettlement" Role="DBClientSettlement" Multiplicity="1" />
           <End Type="DbModel.DBClientSettleBonus" Role="DBClientSettleBonus" Multiplicity="*" />
@@ -10473,6 +10415,129 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SupplierInvoice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="CompanyID" Nullable="false" />
+          <Property Type="Int32" Name="SupplierID" Nullable="false" />
+          <Property Type="DateTime" Name="InvoiceDate" Nullable="false" Precision="3" />
+          <Property Type="String" Name="InvoiceNumber" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Company" Relationship="DbModel.FK_SupplierInvoice_CompanyID" FromRole="SupplierInvoice" ToRole="Company" />
+          <NavigationProperty Name="Supplier" Relationship="DbModel.FK_SupplierInvoice_SupplierID" FromRole="SupplierInvoice" ToRole="Supplier" />
+          <NavigationProperty Name="SupplierInvoiceDetail" Relationship="DbModel.FK_SupplierInvoiceDetail_SupplierInvoiceID" FromRole="SupplierInvoice" ToRole="SupplierInvoiceDetail" />
+        </EntityType>
+        <EntityType Name="SupplierInvoiceDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="SupplierInvoiceID" Nullable="false" />
+          <Property Type="Int32" Name="ProcureOrderAppDetailID" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="ProcureOrderAppDetail" Relationship="DbModel.FK_SupplierInvoiceDetail_ProcureOrderAppDetailID" FromRole="SupplierInvoiceDetail" ToRole="ProcureOrderAppDetail" />
+          <NavigationProperty Name="SupplierInvoice" Relationship="DbModel.FK_SupplierInvoiceDetail_SupplierInvoiceID" FromRole="SupplierInvoiceDetail" ToRole="SupplierInvoice" />
+        </EntityType>
+        <Association Name="FK_SupplierInvoice_CompanyID">
+          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="DbModel.SupplierInvoice" Role="SupplierInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierInvoice">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierInvoiceDetail_ProcureOrderAppDetailID">
+          <End Type="DbModel.ProcureOrderAppDetail" Role="ProcureOrderAppDetail" Multiplicity="1" />
+          <End Type="DbModel.SupplierInvoiceDetail" Role="SupplierInvoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProcureOrderAppDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierInvoiceDetail">
+              <PropertyRef Name="ProcureOrderAppDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierInvoice_SupplierID">
+          <End Type="DbModel.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="DbModel.SupplierInvoice" Role="SupplierInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierInvoice">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierInvoiceDetail_SupplierInvoiceID">
+          <End Type="DbModel.SupplierInvoice" Role="SupplierInvoice" Multiplicity="1" />
+          <End Type="DbModel.SupplierInvoiceDetail" Role="SupplierInvoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SupplierInvoice">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierInvoiceDetail">
+              <PropertyRef Name="SupplierInvoiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DBClientBonus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DBContractID" Nullable="false" />
+          <Property Type="Int32" Name="ClientUserID" Nullable="false" />
+          <Property Type="DateTime" Name="SettlementDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
+          <Property Type="Decimal" Name="PromotionExpense" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="SaleQty" Nullable="false" />
+          <Property Type="Decimal" Name="BonusAmount" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="PerformanceAmount" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="IsSettled" />
+          <Property Type="DateTime" Name="SettledDate" Precision="3" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="ClientUser" Relationship="DbModel.FK_DBClientBonus_ClientUser" FromRole="DBClientBonus" ToRole="ClientUser" />
+          <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBClientBonus_DBContract" FromRole="DBClientBonus" ToRole="DBContract" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_DBClientBonus_Product" FromRole="DBClientBonus" ToRole="Product" />
+          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_DBClientBonus_ProductSpecification" FromRole="DBClientBonus" ToRole="ProductSpecification" />
+          <NavigationProperty Name="DBClientBonusHospital" Relationship="DbModel.FK_DBClientBonusHospital_DBClientBonus" FromRole="DBClientBonus" ToRole="DBClientBonusHospital" />
+          <NavigationProperty Name="DBClientSettleBonus" Relationship="DbModel.FK_DBClientSettleBonus_DBClientBonus" FromRole="DBClientBonus" ToRole="DBClientSettleBonus" />
+        </EntityType>
+        <EntityType Name="DBClientBonusHospital">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DBClientBonusID" Nullable="false" />
+          <Property Type="Int32" Name="HospitalID" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <NavigationProperty Name="DBClientBonus" Relationship="DbModel.FK_DBClientBonusHospital_DBClientBonus" FromRole="DBClientBonusHospital" ToRole="DBClientBonus" />
+          <NavigationProperty Name="Hospital" Relationship="DbModel.FK_DBClientBonusHospital_Hospital" FromRole="DBClientBonusHospital" ToRole="Hospital" />
+        </EntityType>
         <EntityType Name="DBContract">
           <Key>
             <PropertyRef Name="ID" />
@@ -10485,7 +10550,7 @@
           <Property Type="Int32" Name="InChargeUserID" />
           <Property Type="Int32" Name="ProductID" />
           <Property Type="Int32" Name="ProductSpecificationID" />
-          <Property Type="Double" Name="PromotionExpense" />
+          <Property Type="Decimal" Name="PromotionExpense" Precision="19" Scale="4" />
           <Property Type="DateTime" Name="ContractExpDate" Precision="3" />
           <Property Type="Boolean" Name="IsNew" />
           <Property Type="Int32" Name="HospitalTypeID" />
@@ -10506,6 +10571,18 @@
           <NavigationProperty Name="DBContractTaskAssignment" Relationship="DbModel.FK_DBContractTaskAssignment_DBContract" FromRole="DBContract" ToRole="DBContractTaskAssignment" />
           <NavigationProperty Name="DCFlowDataDetail" Relationship="DbModel.FK_DCFlowDataDetail_DBContract" FromRole="DBContract" ToRole="DCFlowDataDetail" />
         </EntityType>
+        <Association Name="FK_DBClientBonus_ClientUser">
+          <End Type="DbModel.ClientUser" Role="ClientUser" Multiplicity="1" />
+          <End Type="DbModel.DBClientBonus" Role="DBClientBonus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBClientBonus">
+              <PropertyRef Name="ClientUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DBContract_ClientUser">
           <End Type="DbModel.ClientUser" Role="ClientUser" Multiplicity="0..1" />
           <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="*" />
@@ -10527,6 +10604,66 @@
             </Principal>
             <Dependent Role="DBClientBonus">
               <PropertyRef Name="DBContractID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DBClientBonus_Product">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DbModel.DBClientBonus" Role="DBClientBonus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBClientBonus">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DBClientBonus_ProductSpecification">
+          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
+          <End Type="DbModel.DBClientBonus" Role="DBClientBonus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBClientBonus">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DBClientBonusHospital_DBClientBonus">
+          <End Type="DbModel.DBClientBonus" Role="DBClientBonus" Multiplicity="1" />
+          <End Type="DbModel.DBClientBonusHospital" Role="DBClientBonusHospital" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DBClientBonus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBClientBonusHospital">
+              <PropertyRef Name="DBClientBonusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DBClientSettleBonus_DBClientBonus">
+          <End Type="DbModel.DBClientBonus" Role="DBClientBonus" Multiplicity="1" />
+          <End Type="DbModel.DBClientSettleBonus" Role="DBClientSettleBonus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DBClientBonus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBClientSettleBonus">
+              <PropertyRef Name="DBClientBonusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DBClientBonusHospital_Hospital">
+          <End Type="DbModel.Hospital" Role="Hospital" Multiplicity="1" />
+          <End Type="DbModel.DBClientBonusHospital" Role="DBClientBonusHospital" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospital">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBClientBonusHospital">
+              <PropertyRef Name="HospitalID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10623,89 +10760,6 @@
             </Principal>
             <Dependent Role="DCFlowDataDetail">
               <PropertyRef Name="DBContractID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="SupplierInvoice">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="CompanyID" Nullable="false" />
-          <Property Type="Int32" Name="SupplierID" Nullable="false" />
-          <Property Type="DateTime" Name="InvoiceDate" Nullable="false" Precision="3" />
-          <Property Type="String" Name="InvoiceNumber" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="Company" Relationship="DbModel.FK_SupplierInvoice_CompanyID" FromRole="SupplierInvoice" ToRole="Company" />
-          <NavigationProperty Name="Supplier" Relationship="DbModel.FK_SupplierInvoice_SupplierID" FromRole="SupplierInvoice" ToRole="Supplier" />
-          <NavigationProperty Name="SupplierInvoiceDetail" Relationship="DbModel.FK_SupplierInvoiceDetail_SupplierInvoiceID" FromRole="SupplierInvoice" ToRole="SupplierInvoiceDetail" />
-        </EntityType>
-        <EntityType Name="SupplierInvoiceDetail">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="SupplierInvoiceID" Nullable="false" />
-          <Property Type="Int32" Name="ProcureOrderAppDetailID" Nullable="false" />
-          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="ProcureOrderAppDetail" Relationship="DbModel.FK_SupplierInvoiceDetail_ProcureOrderAppDetailID" FromRole="SupplierInvoiceDetail" ToRole="ProcureOrderAppDetail" />
-          <NavigationProperty Name="SupplierInvoice" Relationship="DbModel.FK_SupplierInvoiceDetail_SupplierInvoiceID" FromRole="SupplierInvoiceDetail" ToRole="SupplierInvoice" />
-        </EntityType>
-        <Association Name="FK_SupplierInvoice_CompanyID">
-          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
-          <End Type="DbModel.SupplierInvoice" Role="SupplierInvoice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Company">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="SupplierInvoice">
-              <PropertyRef Name="CompanyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SupplierInvoiceDetail_ProcureOrderAppDetailID">
-          <End Type="DbModel.ProcureOrderAppDetail" Role="ProcureOrderAppDetail" Multiplicity="1" />
-          <End Type="DbModel.SupplierInvoiceDetail" Role="SupplierInvoiceDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProcureOrderAppDetail">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="SupplierInvoiceDetail">
-              <PropertyRef Name="ProcureOrderAppDetailID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SupplierInvoice_SupplierID">
-          <End Type="DbModel.Supplier" Role="Supplier" Multiplicity="1" />
-          <End Type="DbModel.SupplierInvoice" Role="SupplierInvoice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Supplier">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="SupplierInvoice">
-              <PropertyRef Name="SupplierID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_SupplierInvoiceDetail_SupplierInvoiceID">
-          <End Type="DbModel.SupplierInvoice" Role="SupplierInvoice" Multiplicity="1" />
-          <End Type="DbModel.SupplierInvoiceDetail" Role="SupplierInvoiceDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SupplierInvoice">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="SupplierInvoiceDetail">
-              <PropertyRef Name="SupplierInvoiceID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -12309,30 +12363,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DBClientBonus">
-            <EntityTypeMapping TypeName="DbModel.DBClientBonus">
-              <MappingFragment StoreEntitySet="DBClientBonus">
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="SettledDate" ColumnName="SettledDate" />
-                <ScalarProperty Name="IsSettled" ColumnName="IsSettled" />
-                <ScalarProperty Name="PerformanceAmount" ColumnName="PerformanceAmount" />
-                <ScalarProperty Name="CommisionAmount" ColumnName="CommisionAmount" />
-                <ScalarProperty Name="SaleQty" ColumnName="SaleQty" />
-                <ScalarProperty Name="PromotionExpense" ColumnName="PromotionExpense" />
-                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="SettlementDate" ColumnName="SettlementDate" />
-                <ScalarProperty Name="HospitalID" ColumnName="HospitalID" />
-                <ScalarProperty Name="ClientUserID" ColumnName="ClientUserID" />
-                <ScalarProperty Name="DBContractID" ColumnName="DBContractID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="DBClientSettleBonus">
             <EntityTypeMapping TypeName="DbModel.DBClientSettleBonus">
               <MappingFragment StoreEntitySet="DBClientSettleBonus">
@@ -12369,30 +12399,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DBContract">
-            <EntityTypeMapping TypeName="DbModel.DBContract">
-              <MappingFragment StoreEntitySet="DBContract">
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="HospitalTypeID" ColumnName="HospitalTypeID" />
-                <ScalarProperty Name="IsNew" ColumnName="IsNew" />
-                <ScalarProperty Name="ContractExpDate" ColumnName="ContractExpDate" />
-                <ScalarProperty Name="PromotionExpense" ColumnName="PromotionExpense" />
-                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="InChargeUserID" ColumnName="InChargeUserID" />
-                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
-                <ScalarProperty Name="IsTempContract" ColumnName="IsTempContract" />
-                <ScalarProperty Name="ClientUserID" ColumnName="ClientUserID" />
-                <ScalarProperty Name="ContractCode" ColumnName="ContractCode" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="SupplierInvoice">
             <EntityTypeMapping TypeName="DbModel.SupplierInvoice">
               <MappingFragment StoreEntitySet="SupplierInvoice">
@@ -12421,6 +12427,64 @@
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="ProcureOrderAppDetailID" ColumnName="ProcureOrderAppDetailID" />
                 <ScalarProperty Name="SupplierInvoiceID" ColumnName="SupplierInvoiceID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DBClientBonus">
+            <EntityTypeMapping TypeName="DbModel.DBClientBonus">
+              <MappingFragment StoreEntitySet="DBClientBonus">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="SettledDate" ColumnName="SettledDate" />
+                <ScalarProperty Name="IsSettled" ColumnName="IsSettled" />
+                <ScalarProperty Name="PerformanceAmount" ColumnName="PerformanceAmount" />
+                <ScalarProperty Name="BonusAmount" ColumnName="BonusAmount" />
+                <ScalarProperty Name="SaleQty" ColumnName="SaleQty" />
+                <ScalarProperty Name="PromotionExpense" ColumnName="PromotionExpense" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="SettlementDate" ColumnName="SettlementDate" />
+                <ScalarProperty Name="ClientUserID" ColumnName="ClientUserID" />
+                <ScalarProperty Name="DBContractID" ColumnName="DBContractID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DBClientBonusHospital">
+            <EntityTypeMapping TypeName="DbModel.DBClientBonusHospital">
+              <MappingFragment StoreEntitySet="DBClientBonusHospital">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="HospitalID" ColumnName="HospitalID" />
+                <ScalarProperty Name="DBClientBonusID" ColumnName="DBClientBonusID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DBContract">
+            <EntityTypeMapping TypeName="DbModel.DBContract">
+              <MappingFragment StoreEntitySet="DBContract">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="HospitalTypeID" ColumnName="HospitalTypeID" />
+                <ScalarProperty Name="IsNew" ColumnName="IsNew" />
+                <ScalarProperty Name="ContractExpDate" ColumnName="ContractExpDate" />
+                <ScalarProperty Name="PromotionExpense" ColumnName="PromotionExpense" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="InChargeUserID" ColumnName="InChargeUserID" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="IsTempContract" ColumnName="IsTempContract" />
+                <ScalarProperty Name="ClientUserID" ColumnName="ClientUserID" />
+                <ScalarProperty Name="ContractCode" ColumnName="ContractCode" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

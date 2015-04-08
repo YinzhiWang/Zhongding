@@ -13,37 +13,25 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class SupplierInvoice : IEntityExtendedProperty
+    public partial class DBClientBonusHospital : IEntityExtendedProperty
     {
-        public SupplierInvoice()
-        {
-            this.SupplierInvoiceDetail = new HashSet<SupplierInvoiceDetail>();
-        }
-    
         public int ID { get; set; }
-        public int CompanyID { get; set; }
-        public int SupplierID { get; set; }
-        public System.DateTime InvoiceDate { get; set; }
-        public string InvoiceNumber { get; set; }
-        public decimal Amount { get; set; }
-        public bool IsDeleted { get; set; }
+        public int DBClientBonusID { get; set; }
+        public int HospitalID { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
-        public Nullable<System.DateTime> LastModifiedOn { get; set; }
-        public Nullable<int> LastModifiedBy { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
-    	public bool HasColumnIsDeleted { get { return true; } }
+    	public bool HasColumnIsDeleted { get { return false; } }
     	public bool HasColumnDeletedOn { get { return false; } }
     	public bool HasColumnCreatedOn { get { return true; } }
     	public bool HasColumnCreatedBy { get { return true; } }
-    	public bool HasColumnLastModifiedOn { get { return true; } }
-    	public bool HasColumnLastModifiedBy { get { return true; } }
+    	public bool HasColumnLastModifiedOn { get { return false; } }
+    	public bool HasColumnLastModifiedBy { get { return false; } }
     
     
-        public virtual Company Company { get; set; }
-        public virtual Supplier Supplier { get; set; }
-        public virtual ICollection<SupplierInvoiceDetail> SupplierInvoiceDetail { get; set; }
+        public virtual DBClientBonus DBClientBonus { get; set; }
+        public virtual Hospital Hospital { get; set; }
     }
 }

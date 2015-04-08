@@ -17,19 +17,19 @@ namespace ZhongDing.Domain.Models
     {
         public DBClientBonus()
         {
+            this.DBClientBonusHospital = new HashSet<DBClientBonusHospital>();
             this.DBClientSettleBonus = new HashSet<DBClientSettleBonus>();
         }
     
         public int ID { get; set; }
         public int DBContractID { get; set; }
         public int ClientUserID { get; set; }
-        public int HospitalID { get; set; }
         public System.DateTime SettlementDate { get; set; }
         public int ProductID { get; set; }
         public int ProductSpecificationID { get; set; }
         public Nullable<decimal> PromotionExpense { get; set; }
         public int SaleQty { get; set; }
-        public Nullable<decimal> CommisionAmount { get; set; }
+        public Nullable<decimal> BonusAmount { get; set; }
         public Nullable<decimal> PerformanceAmount { get; set; }
         public Nullable<bool> IsSettled { get; set; }
         public Nullable<System.DateTime> SettledDate { get; set; }
@@ -50,10 +50,10 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual ClientUser ClientUser { get; set; }
-        public virtual Hospital Hospital { get; set; }
+        public virtual DBContract DBContract { get; set; }
         public virtual Product Product { get; set; }
         public virtual ProductSpecification ProductSpecification { get; set; }
+        public virtual ICollection<DBClientBonusHospital> DBClientBonusHospital { get; set; }
         public virtual ICollection<DBClientSettleBonus> DBClientSettleBonus { get; set; }
-        public virtual DBContract DBContract { get; set; }
     }
 }

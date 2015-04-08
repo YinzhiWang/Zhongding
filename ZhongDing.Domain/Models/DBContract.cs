@@ -31,7 +31,7 @@ namespace ZhongDing.Domain.Models
         public Nullable<int> InChargeUserID { get; set; }
         public Nullable<int> ProductID { get; set; }
         public Nullable<int> ProductSpecificationID { get; set; }
-        public Nullable<double> PromotionExpense { get; set; }
+        public Nullable<decimal> PromotionExpense { get; set; }
         public Nullable<System.DateTime> ContractExpDate { get; set; }
         public Nullable<bool> IsNew { get; set; }
         public Nullable<int> HospitalTypeID { get; set; }

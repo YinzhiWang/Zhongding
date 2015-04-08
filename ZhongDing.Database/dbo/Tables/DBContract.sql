@@ -7,7 +7,7 @@
     [InChargeUserID]         INT            NULL,
     [ProductID]              INT            NULL,
     [ProductSpecificationID] INT            NULL,
-    [PromotionExpense]       FLOAT (53)     NULL,
+    [PromotionExpense]       MONEY          NULL,
     [ContractExpDate]        DATETIME       NULL,
     [IsNew]                  BIT            NULL,
     [HospitalTypeID]         INT            NULL,
@@ -25,6 +25,8 @@
     CONSTRAINT [FK_DBContract_ProductSpecification] FOREIGN KEY ([ProductSpecificationID]) REFERENCES [dbo].[ProductSpecification] ([ID]),
     CONSTRAINT [FK_DBContract_Users] FOREIGN KEY ([InChargeUserID]) REFERENCES [dbo].[Users] ([UserID])
 );
+
+
 
 
 

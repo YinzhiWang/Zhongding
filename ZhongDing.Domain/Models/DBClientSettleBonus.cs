@@ -39,7 +39,7 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual DBClientBonus DBClientBonus { get; set; }
         public virtual DBClientSettlement DBClientSettlement { get; set; }
+        public virtual DBClientBonus DBClientBonus { get; set; }
     }
 }

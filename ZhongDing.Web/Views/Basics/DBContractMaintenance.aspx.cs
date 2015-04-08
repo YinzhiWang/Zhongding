@@ -264,7 +264,7 @@ namespace ZhongDing.Web.Views.Basics
                             ddlProductSpecification.SelectedValue = currentEntity.ProductSpecificationID.ToString();
                     }
 
-                    txtPromotionExpense.Value = currentEntity.PromotionExpense;
+                    txtPromotionExpense.DbValue = currentEntity.PromotionExpense;
                     rdpContractExpDate.SelectedDate = currentEntity.ContractExpDate;
 
                     if (currentEntity.IsNew.HasValue)
@@ -640,7 +640,7 @@ namespace ZhongDing.Web.Views.Basics
             currentEntity.InChargeUserID = Convert.ToInt32(ddlInChargeUser.SelectedValue);
             currentEntity.ProductID = Convert.ToInt32(rcbxProduct.SelectedValue);
             currentEntity.ProductSpecificationID = Convert.ToInt32(ddlProductSpecification.SelectedValue);
-            currentEntity.PromotionExpense = txtPromotionExpense.Value;
+            currentEntity.PromotionExpense = (decimal?)txtPromotionExpense.Value;
             currentEntity.ContractExpDate = rdpContractExpDate.SelectedDate;
 
             if (radioIsNew.Checked)

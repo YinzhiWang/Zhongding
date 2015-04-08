@@ -137,6 +137,9 @@
     <Compile Include="Models\DBClientBonus.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DBClientBonusHospital.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DBClientSettleBonus.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>

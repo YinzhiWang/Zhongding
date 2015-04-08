@@ -13,7 +13,7 @@ namespace ZhongDing.Domain.UIObjects
         public string DepartmentName { get; set; }
         public string ProductName { get; set; }
         public string ProductSpecification { get; set; }
-        public double? PromotionExpense { get; set; }
+        public decimal? PromotionExpense { get; set; }
         public string InChargeUser { get; set; }
         public bool? IsTempContract { get; set; }
         public DateTime? ContractExpDate { get; set; }
