@@ -15,7 +15,7 @@ namespace ZhongDing.Business.Repositories
     {
         public IList<Domain.UIObjects.UIClientInvoice> GetUIList(Domain.UISearchObjects.UISearchClientInvoice uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
         {
-            IList<UIClientInvoice> uiWarehouses = new List<UIClientInvoice>();
+            List<UIClientInvoice> uiWarehouses = new List<UIClientInvoice>();
             int total = 0;
 
             IQueryable<ClientInvoice> query = null;
@@ -50,6 +50,7 @@ namespace ZhongDing.Business.Repositories
                                 join stockOut in DB.StockOut on stockOutDetail.StockOutID equals stockOut.ID
                                 join product in DB.Product on stockOutDetail.ProductID equals product.ID
                                 join company in DB.Company on q.CompanyID equals company.ID
+                                join clientCompany in DB.ClientCompany on q.ClientCompanyID equals clientCompany.ID
                                 select new UIClientInvoice()
                                  {
                                      ID = q.ID,
@@ -64,13 +65,22 @@ namespace ZhongDing.Business.Repositories
                                      ProductName = product.ProductName,
                                      ProductID = product.ID,
                                      OutQty = stockOutDetail.OutQty,
+                                     SalesPrice = stockOutDetail.SalesPrice,
                                      TotalSalesAmount = stockOutDetail.TotalSalesAmount,
-                                     TaxQty = stockOutDetail.TaxQty
+                                     TaxQty = stockOutDetail.TaxQty,
+                                     ClientCompanyName = clientCompany.Name,
+                                     ClientInvoiceDetailTaxAmount = clientInvoiceDetail.Amount,
+
                                  }).ToList();
             }
 
             totalRecords = total;
+            uiWarehouses.ForEach(x =>
+            {
+                x.ClientInvoiceDetailQty = (int)(x.ClientInvoiceDetailTaxAmount / x.SalesPrice);
+                x.ClientInvoiceDetailAmount = x.SalesPrice * x.ClientInvoiceDetailQty;
 
+            });
             return uiWarehouses;
         }
     }

@@ -85,41 +85,45 @@
                                 <ItemStyle HorizontalAlign="Left" Width="50" />
                             </telerik:GridBoundColumn>
 
-                            <telerik:GridBoundColumn UniqueName="SupplierName" HeaderText="开票单位" DataField="SupplierName">
+                            <telerik:GridBoundColumn UniqueName="CompanyName" HeaderText="开票单位" DataField="CompanyName">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
+                              <telerik:GridBoundColumn UniqueName="ClientCompanyName" HeaderText="收票单位" DataField="ClientCompanyName">
+                                <ItemStyle HorizontalAlign="Left" />
+                            </telerik:GridBoundColumn>
+
+
+                              <telerik:GridBoundColumn UniqueName="ClientCompanyName" HeaderText="客户" DataField="ClientCompanyName">
+                                <ItemStyle HorizontalAlign="Left" />
+                            </telerik:GridBoundColumn>
+
+
                             <telerik:GridBoundColumn UniqueName="InvoiceNumber" HeaderText="发票号" DataField="InvoiceNumber">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
 
-                            <telerik:GridBoundColumn UniqueName="ProcureOrderApplicationOrderCode" HeaderText="订单号" DataField="ProcureOrderApplicationOrderCode">
+                            <telerik:GridBoundColumn UniqueName="StockOutCode" HeaderText="出库单号" DataField="StockOutCode">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="ProcureOrderApplicationOrderDate" DataFormatString="{0:yyyy/MM/dd}" HeaderText="订单日期" DataField="ProcureOrderApplicationOrderDate">
-                                <ItemStyle HorizontalAlign="Left" />
-                            </telerik:GridBoundColumn>
+                        
 
                             <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品名称" DataField="ProductName">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="ProcureCount" HeaderText="数量" DataField="ProcureCount">
+                            <telerik:GridBoundColumn UniqueName="ClientInvoiceDetailQty" HeaderText="数量" DataField="ClientInvoiceDetailQty">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
 
 
-                            <telerik:GridBoundColumn UniqueName="TotalAmount" HeaderText="金额" DataField="TotalAmount" DataFormatString="￥{0:f2}">
+                            <telerik:GridBoundColumn UniqueName="ClientInvoiceDetailAmount" HeaderText="金额" DataField="ClientInvoiceDetailAmount" DataFormatString="￥{0:f2}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="TaxAmount" HeaderText="发票金额" DataField="TaxAmount" DataFormatString="￥{0:f2}">
-                                <ItemStyle HorizontalAlign="Left" />
-                            </telerik:GridBoundColumn>
-
-
-                            <telerik:GridBoundColumn UniqueName="CompanyName" HeaderText="收票单位" DataField="CompanyName">
+                            <telerik:GridBoundColumn UniqueName="ClientInvoiceDetailTaxAmount" HeaderText="发票金额" DataField="ClientInvoiceDetailTaxAmount" DataFormatString="￥{0:f2}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
 
 
+                          
 
                            
                             <%--<telerik:GridTemplateColumn UniqueName="Audit">

@@ -285,7 +285,7 @@ namespace ZhongDing.Business.Repositories
                                   ClientName = tempClientUser == null ? "" : tempClientUser.ClientName,
                                   ClientInvoiceDetailTotalAmount = DB.ClientInvoiceDetail.Any(x => x.IsDeleted == false && x.StockOutDetailID == q.ID) ?
                                   DB.ClientInvoiceDetail.Where(x => x.IsDeleted == false && x.StockOutDetailID == q.ID).Sum(x => x.Amount) : 0,
-                              }).ToList();
+                              }).Where(x => x.ClientInvoiceDetailTotalAmount / x.SalesPrice < x.TaxQty.Value).ToList();
             }
 
             totalRecords = total;
