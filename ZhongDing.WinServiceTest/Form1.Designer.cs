@@ -30,6 +30,7 @@
         {
             this.btnCalculateInventory = new System.Windows.Forms.Button();
             this.btnImportData = new System.Windows.Forms.Button();
+            this.btnClientSettleBonus = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnCalculateInventory
@@ -52,11 +53,22 @@
             this.btnImportData.UseVisualStyleBackColor = true;
             this.btnImportData.Click += new System.EventHandler(this.btnImportData_Click);
             // 
+            // btnClientSettleBonus
+            // 
+            this.btnClientSettleBonus.Location = new System.Drawing.Point(12, 106);
+            this.btnClientSettleBonus.Name = "btnClientSettleBonus";
+            this.btnClientSettleBonus.Size = new System.Drawing.Size(152, 23);
+            this.btnClientSettleBonus.TabIndex = 1;
+            this.btnClientSettleBonus.Text = "大包客户提出结算";
+            this.btnClientSettleBonus.UseVisualStyleBackColor = true;
+            this.btnClientSettleBonus.Click += new System.EventHandler(this.btnClientSettleBonus_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 261);
+            this.Controls.Add(this.btnClientSettleBonus);
             this.Controls.Add(this.btnImportData);
             this.Controls.Add(this.btnCalculateInventory);
             this.Name = "Form1";
@@ -69,6 +81,7 @@
 
         private System.Windows.Forms.Button btnCalculateInventory;
         private System.Windows.Forms.Button btnImportData;
+        private System.Windows.Forms.Button btnClientSettleBonus;
     }
 }
 

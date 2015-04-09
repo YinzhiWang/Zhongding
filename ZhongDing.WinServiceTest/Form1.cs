@@ -39,5 +39,10 @@ namespace ZhongDing.WinServiceTest
             ImportDataService.ProcessWork();
         }
 
+        private void btnClientSettleBonus_Click(object sender, EventArgs e)
+        {
+            DBClientSettleBonusService.ProcessWork();
+        }
+
     }
 }

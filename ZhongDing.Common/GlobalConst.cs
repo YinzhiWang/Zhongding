@@ -59,7 +59,12 @@ namespace ZhongDing.Common
         /// <summary>
         /// 服务默认运行周期：24小时
         /// </summary>
-        public const int WIN_SERVICE_DEFAULT_INTERVAl = 24;
+        public const int WIN_SERVICE_DEFAULT_INTERVAl_HOUR = 24;
+
+        /// <summary>
+        /// 服务默认运行周期：1个月
+        /// </summary>
+        public const int WIN_SERVICE_DEFAULT_INTERVAl_MONTH = 1;
         #endregion
 
         #region System Security

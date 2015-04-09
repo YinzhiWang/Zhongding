@@ -84,6 +84,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Lib\CalculateInventoryService.cs" />
+    <Compile Include="Lib\DBClientSettleBonusService.cs" />
     <Compile Include="Lib\ImportDataService.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>

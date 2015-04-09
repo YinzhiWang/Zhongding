@@ -74,7 +74,15 @@ namespace ZhongDing.Common
         private static readonly string CONFIGKEY_YunTongXun_CCPRestSDK_Address = "YunTongXun.CCPRestSDK_Address";
         private static readonly string CONFIGKEY_YunTongXun_CCPRestSDK_Port = "YunTongXun.CCPRestSDK_Port";
 
+        /// <summary>
+        /// 结算大包客户提成服务运行的开始时间
+        /// </summary>
+        private static readonly string CONFIGKEY_SETTLE_DB_CLIENT_BONU_SERVICE_STARTTIME = "SettleDBClientBonusService.StartTime";
 
+        /// <summary>
+        /// 结算大包客户提成服务运行的周期
+        /// </summary>
+        private static readonly string CONFIGKEY_SETTLE_DB_CLIENT_BONU_SERVICE_INTERVAl = "SettleDBClientBonusService.Interval";
         #endregion
 
         #endregion
@@ -359,7 +367,7 @@ namespace ZhongDing.Common
                 if (int.TryParse(sInterval, out iInerval))
                     return iInerval;
                 else
-                    return GlobalConst.WIN_SERVICE_DEFAULT_INTERVAl;
+                    return GlobalConst.WIN_SERVICE_DEFAULT_INTERVAl_HOUR;
             }
         }
 
@@ -394,9 +402,45 @@ namespace ZhongDing.Common
                 if (int.TryParse(sInterval, out iInerval))
                     return iInerval;
                 else
-                    return GlobalConst.WIN_SERVICE_DEFAULT_INTERVAl;
+                    return GlobalConst.WIN_SERVICE_DEFAULT_INTERVAl_HOUR;
             }
         }
+
+        /// <summary>
+        /// 结算大包客户提成服务运行的开始时间
+        /// </summary>
+        public static DateTime SettleDBClientBonusServiceStartTime
+        {
+            get
+            {
+                try
+                {
+                    return DateTime.Parse(ConfigurationManager.AppSettings[CONFIGKEY_SETTLE_DB_CLIENT_BONU_SERVICE_STARTTIME]);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 结算大包客户提成服务运行的周期
+        /// </summary>
+        public static int SettleDBClientBonusServiceInterval
+        {
+            get
+            {
+                var sInterval = ConfigurationManager.AppSettings[CONFIGKEY_SETTLE_DB_CLIENT_BONU_SERVICE_INTERVAl];
+
+                int iInerval;
+                if (int.TryParse(sInterval, out iInerval))
+                    return iInerval;
+                else
+                    return GlobalConst.WIN_SERVICE_DEFAULT_INTERVAl_MONTH;
+            }
+        }
+
 
         #endregion
 

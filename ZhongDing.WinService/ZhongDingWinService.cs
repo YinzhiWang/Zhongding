@@ -42,6 +42,9 @@ namespace ZhongDing.WinService
         private bool isFirstRunProcessImportDCFlowData = true;
         private bool isRunProcessImportDCFlowData = false;
 
+        private bool isFirstRunProcessSettleDBClientBonus = true;
+        private bool isRunProcessSettleDBClientBonus = false;
+
 
         public ZhongDingWinService()
         {
@@ -267,7 +270,70 @@ namespace ZhongDing.WinService
             }
         }
 
+        private void tmSettleDBClientBonus_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
+        {
+            this.tmSettleDBClientBonus.Stop();
+
+            Utility.WriteTrace("Start tmSettleDBClientBonus_Elapsed at：" + DateTime.Now);
+
+            try
+            {
+                if (isFirstRunProcessSettleDBClientBonus)
+                {
+                    DateTime dtNextRunTime = CaculateNextRunTime(WebConfig.SettleDBClientBonusServiceStartTime, WebConfig.SettleDBClientBonusServiceInterval, DateInterval.Month);
+                    if (dtNextRunTime <= DateTime.Now)
+                    {
+                        isFirstRunProcessSettleDBClientBonus = false;
+
+                        if (tmSettleDBClientBonus.Interval == initInterval)
+                            tmSettleDBClientBonus.Interval = WebConfig.SettleDBClientBonusServiceInterval * 1000 * 60 * 60;
+
+                        if (isRunProcessSettleDBClientBonus == false)
+                        {
+                            isRunProcessSettleDBClientBonus = true;
+
+                            DBClientSettleBonusService.ProcessWork();
+
+                            Utility.WriteTrace(WIN_SERVICE_NAME + ": tmSettleDBClientBonus_Elapsed Processing has finished");
+
+                            isRunProcessSettleDBClientBonus = false;
+                        }
+                    }
+                }
+                else
+                {
+                    if (isRunProcessSettleDBClientBonus == false)
+                    {
+                        isRunProcessSettleDBClientBonus = true;
+
+                        DBClientSettleBonusService.ProcessWork();
+
+                        Utility.WriteTrace(WIN_SERVICE_NAME + ": tmSettleDBClientBonus_Elapsed Processing has finished");
+
+                        isRunProcessSettleDBClientBonus = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                isRunProcessSettleDBClientBonus = false;
+
+                Utility.WriteTrace(WIN_SERVICE_NAME + ": tmSettleDBClientBonus_Elapsed Error:" + ex.Message);
+
+                Utility.WriteExceptionLog(ex);
+            }
+            finally
+            {
+
+                tmSettleDBClientBonus.Start();
+
+                Utility.WriteTrace("End tmSettleDBClientBonus_Elapsed at：" + DateTime.Now);
+            }
+        }
+
         #endregion
+
+        
 
     }
 }
