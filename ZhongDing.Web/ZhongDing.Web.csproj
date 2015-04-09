@@ -2625,6 +2625,8 @@
     <Content Include="Views\Imports\ImportDCFlowDataDetails.aspx" />
     <Content Include="Views\Imports\ImportDCInventoryData.aspx" />
     <Content Include="Views\Imports\ImportDCInventoryDataDetails.aspx" />
+    <Content Include="Views\Invoices\ClientInfoInvoiceManagement.aspx" />
+    <Content Include="Views\Invoices\ClientInfoInvoiceMaintenance.aspx" />
     <Content Include="Views\Invoices\SupplierInvoiceMaintenance.aspx" />
     <Content Include="Views\Invoices\SupplierInvoiceManagement.aspx" />
     <Content Include="Views\Procures\Editors\ChooseProcureOrderProducts.aspx" />
@@ -3241,6 +3243,20 @@
     <Compile Include="Views\Imports\ImportDCInventoryDataDetails.aspx.designer.cs">
       <DependentUpon>ImportDCInventoryDataDetails.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Invoices\ClientInfoInvoiceManagement.aspx.cs">
+      <DependentUpon>ClientInfoInvoiceManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Invoices\ClientInfoInvoiceManagement.aspx.designer.cs">
+      <DependentUpon>ClientInfoInvoiceManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Invoices\ClientInfoInvoiceMaintenance.aspx.cs">
+      <DependentUpon>ClientInfoInvoiceMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Invoices\ClientInfoInvoiceMaintenance.aspx.designer.cs">
+      <DependentUpon>ClientInfoInvoiceMaintenance.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Invoices\SupplierInvoiceMaintenance.aspx.cs">
       <DependentUpon>SupplierInvoiceMaintenance.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3650,7 +3666,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

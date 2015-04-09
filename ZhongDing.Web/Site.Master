@@ -173,19 +173,9 @@
                                 <a href="#" class="mws-i-24 i-tags-2">发票管理</a>
                                 <ul class="hide">
                                     <li data-level="2" data-menuitemid="151">
-                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Invoices/SupplierInvoiceManagement.aspx');">采购订单报表</a></li>
-                                  <%--  <li data-level="2" data-menuitemid="152">
-                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/ProcureOrderApplicationPaymentReportManagement.aspx');">采购付款明细表</a>
-                                    </li>
-                                    <li data-level="2" data-menuitemid="153">
-                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/ClientSaleAppReportManagement.aspx');">销售订单报表</a>
-                                    </li>
-                                    <li data-level="2" data-menuitemid="154">
-                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/StockOutDetailReportManagement.aspx');">出库明细表</a></li>
-                                    <li data-level="2" data-menuitemid="155">
-                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/StockInDetailReportManagement.aspx');">入库明细表</a></li>--%>
-
-
+                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Invoices/SupplierInvoiceManagement.aspx');">供应商发票管理</a></li>
+                                    <li data-level="2" data-menuitemid="152">
+                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Invoices/ClientInfoInvoiceManagement.aspx');">客户发票管理</a></li>
                                 </ul>
                             </li>
                         </ul>

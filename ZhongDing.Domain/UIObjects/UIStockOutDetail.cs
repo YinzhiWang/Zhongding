@@ -72,5 +72,13 @@ namespace ZhongDing.Domain.UIObjects
         public string LicenseNumber { get; set; }
 
         public bool IsDeleted { get; set; }
+
+        public int NotTaxQty { get; set; }
+
+        public string ClientName { get; set; }
+
+        public decimal ClientInvoiceDetailTotalAmount { get; set; }
+
+        public int? ClientUserID { get; set; }
     }
 }

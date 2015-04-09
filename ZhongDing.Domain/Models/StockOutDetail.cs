@@ -15,6 +15,11 @@ namespace ZhongDing.Domain.Models
     [Serializable]
     public partial class StockOutDetail : IEntityExtendedProperty
     {
+        public StockOutDetail()
+        {
+            this.ClientInvoiceDetail = new HashSet<ClientInvoiceDetail>();
+        }
+    
         public int ID { get; set; }
         public int StockOutID { get; set; }
         public int SalesOrderApplicationID { get; set; }
@@ -52,5 +57,6 @@ namespace ZhongDing.Domain.Models
         public virtual SalesOrderApplication SalesOrderApplication { get; set; }
         public virtual StockOut StockOut { get; set; }
         public virtual Warehouse Warehouse { get; set; }
+        public virtual ICollection<ClientInvoiceDetail> ClientInvoiceDetail { get; set; }
     }
 }

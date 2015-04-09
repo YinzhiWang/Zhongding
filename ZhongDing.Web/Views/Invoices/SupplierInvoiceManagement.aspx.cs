@@ -60,10 +60,10 @@ namespace ZhongDing.Web.Views.Invoices
             this.Master.MenuItemID = (int)EMenuItem.SupplierInvoiceManage;
             if (!IsPostBack)
             {
-                BindSuppliers();
+                BindClientCompanys();
             }
         }
-        private void BindSuppliers()
+        private void BindClientCompanys()
         {
             var suppliers = PageSupplierRepository.GetDropdownItems(new UISearchDropdownItem
             {

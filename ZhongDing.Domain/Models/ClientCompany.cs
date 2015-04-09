@@ -25,6 +25,7 @@ namespace ZhongDing.Domain.Models
             this.ClientFlowData = new HashSet<ClientFlowData>();
             this.ClientImportFileLog = new HashSet<ClientImportFileLog>();
             this.ClientInfo = new HashSet<ClientInfo>();
+            this.ClientInvoice = new HashSet<ClientInvoice>();
         }
     
         public int ID { get; set; }
@@ -56,5 +57,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<ClientFlowData> ClientFlowData { get; set; }
         public virtual ICollection<ClientImportFileLog> ClientImportFileLog { get; set; }
         public virtual ICollection<ClientInfo> ClientInfo { get; set; }
+        public virtual ICollection<ClientInvoice> ClientInvoice { get; set; }
     }
 }

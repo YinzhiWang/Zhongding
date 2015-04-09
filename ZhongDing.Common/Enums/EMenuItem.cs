@@ -235,7 +235,11 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 供应商发票管理
         /// </summary>
-        SupplierInvoiceManage
+        SupplierInvoiceManage,
+        /// <summary>
+        /// 客户发票管理
+        /// </summary>
+        ClientInvoiceManage
 
 
     }

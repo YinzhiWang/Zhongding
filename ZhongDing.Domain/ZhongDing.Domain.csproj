@@ -104,6 +104,12 @@
     <Compile Include="Models\ClientInfoProductSetting.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClientInvoice.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClientInvoiceDetail.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ClientRefundAppDetail.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -392,6 +398,7 @@
     <Compile Include="UIObjects\UIClientInfoBankAccount.cs" />
     <Compile Include="UIObjects\UIClientInfoContact.cs" />
     <Compile Include="UIObjects\UIClientInfoProductSetting.cs" />
+    <Compile Include="UIObjects\UIClientInvoice.cs" />
     <Compile Include="UIObjects\UIClientNeedRefundOrder.cs" />
     <Compile Include="UIObjects\UIClientRefundAppDetail.cs" />
     <Compile Include="UIObjects\UIClientRefundApplication.cs" />
@@ -467,6 +474,7 @@
     <Compile Include="UISearchObjects\UISearchClientImportFileLog.cs" />
     <Compile Include="UISearchObjects\UISearchClientInfo.cs" />
     <Compile Include="UISearchObjects\UISearchClientInfoProductSetting.cs" />
+    <Compile Include="UISearchObjects\UISearchClientInvoice.cs" />
     <Compile Include="UISearchObjects\UISearchClientNeedRefundOrder.cs" />
     <Compile Include="UISearchObjects\UISearchClientRefundAppDetail.cs" />
     <Compile Include="UISearchObjects\UISearchClientRefundApplication.cs" />

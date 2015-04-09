@@ -323,6 +323,12 @@
         <AssociationConnector Association="DbModel.FK_DBContractHospital_DBContract" />
         <AssociationConnector Association="DbModel.FK_DBContractTaskAssignment_DBContract" />
         <AssociationConnector Association="DbModel.FK_DCFlowDataDetail_DBContract" />
+        <EntityTypeShape EntityType="DbModel.ClientInvoice" Width="1.5" PointX="3.9050239156489375" PointY="14.425880170625579" />
+        <AssociationConnector Association="DbModel.FK_ClientInvoice_ClientCompanyID" />
+        <AssociationConnector Association="DbModel.FK_ClientInvoice_CompanyID" />
+        <EntityTypeShape EntityType="DbModel.ClientInvoiceDetail" Width="1.5" PointX="10.481822568216279" PointY="12.248935436945844" />
+        <AssociationConnector Association="DbModel.FK_ClientInvoiceDetail_ClientInvoiceID" />
+        <AssociationConnector Association="DbModel.FK_ClientInvoiceDetail_StockOutDetailID" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

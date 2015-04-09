@@ -30,6 +30,7 @@ namespace ZhongDing.Domain.Models
             this.SupplierRefundApplication = new HashSet<SupplierRefundApplication>();
             this.ClientTaskRefundApplication = new HashSet<ClientTaskRefundApplication>();
             this.SupplierInvoice = new HashSet<SupplierInvoice>();
+            this.ClientInvoice = new HashSet<ClientInvoice>();
         }
     
         public int ID { get; set; }
@@ -69,5 +70,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<SupplierRefundApplication> SupplierRefundApplication { get; set; }
         public virtual ICollection<ClientTaskRefundApplication> ClientTaskRefundApplication { get; set; }
         public virtual ICollection<SupplierInvoice> SupplierInvoice { get; set; }
+        public virtual ICollection<ClientInvoice> ClientInvoice { get; set; }
     }
 }
