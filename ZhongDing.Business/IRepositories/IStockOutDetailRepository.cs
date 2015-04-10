@@ -42,5 +42,15 @@ namespace ZhongDing.Business.IRepositories
         /// <param name="totalRecords"></param>
         /// <returns></returns>
         IList<UIStockOutDetail> GetClientInvoiceChooseStockOutDetailUIList(UISearchStockOutDetail uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
+        /// <summary>
+        /// 获取 供新增大包客户发票管理的  出库单 货品列表
+        /// </summary>
+        /// <param name="uiSearchObj"></param>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <param name="totalRecords"></param>
+        /// <returns></returns>
+        IList<UIStockOutDetail> GetDBClientInvoiceChooseStockOutDetailUIList(UISearchStockOutDetail uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
+
     }
 }

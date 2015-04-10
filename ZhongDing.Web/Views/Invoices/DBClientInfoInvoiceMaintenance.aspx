@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ClientInfoInvoiceMaintenance.aspx.cs" Inherits="ZhongDing.Web.Views.Invoices.ClientInfoInvoiceMaintenance" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DBClientInfoInvoiceMaintenance.aspx.cs" Inherits="ZhongDing.Web.Views.Invoices.DBClientInfoInvoiceMaintenance" %>
 
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
@@ -10,7 +10,7 @@
 
         <div class="mws-panel grid_8">
             <div class="mws-panel-header">
-                <span class="mws-i-24 i-sign-post">客户发票维护</span>
+                <span class="mws-i-24 i-sign-post">大包发票维护</span>
             </div>
             <div class="mws-panel-body">
                 <div class="mws-form">
@@ -188,9 +188,9 @@
                                             <HeaderStyle Width="100" Font-Size="13px" />
                                             <ItemStyle HorizontalAlign="Left" Width="100" />
                                             <ItemTemplate>
-                                                <telerik:RadNumericTextBox runat="server" ID="txtClientInvoiceDetailQty" Type="Number" MaxLength="9" Width="80" ShowSpinButtons="true"
+                                                <telerik:RadNumericTextBox runat="server" ID="txtDBClientInvoiceDetailQty" Type="Number" MaxLength="9" Width="80" ShowSpinButtons="true"
                                                     MinValue="1" MaxValue="99999999" NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator="">
-                                                    <ClientEvents OnValueChanging="onClientInvoiceDetailAmountChanging" />
+                                                    <ClientEvents OnValueChanging="onDBClientInvoiceDetailAmountChanging" />
                                                 </telerik:RadNumericTextBox>
                                             </ItemTemplate>
                                         </telerik:GridTemplateColumn>
@@ -199,7 +199,7 @@
                                             <HeaderStyle Width="100" Font-Size="13px" />
                                             <ItemStyle HorizontalAlign="Left" Width="100" />
                                             <ItemTemplate>
-                                                <telerik:RadNumericTextBox runat="server" ID="txtClientInvoiceDetailAmount" Type="Number" MaxLength="9" Width="80" ShowSpinButtons="true"
+                                                <telerik:RadNumericTextBox runat="server" ID="txtDBClientInvoiceDetailAmount" Type="Number" MaxLength="9" Width="80" ShowSpinButtons="true"
                                                     MinValue="1" MaxValue="99999999" NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator="" ReadOnly="true">
                                                 </telerik:RadNumericTextBox>
                                             </ItemTemplate>
@@ -248,7 +248,7 @@
     <script type="text/javascript">
 
         function onClientHidden(sender, args) {
-            redirectToPage('Views/Invoices/ClientInfoInvoiceManagement');
+            redirectToPage('Views/Invoices/DBClientInfoInvoiceManagement');
         }
 
         function onClientBlur(sender, args) {
@@ -256,9 +256,9 @@
 
         }
         function onBtnCancelClick() {
-            redirectToPage('Views/Invoices/ClientInfoInvoiceManagement');
+            redirectToPage('Views/Invoices/DBClientInfoInvoiceManagement');
         }
-        function onClientInvoiceDetailAmountChanging(sender, eventArgs) {
+        function onDBClientInvoiceDetailAmountChanging(sender, eventArgs) {
             var gridItem = sender.get_parent();
 
             if (gridItem) {
@@ -281,12 +281,12 @@
 
 
                 var txtAmount = $find("<%=txtAmount.ClientID%>");
-                var txtClientInvoiceDetailAmount = gridItem.findControl("txtClientInvoiceDetailAmount");
+                var txtDBClientInvoiceDetailAmount = gridItem.findControl("txtDBClientInvoiceDetailAmount");
                 var salesPrice = gridItem.getDataKeyValue("SalesPrice");
                 if (newValue)
-                    txtClientInvoiceDetailAmount.set_value(salesPrice * newValue);
+                    txtDBClientInvoiceDetailAmount.set_value(salesPrice * newValue);
                 else
-                    txtClientInvoiceDetailAmount.set_value("");
+                    txtDBClientInvoiceDetailAmount.set_value("");
 
             }
         }
@@ -298,7 +298,7 @@
             var selectingItem = eventArgs.get_gridDataItem();
             var selectingElement = selectingItem.get_element();
 
-            var txtSupplierInvoiceDetailAmount = $telerik.findControl(selectingElement, "txtClientInvoiceDetailAmount");
+            var txtSupplierInvoiceDetailAmount = $telerik.findControl(selectingElement, "txtDBClientInvoiceDetailAmount");
 
         }
 
@@ -311,11 +311,11 @@
                 radNotification.show();
                 return false;
             }
-            var selectedTotalClientInvoiceDetailAmount = calculateSelectedTotalClientInvoiceDetailAmount();
-            console.log("amount:" + amount + "  selectedTotalClientInvoiceDetailAmount：" + selectedTotalClientInvoiceDetailAmount);
-            if (amount != selectedTotalClientInvoiceDetailAmount) {
+            var selectedTotalDBClientInvoiceDetailAmount = calculateSelectedTotalDBClientInvoiceDetailAmount();
+            console.log("amount:" + amount + "  selectedTotalDBClientInvoiceDetailAmount：" + selectedTotalDBClientInvoiceDetailAmount);
+            if (amount != selectedTotalDBClientInvoiceDetailAmount) {
 
-                radNotification.set_text("本次开票金额总计必须等于总金额：" + selectedTotalClientInvoiceDetailAmount);
+                radNotification.set_text("本次开票金额总计必须等于总金额：" + selectedTotalDBClientInvoiceDetailAmount);
                 radNotification.show();
                 return false;
             }
@@ -341,13 +341,13 @@
                     }
                 }
                 var curCurrentOutQtyControl = $telerik.findControl(curSelectedItemElement, "txtCurrentOutQty");
-                var curCurrentTxtClientInvoiceDetailAmount = $telerik.findControl(curSelectedItemElement, "txtClientInvoiceDetailAmount");
+                var curCurrentTxtDBClientInvoiceDetailAmount = $telerik.findControl(curSelectedItemElement, "txtDBClientInvoiceDetailAmount");
 
-                var curCurrentClientInvoiceDetailAmount = curCurrentTxtClientInvoiceDetailAmount.get_value();
+                var curCurrentDBClientInvoiceDetailAmount = curCurrentTxtDBClientInvoiceDetailAmount.get_value();
 
 
 
-                if (!curCurrentClientInvoiceDetailAmount) {
+                if (!curCurrentDBClientInvoiceDetailAmount) {
                     radNotification.set_text("勾选的订单必须填写本次开票金额");
                     radNotification.show();
                     return false;
@@ -357,7 +357,7 @@
 
             return true;
         }
-        function calculateSelectedTotalClientInvoiceDetailAmount() {
+        function calculateSelectedTotalDBClientInvoiceDetailAmount() {
             var selectedTotalAmount = 0;
             //获取已经选中的items
             var rgStockOutDetails = $find("<%=rgStockOutDetails.ClientID%>")
@@ -368,12 +368,12 @@
                 var curSelectedItemElement = curSelectedItem.get_element();
 
 
-                var curCurrentTxtClientInvoiceDetailAmount = $telerik.findControl(curSelectedItemElement, "txtClientInvoiceDetailAmount");
+                var curCurrentTxtDBClientInvoiceDetailAmount = $telerik.findControl(curSelectedItemElement, "txtDBClientInvoiceDetailAmount");
 
-                var curCurrentClientInvoiceDetailAmount = curCurrentTxtClientInvoiceDetailAmount.get_value();
+                var curCurrentDBClientInvoiceDetailAmount = curCurrentTxtDBClientInvoiceDetailAmount.get_value();
 
-                if (curCurrentClientInvoiceDetailAmount) {
-                    selectedTotalAmount = Number(selectedTotalAmount).add(curCurrentClientInvoiceDetailAmount);
+                if (curCurrentDBClientInvoiceDetailAmount) {
+                    selectedTotalAmount = Number(selectedTotalAmount).add(curCurrentDBClientInvoiceDetailAmount);
                 }
             }
 

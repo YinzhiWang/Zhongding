@@ -17,5 +17,7 @@ namespace ZhongDing.Domain.UISearchObjects
         public int DistributionCompanyID { get; set; }
 
         public int? ClientCompanyID { get; set; }
+
+        public int ReceiverTypeID { get; set; }
     }
 }

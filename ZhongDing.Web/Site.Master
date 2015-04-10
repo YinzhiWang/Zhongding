@@ -176,6 +176,8 @@
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Invoices/SupplierInvoiceManagement.aspx');">供应商发票管理</a></li>
                                     <li data-level="2" data-menuitemid="152">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Invoices/ClientInfoInvoiceManagement.aspx');">客户发票管理</a></li>
+                                    <li data-level="2" data-menuitemid="153">
+                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Invoices/DBClientInfoInvoiceManagement.aspx');">大包发票管理</a></li>
                                 </ul>
                             </li>
                         </ul>

@@ -405,6 +405,8 @@
     <Build Include="dbo\Tables\SupplierInvoice.sql" />
     <Build Include="dbo\Tables\ClientInvoiceDetail.sql" />
     <Build Include="dbo\Tables\ClientInvoice.sql" />
+    <Build Include="dbo\Tables\DBClientInvoiceDetail.sql" />
+    <Build Include="dbo\Tables\DBClientInvoice.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

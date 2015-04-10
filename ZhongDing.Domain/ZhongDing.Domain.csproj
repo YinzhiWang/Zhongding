@@ -146,6 +146,12 @@
     <Compile Include="Models\DBClientBonusHospital.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DBClientInvoice.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DBClientInvoiceDetail.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DBClientSettleBonus.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -384,6 +390,7 @@
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIObjects\UIDBClientInvoice.cs" />
     <Compile Include="UIObjects\UIAccountType.cs" />
     <Compile Include="UIObjects\UIApplicationNote.cs" />
     <Compile Include="UIObjects\UIApplicationPayment.cs" />
@@ -464,6 +471,7 @@
     <Compile Include="UIObjects\UIWarehouse.cs" />
     <Compile Include="UIObjects\UIWorkflowBase.cs" />
     <Compile Include="UIObjects\UIWorkflowStep.cs" />
+    <Compile Include="UISearchObjects\UISearchDBClientInvoice.cs" />
     <Compile Include="UISearchObjects\UISearchApplicationNote.cs" />
     <Compile Include="UISearchObjects\UISearchApplicationPayment.cs" />
     <Compile Include="UISearchObjects\UISearchBankAccount.cs" />

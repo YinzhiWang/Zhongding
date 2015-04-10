@@ -84,5 +84,7 @@ namespace ZhongDing.Domain.UIObjects
         public string SaleOrderType { get; set; }
 
         public int SaleOrderTypeID { get; set; }
+
+        public decimal DBClientInvoiceDetailTotalAmount { get; set; }
     }
 }

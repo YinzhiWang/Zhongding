@@ -53,6 +53,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\DynamicLinq.cs" />
+    <Compile Include="IRepositories\IDBClientInvoiceDetailRepository.cs" />
+    <Compile Include="IRepositories\IDBClientInvoiceRepository.cs" />
     <Compile Include="IRepositories\IClientFlowDataRepository.cs" />
     <Compile Include="IRepositories\IClientImportFileLogRepository.cs" />
     <Compile Include="IRepositories\IClientInvoiceDetailRepository.cs" />
@@ -174,6 +176,8 @@
     <Compile Include="Repositories\ClientTaskRefundAppRepository.cs" />
     <Compile Include="Repositories\ClientUserRepository.cs" />
     <Compile Include="Repositories\CompanyRepository.cs" />
+    <Compile Include="Repositories\DBClientInvoiceDetailRepository.cs" />
+    <Compile Include="Repositories\DBClientInvoiceRepository.cs" />
     <Compile Include="Repositories\DaBaoApplicationRepository.cs" />
     <Compile Include="Repositories\DaBaoRequestAppDetailRepository.cs" />
     <Compile Include="Repositories\DaBaoRequestApplicationRepository.cs" />

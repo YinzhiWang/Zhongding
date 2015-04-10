@@ -330,6 +330,13 @@
         <AssociationConnector Association="DbModel.FK_ClientInvoiceDetail_ClientInvoiceID" />
         <AssociationConnector Association="DbModel.FK_ClientInvoiceDetail_StockOutDetailID" />
         <AssociationConnector Association="DbModel.FK_ClientInvoice_SaleOrderTypeID" />
+        <EntityTypeShape EntityType="DbModel.DBClientInvoice" Width="1.5" PointX="7.8707086145275778" PointY="10.12836719030904" />
+        <EntityTypeShape EntityType="DbModel.DBClientInvoiceDetail" Width="1.5" PointX="8.1427038871416375" PointY="10.775860314618731" />
+        <AssociationConnector Association="DbModel.FK_DBClientInvoice_ClientCompanyID" />
+        <AssociationConnector Association="DbModel.FK_DBClientInvoice_CompanyID" />
+        <AssociationConnector Association="DbModel.FK_DBClientInvoice_SaleOrderTypeID" />
+        <AssociationConnector Association="DbModel.FK_DBClientInvoiceDetail_DBClientInvoiceID" />
+        <AssociationConnector Association="DbModel.FK_DBClientInvoiceDetail_StockOutDetailID" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
