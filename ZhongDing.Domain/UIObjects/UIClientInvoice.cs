@@ -47,5 +47,9 @@ namespace ZhongDing.Domain.UIObjects
         public int ClientInvoiceDetailQty { get; set; }
 
         public decimal ClientInvoiceDetailTaxAmount { get; set; }
+
+        public decimal StockOutDetailSalesAmount { get; set; }
+
+        public string SaleOrderType { get; set; }
     }
 }

@@ -96,7 +96,7 @@
                                     <telerik:RadToolTip ID="rttTransportCompany" runat="server" TargetControlID="rcbxTransportCompany" ShowEvent="OnClick"
                                         Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
                                     </telerik:RadToolTip>
-                                    <asp:CustomValidator ID="cvrTransportCompany" runat="server" ErrorMessage="请选择商业单位"
+                                    <asp:CustomValidator ID="cvrTransportCompany" runat="server" ErrorMessage="请选择快递公司"
                                         ControlToValidate="rcbxTransportCompany" ValidationGroup="vgMaintenance" Display="Dynamic"
                                         Text="*" CssClass="field-validation-error">
                                     </asp:CustomValidator>
@@ -124,7 +124,7 @@
                                 OnNeedDataSource="rgStockOutDetails_NeedDataSource" OnItemDataBound="rgStockOutDetails_ItemDataBound"
                                 OnColumnCreated="rgStockOutDetails_ColumnCreated">
                                 <MasterTableView Width="100%" DataKeyNames="ID,ClientUserID" CommandItemDisplay="None" TableLayout="Auto"
-                                    ShowHeadersWhenNoRecords="true" BackColor="#fafafa" ClientDataKeyNames="ID,ClientUserID,NotTaxQty,SalesPrice">
+                                    ShowHeadersWhenNoRecords="true" BackColor="#fafafa" ClientDataKeyNames="ID,ClientUserID,NotTaxQty,SalesPrice,SaleOrderTypeID">
                                     <Columns>
                                         <telerik:GridClientSelectColumn UniqueName="ClientSelectColumn" HeaderText="全选">
                                             <HeaderStyle Width="30" />
@@ -134,10 +134,15 @@
                                             <HeaderStyle Width="160px" />
                                             <ItemStyle HorizontalAlign="Left" Width="160px" />
                                         </telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn UniqueName="SaleOrderType" HeaderText="订单类型" DataField="SaleOrderType" ReadOnly="true">
+                                            <HeaderStyle Width="160px" />
+                                            <ItemStyle HorizontalAlign="Left" Width="160px" />
+                                        </telerik:GridBoundColumn>
                                         <telerik:GridBoundColumn UniqueName="ClientName" HeaderText="客户名称" DataField="ClientName" ReadOnly="true">
                                             <HeaderStyle Width="100px" />
                                             <ItemStyle HorizontalAlign="Left" Width="100px" />
                                         </telerik:GridBoundColumn>
+
                                         <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品名称" DataField="ProductName" ReadOnly="true">
                                             <HeaderStyle Width="200px" />
                                             <ItemStyle HorizontalAlign="Left" Width="200px" />
@@ -212,7 +217,7 @@
                                 </MasterTableView>
                                 <ClientSettings EnableRowHoverStyle="true">
                                     <Selecting AllowRowSelect="True" />
-                                    <Scrolling AllowScroll="true" FrozenColumnsCount="2" SaveScrollPosition="true" UseStaticHeaders="true" />
+                                    <Scrolling AllowScroll="true" FrozenColumnsCount="4" SaveScrollPosition="true" UseStaticHeaders="true" />
                                     <ClientEvents OnRowSelecting="onRowSelecting" />
                                 </ClientSettings>
                                 <HeaderStyle Width="99.8%" />
@@ -232,6 +237,7 @@
 
     </div>
     <asp:HiddenField ID="hdnCurrentEntityID" runat="server" Value="-1" />
+    <asp:HiddenField ID="hdnSaleOrderTypeID" runat="server" Value="-1" />
     <telerik:RadNotification ID="radNotification" runat="server" EnableRoundedCorners="true"
         AutoCloseDelay="1000" Skin="Silk" Animation="Fade" EnableShadow="true" Title="提示"
         TitleIcon="none" Opacity="95" Position="Center" ContentIcon="~/Content/icons/32/cross.png"
@@ -273,10 +279,15 @@
                     }
                 }
 
+
                 var txtAmount = $find("<%=txtAmount.ClientID%>");
                 var txtClientInvoiceDetailAmount = gridItem.findControl("txtClientInvoiceDetailAmount");
                 var salesPrice = gridItem.getDataKeyValue("SalesPrice");
-                txtClientInvoiceDetailAmount.set_value(salesPrice * newValue);
+                if (newValue)
+                    txtClientInvoiceDetailAmount.set_value(salesPrice * newValue);
+                else
+                    txtClientInvoiceDetailAmount.set_value("");
+
             }
         }
 
@@ -312,21 +323,36 @@
             var rgStockOutDetails = $find("<%=rgStockOutDetails.ClientID%>")
             var selectedItems = rgStockOutDetails.get_masterTableView().get_selectedItems();
 
+            var saleOrderType = "";
             for (var i = 0; i < selectedItems.length; i++) {
                 var curSelectedItem = selectedItems[i];
                 var curSelectedItemElement = curSelectedItem.get_element();
 
-
+                var currentSaleOrderType = curSelectedItem.getDataKeyValue("SaleOrderTypeID");
+                if (saleOrderType == "") {
+                    saleOrderType = currentSaleOrderType;
+                    $("#<%=hdnSaleOrderTypeID.ClientID%>").val(saleOrderType);
+                }
+                else {
+                    if (saleOrderType != currentSaleOrderType) {
+                        radNotification.set_text("勾选的订单必须为：同种订单类型");
+                        radNotification.show();
+                        return false;
+                    }
+                }
                 var curCurrentOutQtyControl = $telerik.findControl(curSelectedItemElement, "txtCurrentOutQty");
                 var curCurrentTxtClientInvoiceDetailAmount = $telerik.findControl(curSelectedItemElement, "txtClientInvoiceDetailAmount");
 
                 var curCurrentClientInvoiceDetailAmount = curCurrentTxtClientInvoiceDetailAmount.get_value();
+
+
 
                 if (!curCurrentClientInvoiceDetailAmount) {
                     radNotification.set_text("勾选的订单必须填写本次开票金额");
                     radNotification.show();
                     return false;
                 }
+
             }
 
             return true;
@@ -355,6 +381,6 @@
         }
 
 
-      
+
     </script>
 </asp:Content>

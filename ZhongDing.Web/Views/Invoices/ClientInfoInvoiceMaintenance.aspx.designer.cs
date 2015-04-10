@@ -220,6 +220,15 @@ namespace ZhongDing.Web.Views.Invoices {
         protected global::System.Web.UI.WebControls.HiddenField hdnCurrentEntityID;
         
         /// <summary>
+        /// hdnSaleOrderTypeID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnSaleOrderTypeID;
+        
+        /// <summary>
         /// radNotification control.
         /// </summary>
         /// <remarks>

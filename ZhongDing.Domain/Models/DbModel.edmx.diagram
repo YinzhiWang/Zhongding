@@ -329,6 +329,7 @@
         <EntityTypeShape EntityType="DbModel.ClientInvoiceDetail" Width="1.5" PointX="10.481822568216279" PointY="12.248935436945844" />
         <AssociationConnector Association="DbModel.FK_ClientInvoiceDetail_ClientInvoiceID" />
         <AssociationConnector Association="DbModel.FK_ClientInvoiceDetail_StockOutDetailID" />
+        <AssociationConnector Association="DbModel.FK_ClientInvoice_SaleOrderTypeID" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

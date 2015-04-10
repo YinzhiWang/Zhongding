@@ -11,5 +11,7 @@ namespace ZhongDing.Domain.UISearchObjects
         public string InvoiceNumber { get; set; }
 
         public int CompanyID { get; set; }
+
+        public int? ClientCompanyID { get; set; }
     }
 }

@@ -82,6 +82,7 @@ namespace ZhongDing.Web.Views.Invoices
                 EndDate = rdpEndDate.SelectedDate,
                 InvoiceNumber = txtInvoiceNumber.Text.Trim(),
                 CompanyID = SiteUser.GetCurrentSiteUser().CompanyID,
+                ClientCompanyID = rcbxClientCompany.SelectedValue.ToIntOrNull()
             };
 
             int totalRecords = 0;

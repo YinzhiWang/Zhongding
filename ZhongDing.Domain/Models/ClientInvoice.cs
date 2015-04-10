@@ -33,6 +33,7 @@ namespace ZhongDing.Domain.Models
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
+        public int SaleOrderTypeID { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -47,5 +48,6 @@ namespace ZhongDing.Domain.Models
         public virtual ClientCompany ClientCompany { get; set; }
         public virtual Company Company { get; set; }
         public virtual ICollection<ClientInvoiceDetail> ClientInvoiceDetail { get; set; }
+        public virtual SaleOrderType SaleOrderType { get; set; }
     }
 }

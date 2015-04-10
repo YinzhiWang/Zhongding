@@ -178,7 +178,7 @@ namespace ZhongDing.Web.Views.Invoices
                 currentEntity.TransportCompany = rcbxTransportCompany.SelectedItem.Text;
                 currentEntity.TransportNumber = txtTransportNumber.Text.Trim();
                 currentEntity.ClientCompanyID = rcbxClientCompany.SelectedValue.ToInt();
-
+                currentEntity.SaleOrderTypeID = hdnSaleOrderTypeID.Value.ToInt();
                 PageClientInvoiceRepository.Save();
                 var selectedItems = rgStockOutDetails.SelectedItems;
 
@@ -247,7 +247,7 @@ namespace ZhongDing.Web.Views.Invoices
         {
             var uiSearchObj = new UISearchStockOutDetail()
             {
-
+                ClientCompanyID = rcbxClientCompany.SelectedValue.ToIntOrNull(),
             };
 
             int totalRecords;

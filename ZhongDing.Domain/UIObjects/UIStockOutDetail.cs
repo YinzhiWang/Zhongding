@@ -80,5 +80,9 @@ namespace ZhongDing.Domain.UIObjects
         public decimal ClientInvoiceDetailTotalAmount { get; set; }
 
         public int? ClientUserID { get; set; }
+
+        public string SaleOrderType { get; set; }
+
+        public int SaleOrderTypeID { get; set; }
     }
 }

@@ -275,6 +275,10 @@
             <End Role="Company" EntitySet="Company" />
             <End Role="ClientInvoice" EntitySet="ClientInvoice" />
           </AssociationSet>
+          <AssociationSet Name="FK_ClientInvoice_SaleOrderTypeID" Association="DbModel.Store.FK_ClientInvoice_SaleOrderTypeID">
+            <End Role="SaleOrderType" EntitySet="SaleOrderType" />
+            <End Role="ClientInvoice" EntitySet="ClientInvoice" />
+          </AssociationSet>
           <AssociationSet Name="FK_ClientInvoiceDetail_ClientInvoiceID" Association="DbModel.Store.FK_ClientInvoiceDetail_ClientInvoiceID">
             <End Role="ClientInvoice" EntitySet="ClientInvoice" />
             <End Role="ClientInvoiceDetail" EntitySet="ClientInvoiceDetail" />
@@ -1277,6 +1281,7 @@
           <Property Name="Amount" Type="money" Nullable="false" />
           <Property Name="TransportNumber" Type="nvarchar" Nullable="false" MaxLength="256" />
           <Property Name="TransportCompany" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="SaleOrderTypeID" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
@@ -3126,6 +3131,18 @@
             </Principal>
             <Dependent Role="ClientInvoice">
               <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientInvoice_SaleOrderTypeID">
+          <End Role="SaleOrderType" Type="DbModel.Store.SaleOrderType" Multiplicity="1" />
+          <End Role="ClientInvoice" Type="DbModel.Store.ClientInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaleOrderType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientInvoice">
+              <PropertyRef Name="SaleOrderTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6251,6 +6268,10 @@
             <End Role="StockOutDetail" EntitySet="StockOutDetail" />
             <End Role="ClientInvoiceDetail" EntitySet="ClientInvoiceDetail" />
           </AssociationSet>
+          <AssociationSet Name="FK_ClientInvoice_SaleOrderTypeID" Association="DbModel.FK_ClientInvoice_SaleOrderTypeID">
+            <End Role="SaleOrderType" EntitySet="SaleOrderType" />
+            <End Role="ClientInvoice" EntitySet="ClientInvoice" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -8660,6 +8681,7 @@
           <Property Type="String" Name="TypeName" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="SalesOrderApplication" Relationship="DbModel.FK_SalesOrderApplication_SaleOrderType" FromRole="SaleOrderType" ToRole="SalesOrderApplication" />
           <NavigationProperty Name="ClientRefundApplication" Relationship="DbModel.FK_ClientRefundApplication_SaleOrderType" FromRole="SaleOrderType" ToRole="ClientRefundApplication" />
+          <NavigationProperty Name="ClientInvoice" Relationship="DbModel.FK_ClientInvoice_SaleOrderTypeID" FromRole="SaleOrderType" ToRole="ClientInvoice" />
         </EntityType>
         <EntityType Name="SalesOrderApplication">
           <Key>
@@ -10902,6 +10924,8 @@
           <NavigationProperty Name="ClientCompany" Relationship="DbModel.FK_ClientInvoice_ClientCompanyID" FromRole="ClientInvoice" ToRole="ClientCompany" />
           <NavigationProperty Name="Company" Relationship="DbModel.FK_ClientInvoice_CompanyID" FromRole="ClientInvoice" ToRole="Company" />
           <NavigationProperty Name="ClientInvoiceDetail" Relationship="DbModel.FK_ClientInvoiceDetail_ClientInvoiceID" FromRole="ClientInvoice" ToRole="ClientInvoiceDetail" />
+          <Property Type="Int32" Name="SaleOrderTypeID" Nullable="false" />
+          <NavigationProperty Name="SaleOrderType" Relationship="DbModel.FK_ClientInvoice_SaleOrderTypeID" FromRole="ClientInvoice" ToRole="SaleOrderType" />
         </EntityType>
         <Association Name="FK_ClientInvoice_ClientCompanyID">
           <End Type="DbModel.ClientCompany" Role="ClientCompany" Multiplicity="1" />
@@ -10964,6 +10988,18 @@
             </Principal>
             <Dependent Role="ClientInvoiceDetail">
               <PropertyRef Name="StockOutDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientInvoice_SaleOrderTypeID">
+          <End Type="DbModel.SaleOrderType" Role="SaleOrderType" Multiplicity="1" />
+          <End Type="DbModel.ClientInvoice" Role="ClientInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaleOrderType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientInvoice">
+              <PropertyRef Name="SaleOrderTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -12696,6 +12732,7 @@
           <EntitySetMapping Name="ClientInvoice">
             <EntityTypeMapping TypeName="DbModel.ClientInvoice">
               <MappingFragment StoreEntitySet="ClientInvoice">
+                <ScalarProperty Name="SaleOrderTypeID" ColumnName="SaleOrderTypeID" />
                 <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
                 <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />

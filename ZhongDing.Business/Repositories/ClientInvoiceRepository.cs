@@ -38,6 +38,14 @@ namespace ZhongDing.Business.Repositories
                 {
                     whereFuncs.Add(x => x.InvoiceNumber.Contains(uiSearchObj.InvoiceNumber));
                 }
+                if (uiSearchObj.ClientCompanyID.BiggerThanZero())
+                {
+                    whereFuncs.Add(x => x.ClientCompanyID == uiSearchObj.ClientCompanyID);
+                }
+                if (uiSearchObj.CompanyID > 0)
+                {
+                    whereFuncs.Add(x => x.CompanyID == uiSearchObj.CompanyID);
+                }
             }
 
             query = GetList(pageIndex, pageSize, whereFuncs, out total);
@@ -70,7 +78,8 @@ namespace ZhongDing.Business.Repositories
                                      TaxQty = stockOutDetail.TaxQty,
                                      ClientCompanyName = clientCompany.Name,
                                      ClientInvoiceDetailTaxAmount = clientInvoiceDetail.Amount,
-
+                                     StockOutDetailSalesAmount = stockOutDetail.TotalSalesAmount,
+                                     SaleOrderType = q.SaleOrderType.TypeName
                                  }).ToList();
             }
 

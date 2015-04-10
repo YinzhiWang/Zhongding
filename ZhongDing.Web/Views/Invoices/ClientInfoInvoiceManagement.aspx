@@ -33,7 +33,7 @@
     <div class="container">
         <div class="mws-panel grid_8">
             <div class="mws-panel-header">
-                <span class="mws-i-24 i-table-1" id="lblTitle" runat="server">供应商发票管理</span>
+                <span class="mws-i-24 i-table-1" id="lblTitle" runat="server">客户发票管理</span>
             </div>
             <div class="mws-panel-body">
                 <table runat="server" id="tblSearch" class="leftmargin10">
@@ -84,7 +84,10 @@
                             <telerik:GridBoundColumn UniqueName="InvoiceDate" HeaderText="开票日期" DataFormatString="{0:yyyy/MM/dd}" DataField="InvoiceDate">
                                 <ItemStyle HorizontalAlign="Left" Width="50" />
                             </telerik:GridBoundColumn>
-
+                            <telerik:GridBoundColumn UniqueName="SaleOrderType" HeaderText="订单类型" DataField="SaleOrderType">
+                                <ItemStyle HorizontalAlign="Left" Width="80" />
+                            </telerik:GridBoundColumn>
+                            
                             <telerik:GridBoundColumn UniqueName="CompanyName" HeaderText="开票单位" DataField="CompanyName">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
@@ -115,17 +118,13 @@
                             </telerik:GridBoundColumn>
 
 
-                            <telerik:GridBoundColumn UniqueName="ClientInvoiceDetailAmount" HeaderText="金额" DataField="ClientInvoiceDetailAmount" DataFormatString="￥{0:f2}">
+                            <telerik:GridBoundColumn UniqueName="StockOutDetailSalesAmount" HeaderText="金额" DataField="StockOutDetailSalesAmount" DataFormatString="￥{0:f2}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="ClientInvoiceDetailTaxAmount" HeaderText="发票金额" DataField="ClientInvoiceDetailTaxAmount" DataFormatString="￥{0:f2}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
 
-
-                          
-
-                           
                             <%--<telerik:GridTemplateColumn UniqueName="Audit">
                                 <ItemStyle HorizontalAlign="Center" Width="30" />
                                 <ItemTemplate>
