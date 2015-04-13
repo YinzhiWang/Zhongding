@@ -419,6 +419,8 @@
     <Compile Include="UIObjects\UICompany.cs" />
     <Compile Include="UIObjects\UIDaBaoApplication.cs" />
     <Compile Include="UIObjects\UIDaBaoAppDetail.cs" />
+    <Compile Include="UIObjects\UIDBClientSettleBonus.cs" />
+    <Compile Include="UIObjects\UIDBClientSettlement.cs" />
     <Compile Include="UIObjects\UIDBContract.cs" />
     <Compile Include="UIObjects\UIDBContractHospital.cs" />
     <Compile Include="UIObjects\UIDCFlowData.cs" />
@@ -495,6 +497,8 @@
     <Compile Include="UISearchObjects\UISearchCompany.cs" />
     <Compile Include="UISearchObjects\UISearchDaBaoApplication.cs" />
     <Compile Include="UISearchObjects\UISearchDaBaoAppDetail.cs" />
+    <Compile Include="UISearchObjects\UISearchDBClientSettleBonus.cs" />
+    <Compile Include="UISearchObjects\UISearchDBClientSettlement.cs" />
     <Compile Include="UISearchObjects\UISearchDBContract.cs" />
     <Compile Include="UISearchObjects\UISearchDCFlowData.cs" />
     <Compile Include="UISearchObjects\UISearchDCFlowDataDetail.cs" />

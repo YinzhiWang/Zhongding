@@ -1598,7 +1598,7 @@
           <Property Name="IsNeedSettlement" Type="bit" />
           <Property Name="IsManualSettled" Type="bit" />
           <Property Name="ManualSettledBy" Type="int" />
-          <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Comment" Type="nvarchar(max)" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
@@ -6291,12 +6291,7 @@
             <End Role="ClientInfo" EntitySet="ClientInfo" />
             <End Role="ClientInfoProductSetting" EntitySet="ClientInfoProductSetting" />
           </AssociationSet>
-          <EntitySet Name="DBClientSettleBonus" EntityType="DbModel.DBClientSettleBonus" />
           <EntitySet Name="DBClientSettlement" EntityType="DbModel.DBClientSettlement" />
-          <AssociationSet Name="FK_DBClientSettleBonus_DBClientSettlement" Association="DbModel.FK_DBClientSettleBonus_DBClientSettlement">
-            <End Role="DBClientSettlement" EntitySet="DBClientSettlement" />
-            <End Role="DBClientSettleBonus" EntitySet="DBClientSettleBonus" />
-          </AssociationSet>
           <AssociationSet Name="FK_DBClientSettlement_HospitalType" Association="DbModel.FK_DBClientSettlement_HospitalType">
             <End Role="HospitalType" EntitySet="HospitalType" />
             <End Role="DBClientSettlement" EntitySet="DBClientSettlement" />
@@ -6349,10 +6344,6 @@
           <AssociationSet Name="FK_DBClientBonusHospital_DBClientBonus" Association="DbModel.FK_DBClientBonusHospital_DBClientBonus">
             <End Role="DBClientBonus" EntitySet="DBClientBonus" />
             <End Role="DBClientBonusHospital" EntitySet="DBClientBonusHospital" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DBClientSettleBonus_DBClientBonus" Association="DbModel.FK_DBClientSettleBonus_DBClientBonus">
-            <End Role="DBClientBonus" EntitySet="DBClientBonus" />
-            <End Role="DBClientSettleBonus" EntitySet="DBClientSettleBonus" />
           </AssociationSet>
           <AssociationSet Name="FK_DBClientBonusHospital_Hospital" Association="DbModel.FK_DBClientBonusHospital_Hospital">
             <End Role="Hospital" EntitySet="Hospital" />
@@ -6438,6 +6429,15 @@
           <AssociationSet Name="FK_ClientInvoiceDetail_InvoiceTypeID" Association="DbModel.FK_ClientInvoiceDetail_InvoiceTypeID">
             <End Role="InvoiceType" EntitySet="InvoiceType" />
             <End Role="ClientInvoiceDetail" EntitySet="ClientInvoiceDetail" />
+          </AssociationSet>
+          <EntitySet Name="DBClientSettleBonus" EntityType="DbModel.DBClientSettleBonus" />
+          <AssociationSet Name="FK_DBClientSettleBonus_DBClientBonus" Association="DbModel.FK_DBClientSettleBonus_DBClientBonus">
+            <End Role="DBClientBonus" EntitySet="DBClientBonus" />
+            <End Role="DBClientSettleBonus" EntitySet="DBClientSettleBonus" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DBClientSettleBonus_DBClientSettlement" Association="DbModel.FK_DBClientSettleBonus_DBClientSettlement">
+            <End Role="DBClientSettlement" EntitySet="DBClientSettlement" />
+            <End Role="DBClientSettleBonus" EntitySet="DBClientSettleBonus" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
@@ -10652,26 +10652,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="DBClientSettleBonus">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="DBClientSettlementID" Nullable="false" />
-          <Property Type="Int32" Name="DBClientBonusID" Nullable="false" />
-          <Property Type="Decimal" Name="TotalPayAmount" Precision="19" Scale="4" />
-          <Property Type="Boolean" Name="IsNeedSettlement" />
-          <Property Type="Boolean" Name="IsManualSettled" />
-          <Property Type="Int32" Name="ManualSettledBy" />
-          <Property Type="String" Name="Comment" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="DBClientSettlement" Relationship="DbModel.FK_DBClientSettleBonus_DBClientSettlement" FromRole="DBClientSettleBonus" ToRole="DBClientSettlement" />
-          <NavigationProperty Name="DBClientBonus" Relationship="DbModel.FK_DBClientSettleBonus_DBClientBonus" FromRole="DBClientSettleBonus" ToRole="DBClientBonus" />
-        </EntityType>
         <EntityType Name="DBClientSettlement">
           <Key>
             <PropertyRef Name="ID" />
@@ -10687,22 +10667,10 @@
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="DBClientSettleBonus" Relationship="DbModel.FK_DBClientSettleBonus_DBClientSettlement" FromRole="DBClientSettlement" ToRole="DBClientSettleBonus" />
           <NavigationProperty Name="HospitalType" Relationship="DbModel.FK_DBClientSettlement_HospitalType" FromRole="DBClientSettlement" ToRole="HospitalType" />
           <NavigationProperty Name="WorkflowStatus" Relationship="DbModel.FK_DBClientSettlement_WorkflowStatus" FromRole="DBClientSettlement" ToRole="WorkflowStatus" />
+          <NavigationProperty Name="DBClientSettleBonus" Relationship="DbModel.FK_DBClientSettleBonus_DBClientSettlement" FromRole="DBClientSettlement" ToRole="DBClientSettleBonus" />
         </EntityType>
-        <Association Name="FK_DBClientSettleBonus_DBClientSettlement">
-          <End Type="DbModel.DBClientSettlement" Role="DBClientSettlement" Multiplicity="1" />
-          <End Type="DbModel.DBClientSettleBonus" Role="DBClientSettleBonus" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DBClientSettlement">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DBClientSettleBonus">
-              <PropertyRef Name="DBClientSettlementID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DBClientSettlement_HospitalType">
           <End Type="DbModel.HospitalType" Role="HospitalType" Multiplicity="1" />
           <End Type="DbModel.DBClientSettlement" Role="DBClientSettlement" Multiplicity="*" />
@@ -10951,18 +10919,6 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="DBClientBonusHospital">
-              <PropertyRef Name="DBClientBonusID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DBClientSettleBonus_DBClientBonus">
-          <End Type="DbModel.DBClientBonus" Role="DBClientBonus" Multiplicity="1" />
-          <End Type="DbModel.DBClientSettleBonus" Role="DBClientSettleBonus" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DBClientBonus">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DBClientSettleBonus">
               <PropertyRef Name="DBClientBonusID" />
             </Dependent>
           </ReferentialConstraint>
@@ -11292,6 +11248,50 @@
             </Principal>
             <Dependent Role="ClientInvoiceDetail">
               <PropertyRef Name="InvoiceTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DBClientSettleBonus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DBClientSettlementID" Nullable="false" />
+          <Property Type="Int32" Name="DBClientBonusID" Nullable="false" />
+          <Property Type="Decimal" Name="TotalPayAmount" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="IsNeedSettlement" />
+          <Property Type="Boolean" Name="IsManualSettled" />
+          <Property Type="Int32" Name="ManualSettledBy" />
+          <Property Type="String" Name="Comment" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="DBClientBonus" Relationship="DbModel.FK_DBClientSettleBonus_DBClientBonus" FromRole="DBClientSettleBonus" ToRole="DBClientBonus" />
+          <NavigationProperty Name="DBClientSettlement" Relationship="DbModel.FK_DBClientSettleBonus_DBClientSettlement" FromRole="DBClientSettleBonus" ToRole="DBClientSettlement" />
+        </EntityType>
+        <Association Name="FK_DBClientSettleBonus_DBClientBonus">
+          <End Type="DbModel.DBClientBonus" Role="DBClientBonus" Multiplicity="1" />
+          <End Type="DbModel.DBClientSettleBonus" Role="DBClientSettleBonus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DBClientBonus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBClientSettleBonus">
+              <PropertyRef Name="DBClientBonusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DBClientSettleBonus_DBClientSettlement">
+          <End Type="DbModel.DBClientSettlement" Role="DBClientSettlement" Multiplicity="1" />
+          <End Type="DbModel.DBClientSettleBonus" Role="DBClientSettleBonus" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DBClientSettlement">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBClientSettleBonus">
+              <PropertyRef Name="DBClientSettlementID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -12895,25 +12895,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DBClientSettleBonus">
-            <EntityTypeMapping TypeName="DbModel.DBClientSettleBonus">
-              <MappingFragment StoreEntitySet="DBClientSettleBonus">
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Comment" ColumnName="Comment" />
-                <ScalarProperty Name="ManualSettledBy" ColumnName="ManualSettledBy" />
-                <ScalarProperty Name="IsManualSettled" ColumnName="IsManualSettled" />
-                <ScalarProperty Name="IsNeedSettlement" ColumnName="IsNeedSettlement" />
-                <ScalarProperty Name="TotalPayAmount" ColumnName="TotalPayAmount" />
-                <ScalarProperty Name="DBClientBonusID" ColumnName="DBClientBonusID" />
-                <ScalarProperty Name="DBClientSettlementID" ColumnName="DBClientSettlementID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="DBClientSettlement">
             <EntityTypeMapping TypeName="DbModel.DBClientSettlement">
               <MappingFragment StoreEntitySet="DBClientSettlement">
@@ -13096,6 +13077,25 @@
             <EntityTypeMapping TypeName="DbModel.InvoiceType">
               <MappingFragment StoreEntitySet="InvoiceType">
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DBClientSettleBonus">
+            <EntityTypeMapping TypeName="DbModel.DBClientSettleBonus">
+              <MappingFragment StoreEntitySet="DBClientSettleBonus">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="ManualSettledBy" ColumnName="ManualSettledBy" />
+                <ScalarProperty Name="IsManualSettled" ColumnName="IsManualSettled" />
+                <ScalarProperty Name="IsNeedSettlement" ColumnName="IsNeedSettlement" />
+                <ScalarProperty Name="TotalPayAmount" ColumnName="TotalPayAmount" />
+                <ScalarProperty Name="DBClientBonusID" ColumnName="DBClientBonusID" />
+                <ScalarProperty Name="DBClientSettlementID" ColumnName="DBClientSettlementID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

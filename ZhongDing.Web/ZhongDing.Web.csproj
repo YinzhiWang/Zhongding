@@ -2679,6 +2679,9 @@
     <Content Include="Views\Sales\Editors\DBOrderProductMaintain.aspx" />
     <Content Include="Views\Sales\Editors\DBOrderRequestProductMaintain.aspx" />
     <Content Include="Views\Sales\Printers\PrintStockOut.aspx" />
+    <Content Include="Views\Settlements\DBClientSettleBonusMaintenance.aspx" />
+    <Content Include="Views\Settlements\DBClientSettleBonusManagement.aspx" />
+    <Content Include="Views\Settlements\Editors\ManualSettleDBClientBonus.aspx" />
     <Content Include="WebServices\SupplierWS.asmx" />
     <Content Include="HttpHandle\AsyncUploadFileHandler.ashx" />
     <Content Include="HttpHandle\AsyncOperateFileHandler.ashx" />
@@ -3622,6 +3625,27 @@
     </Compile>
     <Compile Include="Views\Sales\Printers\PrintStockOut.aspx.designer.cs">
       <DependentUpon>PrintStockOut.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settlements\DBClientSettleBonusMaintenance.aspx.cs">
+      <DependentUpon>DBClientSettleBonusMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Settlements\DBClientSettleBonusMaintenance.aspx.designer.cs">
+      <DependentUpon>DBClientSettleBonusMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settlements\DBClientSettleBonusManagement.aspx.cs">
+      <DependentUpon>DBClientSettleBonusManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Settlements\DBClientSettleBonusManagement.aspx.designer.cs">
+      <DependentUpon>DBClientSettleBonusManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settlements\Editors\ManualSettleDBClientBonus.aspx.cs">
+      <DependentUpon>ManualSettleDBClientBonus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Settlements\Editors\ManualSettleDBClientBonus.aspx.designer.cs">
+      <DependentUpon>ManualSettleDBClientBonus.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebServices\SupplierWS.asmx.cs">
       <DependentUpon>SupplierWS.asmx</DependentUpon>

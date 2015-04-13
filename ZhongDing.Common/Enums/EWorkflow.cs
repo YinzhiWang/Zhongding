@@ -55,7 +55,7 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 厂家经理返款
         /// </summary>
-        FactoryManagerRefunds,
+        FactoryManagerRefunds = 10,
 
         /// <summary>
         /// 供应商任务返款
@@ -66,5 +66,12 @@ namespace ZhongDing.Common.Enums
         /// 客户任务奖励返款
         /// </summary>
         ClientTaskRefunds,
+
+        /// <summary>
+        /// 大包用户提成结算
+        /// </summary>
+        DBClientSettleBonus,
+
+
     }
 }

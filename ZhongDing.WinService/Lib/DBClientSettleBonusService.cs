@@ -258,8 +258,7 @@ namespace ZhongDing.WinService.Lib
                         var dbClientSettleBonus = new DBClientSettleBonus()
                         {
                             DBClientSettlement = clientSettlement,
-                            DBClientBonus = clientBonus,
-                            TotalPayAmount = clientBonus.BonusAmount + clientBonus.PerformanceAmount //绩效有加减
+                            DBClientBonus = clientBonus
                         };
 
                         if (clientBonus.SettlementDate == tempSettlementDate.AddMonths(-1))
@@ -273,6 +272,10 @@ namespace ZhongDing.WinService.Lib
                                     && x.SaleQty > 0);
 
                             dbClientSettleBonus.IsNeedSettlement = isNeedSettlement;
+
+                            //需结算的才计算应支付金额
+                            if (isNeedSettlement)
+                                dbClientSettleBonus.TotalPayAmount = clientBonus.BonusAmount + clientBonus.PerformanceAmount;//绩效有加减
                         }
                         else
                             dbClientSettleBonus.IsNeedSettlement = false;
@@ -312,8 +315,7 @@ namespace ZhongDing.WinService.Lib
                         var dbClientSettleBonus = new DBClientSettleBonus()
                         {
                             DBClientSettlement = clientSettlement,
-                            DBClientBonus = clientBonus,
-                            TotalPayAmount = clientBonus.BonusAmount + clientBonus.PerformanceAmount //绩效有加减
+                            DBClientBonus = clientBonus
                         };
 
                         if (clientBonus.SettlementDate == tempSettlementDate.AddMonths(-1))
@@ -327,6 +329,10 @@ namespace ZhongDing.WinService.Lib
                                     && x.SaleQty > 0);
 
                             dbClientSettleBonus.IsNeedSettlement = isNeedSettlement;
+
+                            //需结算的才计算应支付金额
+                            if (isNeedSettlement)
+                                dbClientSettleBonus.TotalPayAmount = clientBonus.BonusAmount + clientBonus.PerformanceAmount;//绩效有加减
                         }
                         else
                             dbClientSettleBonus.IsNeedSettlement = false;

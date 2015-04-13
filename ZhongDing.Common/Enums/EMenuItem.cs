@@ -204,6 +204,17 @@ namespace ZhongDing.Common.Enums
         /// 配送公司库存
         /// </summary>
         DCInventoryData,
+
+        /// <summary>
+        /// 提成与考核管理
+        /// </summary>
+        BonusAndAssessmentManage = 90,
+
+        /// <summary>
+        /// 大包客户提成结算管理
+        /// </summary>
+        DBClientSettleBonusManage,
+
         /// <summary>
         /// 报表管理
         /// </summary>

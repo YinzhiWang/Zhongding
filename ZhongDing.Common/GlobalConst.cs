@@ -169,6 +169,16 @@ namespace ZhongDing.Common
             /// </summary>
             public static readonly string MSG_PARAMETER_ERROR_REDIRECT = "参数错误，页面将自动跳转";
 
+            /// <summary>
+            /// 提示消息："没有权限，窗口将自动关闭"
+            /// </summary>
+            public static readonly string MSG_NO_PERMISSION_CLOSE_WIN = "没有权限，窗口将自动关闭";
+
+            /// <summary>
+            /// 提示消息："没有权限，页面将自动跳转"
+            /// </summary>
+            public static readonly string MSG_NO_PERMISSION_REDIRECT = "没有权限，页面将自动跳转";
+
         }
 
 
@@ -432,9 +442,14 @@ namespace ZhongDing.Common
         public class OrderByExpression
         {
             /// <summary>
-            /// 创建时间倒序："CreatedOn DESC"
+            /// 创建时间倒序：CreatedOn DESC
             /// </summary>
             public static readonly string CREATEDON_DESC = "CreatedOn DESC";
+
+            /// <summary>
+            /// 结算日期倒序：SettlementDate DESC
+            /// </summary>
+            public static readonly string SETTLEMENTDATE_DESC = "SettlementDate DESC";
 
 
         }

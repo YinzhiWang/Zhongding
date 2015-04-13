@@ -212,5 +212,25 @@ namespace ZhongDing.Common.Enums
         /// 修改客户任务奖励返款
         /// </summary>
         EditClientTaskRefund,
+
+        /// <summary>
+        /// 申请结算大包客户提成
+        /// </summary>
+        ApplyDBClientSettleBonus,
+
+        /// <summary>
+        /// 部门领导审核（大包客户提成）
+        /// </summary>
+        AuditDBClientSettleBonusByDeptManagers,
+
+        /// <summary>
+        /// 出纳支付（大包客户提成）
+        /// </summary>
+        PayDBClientSettleBonus,
+
+        /// <summary>
+        /// 修改大包客户提成
+        /// </summary>
+        EditDBClientSettleBonus
     }
 }

@@ -91,6 +91,7 @@
     <Compile Include="Enums\EImportDataType.cs" />
     <Compile Include="Enums\EImportStatus.cs" />
     <Compile Include="Enums\EInvoiceType.cs" />
+    <Compile Include="Enums\EManualSettleActionType.cs" />
     <Compile Include="Enums\EMenuItem.cs" />
     <Compile Include="Enums\EMonthOfYear.cs" />
     <Compile Include="Enums\EOwnerType.cs" />

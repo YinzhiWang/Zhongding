@@ -150,6 +150,15 @@
                                     <li data-level="2"><a href="form_elements.html">大包出库单导入</a></li>
                                 </ul>
                             </li>
+
+                            <li data-level="1" data-menuitemid="90">
+                                <a href="#" class="mws-i-24 i-link">提成与考核</a>
+                                <ul class="hide">
+                                    <li data-level="2" data-menuitemid="91"><a href="javascript:void(0);" onclick="redirectToPage('Views/Settlements/DBClientSettleBonusManagement.aspx');">大包客户提成结算</a></li>
+                                    <li data-level="2" data-menuitemid="92"><a href="#">部门月提成</a></li>
+                                </ul>
+                            </li>
+
                             <li data-level="1" data-menuitemid="100">
                                 <a href="#" class="mws-i-24 i-chart-8">报表管理</a>
                                 <ul class="hide">

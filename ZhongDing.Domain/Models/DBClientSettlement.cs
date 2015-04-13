@@ -42,8 +42,8 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ICollection<DBClientSettleBonus> DBClientSettleBonus { get; set; }
         public virtual HospitalType HospitalType { get; set; }
         public virtual WorkflowStatus WorkflowStatus { get; set; }
+        public virtual ICollection<DBClientSettleBonus> DBClientSettleBonus { get; set; }
     }
 }
