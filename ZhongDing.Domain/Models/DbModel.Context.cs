@@ -132,5 +132,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<ClientInvoiceDetail> ClientInvoiceDetail { get; set; }
         public DbSet<DBClientInvoice> DBClientInvoice { get; set; }
         public DbSet<DBClientInvoiceDetail> DBClientInvoiceDetail { get; set; }
+        public DbSet<InvoiceType> InvoiceType { get; set; }
     }
 }

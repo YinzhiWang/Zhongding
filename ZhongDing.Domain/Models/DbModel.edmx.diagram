@@ -337,6 +337,8 @@
         <AssociationConnector Association="DbModel.FK_DBClientInvoice_SaleOrderTypeID" />
         <AssociationConnector Association="DbModel.FK_DBClientInvoiceDetail_DBClientInvoiceID" />
         <AssociationConnector Association="DbModel.FK_DBClientInvoiceDetail_StockOutDetailID" />
+        <EntityTypeShape EntityType="DbModel.InvoiceType" Width="1.5" PointX="9.9703735606606934" PointY="16.649070538882665" />
+        <AssociationConnector Association="DbModel.FK_ClientInvoiceDetail_InvoiceTypeID" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

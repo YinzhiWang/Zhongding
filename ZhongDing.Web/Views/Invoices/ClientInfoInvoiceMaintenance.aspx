@@ -105,9 +105,10 @@
                             <div class="float-left">
                                 <label>快递单号</label>
                                 <div class="mws-form-item small">
-                                    <telerik:RadNumericTextBox ShowSpinButtons="true" MinValue="0" IncrementSettings-InterceptArrowKeys="true" IncrementSettings-InterceptMouseWheel="true"
-                                        Label="" runat="server" ID="txtTransportNumber" Width="160px">
-                                    </telerik:RadNumericTextBox>
+                                  <telerik:RadTextBox  
+                                        runat="server" ID="txtTransportNumber" Width="160px">
+                                    </telerik:RadTextBox>
+                                    
                                     <asp:RequiredFieldValidator ID="rfvTransportNumber" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="txtTransportNumber"
                                         ErrorMessage="快递单号必填" Text="*" CssClass="field-validation-error">
                                     </asp:RequiredFieldValidator>
@@ -202,6 +203,20 @@
                                                 <telerik:RadNumericTextBox runat="server" ID="txtClientInvoiceDetailAmount" Type="Number" MaxLength="9" Width="80" ShowSpinButtons="true"
                                                     MinValue="1" MaxValue="99999999" NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator="" ReadOnly="true">
                                                 </telerik:RadNumericTextBox>
+                                            </ItemTemplate>
+                                        </telerik:GridTemplateColumn>
+                                        <telerik:GridTemplateColumn UniqueName="CurrentInvoiceType" HeaderText="发票类型">
+                                            <HeaderStyle Width="160" Font-Size="13px" />
+                                            <ItemStyle HorizontalAlign="Left" Width="160" />
+                                            <ItemTemplate>
+                                                <asp:RadioButtonList  CssClass="radioButtonList"
+                                                    RepeatDirection="Vertical" Width="160px" CellPadding="0" CellSpacing="0"
+                                                    ID="rblInvoiceType" runat="server"  >
+                                                    <asp:ListItem Value="1" Selected="True">高价</asp:ListItem>
+                                                    <asp:ListItem Value="2">低价</asp:ListItem>
+                                                    <asp:ListItem Value="3">平价</asp:ListItem>
+       
+                                                </asp:RadioButtonList>
                                             </ItemTemplate>
                                         </telerik:GridTemplateColumn>
 

@@ -76,13 +76,13 @@ namespace ZhongDing.Web.Views.Invoices {
         protected global::Telerik.Web.UI.RadTextBox txtInvoiceNumber;
         
         /// <summary>
-        /// rcbxClientCompany control.
+        /// rcbxDistributionCompany control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbxClientCompany;
+        protected global::Telerik.Web.UI.RadComboBox rcbxDistributionCompany;
         
         /// <summary>
         /// btnSearch control.

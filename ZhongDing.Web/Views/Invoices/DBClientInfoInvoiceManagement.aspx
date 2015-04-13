@@ -54,11 +54,11 @@
                             <telerik:RadTextBox runat="server" ID="txtInvoiceNumber" CssClass="mws-textinput" Width="200px" MaxLength="100"></telerik:RadTextBox>
 
                         </td>
-                        <th class="width80 middle-td">商业单位：</th>
+                        <th class="width80 middle-td">配送公司：</th>
                         <td class="middle-td width280-percent">
-                         <telerik:RadComboBox runat="server" ID="rcbxClientCompany" Height="160px" Width="200px" Filter="Contains"
-                                EmptyMessage="--请选择--" AllowCustomText="true">
-                            </telerik:RadComboBox>   &nbsp;&nbsp;&nbsp;&nbsp;
+                            <telerik:RadComboBox runat="server" ID="rcbxDistributionCompany" Filter="Contains" Height="160px" Width="260" EmptyMessage="--请选择--">
+                            </telerik:RadComboBox>
+                              &nbsp;&nbsp;&nbsp;&nbsp;
                              <asp:Button ID="btnSearch" runat="server" Text="查询" CssClass="mws-button green" OnClick="btnSearch_Click" />
                             &nbsp;&nbsp;&nbsp;&nbsp;
                                 <asp:Button ID="btnReset" runat="server" Text="重置" CssClass="mws-button orange" OnClick="btnReset_Click" />

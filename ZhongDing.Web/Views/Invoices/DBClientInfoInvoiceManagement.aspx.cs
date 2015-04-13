@@ -52,6 +52,17 @@ namespace ZhongDing.Web.Views.Invoices
                 return _PageClientCompanyRepository;
             }
         }
+        private IDistributionCompanyRepository _PageDistributionCompanyRepository;
+        private IDistributionCompanyRepository PageDistributionCompanyRepository
+        {
+            get
+            {
+                if (_PageDistributionCompanyRepository == null)
+                    _PageDistributionCompanyRepository = new DistributionCompanyRepository();
+
+                return _PageDistributionCompanyRepository;
+            }
+        }
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
@@ -59,20 +70,20 @@ namespace ZhongDing.Web.Views.Invoices
             this.Master.MenuItemID = (int)EMenuItem.DBClientInvoiceManage;
             if (!IsPostBack)
             {
-                BindClientCompanys();
+                BindDistributionCompanies();
             }
         }
-        private void BindClientCompanys()
+
+        private void BindDistributionCompanies()
         {
-            var uiSearchObj = new UISearchDropdownItem();
+            var distributionCompanies = PageDistributionCompanyRepository.GetDropdownItems();
 
-            var clientCompanies = PageClientCompanyRepository.GetDropdownItems(uiSearchObj);
-            rcbxClientCompany.DataSource = clientCompanies;
-            rcbxClientCompany.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
-            rcbxClientCompany.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
-            rcbxClientCompany.DataBind();
+            rcbxDistributionCompany.DataSource = distributionCompanies;
+            rcbxDistributionCompany.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+            rcbxDistributionCompany.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+            rcbxDistributionCompany.DataBind();
 
-            rcbxClientCompany.Items.Insert(0, new RadComboBoxItem("", ""));
+            rcbxDistributionCompany.Items.Insert(0, new RadComboBoxItem("", ""));
         }
         private void BindDBClientInvoice(bool isNeedRebind)
         {
@@ -82,7 +93,7 @@ namespace ZhongDing.Web.Views.Invoices
                 EndDate = rdpEndDate.SelectedDate,
                 InvoiceNumber = txtInvoiceNumber.Text.Trim(),
                 CompanyID = SiteUser.GetCurrentSiteUser().CompanyID,
-                ClientCompanyID = rcbxClientCompany.SelectedValue.ToIntOrNull()
+                DistributionCompanyID = rcbxDistributionCompany.SelectedValue.ToIntOrNull()
             };
 
             int totalRecords = 0;
@@ -147,7 +158,7 @@ namespace ZhongDing.Web.Views.Invoices
         {
             rdpEndDate.SelectedDate = rdpBeginDate.SelectedDate = null;
 
-            txtInvoiceNumber.Text = rcbxClientCompany.Text = rcbxClientCompany.SelectedValue = string.Empty;
+            txtInvoiceNumber.Text = rcbxDistributionCompany.Text = rcbxDistributionCompany.SelectedValue = string.Empty;
            
             BindDBClientInvoice(true);
         }

@@ -187,12 +187,13 @@ namespace ZhongDing.Web.Views.Invoices
                     var editableItem = ((GridEditableItem)item);
                     int stockOutDetailID = Convert.ToInt32(editableItem.GetDataKeyValue("ID").ToString());
                     var txtClientInvoiceDetailAmount = (RadNumericTextBox)editableItem.FindControl("txtClientInvoiceDetailAmount");
-
+                    var rblInvoiceType = (RadioButtonList)editableItem.FindControl("rblInvoiceType");
                     ClientInvoiceDetail ClientInvoiceDetail = new ClientInvoiceDetail()
                     {
                         Amount = txtClientInvoiceDetailAmount.Value.ToDecimal(),
                         StockOutDetailID = stockOutDetailID,
                         ClientInvoiceID = currentEntity.ID,
+                        InvoiceTypeID = rblInvoiceType.SelectedValue.ToInt()
                     };
                     PageClientInvoiceDetailRepository.Add(ClientInvoiceDetail);
 
