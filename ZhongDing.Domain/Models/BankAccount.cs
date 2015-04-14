@@ -22,7 +22,7 @@ namespace ZhongDing.Domain.Models
             this.ClientSaleAppBankAccount = new HashSet<ClientSaleAppBankAccount>();
             this.ApplicationPayment = new HashSet<ApplicationPayment>();
             this.ApplicationPayment1 = new HashSet<ApplicationPayment>();
-            this.ClientInfo = new HashSet<ClientInfo>();
+            this.ClientUser = new HashSet<ClientUser>();
         }
     
         public int ID { get; set; }
@@ -57,6 +57,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<ClientSaleAppBankAccount> ClientSaleAppBankAccount { get; set; }
         public virtual ICollection<ApplicationPayment> ApplicationPayment { get; set; }
         public virtual ICollection<ApplicationPayment> ApplicationPayment1 { get; set; }
-        public virtual ICollection<ClientInfo> ClientInfo { get; set; }
+        public virtual ICollection<ClientUser> ClientUser { get; set; }
     }
 }

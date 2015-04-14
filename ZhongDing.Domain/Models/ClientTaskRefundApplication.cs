@@ -46,10 +46,10 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual ClientCompany ClientCompany { get; set; }
-        public virtual ClientUser ClientUser { get; set; }
         public virtual Company Company { get; set; }
         public virtual Product Product { get; set; }
         public virtual ProductSpecification ProductSpecification { get; set; }
         public virtual WorkflowStatus WorkflowStatus { get; set; }
+        public virtual ClientUser ClientUser { get; set; }
     }
 }

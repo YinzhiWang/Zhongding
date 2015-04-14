@@ -53,7 +53,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<DeptProductEvaluation> DeptProductEvaluation { get; set; }
         public DbSet<SupplierCertificate> SupplierCertificate { get; set; }
         public DbSet<ClientCompany> ClientCompany { get; set; }
-        public DbSet<ClientUser> ClientUser { get; set; }
         public DbSet<ProductBasicPrice> ProductBasicPrice { get; set; }
         public DbSet<ProductDBPolicyPrice> ProductDBPolicyPrice { get; set; }
         public DbSet<Department> Department { get; set; }
@@ -120,7 +119,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<DCInventoryData> DCInventoryData { get; set; }
         public DbSet<DCImportFileLog> DCImportFileLog { get; set; }
         public DbSet<StockOutDetail> StockOutDetail { get; set; }
-        public DbSet<ClientInfo> ClientInfo { get; set; }
         public DbSet<DBClientSettlement> DBClientSettlement { get; set; }
         public DbSet<SupplierInvoice> SupplierInvoice { get; set; }
         public DbSet<SupplierInvoiceDetail> SupplierInvoiceDetail { get; set; }
@@ -133,5 +131,7 @@ namespace ZhongDing.Domain.Models
         public DbSet<DBClientInvoiceDetail> DBClientInvoiceDetail { get; set; }
         public DbSet<InvoiceType> InvoiceType { get; set; }
         public DbSet<DBClientSettleBonus> DBClientSettleBonus { get; set; }
+        public DbSet<ClientInfo> ClientInfo { get; set; }
+        public DbSet<ClientUser> ClientUser { get; set; }
     }
 }

@@ -17,16 +17,16 @@ namespace ZhongDing.Domain.Models
     {
         public ClientUser()
         {
-            this.StockOut = new HashSet<StockOut>();
-            this.ClientSaleApplication = new HashSet<ClientSaleApplication>();
-            this.ClientRefundApplication = new HashSet<ClientRefundApplication>();
-            this.FactoryManagerRefundApplication = new HashSet<FactoryManagerRefundApplication>();
-            this.ClientTaskRefundApplication = new HashSet<ClientTaskRefundApplication>();
             this.ClientFlowData = new HashSet<ClientFlowData>();
             this.ClientImportFileLog = new HashSet<ClientImportFileLog>();
             this.ClientInfo = new HashSet<ClientInfo>();
+            this.ClientRefundApplication = new HashSet<ClientRefundApplication>();
+            this.ClientSaleApplication = new HashSet<ClientSaleApplication>();
+            this.ClientTaskRefundApplication = new HashSet<ClientTaskRefundApplication>();
             this.DBClientBonus = new HashSet<DBClientBonus>();
             this.DBContract = new HashSet<DBContract>();
+            this.FactoryManagerRefundApplication = new HashSet<FactoryManagerRefundApplication>();
+            this.StockOut = new HashSet<StockOut>();
         }
     
         public int ID { get; set; }
@@ -36,6 +36,7 @@ namespace ZhongDing.Domain.Models
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
+        public Nullable<int> DBBankAccountID { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -47,15 +48,16 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ICollection<StockOut> StockOut { get; set; }
-        public virtual ICollection<ClientSaleApplication> ClientSaleApplication { get; set; }
-        public virtual ICollection<ClientRefundApplication> ClientRefundApplication { get; set; }
-        public virtual ICollection<FactoryManagerRefundApplication> FactoryManagerRefundApplication { get; set; }
-        public virtual ICollection<ClientTaskRefundApplication> ClientTaskRefundApplication { get; set; }
+        public virtual BankAccount BankAccount { get; set; }
         public virtual ICollection<ClientFlowData> ClientFlowData { get; set; }
         public virtual ICollection<ClientImportFileLog> ClientImportFileLog { get; set; }
         public virtual ICollection<ClientInfo> ClientInfo { get; set; }
+        public virtual ICollection<ClientRefundApplication> ClientRefundApplication { get; set; }
+        public virtual ICollection<ClientSaleApplication> ClientSaleApplication { get; set; }
+        public virtual ICollection<ClientTaskRefundApplication> ClientTaskRefundApplication { get; set; }
         public virtual ICollection<DBClientBonus> DBClientBonus { get; set; }
         public virtual ICollection<DBContract> DBContract { get; set; }
+        public virtual ICollection<FactoryManagerRefundApplication> FactoryManagerRefundApplication { get; set; }
+        public virtual ICollection<StockOut> StockOut { get; set; }
     }
 }

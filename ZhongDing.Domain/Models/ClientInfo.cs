@@ -36,7 +36,6 @@ namespace ZhongDing.Domain.Models
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
-        public Nullable<int> DBBankAccountID { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -48,7 +47,6 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual BankAccount BankAccount { get; set; }
         public virtual ClientCompany ClientCompany { get; set; }
         public virtual ClientUser ClientUser { get; set; }
         public virtual ICollection<ClientInfoBankAccount> ClientInfoBankAccount { get; set; }

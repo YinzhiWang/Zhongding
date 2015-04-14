@@ -24,9 +24,9 @@ namespace ZhongDing.Domain.Models
             this.ClientTaskRefundApplication = new HashSet<ClientTaskRefundApplication>();
             this.ClientFlowData = new HashSet<ClientFlowData>();
             this.ClientImportFileLog = new HashSet<ClientImportFileLog>();
-            this.ClientInfo = new HashSet<ClientInfo>();
             this.ClientInvoice = new HashSet<ClientInvoice>();
             this.DBClientInvoice = new HashSet<DBClientInvoice>();
+            this.ClientInfo = new HashSet<ClientInfo>();
         }
     
         public int ID { get; set; }
@@ -57,8 +57,8 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<ClientTaskRefundApplication> ClientTaskRefundApplication { get; set; }
         public virtual ICollection<ClientFlowData> ClientFlowData { get; set; }
         public virtual ICollection<ClientImportFileLog> ClientImportFileLog { get; set; }
-        public virtual ICollection<ClientInfo> ClientInfo { get; set; }
         public virtual ICollection<ClientInvoice> ClientInvoice { get; set; }
         public virtual ICollection<DBClientInvoice> DBClientInvoice { get; set; }
+        public virtual ICollection<ClientInfo> ClientInfo { get; set; }
     }
 }

@@ -36,7 +36,7 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual ClientCompany ClientCompany { get; set; }
-        public virtual ClientUser ClientUser { get; set; }
         public virtual ImportFileLog ImportFileLog { get; set; }
+        public virtual ClientUser ClientUser { get; set; }
     }
 }

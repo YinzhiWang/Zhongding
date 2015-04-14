@@ -49,11 +49,11 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ClientUser ClientUser { get; set; }
         public virtual DBContract DBContract { get; set; }
         public virtual Product Product { get; set; }
         public virtual ProductSpecification ProductSpecification { get; set; }
         public virtual ICollection<DBClientBonusHospital> DBClientBonusHospital { get; set; }
         public virtual ICollection<DBClientSettleBonus> DBClientSettleBonus { get; set; }
+        public virtual ClientUser ClientUser { get; set; }
     }
 }

@@ -220,22 +220,13 @@ namespace ZhongDing.Web.Views.Basics {
         protected global::Telerik.Web.UI.RadTextBox txtReceiptAddress;
         
         /// <summary>
-        /// divOtherSections control.
+        /// divDBBankAccount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divOtherSections;
-        
-        /// <summary>
-        /// rgBankAccounts control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid rgBankAccounts;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divDBBankAccount;
         
         /// <summary>
         /// txtAccountName control.
@@ -317,6 +308,24 @@ namespace ZhongDing.Web.Views.Basics {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadTextBox txtComment;
+        
+        /// <summary>
+        /// divOtherSections control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divOtherSections;
+        
+        /// <summary>
+        /// rgBankAccounts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid rgBankAccounts;
         
         /// <summary>
         /// rgContacts control.

@@ -246,23 +246,17 @@ namespace ZhongDing.Web.Views.Settlements
                                     break;
                                 case EWorkflowStatus.ReturnBasicInfo:
                                     if (isCanEditUser)
-                                        linkHtml += "修改";
+                                        linkHtml += "编辑";
                                     else
                                         linkHtml += "查看";
                                     break;
 
                                 case EWorkflowStatus.Submit:
-                                    if (isCanEditUser)
                                         linkHtml += "审核";
-                                    else
-                                        linkHtml += "查看";
                                     break;
 
                                 case EWorkflowStatus.ApprovedByDeptManagers:
-                                    if (isCanEditUser)
                                         linkHtml += "支付";
-                                    else
-                                        linkHtml += "查看";
                                     break;
                                 case EWorkflowStatus.Paid:
                                     linkHtml += "查看";

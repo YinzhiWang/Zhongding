@@ -52,11 +52,11 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual ClientCompany ClientCompany { get; set; }
-        public virtual ClientUser ClientUser { get; set; }
         public virtual Company Company { get; set; }
         public virtual DistributionCompany DistributionCompany { get; set; }
         public virtual WorkflowStatus WorkflowStatus { get; set; }
         public virtual ICollection<TransportFeeStockOut> TransportFeeStockOut { get; set; }
         public virtual ICollection<StockOutDetail> StockOutDetail { get; set; }
+        public virtual ClientUser ClientUser { get; set; }
     }
 }

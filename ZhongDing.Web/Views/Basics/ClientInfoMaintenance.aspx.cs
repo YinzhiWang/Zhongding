@@ -123,9 +123,9 @@ namespace ZhongDing.Web.Views.Basics
                     txtReceiverAddress.Text = clientInfo.ReceiverAddress;
                     txtReceiptAddress.Text = clientInfo.ReceiptAddress;
 
-                    if (clientInfo.BankAccount != null)
+                    if (clientInfo.ClientUser.BankAccount != null)
                     {
-                        var bankAccount = clientInfo.BankAccount;
+                        var bankAccount = clientInfo.ClientUser.BankAccount;
 
                         txtAccountName.Text = bankAccount.AccountName;
                         txtBankBranchName.Text = bankAccount.BankBranchName;
@@ -216,6 +216,43 @@ namespace ZhongDing.Web.Views.Basics
 
                     args.IsValid = false;
                 }
+            }
+        }
+
+        protected void rcbxClientUser_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(e.Value))
+            {
+                int clientUserID;
+
+                if (int.TryParse(e.Value, out clientUserID))
+                {
+                    var clientUser = PageClientUserRepository.GetByID(clientUserID);
+
+                    if (clientUser != null && clientUser.BankAccount != null)
+                    {
+                        var bankAccount = clientUser.BankAccount;
+
+                        txtAccountName.Text = bankAccount.AccountName;
+                        txtBankBranchName.Text = bankAccount.BankBranchName;
+                        txtAccount.Text = bankAccount.Account;
+                        txtComment.Text = bankAccount.Comment;
+                    }
+                    else
+                    {
+                        txtAccountName.Text = string.Empty;
+                        txtBankBranchName.Text = string.Empty;
+                        txtAccount.Text = string.Empty;
+                        txtComment.Text = string.Empty;
+                    }
+                }
+            }
+            else
+            {
+                txtAccountName.Text = string.Empty;
+                txtBankBranchName.Text = string.Empty;
+                txtAccount.Text = string.Empty;
+                txtComment.Text = string.Empty;
             }
         }
 
@@ -333,7 +370,7 @@ namespace ZhongDing.Web.Views.Basics
                 && !string.IsNullOrEmpty(txtBankBranchName.Text.Trim())
                 && !string.IsNullOrEmpty(txtAccount.Text.Trim()))
             {
-                var bankAccount = clientInfo.BankAccount;
+                var bankAccount = clientInfo.ClientUser.BankAccount;
 
                 if (bankAccount == null)
                 {
@@ -342,7 +379,7 @@ namespace ZhongDing.Web.Views.Basics
                         OwnerTypeID = (int)EOwnerType.Client
                     };
 
-                    clientInfo.BankAccount = bankAccount;
+                    clientInfo.ClientUser.BankAccount = bankAccount;
                 }
 
                 bankAccount.AccountName = txtAccountName.Text.Trim();
@@ -391,9 +428,6 @@ namespace ZhongDing.Web.Views.Basics
 
                     if (clientInfo != null)
                     {
-                        if (clientInfo.BankAccount != null)
-                            clientInfo.BankAccount.IsDeleted = true;
-
                         foreach (var clientInfoBA in clientInfo.ClientInfoBankAccount)
                         {
                             if (clientInfoBA != null)
@@ -420,6 +454,8 @@ namespace ZhongDing.Web.Views.Basics
                 this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_DELETED_REDIRECT);
             }
         }
+
+
 
     }
 }
