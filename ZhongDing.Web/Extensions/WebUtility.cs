@@ -110,11 +110,11 @@ namespace ZhongDing.Web.Extensions
         }
 
         /// <summary>
-        /// 获取参数值
+        /// 获取Int参数值
         /// </summary>
         /// <param name="paramName">Name of the param.</param>
         /// <returns>System.Nullable{System.Int32}.</returns>
-        public static int? GetValueFromQueryString(string paramName)
+        public static int? GetIntFromQueryString(string paramName)
         {
             string sParamValue = HttpContext.Current.Request.QueryString[paramName];
 
@@ -122,6 +122,21 @@ namespace ZhongDing.Web.Extensions
 
             if (int.TryParse(sParamValue, out iParamValue))
                 return iParamValue;
+            else
+                return null;
+        }
+
+        /// <summary>
+        /// 获取日期时间类型参数值
+        /// </summary>
+        public static DateTime? GetDateTimeFromQueryString(string paramName)
+        {
+            string sParamValue = HttpContext.Current.Request.QueryString[paramName];
+
+            DateTime dtParamValue;
+
+            if (DateTime.TryParse(sParamValue, out dtParamValue))
+                return dtParamValue;
             else
                 return null;
         }

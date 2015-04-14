@@ -517,6 +517,26 @@ namespace ZhongDing.Common
 
         #endregion
 
+        #region 支付状态
+
+        /// <summary>
+        /// 常量类：支付状态
+        /// </summary>
+        public class PaymentStatus
+        {
+            /// <summary>
+            /// 待支付
+            /// </summary>
+            public static readonly string TO_BE_PAY = "待支付";
+
+            /// <summary>
+            /// 已支付
+            /// </summary>
+            public static readonly string PAID = "已支付";
+        }
+
+        #endregion
+
         #region 导入数据Excel列名
 
         /// <summary>

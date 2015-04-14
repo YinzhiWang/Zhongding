@@ -24,7 +24,7 @@ namespace ZhongDing.Web.Views.Settlements.Editors
         {
             get
             {
-                return WebUtility.GetValueFromQueryString("ManualSettleActionTypeID");
+                return WebUtility.GetIntFromQueryString("ManualSettleActionTypeID");
             }
         }
 

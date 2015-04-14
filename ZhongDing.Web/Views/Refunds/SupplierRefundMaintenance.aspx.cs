@@ -24,7 +24,7 @@ namespace ZhongDing.Web.Views.Refunds
         {
             get
             {
-                return WebUtility.GetValueFromQueryString("CompanyID");
+                return WebUtility.GetIntFromQueryString("CompanyID");
             }
         }
 
@@ -32,7 +32,7 @@ namespace ZhongDing.Web.Views.Refunds
         {
             get
             {
-                return WebUtility.GetValueFromQueryString("SupplierID");
+                return WebUtility.GetIntFromQueryString("SupplierID");
             }
         }
 
@@ -40,7 +40,7 @@ namespace ZhongDing.Web.Views.Refunds
         {
             get
             {
-                return WebUtility.GetValueFromQueryString("ProductID");
+                return WebUtility.GetIntFromQueryString("ProductID");
             }
         }
 
@@ -48,7 +48,7 @@ namespace ZhongDing.Web.Views.Refunds
         {
             get
             {
-                return WebUtility.GetValueFromQueryString("ProductSpecificationID");
+                return WebUtility.GetIntFromQueryString("ProductSpecificationID");
             }
         }
 

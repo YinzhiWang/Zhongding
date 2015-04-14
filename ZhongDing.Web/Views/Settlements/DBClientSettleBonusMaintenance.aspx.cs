@@ -9,6 +9,8 @@ using ZhongDing.Business.IRepositories;
 using ZhongDing.Business.Repositories;
 using ZhongDing.Common;
 using ZhongDing.Common.Enums;
+using ZhongDing.Common.Extension;
+using ZhongDing.Common.NPOIHelper.Excel;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
@@ -40,6 +42,18 @@ namespace ZhongDing.Web.Views.Settlements
                     _PageDBClientSettleBonusRepository = new DBClientSettleBonusRepository();
 
                 return _PageDBClientSettleBonusRepository;
+            }
+        }
+
+        private IApplicationPaymentRepository _PageAppPaymentRepository;
+        private IApplicationPaymentRepository PageAppPaymentRepository
+        {
+            get
+            {
+                if (_PageAppPaymentRepository == null)
+                    _PageAppPaymentRepository = new ApplicationPaymentRepository();
+
+                return _PageAppPaymentRepository;
             }
         }
 
@@ -94,6 +108,18 @@ namespace ZhongDing.Web.Views.Settlements
                     _CanAuditUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.AuditDBClientSettleBonusByDeptManagers);
 
                 return _CanAuditUserIDs;
+            }
+        }
+
+        private IList<int> _CanPayUserIDs;
+        private IList<int> CanPayUserIDs
+        {
+            get
+            {
+                if (_CanPayUserIDs == null)
+                    _CanPayUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.PayDBClientSettleBonus);
+
+                return _CanPayUserIDs;
             }
         }
 
@@ -178,11 +204,13 @@ namespace ZhongDing.Web.Views.Settlements
 
                             DisabledBasicInfoControls();
                             ShowAuditControls(false);
+                            ShowSaveButtons(false);
 
                             if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
-                                ShowSaveButtons(true);
-                            else
-                                ShowSaveButtons(false);
+                            {
+                                divAppPayments.Visible = true;
+                                btnConfirmPay.Visible = true;
+                            }
 
                             #endregion
                             break;
@@ -221,6 +249,7 @@ namespace ZhongDing.Web.Views.Settlements
         private void ShowSaveButtons(bool isShow)
         {
             btnSubmit.Visible = isShow;
+            btnExport.Visible = isShow;
         }
 
         /// <summary>
@@ -229,7 +258,6 @@ namespace ZhongDing.Web.Views.Settlements
         private void ShowAuditControls(bool isShow)
         {
             divAudit.Visible = isShow;
-            divAppPayments.Visible = isShow;
             btnAudit.Visible = isShow;
             btnReturn.Visible = isShow;
         }
@@ -270,6 +298,9 @@ namespace ZhongDing.Web.Views.Settlements
 
             if (!string.IsNullOrEmpty(txtClientUserName.Text.Trim()))
                 uiSearchObj.ClientUserName = txtClientUserName.Text.Trim();
+
+            if (CanPayUserIDs.Contains(CurrentUser.UserID))
+                uiSearchObj.OnlyIncludeNeedSettlement = true;
 
             int totalRecords;
 
@@ -317,6 +348,24 @@ namespace ZhongDing.Web.Views.Settlements
             else
             {
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT).Visible = false;
+            }
+
+            if (CanPayUserIDs.Contains(CurrentUser.UserID))
+            {
+                e.OwnerTableView.Columns.FindByUniqueName("ClientDBBankAccount").Visible = true;
+                e.OwnerTableView.Columns.FindByUniqueName("IsSettled").Visible = true;
+
+                e.OwnerTableView.Columns.FindByUniqueName("Hospitals").Visible = false;
+                e.OwnerTableView.Columns.FindByUniqueName("ProductName").Visible = false;
+                e.OwnerTableView.Columns.FindByUniqueName("Specification").Visible = false;
+                e.OwnerTableView.Columns.FindByUniqueName("BonusAmount").Visible = false;
+                e.OwnerTableView.Columns.FindByUniqueName("IsNeedSettlement").Visible = false;
+                e.OwnerTableView.Columns.FindByUniqueName("PerformanceAmount").Visible = false;
+            }
+            else
+            {
+                e.OwnerTableView.Columns.FindByUniqueName("ClientDBBankAccount").Visible = false;
+                e.OwnerTableView.Columns.FindByUniqueName("IsSettled").Visible = false;
             }
         }
 
@@ -402,23 +451,41 @@ namespace ZhongDing.Web.Views.Settlements
 
         protected void rgAppPayments_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
+            var uiSearchObj = new UISearchApplicationPayment
+            {
+                WorkflowID = this.CurrentWorkFlowID,
+                ApplicationID = this.CurrentEntityID.HasValue
+                ? this.CurrentEntityID.Value : GlobalConst.INVALID_INT
+            };
 
+            int totalRecords;
+
+            var appPayments = PageDBClientSettlementRepository.GetPayments(uiSearchObj, rgAppPayments.CurrentPageIndex, rgAppPayments.PageSize, out totalRecords);
+
+            rgAppPayments.DataSource = appPayments;
+            rgAppPayments.VirtualItemCount = totalRecords;
         }
 
         protected void rgAppPayments_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
+            if (e.Item is GridCommandItem)
+            {
+                GridCommandItem commandItem = e.Item as GridCommandItem;
+                Panel plAddCommand = commandItem.FindControl("plAddCommand") as Panel;
 
+                if (plAddCommand != null)
+                {
+                    if (this.CurrentEntity != null && (this.CanEditUserIDs.Contains(CurrentUser.UserID)
+                        || (this.CanPayUserIDs.Contains(CurrentUser.UserID)
+                            && this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.ApprovedByDeptManagers)))
+                        plAddCommand.Visible = true;
+                    else
+                        plAddCommand.Visible = false;
+                }
+            }
         }
 
-        protected void rgAppPayments_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
-        {
-
-        }
-
-        protected void rgAppPayments_DeleteCommand(object sender, Telerik.Web.UI.GridCommandEventArgs e)
-        {
-
-        }
+        #region Button Events
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
@@ -433,7 +500,7 @@ namespace ZhongDing.Web.Views.Settlements
             if (!string.IsNullOrEmpty(txtComment.Text.Trim()))
             {
                 var appNote = new ApplicationNote();
-                appNote.WorkflowID = (int)EWorkflow.ClientOrder;
+                appNote.WorkflowID = CurrentWorkFlowID;
                 appNote.NoteTypeID = (int)EAppNoteType.Comment;
 
                 if (CanEditUserIDs.Contains(CurrentUser.UserID))
@@ -572,5 +639,120 @@ namespace ZhongDing.Web.Views.Settlements
                 }
             }
         }
+
+        protected void btnConfirmPay_Click(object sender, EventArgs e)
+        {
+            var totalNeedPayAmount = PageDBClientSettleBonusRepository
+                .GetList(x => x.DBClientSettlementID == this.CurrentEntity.ID
+                && x.IsNeedSettlement == true).Sum(x => x.TotalPayAmount);
+
+            var totalPaidAmount = PageAppPaymentRepository
+                .GetList(x => x.WorkflowID == CurrentWorkFlowID
+                && x.ApplicationID == this.CurrentEntity.ID).Sum(x => x.Amount);
+
+            if (totalNeedPayAmount != totalPaidAmount)
+            {
+                this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
+                this.Master.BaseNotification.AutoCloseDelay = 1000;
+                this.Master.BaseNotification.Show("支付总额不等于应发总额，请确认");
+
+                return;
+            }
+
+            this.CurrentEntity.WorkflowStatusID = (int)EWorkflowStatus.Paid;
+
+            PageDBClientSettlementRepository.Save();
+
+            this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
+            this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_SUCCESS;
+            this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_OPERATE_REDIRECT);
+        }
+
+        protected void btnExport_Click(object sender, EventArgs e)
+        {
+            var uiSearchObj = new UISearchDBClientSettleBonus
+            {
+                DBClientSettlementID = this.CurrentEntityID.HasValue
+                ? CurrentEntityID.Value : GlobalConst.INVALID_INT
+            };
+
+            if (!string.IsNullOrEmpty(txtClientUserName.Text.Trim()))
+                uiSearchObj.ClientUserName = txtClientUserName.Text.Trim();
+
+            if (CanPayUserIDs.Contains(CurrentUser.UserID))
+                uiSearchObj.OnlyIncludeNeedSettlement = true;
+
+            var uiEntities = PageDBClientSettleBonusRepository.GetUIList(uiSearchObj);
+
+            var excelPath = Server.MapPath("~/App_Data/") + "TempDBClientSettleBonusExcel.xls";
+
+            NPOIHelper nPOIHelper = new Common.NPOIHelper.Excel.NPOIHelper();
+            UIDBClientSettleBonus model = new UIDBClientSettleBonus();
+
+            List<ExcelHeader> excelHeaders = new List<ExcelHeader>() { 
+                new ExcelHeader(model.GetName(() => model.ClientUserName),"客户"), 
+                new ExcelHeader(model.GetName(() => model.Hospitals),"医院"),
+                new ExcelHeader(model.GetName(() => model.ProductName),"货品"),
+                new ExcelHeader(model.GetName(() => model.Specification),"规格"),
+                new ExcelHeader(model.GetName(() => model.SettlementDate),"年月"),
+                new ExcelHeader(model.GetName(() => model.BonusAmount),"提成"),
+                new ExcelHeader(model.GetName(() => model.IsNeedSettlement),"需结算"),
+                new ExcelHeader(model.GetName(() => model.PerformanceAmount),"绩效"),
+                new ExcelHeader(model.GetName(() => model.TotalPayAmount),"应发")
+            };
+
+            Queue<ExcelHeader> excelHeadersQueue = new Queue<ExcelHeader>(excelHeaders);
+            Root excelRoot = new Root()
+            {
+                root = new HeadInfo()
+                {
+                    rowspan = 2,
+                    sheetname = "大包客户提成结算表",
+                    defaultheight = null,
+                    defaultwidth = 20,
+                    head = new List<AttributeList>(){
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,0,0"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,1,1"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,2,2"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,3,3"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,4,4"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,5,5"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,6,6"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,7,7"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,8,8"},
+
+                    }
+                }
+            };
+
+            List<Func<UIDBClientSettleBonus, string>> fieldFuncs = new List<Func<UIDBClientSettleBonus, string>>();
+
+            fieldFuncs.Add(x => x.ClientUserName);
+            fieldFuncs.Add(x => x.Hospitals);
+            fieldFuncs.Add(x => x.ProductName);
+            fieldFuncs.Add(x => x.Specification);
+            fieldFuncs.Add(x => x.SettlementDate.ToString("yyyy/MM"));
+            fieldFuncs.Add(x => x.BonusAmount.ToString("C2"));
+            fieldFuncs.Add(x => (x.IsNeedSettlement.HasValue && x.IsNeedSettlement == true)
+                ? GlobalConst.BoolChineseDescription.TRUE : GlobalConst.BoolChineseDescription.FALSE);
+            fieldFuncs.Add(x => x.PerformanceAmount.ToString("C2"));
+            fieldFuncs.Add(x => x.TotalPayAmount.ToString("C2"));
+
+
+            nPOIHelper.ExportToExcel<UIDBClientSettleBonus>(
+                (List<UIDBClientSettleBonus>)uiEntities,
+                excelPath,
+                excelHeaders.Select(x => x.Key).ToArray(),
+                excelRoot,
+                fieldFuncs.ToArray());
+            Response.ContentType = "application/x-zip-compressed";
+            Response.AddHeader("Content-Disposition", "attachment;filename=" + "大包客户提成结算表".UrlEncode() + "_"
+                + this.CurrentEntity.HospitalType.TypeName + "_" + this.CurrentEntity.SettlementDate.ToString("yyyyMMdd") + ".xls");
+            string filename = excelPath;
+            Response.TransmitFile(filename);
+
+        }
+
+        #endregion
     }
 }

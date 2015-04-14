@@ -160,7 +160,7 @@ namespace ZhongDing.Web.Views.Settlements
                         includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ReturnBasicInfo);
 
                     if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ApprovedByDeptManagers))
-                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ApprovedBasicInfo);
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ApprovedByDeptManagers);
 
                     if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Completed))
                         includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Completed);

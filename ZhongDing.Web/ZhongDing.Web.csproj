@@ -2681,7 +2681,9 @@
     <Content Include="Views\Sales\Printers\PrintStockOut.aspx" />
     <Content Include="Views\Settlements\DBClientSettleBonusMaintenance.aspx" />
     <Content Include="Views\Settlements\DBClientSettleBonusManagement.aspx" />
+    <Content Include="Views\Settlements\Editors\DBClientSettleBonusPayment.aspx" />
     <Content Include="Views\Settlements\Editors\ManualSettleDBClientBonus.aspx" />
+    <Content Include="Views\Settlements\Editors\ViewDBClinetBonusGroupPayments.aspx" />
     <Content Include="WebServices\SupplierWS.asmx" />
     <Content Include="HttpHandle\AsyncUploadFileHandler.ashx" />
     <Content Include="HttpHandle\AsyncOperateFileHandler.ashx" />
@@ -3640,12 +3642,26 @@
     <Compile Include="Views\Settlements\DBClientSettleBonusManagement.aspx.designer.cs">
       <DependentUpon>DBClientSettleBonusManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Settlements\Editors\DBClientSettleBonusPayment.aspx.cs">
+      <DependentUpon>DBClientSettleBonusPayment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Settlements\Editors\DBClientSettleBonusPayment.aspx.designer.cs">
+      <DependentUpon>DBClientSettleBonusPayment.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Settlements\Editors\ManualSettleDBClientBonus.aspx.cs">
       <DependentUpon>ManualSettleDBClientBonus.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Views\Settlements\Editors\ManualSettleDBClientBonus.aspx.designer.cs">
       <DependentUpon>ManualSettleDBClientBonus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Settlements\Editors\ViewDBClinetBonusGroupPayments.aspx.cs">
+      <DependentUpon>ViewDBClinetBonusGroupPayments.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Settlements\Editors\ViewDBClinetBonusGroupPayments.aspx.designer.cs">
+      <DependentUpon>ViewDBClinetBonusGroupPayments.aspx</DependentUpon>
     </Compile>
     <Compile Include="WebServices\SupplierWS.asmx.cs">
       <DependentUpon>SupplierWS.asmx</DependentUpon>
@@ -3706,7 +3722,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

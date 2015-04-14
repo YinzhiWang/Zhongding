@@ -40,6 +40,9 @@ namespace ZhongDing.Business.Repositories
                     uiSearchObj.EndDate = uiSearchObj.EndDate.Value.AddDays(1);
                     whereFuncs.Add(x => x.PayDate < uiSearchObj.EndDate);
                 }
+
+                if (uiSearchObj.PayDate.HasValue)
+                    whereFuncs.Add(x => x.PayDate == uiSearchObj.PayDate);
             }
 
             query = GetList(whereFuncs);
@@ -96,6 +99,9 @@ namespace ZhongDing.Business.Repositories
                     uiSearchObj.EndDate = uiSearchObj.EndDate.Value.AddDays(1);
                     whereFuncs.Add(x => x.PayDate < uiSearchObj.EndDate);
                 }
+
+                if (uiSearchObj.PayDate.HasValue)
+                    whereFuncs.Add(x => x.PayDate == uiSearchObj.PayDate);
             }
 
             query = GetList(pageIndex, pageSize, whereFuncs, out total);

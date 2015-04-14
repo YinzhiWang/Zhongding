@@ -25,7 +25,7 @@ namespace ZhongDing.Web.Views.Imports.Editors
         {
             get
             {
-                return WebUtility.GetValueFromQueryString("OwnerEntityID");
+                return WebUtility.GetIntFromQueryString("OwnerEntityID");
             }
         }
 

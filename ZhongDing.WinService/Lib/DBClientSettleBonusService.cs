@@ -123,6 +123,7 @@ namespace ZhongDing.WinService.Lib
                                 SaleQty = settleData.TotalSaleQty,
                                 BonusAmount = (settleData.Key.PromotionExpense ?? 0M) * settleData.TotalSaleQty,
                                 PerformanceAmount = 0,//暂时用0代替
+                                IsSettled = false,
                             };
 
                             #region 保存相关医院
@@ -204,6 +205,7 @@ namespace ZhongDing.WinService.Lib
                                 SaleQty = settleData.TotalSaleQty,
                                 BonusAmount = (settleData.Key.PromotionExpense ?? 0M) * settleData.TotalSaleQty,
                                 PerformanceAmount = 0,//暂时用0代替
+                                IsSettled = false,
                             };
 
                             #region 保存相关医院

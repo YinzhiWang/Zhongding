@@ -180,6 +180,9 @@
                                                     <telerik:GridBoundColumn UniqueName="Specification" HeaderText="规格" DataField="Specification">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="ClientDBBankAccount" HeaderText="银行账号" DataField="ClientDBBankAccount">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
                                                     <telerik:GridBoundColumn UniqueName="SettlementDate" HeaderText="年月" DataField="SettlementDate" DataFormatString="{0:yyyy/MM}">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
@@ -205,10 +208,21 @@
                                                         Aggregate="Sum" FooterStyle-Font-Bold="true">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
+                                                    <telerik:GridTemplateColumn UniqueName="IsSettled" HeaderText="支付状态" DataField="IsSettled" SortExpression="IsSettled">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                        <ItemTemplate>
+                                                            <span>
+                                                                <%#DataBinder.Eval(Container.DataItem,"IsSettled")!=null
+                                                                    ?(Convert.ToBoolean( DataBinder.Eval(Container.DataItem,"IsSettled").ToString())==true 
+                                                                        ? ZhongDing.Common.GlobalConst.PaymentStatus.PAID
+                                                                            : ZhongDing.Common.GlobalConst.PaymentStatus.TO_BE_PAY)
+                                                                    :string.Empty%>
+                                                            </span>
+                                                        </ItemTemplate>
+                                                    </telerik:GridTemplateColumn>
                                                     <telerik:GridTemplateColumn UniqueName="Edit" HeaderStyle-Width="60">
                                                         <ItemStyle HorizontalAlign="Center" Width="60" />
                                                         <ItemTemplate>
-                                                            
                                                         </ItemTemplate>
                                                     </telerik:GridTemplateColumn>
                                                 </Columns>
@@ -239,10 +253,10 @@
                                 </div>
                             </div>
 
-                            <!--收款信息维护 -->
+                            <!--支付信息 -->
                             <div class="mws-panel grid_8 mws-collapsible" data-collapseid="panel-payment" runat="server" id="divAppPayments">
                                 <div class="mws-panel-header">
-                                    <span class="mws-i-24 i-creditcard">确认收款</span>
+                                    <span class="mws-i-24 i-creditcard">支付信息</span>
                                 </div>
                                 <div class="mws-panel-body">
                                     <div class="mws-panel-content">
@@ -250,38 +264,28 @@
                                             AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
                                             MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true" ShowFooter="true"
                                             ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                                            OnNeedDataSource="rgAppPayments_NeedDataSource" OnItemCreated="rgAppPayments_ItemCreated"
-                                            OnColumnCreated="rgAppPayments_ColumnCreated" OnDeleteCommand="rgAppPayments_DeleteCommand">
-                                            <MasterTableView Width="100%" DataKeyNames="ID,PaymentMethodID" CommandItemDisplay="Top"
+                                            OnNeedDataSource="rgAppPayments_NeedDataSource" OnItemCreated="rgAppPayments_ItemCreated">
+                                            <MasterTableView Width="100%" CommandItemDisplay="Top"
                                                 ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                                                 <Columns>
-                                                    <telerik:GridBoundColumn UniqueName="PaymentMethod" HeaderText="收款方式" DataField="PaymentMethod">
-                                                        <HeaderStyle Width="15%" />
+                                                    <telerik:GridTemplateColumn UniqueName="PayDate" HeaderText="转账日期" DataField="PayDate" SortExpression="PayDate">
+                                                        <HeaderStyle Width="10%" />
                                                         <ItemStyle HorizontalAlign="Left" Width="10%" />
+                                                        <ItemTemplate>
+                                                            <a href="javascript:void(0);" onclick="openViewAppPaymentsWindow('<%#DataBinder.Eval(Container.DataItem,"PayDate","{0:yyyy/MM/dd}")%>')"><%#DataBinder.Eval(Container.DataItem,"PayDate","{0:yyyy/MM/dd}")%></a>
+                                                        </ItemTemplate>
+                                                    </telerik:GridTemplateColumn>
+                                                    <telerik:GridBoundColumn UniqueName="FromAccount" HeaderText="转出账号" DataField="FromAccount">
+                                                        <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
                                                     <telerik:GridBoundColumn UniqueName="Amount" HeaderText="金额" DataField="Amount" DataFormatString="{0:C2}">
                                                         <HeaderStyle Width="15%" />
-                                                        <ItemStyle HorizontalAlign="Left" Width="10%" />
+                                                        <ItemStyle HorizontalAlign="Left" Width="15%" />
                                                     </telerik:GridBoundColumn>
                                                     <telerik:GridBoundColumn UniqueName="Fee" HeaderText="手续费" DataField="Fee" DataFormatString="{0:C2}">
-                                                        <HeaderStyle Width="15%" />
+                                                        <HeaderStyle Width="10%" />
                                                         <ItemStyle HorizontalAlign="Left" Width="10%" />
                                                     </telerik:GridBoundColumn>
-                                                    <telerik:GridBoundColumn UniqueName="PayDate" HeaderText="到账日期" DataField="PayDate">
-                                                        <HeaderStyle Width="15%" />
-                                                        <ItemStyle HorizontalAlign="Left" Width="10%" />
-                                                    </telerik:GridBoundColumn>
-                                                    <telerik:GridBoundColumn UniqueName="Comment" HeaderText="备注" DataField="Comment">
-                                                        <ItemStyle HorizontalAlign="Left" />
-                                                    </telerik:GridBoundColumn>
-                                                    <telerik:GridTemplateColumn UniqueName="Edit" HeaderStyle-Width="60">
-                                                        <ItemStyle HorizontalAlign="Center" Width="60" />
-                                                        <ItemTemplate>
-                                                            <a href="javascript:void(0);" onclick="openAppPaymentWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>, <%#DataBinder.Eval(Container.DataItem,"PaymentMethodID")%>)">
-                                                                <u>编辑</u></a>
-                                                        </ItemTemplate>
-                                                    </telerik:GridTemplateColumn>
-                                                    <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="60" ItemStyle-Width="60" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
                                                 </Columns>
                                                 <CommandItemTemplate>
                                                     <table class="width100-percent">
@@ -382,6 +386,8 @@
                             <asp:Button ID="btnSubmit" runat="server" Text="提交" CssClass="mws-button green" CausesValidation="true" OnClick="btnSubmit_Click" />
                             <asp:Button ID="btnAudit" runat="server" Text="审核通过" CssClass="mws-button green" CausesValidation="true" Visible="false" OnClick="btnAudit_Click" />
                             <asp:Button ID="btnReturn" runat="server" Text="退回" CssClass="mws-button orange" CausesValidation="true" Visible="false" OnClick="btnReturn_Click" />
+                            <asp:Button ID="btnConfirmPay" runat="server" Text="确认支付" CssClass="mws-button green" CausesValidation="true" Visible="false" OnClick="btnConfirmPay_Click" />
+                            <asp:Button ID="btnExport" runat="server" Text="导出" CssClass="mws-button green" CausesValidation="true" Visible="false" OnClick="btnExport_Click" />
                             <asp:Button ID="btnCancel" runat="server" Text="取消" UseSubmitBehavior="false" CssClass="mws-button green" OnClientClick="redirectToPage('Views/Settlements/DBClientSettleBonusManagement.aspx');return false;" />
                         </div>
                     </div>
@@ -429,17 +435,23 @@
             $.openRadWindow(targetUrl, "winManualSettle", true, 400, 260);
         }
 
-        function openAppPaymentWindow(id, paymentMethodID) {
+        function openAppPaymentWindow() {
             $.showLoading();
 
-            var targetUrl = $.getRootPath() + "Views/Sales/Editors/ClientOrderPaymentMaintain.aspx?EntityID=" + id
-                + "&OwnerEntityID=" + currentEntityID + "&PaymentMethodID=" + paymentMethodID
-                + "&GridClientID=" + gridClientIDs.gridAppPayments;
+            var targetUrl = $.getRootPath() + "Views/Settlements/Editors/DBClientSettleBonusPayment.aspx?OwnerEntityID="
+                + currentEntityID + "&GridClientID=" + gridClientIDs.gridAppPayments;
 
-            $.openRadWindow(targetUrl, "winAppPayment", true, 800, 440);
+            $.openRadWindow(targetUrl, "winAppPayment", true, 800, 600);
         }
 
+        function openViewAppPaymentsWindow(payDate) {
+            $.showLoading();
 
+            var targetUrl = $.getRootPath() + "Views/Settlements/Editors/ViewDBClinetBonusGroupPayments.aspx?OwnerEntityID="
+                + currentEntityID + "&PayDate=" + payDate;
+
+            $.openRadWindow(targetUrl, "winViewAppPayments", true, 800, 600);
+        }
 
         $(document).ready(function () {
             currentEntityID = $("#<%= hdnCurrentEntityID.ClientID %>").val();

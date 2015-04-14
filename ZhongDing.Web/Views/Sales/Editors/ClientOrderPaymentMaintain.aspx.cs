@@ -26,7 +26,7 @@ namespace ZhongDing.Web.Views.Sales.Editors
         {
             get
             {
-                return WebUtility.GetValueFromQueryString("OwnerEntityID");
+                return WebUtility.GetIntFromQueryString("OwnerEntityID");
             }
         }
 
@@ -37,7 +37,7 @@ namespace ZhongDing.Web.Views.Sales.Editors
         {
             get
             {
-                return WebUtility.GetValueFromQueryString("PaymentMethodID");
+                return WebUtility.GetIntFromQueryString("PaymentMethodID");
             }
         }
 

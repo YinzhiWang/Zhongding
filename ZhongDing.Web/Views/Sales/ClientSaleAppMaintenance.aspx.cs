@@ -133,7 +133,7 @@ namespace ZhongDing.Web.Views.Sales
             get
             {
                 if (this.CurrentEntity == null)
-                    return WebUtility.GetValueFromQueryString("SaleOrderTypeID");
+                    return WebUtility.GetIntFromQueryString("SaleOrderTypeID");
                 else
                     return CurrentEntity.SalesOrderApplication == null
                         ? GlobalConst.INVALID_INT : CurrentEntity.SalesOrderApplication.SaleOrderTypeID;

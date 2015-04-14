@@ -71,5 +71,38 @@ namespace ZhongDing.Business.Repositories
 
             return uiEntities;
         }
+
+        public IList<UIDBClientSettlementAppPayment> GetPayments(UISearchApplicationPayment uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
+        {
+            IList<UIDBClientSettlementAppPayment> uiEntities = new List<UIDBClientSettlementAppPayment>();
+
+            int total = 0;
+
+            var query = DB.ApplicationPayment.Where(x => x.IsDeleted == false
+                        && x.WorkflowID == uiSearchObj.WorkflowID
+                        && x.ApplicationID == uiSearchObj.ApplicationID)
+                        .GroupBy(x => new { x.FromBankAccountID, x.PayDate, x.FromAccount })
+                        .Select(g => new UIDBClientSettlementAppPayment
+                         {
+                             FromBankAccountID = g.Key.FromBankAccountID,
+                             FromAccount = g.Key.FromAccount,
+                             PayDate = g.Key.PayDate,
+                             Amount = g.Sum(x => x.Amount),
+                             Fee = g.Sum(x => x.Fee),
+                         });
+
+
+            if (query != null)
+            {
+                total = query.Count();
+
+                uiEntities = query.OrderByDescending(x => x.PayDate)
+                    .Skip(pageSize * pageIndex).Take(pageSize).ToList();
+            }
+
+            totalRecords = total;
+
+            return uiEntities;
+        }
     }
 }

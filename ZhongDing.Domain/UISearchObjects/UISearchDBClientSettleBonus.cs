@@ -11,5 +11,7 @@ namespace ZhongDing.Domain.UISearchObjects
         public int DBClientSettlementID { get; set; }
 
         public string ClientUserName { get; set; }
+
+        public bool OnlyIncludeNeedSettlement { get; set; }
     }
 }

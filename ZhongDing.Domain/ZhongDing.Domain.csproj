@@ -420,7 +420,9 @@
     <Compile Include="UIObjects\UIDaBaoApplication.cs" />
     <Compile Include="UIObjects\UIDaBaoAppDetail.cs" />
     <Compile Include="UIObjects\UIDBClientSettleBonus.cs" />
+    <Compile Include="UIObjects\UIDBClientSettleBonusPayment.cs" />
     <Compile Include="UIObjects\UIDBClientSettlement.cs" />
+    <Compile Include="UIObjects\UIDBClientSettlementAppPayment.cs" />
     <Compile Include="UIObjects\UIDBContract.cs" />
     <Compile Include="UIObjects\UIDBContractHospital.cs" />
     <Compile Include="UIObjects\UIDCFlowData.cs" />

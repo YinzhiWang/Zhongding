@@ -29,7 +29,7 @@ namespace ZhongDing.Web.Views.Sales.Editors
         {
             get
             {
-                return WebUtility.GetValueFromQueryString("OwnerEntityID");
+                return WebUtility.GetIntFromQueryString("OwnerEntityID");
             }
         }
 
@@ -40,7 +40,7 @@ namespace ZhongDing.Web.Views.Sales.Editors
         {
             get
             {
-                return WebUtility.GetValueFromQueryString("DistributionCompanyID");
+                return WebUtility.GetIntFromQueryString("DistributionCompanyID");
             }
         }
 
@@ -51,7 +51,7 @@ namespace ZhongDing.Web.Views.Sales.Editors
         {
             get
             {
-                return WebUtility.GetValueFromQueryString("ClientUserID");
+                return WebUtility.GetIntFromQueryString("ClientUserID");
             }
         }
 
@@ -62,7 +62,7 @@ namespace ZhongDing.Web.Views.Sales.Editors
         {
             get
             {
-                return WebUtility.GetValueFromQueryString("ClientCompanyID");
+                return WebUtility.GetIntFromQueryString("ClientCompanyID");
             }
         }
 

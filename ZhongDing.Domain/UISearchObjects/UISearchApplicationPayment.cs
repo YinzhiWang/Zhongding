@@ -12,5 +12,7 @@ namespace ZhongDing.Domain.UISearchObjects
 
         public int WorkflowID { get; set; }
 
+        public DateTime? PayDate { get; set; }
+
     }
 }

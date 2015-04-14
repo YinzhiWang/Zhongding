@@ -32,5 +32,7 @@ namespace ZhongDing.Domain.UIObjects
 
         public bool? IsManualSettled { get; set; }
 
+        public string ClientDBBankAccount { get; set; }
+
     }
 }

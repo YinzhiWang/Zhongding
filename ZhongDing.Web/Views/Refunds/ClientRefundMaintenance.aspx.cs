@@ -24,7 +24,7 @@ namespace ZhongDing.Web.Views.Refunds
         {
             get
             {
-                return WebUtility.GetValueFromQueryString("ClientSaleAppID");
+                return WebUtility.GetIntFromQueryString("ClientSaleAppID");
             }
         }
 
