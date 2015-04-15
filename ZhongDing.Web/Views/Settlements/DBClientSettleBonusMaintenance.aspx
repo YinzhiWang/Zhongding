@@ -268,7 +268,8 @@
                                             <MasterTableView Width="100%" CommandItemDisplay="Top"
                                                 ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                                                 <Columns>
-                                                    <telerik:GridTemplateColumn UniqueName="PayDate" HeaderText="转账日期" DataField="PayDate" SortExpression="PayDate">
+                                                    <telerik:GridTemplateColumn UniqueName="PayDate" HeaderText="转账日期" DataField="PayDate" SortExpression="PayDate"
+                                                        FooterText="合计：" FooterStyle-Font-Bold="true" FooterStyle-HorizontalAlign="Right">
                                                         <HeaderStyle Width="10%" />
                                                         <ItemStyle HorizontalAlign="Left" Width="10%" />
                                                         <ItemTemplate>
@@ -278,11 +279,13 @@
                                                     <telerik:GridBoundColumn UniqueName="FromAccount" HeaderText="转出账号" DataField="FromAccount">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
-                                                    <telerik:GridBoundColumn UniqueName="Amount" HeaderText="金额" DataField="Amount" DataFormatString="{0:C2}">
+                                                    <telerik:GridBoundColumn UniqueName="Amount" HeaderText="金额" DataField="Amount" DataFormatString="{0:C2}"
+                                                        FooterAggregateFormatString="{0:C2}" Aggregate="Sum" FooterStyle-Font-Bold="true" SortExpression="Amount">
                                                         <HeaderStyle Width="15%" />
                                                         <ItemStyle HorizontalAlign="Left" Width="15%" />
                                                     </telerik:GridBoundColumn>
-                                                    <telerik:GridBoundColumn UniqueName="Fee" HeaderText="手续费" DataField="Fee" DataFormatString="{0:C2}">
+                                                    <telerik:GridBoundColumn UniqueName="Fee" HeaderText="手续费" DataField="Fee" DataFormatString="{0:C2}"
+                                                        FooterAggregateFormatString="{0:C2}" Aggregate="Sum" FooterStyle-Font-Bold="true" SortExpression="Fee">
                                                         <HeaderStyle Width="10%" />
                                                         <ItemStyle HorizontalAlign="Left" Width="10%" />
                                                     </telerik:GridBoundColumn>

@@ -85,8 +85,7 @@
                                 AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
                                 MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
                                 ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                                OnNeedDataSource="rgEntities_NeedDataSource"
-                                OnColumnCreated="rgEntities_ColumnCreated" OnItemDataBound="rgEntities_ItemDataBound">
+                                OnNeedDataSource="rgEntities_NeedDataSource" OnItemDataBound="rgEntities_ItemDataBound">
                                 <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
                                     ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                                     <Columns>

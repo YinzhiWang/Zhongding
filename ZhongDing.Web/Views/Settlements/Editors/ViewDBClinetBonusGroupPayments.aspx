@@ -25,7 +25,7 @@
                     <div class="mws-form-row">
                         <telerik:RadGrid ID="rgAppPayments" runat="server" PageSize="5"
                             AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
-                            MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true" ShowFooter="true"
+                            MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" Height="450" ShowHeader="true" ShowFooter="true"
                             ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
                             OnNeedDataSource="rgAppPayments_NeedDataSource">
                             <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
@@ -78,10 +78,12 @@
                                     PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
                                     FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
                             </MasterTableView>
-                            <ClientSettings EnableRowHoverStyle="true" />
+                            <ClientSettings EnableRowHoverStyle="true">
+                                <Scrolling AllowScroll="true" SaveScrollPosition="true" />
+                            </ClientSettings>
                         </telerik:RadGrid>
                     </div>
-
+                    <div class="mws-form-row"></div>
                     <div class="mws-button-row">
                         <asp:Button ID="btnCancel" runat="server" Text="关闭" UseSubmitBehavior="false" CssClass="mws-button green" OnClientClick="closeWindow();return false;" />
                     </div>

@@ -151,7 +151,7 @@ namespace ZhongDing.Web.Views.Settlements
                 if (this.CanAddUserIDs.Contains(CurrentUser.UserID) || this.CanEditUserIDs.Contains(CurrentUser.UserID))
                 {
                     if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ToBeSettle))
-                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.TemporarySave);
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ToBeSettle);
 
                     if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Submit))
                         includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Submit);
@@ -162,8 +162,8 @@ namespace ZhongDing.Web.Views.Settlements
                     if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ApprovedByDeptManagers))
                         includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ApprovedByDeptManagers);
 
-                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Completed))
-                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Completed);
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Paid))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Paid);
                 }
             }
 
@@ -193,14 +193,6 @@ namespace ZhongDing.Web.Views.Settlements
         protected void rgEntities_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
             BindEntities(false);
-        }
-
-        protected void rgEntities_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
-        {
-            //if (this.CanAddUserIDs.Contains(CurrentUser.UserID) || CanEditUserIDs.Contains(CurrentUser.UserID))
-            //    e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT).Visible = true;
-            //else
-            //    e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT).Visible = false;
         }
 
         protected void rgEntities_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
@@ -239,10 +231,7 @@ namespace ZhongDing.Web.Views.Settlements
                             switch (workflowStatus)
                             {
                                 case EWorkflowStatus.ToBeSettle:
-                                    if (isCanEditUser)
                                         linkHtml += "申请结算";
-                                    else
-                                        linkHtml += "查看";
                                     break;
                                 case EWorkflowStatus.ReturnBasicInfo:
                                     if (isCanEditUser)

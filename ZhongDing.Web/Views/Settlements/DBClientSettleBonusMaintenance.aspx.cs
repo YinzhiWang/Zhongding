@@ -489,6 +489,16 @@ namespace ZhongDing.Web.Views.Settlements
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
+            if (CurrentEntity.DBClientSettleBonus.Count == 0)
+            {
+                this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
+                this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
+                this.Master.BaseNotification.Show("没有结算明细无需申请结算");
+
+                return;
+            }
+
+
             if (!IsValid) return;
 
             CurrentEntity.SettlementOperateDate = DateTime.Now;
@@ -517,6 +527,7 @@ namespace ZhongDing.Web.Views.Settlements
             }
 
             this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
+            this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_SUCCESS;
             this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_OPERATE_REDIRECT);
         }
 
@@ -543,26 +554,6 @@ namespace ZhongDing.Web.Views.Settlements
 
                     if (currentEntity != null)
                     {
-                        //decimal totalPayAmount = 0;
-                        //decimal totalPaidAmount = 0;//已支付
-
-                        //if (currentEntity.DBClientSettleBonus != null)
-                        //    totalPayAmount = currentEntity.DBClientSettleBonus.Sum(x => x.TotalPayAmount ?? 0);
-
-                        //var appPayments = appPaymentRepository.GetList(x => x.WorkflowID == CurrentWorkFlowID
-                        //    && x.ApplicationID == currentEntity.ID);
-
-                        //totalPaidAmount += appPayments.Sum(x => ((x.Amount.HasValue ? x.Amount.Value : 0) + (x.Fee.HasValue ? x.Fee.Value : 0)));
-
-                        //if (totalPayAmount != totalPaidAmount)
-                        //{
-                        //    this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
-                        //    this.Master.BaseNotification.AutoCloseDelay = 1000;
-                        //    this.Master.BaseNotification.Show("货品总金额必须等于收款总金额");
-
-                        //    return;
-                        //}
-
                         var appNote = new ApplicationNote();
                         appNote.WorkflowID = CurrentWorkFlowID;
                         appNote.NoteTypeID = (int)EAppNoteType.AuditOpinion;
@@ -746,8 +737,8 @@ namespace ZhongDing.Web.Views.Settlements
                 excelRoot,
                 fieldFuncs.ToArray());
             Response.ContentType = "application/x-zip-compressed";
-            Response.AddHeader("Content-Disposition", "attachment;filename=" + "大包客户提成结算表".UrlEncode() + "_"
-                + this.CurrentEntity.HospitalType.TypeName + "_" + this.CurrentEntity.SettlementDate.ToString("yyyyMMdd") + ".xls");
+            Response.AddHeader("Content-Disposition", "attachment;filename=" + ("大包客户提成结算表" + "_"
+                + this.CurrentEntity.HospitalType.TypeName).UrlEncode() + "_" + this.CurrentEntity.SettlementDate.ToString("yyyyMMdd") + ".xls");
             string filename = excelPath;
             Response.TransmitFile(filename);
 
