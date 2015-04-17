@@ -408,6 +408,10 @@
     <Build Include="dbo\Tables\DBClientInvoiceDetail.sql" />
     <Build Include="dbo\Tables\DBClientInvoice.sql" />
     <Build Include="dbo\Tables\InvoiceType.sql" />
+    <Build Include="dbo\Tables\SupplierInvoiceSettlementDetail.sql" />
+    <Build Include="dbo\Tables\SupplierInvoiceSettlement.sql" />
+    <Build Include="dbo\Tables\ClientInvoiceSettlementDetail.sql" />
+    <Build Include="dbo\Tables\ClientInvoiceSettlement.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

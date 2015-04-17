@@ -231,6 +231,41 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 修改大包客户提成
         /// </summary>
-        EditDBClientSettleBonus
+        EditDBClientSettleBonus,
+
+        /// <summary>
+        /// 新增供应商发票结算
+        /// </summary>
+        NewSupplierInvoiceSettlement,
+
+        /// <summary>
+        /// 修改供应商发票结算
+        /// </summary>
+        EditSupplierInvoiceSettlement,
+
+        /// <summary>
+        /// 新增客户发票结算
+        /// </summary>
+        NewCISettlement,
+
+        /// <summary>
+        /// 财务主管审核（客户发票结算）
+        /// </summary>
+        AuditCISettlementByTreasurers,
+
+        /// <summary>
+        /// 部门领导审核（客户发票结算）
+        /// </summary>
+        AuditCISettlementByDeptManagers = 50,
+
+        /// <summary>
+        /// 出纳支付（客户发票结算）
+        /// </summary>
+        PayCISettlement,
+
+        /// <summary>
+        /// 修改客户发票结算
+        /// </summary>
+        EditCISettlement,
     }
 }

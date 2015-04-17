@@ -254,8 +254,17 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 大包发票管理
         /// </summary>
-        DBClientInvoiceManage
+        DBClientInvoiceManage,
 
+        /// <summary>
+        /// 供应商发票结算管理
+        /// </summary>
+        SupplierInvoiceSettlementManage,
+
+        /// <summary>
+        /// 客户发票结算管理
+        /// </summary>
+        ClientInvoiceSettlementManage,
 
     }
 }

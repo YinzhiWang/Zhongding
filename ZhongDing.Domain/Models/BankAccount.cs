@@ -23,6 +23,7 @@ namespace ZhongDing.Domain.Models
             this.ApplicationPayment = new HashSet<ApplicationPayment>();
             this.ApplicationPayment1 = new HashSet<ApplicationPayment>();
             this.ClientUser = new HashSet<ClientUser>();
+            this.SupplierInvoiceSettlement = new HashSet<SupplierInvoiceSettlement>();
         }
     
         public int ID { get; set; }
@@ -58,5 +59,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<ApplicationPayment> ApplicationPayment { get; set; }
         public virtual ICollection<ApplicationPayment> ApplicationPayment1 { get; set; }
         public virtual ICollection<ClientUser> ClientUser { get; set; }
+        public virtual ICollection<SupplierInvoiceSettlement> SupplierInvoiceSettlement { get; set; }
     }
 }

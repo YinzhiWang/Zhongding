@@ -13,28 +13,31 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class ClientInvoice : IEntityExtendedProperty
+    public partial class ClientInvoiceSettlementDetail : IEntityExtendedProperty
     {
-        public ClientInvoice()
-        {
-            this.ClientInvoiceDetail = new HashSet<ClientInvoiceDetail>();
-            this.ClientInvoiceSettlementDetail = new HashSet<ClientInvoiceSettlementDetail>();
-        }
-    
         public int ID { get; set; }
-        public int CompanyID { get; set; }
+        public int ClientInvoiceSettlementID { get; set; }
         public int ClientCompanyID { get; set; }
+        public int ClientInvoiceID { get; set; }
         public System.DateTime InvoiceDate { get; set; }
         public string InvoiceNumber { get; set; }
-        public decimal Amount { get; set; }
-        public string TransportNumber { get; set; }
-        public string TransportCompany { get; set; }
+        public decimal TotalInvoiceAmount { get; set; }
+        public Nullable<decimal> ClientTaxHighRatio { get; set; }
+        public Nullable<decimal> HighRatioAmount { get; set; }
+        public Nullable<decimal> ClientTaxLowRatio { get; set; }
+        public Nullable<decimal> LowRatioAmount { get; set; }
+        public Nullable<decimal> ClientTaxDeductionRatio { get; set; }
+        public Nullable<decimal> DeductionRatioAmount { get; set; }
+        public Nullable<int> AppPaymentID { get; set; }
+        public Nullable<int> CanceledAppPaymentID { get; set; }
+        public decimal PayAmount { get; set; }
+        public Nullable<bool> IsSettled { get; set; }
+        public Nullable<System.DateTime> SettledDate { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
-        public int SaleOrderTypeID { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -46,10 +49,10 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
+        public virtual ApplicationPayment ApplicationPayment { get; set; }
+        public virtual ApplicationPayment ApplicationPayment1 { get; set; }
         public virtual ClientCompany ClientCompany { get; set; }
-        public virtual Company Company { get; set; }
-        public virtual ICollection<ClientInvoiceDetail> ClientInvoiceDetail { get; set; }
-        public virtual SaleOrderType SaleOrderType { get; set; }
-        public virtual ICollection<ClientInvoiceSettlementDetail> ClientInvoiceSettlementDetail { get; set; }
+        public virtual ClientInvoice ClientInvoice { get; set; }
+        public virtual ClientInvoiceSettlement ClientInvoiceSettlement { get; set; }
     }
 }

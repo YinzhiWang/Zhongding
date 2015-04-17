@@ -18,6 +18,7 @@ namespace ZhongDing.Domain.Models
         public SupplierInvoice()
         {
             this.SupplierInvoiceDetail = new HashSet<SupplierInvoiceDetail>();
+            this.SupplierInvoiceSettlementDetail = new HashSet<SupplierInvoiceSettlementDetail>();
         }
     
         public int ID { get; set; }
@@ -26,6 +27,8 @@ namespace ZhongDing.Domain.Models
         public System.DateTime InvoiceDate { get; set; }
         public string InvoiceNumber { get; set; }
         public decimal Amount { get; set; }
+        public Nullable<bool> IsSettled { get; set; }
+        public Nullable<System.DateTime> SettledDate { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -45,5 +48,6 @@ namespace ZhongDing.Domain.Models
         public virtual Company Company { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual ICollection<SupplierInvoiceDetail> SupplierInvoiceDetail { get; set; }
+        public virtual ICollection<SupplierInvoiceSettlementDetail> SupplierInvoiceSettlementDetail { get; set; }
     }
 }

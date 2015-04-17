@@ -5,6 +5,8 @@
     [InvoiceDate]    DATETIME       NOT NULL,
     [InvoiceNumber]  NVARCHAR (256) NOT NULL,
     [Amount]         MONEY          NOT NULL,
+    [IsSettled]      BIT            NULL,
+    [SettledDate]    DATETIME       NULL,
     [IsDeleted]      BIT            NOT NULL,
     [CreatedOn]      DATETIME       NOT NULL,
     [CreatedBy]      INT            NULL,
@@ -14,4 +16,6 @@
     CONSTRAINT [FK_SupplierInvoice_CompanyID] FOREIGN KEY ([CompanyID]) REFERENCES [dbo].[Company] ([ID]),
     CONSTRAINT [FK_SupplierInvoice_SupplierID] FOREIGN KEY ([SupplierID]) REFERENCES [dbo].[Supplier] ([ID])
 );
+
+
 

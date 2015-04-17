@@ -120,7 +120,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<DCImportFileLog> DCImportFileLog { get; set; }
         public DbSet<StockOutDetail> StockOutDetail { get; set; }
         public DbSet<DBClientSettlement> DBClientSettlement { get; set; }
-        public DbSet<SupplierInvoice> SupplierInvoice { get; set; }
         public DbSet<SupplierInvoiceDetail> SupplierInvoiceDetail { get; set; }
         public DbSet<DBClientBonus> DBClientBonus { get; set; }
         public DbSet<DBClientBonusHospital> DBClientBonusHospital { get; set; }
@@ -133,5 +132,10 @@ namespace ZhongDing.Domain.Models
         public DbSet<DBClientSettleBonus> DBClientSettleBonus { get; set; }
         public DbSet<ClientInfo> ClientInfo { get; set; }
         public DbSet<ClientUser> ClientUser { get; set; }
+        public DbSet<ClientInvoiceSettlementDetail> ClientInvoiceSettlementDetail { get; set; }
+        public DbSet<SupplierInvoice> SupplierInvoice { get; set; }
+        public DbSet<SupplierInvoiceSettlementDetail> SupplierInvoiceSettlementDetail { get; set; }
+        public DbSet<ClientInvoiceSettlement> ClientInvoiceSettlement { get; set; }
+        public DbSet<SupplierInvoiceSettlement> SupplierInvoiceSettlement { get; set; }
     }
 }

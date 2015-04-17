@@ -370,6 +370,11 @@ namespace ZhongDing.Common
             /// 列名：Delete
             /// </summary>
             public static readonly string COLUMN_DELETE = "Delete";
+
+            /// <summary>
+            /// 列名：ClientSelect
+            /// </summary>
+            public static readonly string COLUMN_CLIENT_SELECT = "ClientSelect";
         }
 
 

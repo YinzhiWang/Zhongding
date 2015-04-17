@@ -13,28 +13,23 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class ClientInvoice : IEntityExtendedProperty
+    public partial class SupplierInvoiceSettlementDetail : IEntityExtendedProperty
     {
-        public ClientInvoice()
-        {
-            this.ClientInvoiceDetail = new HashSet<ClientInvoiceDetail>();
-            this.ClientInvoiceSettlementDetail = new HashSet<ClientInvoiceSettlementDetail>();
-        }
-    
         public int ID { get; set; }
-        public int CompanyID { get; set; }
-        public int ClientCompanyID { get; set; }
+        public int SupplierInvoiceSettlementID { get; set; }
+        public int SupplierID { get; set; }
+        public int SupplierInvoiceID { get; set; }
         public System.DateTime InvoiceDate { get; set; }
         public string InvoiceNumber { get; set; }
-        public decimal Amount { get; set; }
-        public string TransportNumber { get; set; }
-        public string TransportCompany { get; set; }
+        public decimal InvoiceAmount { get; set; }
+        public Nullable<int> AppPaymentID { get; set; }
+        public Nullable<int> CanceledAppPaymentID { get; set; }
+        public decimal PayAmount { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
-        public int SaleOrderTypeID { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -46,10 +41,10 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ClientCompany ClientCompany { get; set; }
-        public virtual Company Company { get; set; }
-        public virtual ICollection<ClientInvoiceDetail> ClientInvoiceDetail { get; set; }
-        public virtual SaleOrderType SaleOrderType { get; set; }
-        public virtual ICollection<ClientInvoiceSettlementDetail> ClientInvoiceSettlementDetail { get; set; }
+        public virtual ApplicationPayment ApplicationPayment { get; set; }
+        public virtual ApplicationPayment ApplicationPayment1 { get; set; }
+        public virtual Supplier Supplier { get; set; }
+        public virtual SupplierInvoice SupplierInvoice { get; set; }
+        public virtual SupplierInvoiceSettlement SupplierInvoiceSettlement { get; set; }
     }
 }

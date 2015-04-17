@@ -110,6 +110,12 @@
     <Compile Include="Models\ClientInvoiceDetail.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClientInvoiceSettlement.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClientInvoiceSettlementDetail.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ClientRefundAppDetail.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -344,6 +350,12 @@
     <Compile Include="Models\SupplierInvoiceDetail.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SupplierInvoiceSettlement.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SupplierInvoiceSettlementDetail.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SupplierRefundApplication.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -393,6 +405,7 @@
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIObjects\UIClientInvoiceSettlement.cs" />
     <Compile Include="UIObjects\UIDBClientInvoice.cs" />
     <Compile Include="UIObjects\UIAccountType.cs" />
     <Compile Include="UIObjects\UIApplicationNote.cs" />
@@ -467,6 +480,8 @@
     <Compile Include="UIObjects\UISupplierContractFile.cs" />
     <Compile Include="UIObjects\UISupplierDeduction.cs" />
     <Compile Include="UIObjects\UISupplierInvoice.cs" />
+    <Compile Include="UIObjects\UISupplierInvoiceSettlement.cs" />
+    <Compile Include="UIObjects\UISupplierInvoiceSettlementDetail.cs" />
     <Compile Include="UIObjects\UISupplierRefundApp.cs" />
     <Compile Include="UIObjects\UISupplierRefundAppDetail.cs" />
     <Compile Include="UIObjects\UIToBeOutSalesOrderDetail.cs" />
@@ -478,6 +493,7 @@
     <Compile Include="UIObjects\UIWarehouse.cs" />
     <Compile Include="UIObjects\UIWorkflowBase.cs" />
     <Compile Include="UIObjects\UIWorkflowStep.cs" />
+    <Compile Include="UISearchObjects\UISearchClientInvoiceSettlement.cs" />
     <Compile Include="UISearchObjects\UISearchDBClientInvoice.cs" />
     <Compile Include="UISearchObjects\UISearchApplicationNote.cs" />
     <Compile Include="UISearchObjects\UISearchApplicationPayment.cs" />
@@ -538,6 +554,8 @@
     <Compile Include="UISearchObjects\UISearchSupplierContractFile.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierDeduction.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierInvoice.cs" />
+    <Compile Include="UISearchObjects\UISearchSupplierInvoiceSettlement.cs" />
+    <Compile Include="UISearchObjects\UISearchSupplierInvoiceSettlementDetail.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierRefundApp.cs" />
     <Compile Include="UISearchObjects\UISearchToBeOutSalesOrderDetail.cs" />
     <Compile Include="UISearchObjects\UISearchTransportCompany.cs" />

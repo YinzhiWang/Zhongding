@@ -72,6 +72,16 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         DBClientSettleBonus,
 
+        /// <summary>
+        /// 供应商发票结算
+        /// </summary>
+        SupplierInvoiceSettlement,
+
+        /// <summary>
+        /// 客户发票结算
+        /// </summary>
+        ClientInvoiceSettlement,
+
 
     }
 }

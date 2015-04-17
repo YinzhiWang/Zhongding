@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\DynamicLinq.cs" />
+    <Compile Include="IRepositories\IClientInvoiceSettlementRepository.cs" />
     <Compile Include="IRepositories\IDBClientInvoiceDetailRepository.cs" />
     <Compile Include="IRepositories\IDBClientInvoiceRepository.cs" />
     <Compile Include="IRepositories\IClientFlowDataRepository.cs" />
@@ -66,6 +67,8 @@
     <Compile Include="IRepositories\IHospitalTypeRepository.cs" />
     <Compile Include="IRepositories\ISupplierInvoiceDetailRepository.cs" />
     <Compile Include="IRepositories\ISupplierInvoiceRepository.cs" />
+    <Compile Include="IRepositories\ISupplierInvoiceSettlementDetailRepository.cs" />
+    <Compile Include="IRepositories\ISupplierInvoiceSettlementRepository.cs" />
     <Compile Include="IRepositories\ITransportFeeStockOutRepository.cs" />
     <Compile Include="IRepositories\IAccountTypeRepository.cs" />
     <Compile Include="IRepositories\IApplicationNoteRepository.cs" />
@@ -171,6 +174,7 @@
     <Compile Include="Repositories\ClientInfoRepository.cs" />
     <Compile Include="Repositories\ClientInvoiceDetailRepository.cs" />
     <Compile Include="Repositories\ClientInvoiceRepository.cs" />
+    <Compile Include="Repositories\ClientInvoiceSettlementRepository.cs" />
     <Compile Include="Repositories\ClientRefundAppDetailRepository.cs" />
     <Compile Include="Repositories\ClientRefundApplicationRepository.cs" />
     <Compile Include="Repositories\ClientSaleApplicationRepository.cs" />
@@ -235,6 +239,8 @@
     <Compile Include="Repositories\SupplierDeductionRepository.cs" />
     <Compile Include="Repositories\SupplierInvoiceDetailRepository.cs" />
     <Compile Include="Repositories\SupplierInvoiceRepository.cs" />
+    <Compile Include="Repositories\SupplierInvoiceSettlementDetailRepository.cs" />
+    <Compile Include="Repositories\SupplierInvoiceSettlementRepository.cs" />
     <Compile Include="Repositories\SupplierRefundApplicationRepository.cs" />
     <Compile Include="Repositories\SupplierRepository.cs" />
     <Compile Include="Repositories\SupplierTaskAssignmentRepository.cs" />
