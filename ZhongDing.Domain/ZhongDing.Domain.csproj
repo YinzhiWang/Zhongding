@@ -406,6 +406,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIObjects\UIClientInvoiceSettlement.cs" />
+    <Compile Include="UIObjects\UIClientInvoiceSettlementDetail.cs" />
     <Compile Include="UIObjects\UIDBClientInvoice.cs" />
     <Compile Include="UIObjects\UIAccountType.cs" />
     <Compile Include="UIObjects\UIApplicationNote.cs" />
@@ -494,6 +495,7 @@
     <Compile Include="UIObjects\UIWorkflowBase.cs" />
     <Compile Include="UIObjects\UIWorkflowStep.cs" />
     <Compile Include="UISearchObjects\UISearchClientInvoiceSettlement.cs" />
+    <Compile Include="UISearchObjects\UISearchClientInvoiceSettlementDetail.cs" />
     <Compile Include="UISearchObjects\UISearchDBClientInvoice.cs" />
     <Compile Include="UISearchObjects\UISearchApplicationNote.cs" />
     <Compile Include="UISearchObjects\UISearchApplicationPayment.cs" />

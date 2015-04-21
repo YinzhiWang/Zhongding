@@ -152,6 +152,7 @@ namespace ZhongDing.Web.Views.Invoices
                 CompanyID = CurrentUser.CompanyID,
                 BeginDate = rdpBeginDate.SelectedDate,
                 EndDate = rdpEndDate.SelectedDate,
+                ExcludeCanceled = true
             };
 
             if (!string.IsNullOrEmpty(rcbxClientCompany.SelectedValue))
@@ -203,6 +204,12 @@ namespace ZhongDing.Web.Views.Invoices
                     if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ApprovedByDeptManagers))
                         includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ApprovedByDeptManagers);
 
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Paid))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Paid);
+                }
+
+                if (CanPayUserIDs.Contains(CurrentUser.UserID))
+                {
                     if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Paid))
                         includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Paid);
                 }
@@ -327,16 +334,17 @@ namespace ZhongDing.Web.Views.Invoices
                                     break;
 
                                 case EWorkflowStatus.Paid:
-                                    if (CanPayUserIDs.Contains(CurrentUser.UserID))
-                                        linkHtml += "撤销";
-                                    else
-
-                                        linkHtml += "查看";
+                                    linkHtml += "查看";
                                     break;
                             }
                         }
                         else
-                            linkHtml += "查看";
+                        {
+                            if (uiEntity.PaidBy == CurrentUser.UserID)
+                                linkHtml += "撤销";
+                            else
+                                linkHtml += "查看";
+                        }
                     }
 
                     linkHtml += "</a>";
@@ -364,6 +372,60 @@ namespace ZhongDing.Web.Views.Invoices
             }
         }
 
+        protected void rgEntities_DeleteCommand(object sender, GridCommandEventArgs e)
+        {
+            GridEditableItem editableItem = e.Item as GridEditableItem;
+
+            String sid = editableItem.GetDataKeyValue("ID").ToString();
+
+            int id = 0;
+            if (int.TryParse(sid, out id))
+            {
+                using (IUnitOfWork unitOfWork = new UnitOfWork())
+                {
+                    var db = unitOfWork.GetDbModel();
+
+                    IClientInvoiceSettlementRepository cisRepository = new ClientInvoiceSettlementRepository();
+                    IApplicationNoteRepository appNoteRepository = new ApplicationNoteRepository();
+                    IApplicationPaymentRepository appPaymentRepository = new ApplicationPaymentRepository();
+
+                    cisRepository.SetDbModel(db);
+                    appNoteRepository.SetDbModel(db);
+                    appPaymentRepository.SetDbModel(db);
+
+                    var currentEntity = cisRepository.GetByID(id);
+
+                    if (currentEntity != null)
+                    {
+                        foreach (var item in currentEntity.ClientInvoiceSettlementDetail)
+                        {
+                            item.IsDeleted = true;
+                        }
+
+                        cisRepository.Delete(currentEntity);
+
+                        var appNotes = appNoteRepository.GetList(x => x.WorkflowID == CurrentWorkFlowID && x.ApplicationID == currentEntity.ID);
+                        foreach (var item in appNotes)
+                        {
+                            appNoteRepository.Delete(item);
+                        }
+
+                        var appPayments = appPaymentRepository.GetList(x => x.WorkflowID == CurrentWorkFlowID && x.ApplicationID == currentEntity.ID);
+
+                        foreach (var item in appPayments)
+                        {
+                            appPaymentRepository.Delete(item);
+                        }
+
+                        unitOfWork.SaveChanges();
+                    }
+                }
+
+                rgEntities.Rebind();
+            }
+
+        }
+
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             BindEntities(true);
@@ -379,5 +441,6 @@ namespace ZhongDing.Web.Views.Invoices
 
             BindEntities(true);
         }
+
     }
 }

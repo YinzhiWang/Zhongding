@@ -10,6 +10,8 @@
     [CanceledReason]     NVARCHAR (1000) NULL,
     [CanceledDate]       DATETIME        NULL,
     [CanceledBy]         INT             NULL,
+    [PaidDate]           DATETIME        NULL,
+    [PaidBy]             INT             NULL,
     [IsDeleted]          BIT             NOT NULL,
     [CreatedOn]          DATETIME        NOT NULL,
     [CreatedBy]          INT             NULL,
@@ -20,6 +22,12 @@
     CONSTRAINT [FK_ClientInvoiceSettlement_Company] FOREIGN KEY ([CompanyID]) REFERENCES [dbo].[Company] ([ID]),
     CONSTRAINT [FK_ClientInvoiceSettlement_WorkflowStatus] FOREIGN KEY ([WorkflowStatusID]) REFERENCES [dbo].[WorkflowStatus] ([ID])
 );
+
+
+
+
+
+
 
 
 

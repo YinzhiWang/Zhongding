@@ -33,7 +33,7 @@
     <div class="container">
         <div class="mws-panel grid_8">
             <div class="mws-panel-header">
-                <span class="mws-i-24 i-table-1">供应商发票结算</span>
+                <span class="mws-i-24 i-table-1">客户发票结算管理</span>
             </div>
             <div class="mws-panel-body">
                 <div class="mws-form">
@@ -81,7 +81,8 @@
                                 MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
                                 ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
                                 OnNeedDataSource="rgEntities_NeedDataSource" OnItemCreated="rgEntities_ItemCreated"
-                                OnColumnCreated="rgEntities_ColumnCreated" OnItemDataBound="rgEntities_ItemDataBound">
+                                OnColumnCreated="rgEntities_ColumnCreated" OnItemDataBound="rgEntities_ItemDataBound"
+                                OnDeleteCommand="rgEntities_DeleteCommand">
                                 <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
                                     ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                                     <Columns>
@@ -92,11 +93,10 @@
                                         <telerik:GridBoundColumn UniqueName="InvoiceNumbers" HeaderText="发票号" DataField="InvoiceNumbers">
                                             <ItemStyle HorizontalAlign="Left" />
                                         </telerik:GridBoundColumn>
-                                        <telerik:GridBoundColumn UniqueName="TotalInvoiceAmount" HeaderText="发票金额" DataField="TotalInvoiceAmount" DataFormatString="{0:C2}">
-                                            <HeaderStyle Width="10%" />
-                                            <ItemStyle HorizontalAlign="Left" Width="10%" />
+                                        <telerik:GridBoundColumn UniqueName="ClientCompanyName" HeaderText="商业单位" DataField="ClientCompanyName">
+                                            <ItemStyle HorizontalAlign="Left" />
                                         </telerik:GridBoundColumn>
-                                        <telerik:GridBoundColumn UniqueName="TaxRatio" HeaderText="返点比率" DataField="TaxRatio" DataFormatString="{0:P2}">
+                                        <telerik:GridBoundColumn UniqueName="TotalInvoiceAmount" HeaderText="发票金额" DataField="TotalInvoiceAmount" DataFormatString="{0:C2}">
                                             <HeaderStyle Width="10%" />
                                             <ItemStyle HorizontalAlign="Left" Width="10%" />
                                         </telerik:GridBoundColumn>
@@ -104,9 +104,11 @@
                                             <HeaderStyle Width="10%" />
                                             <ItemStyle HorizontalAlign="Left" Width="10%" />
                                         </telerik:GridBoundColumn>
-                                        <telerik:GridBoundColumn UniqueName="CompanyName" HeaderText="收票单位" DataField="CompanyName">
-                                            <HeaderStyle Width="20%" />
-                                            <ItemStyle HorizontalAlign="Left" Width="20%" />
+                                        <telerik:GridBoundColumn UniqueName="WorkflowStatus" HeaderText="状态" DataField="WorkflowStatus">
+                                            <ItemStyle HorizontalAlign="Left" Width="100" />
+                                        </telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn UniqueName="CreatedBy" HeaderText="操作人" DataField="CreatedBy">
+                                            <ItemStyle HorizontalAlign="Left" Width="60" />
                                         </telerik:GridBoundColumn>
                                         <telerik:GridTemplateColumn UniqueName="Edit">
                                             <HeaderStyle Width="100" />

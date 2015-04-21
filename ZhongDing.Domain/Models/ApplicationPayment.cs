@@ -17,10 +17,10 @@ namespace ZhongDing.Domain.Models
     {
         public ApplicationPayment()
         {
-            this.ClientInvoiceSettlementDetail = new HashSet<ClientInvoiceSettlementDetail>();
-            this.ClientInvoiceSettlementDetail1 = new HashSet<ClientInvoiceSettlementDetail>();
             this.SupplierInvoiceSettlementDetail = new HashSet<SupplierInvoiceSettlementDetail>();
             this.SupplierInvoiceSettlementDetail1 = new HashSet<SupplierInvoiceSettlementDetail>();
+            this.ClientInvoiceSettlementDetail = new HashSet<ClientInvoiceSettlementDetail>();
+            this.ClientInvoiceSettlementDetail1 = new HashSet<ClientInvoiceSettlementDetail>();
         }
     
         public int ID { get; set; }
@@ -57,9 +57,9 @@ namespace ZhongDing.Domain.Models
         public virtual PaymentType PaymentType { get; set; }
         public virtual BankAccount BankAccount1 { get; set; }
         public virtual Workflow Workflow { get; set; }
-        public virtual ICollection<ClientInvoiceSettlementDetail> ClientInvoiceSettlementDetail { get; set; }
-        public virtual ICollection<ClientInvoiceSettlementDetail> ClientInvoiceSettlementDetail1 { get; set; }
         public virtual ICollection<SupplierInvoiceSettlementDetail> SupplierInvoiceSettlementDetail { get; set; }
         public virtual ICollection<SupplierInvoiceSettlementDetail> SupplierInvoiceSettlementDetail1 { get; set; }
+        public virtual ICollection<ClientInvoiceSettlementDetail> ClientInvoiceSettlementDetail { get; set; }
+        public virtual ICollection<ClientInvoiceSettlementDetail> ClientInvoiceSettlementDetail1 { get; set; }
     }
 }

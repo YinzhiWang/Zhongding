@@ -71,11 +71,13 @@ namespace ZhongDing.Business.Repositories
                                   TotalInvoiceAmount = q.TotalInvoiceAmount,
                                   TotalPayAmount = q.TotalPayAmount,
                                   ClientCompanyName = cc.Name,
-                                  InvoiceNumberArray = q.ClientInvoiceSettlementDetail.Select(x => x.InvoiceNumber),
+                                  InvoiceNumberArray = q.ClientInvoiceSettlementDetail
+                                  .Where(x => x.IsDeleted == false).Select(x => x.InvoiceNumber),
                                   WorkflowStatusID = q.WorkflowStatusID,
                                   WorkflowStatus = ws.StatusName,
                                   CreatedByUserID = q.CreatedBy,
-                                  CreatedBy = tcbu == null ? string.Empty : tcbu.FullName
+                                  CreatedBy = tcbu == null ? string.Empty : tcbu.FullName,
+                                  PaidBy = q.PaidBy
                               }).ToList();
 
                 foreach (var uiEntity in uiEntities)

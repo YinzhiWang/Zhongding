@@ -461,12 +461,12 @@ namespace ZhongDing.Common
 
         #endregion
 
-        #region 发票类型
+        #region 收款单据类型
 
         /// <summary>
-        /// 常量类：发票类型
+        /// 常量类：收款单据类型
         /// </summary>
-        public class InvoiceTypes
+        public class InvoiceCategories
         {
             /// <summary>
             /// 收据

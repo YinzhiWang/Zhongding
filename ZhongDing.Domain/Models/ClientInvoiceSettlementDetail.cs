@@ -31,8 +31,6 @@ namespace ZhongDing.Domain.Models
         public Nullable<int> AppPaymentID { get; set; }
         public Nullable<int> CanceledAppPaymentID { get; set; }
         public decimal PayAmount { get; set; }
-        public Nullable<bool> IsSettled { get; set; }
-        public Nullable<System.DateTime> SettledDate { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }

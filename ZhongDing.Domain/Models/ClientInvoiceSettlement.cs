@@ -31,6 +31,8 @@ namespace ZhongDing.Domain.Models
         public string CanceledReason { get; set; }
         public Nullable<System.DateTime> CanceledDate { get; set; }
         public Nullable<int> CanceledBy { get; set; }
+        public Nullable<System.DateTime> PaidDate { get; set; }
+        public Nullable<int> PaidBy { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }

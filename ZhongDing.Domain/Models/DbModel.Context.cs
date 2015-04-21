@@ -124,7 +124,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<DBClientBonus> DBClientBonus { get; set; }
         public DbSet<DBClientBonusHospital> DBClientBonusHospital { get; set; }
         public DbSet<DBContract> DBContract { get; set; }
-        public DbSet<ClientInvoice> ClientInvoice { get; set; }
         public DbSet<ClientInvoiceDetail> ClientInvoiceDetail { get; set; }
         public DbSet<DBClientInvoice> DBClientInvoice { get; set; }
         public DbSet<DBClientInvoiceDetail> DBClientInvoiceDetail { get; set; }
@@ -132,10 +131,11 @@ namespace ZhongDing.Domain.Models
         public DbSet<DBClientSettleBonus> DBClientSettleBonus { get; set; }
         public DbSet<ClientInfo> ClientInfo { get; set; }
         public DbSet<ClientUser> ClientUser { get; set; }
-        public DbSet<ClientInvoiceSettlementDetail> ClientInvoiceSettlementDetail { get; set; }
         public DbSet<SupplierInvoice> SupplierInvoice { get; set; }
         public DbSet<SupplierInvoiceSettlementDetail> SupplierInvoiceSettlementDetail { get; set; }
-        public DbSet<ClientInvoiceSettlement> ClientInvoiceSettlement { get; set; }
         public DbSet<SupplierInvoiceSettlement> SupplierInvoiceSettlement { get; set; }
+        public DbSet<ClientInvoice> ClientInvoice { get; set; }
+        public DbSet<ClientInvoiceSettlementDetail> ClientInvoiceSettlementDetail { get; set; }
+        public DbSet<ClientInvoiceSettlement> ClientInvoiceSettlement { get; set; }
     }
 }

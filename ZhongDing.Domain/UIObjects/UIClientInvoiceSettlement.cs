@@ -20,5 +20,7 @@ namespace ZhongDing.Domain.UIObjects
 
         public decimal TotalPayAmount { get; set; }
 
+        public int? PaidBy { get; set; }
+
     }
 }

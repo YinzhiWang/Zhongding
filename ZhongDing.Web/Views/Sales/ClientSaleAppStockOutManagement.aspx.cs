@@ -264,7 +264,7 @@ namespace ZhongDing.Web.Views.Sales
                             item.IsDeleted = true;
                         }
 
-                        var appNotes = appNoteRepository.GetList(x => x.ApplicationID == currentEntity.ID);
+                        var appNotes = appNoteRepository.GetList(x => x.WorkflowID == CurrentWorkFlowID && x.ApplicationID == currentEntity.ID);
                         foreach (var item in appNotes)
                         {
                             appNoteRepository.Delete(item);

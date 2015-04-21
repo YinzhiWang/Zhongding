@@ -15,8 +15,6 @@
     [AppPaymentID]              INT             NULL,
     [CanceledAppPaymentID]      INT             NULL,
     [PayAmount]                 MONEY           NOT NULL,
-    [IsSettled]                 BIT             NULL,
-    [SettledDate]               DATETIME        NULL,
     [IsDeleted]                 BIT             NOT NULL,
     [CreatedOn]                 DATETIME        NOT NULL,
     [CreatedBy]                 INT             NULL,
@@ -29,4 +27,6 @@
     CONSTRAINT [FK_ClientInvoiceSettlementDetail_ClientInvoice] FOREIGN KEY ([ClientInvoiceID]) REFERENCES [dbo].[ClientInvoice] ([ID]),
     CONSTRAINT [FK_ClientInvoiceSettlementDetail_ClientInvoiceSettlement] FOREIGN KEY ([ClientInvoiceSettlementID]) REFERENCES [dbo].[ClientInvoiceSettlement] ([ID])
 );
+
+
 

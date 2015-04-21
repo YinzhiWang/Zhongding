@@ -206,11 +206,11 @@ namespace ZhongDing.Web.Views.Sales
 
         private void BindInvoiceTypes()
         {
-            ddlInvoiceType.Items.Add(new DropDownListItem(GlobalConst.InvoiceTypes.RECEIPT,
-                ((int)EInvoiceType.Receipt).ToString()));
+            ddlInvoiceType.Items.Add(new DropDownListItem(GlobalConst.InvoiceCategories.RECEIPT,
+                ((int)EInvoiceCategory.Receipt).ToString()));
 
-            ddlInvoiceType.Items.Add(new DropDownListItem(GlobalConst.InvoiceTypes.INVOICE,
-                ((int)EInvoiceType.Invoice).ToString()));
+            ddlInvoiceType.Items.Add(new DropDownListItem(GlobalConst.InvoiceCategories.INVOICE,
+                ((int)EInvoiceCategory.Invoice).ToString()));
 
             ddlInvoiceType.DataBind();
         }

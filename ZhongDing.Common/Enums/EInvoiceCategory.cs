@@ -7,21 +7,18 @@ using System.Threading.Tasks;
 namespace ZhongDing.Common.Enums
 {
     /// <summary>
-    /// 发票税率类型
+    /// 收款单据类别
     /// </summary>
-    public enum EInvoiceType : int
+    public enum EInvoiceCategory : int
     {
         /// <summary>
-        /// 高价税率
+        /// 收据
         /// </summary>
-        HighRatio = 1,
+        Receipt = 1,
+
         /// <summary>
-        /// 低价税率
+        /// 发票
         /// </summary>
-        LowRatio,
-        /// <summary>
-        /// 评价税率
-        /// </summary>
-        DeductionRatio
+        Invoice
     }
 }

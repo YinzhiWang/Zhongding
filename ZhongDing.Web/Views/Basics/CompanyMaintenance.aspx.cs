@@ -107,11 +107,11 @@ namespace ZhongDing.Web.Views.Basics
             if (company != null)
             {
                 company.CompanyName = txtCompanyName.Text;
-                company.ProviderTexRatio = Convert.ToDecimal(txtProviderTexRatio.DbValue);
-                company.ClientTaxHighRatio = Convert.ToDecimal(txtClientTaxHighRatio.DbValue);
-                company.ClientTaxLowRatio = Convert.ToDecimal(txtClientTaxLowRatio.DbValue);
+                company.ProviderTexRatio = (decimal?)(txtProviderTexRatio.Value / txtProviderTexRatio.DbValueFactor);
+                company.ClientTaxHighRatio = (decimal?)(txtClientTaxHighRatio.Value / txtClientTaxHighRatio.DbValueFactor);
+                company.ClientTaxLowRatio = (decimal?)(txtClientTaxLowRatio.Value / txtClientTaxLowRatio.DbValueFactor);
                 company.EnableTaxDeduction = cbxEnableTaxDeduction.Checked;
-                company.ClientTaxDeductionRatio = Convert.ToDecimal(txtClientTaxDeductionRatio.DbValue);
+                company.ClientTaxDeductionRatio = (decimal?)(txtClientTaxDeductionRatio.Value / txtClientTaxDeductionRatio.DbValueFactor);
 
                 PageCompanyRepository.Save();
 

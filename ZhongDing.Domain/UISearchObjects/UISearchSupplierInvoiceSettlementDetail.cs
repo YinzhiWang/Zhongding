@@ -12,6 +12,5 @@ namespace ZhongDing.Domain.UISearchObjects
 
         public int CompanyID { get; set; }
 
-        public bool IsNew { get; set; }
     }
 }

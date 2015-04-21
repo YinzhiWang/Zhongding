@@ -29,12 +29,14 @@ namespace ZhongDing.Domain.Models
         public decimal Amount { get; set; }
         public string TransportNumber { get; set; }
         public string TransportCompany { get; set; }
+        public int SaleOrderTypeID { get; set; }
+        public Nullable<bool> IsSettled { get; set; }
+        public Nullable<System.DateTime> SettledDate { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
-        public int SaleOrderTypeID { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -48,8 +50,8 @@ namespace ZhongDing.Domain.Models
     
         public virtual ClientCompany ClientCompany { get; set; }
         public virtual Company Company { get; set; }
-        public virtual ICollection<ClientInvoiceDetail> ClientInvoiceDetail { get; set; }
         public virtual SaleOrderType SaleOrderType { get; set; }
+        public virtual ICollection<ClientInvoiceDetail> ClientInvoiceDetail { get; set; }
         public virtual ICollection<ClientInvoiceSettlementDetail> ClientInvoiceSettlementDetail { get; set; }
     }
 }

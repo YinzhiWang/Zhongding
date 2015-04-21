@@ -90,6 +90,7 @@
     <Compile Include="Enums\EHospitalType.cs" />
     <Compile Include="Enums\EImportDataType.cs" />
     <Compile Include="Enums\EImportStatus.cs" />
+    <Compile Include="Enums\EInvoiceCategory.cs" />
     <Compile Include="Enums\EInvoiceType.cs" />
     <Compile Include="Enums\EManualSettleActionType.cs" />
     <Compile Include="Enums\EMenuItem.cs" />
