@@ -78,7 +78,7 @@ namespace ZhongDing.Business.Repositories
                     whereFuncs.Add(x => x.WorkflowStepUser.Any(y => y.UserID.Equals(uiSearchObj.UserID)));
             }
 
-            query = GetList(pageIndex, pageSize, whereFuncs, out total);
+            query = GetList(pageIndex, pageSize, whereFuncs, "WorkflowID ASC", out total);
 
             if (query != null)
             {

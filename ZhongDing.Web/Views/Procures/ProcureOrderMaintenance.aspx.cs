@@ -277,7 +277,9 @@ namespace ZhongDing.Web.Views.Procures
                             break;
                         case EWorkflowStatus.Paid:
                         case EWorkflowStatus.InWarehouse:
-                            #region 已支付，不能修改
+                        case EWorkflowStatus.Shipping:
+                        case EWorkflowStatus.Completed:
+                            #region 已支付,发货中，已完成不能修改
 
                             DisabledBasicInfoControls();
 

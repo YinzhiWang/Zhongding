@@ -69,6 +69,18 @@ namespace ZhongDing.Web.Views.Procures
             }
         }
 
+        private IList<int> _CanStopUserIDs;
+        private IList<int> CanStopUserIDs
+        {
+            get
+            {
+                if (_CanStopUserIDs == null)
+                    _CanStopUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.StopProcureOrder);
+
+                return _CanStopUserIDs;
+            }
+        }
+
         #endregion
 
         protected override int GetCurrentWorkFlowID()
@@ -121,6 +133,8 @@ namespace ZhongDing.Web.Views.Procures
             includeItemValues.Add((int)EWorkflowStatus.ToBePaid);
             includeItemValues.Add((int)EWorkflowStatus.ReturnPaymentInfo);
             includeItemValues.Add((int)EWorkflowStatus.Paid);
+            includeItemValues.Add((int)EWorkflowStatus.Shipping);
+            includeItemValues.Add((int)EWorkflowStatus.Completed);
 
             uiSearchObj.IncludeItemValues = includeItemValues;
 
@@ -178,6 +192,12 @@ namespace ZhongDing.Web.Views.Procures
 
                     if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Paid))
                         includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Paid);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Shipping))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Shipping);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Completed))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Completed);
                 }
             }
 
@@ -293,6 +313,11 @@ namespace ZhongDing.Web.Views.Procures
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = true;
             else
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = false;
+
+            if (this.CanStopUserIDs.Contains(CurrentUser.UserID))
+                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_STOP).Visible = true;
+            else
+                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_STOP).Visible = false;
         }
 
         protected void rgEntities_ItemDataBound(object sender, GridItemEventArgs e)
@@ -319,6 +344,7 @@ namespace ZhongDing.Web.Views.Procures
                         isCanEditUser = true;
 
                     bool isShowDeleteLink = false;
+                    bool isShowStopLink = false;
 
                     EWorkflowStatus workflowStatus = (EWorkflowStatus)uiEntity.WorkflowStatusID;
 
@@ -384,6 +410,8 @@ namespace ZhongDing.Web.Views.Procures
 
                                 case EWorkflowStatus.Paid:
                                 case EWorkflowStatus.InWarehouse:
+                                case EWorkflowStatus.Shipping:
+                                case EWorkflowStatus.Completed:
                                     linkHtml += "查看";
                                     break;
                             }
@@ -393,6 +421,17 @@ namespace ZhongDing.Web.Views.Procures
                     }
 
                     linkHtml += "</a>";
+
+                    if (this.CanStopUserIDs.Contains(CurrentUser.UserID)
+                        && uiEntity.IsStop == false)
+                    {
+                        switch (workflowStatus)
+                        {
+                            case EWorkflowStatus.Shipping:
+                                isShowStopLink = true;
+                                break;
+                        }
+                    }
 
                     var editColumn = rgEntities.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT);
 
@@ -413,7 +452,44 @@ namespace ZhongDing.Web.Views.Procures
                         if (deleteCell != null && !isShowDeleteLink)
                             deleteCell.Text = string.Empty;
                     }
+
+                    var stopColumn = rgEntities.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_STOP);
+
+                    if (stopColumn != null)
+                    {
+                        var stopCell = gridDataItem.Cells[stopColumn.OrderIndex];
+
+                        if (stopCell != null && !isShowStopLink)
+                            stopCell.Text = string.Empty;
+                    }
                 }
+            }
+        }
+
+        protected void rgEntities_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            if (e.CommandName == GlobalConst.GridColumnUniqueNames.COLUMN_STOP)
+            {
+                GridEditableItem editableItem = e.Item as GridEditableItem;
+
+                String sid = editableItem.GetDataKeyValue("ID").ToString();
+
+                int id = 0;
+                if (int.TryParse(sid, out id))
+                {
+                    var currentEntity = PageProcureOrderAppRepository.GetByID(id);
+
+                    if (currentEntity != null)
+                    {
+                        currentEntity.IsStop = true;
+                        currentEntity.StoppedBy = CurrentUser.UserID;
+                        currentEntity.StoppedOn = DateTime.Now;
+
+                        PageProcureOrderAppRepository.Save();
+                    }
+                }
+
+                rgEntities.Rebind();
             }
         }
 
@@ -432,5 +508,7 @@ namespace ZhongDing.Web.Views.Procures
 
             BindEntities(true);
         }
+
+        
     }
 }

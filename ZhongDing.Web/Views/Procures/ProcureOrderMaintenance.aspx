@@ -120,7 +120,7 @@
                                 <label>中止执行</label>
                                 <div class="mws-form-item small">
                                     <telerik:RadButton runat="server" ID="cbxIsStop" ButtonType="ToggleButton"
-                                        ToggleType="CheckBox" AutoPostBack="false">
+                                        ToggleType="CheckBox" AutoPostBack="false" Enabled="false">
                                     </telerik:RadButton>
                                 </div>
                             </div>

@@ -216,6 +216,8 @@ namespace ZhongDing.Business.Repositories
 
             List<Expression<Func<ProcureOrderAppDetail, bool>>> whereFuncs = new List<Expression<Func<ProcureOrderAppDetail, bool>>>();
 
+            whereFuncs.Add(x => x.ProcureOrderApplication.IsStop == false);
+
             if (uiSearchObj != null)
             {
                 if (uiSearchObj.ID > 0)

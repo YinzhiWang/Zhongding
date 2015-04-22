@@ -267,5 +267,10 @@ namespace ZhongDing.Common.Enums
         /// 修改客户发票结算
         /// </summary>
         EditCISettlement,
+
+        /// <summary>
+        /// 中止采购订单
+        /// </summary>
+        StopProcureOrder,
     }
 }

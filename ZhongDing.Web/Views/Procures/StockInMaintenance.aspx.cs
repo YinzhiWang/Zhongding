@@ -761,24 +761,41 @@ namespace ZhongDing.Web.Views.Procures
                     var db = unitOfWork.GetDbModel();
 
                     IStockInRepository stockInRepository = new StockInRepository();
-                    //IApplicationNoteRepository appNoteRepository = new ApplicationNoteRepository();
+                    IProcureOrderApplicationRepository procureOrderAppRepository = new ProcureOrderApplicationRepository();
 
+                    procureOrderAppRepository.SetDbModel(db);
                     stockInRepository.SetDbModel(db);
-                    //appNoteRepository.SetDbModel(db);
 
                     var currentEntity = stockInRepository.GetByID(this.CurrentEntityID);
 
                     if (currentEntity != null)
                     {
-                        currentEntity.WorkflowStatusID = (int)EWorkflowStatus.InWarehouse;
+                        var procureOrderAppIDs = currentEntity.StockInDetail.Where(x => x.IsDeleted == false)
+                            .Select(x => x.ProcureOrderAppID).Distinct();
 
-                        //var appNote = new ApplicationNote();
-                        //appNote.WorkflowID = (int)EWorkflow.StockIn;
-                        //appNote.WorkflowStepID = (int)EWorkflowStep.EntryStockRoom;
-                        //appNote.NoteTypeID = (int)EAppNoteType.Comment;
-                        //appNote.ApplicationID = currentEntity.ID;
-                        //appNote.Note = "入库单已入库（由系统自动生成）";
-                        //appNoteRepository.Add(appNote);
+                        foreach (var procureOrderAppID in procureOrderAppIDs)
+                        {
+                            var procureOrderApp = procureOrderAppRepository.GetByID(procureOrderAppID);
+
+                            if (procureOrderApp != null)
+                            {
+                                var totalProcureQty = procureOrderApp.ProcureOrderAppDetail
+                                    .Where(x => x.IsDeleted == false).Sum(x => x.ProcureCount);
+
+                                var totalInQty = procureOrderApp.StockInDetail
+                                    .Where(x => x.IsDeleted == false).Sum(x => x.InQty);
+
+                                if (totalInQty > 0)
+                                {
+                                    if (totalProcureQty == totalInQty)
+                                        procureOrderApp.WorkflowStatusID = (int)EWorkflowStatus.Completed;
+                                    else
+                                        procureOrderApp.WorkflowStatusID = (int)EWorkflowStatus.Shipping;
+                                }
+                            }
+                        }
+
+                        currentEntity.WorkflowStatusID = (int)EWorkflowStatus.InWarehouse;
 
                         unitOfWork.SaveChanges();
 
