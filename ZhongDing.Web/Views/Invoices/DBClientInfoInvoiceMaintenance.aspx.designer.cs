@@ -94,13 +94,13 @@ namespace ZhongDing.Web.Views.Invoices {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvAmount;
         
         /// <summary>
-        /// rcbxClientCompany control.
+        /// rcbxDistributionCompany control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbxClientCompany;
+        protected global::Telerik.Web.UI.RadComboBox rcbxDistributionCompany;
         
         /// <summary>
         /// rttSupplier control.
@@ -163,7 +163,7 @@ namespace ZhongDing.Web.Views.Invoices {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox txtTransportNumber;
+        protected global::Telerik.Web.UI.RadTextBox txtTransportNumber;
         
         /// <summary>
         /// rfvTransportNumber control.

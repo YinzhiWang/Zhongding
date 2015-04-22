@@ -301,12 +301,7 @@
         <AssociationConnector Association="DbModel.FK_DCFlowDataDetail_DBContract" />
         <EntityTypeShape EntityType="DbModel.ClientInvoiceDetail" Width="1.5" PointX="26" PointY="129.125" />
         <AssociationConnector Association="DbModel.FK_ClientInvoiceDetail_StockOutDetailID" />
-        <EntityTypeShape EntityType="DbModel.DBClientInvoice" Width="1.5" PointX="3" PointY="118" />
         <EntityTypeShape EntityType="DbModel.DBClientInvoiceDetail" Width="1.5" PointX="26" PointY="124.375" />
-        <AssociationConnector Association="DbModel.FK_DBClientInvoice_ClientCompanyID" />
-        <AssociationConnector Association="DbModel.FK_DBClientInvoice_CompanyID" />
-        <AssociationConnector Association="DbModel.FK_DBClientInvoice_SaleOrderTypeID" />
-        <AssociationConnector Association="DbModel.FK_DBClientInvoiceDetail_DBClientInvoiceID" />
         <AssociationConnector Association="DbModel.FK_DBClientInvoiceDetail_StockOutDetailID" />
         <EntityTypeShape EntityType="DbModel.InvoiceType" Width="1.5" PointX="23.75" PointY="130" />
         <AssociationConnector Association="DbModel.FK_ClientInvoiceDetail_InvoiceTypeID" />
@@ -358,6 +353,11 @@
         <AssociationConnector Association="DbModel.FK_ClientInvoiceSettlement_Company" />
         <AssociationConnector Association="DbModel.FK_ClientInvoiceSettlement_WorkflowStatus" />
         <AssociationConnector Association="DbModel.FK_ClientInvoiceSettlementDetail_ClientInvoiceSettlement" />
+        <EntityTypeShape EntityType="DbModel.DBClientInvoice" Width="1.5" PointX="1.7499765836400805" PointY="17.504261054799084" />
+        <AssociationConnector Association="DbModel.FK_DBClientInvoice_CompanyID" />
+        <AssociationConnector Association="DbModel.FK_DBClientInvoice_DistributionCompanyID" />
+        <AssociationConnector Association="DbModel.FK_DBClientInvoice_SaleOrderTypeID" />
+        <AssociationConnector Association="DbModel.FK_DBClientInvoiceDetail_DBClientInvoiceID" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

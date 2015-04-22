@@ -38,13 +38,13 @@ namespace ZhongDing.Business.Repositories
                 {
                     whereFuncs.Add(x => x.InvoiceNumber.Contains(uiSearchObj.InvoiceNumber));
                 }
-                if (uiSearchObj.ClientCompanyID.BiggerThanZero())
-                {
-                    whereFuncs.Add(x => x.ClientCompanyID == uiSearchObj.ClientCompanyID);
-                }
                 if (uiSearchObj.CompanyID > 0)
                 {
                     whereFuncs.Add(x => x.CompanyID == uiSearchObj.CompanyID);
+                }
+                if (uiSearchObj.DistributionCompanyID.BiggerThanZero())
+                {
+                    whereFuncs.Add(x => x.DistributionCompanyID == uiSearchObj.DistributionCompanyID);
                 }
             }
 
@@ -53,12 +53,12 @@ namespace ZhongDing.Business.Repositories
             if (query != null)
             {
                 uiWarehouses = (from q in query
-                                join clientInvoiceDetail in DB.ClientInvoiceDetail on q.ID equals clientInvoiceDetail.ClientInvoiceID
-                                join stockOutDetail in DB.StockOutDetail on clientInvoiceDetail.StockOutDetailID equals stockOutDetail.ID
+                                join dBClientInvoiceDetail in DB.DBClientInvoiceDetail on q.ID equals dBClientInvoiceDetail.DBClientInvoiceID
+                                join stockOutDetail in DB.StockOutDetail on dBClientInvoiceDetail.StockOutDetailID equals stockOutDetail.ID
                                 join stockOut in DB.StockOut on stockOutDetail.StockOutID equals stockOut.ID
                                 join product in DB.Product on stockOutDetail.ProductID equals product.ID
                                 join company in DB.Company on q.CompanyID equals company.ID
-                                join clientCompany in DB.ClientCompany on q.ClientCompanyID equals clientCompany.ID
+                                join distributionCompany in DB.DistributionCompany on q.DistributionCompanyID equals distributionCompany.ID
                                 select new UIDBClientInvoice()
                                  {
                                      ID = q.ID,
@@ -76,8 +76,8 @@ namespace ZhongDing.Business.Repositories
                                      SalesPrice = stockOutDetail.SalesPrice,
                                      TotalSalesAmount = stockOutDetail.TotalSalesAmount,
                                      TaxQty = stockOutDetail.TaxQty,
-                                     ClientCompanyName = clientCompany.Name,
-                                     ClientInvoiceDetailTaxAmount = clientInvoiceDetail.Amount,
+                                     DistributionCompanyName = distributionCompany.Name,
+                                     DBClientInvoiceDetailTaxAmount = dBClientInvoiceDetail.Amount,
                                      StockOutDetailSalesAmount = stockOutDetail.TotalSalesAmount,
                                      SaleOrderType = q.SaleOrderType.TypeName
                                  }).ToList();
@@ -86,8 +86,8 @@ namespace ZhongDing.Business.Repositories
             totalRecords = total;
             uiWarehouses.ForEach(x =>
             {
-                x.ClientInvoiceDetailQty = (int)(x.ClientInvoiceDetailTaxAmount / x.SalesPrice);
-                x.ClientInvoiceDetailAmount = x.SalesPrice * x.ClientInvoiceDetailQty;
+                x.DBClientInvoiceDetailQty = (int)(x.DBClientInvoiceDetailTaxAmount / x.SalesPrice);
+                x.DBClientInvoiceDetailAmount = x.SalesPrice * x.DBClientInvoiceDetailQty;
 
             });
             return uiWarehouses;

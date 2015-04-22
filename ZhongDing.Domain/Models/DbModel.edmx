@@ -502,12 +502,12 @@
             <End Role="Hospital" EntitySet="Hospital" />
             <End Role="DBClientBonusHospital" EntitySet="DBClientBonusHospital" />
           </AssociationSet>
-          <AssociationSet Name="FK_DBClientInvoice_ClientCompanyID" Association="DbModel.Store.FK_DBClientInvoice_ClientCompanyID">
-            <End Role="ClientCompany" EntitySet="ClientCompany" />
-            <End Role="DBClientInvoice" EntitySet="DBClientInvoice" />
-          </AssociationSet>
           <AssociationSet Name="FK_DBClientInvoice_CompanyID" Association="DbModel.Store.FK_DBClientInvoice_CompanyID">
             <End Role="Company" EntitySet="Company" />
+            <End Role="DBClientInvoice" EntitySet="DBClientInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DBClientInvoice_DistributionCompanyID" Association="DbModel.Store.FK_DBClientInvoice_DistributionCompanyID">
+            <End Role="DistributionCompany" EntitySet="DistributionCompany" />
             <End Role="DBClientInvoice" EntitySet="DBClientInvoice" />
           </AssociationSet>
           <AssociationSet Name="FK_DBClientInvoice_SaleOrderTypeID" Association="DbModel.Store.FK_DBClientInvoice_SaleOrderTypeID">
@@ -1675,7 +1675,7 @@
           </Key>
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="CompanyID" Type="int" Nullable="false" />
-          <Property Name="ClientCompanyID" Type="int" Nullable="false" />
+          <Property Name="DistributionCompanyID" Type="int" Nullable="false" />
           <Property Name="InvoiceDate" Type="datetime" Nullable="false" />
           <Property Name="InvoiceNumber" Type="nvarchar" Nullable="false" MaxLength="256" />
           <Property Name="Amount" Type="money" Nullable="false" />
@@ -4021,18 +4021,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_DBClientInvoice_ClientCompanyID">
-          <End Role="ClientCompany" Type="DbModel.Store.ClientCompany" Multiplicity="1" />
-          <End Role="DBClientInvoice" Type="DbModel.Store.DBClientInvoice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ClientCompany">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DBClientInvoice">
-              <PropertyRef Name="ClientCompanyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DBClientInvoice_CompanyID">
           <End Role="Company" Type="DbModel.Store.Company" Multiplicity="1" />
           <End Role="DBClientInvoice" Type="DbModel.Store.DBClientInvoice" Multiplicity="*" />
@@ -4042,6 +4030,18 @@
             </Principal>
             <Dependent Role="DBClientInvoice">
               <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DBClientInvoice_DistributionCompanyID">
+          <End Role="DistributionCompany" Type="DbModel.Store.DistributionCompany" Multiplicity="1" />
+          <End Role="DBClientInvoice" Type="DbModel.Store.DBClientInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCompany">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBClientInvoice">
+              <PropertyRef Name="DistributionCompanyID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6650,24 +6650,7 @@
             <End Role="StockOutDetail" EntitySet="StockOutDetail" />
             <End Role="ClientInvoiceDetail" EntitySet="ClientInvoiceDetail" />
           </AssociationSet>
-          <EntitySet Name="DBClientInvoice" EntityType="DbModel.DBClientInvoice" />
           <EntitySet Name="DBClientInvoiceDetail" EntityType="DbModel.DBClientInvoiceDetail" />
-          <AssociationSet Name="FK_DBClientInvoice_ClientCompanyID" Association="DbModel.FK_DBClientInvoice_ClientCompanyID">
-            <End Role="ClientCompany" EntitySet="ClientCompany" />
-            <End Role="DBClientInvoice" EntitySet="DBClientInvoice" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DBClientInvoice_CompanyID" Association="DbModel.FK_DBClientInvoice_CompanyID">
-            <End Role="Company" EntitySet="Company" />
-            <End Role="DBClientInvoice" EntitySet="DBClientInvoice" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DBClientInvoice_SaleOrderTypeID" Association="DbModel.FK_DBClientInvoice_SaleOrderTypeID">
-            <End Role="SaleOrderType" EntitySet="SaleOrderType" />
-            <End Role="DBClientInvoice" EntitySet="DBClientInvoice" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DBClientInvoiceDetail_DBClientInvoiceID" Association="DbModel.FK_DBClientInvoiceDetail_DBClientInvoiceID">
-            <End Role="DBClientInvoice" EntitySet="DBClientInvoice" />
-            <End Role="DBClientInvoiceDetail" EntitySet="DBClientInvoiceDetail" />
-          </AssociationSet>
           <AssociationSet Name="FK_DBClientInvoiceDetail_StockOutDetailID" Association="DbModel.FK_DBClientInvoiceDetail_StockOutDetailID">
             <End Role="StockOutDetail" EntitySet="StockOutDetail" />
             <End Role="DBClientInvoiceDetail" EntitySet="DBClientInvoiceDetail" />
@@ -6841,6 +6824,23 @@
           <AssociationSet Name="FK_ClientInvoiceSettlementDetail_ClientInvoiceSettlement" Association="DbModel.FK_ClientInvoiceSettlementDetail_ClientInvoiceSettlement">
             <End Role="ClientInvoiceSettlement" EntitySet="ClientInvoiceSettlement" />
             <End Role="ClientInvoiceSettlementDetail" EntitySet="ClientInvoiceSettlementDetail" />
+          </AssociationSet>
+          <EntitySet Name="DBClientInvoice" EntityType="DbModel.DBClientInvoice" />
+          <AssociationSet Name="FK_DBClientInvoice_CompanyID" Association="DbModel.FK_DBClientInvoice_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="DBClientInvoice" EntitySet="DBClientInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DBClientInvoice_DistributionCompanyID" Association="DbModel.FK_DBClientInvoice_DistributionCompanyID">
+            <End Role="DistributionCompany" EntitySet="DistributionCompany" />
+            <End Role="DBClientInvoice" EntitySet="DBClientInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DBClientInvoice_SaleOrderTypeID" Association="DbModel.FK_DBClientInvoice_SaleOrderTypeID">
+            <End Role="SaleOrderType" EntitySet="SaleOrderType" />
+            <End Role="DBClientInvoice" EntitySet="DBClientInvoice" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DBClientInvoiceDetail_DBClientInvoiceID" Association="DbModel.FK_DBClientInvoiceDetail_DBClientInvoiceID">
+            <End Role="DBClientInvoice" EntitySet="DBClientInvoice" />
+            <End Role="DBClientInvoiceDetail" EntitySet="DBClientInvoiceDetail" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
@@ -7017,11 +7017,11 @@
           <NavigationProperty Name="FactoryManagerRefundApplication" Relationship="DbModel.FK_FactoryManagerRefundApplication_Company" FromRole="Company" ToRole="FactoryManagerRefundApplication" />
           <NavigationProperty Name="SupplierRefundApplication" Relationship="DbModel.FK_SupplierRefundApplication_Company" FromRole="Company" ToRole="SupplierRefundApplication" />
           <NavigationProperty Name="ClientTaskRefundApplication" Relationship="DbModel.FK_ClientTaskRefundApplication_Company" FromRole="Company" ToRole="ClientTaskRefundApplication" />
-          <NavigationProperty Name="DBClientInvoice" Relationship="DbModel.FK_DBClientInvoice_CompanyID" FromRole="Company" ToRole="DBClientInvoice" />
           <NavigationProperty Name="SupplierInvoice" Relationship="DbModel.FK_SupplierInvoice_CompanyID" FromRole="Company" ToRole="SupplierInvoice" />
           <NavigationProperty Name="SupplierInvoiceSettlement" Relationship="DbModel.FK_SupplierInvoiceSettlement_Company" FromRole="Company" ToRole="SupplierInvoiceSettlement" />
           <NavigationProperty Name="ClientInvoice" Relationship="DbModel.FK_ClientInvoice_CompanyID" FromRole="Company" ToRole="ClientInvoice" />
           <NavigationProperty Name="ClientInvoiceSettlement" Relationship="DbModel.FK_ClientInvoiceSettlement_Company" FromRole="Company" ToRole="ClientInvoiceSettlement" />
+          <NavigationProperty Name="DBClientInvoice" Relationship="DbModel.FK_DBClientInvoice_CompanyID" FromRole="Company" ToRole="DBClientInvoice" />
         </EntityType>
         <EntityType Name="OwnerType">
           <Key>
@@ -7537,6 +7537,7 @@
           <NavigationProperty Name="DCFlowData" Relationship="DbModel.FK_DCFlowData_DistributionCompany" FromRole="DistributionCompany" ToRole="DCFlowData" />
           <NavigationProperty Name="DCInventoryData" Relationship="DbModel.FK_DCInventoryData_DistributionCompany" FromRole="DistributionCompany" ToRole="DCInventoryData" />
           <NavigationProperty Name="DCImportFileLog" Relationship="DbModel.FK_DCImportFileLog_DistributionCompany" FromRole="DistributionCompany" ToRole="DCImportFileLog" />
+          <NavigationProperty Name="DBClientInvoice" Relationship="DbModel.FK_DBClientInvoice_DistributionCompanyID" FromRole="DistributionCompany" ToRole="DBClientInvoice" />
         </EntityType>
         <EntityType Name="ClientCompanyCertificate">
           <Key>
@@ -7654,7 +7655,6 @@
           <NavigationProperty Name="ClientTaskRefundApplication" Relationship="DbModel.FK_ClientTaskRefundApplication_ClientCompany" FromRole="ClientCompany" ToRole="ClientTaskRefundApplication" />
           <NavigationProperty Name="ClientFlowData" Relationship="DbModel.FK_ClientFlowData_ClientCompany" FromRole="ClientCompany" ToRole="ClientFlowData" />
           <NavigationProperty Name="ClientImportFileLog" Relationship="DbModel.FK_ClientImportFileLog_ClientCompany" FromRole="ClientCompany" ToRole="ClientImportFileLog" />
-          <NavigationProperty Name="DBClientInvoice" Relationship="DbModel.FK_DBClientInvoice_ClientCompanyID" FromRole="ClientCompany" ToRole="DBClientInvoice" />
           <NavigationProperty Name="ClientInfo" Relationship="DbModel.FK_ClientInfo_ClientCompany" FromRole="ClientCompany" ToRole="ClientInfo" />
           <NavigationProperty Name="ClientInvoice" Relationship="DbModel.FK_ClientInvoice_ClientCompanyID" FromRole="ClientCompany" ToRole="ClientInvoice" />
           <NavigationProperty Name="ClientInvoiceSettlementDetail" Relationship="DbModel.FK_ClientInvoiceSettlementDetail_ClientCompany" FromRole="ClientCompany" ToRole="ClientInvoiceSettlementDetail" />
@@ -9226,8 +9226,8 @@
           <Property Type="String" Name="TypeName" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="SalesOrderApplication" Relationship="DbModel.FK_SalesOrderApplication_SaleOrderType" FromRole="SaleOrderType" ToRole="SalesOrderApplication" />
           <NavigationProperty Name="ClientRefundApplication" Relationship="DbModel.FK_ClientRefundApplication_SaleOrderType" FromRole="SaleOrderType" ToRole="ClientRefundApplication" />
-          <NavigationProperty Name="DBClientInvoice" Relationship="DbModel.FK_DBClientInvoice_SaleOrderTypeID" FromRole="SaleOrderType" ToRole="DBClientInvoice" />
           <NavigationProperty Name="ClientInvoice" Relationship="DbModel.FK_ClientInvoice_SaleOrderTypeID" FromRole="SaleOrderType" ToRole="ClientInvoice" />
+          <NavigationProperty Name="DBClientInvoice" Relationship="DbModel.FK_DBClientInvoice_SaleOrderTypeID" FromRole="SaleOrderType" ToRole="DBClientInvoice" />
         </EntityType>
         <EntityType Name="SalesOrderApplication">
           <Key>
@@ -11192,29 +11192,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="DBClientInvoice">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="CompanyID" Nullable="false" />
-          <Property Type="Int32" Name="ClientCompanyID" Nullable="false" />
-          <Property Type="DateTime" Name="InvoiceDate" Nullable="false" Precision="3" />
-          <Property Type="String" Name="InvoiceNumber" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
-          <Property Type="String" Name="TransportNumber" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="TransportCompany" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="SaleOrderTypeID" Nullable="false" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="ClientCompany" Relationship="DbModel.FK_DBClientInvoice_ClientCompanyID" FromRole="DBClientInvoice" ToRole="ClientCompany" />
-          <NavigationProperty Name="Company" Relationship="DbModel.FK_DBClientInvoice_CompanyID" FromRole="DBClientInvoice" ToRole="Company" />
-          <NavigationProperty Name="SaleOrderType" Relationship="DbModel.FK_DBClientInvoice_SaleOrderTypeID" FromRole="DBClientInvoice" ToRole="SaleOrderType" />
-          <NavigationProperty Name="DBClientInvoiceDetail" Relationship="DbModel.FK_DBClientInvoiceDetail_DBClientInvoiceID" FromRole="DBClientInvoice" ToRole="DBClientInvoiceDetail" />
-        </EntityType>
         <EntityType Name="DBClientInvoiceDetail">
           <Key>
             <PropertyRef Name="ID" />
@@ -11228,57 +11205,9 @@
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="DBClientInvoice" Relationship="DbModel.FK_DBClientInvoiceDetail_DBClientInvoiceID" FromRole="DBClientInvoiceDetail" ToRole="DBClientInvoice" />
           <NavigationProperty Name="StockOutDetail" Relationship="DbModel.FK_DBClientInvoiceDetail_StockOutDetailID" FromRole="DBClientInvoiceDetail" ToRole="StockOutDetail" />
+          <NavigationProperty Name="DBClientInvoice" Relationship="DbModel.FK_DBClientInvoiceDetail_DBClientInvoiceID" FromRole="DBClientInvoiceDetail" ToRole="DBClientInvoice" />
         </EntityType>
-        <Association Name="FK_DBClientInvoice_ClientCompanyID">
-          <End Type="DbModel.ClientCompany" Role="ClientCompany" Multiplicity="1" />
-          <End Type="DbModel.DBClientInvoice" Role="DBClientInvoice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ClientCompany">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DBClientInvoice">
-              <PropertyRef Name="ClientCompanyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DBClientInvoice_CompanyID">
-          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
-          <End Type="DbModel.DBClientInvoice" Role="DBClientInvoice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Company">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DBClientInvoice">
-              <PropertyRef Name="CompanyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DBClientInvoice_SaleOrderTypeID">
-          <End Type="DbModel.SaleOrderType" Role="SaleOrderType" Multiplicity="1" />
-          <End Type="DbModel.DBClientInvoice" Role="DBClientInvoice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SaleOrderType">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DBClientInvoice">
-              <PropertyRef Name="SaleOrderTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DBClientInvoiceDetail_DBClientInvoiceID">
-          <End Type="DbModel.DBClientInvoice" Role="DBClientInvoice" Multiplicity="1" />
-          <End Type="DbModel.DBClientInvoiceDetail" Role="DBClientInvoiceDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DBClientInvoice">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DBClientInvoiceDetail">
-              <PropertyRef Name="DBClientInvoiceID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DBClientInvoiceDetail_StockOutDetailID">
           <End Type="DbModel.StockOutDetail" Role="StockOutDetail" Multiplicity="1" />
           <End Type="DbModel.DBClientInvoiceDetail" Role="DBClientInvoiceDetail" Multiplicity="*" />
@@ -12000,6 +11929,77 @@
             </Principal>
             <Dependent Role="ClientInvoiceSettlementDetail">
               <PropertyRef Name="ClientInvoiceSettlementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="DBClientInvoice">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="CompanyID" Nullable="false" />
+          <Property Type="Int32" Name="DistributionCompanyID" Nullable="false" />
+          <Property Type="DateTime" Name="InvoiceDate" Nullable="false" Precision="3" />
+          <Property Type="String" Name="InvoiceNumber" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="String" Name="TransportNumber" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="TransportCompany" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="SaleOrderTypeID" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Company" Relationship="DbModel.FK_DBClientInvoice_CompanyID" FromRole="DBClientInvoice" ToRole="Company" />
+          <NavigationProperty Name="DistributionCompany" Relationship="DbModel.FK_DBClientInvoice_DistributionCompanyID" FromRole="DBClientInvoice" ToRole="DistributionCompany" />
+          <NavigationProperty Name="SaleOrderType" Relationship="DbModel.FK_DBClientInvoice_SaleOrderTypeID" FromRole="DBClientInvoice" ToRole="SaleOrderType" />
+          <NavigationProperty Name="DBClientInvoiceDetail" Relationship="DbModel.FK_DBClientInvoiceDetail_DBClientInvoiceID" FromRole="DBClientInvoice" ToRole="DBClientInvoiceDetail" />
+        </EntityType>
+        <Association Name="FK_DBClientInvoice_CompanyID">
+          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="DbModel.DBClientInvoice" Role="DBClientInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBClientInvoice">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DBClientInvoice_DistributionCompanyID">
+          <End Type="DbModel.DistributionCompany" Role="DistributionCompany" Multiplicity="1" />
+          <End Type="DbModel.DBClientInvoice" Role="DBClientInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCompany">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBClientInvoice">
+              <PropertyRef Name="DistributionCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DBClientInvoice_SaleOrderTypeID">
+          <End Type="DbModel.SaleOrderType" Role="SaleOrderType" Multiplicity="1" />
+          <End Type="DbModel.DBClientInvoice" Role="DBClientInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaleOrderType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBClientInvoice">
+              <PropertyRef Name="SaleOrderTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DBClientInvoiceDetail_DBClientInvoiceID">
+          <End Type="DbModel.DBClientInvoice" Role="DBClientInvoice" Multiplicity="1" />
+          <End Type="DbModel.DBClientInvoiceDetail" Role="DBClientInvoiceDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DBClientInvoice">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBClientInvoiceDetail">
+              <PropertyRef Name="DBClientInvoiceID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -13675,26 +13675,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DBClientInvoice">
-            <EntityTypeMapping TypeName="DbModel.DBClientInvoice">
-              <MappingFragment StoreEntitySet="DBClientInvoice">
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="SaleOrderTypeID" ColumnName="SaleOrderTypeID" />
-                <ScalarProperty Name="TransportCompany" ColumnName="TransportCompany" />
-                <ScalarProperty Name="TransportNumber" ColumnName="TransportNumber" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
-                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
-                <ScalarProperty Name="ClientCompanyID" ColumnName="ClientCompanyID" />
-                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="DBClientInvoiceDetail">
             <EntityTypeMapping TypeName="DbModel.DBClientInvoiceDetail">
               <MappingFragment StoreEntitySet="DBClientInvoiceDetail">
@@ -13903,6 +13883,26 @@
                 <ScalarProperty Name="ClientCompanyID" ColumnName="ClientCompanyID" />
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
                 <ScalarProperty Name="SettlementDate" ColumnName="SettlementDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DBClientInvoice">
+            <EntityTypeMapping TypeName="DbModel.DBClientInvoice">
+              <MappingFragment StoreEntitySet="DBClientInvoice">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="SaleOrderTypeID" ColumnName="SaleOrderTypeID" />
+                <ScalarProperty Name="TransportCompany" ColumnName="TransportCompany" />
+                <ScalarProperty Name="TransportNumber" ColumnName="TransportNumber" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+                <ScalarProperty Name="InvoiceDate" ColumnName="InvoiceDate" />
+                <ScalarProperty Name="DistributionCompanyID" ColumnName="DistributionCompanyID" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

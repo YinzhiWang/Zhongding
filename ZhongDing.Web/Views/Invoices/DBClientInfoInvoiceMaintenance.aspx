@@ -68,16 +68,16 @@
 
                             </div>
                             <div class="float-left">
-                                <label>商业单位</label>
+                                <label>配送公司</label>
                                 <div class="mws-form-item small">
-                                    <telerik:RadComboBox runat="server" ID="rcbxClientCompany" Height="160px" Width="200px" Filter="Contains"
+                                    <telerik:RadComboBox runat="server" ID="rcbxDistributionCompany" Height="160px" Width="200px" Filter="Contains"
                                         EmptyMessage="--请选择--" AllowCustomText="true">
                                     </telerik:RadComboBox>
-                                    <telerik:RadToolTip ID="rttSupplier" runat="server" TargetControlID="rcbxClientCompany" ShowEvent="OnClick"
+                                    <telerik:RadToolTip ID="rttSupplier" runat="server" TargetControlID="rcbxDistributionCompany" ShowEvent="OnClick"
                                         Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
                                     </telerik:RadToolTip>
                                     <asp:CustomValidator ID="cvSupplier" runat="server" ErrorMessage="请选择商业单位"
-                                        ControlToValidate="rcbxClientCompany" ValidationGroup="vgMaintenance" Display="Dynamic"
+                                        ControlToValidate="rcbxDistributionCompany" ValidationGroup="vgMaintenance" Display="Dynamic"
                                         Text="*" CssClass="field-validation-error">
                                     </asp:CustomValidator>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
@@ -105,9 +105,9 @@
                             <div class="float-left">
                                 <label>快递单号</label>
                                 <div class="mws-form-item small">
-                                    <telerik:RadNumericTextBox ShowSpinButtons="true" MinValue="0" IncrementSettings-InterceptArrowKeys="true" IncrementSettings-InterceptMouseWheel="true"
-                                        Label="" runat="server" ID="txtTransportNumber" Width="160px">
-                                    </telerik:RadNumericTextBox>
+                               <telerik:RadTextBox  
+                                        runat="server" ID="txtTransportNumber" Width="160px" MaxLength="100">
+                                    </telerik:RadTextBox>
                                     <asp:RequiredFieldValidator ID="rfvTransportNumber" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="txtTransportNumber"
                                         ErrorMessage="快递单号必填" Text="*" CssClass="field-validation-error">
                                     </asp:RequiredFieldValidator>

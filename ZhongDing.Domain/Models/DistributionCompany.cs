@@ -23,6 +23,7 @@ namespace ZhongDing.Domain.Models
             this.DCFlowData = new HashSet<DCFlowData>();
             this.DCInventoryData = new HashSet<DCInventoryData>();
             this.DCImportFileLog = new HashSet<DCImportFileLog>();
+            this.DBClientInvoice = new HashSet<DBClientInvoice>();
         }
     
         public int ID { get; set; }
@@ -53,5 +54,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<DCFlowData> DCFlowData { get; set; }
         public virtual ICollection<DCInventoryData> DCInventoryData { get; set; }
         public virtual ICollection<DCImportFileLog> DCImportFileLog { get; set; }
+        public virtual ICollection<DBClientInvoice> DBClientInvoice { get; set; }
     }
 }

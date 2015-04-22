@@ -38,15 +38,15 @@ namespace ZhongDing.Domain.UIObjects
 
         public int? TaxQty { get; set; }
 
-        public string ClientCompanyName { get; set; }
+        public string DistributionCompanyName { get; set; }
 
-        public decimal ClientInvoiceDetailAmount { get; set; }
+        public decimal DBClientInvoiceDetailAmount { get; set; }
 
         public decimal SalesPrice { get; set; }
 
-        public int ClientInvoiceDetailQty { get; set; }
+        public int DBClientInvoiceDetailQty { get; set; }
 
-        public decimal ClientInvoiceDetailTaxAmount { get; set; }
+        public decimal DBClientInvoiceDetailTaxAmount { get; set; }
 
         public decimal StockOutDetailSalesAmount { get; set; }
 

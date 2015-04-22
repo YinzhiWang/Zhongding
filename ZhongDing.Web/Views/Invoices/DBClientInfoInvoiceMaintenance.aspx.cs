@@ -77,6 +77,17 @@ namespace ZhongDing.Web.Views.Invoices
                 return _PageTransportCompanyRepository;
             }
         }
+        private IDistributionCompanyRepository _PageDistributionCompanyRepository;
+        private IDistributionCompanyRepository PageDistributionCompanyRepository
+        {
+            get
+            {
+                if (_PageDistributionCompanyRepository == null)
+                    _PageDistributionCompanyRepository = new DistributionCompanyRepository();
+
+                return _PageDistributionCompanyRepository;
+            }
+        }
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
@@ -84,7 +95,7 @@ namespace ZhongDing.Web.Views.Invoices
             this.Master.MenuItemID = (int)EMenuItem.DBClientInvoiceManage;
             if (!IsPostBack)
             {
-                BindClientCompanys();
+                BindDistributionCompanies();
                 LoadEntityData();
             }
 
@@ -128,7 +139,7 @@ namespace ZhongDing.Web.Views.Invoices
 
         protected void btnSearchOrder_Click(object sender, EventArgs e)
         {
-            if (rcbxClientCompany.SelectedValue.ToIntOrNull().BiggerThanZero())
+            if (rcbxDistributionCompany.SelectedValue.ToIntOrNull().BiggerThanZero())
             {
                 BindStockOutDetails(true);
             }
@@ -140,7 +151,7 @@ namespace ZhongDing.Web.Views.Invoices
         }
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            if (!rcbxClientCompany.SelectedValue.ToIntOrNull().BiggerThanZero())
+            if (!rcbxDistributionCompany.SelectedValue.ToIntOrNull().BiggerThanZero())
             {
                 cvSupplier.IsValid = false;
             }
@@ -177,8 +188,9 @@ namespace ZhongDing.Web.Views.Invoices
                 currentEntity.InvoiceNumber = txtInvoiceNumber.Text.Trim();
                 currentEntity.TransportCompany = rcbxTransportCompany.SelectedItem.Text;
                 currentEntity.TransportNumber = txtTransportNumber.Text.Trim();
-                currentEntity.ClientCompanyID = rcbxClientCompany.SelectedValue.ToInt();
+                //currentEntity.ClientCompanyID = rcbxDistributionCompany.SelectedValue.ToInt();
                 currentEntity.SaleOrderTypeID = hdnSaleOrderTypeID.Value.ToInt();
+                currentEntity.DistributionCompanyID = rcbxDistributionCompany.SelectedValue.ToInt();
                 PageDBClientInvoiceRepository.Save();
                 var selectedItems = rgStockOutDetails.SelectedItems;
 
@@ -193,6 +205,7 @@ namespace ZhongDing.Web.Views.Invoices
                         Amount = txtDBClientInvoiceDetailAmount.Value.ToDecimal(),
                         StockOutDetailID = stockOutDetailID,
                         DBClientInvoiceID = currentEntity.ID,
+                        
                     };
                     PageDBClientInvoiceDetailRepository.Add(DBClientInvoiceDetail);
 
@@ -226,20 +239,19 @@ namespace ZhongDing.Web.Views.Invoices
 
         }
 
-        private void BindClientCompanys()
+        private void BindDistributionCompanies()
         {
-            var uiSearchObj = new UISearchDropdownItem();
+            var distributionCompanies = PageDistributionCompanyRepository.GetDropdownItems();
 
-            var clientCompanies = PageClientCompanyRepository.GetDropdownItems(uiSearchObj);
-            rcbxClientCompany.DataSource = clientCompanies;
-            rcbxClientCompany.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
-            rcbxClientCompany.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
-            rcbxClientCompany.DataBind();
+            rcbxDistributionCompany.DataSource = distributionCompanies;
+            rcbxDistributionCompany.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+            rcbxDistributionCompany.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+            rcbxDistributionCompany.DataBind();
 
-            rcbxClientCompany.Items.Insert(0, new RadComboBoxItem("", ""));
+            rcbxDistributionCompany.Items.Insert(0, new RadComboBoxItem("", ""));
         }
 
-        protected void rcbxClientCompany_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        protected void rcbxDistributionCompany_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
         {
 
         }
@@ -247,7 +259,9 @@ namespace ZhongDing.Web.Views.Invoices
         {
             var uiSearchObj = new UISearchStockOutDetail()
             {
-                ReceiverTypeID = (int)EReceiverType.DistributionCompany
+                ReceiverTypeID = (int)EReceiverType.DistributionCompany,
+                DistributionCompanyID = rcbxDistributionCompany.SelectedValue.ToIntOrNull().GetValueOrDefault(0)
+
             };
 
             int totalRecords;
@@ -265,7 +279,7 @@ namespace ZhongDing.Web.Views.Invoices
         }
         protected void rgStockOutDetails_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
-            if (rcbxClientCompany.SelectedValue.ToIntOrNull().BiggerThanZero())
+            if (rcbxDistributionCompany.SelectedValue.ToIntOrNull().BiggerThanZero())
                 BindStockOutDetails(false);
         }
 

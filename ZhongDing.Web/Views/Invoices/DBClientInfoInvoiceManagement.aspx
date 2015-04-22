@@ -82,23 +82,23 @@
                                 <ItemStyle HorizontalAlign="Left" Width="50" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="InvoiceDate" HeaderText="开票日期" DataFormatString="{0:yyyy/MM/dd}" DataField="InvoiceDate">
-                                <ItemStyle HorizontalAlign="Left" Width="50" />
+                                <ItemStyle HorizontalAlign="Left" Width="100px" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="SaleOrderType" HeaderText="订单类型" DataField="SaleOrderType">
+                           <%-- <telerik:GridBoundColumn UniqueName="SaleOrderType" HeaderText="订单类型" DataField="SaleOrderType">
                                 <ItemStyle HorizontalAlign="Left" Width="80" />
-                            </telerik:GridBoundColumn>
+                            </telerik:GridBoundColumn>--%>
                             
                             <telerik:GridBoundColumn UniqueName="CompanyName" HeaderText="开票单位" DataField="CompanyName">
-                                <ItemStyle HorizontalAlign="Left" />
+                                       <ItemStyle HorizontalAlign="Left" Width="100px" />
                             </telerik:GridBoundColumn>
-                              <telerik:GridBoundColumn UniqueName="ClientCompanyName" HeaderText="收票单位" DataField="ClientCompanyName">
+                              <telerik:GridBoundColumn UniqueName="DistributionCompanyName" HeaderText="收票单位" DataField="DistributionCompanyName">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
 
 
-                              <telerik:GridBoundColumn UniqueName="ClientCompanyName" HeaderText="客户" DataField="ClientCompanyName">
+                          <%--    <telerik:GridBoundColumn UniqueName="ClientCompanyName" HeaderText="客户" DataField="ClientCompanyName">
                                 <ItemStyle HorizontalAlign="Left" />
-                            </telerik:GridBoundColumn>
+                            </telerik:GridBoundColumn>--%>
 
 
                             <telerik:GridBoundColumn UniqueName="InvoiceNumber" HeaderText="发票号" DataField="InvoiceNumber">
@@ -118,7 +118,7 @@
                             </telerik:GridBoundColumn>
 
 
-                            <telerik:GridBoundColumn UniqueName="StockOutDetailSalesAmount" HeaderText="金额" DataField="StockOutDetailSalesAmount" DataFormatString="￥{0:f2}">
+                            <telerik:GridBoundColumn UniqueName="StockOutDetailTotalSalesAmount" HeaderText="金额" DataField="StockOutDetailSalesAmount" DataFormatString="￥{0:f2}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="DBClientInvoiceDetailTaxAmount" HeaderText="发票金额" DataField="DBClientInvoiceDetailTaxAmount" DataFormatString="￥{0:f2}">

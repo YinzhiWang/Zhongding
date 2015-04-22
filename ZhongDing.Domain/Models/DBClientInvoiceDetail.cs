@@ -35,7 +35,7 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual DBClientInvoice DBClientInvoice { get; set; }
         public virtual StockOutDetail StockOutDetail { get; set; }
+        public virtual DBClientInvoice DBClientInvoice { get; set; }
     }
 }

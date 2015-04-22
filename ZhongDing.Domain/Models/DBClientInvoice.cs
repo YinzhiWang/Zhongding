@@ -22,7 +22,7 @@ namespace ZhongDing.Domain.Models
     
         public int ID { get; set; }
         public int CompanyID { get; set; }
-        public int ClientCompanyID { get; set; }
+        public int DistributionCompanyID { get; set; }
         public System.DateTime InvoiceDate { get; set; }
         public string InvoiceNumber { get; set; }
         public decimal Amount { get; set; }
@@ -45,8 +45,8 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ClientCompany ClientCompany { get; set; }
         public virtual Company Company { get; set; }
+        public virtual DistributionCompany DistributionCompany { get; set; }
         public virtual SaleOrderType SaleOrderType { get; set; }
         public virtual ICollection<DBClientInvoiceDetail> DBClientInvoiceDetail { get; set; }
     }

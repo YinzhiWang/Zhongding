@@ -29,11 +29,11 @@ namespace ZhongDing.Domain.Models
             this.FactoryManagerRefundApplication = new HashSet<FactoryManagerRefundApplication>();
             this.SupplierRefundApplication = new HashSet<SupplierRefundApplication>();
             this.ClientTaskRefundApplication = new HashSet<ClientTaskRefundApplication>();
-            this.DBClientInvoice = new HashSet<DBClientInvoice>();
             this.SupplierInvoice = new HashSet<SupplierInvoice>();
             this.SupplierInvoiceSettlement = new HashSet<SupplierInvoiceSettlement>();
             this.ClientInvoice = new HashSet<ClientInvoice>();
             this.ClientInvoiceSettlement = new HashSet<ClientInvoiceSettlement>();
+            this.DBClientInvoice = new HashSet<DBClientInvoice>();
         }
     
         public int ID { get; set; }
@@ -72,10 +72,10 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<FactoryManagerRefundApplication> FactoryManagerRefundApplication { get; set; }
         public virtual ICollection<SupplierRefundApplication> SupplierRefundApplication { get; set; }
         public virtual ICollection<ClientTaskRefundApplication> ClientTaskRefundApplication { get; set; }
-        public virtual ICollection<DBClientInvoice> DBClientInvoice { get; set; }
         public virtual ICollection<SupplierInvoice> SupplierInvoice { get; set; }
         public virtual ICollection<SupplierInvoiceSettlement> SupplierInvoiceSettlement { get; set; }
         public virtual ICollection<ClientInvoice> ClientInvoice { get; set; }
         public virtual ICollection<ClientInvoiceSettlement> ClientInvoiceSettlement { get; set; }
+        public virtual ICollection<DBClientInvoice> DBClientInvoice { get; set; }
     }
 }

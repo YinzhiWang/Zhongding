@@ -106,7 +106,7 @@
                                 <label>快递单号</label>
                                 <div class="mws-form-item small">
                                   <telerik:RadTextBox  
-                                        runat="server" ID="txtTransportNumber" Width="160px">
+                                        runat="server" ID="txtTransportNumber" Width="160px"  MaxLength="100">
                                     </telerik:RadTextBox>
                                     
                                     <asp:RequiredFieldValidator ID="rfvTransportNumber" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="txtTransportNumber"
