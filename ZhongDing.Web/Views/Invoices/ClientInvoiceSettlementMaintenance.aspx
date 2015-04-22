@@ -437,7 +437,7 @@
                             <asp:Button ID="btnAudit" runat="server" Text="审核通过" CssClass="mws-button green" CausesValidation="true" OnClick="btnAudit_Click" />
                             <asp:Button ID="btnReturn" runat="server" Text="退回" CssClass="mws-button orange" CausesValidation="true" OnClick="btnReturn_Click" />
                             <asp:Button ID="btnPay" runat="server" Text="确认支付" CssClass="mws-button green" CausesValidation="true" OnClick="btnPay_Click" Visible="false" />
-                            <asp:Button ID="btnCancel" runat="server" Text="撤销" CssClass="mws-button orange" CausesValidation="true" ValidationGroup="vgMaintenance" OnClick="btnCancel_Click" Visible="false" />
+                            <asp:Button ID="btnCancel" runat="server" Text="撤销" CssClass="mws-button orange" CausesValidation="true" ValidationGroup="vgMaintenance" OnClick="btnCancel_Click" OnClientClick="if(confirm('您确定要撤销该笔发票结算吗？')){return true;}else{return false;}" Visible="false" />
                             <asp:Button ID="btnBack" runat="server" Text="取消" UseSubmitBehavior="false" CssClass="mws-button green" OnClientClick="redirectToPage('Views/Invoices/ClientInvoiceSettlementManagement.aspx');return false;" />
                         </div>
                     </div>
@@ -458,18 +458,6 @@
     <script type="text/javascript">
         var currentEntityID = -1;
 
-        var gridClientIDs = {
-            gridClientInvoices: "<%= rgClientInvoices.ClientID %>",
-
-        };
-
-        function refreshGrid(gridClientID) {
-            var gridObj = $find(gridClientID);
-
-            if (gridObj)
-                gridObj.get_masterTableView().rebind();
-        }
-
         function redirectToManagementPage(sender, args) {
             redirectToPage("Views/Invoices/ClientInvoiceSettlementManagement.aspx");
         }
@@ -478,7 +466,7 @@
 
             var currentEntityID = $("#<%= hdnCurrentEntityID.ClientID %>").val();
 
-            redirectToPage("Views/Procures/ProcureOrderMaintenance.aspx?EntityID=" + currentEntityID);
+            redirectToPage("Views/Invoices/ClientInvoiceSettlementMaintenance.aspx?EntityID=" + currentEntityID);
         }
 
         var toolTip;

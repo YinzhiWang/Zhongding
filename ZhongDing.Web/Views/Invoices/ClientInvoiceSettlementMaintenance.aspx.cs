@@ -375,13 +375,15 @@ namespace ZhongDing.Web.Views.Invoices
             else
                 uiSearchObj.ClientCompanyID = GlobalConst.INVALID_INT;
 
-            if (this.CurrentEntity != null
-                && (this.CurrentEntity.CreatedBy == CurrentUser.UserID || this.CanEditUserIDs.Contains(CurrentUser.UserID))
+            if (this.CurrentEntity != null)
+            {
+                if ((this.CurrentEntity.CreatedBy == CurrentUser.UserID || this.CanEditUserIDs.Contains(CurrentUser.UserID))
                 && (this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.TemporarySave
                 || this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.ReturnBasicInfo))
-                uiSearchObj.OnlyIncludeChecked = false;
-            else
-                uiSearchObj.OnlyIncludeChecked = true;
+                    uiSearchObj.OnlyIncludeChecked = false;
+                else
+                    uiSearchObj.OnlyIncludeChecked = true;
+            }
 
             var uiEntities = PageClientInvoiceSDRepository.GetUIList(uiSearchObj);
 
@@ -439,10 +441,10 @@ namespace ZhongDing.Web.Views.Invoices
 
         protected void rgClientInvoices_ColumnCreated(object sender, GridColumnCreatedEventArgs e)
         {
-            if (this.CurrentEntity != null
+            if (this.CurrentEntity == null || (this.CurrentEntity != null
                 && (this.CurrentEntity.CreatedBy == CurrentUser.UserID || this.CanEditUserIDs.Contains(CurrentUser.UserID))
                 && (this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.TemporarySave
-                || this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.ReturnBasicInfo))
+                || this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.ReturnBasicInfo)))
             {
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_CLIENT_SELECT).Visible = true;
             }
@@ -819,6 +821,8 @@ namespace ZhongDing.Web.Views.Invoices
 
                 unitOfWork.SaveChanges();
 
+                hdnCurrentEntityID.Value = clientInvoiceSettlement.ID.ToString();
+
                 if (!string.IsNullOrEmpty(txtComment.Text.Trim()))
                 {
                     var appNote = new ApplicationNote();
@@ -833,7 +837,7 @@ namespace ZhongDing.Web.Views.Invoices
                     PageAppNoteRepository.Save();
                 }
 
-                this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
+                this.Master.BaseNotification.OnClientHidden = "refreshMaintenancePage";
                 this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_SUCCESS;
                 this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_OPERATE_REDIRECT);
             }
@@ -1081,7 +1085,7 @@ namespace ZhongDing.Web.Views.Invoices
                                 appNote.WorkflowStepID = (int)EWorkflowStep.AuditCISettlementByTreasurers;
                                 break;
 
-                            case (int)EWorkflowStatus.AuditingOfPaymentInfo:
+                            case (int)EWorkflowStatus.ApprovedByTreasurers:
                                 appNote.WorkflowStepID = (int)EWorkflowStep.AuditCISettlementByDeptManagers;
                                 break;
                         }
