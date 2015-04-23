@@ -130,7 +130,7 @@
                                             <HeaderStyle Width="30" />
                                             <ItemStyle Width="30" />
                                         </telerik:GridClientSelectColumn>
-                                        <telerik:GridBoundColumn UniqueName="OrderCode" HeaderText="出库单单号" DataField="OrderCode" ReadOnly="true">
+                                        <telerik:GridBoundColumn UniqueName="StockOutCode" HeaderText="出库单单号" DataField="StockOutCode" ReadOnly="true">
                                             <HeaderStyle Width="160px" />
                                             <ItemStyle HorizontalAlign="Left" Width="160px" />
                                         </telerik:GridBoundColumn>

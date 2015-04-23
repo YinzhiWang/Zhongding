@@ -20,6 +20,12 @@ namespace ZhongDing.Domain.UIObjects
 
         public int WarehouseID { get; set; }
 
+        /// <summary>
+        ///  出库单编号
+        /// </summary>
+        /// <value>The stock out code.</value>
+        public string StockOutCode { get; set; }
+
         public string OrderCode { get; set; }
 
         public string Warehouse { get; set; }

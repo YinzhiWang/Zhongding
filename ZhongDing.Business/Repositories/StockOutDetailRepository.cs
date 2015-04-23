@@ -223,6 +223,8 @@ namespace ZhongDing.Business.Repositories
 
             List<Expression<Func<StockOutDetail, bool>>> whereFuncs = new List<Expression<Func<StockOutDetail, bool>>>();
 
+            whereFuncs.Add(x => x.StockOut.WorkflowStatusID == (int)EWorkflowStatus.OutWarehouse);
+
             if (uiSearchObj != null)
             {
                 if (uiSearchObj.ID > 0)
@@ -270,6 +272,7 @@ namespace ZhongDing.Business.Repositories
                                      SalesOrderAppDetailID = q.SalesOrderAppDetailID,
                                      ProductID = q.ProductID,
                                      ProductSpecificationID = q.ProductSpecificationID,
+                                     StockOutCode = so.Code,
                                      OrderCode = sop.OrderCode,
                                      WarehouseID = q.WarehouseID,
                                      Warehouse = w.Name,
@@ -314,6 +317,8 @@ namespace ZhongDing.Business.Repositories
             IQueryable<StockOutDetail> query = null;
 
             List<Expression<Func<StockOutDetail, bool>>> whereFuncs = new List<Expression<Func<StockOutDetail, bool>>>();
+
+            whereFuncs.Add(x => x.StockOut.WorkflowStatusID == (int)EWorkflowStatus.OutWarehouse);
 
             if (uiSearchObj != null)
             {
@@ -364,6 +369,7 @@ namespace ZhongDing.Business.Repositories
                                      SalesOrderAppDetailID = q.SalesOrderAppDetailID,
                                      ProductID = q.ProductID,
                                      ProductSpecificationID = q.ProductSpecificationID,
+                                     StockOutCode = so.Code,
                                      OrderCode = sop.OrderCode,
                                      WarehouseID = q.WarehouseID,
                                      Warehouse = w.Name,
