@@ -97,32 +97,75 @@ namespace ZhongDing.WinService.Lib
 
                     if (statDate.Date < DateTime.Now.Date)
                     {
-                        var needSavedInventoryHistories = inventoryHistoryRepository.CalculateInventoryByStatDate(statDate);
+                        var needSavedInventoryHistories = new List<UIInventoryHistory>();
 
-                        if (needSavedInventoryHistories.Count > 0)
-                        {
-                            foreach (var curInventoryHistory in needSavedInventoryHistories)
+                        var yesterdayDate = statDate.Date.AddDays(-1);
+                        //获取前一天的所有库存数据
+                        var yesterdayInventoryHistories = inventoryHistoryRepository.GetList(x => x.StatDate == yesterdayDate)
+                            .Select(x => new UIInventoryHistory
                             {
-                                var inventoryHistory = new InventoryHistory
-                                {
-                                    WarehouseID = curInventoryHistory.WarehouseID,
-                                    ProductID = curInventoryHistory.ProductID,
-                                    ProductSpecificationID = curInventoryHistory.ProductSpecificationID,
-                                    BatchNumber = curInventoryHistory.BatchNumber,
-                                    LicenseNumber = curInventoryHistory.LicenseNumber,
-                                    ExpirationDate = curInventoryHistory.ExpirationDate,
-                                    ProcurePrice = curInventoryHistory.ProcurePrice,
-                                    StatDate = curInventoryHistory.StatDate,
-                                    InQty = curInventoryHistory.InQty,
-                                    OutQty = curInventoryHistory.OutQty,
-                                    BalanceQty = curInventoryHistory.BalanceQty
-                                };
+                                WarehouseID = x.WarehouseID,
+                                ProductID = x.ProductID,
+                                ProductSpecificationID = x.ProductSpecificationID,
+                                BatchNumber = x.BatchNumber,
+                                LicenseNumber = x.LicenseNumber,
+                                ExpirationDate = x.ExpirationDate,
+                                ProcurePrice = x.ProcurePrice,
+                                StatDate = statDate.Date,
+                                InQty = x.InQty,
+                                OutQty = x.OutQty,
+                                BalanceQty = x.BalanceQty
+                            })
+                            .ToList();
 
-                                inventoryHistoryRepository.Add(inventoryHistory);
+                        needSavedInventoryHistories.AddRange(yesterdayInventoryHistories);
+
+                        //计算需要更新的所有库存数据
+                        var calculatedInventoryHistories = inventoryHistoryRepository.CalculateInventoryByStatDate(statDate);
+
+                        //合并两种数据（前一天的和当天的数据）
+                        foreach (var curInventoryHistory in calculatedInventoryHistories)
+                        {
+                            var curNeedSaved = needSavedInventoryHistories.FirstOrDefault(x => x.StatDate == curInventoryHistory.StatDate
+                                && x.WarehouseID == curInventoryHistory.WarehouseID && x.ExpirationDate == curInventoryHistory.ExpirationDate
+                                && x.ProductID == curInventoryHistory.ProductID && x.ProductSpecificationID == curInventoryHistory.ProductSpecificationID
+                                && x.BatchNumber == curInventoryHistory.BatchNumber && x.LicenseNumber == curInventoryHistory.LicenseNumber);
+
+                            if (curNeedSaved != null)
+                            {
+                                curNeedSaved.InQty = curInventoryHistory.InQty;
+                                curNeedSaved.OutQty = curInventoryHistory.OutQty;
+                                curNeedSaved.BalanceQty = curInventoryHistory.BalanceQty;
+                                curNeedSaved.ProcurePrice = curInventoryHistory.ProcurePrice;
                             }
-
-                            inventoryHistoryRepository.Save();
+                            else
+                            {
+                                needSavedInventoryHistories.Add(curInventoryHistory);
+                            }
                         }
+
+                        //保存到数据库
+                        foreach (var curInventoryHistory in needSavedInventoryHistories)
+                        {
+                            var inventoryHistory = new InventoryHistory
+                            {
+                                WarehouseID = curInventoryHistory.WarehouseID,
+                                ProductID = curInventoryHistory.ProductID,
+                                ProductSpecificationID = curInventoryHistory.ProductSpecificationID,
+                                BatchNumber = curInventoryHistory.BatchNumber,
+                                LicenseNumber = curInventoryHistory.LicenseNumber,
+                                ExpirationDate = curInventoryHistory.ExpirationDate,
+                                ProcurePrice = curInventoryHistory.ProcurePrice,
+                                StatDate = curInventoryHistory.StatDate,
+                                InQty = curInventoryHistory.InQty,
+                                OutQty = curInventoryHistory.OutQty,
+                                BalanceQty = curInventoryHistory.BalanceQty
+                            };
+
+                            inventoryHistoryRepository.Add(inventoryHistory);
+                        }
+
+                        inventoryHistoryRepository.Save();
                     }
                 }
             }

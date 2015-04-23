@@ -412,6 +412,8 @@
     <Build Include="dbo\Tables\SupplierInvoiceSettlement.sql" />
     <Build Include="dbo\Tables\ClientInvoiceSettlementDetail.sql" />
     <Build Include="dbo\Tables\ClientInvoiceSettlement.sql" />
+    <Build Include="dbo\Tables\DBClientInvoiceSettlementDetail.sql" />
+    <Build Include="dbo\Tables\DBClientInvoiceSettlement.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

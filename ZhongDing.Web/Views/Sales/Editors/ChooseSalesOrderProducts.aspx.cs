@@ -404,10 +404,13 @@ namespace ZhongDing.Web.Views.Sales.Editors
                                         tempStockOutDetail.OutQty += curOutQty;
                                         tempStockOutDetail.TotalSalesAmount = tempStockOutDetail.SalesPrice * tempStockOutDetail.OutQty;
 
-                                        if (tempStockOutDetail.TaxQty.HasValue)
-                                            tempStockOutDetail.TaxQty += curTaxQty;
+                                        if (CurrentOwnerEntity.ReceiverTypeID == (int)EReceiverType.DistributionCompany)
+                                            tempStockOutDetail.TaxQty = tempStockOutDetail.OutQty;
                                         else
-                                            tempStockOutDetail.TaxQty = curTaxQty;
+                                            if (tempStockOutDetail.TaxQty.HasValue)
+                                                tempStockOutDetail.TaxQty += curTaxQty;
+                                            else
+                                                tempStockOutDetail.TaxQty = curTaxQty;
                                     }
                                     else
                                     {
@@ -421,12 +424,16 @@ namespace ZhongDing.Web.Views.Sales.Editors
                                             ProcurePrice = canOutStockInDetail.ProcurePrice,
                                             SalesPrice = salesOrderAppDetail.SalesPrice,
                                             OutQty = curOutQty,
-                                            TaxQty = curTaxQty,
                                             BatchNumber = canOutStockInDetail.BatchNumber,
                                             ExpirationDate = canOutStockInDetail.ExpirationDate,
                                             LicenseNumber = canOutStockInDetail.LicenseNumber,
                                             TotalSalesAmount = salesOrderAppDetail.SalesPrice * curOutQty
                                         };
+
+                                        if (CurrentOwnerEntity.ReceiverTypeID == (int)EReceiverType.DistributionCompany)
+                                            stockOutDetail.TaxQty = stockOutDetail.OutQty;
+                                        else
+                                            stockOutDetail.TaxQty = curTaxQty;
 
                                         CurrentOwnerEntity.StockOutDetail.Add(stockOutDetail);
                                     }

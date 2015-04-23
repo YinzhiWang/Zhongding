@@ -23,90 +23,101 @@ namespace ZhongDing.Business.Repositories
         {
             List<UIInventoryHistory> inventoryHistories = new List<UIInventoryHistory>();
 
+            var isFirstCalculate = GetCount() == 0;
+
+            DateTime yesterdayDate = statDate.Date.AddDays(-1);
             DateTime beginDate = statDate.Date;
             DateTime endDate = beginDate.AddDays(1);
 
-            inventoryHistories = (from sid in DB.StockInDetail
-                                  join si in DB.StockIn on sid.StockInID equals si.ID
-                                  where si.IsDeleted == false && si.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse
-                                  && sid.IsDeleted == false && si.EntryDate < endDate
-                                  select new
-                                  {
-                                      sid.WarehouseID,
-                                      sid.ProductID,
-                                      sid.ProductSpecificationID,
-                                      sid.BatchNumber,
-                                      sid.LicenseNumber,
-                                      sid.ExpirationDate,
-                                      sid.ProcurePrice,
-                                      sid.InQty
-                                  })
-                                  .GroupBy(x => new { x.WarehouseID, x.ProductID, x.ProductSpecificationID, x.BatchNumber, x.LicenseNumber, x.ExpirationDate })
-                                  .Select(g => new
-                                  {
-                                      Key = g.Key,
-                                      TotalInQty = g.Sum(x => x.InQty),
-                                      TotalOutQty = DB.StockOutDetail.Any(x => x.IsDeleted == false && x.CreatedOn < endDate && x.WarehouseID == g.Key.WarehouseID
-                                          && x.ProductID == g.Key.ProductID && x.ProductSpecificationID == g.Key.ProductSpecificationID
-                                          && x.BatchNumber == g.Key.BatchNumber && x.LicenseNumber == g.Key.LicenseNumber
-                                          && x.ExpirationDate == g.Key.ExpirationDate)
-                                          ? DB.StockOutDetail.Where(x => x.IsDeleted == false && x.CreatedOn < endDate && x.WarehouseID == g.Key.WarehouseID
-                                          && x.ProductID == g.Key.ProductID && x.ProductSpecificationID == g.Key.ProductSpecificationID
-                                          && x.BatchNumber == g.Key.BatchNumber && x.LicenseNumber == g.Key.LicenseNumber
-                                          && x.ExpirationDate == g.Key.ExpirationDate).Sum(x => x.OutQty) : 0,
-                                  })
-                                  .Select(x => new UIInventoryHistory
-                                  {
-                                      WarehouseID = x.Key.WarehouseID,
-                                      ProductID = x.Key.ProductID,
-                                      ProductSpecificationID = x.Key.ProductSpecificationID,
-                                      BatchNumber = x.Key.BatchNumber,
-                                      LicenseNumber = x.Key.LicenseNumber,
-                                      ExpirationDate = x.Key.ExpirationDate,
-                                      ProcurePrice = DB.StockInDetail.Any(y => y.WarehouseID == x.Key.WarehouseID
-                                          && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
-                                          && y.BatchNumber == x.Key.BatchNumber && y.LicenseNumber == x.Key.LicenseNumber
-                                          && y.ExpirationDate == x.Key.ExpirationDate)
-                                          ? DB.StockInDetail.FirstOrDefault(y => y.WarehouseID == x.Key.WarehouseID
-                                          && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
-                                          && y.BatchNumber == x.Key.BatchNumber && y.LicenseNumber == x.Key.LicenseNumber
-                                          && y.ExpirationDate == x.Key.ExpirationDate).ProcurePrice : 0,
-                                      InQty = DB.InventoryHistory.Any(y => y.WarehouseID == x.Key.WarehouseID
-                                          && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
-                                          && y.BatchNumber == x.Key.BatchNumber && y.LicenseNumber == x.Key.LicenseNumber
-                                          && y.ExpirationDate == x.Key.ExpirationDate)
-                                          ? (DB.StockInDetail.Any(y => y.IsDeleted == false && y.WarehouseID == x.Key.WarehouseID
+            var query1 = (from sid in DB.StockInDetail
+                          join si in DB.StockIn on sid.StockInID equals si.ID
+                          where si.IsDeleted == false && si.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse
+                                  && sid.IsDeleted == false && ((isFirstCalculate && si.EntryDate < endDate)
+                                        || (!isFirstCalculate && si.EntryDate >= beginDate && si.EntryDate < endDate))
+                          select new
+                          {
+                              sid.WarehouseID,
+                              sid.ProductID,
+                              sid.ProductSpecificationID,
+                              sid.BatchNumber,
+                              sid.LicenseNumber,
+                              sid.ExpirationDate,
+                          });
+
+            var query2 = (from sod in DB.StockOutDetail
+                          join so in DB.StockOut on sod.StockOutID equals so.ID
+                          where so.IsDeleted == false && so.WorkflowStatusID == (int)EWorkflowStatus.OutWarehouse
+                                && sod.IsDeleted == false && ((isFirstCalculate && so.OutDate < endDate)
+                                    || (!isFirstCalculate && so.OutDate >= beginDate && so.OutDate < endDate))
+                          select new
+                          {
+                              sod.WarehouseID,
+                              sod.ProductID,
+                              sod.ProductSpecificationID,
+                              sod.BatchNumber,
+                              sod.LicenseNumber,
+                              sod.ExpirationDate,
+                          });
+
+            var query = query1.Union(query2);
+
+            inventoryHistories = query.GroupBy(x => new { x.WarehouseID, x.ProductID, x.ProductSpecificationID, x.BatchNumber, x.LicenseNumber, x.ExpirationDate })
+                                      .Select(g => new
+                                      {
+                                          Key = g.Key,
+                                          TotalInQty = DB.StockInDetail.Any(y => y.IsDeleted == false && y.StockIn.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse
+                                          && ((isFirstCalculate && y.StockIn.EntryDate < endDate) || (!isFirstCalculate && y.StockIn.EntryDate >= beginDate && y.StockIn.EntryDate < endDate))
+                                          && y.WarehouseID == g.Key.WarehouseID && y.ProductID == g.Key.ProductID && y.ProductSpecificationID == g.Key.ProductSpecificationID
+                                          && y.BatchNumber == g.Key.BatchNumber && y.LicenseNumber == g.Key.LicenseNumber && y.ExpirationDate == g.Key.ExpirationDate)
+                                          ? DB.StockInDetail.Where(y => y.IsDeleted == false && y.StockIn.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse
+                                          && ((isFirstCalculate && y.StockIn.EntryDate < endDate) || (!isFirstCalculate && y.StockIn.EntryDate >= beginDate && y.StockIn.EntryDate < endDate))
+                                          && y.WarehouseID == g.Key.WarehouseID && y.ProductID == g.Key.ProductID && y.ProductSpecificationID == g.Key.ProductSpecificationID
+                                          && y.BatchNumber == g.Key.BatchNumber && y.LicenseNumber == g.Key.LicenseNumber && y.ExpirationDate == g.Key.ExpirationDate)
+                                          .Sum(y => y.InQty)
+                                          : 0,
+                                          TotalOutQty = DB.StockOutDetail.Any(x => x.IsDeleted == false && x.StockOut.WorkflowStatusID == (int)EWorkflowStatus.OutWarehouse
+                                              && ((isFirstCalculate && x.StockOut.OutDate < endDate) || (!isFirstCalculate && x.StockOut.OutDate >= beginDate && x.StockOut.OutDate < endDate))
+                                              && x.WarehouseID == g.Key.WarehouseID && x.ProductID == g.Key.ProductID && x.ProductSpecificationID == g.Key.ProductSpecificationID
+                                              && x.BatchNumber == g.Key.BatchNumber && x.LicenseNumber == g.Key.LicenseNumber && x.ExpirationDate == g.Key.ExpirationDate)
+                                              ? DB.StockOutDetail.Where(x => x.IsDeleted == false && x.StockOut.WorkflowStatusID == (int)EWorkflowStatus.OutWarehouse
+                                              && ((isFirstCalculate && x.StockOut.OutDate < endDate) || (!isFirstCalculate && x.StockOut.OutDate >= beginDate && x.StockOut.OutDate < endDate))
+                                              && x.WarehouseID == g.Key.WarehouseID && x.ProductID == g.Key.ProductID && x.ProductSpecificationID == g.Key.ProductSpecificationID
+                                              && x.BatchNumber == g.Key.BatchNumber && x.LicenseNumber == g.Key.LicenseNumber && x.ExpirationDate == g.Key.ExpirationDate).Sum(x => x.OutQty)
+                                              : 0,
+                                      })
+                                      .Select(x => new UIInventoryHistory
+                                      {
+                                          WarehouseID = x.Key.WarehouseID,
+                                          ProductID = x.Key.ProductID,
+                                          ProductSpecificationID = x.Key.ProductSpecificationID,
+                                          BatchNumber = x.Key.BatchNumber,
+                                          LicenseNumber = x.Key.LicenseNumber,
+                                          ExpirationDate = x.Key.ExpirationDate,
+                                          ProcurePrice = DB.StockInDetail.Any(y => y.WarehouseID == x.Key.WarehouseID
                                               && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
                                               && y.BatchNumber == x.Key.BatchNumber && y.LicenseNumber == x.Key.LicenseNumber
-                                              && y.ExpirationDate == x.Key.ExpirationDate && y.StockIn.EntryDate >= beginDate && y.StockIn.EntryDate < endDate
-                                              && y.StockIn.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse)
-                                             ? DB.StockInDetail.Where(y => y.IsDeleted == false && y.WarehouseID == x.Key.WarehouseID
-                                                 && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
-                                                 && y.BatchNumber == x.Key.BatchNumber && y.LicenseNumber == x.Key.LicenseNumber
-                                                 && y.ExpirationDate == x.Key.ExpirationDate && y.StockIn.EntryDate >= beginDate && y.StockIn.EntryDate < endDate
-                                                 && y.StockIn.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse).Sum(y => y.InQty) : 0)
-                                          : x.TotalInQty,
-                                      OutQty = DB.InventoryHistory.Any(y => y.WarehouseID == x.Key.WarehouseID
-                                          && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
-                                          && y.BatchNumber == x.Key.BatchNumber && y.LicenseNumber == x.Key.LicenseNumber
-                                          && y.ExpirationDate == x.Key.ExpirationDate)
-                                          ? (DB.StockOutDetail.Any(y => y.IsDeleted == false && y.WarehouseID == x.Key.WarehouseID
+                                              && y.ExpirationDate == x.Key.ExpirationDate)
+                                              ? DB.StockInDetail.FirstOrDefault(y => y.WarehouseID == x.Key.WarehouseID
                                               && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
                                               && y.BatchNumber == x.Key.BatchNumber && y.LicenseNumber == x.Key.LicenseNumber
-                                              && y.ExpirationDate == x.Key.ExpirationDate && ((y.CreatedOn >= beginDate && y.CreatedOn < endDate)
-                                                    || (y.LastModifiedOn >= beginDate && y.LastModifiedOn < endDate)))
-                                             ? DB.StockOutDetail.Where(y => y.IsDeleted == false && y.WarehouseID == x.Key.WarehouseID
-                                                 && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
-                                                 && y.BatchNumber == x.Key.BatchNumber && y.LicenseNumber == x.Key.LicenseNumber
-                                                 && y.ExpirationDate == x.Key.ExpirationDate
-                                                 && ((y.CreatedOn >= beginDate && y.CreatedOn < endDate)
-                                                    || (y.LastModifiedOn >= beginDate && y.LastModifiedOn < endDate))).Sum(y => y.OutQty) : 0)
-                                          : x.TotalOutQty,
-                                      BalanceQty = x.TotalInQty - x.TotalOutQty,
-                                      StatDate = statDate
-                                  }).ToList();
+                                              && y.ExpirationDate == x.Key.ExpirationDate).ProcurePrice : 0,
+                                          InQty = x.TotalInQty,
+                                          OutQty = x.TotalOutQty,
+                                          BalanceQty = isFirstCalculate ? (x.TotalInQty - x.TotalOutQty)
+                                          : (DB.InventoryHistory.Any(y => y.WarehouseID == x.Key.WarehouseID
+                                              && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
+                                              && y.BatchNumber == x.Key.BatchNumber && y.LicenseNumber == x.Key.LicenseNumber
+                                              && y.ExpirationDate == x.Key.ExpirationDate && y.StatDate == yesterdayDate)
+                                                ? DB.InventoryHistory.FirstOrDefault(y => y.WarehouseID == x.Key.WarehouseID
+                                                    && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
+                                                    && y.BatchNumber == x.Key.BatchNumber && y.LicenseNumber == x.Key.LicenseNumber
+                                                    && y.ExpirationDate == x.Key.ExpirationDate && y.StatDate == yesterdayDate).BalanceQty + x.TotalInQty - x.TotalOutQty
+                                                : x.TotalInQty - x.TotalOutQty),
+                                          StatDate = statDate
+                                      }).ToList();
 
             return inventoryHistories;
+
         }
 
 

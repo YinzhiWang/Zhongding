@@ -158,6 +158,12 @@
     <Compile Include="Models\DBClientInvoiceDetail.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DBClientInvoiceSettlement.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\DBClientInvoiceSettlementDetail.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\DBClientSettleBonus.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -433,6 +439,7 @@
     <Compile Include="UIObjects\UICompany.cs" />
     <Compile Include="UIObjects\UIDaBaoApplication.cs" />
     <Compile Include="UIObjects\UIDaBaoAppDetail.cs" />
+    <Compile Include="UIObjects\UIDBClientInvoiceSettlement.cs" />
     <Compile Include="UIObjects\UIDBClientSettleBonus.cs" />
     <Compile Include="UIObjects\UIDBClientSettleBonusPayment.cs" />
     <Compile Include="UIObjects\UIDBClientSettlement.cs" />
@@ -517,6 +524,7 @@
     <Compile Include="UISearchObjects\UISearchCompany.cs" />
     <Compile Include="UISearchObjects\UISearchDaBaoApplication.cs" />
     <Compile Include="UISearchObjects\UISearchDaBaoAppDetail.cs" />
+    <Compile Include="UISearchObjects\UISearchDBClientInvoiceSettlement.cs" />
     <Compile Include="UISearchObjects\UISearchDBClientSettleBonus.cs" />
     <Compile Include="UISearchObjects\UISearchDBClientSettlement.cs" />
     <Compile Include="UISearchObjects\UISearchDBContract.cs" />

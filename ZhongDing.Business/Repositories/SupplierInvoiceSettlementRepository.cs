@@ -29,6 +29,9 @@ namespace ZhongDing.Business.Repositories
                 if (uiSearchObj.ID > 0)
                     whereFuncs.Add(x => x.ID.Equals(uiSearchObj.ID));
 
+                if (uiSearchObj.CompanyID > 0)
+                    whereFuncs.Add(x => x.CompanyID == uiSearchObj.CompanyID);
+
                 if (uiSearchObj.ExcludeCanceled)
                     whereFuncs.Add(x => x.IsCanceled == false);
 
@@ -56,7 +59,8 @@ namespace ZhongDing.Business.Repositories
                                   TaxRatio = q.TaxRatio,
                                   TotalPayAmount = q.TotalPayAmount,
                                   CompanyName = c.CompanyName,
-                                  InvoiceNumberArray = q.SupplierInvoiceSettlementDetail.Select(x => x.InvoiceNumber)
+                                  InvoiceNumberArray = q.SupplierInvoiceSettlementDetail
+                                    .Where(x => x.IsDeleted == false).Select(x => x.InvoiceNumber)
 
                               }).ToList();
 

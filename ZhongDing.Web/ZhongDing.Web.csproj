@@ -2631,6 +2631,7 @@
     <Content Include="Views\Invoices\ClientInvoiceSettlementManagement.aspx" />
     <Content Include="Views\Invoices\DBClientInfoInvoiceMaintenance.aspx" />
     <Content Include="Views\Invoices\DBClientInfoInvoiceManagement.aspx" />
+    <Content Include="Views\Invoices\DBClientInvoiceSettlementManagement.aspx" />
     <Content Include="Views\Invoices\SupplierInvoiceMaintenance.aspx" />
     <Content Include="Views\Invoices\SupplierInvoiceManagement.aspx" />
     <Content Include="Views\Invoices\SupplierInvoiceSettlementMaintenance.aspx" />
@@ -3296,6 +3297,13 @@
     </Compile>
     <Compile Include="Views\Invoices\DBClientInfoInvoiceManagement.aspx.designer.cs">
       <DependentUpon>DBClientInfoInvoiceManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Invoices\DBClientInvoiceSettlementManagement.aspx.cs">
+      <DependentUpon>DBClientInvoiceSettlementManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Invoices\DBClientInvoiceSettlementManagement.aspx.designer.cs">
+      <DependentUpon>DBClientInvoiceSettlementManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Invoices\SupplierInvoiceMaintenance.aspx.cs">
       <DependentUpon>SupplierInvoiceMaintenance.aspx</DependentUpon>

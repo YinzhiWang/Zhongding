@@ -18,6 +18,7 @@ namespace ZhongDing.Domain.Models
         public DBClientInvoice()
         {
             this.DBClientInvoiceDetail = new HashSet<DBClientInvoiceDetail>();
+            this.DBClientInvoiceSettlementDetail = new HashSet<DBClientInvoiceSettlementDetail>();
         }
     
         public int ID { get; set; }
@@ -49,5 +50,6 @@ namespace ZhongDing.Domain.Models
         public virtual DistributionCompany DistributionCompany { get; set; }
         public virtual SaleOrderType SaleOrderType { get; set; }
         public virtual ICollection<DBClientInvoiceDetail> DBClientInvoiceDetail { get; set; }
+        public virtual ICollection<DBClientInvoiceSettlementDetail> DBClientInvoiceSettlementDetail { get; set; }
     }
 }

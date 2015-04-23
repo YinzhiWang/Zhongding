@@ -62,6 +62,7 @@
     <Compile Include="IRepositories\IClientInvoiceDetailRepository.cs" />
     <Compile Include="IRepositories\IClientInvoiceRepository.cs" />
     <Compile Include="IRepositories\IDBClientBonusRepository.cs" />
+    <Compile Include="IRepositories\IDBClientInvoiceSettlementRepository.cs" />
     <Compile Include="IRepositories\IDBClientSettleBonusRepository.cs" />
     <Compile Include="IRepositories\IDBClientSettlementRepository.cs" />
     <Compile Include="IRepositories\IDCInventoryDataRepository.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="Repositories\DaBaoRequestAppDetailRepository.cs" />
     <Compile Include="Repositories\DaBaoRequestApplicationRepository.cs" />
     <Compile Include="Repositories\DBClientBonusRepository.cs" />
+    <Compile Include="Repositories\DBClientInvoiceSettlementRepository.cs" />
     <Compile Include="Repositories\DBClientSettleBonusRepository.cs" />
     <Compile Include="Repositories\DBClientSettlementRepository.cs" />
     <Compile Include="Repositories\DBContractHospitalRepository.cs" />
