@@ -83,7 +83,7 @@
                                 <ul class="hide">
                                     <li data-level="2" data-menuitemid="21"><a href="javascript:void(0);" onclick="redirectToPage('Views/Products/ProductManagement.aspx');">货品管理</a></li>
                                     <li data-level="2" data-menuitemid="22"><a href="javascript:void(0);" onclick="redirectToPage('Views/Products/ProductPriceManagement.aspx');">货品定价管理</a></li>
-                                    <li data-level="2" data-menuitemid=""><a href="#">库存货品信息</a></li>
+                                    <li data-level="2" data-menuitemid="23"><a href="javascript:void(0);" onclick="redirectToPage('Views/Products/InventoryHistoryManagement.aspx');">库存货品信息</a></li>
                                 </ul>
 
                             </li>

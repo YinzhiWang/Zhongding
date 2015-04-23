@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using ZhongDing.Business.IRepositories;
 using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UIObjects;
+using ZhongDing.Common.Extension;
 
 namespace ZhongDing.Business.Repositories
 {
@@ -106,6 +108,145 @@ namespace ZhongDing.Business.Repositories
 
             return inventoryHistories;
         }
+
+
+
+        public IList<UIInventoryHistory> GetUIList(Domain.UISearchObjects.UISearchInventoryHistory uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
+        {
+            List<UIInventoryHistory> inventoryHistories = new List<UIInventoryHistory>();
+
+            var lastInventoryHistory = DB.InventoryHistory.OrderByDescending(x => x.ID).FirstOrDefault();
+
+            DateTime? lastStatDate = null;
+            if (lastInventoryHistory != null)
+                lastStatDate = lastInventoryHistory.StatDate;
+            DateTime? beginDate = lastStatDate.HasValue ? lastStatDate.Value.AddDays(1) : lastStatDate;
+            DateTime endDate = DateTime.Now;
+            IQueryable<UIInventoryHistory> query = null;
+
+            query = (from sid in DB.StockInDetail
+                     join si in DB.StockIn on sid.StockInID equals si.ID
+                     where si.IsDeleted == false && si.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse
+                     && sid.IsDeleted == false
+                     select new
+                     {
+                         sid.WarehouseID,
+                         sid.ProductID,
+                         sid.ProductSpecificationID,
+                         sid.BatchNumber,
+                         sid.LicenseNumber,
+                         sid.ExpirationDate,
+                         sid.ProcurePrice,
+                         sid.InQty
+                     })
+                     .GroupBy(x => new { x.WarehouseID, x.ProductID, x.ProductSpecificationID, x.BatchNumber, x.LicenseNumber, x.ExpirationDate })
+                     .Select(x => new UIInventoryHistory
+                     {
+                         WarehouseID = x.Key.WarehouseID,
+                         ProductID = x.Key.ProductID,
+                         ProductSpecificationID = x.Key.ProductSpecificationID,
+                         BatchNumber = x.Key.BatchNumber,
+                         LicenseNumber = x.Key.LicenseNumber,
+                         ExpirationDate = x.Key.ExpirationDate,
+                         ProcurePrice = DB.StockInDetail.Any(y => y.WarehouseID == x.Key.WarehouseID
+                             && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
+                             && y.BatchNumber == x.Key.BatchNumber && y.LicenseNumber == x.Key.LicenseNumber
+                             && y.ExpirationDate == x.Key.ExpirationDate)
+                             ? DB.StockInDetail.FirstOrDefault(y => y.WarehouseID == x.Key.WarehouseID
+                             && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
+                             && y.BatchNumber == x.Key.BatchNumber && y.LicenseNumber == x.Key.LicenseNumber
+                             && y.ExpirationDate == x.Key.ExpirationDate).ProcurePrice : 0,
+                         InQty = (DB.StockInDetail.Any(y => y.IsDeleted == false && y.WarehouseID == x.Key.WarehouseID
+                                 && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
+                                 && y.BatchNumber == x.Key.BatchNumber && y.LicenseNumber == x.Key.LicenseNumber
+                                 && y.ExpirationDate == x.Key.ExpirationDate && (beginDate == null || y.StockIn.EntryDate >= beginDate) && y.StockIn.EntryDate < endDate
+                                 && y.StockIn.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse)
+                                ? DB.StockInDetail.Where(y => y.IsDeleted == false && y.WarehouseID == x.Key.WarehouseID
+                                    && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
+                                    && y.BatchNumber == x.Key.BatchNumber && y.LicenseNumber == x.Key.LicenseNumber
+                                    && y.ExpirationDate == x.Key.ExpirationDate && (beginDate == null || y.StockIn.EntryDate >= beginDate) && y.StockIn.EntryDate < endDate
+                                    && y.StockIn.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse).Sum(y => y.InQty) : 0),
+                         OutQty = (DB.StockOutDetail.Any(y => y.IsDeleted == false && y.WarehouseID == x.Key.WarehouseID
+                                 && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
+                                 && y.BatchNumber == x.Key.BatchNumber && y.LicenseNumber == x.Key.LicenseNumber
+                                 && y.ExpirationDate == x.Key.ExpirationDate && (((beginDate == null || y.CreatedOn >= beginDate) && y.CreatedOn < endDate)
+                                       || ((beginDate == null || y.LastModifiedOn >= beginDate) && y.LastModifiedOn < endDate)))
+                                ? DB.StockOutDetail.Where(y => y.IsDeleted == false && y.WarehouseID == x.Key.WarehouseID
+                                    && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
+                                    && y.BatchNumber == x.Key.BatchNumber && y.LicenseNumber == x.Key.LicenseNumber
+                                    && y.ExpirationDate == x.Key.ExpirationDate
+                                    && (((beginDate == null || y.CreatedOn >= beginDate) && y.CreatedOn < endDate)
+                                       || ((beginDate == null || y.LastModifiedOn >= beginDate) && y.LastModifiedOn < endDate))).Sum(y => y.OutQty) : 0),
+                         WarehouseName = null,
+                         ProductName = null,
+                         Specification = null,
+                         UnitName = null,
+                         NumberInLargePackage = 0,
+
+                     });
+          
+
+            var queryEx = from q in query
+                          join warehouse in DB.Warehouse on q.WarehouseID equals warehouse.ID
+                          join product in DB.Product on q.ProductID equals product.ID
+                          join productSpecification in DB.ProductSpecification on q.ProductSpecificationID equals productSpecification.ID
+                          join unitName in DB.UnitOfMeasurement on productSpecification.UnitOfMeasurementID equals unitName.ID
+                          select new UIInventoryHistory()
+                                {
+                                    WarehouseID = q.WarehouseID,
+                                    ProductID = q.ProductID,
+                                    ProductSpecificationID = q.ProductSpecificationID,
+                                    BatchNumber = q.BatchNumber,
+                                    LicenseNumber = q.LicenseNumber,
+                                    ExpirationDate = q.ExpirationDate,
+                                    ProcurePrice = q.ProcurePrice,
+                                    InQty = q.InQty,
+                                    OutQty = q.OutQty,
+                                    WarehouseName = warehouse.Name,
+                                    ProductName = product.ProductName,
+                                    Specification = productSpecification.Specification,
+                                    UnitName = unitName.UnitName,
+                                    NumberInLargePackage = productSpecification.NumberInLargePackage.HasValue ? productSpecification.NumberInLargePackage.Value : 1,
+                                };
+            if(uiSearchObj.WarehouseName.IsNotNullOrEmpty())
+            {
+                queryEx = queryEx.Where(x => x.WarehouseName.Contains(uiSearchObj.WarehouseName));
+            }
+            if (uiSearchObj.ProductName.IsNotNullOrEmpty())
+            {
+                queryEx = queryEx.Where(x => x.ProductName.Contains(uiSearchObj.ProductName));
+            }
+            totalRecords = query.Count();
+            query = query.OrderBy(x => x.WarehouseID).Skip(pageSize * pageIndex).Take(pageSize);
+            inventoryHistories = queryEx.ToList();
+            if (lastInventoryHistory != null)
+            {
+                inventoryHistories.ForEach(m =>
+                {
+
+                    int balanceQty = m.InQty - m.OutQty;
+                    var oldInventoryHistory = DB.InventoryHistory.Where(x => x.StatDate == lastStatDate
+                          && x.WarehouseID == m.WarehouseID && x.ProductID == m.ProductID && x.ProductSpecificationID == m.ProductSpecificationID
+                          && x.BatchNumber == m.BatchNumber && x.LicenseNumber == m.LicenseNumber && x.ExpirationDate == m.ExpirationDate)
+                          .FirstOrDefault();
+                    if (oldInventoryHistory != null)
+                    {
+                        m.BalanceQty = oldInventoryHistory.BalanceQty;
+                        m.BalanceQty += balanceQty;
+                    }
+                    else
+                    {
+                        m.BalanceQty += balanceQty;
+                    }
+                    m.Amount = m.BalanceQty * m.ProcurePrice;
+                    m.NumberOfPackages = m.BalanceQty / m.NumberInLargePackage;
+                });
+            }
+
+            return inventoryHistories;
+        }
+
+
 
     }
 }

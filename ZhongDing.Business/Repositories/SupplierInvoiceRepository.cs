@@ -15,7 +15,7 @@ namespace ZhongDing.Business.Repositories
     {
         public IList<UISupplierInvoice> GetUIList(Domain.UISearchObjects.UISearchSupplierInvoice uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
         {
-            IList<UISupplierInvoice> uiWarehouses = new List<UISupplierInvoice>();
+            IList<UISupplierInvoice> uiEntities = new List<UISupplierInvoice>();
             int total = 0;
 
             IQueryable<SupplierInvoice> query = null;
@@ -58,7 +58,7 @@ namespace ZhongDing.Business.Repositories
             {
                 if (!uiSearchObj.IsGroupByProduct)
                 {
-                    uiWarehouses = (from q in query
+                    uiEntities = (from q in query
                                     join supplierInvoiceDetail in DB.SupplierInvoiceDetail on q.ID equals supplierInvoiceDetail.SupplierInvoiceID
                                     join procureOrderAppDetail in DB.ProcureOrderAppDetail on supplierInvoiceDetail.ProcureOrderAppDetailID equals procureOrderAppDetail.ID
                                     join procureOrderApplication in DB.ProcureOrderApplication on procureOrderAppDetail.ProcureOrderApplicationID equals procureOrderApplication.ID
@@ -88,7 +88,7 @@ namespace ZhongDing.Business.Repositories
                 else
                 {
 
-                    uiWarehouses = (from q in query
+                    uiEntities = (from q in query
                                     join supplierInvoiceDetail in DB.SupplierInvoiceDetail on q.ID equals supplierInvoiceDetail.SupplierInvoiceID
                                     join procureOrderAppDetail in DB.ProcureOrderAppDetail on supplierInvoiceDetail.ProcureOrderAppDetailID equals procureOrderAppDetail.ID
                                     join procureOrderApplication in DB.ProcureOrderApplication on procureOrderAppDetail.ProcureOrderApplicationID equals procureOrderApplication.ID
@@ -134,7 +134,7 @@ namespace ZhongDing.Business.Repositories
 
             totalRecords = total;
 
-            return uiWarehouses;
+            return uiEntities;
         }
     }
 }

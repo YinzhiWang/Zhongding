@@ -19,5 +19,19 @@ namespace ZhongDing.Domain.UIObjects
         public int OutQty { get; set; }
         public int BalanceQty { get; set; }
         public DateTime StatDate { get; set; }
+
+        public string WarehouseName { get; set; }
+
+        public string ProductName { get; set; }
+
+        public decimal? NumberOfPackages { get; set; }
+
+        public string Specification { get; set; }
+
+        public string UnitName { get; set; }
+
+        public decimal Amount { get; set; }
+
+        public int NumberInLargePackage { get; set; }
     }
 }

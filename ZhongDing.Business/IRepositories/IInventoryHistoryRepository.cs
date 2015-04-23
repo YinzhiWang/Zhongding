@@ -21,5 +21,7 @@ namespace ZhongDing.Business.IRepositories
         /// <param name="statDate">The stat date.</param>
         /// <returns>List{UIInventoryHistory}.</returns>
         List<UIInventoryHistory> CalculateInventoryByStatDate(DateTime statDate);
+
+        IList<UIInventoryHistory> GetUIList(Domain.UISearchObjects.UISearchInventoryHistory uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
     }
 }

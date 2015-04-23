@@ -80,6 +80,10 @@ namespace ZhongDing.Common.Enums
         /// 货品定价管理
         /// </summary>
         ProductPriceManage,
+        /// <summary>
+        /// 库存货品信息
+        /// </summary>
+        InventoryHistoryManage,
 
         /// <summary>
         /// 人事管理

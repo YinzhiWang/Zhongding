@@ -538,6 +538,7 @@
     <Compile Include="UISearchObjects\UISearchHospital.cs" />
     <Compile Include="UISearchObjects\UISearchImportErrorLog.cs" />
     <Compile Include="UISearchObjects\UISearchImportFileLog.cs" />
+    <Compile Include="UISearchObjects\UISearchInventoryHistory.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderAppDetail.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderApplication.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderApplicationPaymentReport.cs" />
