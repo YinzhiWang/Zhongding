@@ -180,14 +180,15 @@ namespace ZhongDing.Business.Repositories
                          OutQty = (DB.StockOutDetail.Any(y => y.IsDeleted == false && y.WarehouseID == x.Key.WarehouseID
                                  && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
                                  && y.BatchNumber == x.Key.BatchNumber && y.LicenseNumber == x.Key.LicenseNumber
-                                 && y.ExpirationDate == x.Key.ExpirationDate && (((beginDate == null || y.CreatedOn >= beginDate) && y.CreatedOn < endDate)
-                                       || ((beginDate == null || y.LastModifiedOn >= beginDate) && y.LastModifiedOn < endDate)))
+                                 && y.ExpirationDate == x.Key.ExpirationDate
+                                 && y.StockOut.WorkflowStatusID == (int)EWorkflowStatus.OutWarehouse &&
+                                 (beginDate == null || y.StockOut.OutDate >= beginDate) && y.StockOut.OutDate < endDate)
                                 ? DB.StockOutDetail.Where(y => y.IsDeleted == false && y.WarehouseID == x.Key.WarehouseID
                                     && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
                                     && y.BatchNumber == x.Key.BatchNumber && y.LicenseNumber == x.Key.LicenseNumber
                                     && y.ExpirationDate == x.Key.ExpirationDate
-                                    && (((beginDate == null || y.CreatedOn >= beginDate) && y.CreatedOn < endDate)
-                                       || ((beginDate == null || y.LastModifiedOn >= beginDate) && y.LastModifiedOn < endDate))).Sum(y => y.OutQty) : 0),
+                                    && (((beginDate == null || y.StockOut.OutDate >= beginDate) && y.StockOut.OutDate < endDate)
+                                       )).Sum(y => y.OutQty) : 0),
                          WarehouseName = null,
                          ProductName = null,
                          Specification = null,
@@ -195,7 +196,7 @@ namespace ZhongDing.Business.Repositories
                          NumberInLargePackage = 0,
 
                      });
-          
+
 
             var queryEx = from q in query
                           join warehouse in DB.Warehouse on q.WarehouseID equals warehouse.ID
@@ -219,7 +220,7 @@ namespace ZhongDing.Business.Repositories
                                     UnitName = unitName.UnitName,
                                     NumberInLargePackage = productSpecification.NumberInLargePackage.HasValue ? productSpecification.NumberInLargePackage.Value : 1,
                                 };
-            if(uiSearchObj.WarehouseName.IsNotNullOrEmpty())
+            if (uiSearchObj.WarehouseName.IsNotNullOrEmpty())
             {
                 queryEx = queryEx.Where(x => x.WarehouseName.Contains(uiSearchObj.WarehouseName));
             }
