@@ -4,6 +4,7 @@
     [DistributionCompanyID] INT             NOT NULL,
     [ReceiveDate]           DATETIME        NOT NULL,
     [ReceiveBankAccountID]  INT             NOT NULL,
+    [ReceiveAccount]        NVARCHAR (255)  NULL,
     [TotalInvoiceAmount]    MONEY           NOT NULL,
     [TotalReceiveAmount]    MONEY           NOT NULL,
     [ConfirmDate]           DATETIME        NULL,
@@ -21,4 +22,6 @@
     CONSTRAINT [FK_DBClientInvoiceSettlement_Company] FOREIGN KEY ([CompanyID]) REFERENCES [dbo].[Company] ([ID]),
     CONSTRAINT [FK_DBClientInvoiceSettlement_DistributionCompany] FOREIGN KEY ([DistributionCompanyID]) REFERENCES [dbo].[DistributionCompany] ([ID])
 );
+
+
 

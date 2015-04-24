@@ -272,5 +272,15 @@ namespace ZhongDing.Common.Enums
         /// 中止采购订单
         /// </summary>
         StopProcureOrder,
+
+        /// <summary>
+        /// 新增大包收款
+        /// </summary>
+        NewDBClientInvoiceSettlement,
+
+        /// <summary>
+        /// 修改大包收款
+        /// </summary>
+        EditDBClientInvoiceSettlement,
     }
 }

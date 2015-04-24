@@ -30,6 +30,8 @@ namespace ZhongDing.Domain.Models
         public string TransportNumber { get; set; }
         public string TransportCompany { get; set; }
         public int SaleOrderTypeID { get; set; }
+        public Nullable<bool> IsSettled { get; set; }
+        public Nullable<System.DateTime> SettledDate { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }

@@ -8,6 +8,8 @@
     [TransportNumber]       NVARCHAR (256) NOT NULL,
     [TransportCompany]      NVARCHAR (256) NOT NULL,
     [SaleOrderTypeID]       INT            NOT NULL,
+    [IsSettled]             BIT            NULL,
+    [SettledDate]           DATETIME       NULL,
     [IsDeleted]             BIT            NOT NULL,
     [CreatedOn]             DATETIME       NOT NULL,
     [CreatedBy]             INT            NULL,
@@ -18,6 +20,8 @@
     CONSTRAINT [FK_DBClientInvoice_DistributionCompanyID] FOREIGN KEY ([DistributionCompanyID]) REFERENCES [dbo].[DistributionCompany] ([ID]),
     CONSTRAINT [FK_DBClientInvoice_SaleOrderTypeID] FOREIGN KEY ([SaleOrderTypeID]) REFERENCES [dbo].[SaleOrderType] ([ID])
 );
+
+
 
 
 

@@ -1190,9 +1190,12 @@ namespace ZhongDing.Web.Views.Invoices
                     {
                         foreach (var item in currentEntity.ClientInvoiceSettlementDetail.Where(x => x.IsDeleted == false))
                         {
+                            item.IsDeleted = true;
                             item.ClientInvoice.IsSettled = null;
                             item.ClientInvoice.SettledDate = null;
                         }
+
+                        currentEntity.IsDeleted = true;
 
                         currentEntity.IsCanceled = true;
                         currentEntity.CanceledReason = txtCancelComment.Text.Trim();

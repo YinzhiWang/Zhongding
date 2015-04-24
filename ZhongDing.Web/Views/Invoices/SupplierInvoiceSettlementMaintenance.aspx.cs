@@ -360,6 +360,12 @@ namespace ZhongDing.Web.Views.Invoices
                         supplierInvoiceSettlement.SupplierInvoiceSettlementDetail.Add(supplierInvoiceSettlementDetail);
                     }
 
+                    supplierInvoiceSettlement.TotalInvoiceAmount = supplierInvoiceSettlement.SupplierInvoiceSettlementDetail
+                        .Where(x => x.IsDeleted == false).Sum(x => x.InvoiceAmount);
+
+                    supplierInvoiceSettlement.TotalPayAmount = supplierInvoiceSettlement.SupplierInvoiceSettlementDetail
+                        .Where(x => x.IsDeleted == false).Sum(x => x.PayAmount);
+
                     sisRepository.Add(supplierInvoiceSettlement);
 
                     unitOfWork.SaveChanges();
@@ -392,7 +398,7 @@ namespace ZhongDing.Web.Views.Invoices
 
             if (this.CurrentEntity != null)
             {
-                foreach (var item in CurrentEntity.SupplierInvoiceSettlementDetail)
+                foreach (var item in CurrentEntity.SupplierInvoiceSettlementDetail.Where(x => x.IsDeleted == false))
                 {
                     var appPayment = new ApplicationPayment()
                     {
@@ -408,9 +414,12 @@ namespace ZhongDing.Web.Views.Invoices
 
                     item.ApplicationPayment1 = appPayment;
 
+                    item.IsDeleted = true;
                     item.SupplierInvoice.IsSettled = null;
                     item.SupplierInvoice.SettledDate = null;
                 }
+
+                CurrentEntity.IsDeleted = true;
 
                 CurrentEntity.IsCanceled = true;
                 CurrentEntity.CanceledReason = txtCancelComment.Text.Trim();

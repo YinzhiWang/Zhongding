@@ -82,6 +82,11 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         ClientInvoiceSettlement,
 
+        /// <summary>
+        /// 大包收款
+        /// </summary>
+        DBClientInvoiceSettlement,
+
 
     }
 }

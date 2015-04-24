@@ -25,6 +25,7 @@ namespace ZhongDing.Domain.Models
         public int DistributionCompanyID { get; set; }
         public System.DateTime ReceiveDate { get; set; }
         public int ReceiveBankAccountID { get; set; }
+        public string ReceiveAccount { get; set; }
         public decimal TotalInvoiceAmount { get; set; }
         public decimal TotalReceiveAmount { get; set; }
         public Nullable<System.DateTime> ConfirmDate { get; set; }
