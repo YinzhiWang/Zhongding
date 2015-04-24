@@ -31,5 +31,9 @@ namespace ZhongDing.Business.IRepositories
         IList<UIStockInDetailReport> GetStockInDetailReport(UISearchStockInDetailReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
 
         IList<UIStockInDetailReport> GetStockInDetailReport(UISearchStockInDetailReport uiSearchObj);
+
+        IList<UIProcurePlanReport> GetProcurePlanReport(UISearchProcurePlanReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
+        
+        IList<UIProcurePlanReport> GetProcurePlanReport(UISearchProcurePlanReport uiSearchObj);
     }
 }

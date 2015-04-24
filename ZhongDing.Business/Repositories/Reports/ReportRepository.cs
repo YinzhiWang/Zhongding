@@ -129,7 +129,7 @@ namespace ZhongDing.Business.Repositories.Reports
                     x.NotInQty = x.ProcureCount - x.AlreadyInQty;
                     x.NotInQtyProcurePrice = x.NotInQty * x.ProcurePrice;
                     x.NotInNumberOfPackages = (decimal)x.NotInQty / (decimal)x.NumberInLargePackage;
-               
+
                 }
 
             });
@@ -301,5 +301,50 @@ namespace ZhongDing.Business.Repositories.Reports
             totalRecords = totalRecordSqlParameter.Value.ToInt();
         }
 
+
+
+        //
+        public IList<UIProcurePlanReport> GetProcurePlanReport(UISearchProcurePlanReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
+        {
+            List<UIProcurePlanReport> result = null;
+            BuildProcurePlanReport(uiSearchObj, pageIndex, pageSize, out totalRecords, out result);
+            return result;
+        }
+
+        public IList<UIProcurePlanReport> GetProcurePlanReport(UISearchProcurePlanReport uiSearchObj)
+        {
+            List<UIProcurePlanReport> result = null;
+            int totalRecords = 0;
+            BuildProcurePlanReport(uiSearchObj, 0, 10000000, out totalRecords, out result);
+            return result;
+        }
+        private void BuildProcurePlanReport(UISearchProcurePlanReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords, out List<UIProcurePlanReport> result)
+        {
+            SqlParameter totalRecordSqlParameter = new SqlParameter() { ParameterName = "@totalRecord", DbType = System.Data.DbType.Int32, Direction = System.Data.ParameterDirection.Output };
+            List<SqlParameter> parameters = new List<SqlParameter>() {
+                new SqlParameter(){ ParameterName="@pageSize",Value=pageSize,Size=4},
+                new SqlParameter(){ ParameterName="@pageIndex", Value=pageIndex,Size=4},
+                totalRecordSqlParameter
+            };
+
+            string sql = "exec GetProcurePlanReport @pageSize,@pageIndex,@warehouseId,@productName,@totalRecord out";
+            parameters.Add(new SqlParameter() { ParameterName = "@warehouseId", SqlDbType = SqlDbType.Int, Size = 256, Value = uiSearchObj.WarehouseID.HasValue ? (object)uiSearchObj.WarehouseID.Value : DBNull.Value });
+            parameters.Add(new SqlParameter() { ParameterName = "@productName", SqlDbType = SqlDbType.NVarChar, Size = 256, Value = uiSearchObj.ProductName.HasValue() ? (object)uiSearchObj.ProductName : DBNull.Value });
+
+            result = this.DB.Database.SqlQuery<UIProcurePlanReport>(sql, parameters.ToArray()).ToList();
+            totalRecords = totalRecordSqlParameter.Value.ToInt();
+            //x.ProductID, x.ProductSpecificationID, x.WarehouseID, x.WarehouseName
+            result.ForEach(x =>
+            {
+                x.ToBeOutNumberOfPackages = x.TotalToBeOutQty / x.NumberInLargePackage;
+                //x
+                IInventoryHistoryRepository inventoryHistoryRepository = new InventoryHistoryRepository();
+                int balanceQty = inventoryHistoryRepository.GetProductBalanceQty(x.WarehouseID, x.ProductID, x.ProductSpecificationID);
+                x.WarehouseQty = balanceQty;
+                x.WarehouseNumberOfPackages = balanceQty / x.NumberInLargePackage;
+
+            });
+
+        }
     }
 }

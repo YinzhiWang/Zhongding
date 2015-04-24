@@ -260,5 +260,84 @@ namespace ZhongDing.Business.Repositories
 
 
 
+
+
+        public int GetProductBalanceQty(int warehouseID, int productID, int productSpecificationID)
+        {
+            List<UIInventoryHistory> inventoryHistories = new List<UIInventoryHistory>();
+
+            var lastInventoryHistory = DB.InventoryHistory.OrderByDescending(x => x.ID).FirstOrDefault();
+
+            DateTime? lastStatDate = null;
+            if (lastInventoryHistory != null)
+                lastStatDate = lastInventoryHistory.StatDate;
+            DateTime? beginDate = lastStatDate.HasValue ? lastStatDate.Value.AddDays(1) : lastStatDate;
+            DateTime endDate = DateTime.Now;
+            IQueryable<UIInventoryHistory> query = null;
+
+            query = (from sid in DB.StockInDetail
+                     join si in DB.StockIn on sid.StockInID equals si.ID
+                     where si.IsDeleted == false && si.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse
+                     && sid.IsDeleted == false
+                     select new
+                     {
+                         sid.WarehouseID,
+                         sid.ProductID,
+                         sid.ProductSpecificationID,
+                         sid.InQty
+                     })
+                     .GroupBy(x => new { x.WarehouseID, x.ProductID, x.ProductSpecificationID })
+                     .Select(x => new UIInventoryHistory
+                     {
+                         WarehouseID = x.Key.WarehouseID,
+                         ProductID = x.Key.ProductID,
+                         ProductSpecificationID = x.Key.ProductSpecificationID,
+
+                         InQty = (DB.StockInDetail.Any(y => y.IsDeleted == false && y.WarehouseID == x.Key.WarehouseID
+                                 && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
+                                 && (beginDate == null || y.StockIn.EntryDate >= beginDate) && y.StockIn.EntryDate < endDate
+                                 && y.StockIn.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse)
+                                ? DB.StockInDetail.Where(y => y.IsDeleted == false && y.WarehouseID == x.Key.WarehouseID
+                                    && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
+                                    && (beginDate == null || y.StockIn.EntryDate >= beginDate) && y.StockIn.EntryDate < endDate
+                                    && y.StockIn.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse).Sum(y => y.InQty) : 0),
+                         OutQty = (DB.StockOutDetail.Any(y => y.IsDeleted == false && y.WarehouseID == x.Key.WarehouseID
+                                 && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
+                                 && y.StockOut.WorkflowStatusID == (int)EWorkflowStatus.OutWarehouse &&
+                                 (beginDate == null || y.StockOut.OutDate >= beginDate) && y.StockOut.OutDate < endDate)
+                                ? DB.StockOutDetail.Where(y => y.IsDeleted == false && y.WarehouseID == x.Key.WarehouseID
+                                    && y.ProductID == x.Key.ProductID && y.ProductSpecificationID == x.Key.ProductSpecificationID
+                                    && (((beginDate == null || y.StockOut.OutDate >= beginDate) && y.StockOut.OutDate < endDate)
+                                       )).Sum(y => y.OutQty) : 0),
+
+                     })
+                     .Where(x => x.WarehouseID == warehouseID && x.ProductID == productID && x.ProductSpecificationID == productSpecificationID);
+
+            inventoryHistories = query.ToList();
+            if (lastInventoryHistory != null)
+            {
+                inventoryHistories.ForEach(m =>
+                {
+
+                    int balanceQty = m.InQty - m.OutQty;
+                    var oldInventoryHistoryBalanceQtys = DB.InventoryHistory.Where(x => x.StatDate == lastStatDate
+                          && x.WarehouseID == m.WarehouseID && x.ProductID == m.ProductID && x.ProductSpecificationID == m.ProductSpecificationID)
+                          .Select(x => x.BalanceQty).ToList(); ;
+
+                    if (oldInventoryHistoryBalanceQtys.Count > 0)
+                    {
+                        m.BalanceQty = oldInventoryHistoryBalanceQtys.Sum(x => x); ;
+                        m.BalanceQty += balanceQty;
+                    }
+                    else
+                    {
+                        m.BalanceQty += balanceQty;
+                    }
+                });
+            }
+
+            int qty = inventoryHistories.Sum(x => x.BalanceQty);
+            return qty;
+        }
     }
 }

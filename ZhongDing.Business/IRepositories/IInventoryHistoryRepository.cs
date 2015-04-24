@@ -23,5 +23,13 @@ namespace ZhongDing.Business.IRepositories
         List<UIInventoryHistory> CalculateInventoryByStatDate(DateTime statDate);
 
         IList<UIInventoryHistory> GetUIList(Domain.UISearchObjects.UISearchInventoryHistory uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
+        /// <summary>
+        /// 获取 库存数量
+        /// </summary>
+        /// <param name="warehouseID"></param>
+        /// <param name="productID"></param>
+        /// <param name="productSpecificationID"></param>
+        /// <returns></returns>
+        int GetProductBalanceQty(int warehouseID,int productID,int productSpecificationID);
     }
 }

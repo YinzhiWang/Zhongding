@@ -244,6 +244,10 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         StockInDetailReportManage,
         /// <summary>
+        /// 采购计划报表
+        /// </summary>
+        ProcurePlanReportManage,
+        /// <summary>
         /// 发票管理
         /// </summary>
         InvoiceManage = 150,
