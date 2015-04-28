@@ -179,6 +179,7 @@ namespace ZhongDing.Web.Views.Invoices
                 currentEntity.TransportNumber = txtTransportNumber.Text.Trim();
                 currentEntity.ClientCompanyID = rcbxClientCompany.SelectedValue.ToInt();
                 currentEntity.SaleOrderTypeID = hdnSaleOrderTypeID.Value.ToInt();
+
                 PageClientInvoiceRepository.Save();
                 var selectedItems = rgStockOutDetails.SelectedItems;
 
@@ -187,13 +188,16 @@ namespace ZhongDing.Web.Views.Invoices
                     var editableItem = ((GridEditableItem)item);
                     int stockOutDetailID = Convert.ToInt32(editableItem.GetDataKeyValue("ID").ToString());
                     var txtClientInvoiceDetailAmount = (RadNumericTextBox)editableItem.FindControl("txtClientInvoiceDetailAmount");
+                    var txtClientInvoiceDetailQty = (RadNumericTextBox)editableItem.FindControl("txtClientInvoiceDetailQty");
                     var rblInvoiceType = (RadioButtonList)editableItem.FindControl("rblInvoiceType");
                     ClientInvoiceDetail ClientInvoiceDetail = new ClientInvoiceDetail()
                     {
                         Amount = txtClientInvoiceDetailAmount.Value.ToDecimal(),
                         StockOutDetailID = stockOutDetailID,
                         ClientInvoiceID = currentEntity.ID,
-                        InvoiceTypeID = rblInvoiceType.SelectedValue.ToInt()
+                        InvoiceTypeID = rblInvoiceType.SelectedValue.ToInt(),
+                        Qty = txtClientInvoiceDetailQty.Value.ToInt()
+
                     };
                     PageClientInvoiceDetailRepository.Add(ClientInvoiceDetail);
 

@@ -174,10 +174,10 @@
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/StockOutDetailReportManagement.aspx');">出库明细表</a></li>
                                     <li data-level="2" data-menuitemid="105">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/StockInDetailReportManagement.aspx');">入库明细表</a></li>
-                                   <li data-level="2" data-menuitemid="106">
+                                    <li data-level="2" data-menuitemid="106">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/ProcurePlanReportManagement.aspx');">采购计划表</a></li>
-                                  
-                                      
+
+
 
                                 </ul>
                             </li>
@@ -196,6 +196,15 @@
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Invoices/ClientInvoiceSettlementManagement.aspx');">客户发票结算</a></li>
                                     <li data-level="2" data-menuitemid="156">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Invoices/DBClientInvoiceSettlementManagement.aspx');">大包收款管理</a></li>
+                                </ul>
+                            </li>
+                            <li data-level="1" data-menuitemid="200">
+                                <a href="#" class="mws-i-24 i-tags-2">保证金管理</a>
+                                <ul class="hide">
+                                    <li data-level="2" data-menuitemid="151">
+                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Invoices/SupplierInvoiceManagement.aspx');">供应商保证金管理</a></li>
+                                    <li data-level="2" data-menuitemid="152">
+                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Invoices/ClientInfoInvoiceManagement.aspx');">供应商保证金申请</a></li>
                                 </ul>
                             </li>
                         </ul>

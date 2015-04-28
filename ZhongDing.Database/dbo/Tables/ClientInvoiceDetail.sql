@@ -3,6 +3,7 @@
     [ClientInvoiceID]  INT      NOT NULL,
     [StockOutDetailID] INT      NOT NULL,
     [InvoiceTypeID]    INT      NOT NULL,
+    [Qty]              INT      NULL,
     [Amount]           MONEY    NOT NULL,
     [IsDeleted]        BIT      NOT NULL,
     [CreatedOn]        DATETIME NOT NULL,
@@ -14,6 +15,8 @@
     CONSTRAINT [FK_ClientInvoiceDetail_InvoiceTypeID] FOREIGN KEY ([InvoiceTypeID]) REFERENCES [dbo].[InvoiceType] ([ID]),
     CONSTRAINT [FK_ClientInvoiceDetail_StockOutDetailID] FOREIGN KEY ([StockOutDetailID]) REFERENCES [dbo].[StockOutDetail] ([ID])
 );
+
+
 
 
 
