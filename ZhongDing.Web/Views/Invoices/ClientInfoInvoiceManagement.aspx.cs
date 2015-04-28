@@ -119,8 +119,6 @@ namespace ZhongDing.Web.Views.Invoices
                 PageClientInvoiceRepository.Save();
                 rgClientInvoices.Rebind();
             }
-
-
         }
 
         protected void rgClientInvoices_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)

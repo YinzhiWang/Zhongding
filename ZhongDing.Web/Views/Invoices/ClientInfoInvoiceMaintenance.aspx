@@ -81,6 +81,7 @@
                                         Text="*" CssClass="field-validation-error">
                                     </asp:CustomValidator>
                                     &nbsp;&nbsp;&nbsp;&nbsp;
+                                   
                                     <asp:Button ID="btnSearchOrder" runat="server" Text="查询出库单" CssClass="mws-button green" CausesValidation="false" ValidationGroup="vgMaintenance" OnClick="btnSearchOrder_Click" />
                                 </div>
                             </div>
@@ -105,10 +106,10 @@
                             <div class="float-left">
                                 <label>快递单号</label>
                                 <div class="mws-form-item small">
-                                  <telerik:RadTextBox  
-                                        runat="server" ID="txtTransportNumber" Width="160px"  MaxLength="100">
+                                    <telerik:RadTextBox
+                                        runat="server" ID="txtTransportNumber" Width="160px" MaxLength="100">
                                     </telerik:RadTextBox>
-                                    
+
                                     <asp:RequiredFieldValidator ID="rfvTransportNumber" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="txtTransportNumber"
                                         ErrorMessage="快递单号必填" Text="*" CssClass="field-validation-error">
                                     </asp:RequiredFieldValidator>
@@ -125,7 +126,7 @@
                                 OnNeedDataSource="rgStockOutDetails_NeedDataSource" OnItemDataBound="rgStockOutDetails_ItemDataBound"
                                 OnColumnCreated="rgStockOutDetails_ColumnCreated">
                                 <MasterTableView Width="100%" DataKeyNames="ID,ClientUserID" CommandItemDisplay="None" TableLayout="Auto"
-                                    ShowHeadersWhenNoRecords="true" BackColor="#fafafa" ClientDataKeyNames="ID,ClientUserID,NotTaxQty,SalesPrice,SaleOrderTypeID">
+                                    ShowHeadersWhenNoRecords="true" BackColor="#fafafa" ClientDataKeyNames="ID,ClientUserID,NotTaxQty,SalesPrice,InvoicePrice,SaleOrderTypeID">
                                     <Columns>
                                         <telerik:GridClientSelectColumn UniqueName="ClientSelectColumn" HeaderText="全选">
                                             <HeaderStyle Width="30" />
@@ -160,6 +161,10 @@
                                             <HeaderStyle Width="80" />
                                             <ItemStyle HorizontalAlign="Left" Width="80" />
                                         </telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn UniqueName="InvoicePrice" HeaderText="挂靠单价" DataField="InvoicePrice" ReadOnly="true" DataFormatString="￥{0:f2}">
+                                            <HeaderStyle Width="80" />
+                                            <ItemStyle HorizontalAlign="Left" Width="80" />
+                                        </telerik:GridBoundColumn>
                                         <telerik:GridBoundColumn UniqueName="FactoryName" HeaderText="生产企业" DataField="FactoryName" ReadOnly="true">
                                             <HeaderStyle Width="160" />
                                             <ItemStyle HorizontalAlign="Left" Width="160" />
@@ -168,14 +173,6 @@
                                             <HeaderStyle Width="80" />
                                             <ItemStyle HorizontalAlign="Left" Width="80" />
                                         </telerik:GridBoundColumn>
-                                        <%-- <telerik:GridBoundColumn UniqueName="ProcureCount" HeaderText="数量" DataField="ProcureCount" ReadOnly="true">
-                                            <HeaderStyle Width="80" />
-                                            <ItemStyle HorizontalAlign="Left" Width="80" />
-                                        </telerik:GridBoundColumn>
-                                        <telerik:GridBoundColumn UniqueName="TotalAmount" HeaderText="订单金额" DataField="TotalAmount" ReadOnly="true" DataFormatString="￥{0:f2}">
-                                            <HeaderStyle Width="80" />
-                                            <ItemStyle HorizontalAlign="Left" Width="80" />
-                                        </telerik:GridBoundColumn>--%>
                                         <telerik:GridBoundColumn UniqueName="TaxQty" HeaderText="需开票数量" DataField="TaxQty" ReadOnly="true">
                                             <HeaderStyle Width="80" />
                                             <ItemStyle HorizontalAlign="Left" Width="80" />
@@ -209,13 +206,13 @@
                                             <HeaderStyle Width="160" Font-Size="13px" />
                                             <ItemStyle HorizontalAlign="Left" Width="160" />
                                             <ItemTemplate>
-                                                <asp:RadioButtonList  CssClass="radioButtonList"
+                                                <asp:RadioButtonList CssClass="radioButtonList"
                                                     RepeatDirection="Vertical" Width="160px" CellPadding="0" CellSpacing="0"
-                                                    ID="rblInvoiceType" runat="server"  >
+                                                    ID="rblInvoiceType" runat="server">
                                                     <asp:ListItem Value="1" Selected="True">高价</asp:ListItem>
                                                     <asp:ListItem Value="2">低价</asp:ListItem>
                                                     <asp:ListItem Value="3">平价</asp:ListItem>
-       
+
                                                 </asp:RadioButtonList>
                                             </ItemTemplate>
                                         </telerik:GridTemplateColumn>
@@ -284,25 +281,30 @@
                 console.log("newValue:" + newValue);
                 var radNotification = $find("<%=radNotification.ClientID%>");
                 if (newValue) {
-                    //var txtCurrentOutQty = $telerik.findControl(gridItemElement, "txtSupplierInvoiceDetailAmount");
-                    //var currentOutQty = txtCurrentOutQty.get_value();
-                    var notTaxAmount = gridItem.getDataKeyValue("NotTaxQty");
-                    if (newValue > notTaxAmount) {
-                        radNotification.set_text("本次开票金额不能大于未开票金额：" + newValue);
+                    var notTaxQty = gridItem.getDataKeyValue("NotTaxQty");
+                    if (newValue > notTaxQty) {
+                        radNotification.set_text("本次开票数量不能大于未开票数量：" + notTaxQty);
                         radNotification.show();
                         eventArgs.set_cancel(true);
                     }
                 }
 
-
                 var txtAmount = $find("<%=txtAmount.ClientID%>");
                 var txtClientInvoiceDetailAmount = gridItem.findControl("txtClientInvoiceDetailAmount");
                 var salesPrice = gridItem.getDataKeyValue("SalesPrice");
-                if (newValue)
-                    txtClientInvoiceDetailAmount.set_value(salesPrice * newValue);
+                var saleOrderTypeID = gridItem.getDataKeyValue("SaleOrderTypeID");
+
+                if (newValue) {
+
+                    if (saleOrderTypeID == ESaleOrderTypes.AttachedMode) {
+                        var invoicePrice = gridItem.getDataKeyValue("InvoicePrice");
+                        txtClientInvoiceDetailAmount.set_value(invoicePrice * newValue);
+                    }
+                    else
+                        txtClientInvoiceDetailAmount.set_value(salesPrice * newValue);
+                }
                 else
                     txtClientInvoiceDetailAmount.set_value("");
-
             }
         }
 

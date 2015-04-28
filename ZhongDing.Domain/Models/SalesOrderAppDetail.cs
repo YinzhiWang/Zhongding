@@ -26,6 +26,7 @@ namespace ZhongDing.Domain.Models
         public int ProductSpecificationID { get; set; }
         public int Count { get; set; }
         public decimal SalesPrice { get; set; }
+        public Nullable<decimal> InvoicePrice { get; set; }
         public decimal TotalSalesAmount { get; set; }
         public Nullable<int> GiftCount { get; set; }
         public bool IsDeleted { get; set; }

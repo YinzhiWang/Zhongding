@@ -28,8 +28,6 @@ namespace ZhongDing.Domain.Models
         public Nullable<decimal> LowRatioAmount { get; set; }
         public Nullable<decimal> ClientTaxDeductionRatio { get; set; }
         public Nullable<decimal> DeductionRatioAmount { get; set; }
-        public Nullable<int> AppPaymentID { get; set; }
-        public Nullable<int> CanceledAppPaymentID { get; set; }
         public decimal PayAmount { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
@@ -47,8 +45,6 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ApplicationPayment ApplicationPayment { get; set; }
-        public virtual ApplicationPayment ApplicationPayment1 { get; set; }
         public virtual ClientCompany ClientCompany { get; set; }
         public virtual ClientInvoice ClientInvoice { get; set; }
         public virtual ClientInvoiceSettlement ClientInvoiceSettlement { get; set; }

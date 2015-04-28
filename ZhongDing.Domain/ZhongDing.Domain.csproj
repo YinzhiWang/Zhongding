@@ -80,6 +80,12 @@
     <Compile Include="Models\CertificateType.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ClientAttachedInvoiceSettlement.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ClientAttachedInvoiceSettlementDetail.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ClientCompany.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -135,6 +141,9 @@
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Company.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CostType.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\DaBaoApplication.cs">
@@ -411,6 +420,7 @@
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIObjects\UIClientAttachedInvoiceSettlement.cs" />
     <Compile Include="UIObjects\UIClientInvoiceSettlement.cs" />
     <Compile Include="UIObjects\UIClientInvoiceSettlementDetail.cs" />
     <Compile Include="UIObjects\UIDBClientInvoice.cs" />
@@ -503,6 +513,7 @@
     <Compile Include="UIObjects\UIWarehouse.cs" />
     <Compile Include="UIObjects\UIWorkflowBase.cs" />
     <Compile Include="UIObjects\UIWorkflowStep.cs" />
+    <Compile Include="UISearchObjects\UISearchClientAttachedInvoiceSettlement.cs" />
     <Compile Include="UISearchObjects\UISearchClientInvoiceSettlement.cs" />
     <Compile Include="UISearchObjects\UISearchClientInvoiceSettlementDetail.cs" />
     <Compile Include="UISearchObjects\UISearchDBClientInvoice.cs" />

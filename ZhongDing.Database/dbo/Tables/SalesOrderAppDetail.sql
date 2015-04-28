@@ -5,6 +5,7 @@
     [ProductSpecificationID]  INT      NOT NULL,
     [Count]                   INT      NOT NULL,
     [SalesPrice]              MONEY    NOT NULL,
+    [InvoicePrice]            MONEY    NULL,
     [TotalSalesAmount]        MONEY    NOT NULL,
     [GiftCount]               INT      NULL,
     [IsDeleted]               BIT      CONSTRAINT [DF_SalesOrderAppDetail_IsDeleted] DEFAULT ((0)) NOT NULL,
@@ -19,6 +20,8 @@
     CONSTRAINT [FK_SalesOrderAppDetail_SalesOrderApplication] FOREIGN KEY ([SalesOrderApplicationID]) REFERENCES [dbo].[SalesOrderApplication] ([ID]),
     CONSTRAINT [FK_SalesOrderAppDetail_Warehouse] FOREIGN KEY ([WarehouseID]) REFERENCES [dbo].[Warehouse] ([ID])
 );
+
+
 
 
 

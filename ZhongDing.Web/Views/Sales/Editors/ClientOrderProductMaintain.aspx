@@ -111,7 +111,22 @@
                                 </asp:CustomValidator>
                             </div>
                         </div>
-                        <div class="float-left">
+                        <div class="float-left" runat="server" id="divAttachedPrice" visible="false">
+                            <label>挂靠单价</label>
+                            <div class="mws-form-item small" runat="server">
+                                <telerik:RadNumericTextBox runat="server" ID="txtInvoicePrice" CssClass="mws-textinput" Type="Currency" ShowSpinButtons="true"
+                                    NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator="" MinValue="0" MaxValue="999999999"
+                                    MaxLength="10" ClientEvents-OnValueChanged="onPriceValueChanged">
+                                </telerik:RadNumericTextBox>
+                                <asp:CustomValidator ID="cvInvoicePrice" runat="server" ErrorMessage="挂靠单价必填"
+                                    ControlToValidate="txtInvoicePrice" ValidationGroup="vgMaintenance" Display="Dynamic"
+                                    Text="*" CssClass="field-validation-error">
+                                </asp:CustomValidator>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mws-form-row">
+                        <div class="float-left width50-percent">
                             <label>基本数量</label>
                             <div class="mws-form-item small">
                                 <telerik:RadNumericTextBox runat="server" ID="txtCount" CssClass="mws-textinput" Type="Number" ShowSpinButtons="true"
@@ -130,14 +145,6 @@
                                 </asp:RequiredFieldValidator>
                             </div>
                         </div>
-                    </div>
-                    <div class="mws-form-row">
-                        <div class="float-left width50-percent">
-                            <label>件数</label>
-                            <div class="mws-form-item small">
-                                <asp:Label ID="lblNumberOfPackages" runat="server" Text=""></asp:Label>
-                            </div>
-                        </div>
                         <div class="float-left">
                             <label>赠送数量</label>
                             <div class="mws-form-item small">
@@ -149,12 +156,20 @@
                         </div>
                     </div>
                     <div class="mws-form-row">
-                        <label>货款</label>
-                        <div class="mws-form-item small">
-                            <telerik:RadNumericTextBox runat="server" ID="txtTotalSalesAmount" CssClass="mws-textinput" Type="Currency"
-                                NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator="" MinValue="0" MaxValue="999999999"
-                                MaxLength="10" Enabled="false">
-                            </telerik:RadNumericTextBox>
+                        <div class="float-left width50-percent">
+                            <label>件数</label>
+                            <div class="mws-form-item small">
+                                <asp:Label ID="lblNumberOfPackages" runat="server" Text=""></asp:Label>
+                            </div>
+                        </div>
+                        <div class="float-left">
+                            <label>货款</label>
+                            <div class="mws-form-item small">
+                                <telerik:RadNumericTextBox runat="server" ID="txtTotalSalesAmount" CssClass="mws-textinput" Type="Currency"
+                                    NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator="" MinValue="0" MaxValue="999999999"
+                                    MaxLength="10" Enabled="false">
+                                </telerik:RadNumericTextBox>
+                            </div>
                         </div>
                     </div>
                     <div class="height20"></div>
@@ -260,8 +275,7 @@
             }
         }
 
-        function onPriceValueChanged(sender, eventArgs)
-        {
+        function onPriceValueChanged(sender, eventArgs) {
             calTotalAmount();
         }
 
@@ -271,32 +285,32 @@
             setPackagesAndUnit();
         }
 
-            function calTotalAmount() {
+        function calTotalAmount() {
 
-                var totalAmount = -1;
+            var totalAmount = -1;
 
-                var countValue = $find("<%= txtCount.ClientID %>").get_value();
-                var priceValue = $find("<%= txtSalesPrice.ClientID %>").get_value();
+            var countValue = $find("<%= txtCount.ClientID %>").get_value();
+            var priceValue = $find("<%= txtSalesPrice.ClientID %>").get_value();
 
-                if (!isNaN(priceValue) && !isNaN(countValue)) {
-                    totalAmount = priceValue * countValue;
-                }
-
-                var txtTotalAmount = $find("<%=txtTotalSalesAmount.ClientID%>");
-
-                if (totalAmount >= 0)
-                    txtTotalAmount.set_value(totalAmount);
-                else
-                    txtTotalAmount.set_value("");
-
+            if (!isNaN(priceValue) && !isNaN(countValue)) {
+                totalAmount = priceValue * countValue;
             }
 
-            $(document).ready(function () {
+            var txtTotalAmount = $find("<%=txtTotalSalesAmount.ClientID%>");
 
-                calTotalAmount();
+            if (totalAmount >= 0)
+                txtTotalAmount.set_value(totalAmount);
+            else
+                txtTotalAmount.set_value("");
 
-                setPackagesAndUnit();
-            });
+        }
+
+        $(document).ready(function () {
+
+            calTotalAmount();
+
+            setPackagesAndUnit();
+        });
 
     </script>
 </asp:Content>

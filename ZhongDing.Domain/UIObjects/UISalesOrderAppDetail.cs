@@ -32,6 +32,8 @@ namespace ZhongDing.Domain.UIObjects
 
         public decimal SalesPrice { get; set; }
 
+        public decimal? InvoicePrice { get; set; }
+
         /// <summary>
         /// 销售数量（需发货数量）
         /// </summary>

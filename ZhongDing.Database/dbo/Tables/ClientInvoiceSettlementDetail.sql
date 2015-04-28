@@ -12,8 +12,6 @@
     [LowRatioAmount]            MONEY           NULL,
     [ClientTaxDeductionRatio]   DECIMAL (18, 8) NULL,
     [DeductionRatioAmount]      MONEY           NULL,
-    [AppPaymentID]              INT             NULL,
-    [CanceledAppPaymentID]      INT             NULL,
     [PayAmount]                 MONEY           NOT NULL,
     [IsDeleted]                 BIT             NOT NULL,
     [CreatedOn]                 DATETIME        NOT NULL,
@@ -21,12 +19,12 @@
     [LastModifiedOn]            DATETIME        NULL,
     [LastModifiedBy]            INT             NULL,
     CONSTRAINT [PK_ClientInvoiceSettlementDetail] PRIMARY KEY CLUSTERED ([ID] ASC),
-    CONSTRAINT [FK_ClientInvoiceSettlementDetail_ApplicationPayment] FOREIGN KEY ([AppPaymentID]) REFERENCES [dbo].[ApplicationPayment] ([ID]),
-    CONSTRAINT [FK_ClientInvoiceSettlementDetail_CanceledApplicationPayment] FOREIGN KEY ([CanceledAppPaymentID]) REFERENCES [dbo].[ApplicationPayment] ([ID]),
     CONSTRAINT [FK_ClientInvoiceSettlementDetail_ClientCompany] FOREIGN KEY ([ClientCompanyID]) REFERENCES [dbo].[ClientCompany] ([ID]),
     CONSTRAINT [FK_ClientInvoiceSettlementDetail_ClientInvoice] FOREIGN KEY ([ClientInvoiceID]) REFERENCES [dbo].[ClientInvoice] ([ID]),
     CONSTRAINT [FK_ClientInvoiceSettlementDetail_ClientInvoiceSettlement] FOREIGN KEY ([ClientInvoiceSettlementID]) REFERENCES [dbo].[ClientInvoiceSettlement] ([ID])
 );
+
+
 
 
 

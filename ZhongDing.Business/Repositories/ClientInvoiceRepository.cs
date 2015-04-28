@@ -53,43 +53,35 @@ namespace ZhongDing.Business.Repositories
             if (query != null)
             {
                 uiWarehouses = (from q in query
-                                join clientInvoiceDetail in DB.ClientInvoiceDetail on q.ID equals clientInvoiceDetail.ClientInvoiceID
-                                join stockOutDetail in DB.StockOutDetail on clientInvoiceDetail.StockOutDetailID equals stockOutDetail.ID
-                                join stockOut in DB.StockOut on stockOutDetail.StockOutID equals stockOut.ID
-                                join product in DB.Product on stockOutDetail.ProductID equals product.ID
-                                join company in DB.Company on q.CompanyID equals company.ID
-                                join clientCompany in DB.ClientCompany on q.ClientCompanyID equals clientCompany.ID
+                                join cid in DB.ClientInvoiceDetail on q.ID equals cid.ClientInvoiceID
+                                join sod in DB.StockOutDetail on cid.StockOutDetailID equals sod.ID
+                                join so in DB.StockOut on sod.StockOutID equals so.ID
+                                join p in DB.Product on sod.ProductID equals p.ID
+                                join c in DB.Company on q.CompanyID equals c.ID
+                                join cc in DB.ClientCompany on q.ClientCompanyID equals cc.ID
+                                join cu in DB.ClientUser on so.ClientUserID equals cu.ID
                                 select new UIClientInvoice()
                                  {
                                      ID = q.ID,
-                                     Amount = q.Amount,
                                      CompanyID = q.CompanyID,
-                                     CreatedOn = q.CreatedOn,
                                      InvoiceDate = q.InvoiceDate,
+                                     SaleOrderType = q.SaleOrderType.TypeName,
                                      InvoiceNumber = q.InvoiceNumber,
-                                     CompanyName = company.CompanyName,
-                                     StockOutCode = stockOut.Code,
-                                     StockOutOutDate = stockOut.OutDate,
-                                     ProductName = product.ProductName,
-                                     ProductID = product.ID,
-                                     OutQty = stockOutDetail.OutQty,
-                                     SalesPrice = stockOutDetail.SalesPrice,
-                                     TotalSalesAmount = stockOutDetail.TotalSalesAmount,
-                                     TaxQty = stockOutDetail.TaxQty,
-                                     ClientCompanyName = clientCompany.Name,
-                                     ClientInvoiceDetailTaxAmount = clientInvoiceDetail.Amount,
-                                     StockOutDetailSalesAmount = stockOutDetail.TotalSalesAmount,
-                                     SaleOrderType = q.SaleOrderType.TypeName
+                                     CompanyName = c.CompanyName,
+                                     StockOutCode = so.Code,
+                                     ProductName = p.ProductName,
+                                     ClientCompanyName = cc.Name,
+                                     ClientUserName = cu.ClientName,
+                                     InvoiceQty = cid.Qty ?? 0,
+                                     TotalSalesAmount = cid.StockOutDetail.SalesOrderApplication.SalesOrderAppDetail.Any(x => x.IsDeleted == false)
+                                                        ? cid.StockOutDetail.SalesOrderApplication.SalesOrderAppDetail.Where(x => x.IsDeleted == false).Sum(x => x.TotalSalesAmount) : 0,
+                                     InvoiceAmount = cid.Amount,
+                                     TransportNumber = q.TransportNumber,
                                  }).ToList();
             }
 
             totalRecords = total;
-            uiWarehouses.ForEach(x =>
-            {
-                x.ClientInvoiceDetailQty = (int)(x.ClientInvoiceDetailTaxAmount / x.SalesPrice);
-                x.ClientInvoiceDetailAmount = x.SalesPrice * x.ClientInvoiceDetailQty;
 
-            });
             return uiWarehouses;
         }
     }

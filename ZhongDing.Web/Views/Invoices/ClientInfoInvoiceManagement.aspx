@@ -42,6 +42,7 @@
                         <td class="middle-td" colspan="4">
                             <telerik:RadDatePicker runat="server" ID="rdpBeginDate" Width="120"></telerik:RadDatePicker>
                             -&nbsp;&nbsp;
+                           
                             <telerik:RadDatePicker runat="server" ID="rdpEndDate" Width="120"></telerik:RadDatePicker>
                         </td>
                         <td></td>
@@ -56,18 +57,21 @@
                         </td>
                         <th class="width80 middle-td">商业单位：</th>
                         <td class="middle-td width280-percent">
-                         <telerik:RadComboBox runat="server" ID="rcbxClientCompany" Height="160px" Width="200px" Filter="Contains"
+                            <telerik:RadComboBox runat="server" ID="rcbxClientCompany" Height="160px" Width="200px" Filter="Contains"
                                 EmptyMessage="--请选择--" AllowCustomText="true">
-                            </telerik:RadComboBox>   &nbsp;&nbsp;&nbsp;&nbsp;
-                             <asp:Button ID="btnSearch" runat="server" Text="查询" CssClass="mws-button green" OnClick="btnSearch_Click" />
+                            </telerik:RadComboBox>
                             &nbsp;&nbsp;&nbsp;&nbsp;
-                                <asp:Button ID="btnReset" runat="server" Text="重置" CssClass="mws-button orange" OnClick="btnReset_Click" />
+                            
+                            <asp:Button ID="btnSearch" runat="server" Text="查询" CssClass="mws-button green" OnClick="btnSearch_Click" />
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                               
+                            <asp:Button ID="btnReset" runat="server" Text="重置" CssClass="mws-button orange" OnClick="btnReset_Click" />
 
                         </td>
                         <td class="middle-td leftpadding20"></td>
 
                     </tr>
- 
+
                 </table>
                 <telerik:RadGrid ID="rgClientInvoices" runat="server" PageSize="10"
                     AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
@@ -78,60 +82,39 @@
                     <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
                         ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                         <Columns>
-                            <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false">
-                                <ItemStyle HorizontalAlign="Left" Width="50" />
-                            </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="InvoiceDate" HeaderText="开票日期" DataFormatString="{0:yyyy/MM/dd}" DataField="InvoiceDate">
                                 <ItemStyle HorizontalAlign="Left" Width="50" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="SaleOrderType" HeaderText="订单类型" DataField="SaleOrderType">
-                                <ItemStyle HorizontalAlign="Left" Width="80" />
+                                <ItemStyle HorizontalAlign="Left" Width="60" />
                             </telerik:GridBoundColumn>
-                            
                             <telerik:GridBoundColumn UniqueName="CompanyName" HeaderText="开票单位" DataField="CompanyName">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                              <telerik:GridBoundColumn UniqueName="ClientCompanyName" HeaderText="收票单位" DataField="ClientCompanyName">
+                            <telerik:GridBoundColumn UniqueName="ClientCompanyName" HeaderText="收票单位" DataField="ClientCompanyName">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-
-
-                              <telerik:GridBoundColumn UniqueName="ClientCompanyName" HeaderText="客户" DataField="ClientCompanyName">
+                            <telerik:GridBoundColumn UniqueName="ClientUserName" HeaderText="客户" DataField="ClientUserName">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-
-
                             <telerik:GridBoundColumn UniqueName="InvoiceNumber" HeaderText="发票号" DataField="InvoiceNumber">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-
                             <telerik:GridBoundColumn UniqueName="StockOutCode" HeaderText="出库单号" DataField="StockOutCode">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                        
-
                             <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品名称" DataField="ProductName">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="ClientInvoiceDetailQty" HeaderText="数量" DataField="ClientInvoiceDetailQty">
+                            <telerik:GridBoundColumn UniqueName="InvoiceQty" HeaderText="数量" DataField="InvoiceQty">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-
-
-                            <telerik:GridBoundColumn UniqueName="StockOutDetailSalesAmount" HeaderText="金额" DataField="StockOutDetailSalesAmount" DataFormatString="￥{0:f2}">
+                            <telerik:GridBoundColumn UniqueName="TotalSalesAmount" HeaderText="金额" DataField="TotalSalesAmount" DataFormatString="￥{0:f2}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="ClientInvoiceDetailTaxAmount" HeaderText="发票金额" DataField="ClientInvoiceDetailTaxAmount" DataFormatString="￥{0:f2}">
+                            <telerik:GridBoundColumn UniqueName="InvoiceAmount" HeaderText="发票金额" DataField="InvoiceAmount" DataFormatString="￥{0:f2}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-
-                            <%--<telerik:GridTemplateColumn UniqueName="Audit">
-                                <ItemStyle HorizontalAlign="Center" Width="30" />
-                                <ItemTemplate>
-                                    <a href="javascript:void(0)" onclick="openAuditWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>); return false;">
-                                        <u>审核</u></a>
-                                </ItemTemplate>
-                            </telerik:GridTemplateColumn>--%>
                             <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
                         </Columns>
                         <CommandItemTemplate>
@@ -156,6 +139,7 @@
                         </CommandItemTemplate>
                         <NoRecordsTemplate>
                             没有任何数据
+                       
                         </NoRecordsTemplate>
                         <ItemStyle Height="30" />
                         <AlternatingItemStyle BackColor="#f2f2f2" />

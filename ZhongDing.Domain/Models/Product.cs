@@ -31,7 +31,6 @@ namespace ZhongDing.Domain.Models
             this.InventoryHistory = new HashSet<InventoryHistory>();
             this.ClientInfoProductSetting = new HashSet<ClientInfoProductSetting>();
             this.ProductSpecification = new HashSet<ProductSpecification>();
-            this.SalesOrderAppDetail = new HashSet<SalesOrderAppDetail>();
             this.ProductHighPrice = new HashSet<ProductHighPrice>();
             this.ClientRefundAppDetail = new HashSet<ClientRefundAppDetail>();
             this.FactoryManagerRefundApplication = new HashSet<FactoryManagerRefundApplication>();
@@ -43,6 +42,7 @@ namespace ZhongDing.Domain.Models
             this.StockOutDetail = new HashSet<StockOutDetail>();
             this.DBClientBonus = new HashSet<DBClientBonus>();
             this.DBContract = new HashSet<DBContract>();
+            this.SalesOrderAppDetail = new HashSet<SalesOrderAppDetail>();
         }
     
         public int ID { get; set; }
@@ -89,7 +89,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<InventoryHistory> InventoryHistory { get; set; }
         public virtual ICollection<ClientInfoProductSetting> ClientInfoProductSetting { get; set; }
         public virtual ICollection<ProductSpecification> ProductSpecification { get; set; }
-        public virtual ICollection<SalesOrderAppDetail> SalesOrderAppDetail { get; set; }
         public virtual ICollection<ProductHighPrice> ProductHighPrice { get; set; }
         public virtual ICollection<ClientRefundAppDetail> ClientRefundAppDetail { get; set; }
         public virtual ICollection<FactoryManagerRefundApplication> FactoryManagerRefundApplication { get; set; }
@@ -101,5 +100,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<StockOutDetail> StockOutDetail { get; set; }
         public virtual ICollection<DBClientBonus> DBClientBonus { get; set; }
         public virtual ICollection<DBContract> DBContract { get; set; }
+        public virtual ICollection<SalesOrderAppDetail> SalesOrderAppDetail { get; set; }
     }
 }

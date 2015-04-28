@@ -282,6 +282,7 @@ namespace ZhongDing.Business.Repositories
                                      FactoryName = ts == null ? string.Empty : ts.FactoryName,
                                      SalesQty = soad.Count,
                                      SalesPrice = soad.SalesPrice,
+                                     InvoicePrice = soad.InvoicePrice,
                                      OutQty = q.OutQty,
                                      TaxQty = q.TaxQty,
                                      TotalSalesAmount = q.TotalSalesAmount,
@@ -295,17 +296,19 @@ namespace ZhongDing.Business.Repositories
                                      ClientInvoiceDetailTotalAmount = DB.ClientInvoiceDetail.Any(x => x.IsDeleted == false && x.StockOutDetailID == q.ID) ?
                                      DB.ClientInvoiceDetail.Where(x => x.IsDeleted == false && x.StockOutDetailID == q.ID).Sum(x => x.Amount) : 0,
                                      SaleOrderType = sop.SaleOrderType.TypeName,
-                                     SaleOrderTypeID = sop.SaleOrderTypeID
+                                     SaleOrderTypeID = sop.SaleOrderTypeID,
+                                     NotTaxQty = (q.TaxQty ?? 0) - (q.ClientInvoiceDetail.Any(x => x.IsDeleted == false) 
+                                                    ? q.ClientInvoiceDetail.Where(x => x.IsDeleted == false).Sum(x => x.Qty ?? 0) : 0)
                                  }).Where(x => x.ClientInvoiceDetailTotalAmount / x.SalesPrice < x.TaxQty.Value);
                 total = tempQuery.Count();
                 uiEntities = tempQuery.OrderBy(x => x.StockOutID).Skip(pageSize * pageIndex).Take(pageSize).ToList();
             }
 
             totalRecords = total;
-            uiEntities.ForEach(x =>
-            {
-                x.NotTaxQty = x.TaxQty.Value - (int)(x.ClientInvoiceDetailTotalAmount / x.SalesPrice);
-            });
+            //uiEntities.ForEach(x =>
+            //{
+            //    x.NotTaxQty = x.TaxQty.Value - (int)(x.ClientInvoiceDetailTotalAmount / x.SalesPrice);
+            //});
             return uiEntities;
         }
         public IList<UIStockOutDetail> GetDBClientInvoiceChooseStockOutDetailUIList(UISearchStockOutDetail uiSearchObj, int pageIndex, int pageSize, out int totalRecords)

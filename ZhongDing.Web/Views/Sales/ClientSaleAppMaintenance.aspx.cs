@@ -945,6 +945,11 @@ namespace ZhongDing.Web.Views.Sales
             {
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT).Visible = true;
             }
+
+            if (this.CurrentEntity != null && this.CurrentEntity.SalesOrderApplication.SaleOrderTypeID == (int)ESaleOrderType.AttachedMode)
+                e.OwnerTableView.Columns.FindByUniqueName("InvoicePrice").Visible = true;
+            else
+                e.OwnerTableView.Columns.FindByUniqueName("InvoicePrice").Visible = false;
         }
 
         protected void rgOrderProducts_ItemDataBound(object sender, GridItemEventArgs e)

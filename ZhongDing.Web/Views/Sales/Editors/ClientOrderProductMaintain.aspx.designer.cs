@@ -166,6 +166,33 @@ namespace ZhongDing.Web.Views.Sales.Editors {
         protected global::System.Web.UI.WebControls.CustomValidator cvSalesPrice;
         
         /// <summary>
+        /// divAttachedPrice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAttachedPrice;
+        
+        /// <summary>
+        /// txtInvoicePrice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadNumericTextBox txtInvoicePrice;
+        
+        /// <summary>
+        /// cvInvoicePrice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cvInvoicePrice;
+        
+        /// <summary>
         /// txtCount control.
         /// </summary>
         /// <remarks>
@@ -193,15 +220,6 @@ namespace ZhongDing.Web.Views.Sales.Editors {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvCount;
         
         /// <summary>
-        /// lblNumberOfPackages control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNumberOfPackages;
-        
-        /// <summary>
         /// txtGiftCount control.
         /// </summary>
         /// <remarks>
@@ -209,6 +227,15 @@ namespace ZhongDing.Web.Views.Sales.Editors {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadNumericTextBox txtGiftCount;
+        
+        /// <summary>
+        /// lblNumberOfPackages control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblNumberOfPackages;
         
         /// <summary>
         /// txtTotalSalesAmount control.

@@ -349,6 +349,9 @@
                                                     <telerik:GridBoundColumn UniqueName="SalesPrice" HeaderText="单价" DataField="SalesPrice" DataFormatString="{0:C2}">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="InvoicePrice" HeaderText="挂靠单价" DataField="InvoicePrice" DataFormatString="{0:C2}">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
                                                     <telerik:GridBoundColumn UniqueName="GiftCount" HeaderText="赠送数量" DataField="GiftCount" FooterText="合计："
                                                         FooterStyle-Font-Bold="true" FooterStyle-HorizontalAlign="Right">
                                                         <ItemStyle HorizontalAlign="Left" />

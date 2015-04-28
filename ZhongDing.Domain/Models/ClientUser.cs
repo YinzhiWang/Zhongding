@@ -27,6 +27,7 @@ namespace ZhongDing.Domain.Models
             this.DBContract = new HashSet<DBContract>();
             this.FactoryManagerRefundApplication = new HashSet<FactoryManagerRefundApplication>();
             this.StockOut = new HashSet<StockOut>();
+            this.ClientAttachedInvoiceSettlement = new HashSet<ClientAttachedInvoiceSettlement>();
         }
     
         public int ID { get; set; }
@@ -59,5 +60,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<DBContract> DBContract { get; set; }
         public virtual ICollection<FactoryManagerRefundApplication> FactoryManagerRefundApplication { get; set; }
         public virtual ICollection<StockOut> StockOut { get; set; }
+        public virtual ICollection<ClientAttachedInvoiceSettlement> ClientAttachedInvoiceSettlement { get; set; }
     }
 }

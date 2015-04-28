@@ -9,47 +9,31 @@ namespace ZhongDing.Domain.UIObjects
     public class UIClientInvoice
     {
         public int ID { get; set; }
+
         public int CompanyID { get; set; }
         
-        public System.DateTime InvoiceDate { get; set; }
-        public string InvoiceNumber { get; set; }
-        public decimal Amount { get; set; }
-        public bool IsDeleted { get; set; }
-        public System.DateTime CreatedOn { get; set; }
+        public DateTime InvoiceDate { get; set; }
 
- 
+        public string SaleOrderType { get; set; }
+
         public string CompanyName { get; set; }
-
-        public string StockOutCode { get; set; }
-
-        public DateTime? StockOutOutDate { get; set; }
-
-        public string ProductName { get; set; }
-
-        public int OutQty { get; set; }
-
-        public decimal TotalSalesAmount { get; set; }
-
-        public decimal? TaxAmount { get; set; }
-
-        public int ProductID { get; set; }
-
-        public int ClientInvoiceDetailID { get; set; }
-
-        public int? TaxQty { get; set; }
 
         public string ClientCompanyName { get; set; }
 
-        public decimal ClientInvoiceDetailAmount { get; set; }
+        public string ClientUserName { get; set; }
 
-        public decimal SalesPrice { get; set; }
+        public string InvoiceNumber { get; set; }
 
-        public int ClientInvoiceDetailQty { get; set; }
+        public string StockOutCode { get; set; }
 
-        public decimal ClientInvoiceDetailTaxAmount { get; set; }
+        public string ProductName { get; set; }
 
-        public decimal StockOutDetailSalesAmount { get; set; }
+        public int InvoiceQty { get; set; }
 
-        public string SaleOrderType { get; set; }
+        public decimal TotalSalesAmount { get; set; }
+
+        public decimal InvoiceAmount { get; set; }
+
+        public string TransportNumber { get; set; }
     }
 }

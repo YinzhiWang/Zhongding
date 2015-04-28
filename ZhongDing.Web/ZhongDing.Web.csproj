@@ -2625,6 +2625,8 @@
     <Content Include="Views\Imports\ImportDCFlowDataDetails.aspx" />
     <Content Include="Views\Imports\ImportDCInventoryData.aspx" />
     <Content Include="Views\Imports\ImportDCInventoryDataDetails.aspx" />
+    <Content Include="Views\Invoices\ClientAttachedInvoiceSettlementMaintenance.aspx" />
+    <Content Include="Views\Invoices\ClientAttachedInvoiceSettlementManagement.aspx" />
     <Content Include="Views\Invoices\ClientInfoInvoiceManagement.aspx" />
     <Content Include="Views\Invoices\ClientInfoInvoiceMaintenance.aspx" />
     <Content Include="Views\Invoices\ClientInvoiceSettlementMaintenance.aspx" />
@@ -3258,6 +3260,19 @@
     <Compile Include="Views\Imports\ImportDCInventoryDataDetails.aspx.designer.cs">
       <DependentUpon>ImportDCInventoryDataDetails.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Invoices\ClientAttachedInvoiceSettlementMaintenance.aspx.cs">
+      <DependentUpon>ClientAttachedInvoiceSettlementMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Invoices\ClientAttachedInvoiceSettlementMaintenance.aspx.designer.cs">
+      <DependentUpon>ClientAttachedInvoiceSettlementMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Invoices\ClientAttachedInvoiceSettlementManagement.aspx.cs">
+      <DependentUpon>ClientAttachedInvoiceSettlementManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Invoices\ClientAttachedInvoiceSettlementManagement.aspx.designer.cs">
+      <DependentUpon>ClientAttachedInvoiceSettlementManagement.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Invoices\ClientInfoInvoiceManagement.aspx.cs">
       <DependentUpon>ClientInfoInvoiceManagement.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3786,7 +3801,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

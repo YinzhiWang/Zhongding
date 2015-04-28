@@ -13,23 +13,15 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class SalesOrderApplication : IEntityExtendedProperty
+    public partial class ClientAttachedInvoiceSettlementDetail : IEntityExtendedProperty
     {
-        public SalesOrderApplication()
-        {
-            this.DaBaoApplication = new HashSet<DaBaoApplication>();
-            this.ClientSaleApplication = new HashSet<ClientSaleApplication>();
-            this.StockOutDetail = new HashSet<StockOutDetail>();
-            this.SalesOrderAppDetail = new HashSet<SalesOrderAppDetail>();
-        }
-    
         public int ID { get; set; }
-        public int SaleOrderTypeID { get; set; }
-        public string OrderCode { get; set; }
-        public System.DateTime OrderDate { get; set; }
-        public bool IsStop { get; set; }
-        public Nullable<System.DateTime> StoppedOn { get; set; }
-        public Nullable<int> StoppedBy { get; set; }
+        public int ClientAttachedInvoiceSettlementID { get; set; }
+        public int ClientInvoiceDetailID { get; set; }
+        public int StockOutDetailID { get; set; }
+        public int InvoiceQty { get; set; }
+        public Nullable<int> SettlementQty { get; set; }
+        public Nullable<decimal> SettlementAmount { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -46,10 +38,8 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ICollection<DaBaoApplication> DaBaoApplication { get; set; }
-        public virtual SaleOrderType SaleOrderType { get; set; }
-        public virtual ICollection<ClientSaleApplication> ClientSaleApplication { get; set; }
-        public virtual ICollection<StockOutDetail> StockOutDetail { get; set; }
-        public virtual ICollection<SalesOrderAppDetail> SalesOrderAppDetail { get; set; }
+        public virtual ClientAttachedInvoiceSettlement ClientAttachedInvoiceSettlement { get; set; }
+        public virtual ClientInvoiceDetail ClientInvoiceDetail { get; set; }
+        public virtual StockOutDetail StockOutDetail { get; set; }
     }
 }

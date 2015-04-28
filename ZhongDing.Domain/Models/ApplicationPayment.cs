@@ -19,8 +19,6 @@ namespace ZhongDing.Domain.Models
         {
             this.SupplierInvoiceSettlementDetail = new HashSet<SupplierInvoiceSettlementDetail>();
             this.SupplierInvoiceSettlementDetail1 = new HashSet<SupplierInvoiceSettlementDetail>();
-            this.ClientInvoiceSettlementDetail = new HashSet<ClientInvoiceSettlementDetail>();
-            this.ClientInvoiceSettlementDetail1 = new HashSet<ClientInvoiceSettlementDetail>();
             this.DBClientInvoiceSettlementDetail = new HashSet<DBClientInvoiceSettlementDetail>();
             this.DBClientInvoiceSettlementDetail1 = new HashSet<DBClientInvoiceSettlementDetail>();
         }
@@ -61,8 +59,6 @@ namespace ZhongDing.Domain.Models
         public virtual Workflow Workflow { get; set; }
         public virtual ICollection<SupplierInvoiceSettlementDetail> SupplierInvoiceSettlementDetail { get; set; }
         public virtual ICollection<SupplierInvoiceSettlementDetail> SupplierInvoiceSettlementDetail1 { get; set; }
-        public virtual ICollection<ClientInvoiceSettlementDetail> ClientInvoiceSettlementDetail { get; set; }
-        public virtual ICollection<ClientInvoiceSettlementDetail> ClientInvoiceSettlementDetail1 { get; set; }
         public virtual ICollection<DBClientInvoiceSettlementDetail> DBClientInvoiceSettlementDetail { get; set; }
         public virtual ICollection<DBClientInvoiceSettlementDetail> DBClientInvoiceSettlementDetail1 { get; set; }
     }

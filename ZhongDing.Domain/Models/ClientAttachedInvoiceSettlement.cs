@@ -13,24 +13,37 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class ClientInvoiceDetail : IEntityExtendedProperty
+    public partial class ClientAttachedInvoiceSettlement : IEntityExtendedProperty
     {
-        public ClientInvoiceDetail()
+        public ClientAttachedInvoiceSettlement()
         {
             this.ClientAttachedInvoiceSettlementDetail = new HashSet<ClientAttachedInvoiceSettlementDetail>();
         }
     
         public int ID { get; set; }
-        public int ClientInvoiceID { get; set; }
-        public int StockOutDetailID { get; set; }
-        public decimal Amount { get; set; }
+        public int ClientUserID { get; set; }
+        public int CompanyID { get; set; }
+        public int ClientCompanyID { get; set; }
+        public int WorkflowStatusID { get; set; }
+        public int ReceiveBankAccountID { get; set; }
+        public string ReceiveAccount { get; set; }
+        public decimal ReceiveAmount { get; set; }
+        public Nullable<int> OtherCostTypeID { get; set; }
+        public Nullable<decimal> OtherCostAmount { get; set; }
+        public Nullable<System.DateTime> ConfirmDate { get; set; }
+        public Nullable<System.DateTime> SettlementDate { get; set; }
+        public Nullable<decimal> TotalRefundAmount { get; set; }
+        public Nullable<System.DateTime> PaidDate { get; set; }
+        public Nullable<int> PaidBy { get; set; }
+        public bool IsCanceled { get; set; }
+        public string CanceledReason { get; set; }
+        public Nullable<System.DateTime> CanceledDate { get; set; }
+        public Nullable<int> CanceledBy { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
-        public int InvoiceTypeID { get; set; }
-        public Nullable<int> Qty { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -42,9 +55,12 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual StockOutDetail StockOutDetail { get; set; }
-        public virtual InvoiceType InvoiceType { get; set; }
-        public virtual ClientInvoice ClientInvoice { get; set; }
+        public virtual BankAccount BankAccount { get; set; }
+        public virtual ClientCompany ClientCompany { get; set; }
+        public virtual ClientUser ClientUser { get; set; }
+        public virtual Company Company { get; set; }
+        public virtual CostType CostType { get; set; }
+        public virtual WorkflowStatus WorkflowStatus { get; set; }
         public virtual ICollection<ClientAttachedInvoiceSettlementDetail> ClientAttachedInvoiceSettlementDetail { get; set; }
     }
 }

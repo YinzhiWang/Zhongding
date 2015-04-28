@@ -40,6 +40,8 @@ namespace ZhongDing.Domain.UIObjects
 
         public decimal SalesPrice { get; set; }
 
+        public decimal? InvoicePrice { get; set; }
+
         public int SalesQty { get; set; }
 
         /// <summary>

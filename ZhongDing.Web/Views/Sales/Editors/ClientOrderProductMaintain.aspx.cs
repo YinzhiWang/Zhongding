@@ -342,6 +342,9 @@ namespace ZhongDing.Web.Views.Sales.Editors
 
             if (CurrentOwnerEntity.SalesOrderApplication != null)
             {
+                if (CurrentOwnerEntity.SalesOrderApplication.SaleOrderTypeID == (int)ESaleOrderType.AttachedMode)
+                    divAttachedPrice.Visible = true;
+
                 var salesOrderAppDetails = CurrentOwnerEntity.SalesOrderApplication.SalesOrderAppDetail
                     .Where(x => x.IsDeleted == false);
 
@@ -374,6 +377,7 @@ namespace ZhongDing.Web.Views.Sales.Editors
                     txtCount.DbValue = salesOrderAppDetail.Count;
                     txtGiftCount.DbValue = salesOrderAppDetail.GiftCount;
                     txtTotalSalesAmount.DbValue = salesOrderAppDetail.TotalSalesAmount;
+                    txtInvoicePrice.DbValue = salesOrderAppDetail.InvoicePrice;
                 }
                 else
                 {
@@ -394,6 +398,7 @@ namespace ZhongDing.Web.Views.Sales.Editors
             ddlProductSpecification.Enabled = false;
             txtCount.Enabled = false;
             txtGiftCount.Enabled = false;
+            txtInvoicePrice.Enabled = false;
 
             btnSave.Enabled = false;
         }
@@ -435,6 +440,13 @@ namespace ZhongDing.Web.Views.Sales.Editors
                     cvSalesPrice.ErrorMessage = "销售单价必填";
 
                 cvSalesPrice.IsValid = false;
+            }
+
+            if (CurrentOwnerEntity != null && CurrentOwnerEntity.SalesOrderApplication.SaleOrderTypeID
+                == (int)ESaleOrderType.AttachedMode)
+            {
+                if (!txtInvoicePrice.Value.HasValue)
+                    cvInvoicePrice.IsValid = false;
             }
 
             if (!IsValid) return;
@@ -520,6 +532,11 @@ namespace ZhongDing.Web.Views.Sales.Editors
                         salesOrderAppDetail.SalesPrice = salesPrice.HasValue ? salesPrice.Value : 0;
 
                     salesOrderAppDetail.TotalSalesAmount = salesOrderAppDetail.SalesPrice * salesOrderAppDetail.Count;
+
+                    if (CurrentOwnerEntity.SalesOrderApplication.SaleOrderTypeID == (int)ESaleOrderType.AttachedMode)
+                        salesOrderAppDetail.InvoicePrice = (decimal?)txtInvoicePrice.Value;
+                    else
+                        salesOrderAppDetail.InvoicePrice = salesOrderAppDetail.SalesPrice;
 
                     unitOfWork.SaveChanges();
 

@@ -92,7 +92,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<SaleOrderType> SaleOrderType { get; set; }
         public DbSet<SalesOrderApplication> SalesOrderApplication { get; set; }
         public DbSet<ClientSaleApplication> ClientSaleApplication { get; set; }
-        public DbSet<SalesOrderAppDetail> SalesOrderAppDetail { get; set; }
         public DbSet<ProductHighPrice> ProductHighPrice { get; set; }
         public DbSet<ApplicationPayment> ApplicationPayment { get; set; }
         public DbSet<SupplierDeduction> SupplierDeduction { get; set; }
@@ -134,10 +133,14 @@ namespace ZhongDing.Domain.Models
         public DbSet<SupplierInvoiceSettlementDetail> SupplierInvoiceSettlementDetail { get; set; }
         public DbSet<SupplierInvoiceSettlement> SupplierInvoiceSettlement { get; set; }
         public DbSet<ClientInvoice> ClientInvoice { get; set; }
-        public DbSet<ClientInvoiceSettlementDetail> ClientInvoiceSettlementDetail { get; set; }
         public DbSet<ClientInvoiceSettlement> ClientInvoiceSettlement { get; set; }
         public DbSet<DBClientInvoiceSettlementDetail> DBClientInvoiceSettlementDetail { get; set; }
         public DbSet<DBClientInvoice> DBClientInvoice { get; set; }
         public DbSet<DBClientInvoiceSettlement> DBClientInvoiceSettlement { get; set; }
+        public DbSet<SalesOrderAppDetail> SalesOrderAppDetail { get; set; }
+        public DbSet<CostType> CostType { get; set; }
+        public DbSet<ClientAttachedInvoiceSettlement> ClientAttachedInvoiceSettlement { get; set; }
+        public DbSet<ClientAttachedInvoiceSettlementDetail> ClientAttachedInvoiceSettlementDetail { get; set; }
+        public DbSet<ClientInvoiceSettlementDetail> ClientInvoiceSettlementDetail { get; set; }
     }
 }

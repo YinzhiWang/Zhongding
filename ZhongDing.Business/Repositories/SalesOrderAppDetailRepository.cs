@@ -50,6 +50,7 @@ namespace ZhongDing.Business.Repositories
                                   Specification = ps.Specification,
                                   UnitOfMeasurement = tum == null ? string.Empty : tum.UnitName,
                                   SalesPrice = q.SalesPrice,
+                                  InvoicePrice = q.InvoicePrice,
                                   SalesQty = q.Count,
                                   TotalSalesAmount = q.TotalSalesAmount,
                                   GiftCount = q.GiftCount,
@@ -99,6 +100,7 @@ namespace ZhongDing.Business.Repositories
                                   Specification = ps.Specification,
                                   UnitOfMeasurement = tum == null ? string.Empty : tum.UnitName,
                                   SalesPrice = q.SalesPrice,
+                                  InvoicePrice = q.InvoicePrice,
                                   SalesQty = q.Count,
                                   TotalSalesAmount = q.TotalSalesAmount,
                                   GiftCount = q.GiftCount,
@@ -180,6 +182,7 @@ namespace ZhongDing.Business.Repositories
                                   FactoryName = ts == null ? string.Empty : ts.FactoryName,
                                   SalesQty = q.Count,
                                   SalesPrice = q.SalesPrice,
+                                  InvoicePrice = q.InvoicePrice,
                                   NumberInLargePackage = ps.NumberInLargePackage,
                                   NumberOfPackages = q.Count / (ps.NumberInLargePackage.HasValue ? ps.NumberInLargePackage.Value : 1),
                                   OutQty = DB.StockOutDetail.Any(x => x.IsDeleted == false && x.SalesOrderAppDetailID == q.ID)
@@ -269,6 +272,7 @@ namespace ZhongDing.Business.Repositories
                                   FactoryName = ts == null ? string.Empty : ts.FactoryName,
                                   SalesQty = q.Count,
                                   SalesPrice = q.SalesPrice,
+                                  InvoicePrice = q.InvoicePrice,
                                   NumberInLargePackage = ps.NumberInLargePackage,
                                   NumberOfPackages = q.Count / (ps.NumberInLargePackage.HasValue ? ps.NumberInLargePackage.Value : 1),
                                   OutQty = DB.StockOutDetail.Any(x => x.IsDeleted == false && x.SalesOrderAppDetailID == q.ID)

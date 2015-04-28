@@ -279,6 +279,10 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         DBClientInvoiceSettlementManage,
 
+        /// <summary>
+        /// 挂靠发票结算管理
+        /// </summary>
+        ClientAttachedInvoiceSettlementManage
 
     }
 }
