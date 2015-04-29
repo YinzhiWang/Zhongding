@@ -377,6 +377,13 @@
         <AssociationConnector Association="DbModel.FK_ClientInvoiceSettlementDetail_ClientCompany" />
         <AssociationConnector Association="DbModel.FK_ClientInvoiceSettlementDetail_ClientInvoice" />
         <AssociationConnector Association="DbModel.FK_ClientInvoiceSettlementDetail_ClientInvoiceSettlement" />
+        <EntityTypeShape EntityType="DbModel.CautionMoneyType" Width="1.5" PointX="10.768021517790864" PointY="27.422100586547565" />
+        <EntityTypeShape EntityType="DbModel.SupplierCautionMoney" Width="1.5" PointX="9.927280894446783" PointY="14.639464593790223" />
+        <AssociationConnector Association="DbModel.FK_SupplierCautionMoney_CautionMoneyTypeID" />
+        <AssociationConnector Association="DbModel.FK_SupplierCautionMoney_ProductID" />
+        <AssociationConnector Association="DbModel.FK_SupplierCautionMoney_ProductSpecificationID" />
+        <AssociationConnector Association="DbModel.FK_SupplierCautionMoney_SupplierID" />
+        <AssociationConnector Association="DbModel.FK_SupplierCautionMoney_WorkflowStatusID" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

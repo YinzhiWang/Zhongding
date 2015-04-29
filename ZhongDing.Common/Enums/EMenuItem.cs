@@ -282,7 +282,20 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 挂靠发票结算管理
         /// </summary>
-        ClientAttachedInvoiceSettlementManage
+        ClientAttachedInvoiceSettlementManage,
+
+        /// <summary>
+        /// 保证金管理
+        /// </summary>
+        CautionMoneyManage = 200,
+        /// <summary>
+        /// 供应商保证金管理
+        /// </summary>
+        SupplierCautionMoneyManage = 201,
+        /// <summary>
+        /// 供应商保证金支出申请管理
+        /// </summary>
+        SupplierCautionMoneyApplyManage = 202,
 
     }
 }

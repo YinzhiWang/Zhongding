@@ -201,10 +201,10 @@
                             <li data-level="1" data-menuitemid="200">
                                 <a href="#" class="mws-i-24 i-tags-2">保证金管理</a>
                                 <ul class="hide">
-                                    <li data-level="2" data-menuitemid="151">
-                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Invoices/SupplierInvoiceManagement.aspx');">供应商保证金管理</a></li>
-                                    <li data-level="2" data-menuitemid="152">
-                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Invoices/ClientInfoInvoiceManagement.aspx');">供应商保证金申请</a></li>
+                                    <li data-level="2" data-menuitemid="201">
+                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/CautionMoneys/SupplierCautionMoneyManagement.aspx');">供应商保证金管理</a></li>
+                                    <li data-level="2" data-menuitemid="202">
+                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/CautionMoneys/SupplierCautionMoneyApplyManagement.aspx');">供应商保证金申请</a></li>
                                 </ul>
                             </li>
                         </ul>

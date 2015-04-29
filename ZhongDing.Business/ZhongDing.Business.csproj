@@ -53,7 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\DynamicLinq.cs" />
-    <Compile Include="IRepositories\IClientAttachedInvoiceSettlementRepository.cs" />
+    <Compile Include="IRepositories\ICautionMoneyTypeRepository.cs" />
     <Compile Include="IRepositories\IClientInvoiceSettlementDetailRepository.cs" />
     <Compile Include="IRepositories\IClientInvoiceSettlementRepository.cs" />
     <Compile Include="IRepositories\IDBClientInvoiceDetailRepository.cs" />
@@ -69,6 +69,7 @@
     <Compile Include="IRepositories\IDBClientSettlementRepository.cs" />
     <Compile Include="IRepositories\IDCInventoryDataRepository.cs" />
     <Compile Include="IRepositories\IHospitalTypeRepository.cs" />
+    <Compile Include="IRepositories\ISupplierCautionMoneyRepository.cs" />
     <Compile Include="IRepositories\ISupplierInvoiceDetailRepository.cs" />
     <Compile Include="IRepositories\ISupplierInvoiceRepository.cs" />
     <Compile Include="IRepositories\ISupplierInvoiceSettlementDetailRepository.cs" />
@@ -166,9 +167,9 @@
     <Compile Include="Repositories\BaseRepository.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Repositories\CautionMoneyTypeRepository.cs" />
     <Compile Include="Repositories\CertificateRepository.cs" />
     <Compile Include="Repositories\CertificateTypeRepository.cs" />
-    <Compile Include="Repositories\ClientAttachedInvoiceSettlementRepository.cs" />
     <Compile Include="Repositories\ClientCompanyCertificateRepository.cs" />
     <Compile Include="Repositories\ClientCompanyRepository.cs" />
     <Compile Include="Repositories\ClientFlowDataRepository.cs" />
@@ -241,6 +242,7 @@
     <Compile Include="Repositories\StockOutDetailRepository.cs" />
     <Compile Include="Repositories\StockOutRepository.cs" />
     <Compile Include="Repositories\SupplierBankAccountRepository.cs" />
+    <Compile Include="Repositories\SupplierCautionMoneyRepository.cs" />
     <Compile Include="Repositories\SupplierCertificateRepository.cs" />
     <Compile Include="Repositories\SupplierContractFileRepository.cs" />
     <Compile Include="Repositories\SupplierContractRepository.cs" />

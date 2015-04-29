@@ -13,6 +13,7 @@
           <EntitySet Name="aspnet_Roles" EntityType="DbModel.Store.aspnet_Roles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="aspnet_Users" EntityType="DbModel.Store.aspnet_Users" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="BankAccount" EntityType="DbModel.Store.BankAccount" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CautionMoneyType" EntityType="DbModel.Store.CautionMoneyType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Certificate" EntityType="DbModel.Store.Certificate" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CertificateType" EntityType="DbModel.Store.CertificateType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ClientAttachedInvoiceSettlement" EntityType="DbModel.Store.ClientAttachedInvoiceSettlement" store:Type="Tables" Schema="dbo" />
@@ -99,6 +100,7 @@
           <EntitySet Name="StockOutDetail" EntityType="DbModel.Store.StockOutDetail" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Supplier" EntityType="DbModel.Store.Supplier" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierBankAccount" EntityType="DbModel.Store.SupplierBankAccount" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SupplierCautionMoney" EntityType="DbModel.Store.SupplierCautionMoney" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierCertificate" EntityType="DbModel.Store.SupplierCertificate" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierContract" EntityType="DbModel.Store.SupplierContract" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierContractFile" EntityType="DbModel.Store.SupplierContractFile" store:Type="Tables" Schema="dbo" />
@@ -983,6 +985,26 @@
             <End Role="Supplier" EntitySet="Supplier" />
             <End Role="SupplierBankAccount" EntitySet="SupplierBankAccount" />
           </AssociationSet>
+          <AssociationSet Name="FK_SupplierCautionMoney_CautionMoneyTypeID" Association="DbModel.Store.FK_SupplierCautionMoney_CautionMoneyTypeID">
+            <End Role="CautionMoneyType" EntitySet="CautionMoneyType" />
+            <End Role="SupplierCautionMoney" EntitySet="SupplierCautionMoney" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierCautionMoney_ProductID" Association="DbModel.Store.FK_SupplierCautionMoney_ProductID">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="SupplierCautionMoney" EntitySet="SupplierCautionMoney" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierCautionMoney_ProductSpecificationID" Association="DbModel.Store.FK_SupplierCautionMoney_ProductSpecificationID">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="SupplierCautionMoney" EntitySet="SupplierCautionMoney" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierCautionMoney_SupplierID" Association="DbModel.Store.FK_SupplierCautionMoney_SupplierID">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="SupplierCautionMoney" EntitySet="SupplierCautionMoney" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierCautionMoney_WorkflowStatusID" Association="DbModel.Store.FK_SupplierCautionMoney_WorkflowStatusID">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="SupplierCautionMoney" EntitySet="SupplierCautionMoney" />
+          </AssociationSet>
           <AssociationSet Name="FK_SupplierCertificate_Certificate" Association="DbModel.Store.FK_SupplierCertificate_Certificate">
             <End Role="Certificate" EntitySet="Certificate" />
             <End Role="SupplierCertificate" EntitySet="SupplierCertificate" />
@@ -1255,6 +1277,13 @@
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="CautionMoneyType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
         </EntityType>
         <EntityType Name="Certificate">
           <Key>
@@ -2655,6 +2684,30 @@
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="SupplierCautionMoney">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="ProductSpecificationID" Type="int" Nullable="false" />
+          <Property Name="CautionMoneyTypeID" Type="int" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
+          <Property Name="PaymentCautionMoney" Type="money" Nullable="false" />
+          <Property Name="TakeBackCautionMoney" Type="money" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="WorkflowStatusID" Type="int" Nullable="false" />
+          <Property Name="IsStop" Type="bit" Nullable="false" />
+          <Property Name="StoppedOn" Type="datetime" />
+          <Property Name="StoppedBy" Type="int" />
+          <Property Name="ApplyDate" Type="datetime" Nullable="false" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="256" />
         </EntityType>
         <EntityType Name="SupplierCertificate">
           <Key>
@@ -5607,6 +5660,66 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SupplierCautionMoney_CautionMoneyTypeID">
+          <End Role="CautionMoneyType" Type="DbModel.Store.CautionMoneyType" Multiplicity="1" />
+          <End Role="SupplierCautionMoney" Type="DbModel.Store.SupplierCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CautionMoneyType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierCautionMoney">
+              <PropertyRef Name="CautionMoneyTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierCautionMoney_ProductID">
+          <End Role="Product" Type="DbModel.Store.Product" Multiplicity="1" />
+          <End Role="SupplierCautionMoney" Type="DbModel.Store.SupplierCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierCautionMoney">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierCautionMoney_ProductSpecificationID">
+          <End Role="ProductSpecification" Type="DbModel.Store.ProductSpecification" Multiplicity="1" />
+          <End Role="SupplierCautionMoney" Type="DbModel.Store.SupplierCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierCautionMoney">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierCautionMoney_SupplierID">
+          <End Role="Supplier" Type="DbModel.Store.Supplier" Multiplicity="1" />
+          <End Role="SupplierCautionMoney" Type="DbModel.Store.SupplierCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierCautionMoney">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierCautionMoney_WorkflowStatusID">
+          <End Role="WorkflowStatus" Type="DbModel.Store.WorkflowStatus" Multiplicity="1" />
+          <End Role="SupplierCautionMoney" Type="DbModel.Store.SupplierCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierCautionMoney">
+              <PropertyRef Name="WorkflowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SupplierCertificate_Certificate">
           <End Role="Certificate" Type="DbModel.Store.Certificate" Multiplicity="0..1" />
           <End Role="SupplierCertificate" Type="DbModel.Store.SupplierCertificate" Multiplicity="*" />
@@ -7229,6 +7342,28 @@
             <End Role="ClientInvoiceSettlement" EntitySet="ClientInvoiceSettlement" />
             <End Role="ClientInvoiceSettlementDetail" EntitySet="ClientInvoiceSettlementDetail" />
           </AssociationSet>
+          <EntitySet Name="CautionMoneyType" EntityType="DbModel.CautionMoneyType" />
+          <EntitySet Name="SupplierCautionMoney" EntityType="DbModel.SupplierCautionMoney" />
+          <AssociationSet Name="FK_SupplierCautionMoney_CautionMoneyTypeID" Association="DbModel.FK_SupplierCautionMoney_CautionMoneyTypeID">
+            <End Role="CautionMoneyType" EntitySet="CautionMoneyType" />
+            <End Role="SupplierCautionMoney" EntitySet="SupplierCautionMoney" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierCautionMoney_ProductID" Association="DbModel.FK_SupplierCautionMoney_ProductID">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="SupplierCautionMoney" EntitySet="SupplierCautionMoney" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierCautionMoney_ProductSpecificationID" Association="DbModel.FK_SupplierCautionMoney_ProductSpecificationID">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="SupplierCautionMoney" EntitySet="SupplierCautionMoney" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierCautionMoney_SupplierID" Association="DbModel.FK_SupplierCautionMoney_SupplierID">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="SupplierCautionMoney" EntitySet="SupplierCautionMoney" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierCautionMoney_WorkflowStatusID" Association="DbModel.FK_SupplierCautionMoney_WorkflowStatusID">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="SupplierCautionMoney" EntitySet="SupplierCautionMoney" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -7473,6 +7608,7 @@
           <NavigationProperty Name="DBClientBonus" Relationship="DbModel.FK_DBClientBonus_Product" FromRole="Product" ToRole="DBClientBonus" />
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_Product" FromRole="Product" ToRole="DBContract" />
           <NavigationProperty Name="SalesOrderAppDetail" Relationship="DbModel.FK_SalesOrderAppDetail_Product" FromRole="Product" ToRole="SalesOrderAppDetail" />
+          <NavigationProperty Name="SupplierCautionMoney" Relationship="DbModel.FK_SupplierCautionMoney_ProductID" FromRole="Product" ToRole="SupplierCautionMoney" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -7553,6 +7689,7 @@
           <NavigationProperty Name="SupplierRefundApplication" Relationship="DbModel.FK_SupplierRefundApplication_Supplier" FromRole="Supplier" ToRole="SupplierRefundApplication" />
           <NavigationProperty Name="SupplierInvoice" Relationship="DbModel.FK_SupplierInvoice_SupplierID" FromRole="Supplier" ToRole="SupplierInvoice" />
           <NavigationProperty Name="SupplierInvoiceSettlementDetail" Relationship="DbModel.FK_SupplierInvoiceSettlementDetail_Supplier" FromRole="Supplier" ToRole="SupplierInvoiceSettlementDetail" />
+          <NavigationProperty Name="SupplierCautionMoney" Relationship="DbModel.FK_SupplierCautionMoney_SupplierID" FromRole="Supplier" ToRole="SupplierCautionMoney" />
         </EntityType>
         <EntityType Name="SupplierBankAccount">
           <Key>
@@ -8666,6 +8803,7 @@
           <NavigationProperty Name="DBClientSettlement" Relationship="DbModel.FK_DBClientSettlement_WorkflowStatus" FromRole="WorkflowStatus" ToRole="DBClientSettlement" />
           <NavigationProperty Name="ClientInvoiceSettlement" Relationship="DbModel.FK_ClientInvoiceSettlement_WorkflowStatus" FromRole="WorkflowStatus" ToRole="ClientInvoiceSettlement" />
           <NavigationProperty Name="ClientAttachedInvoiceSettlement" Relationship="DbModel.FK_ClientAttachedInvoiceSettlement_WorkflowStatus" FromRole="WorkflowStatus" ToRole="ClientAttachedInvoiceSettlement" />
+          <NavigationProperty Name="SupplierCautionMoney" Relationship="DbModel.FK_SupplierCautionMoney_WorkflowStatusID" FromRole="WorkflowStatus" ToRole="SupplierCautionMoney" />
         </EntityType>
         <EntityType Name="WorkflowStepStatus">
           <Key>
@@ -9447,6 +9585,7 @@
           <NavigationProperty Name="DBClientBonus" Relationship="DbModel.FK_DBClientBonus_ProductSpecification" FromRole="ProductSpecification" ToRole="DBClientBonus" />
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_ProductSpecification" FromRole="ProductSpecification" ToRole="DBContract" />
           <NavigationProperty Name="SalesOrderAppDetail" Relationship="DbModel.FK_SalesOrderAppDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="SalesOrderAppDetail" />
+          <NavigationProperty Name="SupplierCautionMoney" Relationship="DbModel.FK_SupplierCautionMoney_ProductSpecificationID" FromRole="ProductSpecification" ToRole="SupplierCautionMoney" />
         </EntityType>
         <Association Name="FK_ClientInfoProductSetting_ProductSpecification">
           <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
@@ -12683,6 +12822,103 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="CautionMoneyType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SupplierCautionMoney" Relationship="DbModel.FK_SupplierCautionMoney_CautionMoneyTypeID" FromRole="CautionMoneyType" ToRole="SupplierCautionMoney" />
+        </EntityType>
+        <EntityType Name="SupplierCautionMoney">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="SupplierID" Nullable="false" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
+          <Property Type="Int32" Name="CautionMoneyTypeID" Nullable="false" />
+          <Property Type="DateTime" Name="EndDate" Nullable="false" Precision="3" />
+          <Property Type="Decimal" Name="PaymentCautionMoney" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="TakeBackCautionMoney" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <Property Type="Int32" Name="WorkflowStatusID" Nullable="false" />
+          <Property Type="Boolean" Name="IsStop" Nullable="false" />
+          <Property Type="DateTime" Name="StoppedOn" Precision="3" />
+          <Property Type="Int32" Name="StoppedBy" />
+          <Property Type="DateTime" Name="ApplyDate" Nullable="false" Precision="3" />
+          <Property Type="String" Name="Remark" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CautionMoneyType" Relationship="DbModel.FK_SupplierCautionMoney_CautionMoneyTypeID" FromRole="SupplierCautionMoney" ToRole="CautionMoneyType" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_SupplierCautionMoney_ProductID" FromRole="SupplierCautionMoney" ToRole="Product" />
+          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_SupplierCautionMoney_ProductSpecificationID" FromRole="SupplierCautionMoney" ToRole="ProductSpecification" />
+          <NavigationProperty Name="Supplier" Relationship="DbModel.FK_SupplierCautionMoney_SupplierID" FromRole="SupplierCautionMoney" ToRole="Supplier" />
+          <NavigationProperty Name="WorkflowStatus" Relationship="DbModel.FK_SupplierCautionMoney_WorkflowStatusID" FromRole="SupplierCautionMoney" ToRole="WorkflowStatus" />
+        </EntityType>
+        <Association Name="FK_SupplierCautionMoney_CautionMoneyTypeID">
+          <End Type="DbModel.CautionMoneyType" Role="CautionMoneyType" Multiplicity="1" />
+          <End Type="DbModel.SupplierCautionMoney" Role="SupplierCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CautionMoneyType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierCautionMoney">
+              <PropertyRef Name="CautionMoneyTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierCautionMoney_ProductID">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DbModel.SupplierCautionMoney" Role="SupplierCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierCautionMoney">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierCautionMoney_ProductSpecificationID">
+          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
+          <End Type="DbModel.SupplierCautionMoney" Role="SupplierCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierCautionMoney">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierCautionMoney_SupplierID">
+          <End Type="DbModel.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="DbModel.SupplierCautionMoney" Role="SupplierCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierCautionMoney">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierCautionMoney_WorkflowStatusID">
+          <End Type="DbModel.WorkflowStatus" Role="WorkflowStatus" Multiplicity="1" />
+          <End Type="DbModel.SupplierCautionMoney" Role="SupplierCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierCautionMoney">
+              <PropertyRef Name="WorkflowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -14685,6 +14921,39 @@
                 <ScalarProperty Name="ClientInvoiceID" ColumnName="ClientInvoiceID" />
                 <ScalarProperty Name="ClientCompanyID" ColumnName="ClientCompanyID" />
                 <ScalarProperty Name="ClientInvoiceSettlementID" ColumnName="ClientInvoiceSettlementID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CautionMoneyType">
+            <EntityTypeMapping TypeName="DbModel.CautionMoneyType">
+              <MappingFragment StoreEntitySet="CautionMoneyType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplierCautionMoney">
+            <EntityTypeMapping TypeName="DbModel.SupplierCautionMoney">
+              <MappingFragment StoreEntitySet="SupplierCautionMoney">
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="ApplyDate" ColumnName="ApplyDate" />
+                <ScalarProperty Name="StoppedBy" ColumnName="StoppedBy" />
+                <ScalarProperty Name="StoppedOn" ColumnName="StoppedOn" />
+                <ScalarProperty Name="IsStop" ColumnName="IsStop" />
+                <ScalarProperty Name="WorkflowStatusID" ColumnName="WorkflowStatusID" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="TakeBackCautionMoney" ColumnName="TakeBackCautionMoney" />
+                <ScalarProperty Name="PaymentCautionMoney" ColumnName="PaymentCautionMoney" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="CautionMoneyTypeID" ColumnName="CautionMoneyTypeID" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
