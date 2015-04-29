@@ -427,6 +427,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UIObjects\UIClientAttachedInvoiceSettlement.cs" />
+    <Compile Include="UIObjects\UIClientAttachedInvoiceSettlementDetail.cs" />
     <Compile Include="UIObjects\UIClientInvoiceSettlement.cs" />
     <Compile Include="UIObjects\UIClientInvoiceSettlementDetail.cs" />
     <Compile Include="UIObjects\UIDBClientInvoice.cs" />
@@ -521,6 +522,7 @@
     <Compile Include="UIObjects\UIWorkflowBase.cs" />
     <Compile Include="UIObjects\UIWorkflowStep.cs" />
     <Compile Include="UISearchObjects\UISearchClientAttachedInvoiceSettlement.cs" />
+    <Compile Include="UISearchObjects\UISearchClientAttachedInvoiceSettlementDetail.cs" />
     <Compile Include="UISearchObjects\UISearchClientInvoiceSettlement.cs" />
     <Compile Include="UISearchObjects\UISearchClientInvoiceSettlementDetail.cs" />
     <Compile Include="UISearchObjects\UISearchDBClientInvoice.cs" />

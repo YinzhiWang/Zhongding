@@ -5,6 +5,7 @@
     [StockOutDetailID]                  INT      NOT NULL,
     [InvoiceQty]                        INT      NOT NULL,
     [SettlementQty]                     INT      NULL,
+    [SalesAmount]                       MONEY    NULL,
     [SettlementAmount]                  MONEY    NULL,
     [IsDeleted]                         BIT      NOT NULL,
     [CreatedOn]                         DATETIME NOT NULL,
@@ -16,4 +17,6 @@
     CONSTRAINT [FK_ClientAttachedInvoiceSettlementDetail_ClientInvoiceDetail] FOREIGN KEY ([ClientInvoiceDetailID]) REFERENCES [dbo].[ClientInvoiceDetail] ([ID]),
     CONSTRAINT [FK_ClientAttachedInvoiceSettlementDetail_StockOutDetail] FOREIGN KEY ([StockOutDetailID]) REFERENCES [dbo].[StockOutDetail] ([ID])
 );
+
+
 

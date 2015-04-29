@@ -9,6 +9,7 @@ using ZhongDing.Business.IRepositories;
 using ZhongDing.Business.Repositories;
 using ZhongDing.Common;
 using ZhongDing.Common.Enums;
+using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
 
 namespace ZhongDing.Web.Views.Invoices
@@ -16,6 +17,18 @@ namespace ZhongDing.Web.Views.Invoices
     public partial class ClientAttachedInvoiceSettlementManagement : WorkflowBasePage
     {
         #region Members
+
+        private IClientAttachedInvoiceSettlementRepository _PageClientAttachedInvoiceSettlementRepository;
+        private IClientAttachedInvoiceSettlementRepository PageClientAttachedInvoiceSettlementRepository
+        {
+            get
+            {
+                if (_PageClientAttachedInvoiceSettlementRepository == null)
+                    _PageClientAttachedInvoiceSettlementRepository = new ClientAttachedInvoiceSettlementRepository();
+
+                return _PageClientAttachedInvoiceSettlementRepository;
+            }
+        }
 
         private IClientUserRepository _PageClientUserRepository;
         private IClientUserRepository PageClientUserRepository
@@ -41,6 +54,54 @@ namespace ZhongDing.Web.Views.Invoices
             }
         }
 
+        private IList<int> _CanAddUserIDs;
+        private IList<int> CanAddUserIDs
+        {
+            get
+            {
+                if (_CanAddUserIDs == null)
+                    _CanAddUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.NewCAISettlement);
+
+                return _CanAddUserIDs;
+            }
+        }
+
+        private IList<int> _CanEditUserIDs;
+        private IList<int> CanEditUserIDs
+        {
+            get
+            {
+                if (_CanEditUserIDs == null)
+                    _CanEditUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.EditCAISettlement);
+
+                return _CanEditUserIDs;
+            }
+        }
+
+        private IList<int> _CanAuditByTreasurersUserIDs;
+        private IList<int> CanAuditByTreasurersUserIDs
+        {
+            get
+            {
+                if (_CanAuditByTreasurersUserIDs == null)
+                    _CanAuditByTreasurersUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.AuditCAISettlementByTreasurers);
+
+                return _CanAuditByTreasurersUserIDs;
+            }
+        }
+
+        private IList<int> _CanPayUserIDs;
+        private IList<int> CanPayUserIDs
+        {
+            get
+            {
+                if (_CanPayUserIDs == null)
+                    _CanPayUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.PayCAISettlement);
+
+                return _CanPayUserIDs;
+            }
+        }
+
         #endregion
 
         protected override int GetCurrentWorkFlowID()
@@ -50,7 +111,7 @@ namespace ZhongDing.Web.Views.Invoices
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.Master.MenuItemID = (int)EMenuItem.ClientInvoiceSettlementManage;
+            this.Master.MenuItemID = (int)EMenuItem.ClientAttachedInvoiceSettlementManage;
 
             if (!IsPostBack)
             {
@@ -123,6 +184,103 @@ namespace ZhongDing.Web.Views.Invoices
             rcbxWorkflowStatus.Items.Insert(0, new RadComboBoxItem("", ""));
         }
 
+        private void BindEntities(bool isNeedRebind)
+        {
+            var uiSearchObj = new UISearchClientAttachedInvoiceSettlement
+            {
+                CompanyID = CurrentUser.CompanyID,
+                BeginDate = rdpBeginDate.SelectedDate,
+                EndDate = rdpEndDate.SelectedDate,
+                ExcludeCanceled = true
+            };
+
+            if (!string.IsNullOrEmpty(rcbxClientUser.SelectedValue))
+            {
+                int clientUserID;
+                if (int.TryParse(rcbxClientUser.SelectedValue, out clientUserID))
+                    uiSearchObj.ClientUserID = clientUserID;
+            }
+
+            if (!string.IsNullOrEmpty(rcbxClientCompany.SelectedValue))
+            {
+                int clientCompanyID;
+                if (int.TryParse(rcbxClientCompany.SelectedValue, out clientCompanyID))
+                    uiSearchObj.ClientCompanyID = clientCompanyID;
+            }
+
+            IList<int> includeWorkflowStatusIDs = PageWorkflowStatusRepository
+                .GetCanAccessIDsByUserID(this.CurrentWorkFlowID, CurrentUser.UserID);
+
+            if (includeWorkflowStatusIDs == null)
+            {
+                includeWorkflowStatusIDs = new List<int>();
+                includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Paid);
+            }
+            else
+            {
+                if (this.CanAddUserIDs.Contains(CurrentUser.UserID) || this.CanEditUserIDs.Contains(CurrentUser.UserID))
+                {
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.TemporarySave))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.TemporarySave);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Submit))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Submit);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ReturnBasicInfo))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ReturnBasicInfo);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ApprovedByTreasurers))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ApprovedByTreasurers);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ApprovedByDeptManagers))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ApprovedByDeptManagers);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Paid))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Paid);
+                }
+
+                if (CanAuditByTreasurersUserIDs.Contains(CurrentUser.UserID))
+                {
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Submit))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Submit);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ApprovedByTreasurers))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ApprovedByTreasurers);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ApprovedByDeptManagers))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ApprovedByDeptManagers);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Paid))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Paid);
+                }
+
+                if (CanPayUserIDs.Contains(CurrentUser.UserID))
+                {
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Paid))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Paid);
+                }
+            }
+
+            uiSearchObj.IncludeWorkflowStatusIDs = includeWorkflowStatusIDs;
+
+            if (!string.IsNullOrEmpty(rcbxWorkflowStatus.SelectedValue))
+            {
+                int workflowStatusID;
+                if (int.TryParse(rcbxWorkflowStatus.SelectedValue, out workflowStatusID))
+                    uiSearchObj.WorkflowStatusID = workflowStatusID;
+            }
+
+            int totalRecords;
+
+            var uiEntities = PageClientAttachedInvoiceSettlementRepository.GetUIList(uiSearchObj, rgEntities.CurrentPageIndex, rgEntities.PageSize, out totalRecords);
+
+            rgEntities.VirtualItemCount = totalRecords;
+            rgEntities.DataSource = uiEntities;
+
+            if (isNeedRebind)
+                rgEntities.Rebind();
+        }
+
 
         #endregion
 
@@ -133,27 +291,207 @@ namespace ZhongDing.Web.Views.Invoices
 
         protected void rgEntities_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
         {
-
+            BindEntities(false);
         }
 
         protected void rgEntities_ItemCreated(object sender, GridItemEventArgs e)
         {
+            if (e.Item is GridCommandItem)
+            {
+                GridCommandItem commandItem = e.Item as GridCommandItem;
+                Panel plAddCommand = commandItem.FindControl("plAddCommand") as Panel;
 
+                if (plAddCommand != null)
+                {
+                    if (this.CanAddUserIDs.Contains(CurrentUser.UserID))
+                        plAddCommand.Visible = true;
+                    else
+                        plAddCommand.Visible = false;
+                }
+            }
         }
 
         protected void rgEntities_ColumnCreated(object sender, GridColumnCreatedEventArgs e)
         {
-
+            if (this.CanAddUserIDs.Contains(CurrentUser.UserID) || CanEditUserIDs.Contains(CurrentUser.UserID))
+                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = true;
+            else
+                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = false;
         }
 
         protected void rgEntities_ItemDataBound(object sender, GridItemEventArgs e)
         {
+            if (e.Item.ItemType == GridItemType.Item
+                || e.Item.ItemType == GridItemType.AlternatingItem)
+            {
+                GridDataItem gridDataItem = e.Item as GridDataItem;
+                var uiEntity = (UIClientAttachedInvoiceSettlement)gridDataItem.DataItem;
 
+                if (uiEntity != null)
+                {
+                    string linkHtml = "<a href=\"javascript:void(0);\" onclick=\"redirectToMaintenancePage(" + uiEntity.ID + ")\">";
+
+                    var canAccessUserIDs = PageWorkflowStatusRepository.GetCanAccessUserIDsByID(this.CurrentWorkFlowID, uiEntity.WorkflowStatusID);
+
+                    bool isCanAccessUser = false;
+                    if (canAccessUserIDs.Contains(CurrentUser.UserID))
+                        isCanAccessUser = true;
+
+                    bool isCanEditUser = false;
+                    if (CanEditUserIDs.Contains(CurrentUser.UserID)
+                        || uiEntity.CreatedByUserID == CurrentUser.UserID)
+                        isCanEditUser = true;
+
+                    bool isShowDeleteLink = false;
+
+                    EWorkflowStatus workflowStatus = (EWorkflowStatus)uiEntity.WorkflowStatusID;
+
+                    if (CanEditUserIDs.Contains(CurrentUser.UserID))
+                    {
+                        linkHtml += "编辑";
+
+                        switch (workflowStatus)
+                        {
+                            case EWorkflowStatus.TemporarySave:
+                            case EWorkflowStatus.ReturnBasicInfo:
+                                isShowDeleteLink = true;
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        if (isCanAccessUser)
+                        {
+                            switch (workflowStatus)
+                            {
+                                case EWorkflowStatus.TemporarySave:
+                                case EWorkflowStatus.ReturnBasicInfo:
+                                    if (isCanEditUser)
+                                    {
+                                        linkHtml += "编辑";
+                                        isShowDeleteLink = true;
+                                    }
+                                    else
+                                        linkHtml += "查看";
+                                    break;
+
+                                case EWorkflowStatus.Submit:
+                                case EWorkflowStatus.ApprovedByTreasurers:
+                                    linkHtml += "审核";
+                                    break;
+
+                                case EWorkflowStatus.ApprovedByDeptManagers:
+                                    linkHtml += "支付";
+                                    break;
+
+                                case EWorkflowStatus.Paid:
+                                    linkHtml += "查看";
+                                    break;
+                            }
+                        }
+                        else
+                        {
+                            if (uiEntity.PaidBy == CurrentUser.UserID)
+                                linkHtml += "撤销";
+                            else
+                                linkHtml += "查看";
+                        }
+                    }
+
+                    linkHtml += "</a>";
+
+                    var editColumn = rgEntities.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT);
+
+                    if (editColumn != null)
+                    {
+                        var editCell = gridDataItem.Cells[editColumn.OrderIndex];
+
+                        if (editCell != null)
+                            editCell.Text = linkHtml;
+                    }
+
+                    var deleteColumn = rgEntities.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE);
+
+                    if (deleteColumn != null)
+                    {
+                        var deleteCell = gridDataItem.Cells[deleteColumn.OrderIndex];
+
+                        if (deleteCell != null && !isShowDeleteLink)
+                            deleteCell.Text = string.Empty;
+                    }
+                }
+            }
         }
 
         protected void rgEntities_DeleteCommand(object sender, GridCommandEventArgs e)
         {
+            GridEditableItem editableItem = e.Item as GridEditableItem;
+
+            String sid = editableItem.GetDataKeyValue("ID").ToString();
+
+            int id = 0;
+            if (int.TryParse(sid, out id))
+            {
+                using (IUnitOfWork unitOfWork = new UnitOfWork())
+                {
+                    var db = unitOfWork.GetDbModel();
+
+                    IClientAttachedInvoiceSettlementRepository caisRepository = new ClientAttachedInvoiceSettlementRepository();
+                    IApplicationNoteRepository appNoteRepository = new ApplicationNoteRepository();
+                    IApplicationPaymentRepository appPaymentRepository = new ApplicationPaymentRepository();
+
+                    caisRepository.SetDbModel(db);
+                    appNoteRepository.SetDbModel(db);
+                    appPaymentRepository.SetDbModel(db);
+
+                    var currentEntity = caisRepository.GetByID(id);
+
+                    if (currentEntity != null)
+                    {
+                        foreach (var item in currentEntity.ClientAttachedInvoiceSettlementDetail)
+                        {
+                            item.IsDeleted = true;
+                        }
+
+                        caisRepository.Delete(currentEntity);
+
+                        var appNotes = appNoteRepository.GetList(x => x.WorkflowID == CurrentWorkFlowID && x.ApplicationID == currentEntity.ID);
+                        foreach (var item in appNotes)
+                        {
+                            appNoteRepository.Delete(item);
+                        }
+
+                        var appPayments = appPaymentRepository.GetList(x => x.WorkflowID == CurrentWorkFlowID && x.ApplicationID == currentEntity.ID);
+
+                        foreach (var item in appPayments)
+                        {
+                            appPaymentRepository.Delete(item);
+                        }
+
+                        unitOfWork.SaveChanges();
+                    }
+                }
+
+                rgEntities.Rebind();
+            }
 
         }
+
+        protected void btnSearch_Click(object sender, EventArgs e)
+        {
+            BindEntities(true);
+        }
+
+        protected void btnReset_Click(object sender, EventArgs e)
+        {
+            rdpBeginDate.Clear();
+            rdpEndDate.Clear();
+
+            rcbxClientCompany.ClearSelection();
+            rcbxWorkflowStatus.ClearSelection();
+
+            BindEntities(true);
+        }
+
     }
 }

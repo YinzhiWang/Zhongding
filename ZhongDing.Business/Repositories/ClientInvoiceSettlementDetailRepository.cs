@@ -63,6 +63,7 @@ namespace ZhongDing.Business.Repositories
                                                                   where ci.IsDeleted == false && ci.IsSettled != true
                                                                   && ci.CompanyID == uiSearchObj.CompanyID
                                                                   && ci.ClientCompanyID == uiSearchObj.ClientCompanyID
+                                                                  && ci.SaleOrderTypeID == (int)ESaleOrderType.AttractBusinessMode
                                                                   && (!uiSearchObj.BeginDate.HasValue || ci.InvoiceDate >= uiSearchObj.BeginDate)
                                                                   && (!uiSearchObj.EndDate.HasValue || ci.InvoiceDate < uiSearchObj.EndDate)
                                                                   select new UIClientInvoiceSettlementDetail

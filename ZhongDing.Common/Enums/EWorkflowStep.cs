@@ -282,5 +282,30 @@ namespace ZhongDing.Common.Enums
         /// 修改大包收款
         /// </summary>
         EditDBClientInvoiceSettlement,
+
+        /// <summary>
+        /// 新增挂靠发票结算
+        /// </summary>
+        NewCAISettlement,
+
+        /// <summary>
+        /// 财务主管审核（挂靠发票结算）
+        /// </summary>
+        AuditCAISettlementByTreasurers,
+
+        /// <summary>
+        /// 部门领导审核（挂靠发票结算）
+        /// </summary>
+        AuditCAISettlementByDeptManagers,
+
+        /// <summary>
+        /// 出纳支付（挂靠发票结算）
+        /// </summary>
+        PayCAISettlement,
+
+        /// <summary>
+        /// 修改挂靠发票结算
+        /// </summary>
+        EditCAISettlement = 60,
     }
 }

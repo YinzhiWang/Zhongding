@@ -140,9 +140,9 @@ namespace ZhongDing.Domain.Models
         public DbSet<SalesOrderAppDetail> SalesOrderAppDetail { get; set; }
         public DbSet<CostType> CostType { get; set; }
         public DbSet<ClientAttachedInvoiceSettlement> ClientAttachedInvoiceSettlement { get; set; }
-        public DbSet<ClientAttachedInvoiceSettlementDetail> ClientAttachedInvoiceSettlementDetail { get; set; }
         public DbSet<ClientInvoiceSettlementDetail> ClientInvoiceSettlementDetail { get; set; }
         public DbSet<CautionMoneyType> CautionMoneyType { get; set; }
         public DbSet<SupplierCautionMoney> SupplierCautionMoney { get; set; }
+        public DbSet<ClientAttachedInvoiceSettlementDetail> ClientAttachedInvoiceSettlementDetail { get; set; }
     }
 }

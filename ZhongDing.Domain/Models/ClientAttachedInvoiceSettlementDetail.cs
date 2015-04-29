@@ -21,6 +21,7 @@ namespace ZhongDing.Domain.Models
         public int StockOutDetailID { get; set; }
         public int InvoiceQty { get; set; }
         public Nullable<int> SettlementQty { get; set; }
+        public Nullable<decimal> SalesAmount { get; set; }
         public Nullable<decimal> SettlementAmount { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }

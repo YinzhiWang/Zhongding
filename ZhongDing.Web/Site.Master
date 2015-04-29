@@ -196,6 +196,8 @@
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Invoices/ClientInvoiceSettlementManagement.aspx');">客户发票结算</a></li>
                                     <li data-level="2" data-menuitemid="156">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Invoices/DBClientInvoiceSettlementManagement.aspx');">大包收款管理</a></li>
+                                    <li data-level="2" data-menuitemid="157">
+                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Invoices/ClientAttachedInvoiceSettlementManagement.aspx');">挂靠发票结算</a></li>
                                 </ul>
                             </li>
                             <li data-level="1" data-menuitemid="200">

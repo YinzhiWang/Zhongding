@@ -1352,6 +1352,7 @@
           <Property Name="StockOutDetailID" Type="int" Nullable="false" />
           <Property Name="InvoiceQty" Type="int" Nullable="false" />
           <Property Name="SettlementQty" Type="int" />
+          <Property Name="SalesAmount" Type="money" />
           <Property Name="SettlementAmount" Type="money" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
@@ -7316,20 +7317,7 @@
             <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
             <End Role="ClientAttachedInvoiceSettlement" EntitySet="ClientAttachedInvoiceSettlement" />
           </AssociationSet>
-          <EntitySet Name="ClientAttachedInvoiceSettlementDetail" EntityType="DbModel.ClientAttachedInvoiceSettlementDetail" />
           <EntitySet Name="ClientInvoiceSettlementDetail" EntityType="DbModel.ClientInvoiceSettlementDetail" />
-          <AssociationSet Name="FK_ClientAttachedInvoiceSettlementDetail_ClientAttachedInvoiceSettlement" Association="DbModel.FK_ClientAttachedInvoiceSettlementDetail_ClientAttachedInvoiceSettlement">
-            <End Role="ClientAttachedInvoiceSettlement" EntitySet="ClientAttachedInvoiceSettlement" />
-            <End Role="ClientAttachedInvoiceSettlementDetail" EntitySet="ClientAttachedInvoiceSettlementDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClientAttachedInvoiceSettlementDetail_ClientInvoiceDetail" Association="DbModel.FK_ClientAttachedInvoiceSettlementDetail_ClientInvoiceDetail">
-            <End Role="ClientInvoiceDetail" EntitySet="ClientInvoiceDetail" />
-            <End Role="ClientAttachedInvoiceSettlementDetail" EntitySet="ClientAttachedInvoiceSettlementDetail" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClientAttachedInvoiceSettlementDetail_StockOutDetail" Association="DbModel.FK_ClientAttachedInvoiceSettlementDetail_StockOutDetail">
-            <End Role="StockOutDetail" EntitySet="StockOutDetail" />
-            <End Role="ClientAttachedInvoiceSettlementDetail" EntitySet="ClientAttachedInvoiceSettlementDetail" />
-          </AssociationSet>
           <AssociationSet Name="FK_ClientInvoiceSettlementDetail_ClientCompany" Association="DbModel.FK_ClientInvoiceSettlementDetail_ClientCompany">
             <End Role="ClientCompany" EntitySet="ClientCompany" />
             <End Role="ClientInvoiceSettlementDetail" EntitySet="ClientInvoiceSettlementDetail" />
@@ -7363,6 +7351,19 @@
           <AssociationSet Name="FK_SupplierCautionMoney_WorkflowStatusID" Association="DbModel.FK_SupplierCautionMoney_WorkflowStatusID">
             <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
             <End Role="SupplierCautionMoney" EntitySet="SupplierCautionMoney" />
+          </AssociationSet>
+          <EntitySet Name="ClientAttachedInvoiceSettlementDetail" EntityType="DbModel.ClientAttachedInvoiceSettlementDetail" />
+          <AssociationSet Name="FK_ClientAttachedInvoiceSettlementDetail_ClientAttachedInvoiceSettlement" Association="DbModel.FK_ClientAttachedInvoiceSettlementDetail_ClientAttachedInvoiceSettlement">
+            <End Role="ClientAttachedInvoiceSettlement" EntitySet="ClientAttachedInvoiceSettlement" />
+            <End Role="ClientAttachedInvoiceSettlementDetail" EntitySet="ClientAttachedInvoiceSettlementDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientAttachedInvoiceSettlementDetail_ClientInvoiceDetail" Association="DbModel.FK_ClientAttachedInvoiceSettlementDetail_ClientInvoiceDetail">
+            <End Role="ClientInvoiceDetail" EntitySet="ClientInvoiceDetail" />
+            <End Role="ClientAttachedInvoiceSettlementDetail" EntitySet="ClientAttachedInvoiceSettlementDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientAttachedInvoiceSettlementDetail_StockOutDetail" Association="DbModel.FK_ClientAttachedInvoiceSettlementDetail_StockOutDetail">
+            <End Role="StockOutDetail" EntitySet="StockOutDetail" />
+            <End Role="ClientAttachedInvoiceSettlementDetail" EntitySet="ClientAttachedInvoiceSettlementDetail" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
@@ -12703,26 +12704,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="ClientAttachedInvoiceSettlementDetail">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="ClientAttachedInvoiceSettlementID" Nullable="false" />
-          <Property Type="Int32" Name="ClientInvoiceDetailID" Nullable="false" />
-          <Property Type="Int32" Name="StockOutDetailID" Nullable="false" />
-          <Property Type="Int32" Name="InvoiceQty" Nullable="false" />
-          <Property Type="Int32" Name="SettlementQty" />
-          <Property Type="Decimal" Name="SettlementAmount" Precision="19" Scale="4" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="ClientAttachedInvoiceSettlement" Relationship="DbModel.FK_ClientAttachedInvoiceSettlementDetail_ClientAttachedInvoiceSettlement" FromRole="ClientAttachedInvoiceSettlementDetail" ToRole="ClientAttachedInvoiceSettlement" />
-          <NavigationProperty Name="ClientInvoiceDetail" Relationship="DbModel.FK_ClientAttachedInvoiceSettlementDetail_ClientInvoiceDetail" FromRole="ClientAttachedInvoiceSettlementDetail" ToRole="ClientInvoiceDetail" />
-          <NavigationProperty Name="StockOutDetail" Relationship="DbModel.FK_ClientAttachedInvoiceSettlementDetail_StockOutDetail" FromRole="ClientAttachedInvoiceSettlementDetail" ToRole="StockOutDetail" />
-        </EntityType>
         <EntityType Name="ClientInvoiceSettlementDetail">
           <Key>
             <PropertyRef Name="ID" />
@@ -12750,42 +12731,6 @@
           <NavigationProperty Name="ClientInvoice" Relationship="DbModel.FK_ClientInvoiceSettlementDetail_ClientInvoice" FromRole="ClientInvoiceSettlementDetail" ToRole="ClientInvoice" />
           <NavigationProperty Name="ClientInvoiceSettlement" Relationship="DbModel.FK_ClientInvoiceSettlementDetail_ClientInvoiceSettlement" FromRole="ClientInvoiceSettlementDetail" ToRole="ClientInvoiceSettlement" />
         </EntityType>
-        <Association Name="FK_ClientAttachedInvoiceSettlementDetail_ClientAttachedInvoiceSettlement">
-          <End Type="DbModel.ClientAttachedInvoiceSettlement" Role="ClientAttachedInvoiceSettlement" Multiplicity="1" />
-          <End Type="DbModel.ClientAttachedInvoiceSettlementDetail" Role="ClientAttachedInvoiceSettlementDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ClientAttachedInvoiceSettlement">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ClientAttachedInvoiceSettlementDetail">
-              <PropertyRef Name="ClientAttachedInvoiceSettlementID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClientAttachedInvoiceSettlementDetail_ClientInvoiceDetail">
-          <End Type="DbModel.ClientInvoiceDetail" Role="ClientInvoiceDetail" Multiplicity="1" />
-          <End Type="DbModel.ClientAttachedInvoiceSettlementDetail" Role="ClientAttachedInvoiceSettlementDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ClientInvoiceDetail">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ClientAttachedInvoiceSettlementDetail">
-              <PropertyRef Name="ClientInvoiceDetailID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClientAttachedInvoiceSettlementDetail_StockOutDetail">
-          <End Type="DbModel.StockOutDetail" Role="StockOutDetail" Multiplicity="1" />
-          <End Type="DbModel.ClientAttachedInvoiceSettlementDetail" Role="ClientAttachedInvoiceSettlementDetail" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="StockOutDetail">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ClientAttachedInvoiceSettlementDetail">
-              <PropertyRef Name="StockOutDetailID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ClientInvoiceSettlementDetail_ClientCompany">
           <End Type="DbModel.ClientCompany" Role="ClientCompany" Multiplicity="1" />
           <End Type="DbModel.ClientInvoiceSettlementDetail" Role="ClientInvoiceSettlementDetail" Multiplicity="*" />
@@ -12916,6 +12861,63 @@
             </Principal>
             <Dependent Role="SupplierCautionMoney">
               <PropertyRef Name="WorkflowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ClientAttachedInvoiceSettlementDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ClientAttachedInvoiceSettlementID" Nullable="false" />
+          <Property Type="Int32" Name="ClientInvoiceDetailID" Nullable="false" />
+          <Property Type="Int32" Name="StockOutDetailID" Nullable="false" />
+          <Property Type="Int32" Name="InvoiceQty" Nullable="false" />
+          <Property Type="Int32" Name="SettlementQty" />
+          <Property Type="Decimal" Name="SalesAmount" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="SettlementAmount" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="ClientAttachedInvoiceSettlement" Relationship="DbModel.FK_ClientAttachedInvoiceSettlementDetail_ClientAttachedInvoiceSettlement" FromRole="ClientAttachedInvoiceSettlementDetail" ToRole="ClientAttachedInvoiceSettlement" />
+          <NavigationProperty Name="ClientInvoiceDetail" Relationship="DbModel.FK_ClientAttachedInvoiceSettlementDetail_ClientInvoiceDetail" FromRole="ClientAttachedInvoiceSettlementDetail" ToRole="ClientInvoiceDetail" />
+          <NavigationProperty Name="StockOutDetail" Relationship="DbModel.FK_ClientAttachedInvoiceSettlementDetail_StockOutDetail" FromRole="ClientAttachedInvoiceSettlementDetail" ToRole="StockOutDetail" />
+        </EntityType>
+        <Association Name="FK_ClientAttachedInvoiceSettlementDetail_ClientAttachedInvoiceSettlement">
+          <End Type="DbModel.ClientAttachedInvoiceSettlement" Role="ClientAttachedInvoiceSettlement" Multiplicity="1" />
+          <End Type="DbModel.ClientAttachedInvoiceSettlementDetail" Role="ClientAttachedInvoiceSettlementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientAttachedInvoiceSettlement">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientAttachedInvoiceSettlementDetail">
+              <PropertyRef Name="ClientAttachedInvoiceSettlementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientAttachedInvoiceSettlementDetail_ClientInvoiceDetail">
+          <End Type="DbModel.ClientInvoiceDetail" Role="ClientInvoiceDetail" Multiplicity="1" />
+          <End Type="DbModel.ClientAttachedInvoiceSettlementDetail" Role="ClientAttachedInvoiceSettlementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientInvoiceDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientAttachedInvoiceSettlementDetail">
+              <PropertyRef Name="ClientInvoiceDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientAttachedInvoiceSettlementDetail_StockOutDetail">
+          <End Type="DbModel.StockOutDetail" Role="StockOutDetail" Multiplicity="1" />
+          <End Type="DbModel.ClientAttachedInvoiceSettlementDetail" Role="ClientAttachedInvoiceSettlementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockOutDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientAttachedInvoiceSettlementDetail">
+              <PropertyRef Name="StockOutDetailID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -14882,24 +14884,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ClientAttachedInvoiceSettlementDetail">
-            <EntityTypeMapping TypeName="DbModel.ClientAttachedInvoiceSettlementDetail">
-              <MappingFragment StoreEntitySet="ClientAttachedInvoiceSettlementDetail">
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="SettlementAmount" ColumnName="SettlementAmount" />
-                <ScalarProperty Name="SettlementQty" ColumnName="SettlementQty" />
-                <ScalarProperty Name="InvoiceQty" ColumnName="InvoiceQty" />
-                <ScalarProperty Name="StockOutDetailID" ColumnName="StockOutDetailID" />
-                <ScalarProperty Name="ClientInvoiceDetailID" ColumnName="ClientInvoiceDetailID" />
-                <ScalarProperty Name="ClientAttachedInvoiceSettlementID" ColumnName="ClientAttachedInvoiceSettlementID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ClientInvoiceSettlementDetail">
             <EntityTypeMapping TypeName="DbModel.ClientInvoiceSettlementDetail">
               <MappingFragment StoreEntitySet="ClientInvoiceSettlementDetail">
@@ -14954,6 +14938,25 @@
                 <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientAttachedInvoiceSettlementDetail">
+            <EntityTypeMapping TypeName="DbModel.ClientAttachedInvoiceSettlementDetail">
+              <MappingFragment StoreEntitySet="ClientAttachedInvoiceSettlementDetail">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="SettlementAmount" ColumnName="SettlementAmount" />
+                <ScalarProperty Name="SalesAmount" ColumnName="SalesAmount" />
+                <ScalarProperty Name="SettlementQty" ColumnName="SettlementQty" />
+                <ScalarProperty Name="InvoiceQty" ColumnName="InvoiceQty" />
+                <ScalarProperty Name="StockOutDetailID" ColumnName="StockOutDetailID" />
+                <ScalarProperty Name="ClientInvoiceDetailID" ColumnName="ClientInvoiceDetailID" />
+                <ScalarProperty Name="ClientAttachedInvoiceSettlementID" ColumnName="ClientAttachedInvoiceSettlementID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

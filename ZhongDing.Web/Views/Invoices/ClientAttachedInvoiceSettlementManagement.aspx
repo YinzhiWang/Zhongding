@@ -45,7 +45,7 @@
                     <div class="mws-form-inline">
                         <div runat="server" id="divSearch">
                             <div class="mws-form-row">
-                                <div class="float-left width60-percent">
+                                <div class="float-left width50-percent">
                                     <label>结算日期</label>
                                     <div class="mws-form-item">
                                         <telerik:RadDatePicker runat="server" ID="rdpBeginDate" Width="120"></telerik:RadDatePicker>
@@ -53,7 +53,7 @@
                                     <telerik:RadDatePicker runat="server" ID="rdpEndDate" Width="120"></telerik:RadDatePicker>
                                     </div>
                                 </div>
-                                <div class="float-left">
+                                <div class="float-left width40-percent">
                                     <label>客户</label>
                                     <div class="mws-form-item">
                                         <telerik:RadComboBox runat="server" ID="rcbxClientUser" Filter="Contains"
@@ -64,7 +64,7 @@
                                 </div>
                             </div>
                             <div class="mws-form-row">
-                                <div class="float-left width60-percent">
+                                <div class="float-left width50-percent">
                                     <label>商业单位</label>
                                     <div class="mws-form-item">
                                         <telerik:RadComboBox runat="server" ID="rcbxClientCompany" Filter="Contains"
