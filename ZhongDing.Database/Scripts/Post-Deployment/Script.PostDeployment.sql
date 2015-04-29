@@ -956,3 +956,48 @@ ALTER TABLE [dbo].[WorkflowStep]
     ADD CONSTRAINT [FK_WorkflowStep_Workflow] FOREIGN KEY ([WorkflowID]) REFERENCES [dbo].[Workflow] ([ID])
 COMMIT TRANSACTION
 ---- end --- 4/23/2015 -- 初始化工作流状态关联数据(大包收款管理)数据 -- by lihong
+
+---- start --- 4/29/2015 -- 初始化工作流状态关联数据(挂靠发票结算)，以及费用类型数据 -- by lihong
+
+SET NUMERIC_ROUNDABORT OFF
+GO
+SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+
+BEGIN TRANSACTION
+ALTER TABLE [dbo].[WorkflowStep] DROP CONSTRAINT [FK_WorkflowStep_Workflow]
+ALTER TABLE [dbo].[WorkflowStepStatus] DROP CONSTRAINT [FK_WorkflowStepStatus_WorkflowStatus]
+ALTER TABLE [dbo].[WorkflowStepStatus] DROP CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep]
+SET IDENTITY_INSERT [dbo].[Workflow] ON
+INSERT INTO [dbo].[Workflow] ([ID], [WorkflowName], [IsActive], [IsDeleted]) VALUES (17, N'挂靠发票结算', 1, 0)
+SET IDENTITY_INSERT [dbo].[Workflow] OFF
+SET IDENTITY_INSERT [dbo].[WorkflowStepStatus] ON
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (58, 56, 1, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (59, 56, 4, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (60, 57, 2, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (61, 58, 16, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (62, 59, 17, 0)
+SET IDENTITY_INSERT [dbo].[WorkflowStepStatus] OFF
+SET IDENTITY_INSERT [dbo].[WorkflowStep] ON
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (56, 17, N'新增挂靠发票结算', 0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (57, 17, N'挂靠发票结算财务主管审核', 0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (58, 17, N'挂靠发票结算部门领导审核', 0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (59, 17, N'挂靠发票结算出纳支付', 0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (60, 17, N'修改挂靠发票结算', 0)
+SET IDENTITY_INSERT [dbo].[WorkflowStep] OFF
+SET IDENTITY_INSERT [dbo].[CostType] ON
+INSERT INTO [dbo].[CostType] ([ID], [TypeName]) VALUES (1, N'手续费')
+INSERT INTO [dbo].[CostType] ([ID], [TypeName]) VALUES (2, N'托管费')
+INSERT INTO [dbo].[CostType] ([ID], [TypeName]) VALUES (3, N'破损')
+SET IDENTITY_INSERT [dbo].[CostType] OFF
+ALTER TABLE [dbo].[WorkflowStep]
+    ADD CONSTRAINT [FK_WorkflowStep_Workflow] FOREIGN KEY ([WorkflowID]) REFERENCES [dbo].[Workflow] ([ID])
+ALTER TABLE [dbo].[WorkflowStepStatus]
+    ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStatus] FOREIGN KEY ([WorkflowStatusID]) REFERENCES [dbo].[WorkflowStatus] ([ID])
+ALTER TABLE [dbo].[WorkflowStepStatus]
+    ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep] FOREIGN KEY ([WorkflowStepID]) REFERENCES [dbo].[WorkflowStep] ([ID])
+COMMIT TRANSACTION
+
+---- end --- 4/29/2015 -- 初始化工作流状态关联数据(挂靠发票结算)，以及费用类型数据 -- by lihong
+
+
