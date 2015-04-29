@@ -503,6 +503,7 @@
     <Compile Include="UIObjects\UISupplier.cs" />
     <Compile Include="UIObjects\UISupplierBankAccount.cs" />
     <Compile Include="UIObjects\UISupplierCautionMoney.cs" />
+    <Compile Include="UIObjects\UISupplierCautionMoneyAppPayment.cs" />
     <Compile Include="UIObjects\UISupplierCertificate.cs" />
     <Compile Include="UIObjects\UISupplierContract.cs" />
     <Compile Include="UIObjects\UISupplierContractFile.cs" />

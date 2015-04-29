@@ -282,7 +282,6 @@ namespace ZhongDing.Common.Enums
         /// 修改大包收款
         /// </summary>
         EditDBClientInvoiceSettlement,
-
         /// <summary>
         /// 新增挂靠发票结算
         /// </summary>
@@ -307,5 +306,30 @@ namespace ZhongDing.Common.Enums
         /// 修改挂靠发票结算
         /// </summary>
         EditCAISettlement = 60,
+
+        /// <summary>
+        /// 新增供应商保证金申请
+        /// </summary>
+        NewSupplierCautionMoneyApply = 61,
+
+        /// <summary>
+        /// 供应商保证金部门领导审核
+        /// </summary>
+        AuditSupplierCautionMoneyApplyByDeptManagers,
+
+        /// <summary>
+        /// 供应商保证金财务主管审核
+        /// </summary>
+        AuditSupplierCautionMoneyApplyByTreasurers,
+
+        /// <summary>
+        /// 供应商保证金出纳支付
+        /// </summary>
+        PaySupplierCautionMoneyApply,
+
+        /// <summary>
+        /// 修改供应商保证金申请
+        /// </summary>
+        EditSupplierCautionMoneyApply,
     }
 }

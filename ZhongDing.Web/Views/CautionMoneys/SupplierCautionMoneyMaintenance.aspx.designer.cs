@@ -229,31 +229,121 @@ namespace ZhongDing.Web.Views.CautionMoneys {
         protected global::Telerik.Web.UI.RadTextBox txtRemark;
         
         /// <summary>
-        /// divOtherSections control.
+        /// divAuditAll control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divOtherSections;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAuditAll;
         
         /// <summary>
-        /// rgStockIns control.
+        /// RadDockLayout2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid rgStockIns;
+        protected global::Telerik.Web.UI.RadDockLayout RadDockLayout2;
         
         /// <summary>
-        /// rgStockOuts control.
+        /// RadDockZone2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid rgStockOuts;
+        protected global::Telerik.Web.UI.RadDockZone RadDockZone2;
+        
+        /// <summary>
+        /// RadDock2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDock RadDock2;
+        
+        /// <summary>
+        /// rgAuditNotes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid rgAuditNotes;
+        
+        /// <summary>
+        /// divAudit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAudit;
+        
+        /// <summary>
+        /// txtAuditComment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtAuditComment;
+        
+        /// <summary>
+        /// cvAuditComment control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cvAuditComment;
+        
+        /// <summary>
+        /// divAppPayments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAppPayments;
+        
+        /// <summary>
+        /// rgAppPayments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid rgAppPayments;
+        
+        /// <summary>
+        /// divPaymentSummary control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPaymentSummary;
+        
+        /// <summary>
+        /// lblTotalPaymentAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalPaymentAmount;
+        
+        /// <summary>
+        /// lblCapitalTotalPaymentAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCapitalTotalPaymentAmount;
         
         /// <summary>
         /// btnSave control.
@@ -265,13 +355,31 @@ namespace ZhongDing.Web.Views.CautionMoneys {
         protected global::System.Web.UI.WebControls.Button btnSave;
         
         /// <summary>
-        /// btnDelete control.
+        /// btnSubmit control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDelete;
+        protected global::System.Web.UI.WebControls.Button btnSubmit;
+        
+        /// <summary>
+        /// btnAudit control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnAudit;
+        
+        /// <summary>
+        /// btnReturn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnReturn;
         
         /// <summary>
         /// btnCancel control.

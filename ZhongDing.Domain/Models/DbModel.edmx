@@ -989,6 +989,10 @@
             <End Role="CautionMoneyType" EntitySet="CautionMoneyType" />
             <End Role="SupplierCautionMoney" EntitySet="SupplierCautionMoney" />
           </AssociationSet>
+          <AssociationSet Name="FK_SupplierCautionMoney_CompanyID" Association="DbModel.Store.FK_SupplierCautionMoney_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="SupplierCautionMoney" EntitySet="SupplierCautionMoney" />
+          </AssociationSet>
           <AssociationSet Name="FK_SupplierCautionMoney_ProductID" Association="DbModel.Store.FK_SupplierCautionMoney_ProductID">
             <End Role="Product" EntitySet="Product" />
             <End Role="SupplierCautionMoney" EntitySet="SupplierCautionMoney" />
@@ -2709,6 +2713,7 @@
           <Property Name="StoppedBy" Type="int" />
           <Property Name="ApplyDate" Type="datetime" Nullable="false" />
           <Property Name="Remark" Type="nvarchar" MaxLength="256" />
+          <Property Name="CompanyID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="SupplierCertificate">
           <Key>
@@ -5673,6 +5678,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SupplierCautionMoney_CompanyID">
+          <End Role="Company" Type="DbModel.Store.Company" Multiplicity="1" />
+          <End Role="SupplierCautionMoney" Type="DbModel.Store.SupplierCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierCautionMoney">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SupplierCautionMoney_ProductID">
           <End Role="Product" Type="DbModel.Store.Product" Multiplicity="1" />
           <End Role="SupplierCautionMoney" Type="DbModel.Store.SupplierCautionMoney" Multiplicity="*" />
@@ -7352,6 +7369,10 @@
             <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
             <End Role="SupplierCautionMoney" EntitySet="SupplierCautionMoney" />
           </AssociationSet>
+          <AssociationSet Name="FK_SupplierCautionMoney_CompanyID" Association="DbModel.FK_SupplierCautionMoney_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="SupplierCautionMoney" EntitySet="SupplierCautionMoney" />
+          </AssociationSet>
           <EntitySet Name="ClientAttachedInvoiceSettlementDetail" EntityType="DbModel.ClientAttachedInvoiceSettlementDetail" />
           <AssociationSet Name="FK_ClientAttachedInvoiceSettlementDetail_ClientAttachedInvoiceSettlement" Association="DbModel.FK_ClientAttachedInvoiceSettlementDetail_ClientAttachedInvoiceSettlement">
             <End Role="ClientAttachedInvoiceSettlement" EntitySet="ClientAttachedInvoiceSettlement" />
@@ -7549,6 +7570,7 @@
           <NavigationProperty Name="DBClientInvoice" Relationship="DbModel.FK_DBClientInvoice_CompanyID" FromRole="Company" ToRole="DBClientInvoice" />
           <NavigationProperty Name="DBClientInvoiceSettlement" Relationship="DbModel.FK_DBClientInvoiceSettlement_Company" FromRole="Company" ToRole="DBClientInvoiceSettlement" />
           <NavigationProperty Name="ClientAttachedInvoiceSettlement" Relationship="DbModel.FK_ClientAttachedInvoiceSettlement_Company" FromRole="Company" ToRole="ClientAttachedInvoiceSettlement" />
+          <NavigationProperty Name="SupplierCautionMoney" Relationship="DbModel.FK_SupplierCautionMoney_CompanyID" FromRole="Company" ToRole="SupplierCautionMoney" />
         </EntityType>
         <EntityType Name="OwnerType">
           <Key>
@@ -12803,6 +12825,8 @@
           <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_SupplierCautionMoney_ProductSpecificationID" FromRole="SupplierCautionMoney" ToRole="ProductSpecification" />
           <NavigationProperty Name="Supplier" Relationship="DbModel.FK_SupplierCautionMoney_SupplierID" FromRole="SupplierCautionMoney" ToRole="Supplier" />
           <NavigationProperty Name="WorkflowStatus" Relationship="DbModel.FK_SupplierCautionMoney_WorkflowStatusID" FromRole="SupplierCautionMoney" ToRole="WorkflowStatus" />
+          <Property Type="Int32" Name="CompanyID" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="DbModel.FK_SupplierCautionMoney_CompanyID" FromRole="SupplierCautionMoney" ToRole="Company" />
         </EntityType>
         <Association Name="FK_SupplierCautionMoney_CautionMoneyTypeID">
           <End Type="DbModel.CautionMoneyType" Role="CautionMoneyType" Multiplicity="1" />
@@ -12861,6 +12885,18 @@
             </Principal>
             <Dependent Role="SupplierCautionMoney">
               <PropertyRef Name="WorkflowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierCautionMoney_CompanyID">
+          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="DbModel.SupplierCautionMoney" Role="SupplierCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierCautionMoney">
+              <PropertyRef Name="CompanyID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -14920,6 +14956,7 @@
           <EntitySetMapping Name="SupplierCautionMoney">
             <EntityTypeMapping TypeName="DbModel.SupplierCautionMoney">
               <MappingFragment StoreEntitySet="SupplierCautionMoney">
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
                 <ScalarProperty Name="ApplyDate" ColumnName="ApplyDate" />
                 <ScalarProperty Name="StoppedBy" ColumnName="StoppedBy" />

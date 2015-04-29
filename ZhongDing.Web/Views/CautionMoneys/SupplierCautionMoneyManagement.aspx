@@ -82,31 +82,28 @@
                             <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false">
                                 <ItemStyle HorizontalAlign="Left" Width="50" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="InvoiceDate" HeaderText="供应商" DataFormatString="{0:yyyy/MM/dd}" DataField="InvoiceDate">
-                                <ItemStyle HorizontalAlign="Left" Width="50" />
+                            <telerik:GridBoundColumn UniqueName="SupplierName" HeaderText="供应商"  DataField="SupplierName">
+                                <ItemStyle HorizontalAlign="Left" Width="160px" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="SaleOrderType" HeaderText="货品名称" DataField="SaleOrderType">
-                                <ItemStyle HorizontalAlign="Left" Width="80" />
+                            <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品名称" DataField="ProductName">
+                                <ItemStyle HorizontalAlign="Left" Width="160px" />
                             </telerik:GridBoundColumn>
                             
-                            <telerik:GridBoundColumn UniqueName="CompanyName" HeaderText="规格" DataField="CompanyName">
+                            
+                            <telerik:GridBoundColumn UniqueName="ProductSpecification" HeaderText="规格" DataField="ProductSpecification">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                              <telerik:GridBoundColumn UniqueName="ClientCompanyName" HeaderText="保证金类别" DataField="ClientCompanyName">
+                              <telerik:GridBoundColumn UniqueName="CautionMoneyTypeName" HeaderText="保证金类别" DataField="CautionMoneyTypeName">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-
-
-                              <telerik:GridBoundColumn UniqueName="ClientCompanyName" HeaderText="保证金终止日期" DataField="ClientCompanyName">
+                              <telerik:GridBoundColumn UniqueName="EndDate" HeaderText="保证金终止日期" DataField="EndDate" DataFormatString="{0:yyyy/MM/dd}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-
-
-                            <telerik:GridBoundColumn UniqueName="InvoiceNumber" HeaderText="已付保证金" DataField="InvoiceNumber">
+                            <telerik:GridBoundColumn UniqueName="PaymentCautionMoney" HeaderText="已付保证金" DataField="PaymentCautionMoney" DataFormatString="￥{0:f2}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
 
-                            <telerik:GridBoundColumn UniqueName="StockOutCode" HeaderText="已经收回保证金" DataField="StockOutCode">
+                            <telerik:GridBoundColumn UniqueName="TakeBackCautionMoney" HeaderText="已经收回保证金" DataField="TakeBackCautionMoney" DataFormatString="￥{0:f2}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
                         

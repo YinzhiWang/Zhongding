@@ -90,7 +90,12 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 挂靠发票结算
         /// </summary>
-        ClientAttachedInvoiceSettlement
+        ClientAttachedInvoiceSettlement,
+
+        /// <summary>
+        /// 供应商 保证金申请 
+        /// </summary>
+        SupplierCautionMoneyApply
 
     }
 }

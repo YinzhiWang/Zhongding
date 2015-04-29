@@ -66,9 +66,7 @@
 
                         </td>
                         <td class="middle-td leftpadding20"></td>
-
                     </tr>
- 
                 </table>
                 <telerik:RadGrid ID="rgSupplierCautionMoneys" runat="server" PageSize="10"
                     AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
@@ -82,43 +80,48 @@
                             <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false">
                                 <ItemStyle HorizontalAlign="Left" Width="50" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="InvoiceDate" HeaderText="供应商" DataFormatString="{0:yyyy/MM/dd}" DataField="InvoiceDate">
-                                <ItemStyle HorizontalAlign="Left" Width="50" />
+                            <telerik:GridBoundColumn UniqueName="SupplierName" HeaderText="供应商"  DataField="SupplierName">
+                                <ItemStyle HorizontalAlign="Left" Width="160px" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="SaleOrderType" HeaderText="货品名称" DataField="SaleOrderType">
-                                <ItemStyle HorizontalAlign="Left" Width="80" />
+                            <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品名称" DataField="ProductName">
+                                <ItemStyle HorizontalAlign="Left" Width="160px" />
                             </telerik:GridBoundColumn>
                             
-                            <telerik:GridBoundColumn UniqueName="CompanyName" HeaderText="规格" DataField="CompanyName">
+                            <telerik:GridBoundColumn UniqueName="ProductSpecification" HeaderText="规格" DataField="ProductSpecification">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                              <telerik:GridBoundColumn UniqueName="ClientCompanyName" HeaderText="保证金类别" DataField="ClientCompanyName">
+                              <telerik:GridBoundColumn UniqueName="CautionMoneyTypeName" HeaderText="保证金类别" DataField="CautionMoneyTypeName">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
 
                             
-                              <telerik:GridBoundColumn UniqueName="ClientCompanyName" HeaderText="申请日期" DataField="ClientCompanyName">
+                              <telerik:GridBoundColumn UniqueName="ApplyDate" HeaderText="申请日期" DataField="ApplyDate" DataFormatString="{0:yyyy/MM/dd}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                              <telerik:GridBoundColumn UniqueName="ClientCompanyName" HeaderText="保证金终止日期" DataField="ClientCompanyName">
-                                <ItemStyle HorizontalAlign="Left" />
-                            </telerik:GridBoundColumn>
-
-
-                            <telerik:GridBoundColumn UniqueName="InvoiceNumber" HeaderText="金额" DataField="InvoiceNumber">
+                              <telerik:GridBoundColumn UniqueName="EndDate" HeaderText="保证金终止日期" DataField="EndDate" DataFormatString="{0:yyyy/MM/dd}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
 
-                            <telerik:GridBoundColumn UniqueName="StockOutCode" HeaderText="操作人" DataField="StockOutCode">
+
+                            <telerik:GridBoundColumn UniqueName="PaymentCautionMoney" HeaderText="金额" DataField="PaymentCautionMoney" DataFormatString="￥{0:f2}">
+                                <ItemStyle HorizontalAlign="Left" />
+                            </telerik:GridBoundColumn>
+
+                            <telerik:GridBoundColumn UniqueName="CreatedByUserName" HeaderText="操作人" DataField="CreatedByUserName">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
                         
-                             <telerik:GridBoundColumn UniqueName="StockOutCode" HeaderText="状态" DataField="StockOutCode">
+                             <telerik:GridBoundColumn UniqueName="StatusName" HeaderText="状态" DataField="StatusName">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
                         
                            
-
+                            <telerik:GridTemplateColumn UniqueName="Edit">
+                                <ItemStyle HorizontalAlign="Center" Width="60" />
+                                <ItemTemplate>
+                                    <a href="javascript:void(0);" onclick="redirectToMaintenancePage(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">编辑</a>
+                                </ItemTemplate>
+                            </telerik:GridTemplateColumn>
                            
                             <%--<telerik:GridTemplateColumn UniqueName="Audit">
                                 <ItemStyle HorizontalAlign="Center" Width="30" />
@@ -183,5 +186,7 @@
 
             window.location.href = "SupplierCautionMoneyMaintenance.aspx?EntityID=" + id;
         }
+      
+        
     </script>
 </asp:Content>

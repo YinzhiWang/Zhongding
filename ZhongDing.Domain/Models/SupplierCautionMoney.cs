@@ -34,6 +34,7 @@ namespace ZhongDing.Domain.Models
         public Nullable<int> StoppedBy { get; set; }
         public System.DateTime ApplyDate { get; set; }
         public string Remark { get; set; }
+        public int CompanyID { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -50,5 +51,6 @@ namespace ZhongDing.Domain.Models
         public virtual ProductSpecification ProductSpecification { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual WorkflowStatus WorkflowStatus { get; set; }
+        public virtual Company Company { get; set; }
     }
 }

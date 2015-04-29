@@ -30,5 +30,9 @@ namespace ZhongDing.Domain.UIObjects
 
 
         public string CreatedByUserName { get; set; }
+
+        public string StatusName { get; set; }
+
+        public int CreatedByUserID { get; set; }
     }
 }

@@ -380,7 +380,8 @@
         <AssociationConnector Association="DbModel.FK_SupplierCautionMoney_ProductSpecificationID" />
         <AssociationConnector Association="DbModel.FK_SupplierCautionMoney_SupplierID" />
         <AssociationConnector Association="DbModel.FK_SupplierCautionMoney_WorkflowStatusID" />
-        <EntityTypeShape EntityType="DbModel.ClientAttachedInvoiceSettlementDetail" Width="1.5" PointX="29.25" PointY="144.375" />
+        <AssociationConnector Association="DbModel.FK_SupplierCautionMoney_CompanyID" />
+        <EntityTypeShape EntityType="DbModel.ClientAttachedInvoiceSettlementDetail" Width="1.5" PointX="6.7291341716093633" PointY="2.429381103454801" />
         <AssociationConnector Association="DbModel.FK_ClientAttachedInvoiceSettlementDetail_ClientAttachedInvoiceSettlement" />
         <AssociationConnector Association="DbModel.FK_ClientAttachedInvoiceSettlementDetail_ClientInvoiceDetail" />
         <AssociationConnector Association="DbModel.FK_ClientAttachedInvoiceSettlementDetail_StockOutDetail" />
