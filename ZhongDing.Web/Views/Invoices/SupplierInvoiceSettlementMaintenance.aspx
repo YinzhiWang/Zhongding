@@ -49,7 +49,7 @@
                             <div class="float-left width40-percent">
                                 <label>结算日期</label>
                                 <div class="mws-form-item toppadding5">
-                                    <telerik:RadDatePicker runat="server" ID="rdpSettlementDate" AutoPostBack="true"
+                                    <telerik:RadDatePicker runat="server" ID="rdpSettlementDate"
                                         Calendar-EnableShadows="true"
                                         Calendar-FastNavigationSettings-CancelButtonCaption="取消"
                                         Calendar-FastNavigationSettings-OkButtonCaption="确定"

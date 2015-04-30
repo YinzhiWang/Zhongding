@@ -35,8 +35,8 @@ namespace ZhongDing.Domain.Models
             this.ClientInvoiceSettlement = new HashSet<ClientInvoiceSettlement>();
             this.DBClientInvoice = new HashSet<DBClientInvoice>();
             this.DBClientInvoiceSettlement = new HashSet<DBClientInvoiceSettlement>();
-            this.ClientAttachedInvoiceSettlement = new HashSet<ClientAttachedInvoiceSettlement>();
             this.SupplierCautionMoney = new HashSet<SupplierCautionMoney>();
+            this.ClientAttachedInvoiceSettlement = new HashSet<ClientAttachedInvoiceSettlement>();
         }
     
         public int ID { get; set; }
@@ -81,7 +81,7 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<ClientInvoiceSettlement> ClientInvoiceSettlement { get; set; }
         public virtual ICollection<DBClientInvoice> DBClientInvoice { get; set; }
         public virtual ICollection<DBClientInvoiceSettlement> DBClientInvoiceSettlement { get; set; }
-        public virtual ICollection<ClientAttachedInvoiceSettlement> ClientAttachedInvoiceSettlement { get; set; }
         public virtual ICollection<SupplierCautionMoney> SupplierCautionMoney { get; set; }
+        public virtual ICollection<ClientAttachedInvoiceSettlement> ClientAttachedInvoiceSettlement { get; set; }
     }
 }

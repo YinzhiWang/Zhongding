@@ -21,6 +21,11 @@
                     <telerik:AjaxUpdatedControl ControlID="rgClientInvoices" LoadingPanelID="loadingPanel" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="rcbxClientUser">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="rcbxClientCompany" LoadingPanelID="loadingPanel" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="rcbxClientCompany">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="rgClientInvoices" LoadingPanelID="loadingPanel" />
@@ -60,16 +65,16 @@
                                 <label>客户</label>
                                 <div class="mws-form-item">
                                     <telerik:RadComboBox runat="server" ID="rcbxClientUser" Filter="Contains"
-                                        AllowCustomText="false" Height="160px" Width="100%" EmptyMessage="--请选择--"
+                                        AllowCustomText="false" Height="160px" Width="80%" EmptyMessage="--请选择--"
                                         AutoPostBack="true" OnSelectedIndexChanged="rcbxClientUser_SelectedIndexChanged">
                                     </telerik:RadComboBox>
                                 </div>
                             </div>
-                            <div class="float-left">
+                            <div class="float-left width60-percent">
                                 <label>商业单位</label>
                                 <div class="mws-form-item">
                                     <telerik:RadComboBox runat="server" ID="rcbxClientCompany" Filter="Contains"
-                                        AllowCustomText="false" MarkFirstMatch="true" Height="160px" Width="60%" EmptyMessage="--请选择--"
+                                        AllowCustomText="false" MarkFirstMatch="true" Height="160px" Width="80%" EmptyMessage="--请选择--"
                                         AutoPostBack="true" OnSelectedIndexChanged="rcbxClientCompany_SelectedIndexChanged">
                                     </telerik:RadComboBox>
                                     <asp:RequiredFieldValidator ID="rfvClientCompany"
@@ -88,15 +93,11 @@
                                 <div class="mws-form-item small">
                                     <telerik:RadNumericTextBox runat="server" ID="txtReceiveAmount" CssClass="mws-textinput" Type="Currency"
                                         NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator="" MinValue="0" MaxValue="999999999"
-                                        MaxLength="10">
+                                        MaxLength="10" Enabled="false">
                                     </telerik:RadNumericTextBox>
-                                    <asp:RequiredFieldValidator ID="rfvReceiveAmount"
-                                        runat="server"
-                                        ErrorMessage="实际回款必填"
-                                        ControlToValidate="txtReceiveAmount"
-                                        Display="Dynamic" CssClass="field-validation-error"
-                                        ValidationGroup="vgMaintenance" Text="*">
-                                    </asp:RequiredFieldValidator>
+                                    <asp:CustomValidator ID="cvReceiveAmount" runat="server" Display="Dynamic" ErrorMessage="实际回款金额有误"
+                                        ControlToValidate="txtReceiveAmount" ValidationGroup="vgMaintenance" Text="*" CssClass="field-validation-error">
+                                    </asp:CustomValidator>
                                 </div>
                             </div>
                             <div class="float-left width60-percent">
@@ -127,9 +128,9 @@
                             <div class="float-left width60-percent">
                                 <label>金额</label>
                                 <div class="mws-form-item small">
-                                    <telerik:RadNumericTextBox runat="server" ID="txtOtherCostAmount" CssClass="mws-textinput" Type="Currency"
-                                        NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator="" MinValue="0" MaxValue="999999999"
-                                        MaxLength="10">
+                                    <telerik:RadNumericTextBox runat="server" ID="txtOtherCostAmount" CssClass="mws-textinput" Type="Currency" ShowSpinButtons="true"
+                                        NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator="" MinValue="0" MaxValue="999999999" MaxLength="10">
+                                        <ClientEvents OnValueChanging="onClientOtherCostAmountChanging" OnValueChanged="onClientOtherCostAmountChanged" />
                                     </telerik:RadNumericTextBox>
                                     <asp:CustomValidator ID="cvOtherCostAmount" runat="server" Display="Dynamic" ErrorMessage="请填写其他费用对应的金额"
                                         ControlToValidate="txtOtherCostAmount" ValidationGroup="vgMaintenance" Text="*" CssClass="field-validation-error">
@@ -254,9 +255,21 @@
                                                 <td class="middle-td leftpadding10">
                                                     <label>开票日期</label>
                                                     <div class="mws-form-item">
-                                                        <telerik:RadDatePicker runat="server" ID="rdpBeginDate" Width="120"></telerik:RadDatePicker>
+                                                        <telerik:RadDatePicker runat="server" ID="rdpBeginDate" Width="120"
+                                                            Calendar-EnableShadows="true"
+                                                            Calendar-FastNavigationSettings-CancelButtonCaption="取消"
+                                                            Calendar-FastNavigationSettings-OkButtonCaption="确定"
+                                                            Calendar-FastNavigationSettings-TodayButtonCaption="今天"
+                                                            Calendar-FirstDayOfWeek="Monday">
+                                                        </telerik:RadDatePicker>
                                                         -&nbsp;&nbsp;
-                                                        <telerik:RadDatePicker runat="server" ID="rdpEndDate" Width="120"></telerik:RadDatePicker>
+                                                        <telerik:RadDatePicker runat="server" ID="rdpEndDate" Width="120"
+                                                            Calendar-EnableShadows="true"
+                                                            Calendar-FastNavigationSettings-CancelButtonCaption="取消"
+                                                            Calendar-FastNavigationSettings-OkButtonCaption="确定"
+                                                            Calendar-FastNavigationSettings-TodayButtonCaption="今天"
+                                                            Calendar-FirstDayOfWeek="Monday">
+                                                        </telerik:RadDatePicker>
                                                     </div>
                                                 </td>
                                                 <td class="middle-td leftpadding20">
@@ -271,10 +284,10 @@
                                             AllowPaging="false" AllowSorting="True" AutoGenerateColumns="false" AllowMultiRowSelection="true"
                                             MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Height="460" ShowHeader="true" ShowFooter="false"
                                             ClientSettings-ClientEvents-OnRowMouseOver="gridInvoiceRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                                            OnNeedDataSource="rgClientInvoices_NeedDataSource"
-                                            OnColumnCreated="rgClientInvoices_ColumnCreated" OnItemDataBound="rgClientInvoices_ItemDataBound">
-                                            <MasterTableView Width="100%" DataKeyNames="ID,ClientInvoiceID,ClientCompanyID,InvoiceDate,InvoiceNumber,TotalInvoiceAmount,ClientTaxHighRatio,ClientTaxLowRatio,ClientTaxDeductionRatio,HighRatioAmount,LowRatioAmount,DeductionRatioAmount,PayAmount" CommandItemDisplay="None"
-                                                ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
+                                            OnNeedDataSource="rgClientInvoices_NeedDataSource" OnColumnCreated="rgClientInvoices_ColumnCreated"
+                                            OnItemDataBound="rgClientInvoices_ItemDataBound">
+                                            <MasterTableView Width="100%" DataKeyNames="ID,ClientInvoiceDetailID,StockOutDetailID,InvoiceQty,SalesPrice,InvoicePrice,InvoiceSettlementRatio" CommandItemDisplay="None"
+                                                ShowHeadersWhenNoRecords="true" BackColor="#fafafa" ClientDataKeyNames="InvoicePrice,SalesPrice,ToBeSettlementQty">
                                                 <Columns>
                                                     <telerik:GridClientSelectColumn UniqueName="ClientSelect" HeaderText="全选">
                                                         <HeaderStyle Width="40" />
@@ -288,30 +301,57 @@
                                                         <HeaderStyle Width="140" />
                                                         <ItemStyle HorizontalAlign="Left" Width="140" />
                                                     </telerik:GridBoundColumn>
-                                                    <telerik:GridBoundColumn UniqueName="ClientCompanyName" HeaderText="商业单位" DataField="ClientCompanyName">
-                                                        <HeaderStyle Width="240" />
-                                                        <ItemStyle HorizontalAlign="Left" Width="240" />
+                                                    <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品" DataField="ProductName">
+                                                        <HeaderStyle Width="180" />
+                                                        <ItemStyle HorizontalAlign="Left" Width="180" />
                                                     </telerik:GridBoundColumn>
-                                                    <telerik:GridBoundColumn UniqueName="TotalInvoiceAmount" HeaderText="发票总金额" DataField="TotalInvoiceAmount" DataFormatString="{0:C2}">
+                                                    <telerik:GridBoundColumn UniqueName="Specification" HeaderText="规格" DataField="Specification">
+                                                        <HeaderStyle Width="60" />
+                                                        <ItemStyle HorizontalAlign="Left" Width="60" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="TotalInvoiceAmount" HeaderText="发票金额" DataField="TotalInvoiceAmount" DataFormatString="{0:C2}">
                                                         <HeaderStyle Width="120" />
                                                         <ItemStyle HorizontalAlign="Left" Width="120" />
                                                     </telerik:GridBoundColumn>
-                                                    <telerik:GridBoundColumn UniqueName="HighRatioAmount" HeaderText="高开金额" DataField="HighRatioAmount" DataFormatString="{0:C2}">
+                                                    <telerik:GridBoundColumn UniqueName="SalesPrice" HeaderText="销售单价" DataField="SalesPrice" DataFormatString="{0:C2}">
+                                                        <HeaderStyle Width="80" />
+                                                        <ItemStyle HorizontalAlign="Left" Width="80" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="InvoicePrice" HeaderText="挂靠单价" DataField="InvoicePrice" DataFormatString="{0:C2}">
+                                                        <HeaderStyle Width="80" />
+                                                        <ItemStyle HorizontalAlign="Left" Width="80" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="InvoiceQty" HeaderText="发票数量" DataField="InvoiceQty">
+                                                        <HeaderStyle Width="80" />
+                                                        <ItemStyle HorizontalAlign="Left" Width="60" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="SettledQty" HeaderText="已结算数量" DataField="SettledQty">
+                                                        <HeaderStyle Width="80" />
+                                                        <ItemStyle HorizontalAlign="Left" Width="60" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="ToBeSettlementQty" HeaderText="未结算数量" DataField="ToBeSettlementQty">
+                                                        <HeaderStyle Width="80" />
+                                                        <ItemStyle HorizontalAlign="Left" Width="80" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridTemplateColumn UniqueName="SettlementQty" HeaderText="本次结算数量" DataField="SettlementQty" SortExpression="SettlementQty">
+                                                        <HeaderStyle Width="100" />
+                                                        <ItemStyle HorizontalAlign="Left" Width="100" />
+                                                        <ItemTemplate>
+                                                            <telerik:RadNumericTextBox runat="server" ID="txtSettlementQty" Type="Number" MaxLength="9" Width="80" ShowSpinButtons="true"
+                                                                MinValue="1" MaxValue="99999999" NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator="">
+                                                                <ClientEvents OnValueChanging="onClientSettlementQtyChanging" OnValueChanged="onClientSettlementQtyChanged" />
+                                                            </telerik:RadNumericTextBox>
+                                                        </ItemTemplate>
+                                                    </telerik:GridTemplateColumn>
+                                                    <telerik:GridTemplateColumn UniqueName="SettlementAmount" HeaderText="本次结算金额" DataField="SettlementAmount" SortExpression="SettlementAmount">
                                                         <HeaderStyle Width="120" />
                                                         <ItemStyle HorizontalAlign="Left" Width="120" />
-                                                    </telerik:GridBoundColumn>
-                                                    <telerik:GridBoundColumn UniqueName="LowRatioAmount" HeaderText="低开金额" DataField="LowRatioAmount" DataFormatString="{0:C2}">
-                                                        <HeaderStyle Width="120" />
-                                                        <ItemStyle HorizontalAlign="Left" Width="120" />
-                                                    </telerik:GridBoundColumn>
-                                                    <telerik:GridBoundColumn UniqueName="DeductionRatioAmount" HeaderText="平进平出金额" DataField="DeductionRatioAmount" DataFormatString="{0:C2}">
-                                                        <HeaderStyle Width="120" />
-                                                        <ItemStyle HorizontalAlign="Left" Width="120" />
-                                                    </telerik:GridBoundColumn>
-                                                    <telerik:GridBoundColumn UniqueName="PayAmount" HeaderText="结算金额" DataField="PayAmount" DataFormatString="{0:C2}">
-                                                        <HeaderStyle Width="120" />
-                                                        <ItemStyle HorizontalAlign="Left" Width="120" />
-                                                    </telerik:GridBoundColumn>
+                                                        <ItemTemplate>
+                                                            <telerik:RadNumericTextBox runat="server" ID="txtSettlementAmount" Type="Currency" MaxLength="9" Width="100" ShowSpinButtons="true"
+                                                                MinValue="1" MaxValue="99999999" NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator="" Enabled="false" ReadOnly="true">
+                                                            </telerik:RadNumericTextBox>
+                                                        </ItemTemplate>
+                                                    </telerik:GridTemplateColumn>
                                                 </Columns>
                                                 <NoRecordsTemplate>
                                                     没有任何数据
@@ -322,16 +362,18 @@
                                             <ClientSettings EnableRowHoverStyle="true">
                                                 <Selecting AllowRowSelect="True" UseClientSelectColumnOnly="true" />
                                                 <Scrolling AllowScroll="true" FrozenColumnsCount="3" SaveScrollPosition="true" UseStaticHeaders="true" />
-
-
+                                                <ClientEvents OnGridCreated="GetsGridObject" OnRowSelecting="onRowSelecting"
+                                                    OnRowSelected="onRowSelected" OnRowDeselected="onRowDeselected" />
                                             </ClientSettings>
                                         </telerik:RadGrid>
                                         <div class="float-right">
-                                            <span class="bold">结算总金额</span>：<asp:Label ID="lblTotalPayAmount" runat="server"></asp:Label>元&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <span class="bold">大写</span>：<asp:Label ID="lblCapitalAmount" runat="server"></asp:Label>
+                                            <span class="bold">结算总金额</span>：<asp:Label ID="lblTotalSettlementAmount" runat="server"></asp:Label>元&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span class="bold">大写</span>：<asp:Label ID="lblCapitalTSAmount" runat="server"></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span class="bold">应返款总金额</span>：<asp:Label ID="lblTotalRefundAmount" runat="server"></asp:Label>元&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span class="bold">大写</span>：<asp:Label ID="lblCapitalTRAmount" runat="server"></asp:Label>
                                         </div>
                                         <telerik:RadToolTip ID="radToolTip" runat="server" ShowEvent="FromCode" AutoCloseDelay="0">
-                                            <p class="field-validation-error">当前账套未启用平进平出或未配置平进平出税率, 不能加入结算</p>
+                                            <p class="field-validation-error">当前账套未配置相应的税率, 不能加入结算</p>
                                         </telerik:RadToolTip>
                                     </div>
                                 </div>
@@ -527,6 +569,12 @@
     </div>
 
     <asp:HiddenField ID="hdnCurrentEntityID" runat="server" Value="-1" />
+
+    <telerik:RadNotification ID="radNotification" runat="server" EnableRoundedCorners="true"
+        AutoCloseDelay="1000" Skin="Silk" Animation="Fade" EnableShadow="true" Title="提示"
+        TitleIcon="none" Opacity="95" Position="Center" ContentIcon="~/Content/icons/32/cross.png"
+        Width="300" Height="100">
+    </telerik:RadNotification>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContent" runat="server">
     <style>
@@ -537,6 +585,16 @@
 
     <script type="text/javascript">
         var currentEntityID = -1;
+
+        var gridOfRefresh = null;
+
+        function GetsGridObject(sender, eventArgs) {
+            gridOfRefresh = sender;
+        }
+
+        function refreshGrid() {
+            gridOfRefresh.get_masterTableView().rebind();
+        }
 
         function redirectToManagementPage(sender, args) {
             redirectToPage("Views/Invoices/ClientInvoiceSettlementManagement.aspx");
@@ -550,10 +608,12 @@
         }
 
         var toolTip;
+        $(window).load(function () {
 
-        window.onload = function () {
             toolTip = $telerik.findControl(document, "radToolTip");
-        };
+
+            calculateGridTotalAmount();
+        });
 
         function gridInvoiceRowMouseOver(sender, args) {
 
@@ -577,5 +637,196 @@
             }
         };
 
+        function onClientOtherCostAmountChanging(sender, eventArgs) {
+            var newValue = eventArgs.get_newValue();
+
+            if (newValue) {
+
+                var selectedTotalAmount = getSelectedTotalAmount();
+
+                if (newValue > selectedTotalAmount) {
+                    var radNotification = $find("<%=radNotification.ClientID%>");
+                    radNotification.set_text("其他费用不能大于总结算金额：" + selectedTotalAmount);
+                    radNotification.show();
+                    eventArgs.set_cancel(true);
+                }
+            }
+        }
+
+        function onClientOtherCostAmountChanged(sender, eventArgs) {
+            calculateGridTotalAmount();
+        }
+
+        function onClientSettlementQtyChanging(sender, eventArgs) {
+            var gridItem = sender.get_parent();
+
+            if (gridItem) {
+
+                var gridItemElement = gridItem.get_element();
+                var newValue = eventArgs.get_newValue();
+
+                if (newValue) {
+                    var toBeSettlementQty = gridItem.getDataKeyValue("ToBeSettlementQty");
+                    if (newValue > toBeSettlementQty) {
+                        var radNotification = $find("<%=radNotification.ClientID%>");
+                        radNotification.set_text("本次结算数量不能大于未结算数量：" + toBeSettlementQty);
+                        radNotification.show();
+                        eventArgs.set_cancel(true);
+                    }
+                }
+                else {
+                    var radNotification = $find("<%=radNotification.ClientID%>");
+                    radNotification.set_text("本次结算数量为必填项");
+                    radNotification.show();
+
+                    eventArgs.set_cancel(true);
+                }
+            }
+        }
+
+        function onClientSettlementQtyChanged(sender, eventArgs) {
+
+            var gridItem = sender.get_parent();
+
+            if (gridItem) {
+
+                var gridItemElement = gridItem.get_element();
+
+                var newValue = eventArgs.get_newValue();
+
+                if (newValue) {
+
+                    var invoicePrice = gridItem.getDataKeyValue("InvoicePrice");
+
+                    var txtSettlementAmount = $telerik.findControl(gridItemElement, "txtSettlementAmount");
+                    var curSettlementAmount = txtSettlementAmount.get_value();
+
+                    if (curSettlementAmount > parseFloat(newValue)) {
+                        txtSettlementAmount.set_value(newValue * invoicePrice);
+                    }
+                }
+            }
+
+            calculateGridTotalAmount();
+        }
+
+        function onRowSelecting(sender, eventArgs) {
+            var selectingItem = eventArgs.get_gridDataItem();
+            var selectingElement = selectingItem.get_element();
+
+            var txtSettlementQty = $telerik.findControl(selectingElement, "txtSettlementQty");
+            var curSettlementQty = txtSettlementQty.get_value();
+
+            if (curSettlementQty == null || curSettlementQty == "") {
+                var radNotification = $find("<%=radNotification.ClientID%>");
+
+                radNotification.set_text("本次结算数量为必填项");
+                radNotification.show();
+
+                eventArgs.set_cancel(true);
+            }
+            else {
+                var toBeSettlementQty = parseInt(selectingItem.getDataKeyValue("ToBeSettlementQty"));
+
+                if (toBeSettlementQty > 0 && curSettlementQty > toBeSettlementQty) {
+
+                    var radNotification = $find("<%=radNotification.ClientID%>");
+
+                    radNotification.set_text("本次结算数量不能大于未结算数量：" + toBeSettlementQty);
+                    radNotification.show();
+
+                    eventArgs.set_cancel(true);
+                }
+            }
+        }
+
+        function onRowSelected(sender, eventArgs) {
+            calculateTotalAmount(sender, eventArgs);
+        }
+
+        function onRowDeselected(sender, eventArgs) {
+            calculateTotalAmount(sender, eventArgs);
+        }
+
+        //计算动态操作时grid选中项的总金额
+        function calculateTotalAmount(sender, eventArgs) {
+            //debugger;
+            var selectedTotalSettlementAmount = 0;
+
+            //获取已经选中的items
+            var selectedItems = eventArgs.get_tableView().get_selectedItems();
+
+            for (var i = 0; i < selectedItems.length; i++) {
+                var curSelectedItem = selectedItems[i];
+                var curSelectedItemElement = curSelectedItem.get_element();
+
+                var txtSettlementAmount = $telerik.findControl(curSelectedItemElement, "txtSettlementAmount");
+                var curSettlementAmount = txtSettlementAmount.get_value();
+
+                if (curSettlementAmount) {
+                    selectedTotalSettlementAmount += curSettlementAmount;
+                }
+            }
+
+            selectedTotalSettlementAmount = selectedTotalSettlementAmount.toFixed(2);
+
+            $("#<%=lblTotalSettlementAmount.ClientID%>").html("¥" + selectedTotalSettlementAmount);
+            $("#<%=lblCapitalTSAmount.ClientID%>").html($.convertToCapitalChinese(selectedTotalSettlementAmount));
+
+            var calculatedReceiveAmount = selectedTotalSettlementAmount;
+            var otherCostAmount = $find("<%=txtOtherCostAmount.ClientID %>").get_value();
+            if (otherCostAmount && otherCostAmount != "") {
+                calculatedReceiveAmount -= parseFloat(otherCostAmount);
+            }
+            $find("<%=txtReceiveAmount.ClientID%>").set_value(calculatedReceiveAmount);
+        }
+
+        //计算grid里选中项的总金额
+        function calculateGridTotalAmount() {
+            //debugger;
+            var selectedTotalSettlementAmount = getSelectedTotalAmount();
+
+            //获取已经选中的items
+            var selectedItems = gridOfRefresh.get_masterTableView().get_selectedItems();
+
+            if (selectedTotalSettlementAmount > 0) {
+
+                selectedTotalSettlementAmount = selectedTotalSettlementAmount.toFixed(2);
+
+                $("#<%=lblTotalSettlementAmount.ClientID%>").html("¥" + selectedTotalSettlementAmount);
+                $("#<%=lblCapitalTSAmount.ClientID%>").html($.convertToCapitalChinese(selectedTotalSettlementAmount));
+
+                var calculatedReceiveAmount = selectedTotalSettlementAmount;
+                var otherCostAmount = $find("<%=txtOtherCostAmount.ClientID %>").get_value();
+                if (otherCostAmount && otherCostAmount != "") {
+                    calculatedReceiveAmount -= parseFloat(otherCostAmount);
+                }
+                $find("<%=txtReceiveAmount.ClientID%>").set_value(calculatedReceiveAmount);
+            }
+        }
+
+        //获取grid里选中行的结算金额总和
+        function getSelectedTotalAmount() {
+            var selectedTotalSettlementAmount = 0;
+
+            //获取已经选中的items
+            var selectedItems = gridOfRefresh.get_masterTableView().get_selectedItems();
+
+            for (var i = 0; i < selectedItems.length; i++) {
+                var curSelectedItem = selectedItems[i];
+                var curSelectedItemElement = curSelectedItem.get_element();
+
+                var txtSettlementAmount = $telerik.findControl(curSelectedItemElement, "txtSettlementAmount");
+                var curSettlementAmount = txtSettlementAmount.get_value();
+
+                if (curSettlementAmount) {
+                    selectedTotalSettlementAmount += curSettlementAmount;
+                }
+            }
+
+            return selectedTotalSettlementAmount;
+        }
+
     </script>
 </asp:Content>
+

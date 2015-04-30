@@ -32,6 +32,7 @@ namespace ZhongDing.Domain.Models
         public Nullable<decimal> OtherCostAmount { get; set; }
         public Nullable<System.DateTime> ConfirmDate { get; set; }
         public Nullable<System.DateTime> SettlementDate { get; set; }
+        public Nullable<decimal> TotalSettlementAmount { get; set; }
         public Nullable<decimal> TotalRefundAmount { get; set; }
         public Nullable<System.DateTime> PaidDate { get; set; }
         public Nullable<int> PaidBy { get; set; }

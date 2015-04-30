@@ -286,7 +286,7 @@
         }
 
         function onCurrentOutQtyChanged(sender, eventArgs) {
-            debugger;
+            //debugger;
 
             var gridItem = sender.get_parent();
 

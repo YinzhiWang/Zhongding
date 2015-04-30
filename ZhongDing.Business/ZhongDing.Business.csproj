@@ -58,6 +58,7 @@
     <Compile Include="IRepositories\IClientAttachedInvoiceSettlementRepository.cs" />
     <Compile Include="IRepositories\IClientInvoiceSettlementDetailRepository.cs" />
     <Compile Include="IRepositories\IClientInvoiceSettlementRepository.cs" />
+    <Compile Include="IRepositories\ICostTypeRepository.cs" />
     <Compile Include="IRepositories\IDBClientInvoiceDetailRepository.cs" />
     <Compile Include="IRepositories\IDBClientInvoiceRepository.cs" />
     <Compile Include="IRepositories\IClientFlowDataRepository.cs" />
@@ -192,6 +193,7 @@
     <Compile Include="Repositories\ClientTaskRefundAppRepository.cs" />
     <Compile Include="Repositories\ClientUserRepository.cs" />
     <Compile Include="Repositories\CompanyRepository.cs" />
+    <Compile Include="Repositories\CostTypeRepository.cs" />
     <Compile Include="Repositories\DBClientInvoiceDetailRepository.cs" />
     <Compile Include="Repositories\DBClientInvoiceRepository.cs" />
     <Compile Include="Repositories\DaBaoApplicationRepository.cs" />

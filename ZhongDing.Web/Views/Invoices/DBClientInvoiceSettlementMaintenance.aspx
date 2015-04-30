@@ -151,9 +151,21 @@
                                                 <td class="middle-td leftpadding10">
                                                     <label>开票日期</label>
                                                     <div class="mws-form-item">
-                                                        <telerik:RadDatePicker runat="server" ID="rdpBeginDate" Width="120"></telerik:RadDatePicker>
+                                                        <telerik:RadDatePicker runat="server" ID="rdpBeginDate" Width="120"
+                                                            Calendar-EnableShadows="true"
+                                                            Calendar-FastNavigationSettings-CancelButtonCaption="取消"
+                                                            Calendar-FastNavigationSettings-OkButtonCaption="确定"
+                                                            Calendar-FastNavigationSettings-TodayButtonCaption="今天"
+                                                            Calendar-FirstDayOfWeek="Monday">
+                                                        </telerik:RadDatePicker>
                                                         -&nbsp;&nbsp;
-                                                        <telerik:RadDatePicker runat="server" ID="rdpEndDate" Width="120"></telerik:RadDatePicker>
+                                                        <telerik:RadDatePicker runat="server" ID="rdpEndDate" Width="120"
+                                                            Calendar-EnableShadows="true"
+                                                            Calendar-FastNavigationSettings-CancelButtonCaption="取消"
+                                                            Calendar-FastNavigationSettings-OkButtonCaption="确定"
+                                                            Calendar-FastNavigationSettings-TodayButtonCaption="今天"
+                                                            Calendar-FirstDayOfWeek="Monday">
+                                                        </telerik:RadDatePicker>
                                                     </div>
                                                 </td>
                                                 <td class="middle-td leftpadding20">
@@ -396,7 +408,7 @@
 
         //计算grid里选中项的总金额
         function calculateGridTotalAmount() {
-            debugger;
+            //debugger;
             var selectedTotalReceiveAmount = 0;
 
             //获取已经选中的items

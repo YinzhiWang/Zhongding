@@ -35,22 +35,28 @@ namespace ZhongDing.Business.Repositories
                                                                           select new UIClientAttachedInvoiceSettlementDetail()
                                                                           {
                                                                               ID = caisd.ID,
-                                                                              ClientCompanyID = ci.ClientCompanyID,
                                                                               ClientInvoiceDetailID = caisd.ClientInvoiceDetailID,
+                                                                              StockOutDetailID = caisd.StockOutDetailID,
+                                                                              ClientCompanyID = ci.ClientCompanyID,
                                                                               InvoiceDate = ci.InvoiceDate,
                                                                               InvoiceNumber = ci.InvoiceNumber,
                                                                               TotalInvoiceAmount = cid.Amount,
                                                                               ProductName = p.ProductName,
                                                                               Specification = ps.Specification,
                                                                               SalesPrice = soad.SalesPrice,
-                                                                              InvoicePrice = soad.InvoicePrice,
+                                                                              InvoicePrice = soad.InvoicePrice ?? 0,
                                                                               InvoiceQty = cid.Qty ?? 0,
                                                                               SettledQty = (DB.ClientAttachedInvoiceSettlementDetail.Any(x => x.IsDeleted == false
                                                                                   && x.ClientInvoiceDetailID == caisd.ClientInvoiceDetailID)
                                                                                   ? DB.ClientAttachedInvoiceSettlementDetail.Where(x => x.IsDeleted == false
                                                                                   && x.ClientInvoiceDetailID == caisd.ClientInvoiceDetailID).Sum(x => x.SettlementQty ?? 0)
                                                                                   : 0),
-                                                                              SettlementQty = caisd.SettlementQty,
+                                                                              SettlementQty = caisd.SettlementQty ?? 0,
+                                                                              InvoiceTypeID = cid.InvoiceTypeID,
+                                                                              InvoiceSettlementRatio = (cid.InvoiceTypeID == (int)EInvoiceType.HighRatio
+                                                                                ? c.ClientTaxHighRatio : (cid.InvoiceTypeID == (int)EInvoiceType.LowRatio
+                                                                                    ? c.ClientTaxLowRatio : ((cid.InvoiceTypeID == (int)EInvoiceType.DeductionRatio && c.EnableTaxDeduction == true)
+                                                                                        ? c.ClientTaxDeductionRatio : null))),
                                                                               IsChecked = true,
                                                                               CreatedOn = caisd.CreatedOn
                                                                           });
@@ -63,7 +69,7 @@ namespace ZhongDing.Business.Repositories
                 foreach (var item in uiEntities)
                 {
                     item.ToBeSettlementQty = item.InvoiceQty - item.SettledQty;
-                    item.SalesAmount = item.SalesPrice * item.SettlementQty;
+                    //item.SalesAmount = item.SalesPrice * item.SettlementQty;
                     item.SettlementAmount = item.InvoicePrice * item.SettlementQty;
                 }
 
@@ -82,24 +88,30 @@ namespace ZhongDing.Business.Repositories
                                                                           where ci.IsDeleted == false && ci.IsSettled != true
                                                                           && ci.CompanyID == uiSearchObj.CompanyID
                                                                           && ci.ClientCompanyID == uiSearchObj.ClientCompanyID
-                                                                          && ci.SaleOrderTypeID == (int)ESaleOrderType.AttractBusinessMode
+                                                                          && ci.SaleOrderTypeID == (int)ESaleOrderType.AttachedMode
                                                                           && (!uiSearchObj.BeginDate.HasValue || ci.InvoiceDate >= uiSearchObj.BeginDate)
                                                                           && (!uiSearchObj.EndDate.HasValue || ci.InvoiceDate < uiSearchObj.EndDate)
                                                                           select new UIClientAttachedInvoiceSettlementDetail
                                                                   {
                                                                       ID = 0,
-                                                                      ClientCompanyID = ci.ClientCompanyID,
                                                                       ClientInvoiceDetailID = ci.ID,
+                                                                      StockOutDetailID = cid.StockOutDetailID,
+                                                                      ClientCompanyID = ci.ClientCompanyID,
                                                                       InvoiceDate = ci.InvoiceDate,
                                                                       InvoiceNumber = ci.InvoiceNumber,
                                                                       TotalInvoiceAmount = cid.Amount,
                                                                       ProductName = p.ProductName,
                                                                       Specification = ps.Specification,
                                                                       SalesPrice = soad.SalesPrice,
-                                                                      InvoicePrice = soad.InvoicePrice,
+                                                                      InvoicePrice = soad.InvoicePrice ?? 0,
                                                                       InvoiceQty = cid.Qty ?? 0,
                                                                       SettledQty = 0,
-                                                                      SettlementQty = 0,
+                                                                      SettlementQty = cid.Qty ?? 0,
+                                                                      InvoiceTypeID = cid.InvoiceTypeID,
+                                                                      InvoiceSettlementRatio = (cid.InvoiceTypeID == (int)EInvoiceType.HighRatio
+                                                                        ? c.ClientTaxHighRatio : (cid.InvoiceTypeID == (int)EInvoiceType.LowRatio
+                                                                            ? c.ClientTaxLowRatio : ((cid.InvoiceTypeID == (int)EInvoiceType.DeductionRatio && c.EnableTaxDeduction == true)
+                                                                                ? c.ClientTaxDeductionRatio : null))),
                                                                       IsChecked = false,
                                                                       CreatedOn = ci.CreatedOn
                                                                   });
@@ -109,9 +121,11 @@ namespace ZhongDing.Business.Repositories
 
             uiEntities = query.OrderByDescending(x => x.CreatedOn).ToList();
 
-            foreach (var uiEntity in uiEntities.Where(x => x.IsChecked == false))
+            foreach (var item in uiEntities.Where(x => x.IsChecked == false))
             {
-
+                item.ToBeSettlementQty = item.InvoiceQty - item.SettledQty;
+                //item.SalesAmount = item.SalesPrice * item.SettlementQty;
+                item.SettlementAmount = item.InvoicePrice * item.SettlementQty;
             }
 
             return uiEntities;

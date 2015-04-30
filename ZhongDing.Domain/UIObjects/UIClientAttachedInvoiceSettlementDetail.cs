@@ -8,17 +8,25 @@ namespace ZhongDing.Domain.UIObjects
 {
     public class UIClientAttachedInvoiceSettlementDetail : UIBase
     {
-        public int ClientInvoiceSettlementID { get; set; }
-        public int ClientCompanyID { get; set; }
         public int ClientInvoiceDetailID { get; set; }
+        public int StockOutDetailID { get; set; }
+        public int ClientCompanyID { get; set; }
         public DateTime InvoiceDate { get; set; }
         public string InvoiceNumber { get; set; }
+        /// <summary>
+        /// 发票类型（高价，低价，平价）
+        /// </summary>
+        public int InvoiceTypeID { get; set; }
+        /// <summary>
+        /// 发票结算的税率
+        /// </summary>
+        public decimal? InvoiceSettlementRatio { get; set; }
         
         public string ProductName { get; set; }
         public string Specification { get; set; }
 
         public decimal SalesPrice { get; set; }
-        public decimal? InvoicePrice { get; set; }
+        public decimal InvoicePrice { get; set; }
 
         public decimal TotalInvoiceAmount { get; set; }
 
@@ -37,7 +45,7 @@ namespace ZhongDing.Domain.UIObjects
         /// <summary>
         /// 本次结算数量
         /// </summary>
-        public int? SettlementQty { get; set; }
+        public int SettlementQty { get; set; }
 
         /// <summary>
         /// 本次结算金额
@@ -47,7 +55,7 @@ namespace ZhongDing.Domain.UIObjects
         /// <summary>
         /// 销售金额
         /// </summary>
-        public decimal? SalesAmount { get; set; }
+        //public decimal? SalesAmount { get; set; }
 
         /// <summary>
         /// 是否被选中

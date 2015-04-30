@@ -76,13 +76,13 @@ namespace ZhongDing.Web.Views.Invoices {
         protected global::Telerik.Web.UI.RadNumericTextBox txtReceiveAmount;
         
         /// <summary>
-        /// rfvReceiveAmount control.
+        /// cvReceiveAmount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvReceiveAmount;
+        protected global::System.Web.UI.WebControls.CustomValidator cvReceiveAmount;
         
         /// <summary>
         /// rcbxToAccount control.
@@ -310,22 +310,40 @@ namespace ZhongDing.Web.Views.Invoices {
         protected global::Telerik.Web.UI.RadGrid rgClientInvoices;
         
         /// <summary>
-        /// lblTotalPayAmount control.
+        /// lblTotalSettlementAmount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalPayAmount;
+        protected global::System.Web.UI.WebControls.Label lblTotalSettlementAmount;
         
         /// <summary>
-        /// lblCapitalAmount control.
+        /// lblCapitalTSAmount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCapitalAmount;
+        protected global::System.Web.UI.WebControls.Label lblCapitalTSAmount;
+        
+        /// <summary>
+        /// lblTotalRefundAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalRefundAmount;
+        
+        /// <summary>
+        /// lblCapitalTRAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCapitalTRAmount;
         
         /// <summary>
         /// radToolTip control.
@@ -524,6 +542,15 @@ namespace ZhongDing.Web.Views.Invoices {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.HiddenField hdnCurrentEntityID;
+        
+        /// <summary>
+        /// radNotification control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadNotification radNotification;
         
         /// <summary>
         /// Master property.
