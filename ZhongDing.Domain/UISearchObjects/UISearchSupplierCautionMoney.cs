@@ -9,5 +9,8 @@ namespace ZhongDing.Domain.UISearchObjects
 {
     public class UISearchSupplierCautionMoney : UISearchBase
     {
+        public int WorkflowStatusID { get; set; }
+
+        public int[] WorkflowStatusIDs { get; set; }
     }
 }

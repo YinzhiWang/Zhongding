@@ -111,14 +111,14 @@
                            
 
                            
-                            <%--<telerik:GridTemplateColumn UniqueName="Audit">
+                            <telerik:GridTemplateColumn UniqueName="Audit">
                                 <ItemStyle HorizontalAlign="Center" Width="30" />
                                 <ItemTemplate>
-                                    <a href="javascript:void(0)" onclick="openAuditWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>); return false;">
-                                        <u>审核</u></a>
+                                    <a href="javascript:void(0)" onclick="redirectToMaintenancePage(<%#DataBinder.Eval(Container.DataItem,"ID")%>); return false;">
+                                        <u>查看</u></a>
                                 </ItemTemplate>
-                            </telerik:GridTemplateColumn>--%>
-                            <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
+                            </telerik:GridTemplateColumn>
+                            <%--<telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />--%>
                         </Columns>
                         <CommandItemTemplate>
                             <table class="width100-percent">
@@ -172,7 +172,7 @@
         function redirectToMaintenancePage(id) {
             $.showLoading();
 
-            window.location.href = "ClientInfoInvoiceMaintenance.aspx?EntityID=" + id;
+            window.location.href = "SupplierCautionMoneyMaintenance.aspx?EntityID=" + id;
         }
     </script>
 </asp:Content>

@@ -2715,6 +2715,8 @@
           <Property Name="ApplyDate" Type="datetime" Nullable="false" />
           <Property Name="Remark" Type="nvarchar" MaxLength="256" />
           <Property Name="CompanyID" Type="int" Nullable="false" />
+          <Property Name="PaidDate" Type="datetime" />
+          <Property Name="PaidBy" Type="int" />
         </EntityType>
         <EntityType Name="SupplierCertificate">
           <Key>
@@ -12720,6 +12722,8 @@
           <NavigationProperty Name="WorkflowStatus" Relationship="DbModel.FK_SupplierCautionMoney_WorkflowStatusID" FromRole="SupplierCautionMoney" ToRole="WorkflowStatus" />
           <Property Type="Int32" Name="CompanyID" Nullable="false" />
           <NavigationProperty Name="Company" Relationship="DbModel.FK_SupplierCautionMoney_CompanyID" FromRole="SupplierCautionMoney" ToRole="Company" />
+          <Property Type="DateTime" Name="PaidDate" Precision="3" />
+          <Property Type="Int32" Name="PaidBy" />
         </EntityType>
         <Association Name="FK_SupplierCautionMoney_CautionMoneyTypeID">
           <End Type="DbModel.CautionMoneyType" Role="CautionMoneyType" Multiplicity="1" />
@@ -14928,6 +14932,8 @@
           <EntitySetMapping Name="SupplierCautionMoney">
             <EntityTypeMapping TypeName="DbModel.SupplierCautionMoney">
               <MappingFragment StoreEntitySet="SupplierCautionMoney">
+                <ScalarProperty Name="PaidBy" ColumnName="PaidBy" />
+                <ScalarProperty Name="PaidDate" ColumnName="PaidDate" />
                 <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
                 <ScalarProperty Name="Remark" ColumnName="Remark" />
                 <ScalarProperty Name="ApplyDate" ColumnName="ApplyDate" />

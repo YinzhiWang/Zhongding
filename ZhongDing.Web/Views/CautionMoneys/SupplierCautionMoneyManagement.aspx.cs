@@ -50,7 +50,7 @@ namespace ZhongDing.Web.Views.CautionMoneys
             {
                 BeginDate = rdpBeginDate.SelectedDate,
                 EndDate = rdpEndDate.SelectedDate,
-
+                WorkflowStatusID = (int)EWorkflowStatus.Paid
             };
 
             int totalRecords = 0;

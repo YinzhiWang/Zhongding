@@ -13,6 +13,7 @@ using ZhongDing.Domain.Models;
 using ZhongDing.Common.Extension;
 using ZhongDing.Domain.UISearchObjects;
 using ZhongDing.Domain.UIObjects;
+using ZhongDing.Web.Extensions;
 
 namespace ZhongDing.Web.Views.CautionMoneys
 {
@@ -131,6 +132,11 @@ namespace ZhongDing.Web.Views.CautionMoneys
                 LoadCurrentEntity();
 
             }
+            this.Master.MenuItemID = (int)EMenuItem.SupplierCautionMoneyApplyManage;
+            if (CurrentEntity != null && CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.Paid)
+            {
+                this.Master.MenuItemID = (int)EMenuItem.SupplierCautionMoneyManage;
+            }
 
         }
         private SupplierCautionMoney _CurrentEntity;
@@ -212,7 +218,7 @@ namespace ZhongDing.Web.Views.CautionMoneys
                 rdpEndDate.SelectedDate = this.CurrentEntity.EndDate;
                 txtRemark.Text = this.CurrentEntity.Remark;
 
-                lblOperator.Text = PageUsersRepository.GetUserFullNameByID(this.CurrentEntity.CreatedBy.HasValue
+                lblOperator.Text += PageUsersRepository.GetUserFullNameByID(this.CurrentEntity.CreatedBy.HasValue
                     ? this.CurrentEntity.CreatedBy.Value : GlobalConst.INVALID_INT);
                 BindProducts();
                 rcbxProduct.SelectedValue = CurrentEntity.ProductID.ToString();
@@ -224,7 +230,7 @@ namespace ZhongDing.Web.Views.CautionMoneys
                 rcbxSupplier.SelectedValue = CurrentEntity.SupplierID.ToString();
 
 
-
+                BindPaymentSummary();
 
 
                 EWorkflowStatus workfolwStatus = (EWorkflowStatus)this.CurrentEntity.WorkflowStatusID;
@@ -267,7 +273,7 @@ namespace ZhongDing.Web.Views.CautionMoneys
                             btnReturn.Visible = false;
                             divAudit.Visible = false;
                             divAuditAll.Visible = false;
-                            //divAppPayments.Visible = false;
+                            divAppPayments.Visible = false;
 
                             #endregion
 
@@ -276,7 +282,7 @@ namespace ZhongDing.Web.Views.CautionMoneys
                             #region 已提交，待审核
 
                             DisabledBasicInfoControls();
-
+                            divAppPayments.Visible = false;
                             if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
                             {
                                 ShowAuditControls(true);
@@ -298,7 +304,7 @@ namespace ZhongDing.Web.Views.CautionMoneys
 
                             DisabledBasicInfoControls();
 
-                            //divAppPayments.Visible = false;
+                            divAppPayments.Visible = false;
 
                             if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
                                 ShowAuditControls(true);
@@ -316,10 +322,10 @@ namespace ZhongDing.Web.Views.CautionMoneys
                             divAuditAll.Visible = true;
                             if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
                             {
-                                //btnPay.Visible = true;
+                                btnPay.Visible = true;
                             }
-                            //else
-                            //    rgAppPayments.MasterTableView.CommandItemSettings.ShowAddNewRecordButton = false;
+                            else
+                                rgAppPayments.MasterTableView.CommandItemSettings.ShowAddNewRecordButton = false;
                             #endregion
 
                             break;
@@ -333,14 +339,14 @@ namespace ZhongDing.Web.Views.CautionMoneys
                             ShowSaveButtons(false);
 
                             ShowAuditControls(false);
+                            divAuditAll.Visible = true;
+                            rgAppPayments.MasterTableView.CommandItemSettings.ShowAddNewRecordButton = false;
 
-                            //rgAppPayments.MasterTableView.CommandItemSettings.ShowAddNewRecordButton = false;
-
-                            //if (CurrentEntity.PaidBy == CurrentUser.UserID)
-                            //{
-                            //    divCancel.Visible = true;
-                            //    btnCancel.Visible = true;
-                            //}
+                            if (CurrentEntity.PaidBy == CurrentUser.UserID)
+                            {
+                                //divCancel.Visible = true;
+                                //btnCancel.Visible = true;
+                            }
 
                             #endregion
                             break;
@@ -369,6 +375,66 @@ namespace ZhongDing.Web.Views.CautionMoneys
 
             }
         }
+        protected void btnPay_Click(object sender, EventArgs e)
+        {
+            if (CurrentEntity != null)
+            {
+                using (IUnitOfWork unitOfWork = new UnitOfWork())
+                {
+                    var db = unitOfWork.GetDbModel();
+                    ISupplierCautionMoneyRepository supplierCautionMoneyRepository = new SupplierCautionMoneyRepository();
+                    IApplicationPaymentRepository appPaymentRepository = new ApplicationPaymentRepository();
+
+                    appPaymentRepository.SetDbModel(db);
+                    supplierCautionMoneyRepository.SetDbModel(db);
+
+                    var currentEntity = supplierCautionMoneyRepository.GetByID(this.CurrentEntityID);
+
+                    if (currentEntity != null)
+                    {
+
+                        var appPayments = appPaymentRepository.GetList(x => x.WorkflowID == CurrentWorkFlowID
+                            && x.ApplicationID == currentEntity.ID).ToList();
+
+                        var totalPaymentCautionMoney = currentEntity.PaymentCautionMoney;
+
+                        var totalPayAmount = appPayments.Sum(x => x.Amount.HasValue ? x.Amount.Value : 0M);
+
+                        if (totalPayAmount != totalPaymentCautionMoney)
+                        {
+                            this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
+                            this.Master.BaseNotification.AutoCloseDelay = 1000;
+                            this.Master.BaseNotification.Show("支付总额不等于保证金总金额，不能确认支付");
+                        }
+                        else
+                        {
+                            foreach (var item in appPayments)
+                            {
+                                item.PaymentStatusID = (int)EPaymentStatus.Paid;
+                            }
+
+                            currentEntity.WorkflowStatusID = (int)EWorkflowStatus.Paid;
+                            currentEntity.PaidDate = DateTime.Now;
+                            currentEntity.PaidBy = CurrentUser.UserID;
+
+                            unitOfWork.SaveChanges();
+
+                            this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_SUCCESS;
+                            this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
+                            this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_OPERATE_REDIRECT);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
+                this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
+                this.Master.BaseNotification.AutoCloseDelay = 1000;
+                this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_PARAMETER_ERROR_REDIRECT);
+            }
+        }
+
         protected void rgAuditNotes_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
             var uiSearchObj = new UISearchApplicationNote()
@@ -410,7 +476,8 @@ namespace ZhongDing.Web.Views.CautionMoneys
         private void DisabledBasicInfoControls()
         {
             rdpApplyDate.Enabled = rcbxProduct.Enabled = rcbxProductSpecification.Enabled = rcbxSupplier.Enabled
-                = txtPaymentCautionMoney.Enabled = rcbxCautionMoneyType.Enabled = rdpEndDate.Enabled = txtRemark.Enabled = false;
+                = txtPaymentCautionMoney.Enabled = rcbxCautionMoneyType.Enabled = rdpEndDate.Enabled = txtRemark.Enabled
+                = false;
 
             btnSave.Visible = false;
             btnSubmit.Visible = false;
@@ -426,6 +493,7 @@ namespace ZhongDing.Web.Views.CautionMoneys
             btnReturn.Visible = false;
             divAudit.Visible = false;
             divAuditAll.Visible = false;
+            divAppPayments.Visible = false;
             //divComment.Visible = false;
             //divComments.Visible = false;
             //divOtherSections.Visible = false;
@@ -436,7 +504,7 @@ namespace ZhongDing.Web.Views.CautionMoneys
 
             //rdpOrderDate.SelectedDate = DateTime.Now;
             //lblCreateBy.Text = CurrentUser.FullName;
-
+            lblOperator.Text += CurrentUser.FullName;
             //var saleOrderType = PageSaleOrderTypeRepository.GetByID(SaleOrderTypeID);
             //if (saleOrderType != null)
             //    lblSalesOrderType.Text = saleOrderType.TypeName;
@@ -560,7 +628,8 @@ namespace ZhongDing.Web.Views.CautionMoneys
                     ProductSpecificationID = rcbxProductSpecification.SelectedValue.ToInt(),
                     Remark = txtRemark.Text.Trim(),
                     SupplierID = rcbxSupplier.SelectedValue.ToInt(),
-                    WorkflowStatusID = (int)EWorkflowStatus.TemporarySave
+                    WorkflowStatusID = (int)EWorkflowStatus.TemporarySave,
+                    CompanyID = SiteUser.GetCurrentSiteUser().CompanyID
                 };
 
                 PageSupplierCautionMoneyRepository.Add(currentEntity);
@@ -634,13 +703,14 @@ namespace ZhongDing.Web.Views.CautionMoneys
                 {
                     var db = unitOfWork.GetDbModel();
 
-                    IClientSaleApplicationRepository clientSaleAppRepository = new ClientSaleApplicationRepository();
+                    ISupplierCautionMoneyRepository supplierCautionMoneyRepository = new SupplierCautionMoneyRepository();
                     IApplicationNoteRepository appNoteRepository = new ApplicationNoteRepository();
 
-                    clientSaleAppRepository.SetDbModel(db);
                     appNoteRepository.SetDbModel(db);
+                    supplierCautionMoneyRepository.SetDbModel(db);
 
-                    var currentEntity = clientSaleAppRepository.GetByID(this.CurrentEntityID);
+
+                    var currentEntity = supplierCautionMoneyRepository.GetByID(this.CurrentEntityID);
 
                     if (currentEntity != null)
                     {
@@ -652,9 +722,17 @@ namespace ZhongDing.Web.Views.CautionMoneys
                         switch (currentEntity.WorkflowStatusID)
                         {
                             case (int)EWorkflowStatus.Submit:
-                                appNote.WorkflowStepID = (int)EWorkflowStep.AuditClientOrder;
+                                appNote.WorkflowStepID = (int)EWorkflowStep.AuditSupplierCautionMoneyApplyByDeptManagers;
                                 appNote.ApplicationID = currentEntity.ID;
-                                //appNote.Note = txtAuditComment.Text.Trim();
+                                appNote.Note = txtAuditComment.Text.Trim();
+
+                                currentEntity.WorkflowStatusID = (int)EWorkflowStatus.ReturnBasicInfo;
+
+                                break;
+                            case (int)EWorkflowStatus.ApprovedByDeptManagers:
+                                appNote.WorkflowStepID = (int)EWorkflowStep.AuditSupplierCautionMoneyApplyByTreasurers;
+                                appNote.ApplicationID = currentEntity.ID;
+                                appNote.Note = txtAuditComment.Text.Trim();
 
                                 currentEntity.WorkflowStatusID = (int)EWorkflowStatus.ReturnBasicInfo;
 
@@ -684,11 +762,8 @@ namespace ZhongDing.Web.Views.CautionMoneys
                     var db = unitOfWork.GetDbModel();
 
                     ISupplierCautionMoneyRepository supplierCautionMoneyRepository = new SupplierCautionMoneyRepository();
-                    //IApplicationPaymentRepository appPaymentRepository = new ApplicationPaymentRepository();
                     IApplicationNoteRepository appNoteRepository = new ApplicationNoteRepository();
 
-                    //clientSaleAppRepository.SetDbModel(db);
-                    //appPaymentRepository.SetDbModel(db);
                     appNoteRepository.SetDbModel(db);
                     supplierCautionMoneyRepository.SetDbModel(db);
 
@@ -861,7 +936,12 @@ namespace ZhongDing.Web.Views.CautionMoneys
                         appPayment.FromBankAccountID = fromAccountID;
                     appPayment.FromAccount = rcbxFromAccount.SelectedItem.Text;
                 }
-
+                var rcbxToAccount = (RadComboBox)e.Item.FindControl("rcbxToAccount");
+                if (rcbxToAccount.SelectedItem != null)
+                {
+                    appPayment.ToBankAccountID = rcbxToAccount.SelectedValue.ToIntOrNull();
+                    appPayment.ToAccount = rcbxToAccount.SelectedItem.Text;
+                }
                 var txtAmount = (RadNumericTextBox)e.Item.FindControl("txtAmount");
                 appPayment.Amount = (decimal?)txtAmount.Value;
 

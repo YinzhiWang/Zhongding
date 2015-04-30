@@ -26,7 +26,14 @@ namespace ZhongDing.Business.Repositories
 
             if (uiSearchObj != null)
             {
-
+                if (uiSearchObj.WorkflowStatusID > 0)
+                {
+                    whereFuncs.Add(x => x.WorkflowStatusID == uiSearchObj.WorkflowStatusID);
+                }
+                if (uiSearchObj.WorkflowStatusIDs != null && uiSearchObj.WorkflowStatusIDs.Length > 0)
+                {
+                    whereFuncs.Add(x => uiSearchObj.WorkflowStatusIDs.Contains(x.WorkflowStatusID));
+                }
             }
 
             query = GetList(pageIndex, pageSize, whereFuncs, out total);

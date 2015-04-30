@@ -35,6 +35,8 @@ namespace ZhongDing.Domain.Models
         public System.DateTime ApplyDate { get; set; }
         public string Remark { get; set; }
         public int CompanyID { get; set; }
+        public Nullable<System.DateTime> PaidDate { get; set; }
+        public Nullable<int> PaidBy { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }

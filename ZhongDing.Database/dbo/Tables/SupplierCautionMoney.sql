@@ -19,6 +19,8 @@
     [ApplyDate]              DATETIME       NOT NULL,
     [Remark]                 NVARCHAR (256) NULL,
     [CompanyID]              INT            NOT NULL,
+    [PaidDate]               DATETIME       NULL,
+    [PaidBy]                 INT            NULL,
     CONSTRAINT [PK__Supplier__3214EC271D04A192] PRIMARY KEY CLUSTERED ([ID] ASC),
     CONSTRAINT [FK_SupplierCautionMoney_CautionMoneyTypeID] FOREIGN KEY ([CautionMoneyTypeID]) REFERENCES [dbo].[CautionMoneyType] ([ID]),
     CONSTRAINT [FK_SupplierCautionMoney_CompanyID] FOREIGN KEY ([CompanyID]) REFERENCES [dbo].[Company] ([ID]),
@@ -27,6 +29,8 @@
     CONSTRAINT [FK_SupplierCautionMoney_SupplierID] FOREIGN KEY ([SupplierID]) REFERENCES [dbo].[Supplier] ([ID]),
     CONSTRAINT [FK_SupplierCautionMoney_WorkflowStatusID] FOREIGN KEY ([WorkflowStatusID]) REFERENCES [dbo].[WorkflowStatus] ([ID])
 );
+
+
 
 
 
