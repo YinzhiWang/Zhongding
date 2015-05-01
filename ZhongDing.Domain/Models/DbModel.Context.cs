@@ -144,5 +144,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<SupplierCautionMoney> SupplierCautionMoney { get; set; }
         public DbSet<ClientAttachedInvoiceSettlementDetail> ClientAttachedInvoiceSettlementDetail { get; set; }
         public DbSet<ClientAttachedInvoiceSettlement> ClientAttachedInvoiceSettlement { get; set; }
+        public DbSet<SupplierCautionMoneyDeduction> SupplierCautionMoneyDeduction { get; set; }
     }
 }

@@ -102,6 +102,12 @@ namespace ZhongDing.Business.Repositories
 
                 if (uiSearchObj.PayDate.HasValue)
                     whereFuncs.Add(x => x.PayDate == uiSearchObj.PayDate);
+
+                if (uiSearchObj.PaymentTypeID > 0)
+                {
+                    whereFuncs.Add(x => x.PaymentTypeID == uiSearchObj.PaymentTypeID);
+
+                }
             }
 
             query = GetList(pageIndex, pageSize, whereFuncs, out total);

@@ -14,5 +14,7 @@ namespace ZhongDing.Domain.UISearchObjects
 
         public DateTime? PayDate { get; set; }
 
+
+        public int PaymentTypeID { get; set; }
     }
 }

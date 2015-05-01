@@ -1039,3 +1039,14 @@ ALTER TABLE [dbo].[WorkflowStepStatus]
     ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep] FOREIGN KEY ([WorkflowStepID]) REFERENCES [dbo].[WorkflowStep] ([ID])
 COMMIT TRANSACTION
 ---- end --- 4/29/2015 -- 初始化工作流状态关联数据(挂靠发票结算)，以及费用类型数据 -- by Nwang
+
+
+
+---- start --- 4/30/2015 -- 初始化供应商保证金类型 -- by Nwang
+BEGIN TRANSACTION
+INSERT [CautionMoneyType] ([ID],[Name]) VALUES ( 1,N'增补保证金')
+INSERT [CautionMoneyType] ([ID],[Name]) VALUES ( 2,N'市场保证金')
+INSERT [CautionMoneyType] ([ID],[Name]) VALUES ( 3,N'开发保证金')
+INSERT [CautionMoneyType] ([ID],[Name]) VALUES ( 4,N'销量保证金')
+COMMIT TRANSACTION
+---- end --- 4/30/2015 -- 初始化供应商保证金类型 -- by Nwang

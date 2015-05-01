@@ -11,7 +11,7 @@ namespace ZhongDing.Business.IRepositories
 {
     public interface ISupplierCautionMoneyRepository : IBaseRepository<SupplierCautionMoney>
     {
-        IList<UISupplierCautionMoney> GetSupplierCautionMoneyApplyUIList(Domain.UISearchObjects.UISearchSupplierCautionMoney uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
+        IList<UISupplierCautionMoney> GetUIList(Domain.UISearchObjects.UISearchSupplierCautionMoney uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
 
         IList<UISupplierCautionMoneyAppPayment> GetPayments(UISearchApplicationPayment uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
     }

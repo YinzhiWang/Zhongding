@@ -78,11 +78,13 @@ namespace ZhongDing.Web.Views.CautionMoneys
                 WorkflowStatusIDs = new int[] { (int)EWorkflowStatus.TemporarySave, (int)EWorkflowStatus.ReturnBasicInfo,
                 (int)EWorkflowStatus.Submit,(int)EWorkflowStatus.ApprovedByDeptManagers,
                 (int)EWorkflowStatus.ApprovedByTreasurers},
+                SupplierName = txtSupplierName.Text.Trim(),
+                ProductName = txtProductName.Text.Trim()
             };
 
             int totalRecords = 0;
 
-            var uiSupplierCautionMoneys = PageSupplierCautionMoneyRepository.GetSupplierCautionMoneyApplyUIList(uiSearchObj, rgSupplierCautionMoneys.CurrentPageIndex, rgSupplierCautionMoneys.PageSize, out totalRecords);
+            var uiSupplierCautionMoneys = PageSupplierCautionMoneyRepository.GetUIList(uiSearchObj, rgSupplierCautionMoneys.CurrentPageIndex, rgSupplierCautionMoneys.PageSize, out totalRecords);
 
             rgSupplierCautionMoneys.VirtualItemCount = totalRecords;
 

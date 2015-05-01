@@ -50,12 +50,15 @@ namespace ZhongDing.Web.Views.CautionMoneys
             {
                 BeginDate = rdpBeginDate.SelectedDate,
                 EndDate = rdpEndDate.SelectedDate,
-                WorkflowStatusID = (int)EWorkflowStatus.Paid
+                WorkflowStatusID = (int)EWorkflowStatus.Paid,
+                NeedStatistics = true,
+                SupplierName = txtSupplierName.Text.Trim(),
+                ProductName = txtProductName.Text.Trim()
             };
 
             int totalRecords = 0;
 
-            var uiSupplierCautionMoneys = PageSupplierCautionMoneyRepository.GetSupplierCautionMoneyApplyUIList(uiSearchObj, rgSupplierCautionMoneys.CurrentPageIndex, rgSupplierCautionMoneys.PageSize, out totalRecords);
+            var uiSupplierCautionMoneys = PageSupplierCautionMoneyRepository.GetUIList(uiSearchObj, rgSupplierCautionMoneys.CurrentPageIndex, rgSupplierCautionMoneys.PageSize, out totalRecords);
 
             rgSupplierCautionMoneys.VirtualItemCount = totalRecords;
 

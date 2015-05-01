@@ -385,6 +385,9 @@
         <AssociationConnector Association="DbModel.FK_ClientAttachedInvoiceSettlement_CostType" />
         <AssociationConnector Association="DbModel.FK_ClientAttachedInvoiceSettlement_WorkflowStatus" />
         <AssociationConnector Association="DbModel.FK_ClientAttachedInvoiceSettlementDetail_ClientAttachedInvoiceSettlement" />
+        <EntityTypeShape EntityType="DbModel.SupplierCautionMoneyDeduction" Width="1.5" PointX="3.0813929918601146" PointY="31.860506966645133" />
+        <AssociationConnector Association="DbModel.FK_SupplierCautionMoneyDeduction_SupplierID" />
+        <AssociationConnector Association="DbModel.FK_SupplierCautionMoneyDeduction_SupplierCautionMoneyID" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

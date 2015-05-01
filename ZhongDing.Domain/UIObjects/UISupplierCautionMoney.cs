@@ -34,5 +34,9 @@ namespace ZhongDing.Domain.UIObjects
         public string StatusName { get; set; }
 
         public int CreatedByUserID { get; set; }
+
+        public decimal RefundedAmount { get; set; }
+        public decimal DeductedAmount { get; set; }
+        
     }
 }

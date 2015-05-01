@@ -6,6 +6,51 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+     <telerik:RadAjaxLoadingPanel ID="loadingPanel" runat="server">
+    </telerik:RadAjaxLoadingPanel>
+    <telerik:RadAjaxManager runat="server" ID="RadAjaxManager1">
+        <AjaxSettings>
+            
+            <telerik:AjaxSetting AjaxControlID="rgAppPayments">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="rgAppPayments" LoadingPanelID="loadingPanel" />
+                     <telerik:AjaxUpdatedControl ControlID="divPaymentSummary" LoadingPanelID="loadingPanel" />
+                    
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="rgSupplierRefunds">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="rgSupplierRefunds" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="hdnNeedRefreshPage" />
+                    <telerik:AjaxUpdatedControl ControlID="hdnCurrentEntityID" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="btnSearchRefund">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="tblSearchRefund" />
+                    <telerik:AjaxUpdatedControl ControlID="rgSupplierRefunds" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="hdnNeedRefreshPage" />
+                    <telerik:AjaxUpdatedControl ControlID="hdnCurrentEntityID" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="rgSupplierDeduction">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="rgSupplierDeduction" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="hdnNeedRefreshPage" />
+                    <telerik:AjaxUpdatedControl ControlID="hdnCurrentEntityID" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="btnSearchDeduction">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="tblSearchDeduction" />
+                    <telerik:AjaxUpdatedControl ControlID="rgSupplierDeduction" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="hdnNeedRefreshPage" />
+                    <telerik:AjaxUpdatedControl ControlID="hdnCurrentEntityID" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+        </AjaxSettings>
+        <ClientEvents OnResponseEnd="onResponseEnd" />
+    </telerik:RadAjaxManager>
     <div class="container">
 
         <div class="mws-panel grid_8">
@@ -215,63 +260,63 @@
                                 </div>
                             </div>
                         </div>
-                          <!--支付信息维护 -->
-                            <div class="mws-panel grid_8 mws-collapsible" data-collapseid="panel-payment" runat="server" id="divAppPayments">
-                                <div class="mws-panel-header">
-                                    <span class="mws-i-24 i-creditcard">支付信息维护</span>
-                                </div>
-                                <div class="mws-panel-body">
-                                    <div class="mws-panel-content">
-                                        <telerik:RadGrid ID="rgAppPayments" runat="server" PageSize="10"
-                                            AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
-                                            MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true" ShowFooter="false"
-                                            ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                                            OnNeedDataSource="rgAppPayments_NeedDataSource" OnItemDataBound="rgAppPayments_ItemDataBound"
-                                            OnColumnCreated="rgAppPayments_ColumnCreated" OnInsertCommand="rgAppPayments_InsertCommand"
-                                            OnUpdateCommand="rgAppPayments_UpdateCommand">
-                                            <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
-                                                ShowHeadersWhenNoRecords="true" BackColor="#fafafa" EditMode="InPlace">
-                                                <CommandItemSettings AddNewRecordText="添加" RefreshText="刷新" />
-                                                <Columns>
-                                                    <telerik:GridTemplateColumn UniqueName="PayDate" HeaderText="转账日期" DataField="PayDate" SortExpression="PayDate">
-                                                        <HeaderStyle Width="10%" />
-                                                        <ItemStyle Width="10%" />
-                                                        <ItemTemplate>
-                                                            <span><%# Eval("PayDate","{0:yyyy/MM/dd}") %></span>
-                                                        </ItemTemplate>
-                                                        <EditItemTemplate>
-                                                            <div id="divGridCombox">
-                                                                <telerik:RadDatePicker runat="server" ID="rdpPayDate"
-                                                                    Calendar-EnableShadows="true"
-                                                                    Calendar-FastNavigationSettings-CancelButtonCaption="取消"
-                                                                    Calendar-FastNavigationSettings-OkButtonCaption="确定"
-                                                                    Calendar-FastNavigationSettings-TodayButtonCaption="今天"
-                                                                    Calendar-FirstDayOfWeek="Monday">
-                                                                </telerik:RadDatePicker>
-                                                            </div>
-                                                            <asp:RequiredFieldValidator ID="rfvPayDate" runat="server" ErrorMessage="请选择转账日期" CssClass="field-validation-error"
-                                                                ControlToValidate="rdpPayDate"></asp:RequiredFieldValidator>
-                                                        </EditItemTemplate>
-                                                    </telerik:GridTemplateColumn>
-                                                    <telerik:GridTemplateColumn UniqueName="FromAccount" HeaderText="转出账号" DataField="FromAccount" SortExpression="FromAccount">
-                                                         
-                                                        <ItemTemplate>
-                                                            <span><%# Eval("FromAccount") %></span>
-                                                        </ItemTemplate>
-                                                        <EditItemTemplate>
-                                                            <div id="divGridCombox">
-                                                               
-                                                                <telerik:RadComboBox runat="server" ID="rcbxFromAccount" Filter="Contains" AllowCustomText="false" NoWrap="true"
-                                                                    MarkFirstMatch="true" Height="160px" Width="100%" EmptyMessage="--请选择--">
-                                                                </telerik:RadComboBox>
-                                                            </div>
-                                                            <asp:RequiredFieldValidator ID="rfvFromAccount" runat="server" ErrorMessage="请选择转出账号" CssClass="field-validation-error"
-                                                                ControlToValidate="rcbxFromAccount"></asp:RequiredFieldValidator>
-                                                        </EditItemTemplate>
-                                                    </telerik:GridTemplateColumn>
-                                                     <telerik:GridTemplateColumn UniqueName="ToAccount" HeaderText="收款账号" DataField="ToAccount"
+                        <!--支付信息维护 -->
+                        <div class="mws-panel grid_8 mws-collapsible" data-collapseid="panel-payment" runat="server" id="divAppPayments">
+                            <div class="mws-panel-header">
+                                <span class="mws-i-24 i-creditcard">支付信息维护</span>
+                            </div>
+                            <div class="mws-panel-body">
+                                <div class="mws-panel-content">
+                                    <telerik:RadGrid ID="rgAppPayments" runat="server" PageSize="10"
+                                        AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
+                                        MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true" ShowFooter="false"
+                                        ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
+                                        OnNeedDataSource="rgAppPayments_NeedDataSource" OnItemDataBound="rgAppPayments_ItemDataBound"
+                                        OnColumnCreated="rgAppPayments_ColumnCreated" OnInsertCommand="rgAppPayments_InsertCommand"
+                                        OnUpdateCommand="rgAppPayments_UpdateCommand" OnDeleteCommand="rgAppPayments_DeleteCommand">
+                                        <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
+                                            ShowHeadersWhenNoRecords="true" BackColor="#fafafa" EditMode="InPlace">
+                                            <CommandItemSettings AddNewRecordText="添加" RefreshText="刷新" />
+                                            <Columns>
+                                                <telerik:GridTemplateColumn UniqueName="PayDate" HeaderText="转账日期" DataField="PayDate" SortExpression="PayDate">
+                                                    <HeaderStyle Width="10%" />
+                                                    <ItemStyle Width="10%" />
+                                                    <ItemTemplate>
+                                                        <span><%# Eval("PayDate","{0:yyyy/MM/dd}") %></span>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <div id="divGridCombox">
+                                                            <telerik:RadDatePicker runat="server" ID="rdpPayDate"
+                                                                Calendar-EnableShadows="true"
+                                                                Calendar-FastNavigationSettings-CancelButtonCaption="取消"
+                                                                Calendar-FastNavigationSettings-OkButtonCaption="确定"
+                                                                Calendar-FastNavigationSettings-TodayButtonCaption="今天"
+                                                                Calendar-FirstDayOfWeek="Monday">
+                                                            </telerik:RadDatePicker>
+                                                        </div>
+                                                        <asp:RequiredFieldValidator ID="rfvPayDate" runat="server" ErrorMessage="请选择转账日期" CssClass="field-validation-error"
+                                                            ControlToValidate="rdpPayDate"></asp:RequiredFieldValidator>
+                                                    </EditItemTemplate>
+                                                </telerik:GridTemplateColumn>
+                                                <telerik:GridTemplateColumn UniqueName="FromAccount" HeaderText="转出账号" DataField="FromAccount" SortExpression="FromAccount">
+
+                                                    <ItemTemplate>
+                                                        <span><%# Eval("FromAccount") %></span>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <div id="divGridCombox">
+
+                                                            <telerik:RadComboBox runat="server" ID="rcbxFromAccount" Filter="Contains" AllowCustomText="false" NoWrap="true"
+                                                                MarkFirstMatch="true" Height="160px" Width="100%" EmptyMessage="--请选择--">
+                                                            </telerik:RadComboBox>
+                                                        </div>
+                                                        <asp:RequiredFieldValidator ID="rfvFromAccount" runat="server" ErrorMessage="请选择转出账号" CssClass="field-validation-error"
+                                                            ControlToValidate="rcbxFromAccount"></asp:RequiredFieldValidator>
+                                                    </EditItemTemplate>
+                                                </telerik:GridTemplateColumn>
+                                                <telerik:GridTemplateColumn UniqueName="ToAccount" HeaderText="收款账号" DataField="ToAccount"
                                                     SortExpression="ToAccount" FooterText="合计：" FooterStyle-Font-Bold="true" FooterStyle-HorizontalAlign="Right">
-                                                   
+
                                                     <ItemTemplate>
                                                         <span><%# Eval("ToAccount") %></span>
                                                     </ItemTemplate>
@@ -285,62 +330,391 @@
                                                             ControlToValidate="rcbxToAccount" Display="Dynamic"></asp:RequiredFieldValidator>
                                                     </EditItemTemplate>
                                                 </telerik:GridTemplateColumn>
-                                                    <telerik:GridTemplateColumn UniqueName="Amount" HeaderText="付款金额" DataField="Amount" SortExpression="Amount">
-                                                        <HeaderStyle Width="100px" />
-                                                        <ItemStyle Width="100px" />
-                                                        <ItemTemplate>
-                                                            <span><%# Eval("Amount","{0:C2}") %></span>
-                                                        </ItemTemplate>
-                                                        <EditItemTemplate>
-                                                            <div id="divGridCombox">
-                                                                <telerik:RadNumericTextBox runat="server" ID="txtAmount" ShowSpinButtons="true"
-                                                                    Type="Currency" NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator=""
-                                                                    MinValue="0" MaxValue="999999999" MaxLength="9" Width="100%">
-                                                                </telerik:RadNumericTextBox>
-                                                            </div>
-                                                            <asp:RequiredFieldValidator ID="rfvAmount" runat="server" ErrorMessage="付款金额必填" CssClass="field-validation-error"
-                                                                ControlToValidate="txtAmount"></asp:RequiredFieldValidator>
-                                                        </EditItemTemplate>
-                                                    </telerik:GridTemplateColumn>
-                                                    <telerik:GridTemplateColumn UniqueName="Fee" HeaderText="手续费" DataField="Fee" SortExpression="Fee">
-                                                           <HeaderStyle Width="100px" />
-                                                        <ItemStyle Width="100px" />
-                                                        <ItemTemplate>
-                                                            <span><%# Eval("Fee","{0:C2}") %></span>
-                                                        </ItemTemplate>
-                                                        <EditItemTemplate>
-                                                            <div id="divGridCombox">
-                                                                <telerik:RadNumericTextBox runat="server" ID="txtFee" ShowSpinButtons="true"
-                                                                    Type="Currency" NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator=""
-                                                                    MinValue="0" MaxValue="999999999" MaxLength="9" Width="100%">
-                                                                </telerik:RadNumericTextBox>
-                                                            </div>
-                                                        </EditItemTemplate>
-                                                    </telerik:GridTemplateColumn>
-                                                    <telerik:GridEditCommandColumn UniqueName="Edit" ButtonType="LinkButton" InsertText="保存" EditText="编辑" UpdateText="更新" CancelText="取消">
-                                                        <HeaderStyle Width="10%" />
-                                                        <ItemStyle Width="10%" />
-                                                    </telerik:GridEditCommandColumn>
-                                                </Columns>
-                                                <NoRecordsTemplate>
-                                                    没有任何数据
-                                                </NoRecordsTemplate>
-                                                <ItemStyle Height="30" />
-                                                <CommandItemStyle Height="30" />
-                                                <AlternatingItemStyle BackColor="#f2f2f2" />
-                                                <PagerStyle PagerTextFormat="{4} 第{0}页/共{1}页, 第{2}-{3}条 共{5}条"
-                                                    PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
-                                                    FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
-                                            </MasterTableView>
-                                            <ClientSettings EnableRowHoverStyle="true" />
-                                        </telerik:RadGrid>
-                                        <div class="float-right" runat="server" id="divPaymentSummary">
-                                            <span class="bold">支付总金额</span>：<asp:Label ID="lblTotalPaymentAmount" runat="server"></asp:Label>元&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <telerik:GridTemplateColumn UniqueName="Amount" HeaderText="付款金额" DataField="Amount" SortExpression="Amount">
+                                                    <HeaderStyle Width="100px" />
+                                                    <ItemStyle Width="100px" />
+                                                    <ItemTemplate>
+                                                        <span><%# Eval("Amount","{0:C2}") %></span>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <div id="divGridCombox">
+                                                            <telerik:RadNumericTextBox runat="server" ID="txtAmount" ShowSpinButtons="true"
+                                                                Type="Currency" NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator=""
+                                                                MinValue="0" MaxValue="999999999" MaxLength="9" Width="100%">
+                                                            </telerik:RadNumericTextBox>
+                                                        </div>
+                                                        <asp:RequiredFieldValidator ID="rfvAmount" runat="server" ErrorMessage="付款金额必填" CssClass="field-validation-error"
+                                                            ControlToValidate="txtAmount"></asp:RequiredFieldValidator>
+                                                    </EditItemTemplate>
+                                                </telerik:GridTemplateColumn>
+                                                <telerik:GridTemplateColumn UniqueName="Fee" HeaderText="手续费" DataField="Fee" SortExpression="Fee">
+                                                    <HeaderStyle Width="100px" />
+                                                    <ItemStyle Width="100px" />
+                                                    <ItemTemplate>
+                                                        <span><%# Eval("Fee","{0:C2}") %></span>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <div id="divGridCombox">
+                                                            <telerik:RadNumericTextBox runat="server" ID="txtFee" ShowSpinButtons="true"
+                                                                Type="Currency" NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator=""
+                                                                MinValue="0" MaxValue="999999999" MaxLength="9" Width="100%">
+                                                            </telerik:RadNumericTextBox>
+                                                        </div>
+                                                    </EditItemTemplate>
+                                                </telerik:GridTemplateColumn>
+                                                <telerik:GridEditCommandColumn UniqueName="Edit" ButtonType="LinkButton" InsertText="保存" EditText="编辑" UpdateText="更新" CancelText="取消">
+                                                    <HeaderStyle Width="10%" />
+                                                    <ItemStyle Width="10%" />
+                                                </telerik:GridEditCommandColumn>
+                                                <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="60" ItemStyle-Width="60" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
+
+                                            </Columns>
+                                            <NoRecordsTemplate>
+                                                没有任何数据
+                                            </NoRecordsTemplate>
+                                            <ItemStyle Height="30" />
+                                            <CommandItemStyle Height="30" />
+                                            <AlternatingItemStyle BackColor="#f2f2f2" />
+                                            <PagerStyle PagerTextFormat="{4} 第{0}页/共{1}页, 第{2}-{3}条 共{5}条"
+                                                PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
+                                                FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
+                                        </MasterTableView>
+                                        <ClientSettings EnableRowHoverStyle="true" />
+                                    </telerik:RadGrid>
+                                    <div class="float-right" runat="server" id="divPaymentSummary">
+                                        <span class="bold">支付总金额</span>：<asp:Label ID="lblTotalPaymentAmount" runat="server"></asp:Label>元&nbsp;&nbsp;&nbsp;&nbsp;
                                             <span class="bold">大写</span>：<asp:Label ID="lblCapitalTotalPaymentAmount" runat="server"></asp:Label>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="mws-form-row" runat="server" id="divRefund">
+                            <telerik:RadTabStrip ID="tabStripRefunds" runat="server" MultiPageID="multiPageRefunds" Skin="Default">
+                                <Tabs>
+                                    <telerik:RadTab Text="返款记录" Value="tabRefund" PageViewID="pvRefund" Selected="true"></telerik:RadTab>
+                                    <telerik:RadTab Text="抵扣记录" Value="tabDeduction" PageViewID="pvDeduction"></telerik:RadTab>
+                                </Tabs>
+                            </telerik:RadTabStrip>
+                            <telerik:RadMultiPage ID="multiPageRefunds" runat="server" CssClass="multi-page-wrapper">
+                                <telerik:RadPageView ID="pvRefund" runat="server" Selected="true">
+                                    <%--返款--%>
+                                    <table runat="server" id="tblSearchRefund" class="leftmargin10">
+                                        <tr class="height40">
+                                            <th class="middle-td">返款日期：
+                                            </th>
+                                            <td class="middle-td leftpadding10">
+                                                <telerik:RadDatePicker runat="server" ID="rdpRefundBeginDate" Width="100"
+                                                    Calendar-EnableShadows="true"
+                                                    Calendar-FastNavigationSettings-CancelButtonCaption="取消"
+                                                    Calendar-FastNavigationSettings-OkButtonCaption="确定"
+                                                    Calendar-FastNavigationSettings-TodayButtonCaption="今天"
+                                                    Calendar-FastNavigationSettings-DateIsOutOfRangeMessage="日期超出范围"
+                                                    Calendar-FastNavigationSettings-DisableOutOfRangeMonths="true"
+                                                    Calendar-FirstDayOfWeek="Monday">
+                                                </telerik:RadDatePicker>
+                                                -&nbsp;&nbsp;
+                                                <telerik:RadDatePicker runat="server" ID="rdpRefundEndDate" Width="100"
+                                                    Calendar-EnableShadows="true"
+                                                    Calendar-FastNavigationSettings-CancelButtonCaption="取消"
+                                                    Calendar-FastNavigationSettings-OkButtonCaption="确定"
+                                                    Calendar-FastNavigationSettings-TodayButtonCaption="今天"
+                                                    Calendar-FastNavigationSettings-DateIsOutOfRangeMessage="日期超出范围"
+                                                    Calendar-FastNavigationSettings-DisableOutOfRangeMonths="true"
+                                                    Calendar-FirstDayOfWeek="Monday">
+                                                </telerik:RadDatePicker>
+                                            </td>
+                                            <td class="middle-td leftpadding20">
+                                                <asp:Button ID="btnSearchRefund" runat="server" Text="查询" CssClass="mws-button green" OnClick="btnSearchRefund_Click" />
+                                            </td>
+                                            <td class="middle-td leftpadding20">
+                                                <asp:Button ID="btnResetRefund" runat="server" Text="重置" CssClass="mws-button orange" OnClick="btnResetRefund_Click" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <telerik:RadGrid ID="rgSupplierRefunds" runat="server" PageSize="10"
+                                        AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
+                                        MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
+                                        ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
+                                        OnNeedDataSource="rgSupplierRefunds_NeedDataSource" OnItemDataBound="rgSupplierRefunds_ItemDataBound"
+                                        OnItemCommand="rgSupplierRefunds_ItemCommand">
+                                        <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
+                                            ShowHeadersWhenNoRecords="true" BackColor="#fafafa" EditMode="InPlace">
+                                            <CommandItemSettings AddNewRecordText="添加" RefreshText="刷新" />
+                                            <Columns>
+                                                <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
+                                                </telerik:GridBoundColumn>
+                                                <telerik:GridTemplateColumn UniqueName="PayDate" HeaderText="返款日期" DataField="PayDate" SortExpression="FromAccount">
+                                                    <ItemStyle Width="10%" />
+                                                    <ItemTemplate>
+                                                        <span><%# Eval("PayDate","{0:yyyy/MM/dd}") %></span>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <div id="divGridCombox">
+                                                            <telerik:RadDatePicker runat="server" ID="rdpPayDate" Width="100"
+                                                                Calendar-EnableShadows="true"
+                                                                Calendar-FastNavigationSettings-CancelButtonCaption="取消"
+                                                                Calendar-FastNavigationSettings-OkButtonCaption="确定"
+                                                                Calendar-FastNavigationSettings-TodayButtonCaption="今天"
+                                                                Calendar-FastNavigationSettings-DateIsOutOfRangeMessage="日期超出范围"
+                                                                Calendar-FastNavigationSettings-DisableOutOfRangeMonths="true"
+                                                                Calendar-FirstDayOfWeek="Monday">
+                                                            </telerik:RadDatePicker>
+                                                        </div>
+                                                        <asp:RequiredFieldValidator ID="rfvPayDate" runat="server" ErrorMessage="请选择返款日期" CssClass="field-validation-error"
+                                                            ControlToValidate="rdpPayDate" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                    </EditItemTemplate>
+                                                </telerik:GridTemplateColumn>
+                                                <telerik:GridTemplateColumn UniqueName="ToAccount" HeaderText="收款账号" DataField="ToAccount"
+                                                    SortExpression="ToAccount" FooterText="合计：" FooterStyle-Font-Bold="true" FooterStyle-HorizontalAlign="Right">
+                                                    <ItemStyle Width="30%" />
+                                                    <ItemTemplate>
+                                                        <span><%# Eval("ToAccount") %></span>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <div id="divGridCombox">
+                                                            <telerik:RadComboBox runat="server" ID="rcbxToAccount" Filter="Contains" AllowCustomText="false"
+                                                                MarkFirstMatch="true" Height="160px" Width="100%" EmptyMessage="--请选择--">
+                                                            </telerik:RadComboBox>
+                                                        </div>
+                                                        <asp:RequiredFieldValidator ID="rfvToAccount" runat="server" ErrorMessage="请选择收款账号" CssClass="field-validation-error"
+                                                            ControlToValidate="rcbxToAccount" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                    </EditItemTemplate>
+                                                </telerik:GridTemplateColumn>
+                                                <telerik:GridTemplateColumn UniqueName="Amount" HeaderText="返款金额" DataField="Amount"
+                                                    FooterAggregateFormatString="{0:C2}" Aggregate="Sum" FooterStyle-Font-Bold="true" SortExpression="Amount">
+                                                    <HeaderStyle Width="12%" />
+                                                    <ItemStyle Width="12%" />
+                                                    <ItemTemplate>
+                                                        <span><%# Eval("Amount","{0:C2}") %></span>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <div id="divGridCombox">
+                                                            <telerik:RadNumericTextBox runat="server" ID="txtAmount" ShowSpinButtons="true"
+                                                                Type="Currency" NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator=""
+                                                                MinValue="0" MaxValue="999999999" MaxLength="9" Width="100%">
+                                                            </telerik:RadNumericTextBox>
+                                                        </div>
+                                                        <asp:RequiredFieldValidator ID="rfvAmount" runat="server" ErrorMessage="返款金额必填" CssClass="field-validation-error"
+                                                            ControlToValidate="txtAmount" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                        <br />
+                                                        <asp:CustomValidator ID="cvAmount" runat="server" ControlToValidate="txtAmount" CssClass="field-validation-error" Display="Dynamic"
+                                                            ErrorMessage="返款(含手续费)和抵扣之和不能大于应返款总额" ></asp:CustomValidator>
+                                                    </EditItemTemplate>
+                                                </telerik:GridTemplateColumn>
+                                                <telerik:GridTemplateColumn UniqueName="Fee" HeaderText="手续费" DataField="Fee"
+                                                    FooterAggregateFormatString="{0:C2}" Aggregate="Sum" FooterStyle-Font-Bold="true" SortExpression="Fee">
+                                                    <HeaderStyle Width="10%" />
+                                                    <ItemStyle Width="10%" />
+                                                    <ItemTemplate>
+                                                        <span><%# Eval("Fee","{0:C2}") %></span>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <div id="divGridCombox">
+                                                            <telerik:RadNumericTextBox runat="server" ID="txtFee" ShowSpinButtons="true"
+                                                                Type="Currency" NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator=""
+                                                                MinValue="0" MaxValue="999999999" MaxLength="9" Width="100%">
+                                                            </telerik:RadNumericTextBox>
+                                                            <br />
+                                                            <asp:CustomValidator ID="cvFee" runat="server" ControlToValidate="txtFee" CssClass="field-validation-error" Display="Dynamic"
+                                                                ErrorMessage="返款(含手续费)和抵扣之和不能大于应返款总额" ></asp:CustomValidator>
+                                                        </div>
+                                                    </EditItemTemplate>
+                                                </telerik:GridTemplateColumn>
+                                                <telerik:GridBoundColumn UniqueName="CreatedBy" HeaderText="操作人" DataField="CreatedBy" ReadOnly="true">
+                                                    <HeaderStyle Width="80" />
+                                                    <ItemStyle HorizontalAlign="Left" Width="80" />
+                                                </telerik:GridBoundColumn>
+                                                <telerik:GridTemplateColumn UniqueName="Comment" HeaderText="备注" DataField="Comment" SortExpression="Comment">
+                                                    <HeaderStyle Width="20%" />
+                                                    <ItemStyle Width="20%" />
+                                                    <ItemTemplate>
+                                                        <span><%# Eval("Comment") %></span>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <div id="divGridCombox">
+                                                            <telerik:RadTextBox runat="server" ID="txtComment" MaxLength="500" Width="100%"></telerik:RadTextBox>
+                                                        </div>
+                                                    </EditItemTemplate>
+                                                </telerik:GridTemplateColumn>
+                                                <telerik:GridTemplateColumn>
+                                                    <HeaderStyle Width="80" />
+                                                    <ItemStyle Width="80" />
+                                                    <EditItemTemplate>
+                                                        <asp:LinkButton ID="lbtnInsert" runat="server" CommandName="Insert">保存</asp:LinkButton>
+                                                        &nbsp;
+                                                        <asp:LinkButton ID="lbtnCancel" runat="server" CommandName="Cancel" CausesValidation="false">取消</asp:LinkButton>
+                                                    </EditItemTemplate>
+                                                </telerik:GridTemplateColumn>
+                                                <%--//--%>
+                                                    <%--     <telerik:GridEditCommandColumn UniqueName="Edit" ButtonType="LinkButton" InsertText="保存" EditText="编辑" UpdateText="更新" CancelText="取消">
+                                                    <HeaderStyle Width="10%" />
+                                                    <ItemStyle Width="10%" />
+                                                </telerik:GridEditCommandColumn>--%>
+                                                <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="60" ItemStyle-Width="60" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
+
+                                                <%--//--%>
+                                            </Columns>
+                                            <NoRecordsTemplate>
+                                                没有任何数据
+                                            </NoRecordsTemplate>
+                                            <ItemStyle Height="30" />
+                                            <CommandItemStyle Height="30" />
+                                            <AlternatingItemStyle BackColor="#f2f2f2" />
+                                            <PagerStyle PagerTextFormat="{4} 第{0}页/共{1}页, 第{2}-{3}条 共{5}条"
+                                                PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
+                                                FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
+                                        </MasterTableView>
+                                        <ClientSettings EnableRowHoverStyle="true" />
+                                    </telerik:RadGrid>
+                                </telerik:RadPageView>
+                                <telerik:RadPageView ID="pvDeduction" runat="server">
+                                    <%--抵扣--%>
+                                    <table runat="server" id="tblSearchDeduction" class="leftmargin10">
+                                        <tr class="height40">
+                                            <th class="middle-td">抵扣日期：
+                                            </th>
+                                            <td class="middle-td leftpadding10">
+                                                <telerik:RadDatePicker runat="server" ID="rdpDeductionBeginDate" Width="100"
+                                                    Calendar-EnableShadows="true"
+                                                    Calendar-FastNavigationSettings-CancelButtonCaption="取消"
+                                                    Calendar-FastNavigationSettings-OkButtonCaption="确定"
+                                                    Calendar-FastNavigationSettings-TodayButtonCaption="今天"
+                                                    Calendar-FastNavigationSettings-DateIsOutOfRangeMessage="日期超出范围"
+                                                    Calendar-FastNavigationSettings-DisableOutOfRangeMonths="true"
+                                                    Calendar-FirstDayOfWeek="Monday">
+                                                </telerik:RadDatePicker>
+                                                -&nbsp;&nbsp;
+                                                <telerik:RadDatePicker runat="server" ID="rdpDeductionEndDate" Width="100"
+                                                    Calendar-EnableShadows="true"
+                                                    Calendar-FastNavigationSettings-CancelButtonCaption="取消"
+                                                    Calendar-FastNavigationSettings-OkButtonCaption="确定"
+                                                    Calendar-FastNavigationSettings-TodayButtonCaption="今天"
+                                                    Calendar-FastNavigationSettings-DateIsOutOfRangeMessage="日期超出范围"
+                                                    Calendar-FastNavigationSettings-DisableOutOfRangeMonths="true"
+                                                    Calendar-FirstDayOfWeek="Monday">
+                                                </telerik:RadDatePicker>
+                                            </td>
+                                            <td class="middle-td leftpadding20">
+                                                <asp:Button ID="btnSearchDeduction" runat="server" Text="查询" CssClass="mws-button green" OnClick="btnSearchDeduction_Click" />
+                                            </td>
+                                            <td class="middle-td leftpadding20">
+                                                <asp:Button ID="btnResetDeduction" runat="server" Text="重置" CssClass="mws-button orange" OnClick="btnResetDeduction_Click" />
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <telerik:RadGrid ID="rgSupplierDeduction" runat="server" PageSize="10"
+                                        AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
+                                        MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
+                                        ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
+                                        OnNeedDataSource="rgSupplierDeduction_NeedDataSource" OnItemDataBound="rgSupplierDeduction_ItemDataBound"
+                                        OnItemCommand="rgSupplierDeduction_ItemCommand">
+                                        <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
+                                            ShowHeadersWhenNoRecords="true" BackColor="#fafafa" EditMode="InPlace">
+                                            <CommandItemSettings AddNewRecordText="添加" RefreshText="刷新" />
+                                            <Columns>
+                                                <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
+                                                </telerik:GridBoundColumn>
+                                                <telerik:GridTemplateColumn UniqueName="DeductedDate" HeaderText="抵扣日期" DataField="DeductedDate" SortExpression="FromAccount">
+                                                    <ItemStyle Width="10%" />
+                                                    <ItemTemplate>
+                                                        <span><%# Eval("DeductedDate","{0:yyyy/MM/dd}") %></span>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <div id="divGridCombox">
+                                                            <telerik:RadDatePicker runat="server" ID="rdpDeductedDate" Width="100"
+                                                                Calendar-EnableShadows="true"
+                                                                Calendar-FastNavigationSettings-CancelButtonCaption="取消"
+                                                                Calendar-FastNavigationSettings-OkButtonCaption="确定"
+                                                                Calendar-FastNavigationSettings-TodayButtonCaption="今天"
+                                                                Calendar-FastNavigationSettings-DateIsOutOfRangeMessage="日期超出范围"
+                                                                Calendar-FastNavigationSettings-DisableOutOfRangeMonths="true"
+                                                                Calendar-FirstDayOfWeek="Monday">
+                                                            </telerik:RadDatePicker>
+                                                        </div>
+                                                        <asp:RequiredFieldValidator ID="rfvDeductedDate" runat="server" ErrorMessage="请选择抵扣日期" CssClass="field-validation-error"
+                                                            ControlToValidate="rdpDeductedDate" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                    </EditItemTemplate>
+                                                </telerik:GridTemplateColumn>
+                                                <telerik:GridTemplateColumn UniqueName="Amount" HeaderText="抵扣金额" DataField="Amount"
+                                                    FooterAggregateFormatString="{0:C2}" Aggregate="Sum" FooterStyle-Font-Bold="true" SortExpression="Amount">
+                                                    <HeaderStyle Width="12%" />
+                                                    <ItemStyle Width="12%" />
+                                                    <ItemTemplate>
+                                                        <span><%# Eval("Amount","{0:C2}") %></span>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <div id="divGridCombox">
+                                                            <telerik:RadNumericTextBox runat="server" ID="txtAmount" ShowSpinButtons="true"
+                                                                Type="Currency" NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator=""
+                                                                MinValue="-999999999" MaxValue="999999999" MaxLength="9" Width="100%">
+                                                            </telerik:RadNumericTextBox>
+                                                        </div>
+                                                        <asp:RequiredFieldValidator ID="rfvAmount" runat="server" ErrorMessage="抵扣金额必填" CssClass="field-validation-error"
+                                                            ControlToValidate="txtAmount" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                        <br />
+                                                        <asp:CustomValidator ID="cvAmount" runat="server" ControlToValidate="txtAmount" CssClass="field-validation-error" Display="Dynamic"
+                                                            ErrorMessage="抵扣和返款(含手续费)之和不能大于应返款总额" ></asp:CustomValidator>
+                                                    </EditItemTemplate>
+                                                </telerik:GridTemplateColumn>
+                                                <telerik:GridTemplateColumn UniqueName="SupplierName" HeaderText="抵扣供应商" DataField="SupplierName" SortExpression="SupplierName">
+                                                    <ItemStyle Width="20%" />
+                                                    <ItemTemplate>
+                                                        <span><%# Eval("SupplierName") %></span>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <div id="divGridCombox">
+                                                            <telerik:RadComboBox runat="server" ID="rcbxSupplier" Filter="Contains" AllowCustomText="false"
+                                                                MarkFirstMatch="true" Height="160px" Width="100%" EmptyMessage="--请选择--">
+                                                            </telerik:RadComboBox>
+                                                        </div>
+                                                        <asp:RequiredFieldValidator ID="rfvSupplier" runat="server" ErrorMessage="请选择抵扣供应商" CssClass="field-validation-error"
+                                                            ControlToValidate="rcbxSupplier" Display="Dynamic"></asp:RequiredFieldValidator>
+                                                    </EditItemTemplate>
+                                                </telerik:GridTemplateColumn>
+                                                <telerik:GridBoundColumn UniqueName="CreatedBy" HeaderText="操作人" DataField="CreatedBy" ReadOnly="true">
+                                                    <HeaderStyle Width="80" />
+                                                    <ItemStyle HorizontalAlign="Left" Width="80" />
+                                                </telerik:GridBoundColumn>
+                                                <telerik:GridTemplateColumn UniqueName="Comment" HeaderText="备注" DataField="Comment" SortExpression="Comment">
+                                                    <HeaderStyle Width="20%" />
+                                                    <ItemStyle Width="20%" />
+                                                    <ItemTemplate>
+                                                        <span><%# Eval("Comment") %></span>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <div id="divGridCombox">
+                                                            <telerik:RadTextBox runat="server" ID="txtComment" MaxLength="500" Width="100%"></telerik:RadTextBox>
+                                                        </div>
+                                                    </EditItemTemplate>
+                                                </telerik:GridTemplateColumn>
+                                                <telerik:GridTemplateColumn>
+                                                    <HeaderStyle Width="80" />
+                                                    <ItemStyle Width="80" />
+                                                    <EditItemTemplate>
+                                                        <asp:LinkButton ID="lbtnInsert" runat="server" CommandName="Insert">保存</asp:LinkButton>
+                                                        &nbsp;
+                                                        <asp:LinkButton ID="lbtnCancel" runat="server" CommandName="Cancel" CausesValidation="false">取消</asp:LinkButton>
+                                                    </EditItemTemplate>
+                                                </telerik:GridTemplateColumn>
+                                                 <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="60" ItemStyle-Width="60" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
+
+                                            </Columns>
+                                            <NoRecordsTemplate>
+                                                没有任何数据
+                                            </NoRecordsTemplate>
+                                            <ItemStyle Height="30" />
+                                            <CommandItemStyle Height="30" />
+                                            <AlternatingItemStyle BackColor="#f2f2f2" />
+                                            <PagerStyle PagerTextFormat="{4} 第{0}页/共{1}页, 第{2}-{3}条 共{5}条"
+                                                PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
+                                                FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
+                                        </MasterTableView>
+                                        <ClientSettings EnableRowHoverStyle="true" />
+                                    </telerik:RadGrid>
+                                </telerik:RadPageView>
+                            </telerik:RadMultiPage>
+                        </div>
+
                         <div class="height20"></div>
                     </div>
                     <div class="mws-button-row">
@@ -349,8 +723,8 @@
                         <asp:Button ID="btnAudit" runat="server" Text="审核通过" CssClass="mws-button green" CausesValidation="true" Visible="false" OnClick="btnAudit_Click" />
                         <asp:Button ID="btnReturn" runat="server" Text="退回" CssClass="mws-button orange" CausesValidation="true" Visible="false" OnClick="btnReturn_Click" />
                         <asp:Button ID="btnPay" runat="server" Text="确认支付" CssClass="mws-button green" CausesValidation="true" OnClick="btnPay_Click" Visible="false" />
-                            
-                         <asp:Button ID="btnCancel" runat="server" Text="取消" UseSubmitBehavior="false" CssClass="mws-button green" OnClientClick="redirectToPage('Views/CautionMoneys/SupplierCautionMoneyApplyManagement.aspx');return false;" />
+
+                        <asp:Button ID="btnCancel" runat="server" Text="取消" UseSubmitBehavior="false" CssClass="mws-button green" OnClientClick="redirectToPage('Views/CautionMoneys/SupplierCautionMoneyApplyManagement.aspx');return false;" />
                     </div>
                 </div>
             </div>
@@ -362,7 +736,7 @@
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContent" runat="server">
     <script type="text/javascript">
         var gridClientIDs = {
-           
+
         };
 
         function refreshGrid(gridClientID) {
@@ -388,6 +762,18 @@
             $.showLoading();
 
             window.location.href = "SupplierCautionMoneyApplyManagement.aspx";
+        }
+        function onResponseEnd(sender, args) {
+
+            var eventTarget = args.get_eventTarget();
+
+            if ((eventTarget.indexOf("rgSupplierRefunds") >= 0
+                    || eventTarget.indexOf("rgSupplierDeduction") >= 0)
+                && (eventTarget.indexOf("lbtnInsert") >= 0)) {
+
+            
+                }
+            
         }
     </script>
 </asp:Content>

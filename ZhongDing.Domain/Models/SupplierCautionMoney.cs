@@ -15,6 +15,11 @@ namespace ZhongDing.Domain.Models
     [Serializable]
     public partial class SupplierCautionMoney : IEntityExtendedProperty
     {
+        public SupplierCautionMoney()
+        {
+            this.SupplierCautionMoneyDeduction = new HashSet<SupplierCautionMoneyDeduction>();
+        }
+    
         public int ID { get; set; }
         public int SupplierID { get; set; }
         public int ProductID { get; set; }
@@ -54,5 +59,6 @@ namespace ZhongDing.Domain.Models
         public virtual Supplier Supplier { get; set; }
         public virtual WorkflowStatus WorkflowStatus { get; set; }
         public virtual Company Company { get; set; }
+        public virtual ICollection<SupplierCautionMoneyDeduction> SupplierCautionMoneyDeduction { get; set; }
     }
 }

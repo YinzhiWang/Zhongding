@@ -12,5 +12,11 @@ namespace ZhongDing.Domain.UISearchObjects
         public int WorkflowStatusID { get; set; }
 
         public int[] WorkflowStatusIDs { get; set; }
+
+        public bool NeedStatistics { get; set; }
+
+        public string SupplierName { get; set; }
+
+        public string ProductName { get; set; }
     }
 }

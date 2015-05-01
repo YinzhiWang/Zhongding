@@ -116,7 +116,17 @@ namespace ZhongDing.Web.Views.CautionMoneys
                 return _PageSupplierBankAccountRepository;
             }
         }
+        private ISupplierCautionMoneyDeductionRepository _PageSupplierCautionMoneyDeductionRepository;
+        private ISupplierCautionMoneyDeductionRepository PageSupplierCautionMoneyDeductionRepository
+        {
+            get
+            {
+                if (_PageSupplierCautionMoneyDeductionRepository == null)
+                    _PageSupplierCautionMoneyDeductionRepository = new SupplierCautionMoneyDeductionRepository();
 
+                return _PageSupplierCautionMoneyDeductionRepository;
+            }
+        }
 
         #endregion
 
@@ -274,7 +284,7 @@ namespace ZhongDing.Web.Views.CautionMoneys
                             divAudit.Visible = false;
                             divAuditAll.Visible = false;
                             divAppPayments.Visible = false;
-
+                            divRefund.Visible = false;
                             #endregion
 
                             break;
@@ -283,6 +293,7 @@ namespace ZhongDing.Web.Views.CautionMoneys
 
                             DisabledBasicInfoControls();
                             divAppPayments.Visible = false;
+                            divRefund.Visible = false;
                             if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
                             {
                                 ShowAuditControls(true);
@@ -305,6 +316,7 @@ namespace ZhongDing.Web.Views.CautionMoneys
                             DisabledBasicInfoControls();
 
                             divAppPayments.Visible = false;
+                            divRefund.Visible = false;
 
                             if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
                                 ShowAuditControls(true);
@@ -320,6 +332,7 @@ namespace ZhongDing.Web.Views.CautionMoneys
                             DisabledBasicInfoControls();
                             ShowAuditControls(false);
                             divAuditAll.Visible = true;
+                            divRefund.Visible = false;
                             if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
                             {
                                 btnPay.Visible = true;
@@ -340,6 +353,7 @@ namespace ZhongDing.Web.Views.CautionMoneys
 
                             ShowAuditControls(false);
                             divAuditAll.Visible = true;
+                            divRefund.Visible = true;
                             rgAppPayments.MasterTableView.CommandItemSettings.ShowAddNewRecordButton = false;
 
                             if (CurrentEntity.PaidBy == CurrentUser.UserID)
@@ -494,6 +508,7 @@ namespace ZhongDing.Web.Views.CautionMoneys
             divAudit.Visible = false;
             divAuditAll.Visible = false;
             divAppPayments.Visible = false;
+            divRefund.Visible = false;
             //divComment.Visible = false;
             //divComments.Visible = false;
             //divOtherSections.Visible = false;
@@ -833,7 +848,8 @@ namespace ZhongDing.Web.Views.CautionMoneys
             var uiSearchObj = new UISearchApplicationPayment
             {
                 WorkflowID = this.CurrentWorkFlowID,
-                ApplicationID = this.CurrentEntityID.HasValue ? this.CurrentEntityID.Value : GlobalConst.INVALID_INT
+                ApplicationID = this.CurrentEntityID.HasValue ? this.CurrentEntityID.Value : GlobalConst.INVALID_INT,
+                PaymentTypeID = (int)EPaymentType.Expend
             };
 
             int totalRecords;
@@ -965,7 +981,7 @@ namespace ZhongDing.Web.Views.CautionMoneys
         private void BindPaymentSummary()
         {
             var appPaymentAmounts = PageAppPaymentRepository
-                .GetList(x => x.WorkflowID == CurrentWorkFlowID && x.ApplicationID == CurrentEntity.ID)
+                .GetList(x => x.WorkflowID == CurrentWorkFlowID && x.ApplicationID == CurrentEntity.ID && x.IsDeleted == false)
                 .Select(x => x.Amount).ToList();
 
             if (appPaymentAmounts.Count > 0)
@@ -1026,65 +1042,510 @@ namespace ZhongDing.Web.Views.CautionMoneys
 
         protected void rgAppPayments_ItemCreated(object sender, GridItemEventArgs e)
         {
-            //if (e.Item is GridCommandItem)
-            //{
-            //    GridCommandItem commandItem = e.Item as GridCommandItem;
-            //    Panel plAddCommand = commandItem.FindControl("plAddCommand") as Panel;
+            if (e.Item is GridCommandItem)
+            {
+                GridCommandItem commandItem = e.Item as GridCommandItem;
+                Panel plAddCommand = commandItem.FindControl("plAddCommand") as Panel;
 
-            //    if (plAddCommand != null)
-            //    {
-            //        if (this.CurrentEntity != null && (this.CanEditUserIDs.Contains(CurrentUser.UserID)
-            //            || (this.CanAuditUserIDs.Contains(CurrentUser.UserID)
-            //                && this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.Submit)))
-            //            plAddCommand.Visible = true;
-            //        else
-            //            plAddCommand.Visible = false;
-            //    }
-            //}
+                if (plAddCommand != null)
+                {
+                    if (this.CurrentEntity != null && (this.CanEditUserIDs.Contains(CurrentUser.UserID)
+                            || (this.CanAuditByTreasurersUserIDs.Contains(CurrentUser.UserID)
+                    && this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.ApprovedByTreasurers)))
+                        plAddCommand.Visible = true;
+                    else
+                        plAddCommand.Visible = false;
+                }
+            }
         }
 
         protected void rgAppPayments_ColumnCreated(object sender, GridColumnCreatedEventArgs e)
         {
-            //if (this.CurrentEntity != null && (this.CanEditUserIDs.Contains(CurrentUser.UserID)
-            //    || (this.CanAuditUserIDs.Contains(CurrentUser.UserID)
-            //        && this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.Submit)))
-            //{
-            //    e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT).Visible = true;
-            //    e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = true;
-            //}
-            //else
-            //{
-            //    e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT).Visible = false;
-            //    e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = false;
-            //}
+            if (this.CurrentEntity != null && (this.CanEditUserIDs.Contains(CurrentUser.UserID)
+                || (this.CanAuditByTreasurersUserIDs.Contains(CurrentUser.UserID)
+                    && this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.ApprovedByTreasurers)))
+            {
+                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT).Visible = true;
+                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = true;
+            }
+            else
+            {
+                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT).Visible = false;
+                e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = false;
+            }
         }
 
         protected void rgAppPayments_DeleteCommand(object sender, GridCommandEventArgs e)
         {
             var editableItem = ((GridEditableItem)e.Item);
-            String sid = editableItem.GetDataKeyValue("ID").ToString();
+            var id = editableItem.GetDataKeyValue("ID").ToIntOrNull();
 
-            int id = 0;
-            if (int.TryParse(sid, out id))
+            if (id.BiggerThanZero())
             {
-                string sPaymentMethodID = editableItem.GetDataKeyValue("PaymentMethodID").ToString();
 
-                int iPaymentMethodID;
-
-                if (int.TryParse(sPaymentMethodID, out iPaymentMethodID))
-                {
-                    if (iPaymentMethodID == (int)EPaymentMethod.BankTransfer)
-                    {
-                        PageAppPaymentRepository.DeleteByID(id);
-                        PageAppPaymentRepository.Save();
-                    }
-                    else if (iPaymentMethodID == (int)EPaymentMethod.Deduction)
-                    {
-
-                    }
-                }
+                PageAppPaymentRepository.DeleteByID(id);
+                PageAppPaymentRepository.Save();
 
                 rgAppPayments.Rebind();
+                BindPaymentSummary();
+            }
+
+        }
+
+        #endregion
+
+
+        #region 抵扣 返款
+        protected void rgSupplierRefunds_ItemDataBound(object sender, GridItemEventArgs e)
+        {
+            if (e.Item.ItemType == GridItemType.EditItem)
+            {
+                GridDataItem gridDataItem = e.Item as GridDataItem;
+
+                UIApplicationPayment uiEntity = null;
+
+                if (e.Item.ItemIndex >= 0)
+                    uiEntity = (UIApplicationPayment)gridDataItem.DataItem;
+
+                var rcbxToAccount = (RadComboBox)e.Item.FindControl("rcbxToAccount");
+
+                if (rcbxToAccount != null)
+                {
+                    var uiSearchObj = new UISearchDropdownItem
+                    {
+                        Extension = new UISearchExtension
+                        {
+                            OwnerTypeID = (int)EOwnerType.Company,
+                            CompanyID = CurrentEntity.CompanyID
+                        }
+                    };
+
+
+                    var bankAccounts = PageBankAccountRepository.GetDropdownItems(uiSearchObj);
+                    rcbxToAccount.DataSource = bankAccounts;
+                    rcbxToAccount.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+                    rcbxToAccount.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+                    rcbxToAccount.DataBind();
+
+                    if (uiEntity != null)
+                        rcbxToAccount.SelectedValue = uiEntity.ToBankAccountID.ToString();
+                }
+
+                var rdpPayDate = (RadDatePicker)e.Item.FindControl("rdpPayDate");
+
+                if (rdpPayDate != null)
+                    rdpPayDate.MaxDate = DateTime.Now;
+
+                if (uiEntity != null)
+                {
+                    if (rdpPayDate != null)
+                        rdpPayDate.SelectedDate = uiEntity.PayDate;
+
+                    var txtAmount = (RadNumericTextBox)e.Item.FindControl("txtAmount");
+                    if (txtAmount != null)
+                        txtAmount.DbValue = uiEntity.Amount;
+
+                    var txtFee = (RadNumericTextBox)e.Item.FindControl("txtFee");
+                    if (txtFee != null)
+                        txtFee.DbValue = uiEntity.Fee;
+
+                    var txtComment = (RadTextBox)e.Item.FindControl("txtComment");
+                    if (txtComment != null)
+                        txtComment.Text = uiEntity.Comment;
+                }
+            }
+        }
+
+        protected void rgSupplierRefunds_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            if (e.CommandName == "Insert")
+            {
+                if (!IsValid)
+                {
+                    e.Canceled = true;
+                }
+                else
+                {
+                    if (e.Item is GridDataItem)
+                    {
+                        GridDataItem dataItem = e.Item as GridDataItem;
+
+                        ApplicationPayment appPayment = new ApplicationPayment();
+
+                        var rdpPayDate = (RadDatePicker)e.Item.FindControl("rdpPayDate");
+                        if (rdpPayDate != null)
+                            appPayment.PayDate = rdpPayDate.SelectedDate;
+
+                        var rcbxToAccount = (RadComboBox)e.Item.FindControl("rcbxToAccount");
+
+                        if (!string.IsNullOrEmpty(rcbxToAccount.SelectedValue))
+                        {
+                            int toAccountID;
+                            if (int.TryParse(rcbxToAccount.SelectedValue, out toAccountID))
+                                appPayment.ToBankAccountID = toAccountID;
+                            appPayment.ToAccount = rcbxToAccount.SelectedItem.Text;
+                        }
+
+                        var txtAmount = (RadNumericTextBox)e.Item.FindControl("txtAmount");
+                        if (txtAmount != null)
+                            appPayment.Amount = (decimal?)txtAmount.Value;
+
+                        var txtFee = (RadNumericTextBox)e.Item.FindControl("txtFee");
+                        if (txtFee != null)
+                            appPayment.Fee = (decimal?)txtFee.Value;
+
+                        {
+                            var uiSearchObj = new UISearchSupplierCautionMoney()
+                            {
+                                ID = CurrentEntityID.Value,
+                                NeedStatistics = true
+                            };
+
+                            int totalRecords;
+
+                            var uiSupplierRefundApp = PageSupplierCautionMoneyRepository.GetUIList(uiSearchObj, 0, 1, out totalRecords).FirstOrDefault();
+
+                            if (uiSupplierRefundApp != null)
+                            {
+                                if ((uiSupplierRefundApp.TakeBackCautionMoney
+                                    + appPayment.Amount.GetValueOrDefault(0)
+                                    + appPayment.Fee.GetValueOrDefault(0)) > uiSupplierRefundApp.PaymentCautionMoney)
+                                {
+                                    ((CustomValidator)e.Item.FindControl("cvAmount")).IsValid = false;
+                                    ((CustomValidator)e.Item.FindControl("cvFee")).IsValid = false;
+                                    e.Canceled = true;
+                                    return;
+                                }
+                            }
+                        }
+
+
+                        var txtComment = (RadTextBox)e.Item.FindControl("txtComment");
+                        if (txtComment != null)
+                            appPayment.Comment = txtComment.Text;
+
+                        appPayment.ApplicationID = this.CurrentEntityID.Value;
+
+                        appPayment.WorkflowID = this.CurrentWorkFlowID;
+                        appPayment.PaymentStatusID = (int)EPaymentStatus.Paid;
+                        appPayment.PaymentTypeID = (int)EPaymentType.Income;
+
+                        PageAppPaymentRepository.Add(appPayment);
+
+                        PageAppPaymentRepository.Save();
+
+                        //hdnNeedRefreshPage.Value = true.ToString();
+
+                        rgSupplierRefunds.Rebind();
+                    }
+                }
+            }
+            
+            else if (e.CommandName == "Delete")
+            {
+                if (e.Item is GridDataItem)
+                {
+                    GridDataItem dataItem = e.Item as GridDataItem;
+                    PageAppPaymentRepository.DeleteByID(dataItem.GetDataKeyValue("ID").ToInt());
+                    PageAppPaymentRepository.Save();
+                }
+            }
+        }
+
+        protected void btnSearchRefund_Click(object sender, EventArgs e)
+        {
+            BindSupplierRefunds(true);
+        }
+
+        protected void btnResetRefund_Click(object sender, EventArgs e)
+        {
+            rdpRefundBeginDate.Clear();
+            rdpRefundEndDate.Clear();
+
+            BindSupplierRefunds(true);
+        }
+        private void BindSupplierRefunds(bool isNeedRebind)
+        {
+            IList<UIApplicationPayment> appPayments = new List<UIApplicationPayment>();
+
+            int totalRecords = 0;
+
+            if (this.CurrentEntityID.HasValue && this.CurrentEntityID > 0)
+            {
+                var uiSearchObj = new UISearchApplicationPayment
+                {
+                    WorkflowID = this.CurrentWorkFlowID,
+                    ApplicationID = this.CurrentEntityID.HasValue ? this.CurrentEntityID.Value : GlobalConst.INVALID_INT,
+                    BeginDate = rdpRefundBeginDate.SelectedDate,
+                    EndDate = rdpRefundEndDate.SelectedDate,
+                    PaymentTypeID = (int)EPaymentType.Income
+                };
+
+                appPayments = PageAppPaymentRepository.GetUIList(uiSearchObj, rgSupplierRefunds.CurrentPageIndex, rgSupplierRefunds.PageSize, out totalRecords);
+            }
+
+            rgSupplierRefunds.DataSource = appPayments;
+            rgSupplierRefunds.VirtualItemCount = totalRecords;
+
+            if (isNeedRebind)
+                rgSupplierRefunds.Rebind();
+        }
+
+        private void BindSupplierDeductions(bool isNeedRebind)
+        {
+            IList<UISupplierCautionMoneyDeduction> supplierDeductions = new List<UISupplierCautionMoneyDeduction>();
+
+            int totalRecords = 0;
+
+            if (this.CurrentEntityID.HasValue && this.CurrentEntityID > 0)
+            {
+                var uiSearchObj = new UISearchSupplierCautionMoneyDeduction
+                {
+                    SupplierCautionMoneyID = this.CurrentEntityID.Value,
+                    BeginDate = rdpDeductionBeginDate.SelectedDate,
+                    EndDate = rdpDeductionEndDate.SelectedDate,
+                };
+
+                supplierDeductions = PageSupplierCautionMoneyDeductionRepository.GetUIList(uiSearchObj, rgSupplierDeduction.CurrentPageIndex, rgSupplierDeduction.PageSize, out totalRecords);
+            }
+
+
+            rgSupplierDeduction.DataSource = supplierDeductions;
+            rgSupplierDeduction.VirtualItemCount = totalRecords;
+
+            if (isNeedRebind)
+                rgSupplierDeduction.Rebind();
+        }
+        protected void btnSearchDeduction_Click(object sender, EventArgs e)
+        {
+            BindSupplierDeductions(true);
+        }
+
+        protected void btnResetDeduction_Click(object sender, EventArgs e)
+        {
+            rdpDeductionBeginDate.Clear();
+            rdpDeductionEndDate.Clear();
+
+            BindSupplierDeductions(true);
+        }
+        protected void cvAmount_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            if (!string.IsNullOrEmpty(args.Value))
+            {
+                decimal curAmount;
+
+                if (decimal.TryParse(args.Value, out curAmount))
+                {
+                    var uiSearchObj = new UISearchSupplierCautionMoney()
+                    {
+                        ID = CurrentEntityID.Value,
+                        NeedStatistics = true
+                    };
+
+                    int totalRecords;
+
+                    var uiSupplierRefundApp = PageSupplierCautionMoneyRepository.GetUIList(uiSearchObj, 0, 1, out totalRecords).FirstOrDefault();
+
+                    if (uiSupplierRefundApp != null)
+                    {
+                        if ((uiSupplierRefundApp.TakeBackCautionMoney + curAmount) > uiSupplierRefundApp.PaymentCautionMoney)
+                        {
+                            args.IsValid = false;
+                        }
+                    }
+                }
+            }
+        }
+        protected void cvFee_ServerValidate(object source, ServerValidateEventArgs args)
+        {
+            if (!string.IsNullOrEmpty(args.Value))
+            {
+                decimal curFee;
+
+                if (decimal.TryParse(args.Value, out curFee))
+                {
+                    var uiSearchObj = new UISearchSupplierCautionMoney()
+                    {
+                        ID = CurrentEntityID.Value,
+                        NeedStatistics = true
+                    };
+
+
+                    int totalRecords;
+
+                    var uiSupplierRefundApp = PageSupplierCautionMoneyRepository.GetUIList(uiSearchObj, 0, 1, out totalRecords).FirstOrDefault();
+
+                    if (uiSupplierRefundApp != null)
+                    {
+                        if ((uiSupplierRefundApp.TakeBackCautionMoney + curFee) > uiSupplierRefundApp.PaymentCautionMoney)
+                        {
+                            args.IsValid = false;
+                        }
+                    }
+                }
+            }
+        }
+        protected void rgSupplierRefunds_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            BindSupplierRefunds(false);
+        }
+        protected void rgSupplierDeduction_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
+            BindSupplierDeductions(false);
+        }
+
+        protected void rgSupplierDeduction_ItemDataBound(object sender, GridItemEventArgs e)
+        {
+            if (e.Item.ItemType == GridItemType.EditItem)
+            {
+                GridDataItem gridDataItem = e.Item as GridDataItem;
+
+                UISupplierDeduction uiEntity = null;
+
+                if (e.Item.ItemIndex >= 0)
+                    uiEntity = (UISupplierDeduction)gridDataItem.DataItem;
+
+                var rcbxSupplier = (RadComboBox)e.Item.FindControl("rcbxSupplier");
+
+                if (rcbxSupplier != null)
+                {
+                    var uiSearchObj = new UISearchDropdownItem
+                    {
+                        Extension = new UISearchExtension
+                        {
+                            CompanyID = CurrentEntity.CompanyID
+                        }
+                    };
+
+                    //if (e.Item.ItemIndex < 0)
+                    //{
+                    //    var excludeItemValues = PageSupplierDeductionRepository
+                    //        .GetList(x => x.SupplierRefundAppID == this.CurrentEntityID)
+                    //        .Select(x => x.SupplierID)
+                    //        .ToList();
+
+                    //    if (excludeItemValues.Count > 0)
+                    //        uiSearchObj.ExcludeItemValues = excludeItemValues;
+                    //}
+
+                    var suppliers = PageSupplierRepository.GetDropdownItems(uiSearchObj);
+                    rcbxSupplier.DataSource = suppliers;
+                    rcbxSupplier.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+                    rcbxSupplier.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+                    rcbxSupplier.DataBind();
+
+                    if (uiEntity != null)
+                        rcbxSupplier.SelectedValue = uiEntity.SupplierID.ToString();
+                }
+
+                var rdpDeductedDate = (RadDatePicker)e.Item.FindControl("rdpDeductedDate");
+
+                if (rdpDeductedDate != null)
+                    rdpDeductedDate.MaxDate = DateTime.Now;
+
+                if (uiEntity != null)
+                {
+                    if (rdpDeductedDate != null)
+                        rdpDeductedDate.SelectedDate = uiEntity.DeductedDate;
+
+                    var txtAmount = (RadNumericTextBox)e.Item.FindControl("txtAmount");
+                    if (txtAmount != null)
+                        txtAmount.DbValue = uiEntity.Amount;
+
+                    var txtComment = (RadTextBox)e.Item.FindControl("txtComment");
+                    if (txtComment != null)
+                        txtComment.Text = uiEntity.Comment;
+                }
+            }
+        }
+
+        protected void rgSupplierDeduction_ItemCommand(object sender, GridCommandEventArgs e)
+        {
+            if (e.CommandName == "Insert")
+            {
+                if (!IsValid)
+                {
+                    e.Canceled = true;
+                }
+                else
+                {
+                    if (e.Item is GridDataItem)
+                    {
+                        GridDataItem dataItem = e.Item as GridDataItem;
+
+                        SupplierCautionMoneyDeduction supplierDeduction = new SupplierCautionMoneyDeduction();
+
+                        var rdpDeductedDate = (RadDatePicker)e.Item.FindControl("rdpDeductedDate");
+                        if (rdpDeductedDate != null)
+                            supplierDeduction.DeductedDate = rdpDeductedDate.SelectedDate;
+
+                        var rcbxSupplier = (RadComboBox)e.Item.FindControl("rcbxSupplier");
+
+                        if (!string.IsNullOrEmpty(rcbxSupplier.SelectedValue))
+                        {
+                            int supplierID;
+                            if (int.TryParse(rcbxSupplier.SelectedValue, out supplierID))
+                                supplierDeduction.SupplierID = supplierID;
+                        }
+
+                        var txtAmount = (RadNumericTextBox)e.Item.FindControl("txtAmount");
+                        if (txtAmount != null && txtAmount.Value.HasValue)
+                            supplierDeduction.Amount = (decimal)txtAmount.Value;
+
+                        {
+                            var uiSearchObj = new UISearchSupplierCautionMoney()
+                            {
+                                ID = CurrentEntityID.Value,
+                                NeedStatistics = true
+                            };
+
+                            int totalRecords;
+
+                            var uiSupplierRefundApp = PageSupplierCautionMoneyRepository.GetUIList(uiSearchObj, 0, 1, out totalRecords).FirstOrDefault();
+
+                            if (uiSupplierRefundApp != null)
+                            {
+                                if ((uiSupplierRefundApp.TakeBackCautionMoney
+                                    + supplierDeduction.Amount) > uiSupplierRefundApp.PaymentCautionMoney)
+                                {
+                                    ((CustomValidator)e.Item.FindControl("cvAmount")).IsValid = false;
+                                    e.Canceled = true;
+                                    return;
+                                }
+                            }
+                        }
+
+                        var txtComment = (RadTextBox)e.Item.FindControl("txtComment");
+                        if (txtComment != null)
+                            supplierDeduction.Comment = txtComment.Text;
+
+                        int currentEntityID;
+                        int.TryParse(hdnCurrentEntityID.Value, out currentEntityID);
+
+                        var supplierRefundApp = PageSupplierCautionMoneyRepository.GetByID(currentEntityID);
+
+                        supplierRefundApp.SupplierCautionMoneyDeduction.Add(supplierDeduction);
+
+                        PageSupplierCautionMoneyRepository.Save();
+
+                        hdnCurrentEntityID.Value = supplierRefundApp.ID.ToString();
+
+                        //hdnNeedRefreshPage.Value = true.ToString();
+
+                        //rgSupplierRefunds.Rebind();
+                        rgSupplierDeduction.Rebind();
+                    }
+                }
+            }
+            else if (e.CommandName == "Delete")
+            {
+                if (e.Item is GridDataItem)
+                {
+                    GridDataItem dataItem = e.Item as GridDataItem;
+
+                    PageSupplierCautionMoneyDeductionRepository.DeleteByID(dataItem.GetDataKeyValue("ID").ToInt());
+                    PageSupplierCautionMoneyDeductionRepository.Save();
+                }
             }
         }
 
