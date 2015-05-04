@@ -340,7 +340,7 @@
                                                             ControlToValidate="txtAmount" Display="Dynamic"></asp:RequiredFieldValidator>
                                                         <br />
                                                         <asp:CustomValidator ID="cvAmount" runat="server" ControlToValidate="txtAmount" CssClass="field-validation-error" Display="Dynamic"
-                                                            ErrorMessage="返款(含手续费)和抵扣之和不能大于应返款总额" OnServerValidate="cvAmount_ServerValidate"></asp:CustomValidator>
+                                                            ErrorMessage="返款(含手续费)和抵扣之和不能大于应返款总额" ></asp:CustomValidator>
                                                     </EditItemTemplate>
                                                 </telerik:GridTemplateColumn>
                                                 <telerik:GridTemplateColumn UniqueName="Fee" HeaderText="手续费" DataField="Fee"
@@ -358,7 +358,7 @@
                                                             </telerik:RadNumericTextBox>
                                                             <br />
                                                             <asp:CustomValidator ID="cvFee" runat="server" ControlToValidate="txtFee" CssClass="field-validation-error" Display="Dynamic"
-                                                                ErrorMessage="返款(含手续费)和抵扣之和不能大于应返款总额" OnServerValidate="cvFee_ServerValidate"></asp:CustomValidator>
+                                                                ErrorMessage="返款(含手续费)和抵扣之和不能大于应返款总额" ></asp:CustomValidator>
                                                         </div>
                                                     </EditItemTemplate>
                                                 </telerik:GridTemplateColumn>
@@ -487,7 +487,7 @@
                                                             ControlToValidate="txtAmount" Display="Dynamic"></asp:RequiredFieldValidator>
                                                         <br />
                                                         <asp:CustomValidator ID="cvAmount" runat="server" ControlToValidate="txtAmount" CssClass="field-validation-error" Display="Dynamic"
-                                                            ErrorMessage="抵扣和返款(含手续费)之和不能大于应返款总额" OnServerValidate="cvAmount_ServerValidate"></asp:CustomValidator>
+                                                            ErrorMessage="抵扣和返款(含手续费)之和不能大于应返款总额" ></asp:CustomValidator>
                                                     </EditItemTemplate>
                                                 </telerik:GridTemplateColumn>
                                                 <telerik:GridTemplateColumn UniqueName="SupplierName" HeaderText="抵扣供应商" DataField="SupplierName" SortExpression="SupplierName">

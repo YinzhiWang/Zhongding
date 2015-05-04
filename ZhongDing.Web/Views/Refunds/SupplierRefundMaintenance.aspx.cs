@@ -439,6 +439,33 @@ namespace ZhongDing.Web.Views.Refunds
                         if (txtFee != null)
                             appPayment.Fee = (decimal?)txtFee.Value;
 
+                        {
+                            var uiSearchObj = new UISearchSupplierRefundApp()
+                            {
+                                CompanyID = this.CompanyID.Value,
+                                SupplierID = this.SupplierID.Value,
+                                ProductID = this.ProductID.Value,
+                                ProductSpecificationID = this.ProductSpecificationID.Value
+                            };
+
+                            int totalRecords;
+
+                            var uiSupplierRefundApp = PageSupplierRefundAppRepository.GetUIList(uiSearchObj, 0, 1, out totalRecords).FirstOrDefault();
+
+                            if (uiSupplierRefundApp != null)
+                            {
+                                if ((uiSupplierRefundApp.TotalRefundedAmount
+                                     + appPayment.Amount.GetValueOrDefault(0)
+                                    + appPayment.Fee.GetValueOrDefault(0)) > uiSupplierRefundApp.TotalNeedRefundAmount)
+                                {
+                                    ((CustomValidator)e.Item.FindControl("cvAmount")).IsValid = false;
+                                    ((CustomValidator)e.Item.FindControl("cvFee")).IsValid = false;
+                                    e.Canceled = true;
+                                    return;
+                                }
+                            }
+                        }
+
                         var txtComment = (RadTextBox)e.Item.FindControl("txtComment");
                         if (txtComment != null)
                             appPayment.Comment = txtComment.Text;
@@ -490,67 +517,8 @@ namespace ZhongDing.Web.Views.Refunds
             }
         }
 
-        protected void cvAmount_ServerValidate(object source, ServerValidateEventArgs args)
-        {
-            if (!string.IsNullOrEmpty(args.Value))
-            {
-                decimal curAmount;
 
-                if (decimal.TryParse(args.Value, out curAmount))
-                {
-                    var uiSearchObj = new UISearchSupplierRefundApp()
-                    {
-                        CompanyID = this.CompanyID.Value,
-                        SupplierID = this.SupplierID.Value,
-                        ProductID = this.ProductID.Value,
-                        ProductSpecificationID = this.ProductSpecificationID.Value
-                    };
 
-                    int totalRecords;
-
-                    var uiSupplierRefundApp = PageSupplierRefundAppRepository.GetUIList(uiSearchObj, 0, 1, out totalRecords).FirstOrDefault();
-
-                    if (uiSupplierRefundApp != null)
-                    {
-                        if ((uiSupplierRefundApp.TotalRefundedAmount + curAmount) > uiSupplierRefundApp.TotalNeedRefundAmount)
-                        {
-                            args.IsValid = false;
-                        }
-                    }
-                }
-            }
-        }
-
-        protected void cvFee_ServerValidate(object source, ServerValidateEventArgs args)
-        {
-            if (!string.IsNullOrEmpty(args.Value))
-            {
-                decimal curFee;
-
-                if (decimal.TryParse(args.Value, out curFee))
-                {
-                    var uiSearchObj = new UISearchSupplierRefundApp()
-                    {
-                        CompanyID = this.CompanyID.Value,
-                        SupplierID = this.SupplierID.Value,
-                        ProductID = this.ProductID.Value,
-                        ProductSpecificationID = this.ProductSpecificationID.Value
-                    };
-
-                    int totalRecords;
-
-                    var uiSupplierRefundApp = PageSupplierRefundAppRepository.GetUIList(uiSearchObj, 0, 1, out totalRecords).FirstOrDefault();
-
-                    if (uiSupplierRefundApp != null)
-                    {
-                        if ((uiSupplierRefundApp.TotalRefundedAmount + curFee) > uiSupplierRefundApp.TotalNeedRefundAmount)
-                        {
-                            args.IsValid = false;
-                        }
-                    }
-                }
-            }
-        }
 
         protected void btnSearchRefund_Click(object sender, EventArgs e)
         {
@@ -667,6 +635,27 @@ namespace ZhongDing.Web.Views.Refunds
                         var txtAmount = (RadNumericTextBox)e.Item.FindControl("txtAmount");
                         if (txtAmount != null && txtAmount.Value.HasValue)
                             supplierDeduction.Amount = (decimal)txtAmount.Value;
+
+                        {
+                            var uiSearchObj = new UISearchSupplierRefundApp()
+                            {
+                                CompanyID = this.CompanyID.Value,
+                                SupplierID = this.SupplierID.Value,
+                                ProductID = this.ProductID.Value,
+                                ProductSpecificationID = this.ProductSpecificationID.Value
+                            };
+
+                            int totalRecords;
+
+                            var uiSupplierRefundApp = PageSupplierRefundAppRepository.GetUIList(uiSearchObj, 0, 1, out totalRecords).FirstOrDefault();
+
+                            if ((uiSupplierRefundApp.TotalRefundedAmount + supplierDeduction.Amount) > uiSupplierRefundApp.TotalNeedRefundAmount)
+                            {
+                                ((CustomValidator)e.Item.FindControl("cvAmount")).IsValid = false;
+                                e.Canceled = true;
+                                return;
+                            }
+                        }
 
                         var txtComment = (RadTextBox)e.Item.FindControl("txtComment");
                         if (txtComment != null)
