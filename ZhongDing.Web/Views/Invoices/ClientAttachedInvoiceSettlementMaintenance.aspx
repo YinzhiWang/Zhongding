@@ -13,27 +13,32 @@
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="tblSearch" />
                     <telerik:AjaxUpdatedControl ControlID="rgClientInvoices" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="scriptBlock" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="btnReset">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="tblSearch" />
                     <telerik:AjaxUpdatedControl ControlID="rgClientInvoices" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="scriptBlock" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="rcbxClientUser">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="rcbxClientCompany" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="scriptBlock" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="rcbxClientCompany">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="rgClientInvoices" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="scriptBlock" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="rgClientInvoices">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="rgClientInvoices" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="scriptBlock" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="rgAppPayments">
@@ -44,6 +49,7 @@
             </telerik:AjaxSetting>
 
         </AjaxSettings>
+        <ClientEvents OnResponseEnd="onResponseEnd" />
     </telerik:RadAjaxManager>
 
     <div class="container">
@@ -93,7 +99,7 @@
                                 <div class="mws-form-item small">
                                     <telerik:RadNumericTextBox runat="server" ID="txtReceiveAmount" CssClass="mws-textinput" Type="Currency"
                                         NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator="" MinValue="0" MaxValue="999999999"
-                                        MaxLength="10" Enabled="false">
+                                        MaxLength="10" ReadOnly="true">
                                     </telerik:RadNumericTextBox>
                                     <asp:CustomValidator ID="cvReceiveAmount" runat="server" Display="Dynamic" ErrorMessage="实际回款金额有误"
                                         ControlToValidate="txtReceiveAmount" ValidationGroup="vgMaintenance" Text="*" CssClass="field-validation-error">
@@ -123,6 +129,9 @@
                                     <telerik:RadComboBox runat="server" ID="rcbxOtherCostType" Filter="Contains"
                                         AllowCustomText="false" Height="160px" Width="80%" EmptyMessage="--请选择--">
                                     </telerik:RadComboBox>
+                                    <asp:CustomValidator ID="cvOtherCostType" runat="server" Display="Dynamic" ErrorMessage="请选择其他费用类型"
+                                        ControlToValidate="rcbxOtherCostType" ValidationGroup="vgMaintenance" Text="*" CssClass="field-validation-error">
+                                    </asp:CustomValidator>
                                 </div>
                             </div>
                             <div class="float-left width60-percent">
@@ -287,7 +296,7 @@
                                             OnNeedDataSource="rgClientInvoices_NeedDataSource" OnColumnCreated="rgClientInvoices_ColumnCreated"
                                             OnItemDataBound="rgClientInvoices_ItemDataBound">
                                             <MasterTableView Width="100%" DataKeyNames="ID,ClientInvoiceDetailID,StockOutDetailID,InvoiceQty,SalesPrice,InvoicePrice,InvoiceSettlementRatio" CommandItemDisplay="None"
-                                                ShowHeadersWhenNoRecords="true" BackColor="#fafafa" ClientDataKeyNames="InvoicePrice,SalesPrice,ToBeSettlementQty">
+                                                ShowHeadersWhenNoRecords="true" BackColor="#fafafa" ClientDataKeyNames="InvoicePrice,SalesPrice,ToBeSettlementQty,InvoiceSettlementRatio">
                                                 <Columns>
                                                     <telerik:GridClientSelectColumn UniqueName="ClientSelect" HeaderText="全选">
                                                         <HeaderStyle Width="40" />
@@ -347,8 +356,8 @@
                                                         <HeaderStyle Width="120" />
                                                         <ItemStyle HorizontalAlign="Left" Width="120" />
                                                         <ItemTemplate>
-                                                            <telerik:RadNumericTextBox runat="server" ID="txtSettlementAmount" Type="Currency" MaxLength="9" Width="100" ShowSpinButtons="true"
-                                                                MinValue="1" MaxValue="99999999" NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator="" Enabled="false" ReadOnly="true">
+                                                            <telerik:RadNumericTextBox runat="server" ID="txtSettlementAmount" Type="Currency" MaxLength="9" Width="100"
+                                                                MinValue="1" MaxValue="99999999" NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator="" ReadOnly="true">
                                                             </telerik:RadNumericTextBox>
                                                         </ItemTemplate>
                                                     </telerik:GridTemplateColumn>
@@ -366,7 +375,7 @@
                                                     OnRowSelected="onRowSelected" OnRowDeselected="onRowDeselected" />
                                             </ClientSettings>
                                         </telerik:RadGrid>
-                                        <div class="float-right">
+                                        <div class="float-right" runat="server" id="divTotalSummary">
                                             <span class="bold">结算总金额</span>：<asp:Label ID="lblTotalSettlementAmount" runat="server"></asp:Label>元&nbsp;&nbsp;&nbsp;&nbsp;
                                             <span class="bold">大写</span>：<asp:Label ID="lblCapitalTSAmount" runat="server"></asp:Label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <span class="bold">应返款总金额</span>：<asp:Label ID="lblTotalRefundAmount" runat="server"></asp:Label>元&nbsp;&nbsp;&nbsp;&nbsp;
@@ -575,6 +584,17 @@
         TitleIcon="none" Opacity="95" Position="Center" ContentIcon="~/Content/icons/32/cross.png"
         Width="300" Height="100">
     </telerik:RadNotification>
+
+    <telerik:RadScriptBlock runat="server" ID="scriptBlock">
+        <script type="text/javascript">
+            $(function () {
+                $("input[readonly]").keydown(function (e) {
+                    e.preventDefault();
+                });
+            });
+        </script>
+    </telerik:RadScriptBlock>
+
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContent" runat="server">
     <style>
@@ -597,14 +617,14 @@
         }
 
         function redirectToManagementPage(sender, args) {
-            redirectToPage("Views/Invoices/ClientInvoiceSettlementManagement.aspx");
+            redirectToPage("Views/Invoices/ClientAttachedInvoiceSettlementManagement.aspx");
         }
 
         function refreshMaintenancePage(sender, args) {
 
             var currentEntityID = $("#<%= hdnCurrentEntityID.ClientID %>").val();
 
-            redirectToPage("Views/Invoices/ClientInvoiceSettlementMaintenance.aspx?EntityID=" + currentEntityID);
+            redirectToPage("Views/Invoices/ClientAttachedInvoiceSettlementMaintenance.aspx?EntityID=" + currentEntityID);
         }
 
         var toolTip;
@@ -646,79 +666,79 @@
 
                 if (newValue > selectedTotalAmount) {
                     var radNotification = $find("<%=radNotification.ClientID%>");
-                    radNotification.set_text("其他费用不能大于总结算金额：" + selectedTotalAmount);
-                    radNotification.show();
-                    eventArgs.set_cancel(true);
-                }
-            }
-        }
-
-        function onClientOtherCostAmountChanged(sender, eventArgs) {
-            calculateGridTotalAmount();
-        }
-
-        function onClientSettlementQtyChanging(sender, eventArgs) {
-            var gridItem = sender.get_parent();
-
-            if (gridItem) {
-
-                var gridItemElement = gridItem.get_element();
-                var newValue = eventArgs.get_newValue();
-
-                if (newValue) {
-                    var toBeSettlementQty = gridItem.getDataKeyValue("ToBeSettlementQty");
-                    if (newValue > toBeSettlementQty) {
-                        var radNotification = $find("<%=radNotification.ClientID%>");
-                        radNotification.set_text("本次结算数量不能大于未结算数量：" + toBeSettlementQty);
+                        radNotification.set_text("其他费用不能大于总结算金额：" + selectedTotalAmount);
                         radNotification.show();
                         eventArgs.set_cancel(true);
                     }
                 }
-                else {
-                    var radNotification = $find("<%=radNotification.ClientID%>");
-                    radNotification.set_text("本次结算数量为必填项");
-                    radNotification.show();
-
-                    eventArgs.set_cancel(true);
-                }
             }
-        }
 
-        function onClientSettlementQtyChanged(sender, eventArgs) {
+            function onClientOtherCostAmountChanged(sender, eventArgs) {
+                calculateGridTotalAmount();
+            }
 
-            var gridItem = sender.get_parent();
+            function onClientSettlementQtyChanging(sender, eventArgs) {
+                var gridItem = sender.get_parent();
 
-            if (gridItem) {
+                if (gridItem) {
 
-                var gridItemElement = gridItem.get_element();
+                    var gridItemElement = gridItem.get_element();
+                    var newValue = eventArgs.get_newValue();
 
-                var newValue = eventArgs.get_newValue();
+                    if (newValue) {
+                        var toBeSettlementQty = gridItem.getDataKeyValue("ToBeSettlementQty");
+                        if (newValue > toBeSettlementQty) {
+                            var radNotification = $find("<%=radNotification.ClientID%>");
+                            radNotification.set_text("本次结算数量不能大于未结算数量：" + toBeSettlementQty);
+                            radNotification.show();
+                            eventArgs.set_cancel(true);
+                        }
+                    }
+                    else {
+                        var radNotification = $find("<%=radNotification.ClientID%>");
+                        radNotification.set_text("本次结算数量为必填项");
+                        radNotification.show();
 
-                if (newValue) {
-
-                    var invoicePrice = gridItem.getDataKeyValue("InvoicePrice");
-
-                    var txtSettlementAmount = $telerik.findControl(gridItemElement, "txtSettlementAmount");
-                    var curSettlementAmount = txtSettlementAmount.get_value();
-
-                    if (curSettlementAmount > parseFloat(newValue)) {
-                        txtSettlementAmount.set_value(newValue * invoicePrice);
+                        eventArgs.set_cancel(true);
                     }
                 }
             }
 
-            calculateGridTotalAmount();
-        }
+            function onClientSettlementQtyChanged(sender, eventArgs) {
 
-        function onRowSelecting(sender, eventArgs) {
-            var selectingItem = eventArgs.get_gridDataItem();
-            var selectingElement = selectingItem.get_element();
+                var gridItem = sender.get_parent();
 
-            var txtSettlementQty = $telerik.findControl(selectingElement, "txtSettlementQty");
-            var curSettlementQty = txtSettlementQty.get_value();
+                if (gridItem) {
 
-            if (curSettlementQty == null || curSettlementQty == "") {
-                var radNotification = $find("<%=radNotification.ClientID%>");
+                    var gridItemElement = gridItem.get_element();
+
+                    var newValue = eventArgs.get_newValue();
+
+                    if (newValue) {
+
+                        var invoicePrice = gridItem.getDataKeyValue("InvoicePrice");
+
+                        var txtSettlementAmount = $telerik.findControl(gridItemElement, "txtSettlementAmount");
+                        var curSettlementAmount = txtSettlementAmount.get_value();
+
+                        if (curSettlementAmount > parseFloat(newValue)) {
+                            txtSettlementAmount.set_value(newValue * invoicePrice);
+                        }
+                    }
+                }
+
+                calculateGridTotalAmount();
+            }
+
+            function onRowSelecting(sender, eventArgs) {
+                var selectingItem = eventArgs.get_gridDataItem();
+                var selectingElement = selectingItem.get_element();
+
+                var txtSettlementQty = $telerik.findControl(selectingElement, "txtSettlementQty");
+                var curSettlementQty = txtSettlementQty.get_value();
+
+                if (curSettlementQty == null || curSettlementQty == "") {
+                    var radNotification = $find("<%=radNotification.ClientID%>");
 
                 radNotification.set_text("本次结算数量为必填项");
                 radNotification.show();
@@ -748,10 +768,17 @@
             calculateTotalAmount(sender, eventArgs);
         }
 
+        function onResponseEnd(sender, eventArgs) {
+            calculateGridTotalAmount();
+        }
+
         //计算动态操作时grid选中项的总金额
         function calculateTotalAmount(sender, eventArgs) {
             //debugger;
-            var selectedTotalSettlementAmount = 0;
+            var selectedTotalSettlementAmount = 0;//总结算金额
+            var selectedTotalRatioAmount = 0;//总税额
+            var selectedTotalSalesAmount = 0;//总销售金额
+            var totalRefundAmount = 0;//总应返款
 
             //获取已经选中的items
             var selectedItems = eventArgs.get_tableView().get_selectedItems();
@@ -760,11 +787,23 @@
                 var curSelectedItem = selectedItems[i];
                 var curSelectedItemElement = curSelectedItem.get_element();
 
+                var settlementRatio = parseFloat(curSelectedItem.getDataKeyValue("InvoiceSettlementRatio"));
+                var salesPrice = parseFloat(curSelectedItem.getDataKeyValue("SalesPrice"));
+
                 var txtSettlementAmount = $telerik.findControl(curSelectedItemElement, "txtSettlementAmount");
                 var curSettlementAmount = txtSettlementAmount.get_value();
 
                 if (curSettlementAmount) {
                     selectedTotalSettlementAmount += curSettlementAmount;
+                    selectedTotalRatioAmount += curSettlementAmount * settlementRatio;
+                }
+
+                var txtSettlementQty = $telerik.findControl(curSelectedItemElement, "txtSettlementQty");
+                var curSettlementQty = txtSettlementQty.get_value();
+
+
+                if (curSettlementQty) {
+                    selectedTotalSalesAmount += curSettlementQty * salesPrice;
                 }
             }
 
@@ -779,30 +818,65 @@
                 calculatedReceiveAmount -= parseFloat(otherCostAmount);
             }
             $find("<%=txtReceiveAmount.ClientID%>").set_value(calculatedReceiveAmount);
+
+            totalRefundAmount = (calculatedReceiveAmount - selectedTotalRatioAmount + selectedTotalSalesAmount * 0.08).toFixed(2);
+
+            $("#<%= lblTotalRefundAmount.ClientID%>").html("¥" + totalRefundAmount);
+            $("#<%= lblCapitalTRAmount.ClientID%>").html($.convertToCapitalChinese(totalRefundAmount));
         }
 
         //计算grid里选中项的总金额
         function calculateGridTotalAmount() {
-            //debugger;
-            var selectedTotalSettlementAmount = getSelectedTotalAmount();
+
+            var selectedTotalSettlementAmount = 0;//总结算金额
+            var selectedTotalRatioAmount = 0;//总税额
+            var selectedTotalSalesAmount = 0;//总销售金额
+            var totalRefundAmount = 0;//总应返款
 
             //获取已经选中的items
             var selectedItems = gridOfRefresh.get_masterTableView().get_selectedItems();
 
-            if (selectedTotalSettlementAmount > 0) {
+            for (var i = 0; i < selectedItems.length; i++) {
+                var curSelectedItem = selectedItems[i];
+                var curSelectedItemElement = curSelectedItem.get_element();
 
-                selectedTotalSettlementAmount = selectedTotalSettlementAmount.toFixed(2);
+                var settlementRatio = parseFloat(curSelectedItem.getDataKeyValue("InvoiceSettlementRatio"));
+                var salesPrice = parseFloat(curSelectedItem.getDataKeyValue("SalesPrice"));
 
-                $("#<%=lblTotalSettlementAmount.ClientID%>").html("¥" + selectedTotalSettlementAmount);
-                $("#<%=lblCapitalTSAmount.ClientID%>").html($.convertToCapitalChinese(selectedTotalSettlementAmount));
+                var txtSettlementAmount = $telerik.findControl(curSelectedItemElement, "txtSettlementAmount");
+                var curSettlementAmount = txtSettlementAmount.get_value();
 
-                var calculatedReceiveAmount = selectedTotalSettlementAmount;
-                var otherCostAmount = $find("<%=txtOtherCostAmount.ClientID %>").get_value();
-                if (otherCostAmount && otherCostAmount != "") {
-                    calculatedReceiveAmount -= parseFloat(otherCostAmount);
+                if (curSettlementAmount) {
+                    selectedTotalSettlementAmount += curSettlementAmount;
+                    selectedTotalRatioAmount += curSettlementAmount * settlementRatio;
                 }
-                $find("<%=txtReceiveAmount.ClientID%>").set_value(calculatedReceiveAmount);
+
+                var txtSettlementQty = $telerik.findControl(curSelectedItemElement, "txtSettlementQty");
+                var curSettlementQty = txtSettlementQty.get_value();
+
+
+                if (curSettlementQty) {
+                    selectedTotalSalesAmount += curSettlementQty * salesPrice;
+                }
             }
+
+            selectedTotalSettlementAmount = selectedTotalSettlementAmount.toFixed(2);
+
+            $("#<%=lblTotalSettlementAmount.ClientID%>").html("¥" + selectedTotalSettlementAmount);
+            $("#<%=lblCapitalTSAmount.ClientID%>").html($.convertToCapitalChinese(selectedTotalSettlementAmount));
+
+            var calculatedReceiveAmount = selectedTotalSettlementAmount;
+            var otherCostAmount = $find("<%=txtOtherCostAmount.ClientID %>").get_value();
+            if (otherCostAmount && otherCostAmount != "") {
+                calculatedReceiveAmount -= parseFloat(otherCostAmount);
+            }
+            $find("<%=txtReceiveAmount.ClientID%>").set_value(calculatedReceiveAmount);
+
+            totalRefundAmount = (calculatedReceiveAmount - selectedTotalRatioAmount + selectedTotalSalesAmount * 0.08).toFixed(2);
+
+            $("#<%= lblTotalRefundAmount.ClientID%>").html("¥" + totalRefundAmount);
+            $("#<%= lblCapitalTRAmount.ClientID%>").html($.convertToCapitalChinese(totalRefundAmount));
+
         }
 
         //获取grid里选中行的结算金额总和

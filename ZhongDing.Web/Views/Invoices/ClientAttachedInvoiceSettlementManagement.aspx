@@ -137,7 +137,8 @@
                                             </ItemTemplate>
                                         </telerik:GridTemplateColumn>
                                         <telerik:GridButtonColumn UniqueName="Delete" Text="删除" HeaderText="删除" CommandName="Delete" ButtonType="LinkButton"
-                                            HeaderStyle-Width="60" ItemStyle-Width="60" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" Visible="false" />
+                                            HeaderStyle-Width="60" ItemStyle-Width="60" HeaderStyle-HorizontalAlign="Center"
+                                            ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" Visible="false" />
                                     </Columns>
                                     <CommandItemTemplate>
                                         <table class="width100-percent">

@@ -78,7 +78,7 @@ namespace ZhongDing.Business.Repositories
                                   ClientUserName = cu.ClientName,
                                   ClientCompanyName = cc.Name,
                                   InvoiceNumberArray = q.ClientAttachedInvoiceSettlementDetail
-                                  .Where(x => x.IsDeleted == false).Select(x => x.ClientInvoiceDetail.ClientInvoice.InvoiceNumber),
+                                  .Where(x => x.IsDeleted == false).Select(x => x.ClientInvoiceDetail.ClientInvoice.InvoiceNumber).Distinct(),
                                   WorkflowStatusID = q.WorkflowStatusID,
                                   WorkflowStatus = ws.StatusName,
                                   CreatedByUserID = q.CreatedBy,

@@ -36,6 +36,8 @@ namespace ZhongDing.Domain.Models
         public Nullable<decimal> TotalRefundAmount { get; set; }
         public Nullable<System.DateTime> PaidDate { get; set; }
         public Nullable<int> PaidBy { get; set; }
+        public Nullable<int> AppPaymentID { get; set; }
+        public Nullable<int> CanceledAppPaymentID { get; set; }
         public bool IsCanceled { get; set; }
         public string CanceledReason { get; set; }
         public Nullable<System.DateTime> CanceledDate { get; set; }
@@ -56,6 +58,8 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
+        public virtual ApplicationPayment ApplicationPayment { get; set; }
+        public virtual ApplicationPayment ApplicationPayment1 { get; set; }
         public virtual BankAccount BankAccount { get; set; }
         public virtual ClientCompany ClientCompany { get; set; }
         public virtual ClientUser ClientUser { get; set; }

@@ -251,15 +251,25 @@ namespace ZhongDing.Web.Views.Invoices
             rcbxOtherCostType.Items.Insert(0, new RadComboBoxItem("", ""));
         }
 
-
         private void LoadCurrentEntity()
         {
             if (this.CurrentEntity != null)
             {
                 hdnCurrentEntityID.Value = this.CurrentEntity.ID.ToString();
 
+                rcbxClientUser.SelectedValue = CurrentEntity.ClientUserID.ToString();
+                BindClientCompanies();
+                rcbxClientCompany.SelectedValue = CurrentEntity.ClientCompanyID.ToString();
+
+                txtReceiveAmount.DbValue = CurrentEntity.ReceiveAmount;
+                rcbxToAccount.SelectedValue = CurrentEntity.ReceiveBankAccountID.ToString();
+
+                rcbxOtherCostType.SelectedValue = CurrentEntity.OtherCostTypeID.HasValue
+                    ? CurrentEntity.OtherCostTypeID.ToString() : string.Empty;
+                txtOtherCostAmount.DbValue = CurrentEntity.OtherCostAmount;
+
+                rdpConfirmDate.SelectedDate = CurrentEntity.ConfirmDate;
                 rdpSettlementDate.SelectedDate = CurrentEntity.SettlementDate;
-                rcbxClientCompany.SelectedValue = this.CurrentEntity.ClientCompanyID.ToString();
 
                 if (CurrentEntity.TotalSettlementAmount.HasValue)
                 {
@@ -384,8 +394,8 @@ namespace ZhongDing.Web.Views.Invoices
         private void BindPaymentSummary()
         {
             var appPaymentAmounts = PageAppPaymentRepository
-                .GetList(x => x.WorkflowID == CurrentWorkFlowID && x.ApplicationID == CurrentEntity.ID)
-                .Select(x => x.Amount).ToList();
+                .GetList(x => x.WorkflowID == CurrentWorkFlowID && x.PaymentTypeID == (int)EPaymentType.Expend
+                    && x.ApplicationID == CurrentEntity.ID).Select(x => x.Amount).ToList();
 
             if (appPaymentAmounts.Count > 0)
             {
@@ -420,6 +430,13 @@ namespace ZhongDing.Web.Views.Invoices
         /// </summary>
         private void DisabledBasicInfoControls()
         {
+            rcbxClientUser.Enabled = false;
+            rcbxClientCompany.Enabled = false;
+            txtReceiveAmount.Enabled = false;
+            rcbxToAccount.Enabled = false;
+            rcbxOtherCostType.Enabled = false;
+            txtOtherCostAmount.Enabled = false;
+            rdpConfirmDate.Enabled = false;
             rdpSettlementDate.Enabled = false;
             rcbxClientCompany.Enabled = false;
             txtComment.Enabled = false;
@@ -437,22 +454,20 @@ namespace ZhongDing.Web.Views.Invoices
             btnAudit.Visible = false;
             btnReturn.Visible = false;
             btnCancel.Visible = false;
-            divComment.Visible = false;
+            //divComment.Visible = false;
             divCancel.Visible = false;
-            divComments.Visible = false;
+            //divComments.Visible = false;
             divOtherSections.Visible = false;
 
             rdpConfirmDate.SelectedDate = DateTime.Now;
             rdpSettlementDate.SelectedDate = DateTime.Now;
-            //lblCreateBy.Text = CurrentUser.FullName;
         }
 
         private void BindClientInvoices(bool isNeedRebind)
         {
             var uiSearchObj = new UISearchClientAttachedInvoiceSettlementDetail
             {
-                ClientAttachedInvoiceSettlementID = this.CurrentEntityID.HasValue
-                ? CurrentEntityID.Value : GlobalConst.INVALID_INT,
+                ClientAttachedInvoiceSettlementID = this.CurrentEntityID,
                 CompanyID = CurrentUser.CompanyID,
                 BeginDate = rdpBeginDate.SelectedDate,
                 EndDate = rdpEndDate.SelectedDate
@@ -576,11 +591,39 @@ namespace ZhongDing.Web.Views.Invoices
 
                 var txtSettlementQty = (RadNumericTextBox)gridDataItem.FindControl("txtSettlementQty");
                 if (txtSettlementQty != null)
+                {
                     txtSettlementQty.DbValue = uiEntity.SettlementQty;
+
+                    if (this.CurrentEntity == null || (this.CurrentEntity != null
+                        && (this.CurrentEntity.CreatedBy == CurrentUser.UserID || this.CanEditUserIDs.Contains(CurrentUser.UserID))
+                        && (this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.TemporarySave
+                            || this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.ReturnBasicInfo)))
+                    {
+                        txtSettlementQty.Enabled = true;
+                    }
+                    else
+                    {
+                        txtSettlementQty.Enabled = false;
+                    }
+                }
 
                 var txtSettlementAmount = (RadNumericTextBox)gridDataItem.FindControl("txtSettlementAmount");
                 if (txtSettlementAmount != null)
+                {
                     txtSettlementAmount.DbValue = uiEntity.SettlementAmount;
+
+                    if (this.CurrentEntity == null || (this.CurrentEntity != null
+                        && (this.CurrentEntity.CreatedBy == CurrentUser.UserID || this.CanEditUserIDs.Contains(CurrentUser.UserID))
+                        && (this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.TemporarySave
+                            || this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.ReturnBasicInfo)))
+                    {
+                        txtSettlementAmount.Enabled = true;
+                    }
+                    else
+                    {
+                        txtSettlementAmount.Enabled = false;
+                    }
+                }
 
             }
         }
@@ -594,6 +637,7 @@ namespace ZhongDing.Web.Views.Invoices
             var uiSearchObj = new UISearchApplicationPayment
             {
                 WorkflowID = this.CurrentWorkFlowID,
+                PaymentTypeID = (int)EPaymentType.Expend,
                 ApplicationID = this.CurrentEntityID.HasValue ? this.CurrentEntityID.Value : GlobalConst.INVALID_INT
             };
 
@@ -788,6 +832,12 @@ namespace ZhongDing.Web.Views.Invoices
                 cvOtherCostAmount.IsValid = false;
             }
 
+            if (txtOtherCostAmount.Value.HasValue
+                && string.IsNullOrEmpty(rcbxOtherCostType.SelectedValue))
+            {
+                cvOtherCostType.IsValid = false;
+            }
+
             if (!IsValid) return;
 
             var selectedItems = rgClientInvoices.SelectedItems;
@@ -808,10 +858,12 @@ namespace ZhongDing.Web.Views.Invoices
                 IClientInvoiceDetailRepository cidRepository = new ClientInvoiceDetailRepository();
                 IClientAttachedInvoiceSettlementRepository caisRepository = new ClientAttachedInvoiceSettlementRepository();
                 IClientAttachedInvoiceSettlementDetailRepository caisdRepository = new ClientAttachedInvoiceSettlementDetailRepository();
+                IApplicationPaymentRepository appPaymentRepository = new ApplicationPaymentRepository();
 
                 cidRepository.SetDbModel(db);
                 caisRepository.SetDbModel(db);
                 caisdRepository.SetDbModel(db);
+                appPaymentRepository.SetDbModel(db);
 
                 ClientAttachedInvoiceSettlement clientAttachedInvoiceSettlement = caisRepository.GetByID(this.CurrentEntityID);
 
@@ -828,11 +880,17 @@ namespace ZhongDing.Web.Views.Invoices
 
                 clientAttachedInvoiceSettlement.ClientUserID = Convert.ToInt32(rcbxClientUser.SelectedValue);
                 clientAttachedInvoiceSettlement.ClientCompanyID = Convert.ToInt32(rcbxClientCompany.SelectedValue);
-                clientAttachedInvoiceSettlement.ReceiveAmount = (decimal)txtReceiveAmount.Value;
                 clientAttachedInvoiceSettlement.ReceiveBankAccountID = Convert.ToInt32(rcbxToAccount.SelectedValue);
                 clientAttachedInvoiceSettlement.ReceiveAccount = rcbxToAccount.SelectedItem.Text;
                 clientAttachedInvoiceSettlement.ConfirmDate = rdpConfirmDate.SelectedDate ?? DateTime.Now;
                 clientAttachedInvoiceSettlement.SettlementDate = rdpSettlementDate.SelectedDate ?? DateTime.Now;
+
+                if (!string.IsNullOrEmpty(rcbxOtherCostType.SelectedValue))
+                    clientAttachedInvoiceSettlement.OtherCostTypeID = Convert.ToInt32(rcbxOtherCostType.SelectedValue);
+                clientAttachedInvoiceSettlement.OtherCostAmount = (decimal?)txtOtherCostAmount.Value;
+
+                //总的结算发票税额
+                decimal totalInvoiceRatioAmount = 0M;
 
                 List<int> clientInvoiceDetailIDs = new List<int>();
 
@@ -853,17 +911,17 @@ namespace ZhongDing.Web.Views.Invoices
                     var txtSettlementQty = (RadNumericTextBox)editableItem.FindControl("txtSettlementQty");
                     var settlementQty = (int?)txtSettlementQty.Value;
 
-                    var txtSettlementAmount = (RadNumericTextBox)editableItem.FindControl("txtSettlementAmount");
-                    var settlementAmount = (decimal?)txtSettlementAmount.Value;
-
                     var clientAttachedInvoiceSettlementDetail = clientAttachedInvoiceSettlement.ClientAttachedInvoiceSettlementDetail
-                        .FirstOrDefault(x => x.IsDeleted == false && x.ClientInvoiceDetailID == clientInvoiceDetailID);
+                        .FirstOrDefault(x => x.IsDeleted == false && x.ClientInvoiceDetailID == clientInvoiceDetailID
+                            && x.StockOutDetailID == stockOutDetailID);
 
                     if (clientAttachedInvoiceSettlementDetail == null)
                     {
                         clientAttachedInvoiceSettlementDetail = new ClientAttachedInvoiceSettlementDetail();
                         clientAttachedInvoiceSettlement.ClientAttachedInvoiceSettlementDetail.Add(clientAttachedInvoiceSettlementDetail);
                     }
+
+                    var settlementAmount = settlementQty * invoicePrice;
 
                     clientAttachedInvoiceSettlementDetail.ClientInvoiceDetailID = clientInvoiceDetailID;
                     clientAttachedInvoiceSettlementDetail.StockOutDetailID = stockOutDetailID;
@@ -872,6 +930,8 @@ namespace ZhongDing.Web.Views.Invoices
                     clientAttachedInvoiceSettlementDetail.SettlementAmount = settlementAmount;
                     clientAttachedInvoiceSettlementDetail.SalesAmount = settlementQty * salesPrice;
 
+                    totalInvoiceRatioAmount += (settlementAmount ?? 0) * invoiceSettlementRatio;
+
                     clientInvoiceDetailIDs.Add(clientInvoiceDetailID);
                 }
 
@@ -879,51 +939,240 @@ namespace ZhongDing.Web.Views.Invoices
                     .Where(x => x.IsDeleted == false && !clientInvoiceDetailIDs.Contains(x.ClientInvoiceDetailID)))
                 {
                     item.IsDeleted = true;
-
-                    //var clientInvoice = cidRepository.GetByID(item.ClientInvoiceID);
                 }
 
-                //var clientInvoices = cidRepository.GetList(x => clientInvoiceDetailIDs.Contains(x.ID));
+                clientAttachedInvoiceSettlement.TotalSettlementAmount = clientAttachedInvoiceSettlement.ClientAttachedInvoiceSettlementDetail
+                    .Where(x => x.IsDeleted == false)
+                    .Sum(x => x.SettlementAmount);
 
-                //foreach (var clientInvoice in clientInvoices)
-                //{
-                //    clientInvoice.IsSettled = true;
-                //    clientInvoice.SettledDate = DateTime.Now;
-                //}
+                var totalSalesAmount = clientAttachedInvoiceSettlement.ClientAttachedInvoiceSettlementDetail
+                    .Where(x => x.IsDeleted == false)
+                    .Sum(x => x.SalesAmount ?? 0);
 
-                //clientAttachedInvoiceSettlement.TotalInvoiceAmount = clientAttachedInvoiceSettlement.ClientAttachedInvoiceSettlementDetail
-                //    .Where(x => x.IsDeleted == false)
-                //    .Sum(x => x.TotalInvoiceAmount);
-                //clientAttachedInvoiceSettlement.TotalPayAmount = clientAttachedInvoiceSettlement.ClientAttachedInvoiceSettlementDetail
-                //    .Where(x => x.IsDeleted == false)
-                //    .Sum(x => x.PayAmount);
+                clientAttachedInvoiceSettlement.ReceiveAmount = (clientAttachedInvoiceSettlement.TotalSettlementAmount ?? 0)
+                    - (clientAttachedInvoiceSettlement.OtherCostAmount ?? 0);
 
-                //unitOfWork.SaveChanges();
+                clientAttachedInvoiceSettlement.TotalRefundAmount = clientAttachedInvoiceSettlement.ReceiveAmount - totalInvoiceRatioAmount
+                    + totalSalesAmount * 0.08M;
 
-                //hdnCurrentEntityID.Value = clientAttachedInvoiceSettlement.ID.ToString();
+                ApplicationPayment appPayment = clientAttachedInvoiceSettlement.ApplicationPayment;
 
-                //if (!string.IsNullOrEmpty(txtComment.Text.Trim()))
-                //{
-                //    var appNote = new ApplicationNote();
-                //    appNote.WorkflowID = CurrentWorkFlowID;
-                //    appNote.WorkflowStepID = (int)EWorkflowStep.NewCISettlement;
-                //    appNote.NoteTypeID = (int)EAppNoteType.Comment;
-                //    appNote.ApplicationID = clientAttachedInvoiceSettlement.ID;
-                //    appNote.Note = txtComment.Text.Trim();
+                if (appPayment == null)
+                {
+                    appPayment = new ApplicationPayment()
+                    {
+                        WorkflowID = CurrentWorkFlowID,
+                        PaymentTypeID = (int)EPaymentType.Income,
+                        PaymentStatusID = (int)EPaymentStatus.Paid,
+                    };
+                }
 
-                //    PageAppNoteRepository.Add(appNote);
+                appPayment.ToBankAccountID = clientAttachedInvoiceSettlement.ReceiveBankAccountID;
+                appPayment.ToAccount = clientAttachedInvoiceSettlement.ReceiveAccount;
+                appPayment.Amount = clientAttachedInvoiceSettlement.ReceiveAmount;
+                appPayment.PayDate = DateTime.Now;
 
-                //    PageAppNoteRepository.Save();
-                //}
+                clientAttachedInvoiceSettlement.ApplicationPayment = appPayment;
+
+                unitOfWork.SaveChanges();
+
+                hdnCurrentEntityID.Value = clientAttachedInvoiceSettlement.ID.ToString();
+
+                if (!string.IsNullOrEmpty(txtComment.Text.Trim()))
+                {
+                    var appNote = new ApplicationNote();
+                    appNote.WorkflowID = CurrentWorkFlowID;
+                    appNote.WorkflowStepID = (int)EWorkflowStep.NewCAISettlement;
+                    appNote.NoteTypeID = (int)EAppNoteType.Comment;
+                    appNote.ApplicationID = clientAttachedInvoiceSettlement.ID;
+                    appNote.Note = txtComment.Text.Trim();
+
+                    PageAppNoteRepository.Add(appNote);
+
+                    PageAppNoteRepository.Save();
+                }
 
                 this.Master.BaseNotification.OnClientHidden = "refreshMaintenancePage";
                 this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_SUCCESS;
-                this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_OPERATE_REDIRECT);
+                this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SAEVED_REFRESH);
             }
         }
 
         protected void btnSubmit_Click(object sender, EventArgs e)
         {
+            if (!string.IsNullOrEmpty(rcbxOtherCostType.SelectedValue)
+                && !txtOtherCostAmount.Value.HasValue)
+            {
+                cvOtherCostAmount.IsValid = false;
+            }
+
+            if (txtOtherCostAmount.Value.HasValue
+                && string.IsNullOrEmpty(rcbxOtherCostType.SelectedValue))
+            {
+                cvOtherCostType.IsValid = false;
+            }
+
+            if (!IsValid) return;
+
+            var selectedItems = rgClientInvoices.SelectedItems;
+
+            if (selectedItems.Count == 0)
+            {
+                this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
+                this.Master.BaseNotification.AutoCloseDelay = 1000;
+                this.Master.BaseNotification.Show("请选择要结算的发票");
+
+                return;
+            }
+
+            if (this.CurrentEntity != null)
+            {
+                using (IUnitOfWork unitOfWork = new UnitOfWork())
+                {
+                    var db = unitOfWork.GetDbModel();
+
+                    IClientInvoiceDetailRepository cidRepository = new ClientInvoiceDetailRepository();
+                    IClientAttachedInvoiceSettlementRepository caisRepository = new ClientAttachedInvoiceSettlementRepository();
+                    IClientAttachedInvoiceSettlementDetailRepository caisdRepository = new ClientAttachedInvoiceSettlementDetailRepository();
+                    IApplicationPaymentRepository appPaymentRepository = new ApplicationPaymentRepository();
+
+                    cidRepository.SetDbModel(db);
+                    caisRepository.SetDbModel(db);
+                    caisdRepository.SetDbModel(db);
+                    appPaymentRepository.SetDbModel(db);
+
+                    ClientAttachedInvoiceSettlement clientAttachedInvoiceSettlement = caisRepository.GetByID(this.CurrentEntityID);
+
+                    if (clientAttachedInvoiceSettlement != null)
+                    {
+                        clientAttachedInvoiceSettlement.WorkflowStatusID = (int)EWorkflowStatus.Submit;
+                        clientAttachedInvoiceSettlement.ClientUserID = Convert.ToInt32(rcbxClientUser.SelectedValue);
+                        clientAttachedInvoiceSettlement.ClientCompanyID = Convert.ToInt32(rcbxClientCompany.SelectedValue);
+                        clientAttachedInvoiceSettlement.ReceiveBankAccountID = Convert.ToInt32(rcbxToAccount.SelectedValue);
+                        clientAttachedInvoiceSettlement.ReceiveAccount = rcbxToAccount.SelectedItem.Text;
+                        clientAttachedInvoiceSettlement.ConfirmDate = rdpConfirmDate.SelectedDate ?? DateTime.Now;
+                        clientAttachedInvoiceSettlement.SettlementDate = rdpSettlementDate.SelectedDate ?? DateTime.Now;
+
+                        if (!string.IsNullOrEmpty(rcbxOtherCostType.SelectedValue))
+                            clientAttachedInvoiceSettlement.OtherCostTypeID = Convert.ToInt32(rcbxOtherCostType.SelectedValue);
+                        clientAttachedInvoiceSettlement.OtherCostAmount = (decimal?)txtOtherCostAmount.Value;
+
+                        //总的结算发票税额
+                        decimal totalInvoiceRatioAmount = 0M;
+
+                        List<int> clientInvoiceDetailIDs = new List<int>();
+
+                        foreach (var item in selectedItems)
+                        {
+                            var editableItem = ((GridEditableItem)item);
+
+                            int clientInvoiceDetailID = Convert.ToInt32(editableItem.GetDataKeyValue("ClientInvoiceDetailID").ToString());
+                            int stockOutDetailID = Convert.ToInt32(editableItem.GetDataKeyValue("StockOutDetailID").ToString());
+                            int invoiceQty = Convert.ToInt32(editableItem.GetDataKeyValue("InvoiceQty").ToString());
+                            decimal salesPrice = Convert.ToDecimal(editableItem.GetDataKeyValue("SalesPrice").ToString());
+                            decimal invoicePrice = Convert.ToDecimal(editableItem.GetDataKeyValue("InvoicePrice").ToString());
+
+                            decimal invoiceSettlementRatio = 0;
+                            if (editableItem.GetDataKeyValue("InvoiceSettlementRatio") != null)
+                                invoiceSettlementRatio = Convert.ToDecimal(editableItem.GetDataKeyValue("InvoiceSettlementRatio").ToString());
+
+                            var txtSettlementQty = (RadNumericTextBox)editableItem.FindControl("txtSettlementQty");
+                            var settlementQty = (int?)txtSettlementQty.Value;
+
+                            var clientAttachedInvoiceSettlementDetail = clientAttachedInvoiceSettlement.ClientAttachedInvoiceSettlementDetail
+                                .FirstOrDefault(x => x.IsDeleted == false && x.ClientInvoiceDetailID == clientInvoiceDetailID
+                                    && x.StockOutDetailID == stockOutDetailID);
+
+                            if (clientAttachedInvoiceSettlementDetail == null)
+                            {
+                                clientAttachedInvoiceSettlementDetail = new ClientAttachedInvoiceSettlementDetail();
+                                clientAttachedInvoiceSettlement.ClientAttachedInvoiceSettlementDetail.Add(clientAttachedInvoiceSettlementDetail);
+                            }
+
+                            var settlementAmount = settlementQty * invoicePrice;
+
+                            clientAttachedInvoiceSettlementDetail.ClientInvoiceDetailID = clientInvoiceDetailID;
+                            clientAttachedInvoiceSettlementDetail.StockOutDetailID = stockOutDetailID;
+                            clientAttachedInvoiceSettlementDetail.InvoiceQty = invoiceQty;
+                            clientAttachedInvoiceSettlementDetail.SettlementQty = settlementQty;
+                            clientAttachedInvoiceSettlementDetail.SettlementAmount = settlementAmount;
+                            clientAttachedInvoiceSettlementDetail.SalesAmount = settlementQty * salesPrice;
+
+                            totalInvoiceRatioAmount += (settlementAmount ?? 0) * invoiceSettlementRatio;
+
+                            clientInvoiceDetailIDs.Add(clientInvoiceDetailID);
+                        }
+
+                        foreach (var item in clientAttachedInvoiceSettlement.ClientAttachedInvoiceSettlementDetail
+                            .Where(x => x.IsDeleted == false && !clientInvoiceDetailIDs.Contains(x.ClientInvoiceDetailID)))
+                        {
+                            item.IsDeleted = true;
+                        }
+
+                        clientAttachedInvoiceSettlement.TotalSettlementAmount = clientAttachedInvoiceSettlement.ClientAttachedInvoiceSettlementDetail
+                            .Where(x => x.IsDeleted == false)
+                            .Sum(x => x.SettlementAmount);
+
+                        var totalSalesAmount = clientAttachedInvoiceSettlement.ClientAttachedInvoiceSettlementDetail
+                            .Where(x => x.IsDeleted == false)
+                            .Sum(x => x.SalesAmount ?? 0);
+
+                        clientAttachedInvoiceSettlement.ReceiveAmount = (clientAttachedInvoiceSettlement.TotalSettlementAmount ?? 0)
+                            - (clientAttachedInvoiceSettlement.OtherCostAmount ?? 0);
+
+                        clientAttachedInvoiceSettlement.TotalRefundAmount = clientAttachedInvoiceSettlement.ReceiveAmount - totalInvoiceRatioAmount
+                            + totalSalesAmount * 0.08M;
+
+                        ApplicationPayment appPayment = clientAttachedInvoiceSettlement.ApplicationPayment;
+
+                        if (appPayment == null)
+                        {
+                            appPayment = new ApplicationPayment()
+                            {
+                                WorkflowID = CurrentWorkFlowID,
+                                PaymentTypeID = (int)EPaymentType.Income,
+                                PaymentStatusID = (int)EPaymentStatus.Paid,
+                            };
+                        }
+
+                        appPayment.ToBankAccountID = clientAttachedInvoiceSettlement.ReceiveBankAccountID;
+                        appPayment.ToAccount = clientAttachedInvoiceSettlement.ReceiveAccount;
+                        appPayment.Amount = clientAttachedInvoiceSettlement.ReceiveAmount;
+                        appPayment.PayDate = DateTime.Now;
+
+                        clientAttachedInvoiceSettlement.ApplicationPayment = appPayment;
+
+                        unitOfWork.SaveChanges();
+
+                        hdnCurrentEntityID.Value = clientAttachedInvoiceSettlement.ID.ToString();
+
+                        if (!string.IsNullOrEmpty(txtComment.Text.Trim()))
+                        {
+                            var appNote = new ApplicationNote();
+                            appNote.WorkflowID = CurrentWorkFlowID;
+                            appNote.WorkflowStepID = (int)EWorkflowStep.NewCAISettlement;
+                            appNote.NoteTypeID = (int)EAppNoteType.Comment;
+                            appNote.ApplicationID = clientAttachedInvoiceSettlement.ID;
+                            appNote.Note = txtComment.Text.Trim();
+
+                            PageAppNoteRepository.Add(appNote);
+
+                            PageAppNoteRepository.Save();
+                        }
+
+                        this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
+                        this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_SUCCESS;
+                        this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SAEVED_REDIRECT);
+                    }
+                }
+            }
+            else
+            {
+                this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
+                this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
+                this.Master.BaseNotification.AutoCloseDelay = 1000;
+                this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_PARAMETER_ERROR_REDIRECT);
+            }
         }
 
         protected void btnAudit_Click(object sender, EventArgs e)
@@ -959,13 +1208,13 @@ namespace ZhongDing.Web.Views.Invoices
                         switch (currentEntity.WorkflowStatusID)
                         {
                             case (int)EWorkflowStatus.Submit:
-                                appNote.WorkflowStepID = (int)EWorkflowStep.AuditCISettlementByTreasurers;
+                                appNote.WorkflowStepID = (int)EWorkflowStep.AuditCAISettlementByTreasurers;
                                 currentEntity.WorkflowStatusID = (int)EWorkflowStatus.ApprovedByTreasurers;
 
                                 break;
 
                             case (int)EWorkflowStatus.ApprovedByTreasurers:
-                                appNote.WorkflowStepID = (int)EWorkflowStep.AuditCISettlementByDeptManagers;
+                                appNote.WorkflowStepID = (int)EWorkflowStep.AuditCAISettlementByDeptManagers;
                                 currentEntity.WorkflowStatusID = (int)EWorkflowStatus.ApprovedByDeptManagers;
 
                                 break;
@@ -1013,11 +1262,11 @@ namespace ZhongDing.Web.Views.Invoices
                         switch (currentEntity.WorkflowStatusID)
                         {
                             case (int)EWorkflowStatus.Submit:
-                                appNote.WorkflowStepID = (int)EWorkflowStep.AuditCISettlementByTreasurers;
+                                appNote.WorkflowStepID = (int)EWorkflowStep.AuditCAISettlementByTreasurers;
                                 break;
 
                             case (int)EWorkflowStatus.ApprovedByTreasurers:
-                                appNote.WorkflowStepID = (int)EWorkflowStep.AuditCISettlementByDeptManagers;
+                                appNote.WorkflowStepID = (int)EWorkflowStep.AuditCAISettlementByDeptManagers;
                                 break;
                         }
 
@@ -1051,7 +1300,7 @@ namespace ZhongDing.Web.Views.Invoices
                     if (currentEntity != null)
                     {
                         var appPayments = appPaymentRepository.GetList(x => x.WorkflowID == CurrentWorkFlowID
-                            && x.ApplicationID == CurrentEntity.ID).ToList();
+                            && x.ApplicationID == CurrentEntity.ID && x.PaymentTypeID == (int)EPaymentType.Expend).ToList();
 
                         var totalNeedRefundAmount = CurrentEntity.TotalRefundAmount;
 
@@ -1128,35 +1377,55 @@ namespace ZhongDing.Web.Views.Invoices
                         currentEntity.CanceledReason = txtCancelComment.Text.Trim();
                         currentEntity.CanceledDate = DateTime.Now;
                         currentEntity.CanceledBy = CurrentUser.UserID;
-                    }
 
-                    var appPayments = appPaymentRepository.GetList(x => x.WorkflowID == CurrentWorkFlowID
-                            && x.ApplicationID == CurrentEntity.ID).ToList();
+                        ApplicationPayment canceledAppPayment = currentEntity.ApplicationPayment1;
 
-                    foreach (var item in appPayments)
-                    {
-                        var appPayment = new ApplicationPayment()
+                        if (canceledAppPayment == null)
                         {
-                            ApplicationID = item.ApplicationID,
-                            WorkflowID = item.WorkflowID,
-                            PaymentStatusID = item.PaymentStatusID,
-                            PaymentTypeID = item.PaymentTypeID,
-                            PayDate = item.PayDate,
-                            FromBankAccountID = item.FromBankAccountID,
-                            FromAccount = item.FromAccount,
-                            Amount = -item.Amount,
-                            Fee = -item.Fee
-                        };
+                            canceledAppPayment = new ApplicationPayment()
+                            {
+                                ApplicationID = currentEntity.ID,
+                                WorkflowID = this.CurrentWorkFlowID,
+                            };
+                        }
 
-                        appPaymentRepository.Add(appPayment);
+                        canceledAppPayment.PaymentStatusID = currentEntity.ApplicationPayment.PaymentStatusID;
+                        canceledAppPayment.PaymentTypeID = currentEntity.ApplicationPayment.PaymentTypeID;
+                        canceledAppPayment.PayDate = DateTime.Now;
+                        canceledAppPayment.FromBankAccountID = currentEntity.ApplicationPayment.FromBankAccountID;
+                        canceledAppPayment.FromAccount = currentEntity.ApplicationPayment.FromAccount;
+                        canceledAppPayment.Amount = -currentEntity.ApplicationPayment.Amount;
+                        canceledAppPayment.Fee = -currentEntity.ApplicationPayment.Fee;
+
+                        currentEntity.ApplicationPayment1 = canceledAppPayment;
+
+                        var appPayments = appPaymentRepository.GetList(x => x.WorkflowID == CurrentWorkFlowID
+                                && x.ApplicationID == CurrentEntity.ID).ToList();
+
+                        foreach (var item in appPayments)
+                        {
+                            var appPayment = new ApplicationPayment()
+                            {
+                                ApplicationID = item.ApplicationID,
+                                WorkflowID = item.WorkflowID,
+                                PaymentStatusID = item.PaymentStatusID,
+                                PaymentTypeID = item.PaymentTypeID,
+                                PayDate = item.PayDate,
+                                FromBankAccountID = item.FromBankAccountID,
+                                FromAccount = item.FromAccount,
+                                Amount = -item.Amount,
+                                Fee = -item.Fee
+                            };
+
+                            appPaymentRepository.Add(appPayment);
+                        }
+
+                        unitOfWork.SaveChanges();
+
+                        this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
+                        this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_SUCCESS;
+                        this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_OPERATE_REDIRECT);
                     }
-
-                    unitOfWork.SaveChanges();
-
-                    this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
-                    this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_SUCCESS;
-                    this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_OPERATE_REDIRECT);
-
                 }
             }
             else

@@ -91,6 +91,9 @@ namespace ZhongDing.Business.Repositories
                 if (uiSearchObj.ApplicationID > 0)
                     whereFuncs.Add(x => x.ApplicationID == uiSearchObj.ApplicationID);
 
+                if (uiSearchObj.PaymentTypeID > 0)
+                    whereFuncs.Add(x => x.PaymentTypeID == uiSearchObj.PaymentTypeID);
+
                 if (uiSearchObj.BeginDate.HasValue)
                     whereFuncs.Add(x => x.PayDate >= uiSearchObj.BeginDate);
 

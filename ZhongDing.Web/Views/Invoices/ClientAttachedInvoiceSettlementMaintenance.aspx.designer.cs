@@ -112,6 +112,15 @@ namespace ZhongDing.Web.Views.Invoices {
         protected global::Telerik.Web.UI.RadComboBox rcbxOtherCostType;
         
         /// <summary>
+        /// cvOtherCostType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cvOtherCostType;
+        
+        /// <summary>
         /// txtOtherCostAmount control.
         /// </summary>
         /// <remarks>
@@ -308,6 +317,15 @@ namespace ZhongDing.Web.Views.Invoices {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid rgClientInvoices;
+        
+        /// <summary>
+        /// divTotalSummary control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divTotalSummary;
         
         /// <summary>
         /// lblTotalSettlementAmount control.
@@ -551,6 +569,15 @@ namespace ZhongDing.Web.Views.Invoices {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadNotification radNotification;
+        
+        /// <summary>
+        /// scriptBlock control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadScriptBlock scriptBlock;
         
         /// <summary>
         /// Master property.
