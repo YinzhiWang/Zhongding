@@ -22,13 +22,13 @@ namespace ZhongDing.Web.Views.Imports.Editors {
         protected global::System.Web.UI.WebControls.ValidationSummary vsMaintenance;
         
         /// <summary>
-        /// rmypSettlementDate control.
+        /// rdpSettlementDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadMonthYearPicker rmypSettlementDate;
+        protected global::Telerik.Web.UI.RadDatePicker rdpSettlementDate;
         
         /// <summary>
         /// rttSettlementDate control.

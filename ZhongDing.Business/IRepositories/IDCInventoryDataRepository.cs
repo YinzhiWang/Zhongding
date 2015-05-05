@@ -20,5 +20,12 @@ namespace ZhongDing.Business.IRepositories
         /// <param name="totalRecords">总记录数.</param>
         /// <returns>IList{UIDCInventoryData}.</returns>
         IList<UIDCInventoryData> GetUIList(UISearchDCInventoryData uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
+
+        /// <summary>
+        /// 配送公司库存数据，不分页
+        /// </summary>
+        /// <param name="uiSearchObj">查询参数对象.</param>
+        /// <returns>IList{UIDCInventoryData}.</returns>
+        IList<UIDCInventoryData> GetUIList(UISearchDCInventoryData uiSearchObj);
     }
 }

@@ -49,7 +49,7 @@
                                     </div>
                                 </div>
                                 <div class="float-left">
-                                    <label class="leftpadding10">结算年月</label>
+                                    <label class="leftpadding10">库存日期</label>
                                     <div class="mws-form-item">
                                         <telerik:RadMonthYearPicker runat="server" ID="rdpBeginDate" Width="120"
                                             EnableShadows="true"
@@ -100,7 +100,7 @@
                                 <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
                                     ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                                     <Columns>
-                                        <telerik:GridBoundColumn UniqueName="SettlementDate" HeaderText="结算年月" DataField="SettlementDate" DataFormatString="{0:yyyy/MM}">
+                                        <telerik:GridBoundColumn UniqueName="SettlementDate" HeaderText="库存日期" DataField="SettlementDate" DataFormatString="{0:yyyy/MM/dd}">
                                             <HeaderStyle Width="100" />
                                             <ItemStyle HorizontalAlign="Left" Width="100" />
                                         </telerik:GridBoundColumn>

@@ -219,6 +219,8 @@ namespace ZhongDing.Web.Views.Imports.Editors
                 var tempImportFileLogCount = PageClientImportFileLogRepository
                     .GetList(x => x.IsDeleted == false && x.ImportFileLogID != this.CurrentEntityID
                         && x.ClientUserID == clientUserID && x.ClientCompanyID == clientCompanyID
+                        && x.ImportFileLog.ImportDataTypeID == (int)EImportDataType.ClientFlowData
+                        && x.ImportFileLog.ImportStatusID != (int)EImportStatus.ImportError
                         && x.SettlementDate == settlementDate).Count();
 
                 if (tempImportFileLogCount > 0)

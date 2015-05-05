@@ -12,6 +12,8 @@ namespace ZhongDing.Domain.UISearchObjects
 
         public int ProductID { get; set; }
 
+        public DateTime? SettlementDate { get; set; }
+
         public int ImportFileLogID { get; set; }
 
     }

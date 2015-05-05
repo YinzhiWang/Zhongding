@@ -115,7 +115,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<HospitalType> HospitalType { get; set; }
         public DbSet<TransportFeeStockOutSmsReminder> TransportFeeStockOutSmsReminder { get; set; }
         public DbSet<ClientImportFileLog> ClientImportFileLog { get; set; }
-        public DbSet<DCInventoryData> DCInventoryData { get; set; }
         public DbSet<DCImportFileLog> DCImportFileLog { get; set; }
         public DbSet<StockOutDetail> StockOutDetail { get; set; }
         public DbSet<DBClientSettlement> DBClientSettlement { get; set; }
@@ -145,5 +144,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<ClientAttachedInvoiceSettlementDetail> ClientAttachedInvoiceSettlementDetail { get; set; }
         public DbSet<ClientAttachedInvoiceSettlement> ClientAttachedInvoiceSettlement { get; set; }
         public DbSet<SupplierCautionMoneyDeduction> SupplierCautionMoneyDeduction { get; set; }
+        public DbSet<DCInventoryData> DCInventoryData { get; set; }
     }
 }

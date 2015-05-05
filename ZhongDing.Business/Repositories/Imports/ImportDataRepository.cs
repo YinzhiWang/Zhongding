@@ -124,6 +124,18 @@ namespace ZhongDing.Business.Repositories.Imports
             }
         }
 
+        private IStockOutDetailRepository _stockOutDetailRepository;
+        private IStockOutDetailRepository StockOutDetailRepository
+        {
+            get
+            {
+                if (_stockOutDetailRepository == null)
+                    _stockOutDetailRepository = new StockOutDetailRepository();
+
+                return _stockOutDetailRepository;
+            }
+        }
+
         #endregion
 
         public void ImportData()
@@ -560,6 +572,9 @@ namespace ZhongDing.Business.Repositories.Imports
 
                 ImportFileLogRepository.Save();
 
+                DateTime settlementDate = fileLog.DCImportFileLog.SettlementDate;
+                int distributionCompanyID = fileLog.DCImportFileLog.DistributionCompanyID;
+
                 string errorMsg;
                 int errorRowCount = 0;
                 int rowIndex = 0;
@@ -576,8 +591,8 @@ namespace ZhongDing.Business.Repositories.Imports
                     {
                         rowIndex++;
 
-                        int balanceQty;
-                        if (int.TryParse(tempBalanceQty, out balanceQty))
+                        int dcBalanceQty;
+                        if (int.TryParse(tempBalanceQty, out dcBalanceQty))
                         {
                             var product = ProductRepository.GetList(x =>
                                 x.ProductCode.ToLower().Equals(productCode.ToLower())).FirstOrDefault();
@@ -591,24 +606,46 @@ namespace ZhongDing.Business.Repositories.Imports
                                 if (productSpecification != null)
                                 {
                                     var inventoryData = DCInventoryDataRepository.GetList(x =>
-                                                 x.DistributionCompanyID == fileLog.DCImportFileLog.DistributionCompanyID
+                                                 x.DistributionCompanyID == distributionCompanyID
                                                  && x.ProductID == product.ID && x.ProductSpecificationID == productSpecification.ID
-                                                 && x.SettlementDate == fileLog.DCImportFileLog.SettlementDate).FirstOrDefault();
+                                                 && x.SettlementDate == settlementDate).FirstOrDefault();
 
                                     //限制重复导入，如果存在就跳过该条记录
                                     if (inventoryData == null)
                                     {
+                                        int bookBalanceQty = 0;
+
+                                        var queryStockOutDetails = StockOutDetailRepository.GetList(x => x.IsDeleted == false
+                                            && x.StockOut.ReceiverTypeID == (int)EReceiverType.DistributionCompany
+                                            && x.StockOut.WorkflowStatusID == (int)EWorkflowStatus.OutWarehouse
+                                            && x.StockOut.DistributionCompanyID == distributionCompanyID
+                                            && x.ProductID == product.ID && x.ProductSpecificationID == productSpecification.ID
+                                            && x.StockOut.OutDate <= settlementDate);
+
+                                        int stockOutQty = queryStockOutDetails.Count() > 0 ?
+                                            queryStockOutDetails.Sum(x => x.OutQty) : 0;
+
+                                        var queryDCFlowData = DCFlowDataRepository.GetList(x => x.IsCorrectlyFlow == true
+                                            && x.ProductID == product.ID && x.ProductSpecificationID == productSpecification.ID
+                                            && x.DistributionCompanyID == distributionCompanyID
+                                            && x.SaleDate <= settlementDate);
+
+                                        int flowDataQty = queryDCFlowData.Count() > 0 ? queryDCFlowData.Sum(x => x.SaleQty) : 0;
+
+                                        bookBalanceQty = stockOutQty - flowDataQty;
+
                                         inventoryData = new DCInventoryData()
                                         {
-                                            DistributionCompanyID = fileLog.DCImportFileLog.DistributionCompanyID,
-                                            SettlementDate = fileLog.DCImportFileLog.SettlementDate,
+                                            DistributionCompanyID = distributionCompanyID,
+                                            SettlementDate = settlementDate,
                                             ImportFileLogID = fileLog.ID,
                                             ProductID = product.ID,
                                             ProductName = productName,
                                             ProductCode = productCode,
                                             ProductSpecificationID = productSpecification.ID,
                                             ProductSpecification = specification,
-                                            BalanceQty = balanceQty
+                                            DCBalanceQty = dcBalanceQty,
+                                            BookBalanceQty = bookBalanceQty,
                                         };
 
                                         fileLog.DCInventoryData.Add(inventoryData);

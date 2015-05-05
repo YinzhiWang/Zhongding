@@ -55,7 +55,7 @@ namespace ZhongDing.Domain.Models
         public virtual ImportStatus ImportStatus { get; set; }
         public virtual ICollection<ClientFlowData> ClientFlowData { get; set; }
         public virtual ClientImportFileLog ClientImportFileLog { get; set; }
-        public virtual ICollection<DCInventoryData> DCInventoryData { get; set; }
         public virtual DCImportFileLog DCImportFileLog { get; set; }
+        public virtual ICollection<DCInventoryData> DCInventoryData { get; set; }
     }
 }

@@ -24,7 +24,8 @@ namespace ZhongDing.Domain.Models
         public int ProductSpecificationID { get; set; }
         public string ProductSpecification { get; set; }
         public System.DateTime SettlementDate { get; set; }
-        public Nullable<int> BalanceQty { get; set; }
+        public Nullable<int> DCBalanceQty { get; set; }
+        public Nullable<int> BookBalanceQty { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
     

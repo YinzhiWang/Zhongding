@@ -171,6 +171,7 @@ namespace ZhongDing.Web.Views.Imports.Editors
                     .GetList(x => x.IsDeleted == false && x.ImportFileLogID != this.CurrentEntityID
                         && x.DistributionCompanyID == distributionCompanyID
                         && x.ImportFileLog.ImportDataTypeID == (int)EImportDataType.DCFlowData
+                        && x.ImportFileLog.ImportStatusID != (int)EImportStatus.ImportError
                         && x.SettlementDate == settlementDate).Count();
 
                 if (tempImportFileLogCount > 0)

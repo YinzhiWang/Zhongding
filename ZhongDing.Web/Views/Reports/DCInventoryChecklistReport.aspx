@@ -1,4 +1,4 @@
-﻿<%@ Page Title="配送公司库存数据导入" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ImportDCInventoryData.aspx.cs" Inherits="ZhongDing.Web.Views.Imports.ImportDCInventoryData" %>
+﻿<%@ Page Title="配送公司库存核对表" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DCInventoryChecklistReport.aspx.cs" Inherits="ZhongDing.Web.Views.Reports.DCInventoryChecklistReport" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 
@@ -33,7 +33,7 @@
     <div class="container">
         <div class="mws-panel grid_8">
             <div class="mws-panel-header">
-                <span class="mws-i-24 i-table-1">配送公司库存数据导入</span>
+                <span class="mws-i-24 i-table-1" id="lblTitle" runat="server">配送公司库存核对表</span>
             </div>
             <div class="mws-panel-body">
                 <div class="mws-form">
@@ -63,88 +63,52 @@
                                 </div>
                             </div>
                             <div class="mws-form-row">
-                                <label>执行时间</label>
-                                <div class="mws-form-item">
-                                    <telerik:RadDatePicker runat="server" ID="rdpBeginDate" Width="120"
-                                        Calendar-EnableShadows="true"
-                                        Calendar-FastNavigationSettings-CancelButtonCaption="取消"
-                                        Calendar-FastNavigationSettings-OkButtonCaption="确定"
-                                        Calendar-FastNavigationSettings-TodayButtonCaption="今天"
-                                        Calendar-FastNavigationSettings-DateIsOutOfRangeMessage="日期超出范围"
-                                        Calendar-FastNavigationSettings-DisableOutOfRangeMonths="true"
-                                        Calendar-FirstDayOfWeek="Monday">
-                                    </telerik:RadDatePicker>
-                                    -&nbsp;&nbsp;
-                                        <telerik:RadDatePicker runat="server" ID="rdpEndDate" Width="120"
-                                            Calendar-EnableShadows="true"
-                                            Calendar-FastNavigationSettings-CancelButtonCaption="取消"
-                                            Calendar-FastNavigationSettings-OkButtonCaption="确定"
-                                            Calendar-FastNavigationSettings-TodayButtonCaption="今天"
-                                            Calendar-FastNavigationSettings-DateIsOutOfRangeMessage="日期超出范围"
-                                            Calendar-FastNavigationSettings-DisableOutOfRangeMonths="true"
-                                            Calendar-FirstDayOfWeek="Monday">
-                                        </telerik:RadDatePicker>
-                                </div>
-                            </div>
-                            <div class="mws-form-row">
-                                <label></label>
-                                <div class="mws-form-item">
-                                    <asp:Button ID="btnSearch" runat="server" Text="查询" CssClass="mws-button green" OnClick="btnSearch_Click" />
-                                    &nbsp;&nbsp;
-                                    <asp:Button ID="btnReset" runat="server" Text="重置" CssClass="mws-button orange" OnClick="btnReset_Click" />
-                                    &nbsp;&nbsp;
-                                    <asp:Button ID="btnCancel" runat="server" Text="返回" UseSubmitBehavior="false" CssClass="mws-button green" OnClientClick="redirectToPage('Views/Imports/DCInventoryDataManagement.aspx');return false;" />
-                                    &nbsp;&nbsp;
-                                    <asp:HyperLink ID="hlkModelExcel" runat="server" NavigateUrl="~/Content/Templates/XXXX配送公司库存数据(XXXX年XX月).xlsx">Excel模板下载</asp:HyperLink>
+                                <div class="float-left width40-percent">&nbsp;</div>
+                                <div class="float-left">
+                                    <div class="mws-form-item">
+                                        <asp:Button ID="btnSearch" runat="server" Text="查询" CssClass="mws-button green" OnClick="btnSearch_Click" />
+                                        &nbsp;&nbsp;
+                                        <asp:Button ID="btnReset" runat="server" Text="重置" CssClass="mws-button orange" OnClick="btnReset_Click" />
+                                        &nbsp;&nbsp;
+                                        <asp:Button ID="btnExport" runat="server" Text="导出" CssClass="mws-button green" OnClientClick="exportExcel();return false;" Visible="false"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
                         <div class="mws-form-row bottommargin20">
-                            <telerik:RadGrid ID="rgEntities" runat="server" PageSize="10"
-                                AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
+                            <telerik:RadGrid ID="rgEntities" runat="server" PageSize="10" AllowPaging="True"
+                                AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
                                 MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
                                 ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                                OnNeedDataSource="rgEntities_NeedDataSource">
+                                OnNeedDataSource="rgEntities_NeedDataSource" OnItemDataBound="rgEntities_ItemDataBound">
                                 <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
                                     ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                                     <Columns>
-                                        <telerik:GridBoundColumn UniqueName="SettlementDate" HeaderText="库存日期" DataField="SettlementDate" DataFormatString="{0:yyyy/MM/dd}">
-                                            <HeaderStyle Width="100" />
-                                            <ItemStyle HorizontalAlign="Left" Width="100" />
-                                        </telerik:GridBoundColumn>
                                         <telerik:GridBoundColumn UniqueName="DistributionCompanyName" HeaderText="配送公司" DataField="DistributionCompanyName">
-                                            <HeaderStyle Width="20%" />
-                                            <ItemStyle HorizontalAlign="Left" Width="20%" />
+                                            <ItemStyle HorizontalAlign="Left" Width="30%" />
+                                            <HeaderStyle Width="30%" />
                                         </telerik:GridBoundColumn>
-                                        <telerik:GridBoundColumn UniqueName="ImportBeginDate" HeaderText="导入开始时间" DataField="ImportBeginDate" DataFormatString="{0:yyyy/MM/dd HH:mm:ss}">
-                                            <HeaderStyle Width="15%" />
-                                            <ItemStyle HorizontalAlign="Left" Width="15%" />
-                                        </telerik:GridBoundColumn>
-                                        <telerik:GridBoundColumn UniqueName="ImportEndDate" HeaderText="导入结束时间" DataField="ImportEndDate" DataFormatString="{0:yyyy/MM/dd HH:mm:ss}">
-                                            <HeaderStyle Width="15%" />
-                                            <ItemStyle HorizontalAlign="Left" Width="15%" />
-                                        </telerik:GridBoundColumn>
-                                        <telerik:GridBoundColumn UniqueName="ImportStatus" HeaderText="状态" DataField="ImportStatus">
+                                        <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品名称" DataField="ProductName">
                                             <ItemStyle HorizontalAlign="Left" />
                                         </telerik:GridBoundColumn>
-                                        <telerik:GridTemplateColumn UniqueName="View" HeaderText="查看">
-                                            <HeaderStyle HorizontalAlign="Center" Width="60" />
-                                            <ItemStyle HorizontalAlign="Center" Width="60" />
-                                            <ItemTemplate>
-                                                <a href="javascript:void(0);" onclick="redirectToMaintenancePage(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">查看</a>
-                                            </ItemTemplate>
-                                        </telerik:GridTemplateColumn>
+                                        <telerik:GridBoundColumn UniqueName="Specification" HeaderText="规格" DataField="Specification">
+                                            <ItemStyle HorizontalAlign="Left" Width="10%" />
+                                            <HeaderStyle Width="10%" />
+                                        </telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn UniqueName="BookBalanceQty" HeaderText="公司账面库存" DataField="BookBalanceQty">
+                                            <ItemStyle HorizontalAlign="Left" Width="15%" />
+                                            <HeaderStyle Width="15%" />
+                                        </telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn UniqueName="DCBalanceQty" HeaderText="配送公司库存" DataField="DCBalanceQty">
+                                            <ItemStyle HorizontalAlign="Left" Width="15%" />
+                                            <HeaderStyle Width="15%" />
+                                        </telerik:GridBoundColumn>
                                     </Columns>
                                     <CommandItemTemplate>
                                         <table class="width100-percent">
                                             <tr>
-                                                <td>
-                                                    <asp:Panel ID="plAddCommand" runat="server" CssClass="width120 float-left">
-                                                        <input type="button" class="rgAdd" onclick="openUploadFileWindow(-1); return false;" />
-                                                        <a href="javascript:void(0)" onclick="openUploadFileWindow(-1); return false;">新增导入</a>
-                                                    </asp:Panel>
-                                                </td>
+                                                <td></td>
                                                 <td class="right-td rightpadding10">
                                                     <input type="button" class="rgRefresh" onclick="refreshGrid(); return false;" />
                                                     <a href="javascript:void(0);" onclick="refreshGrid(); return false;">刷新</a>
@@ -154,6 +118,7 @@
                                     </CommandItemTemplate>
                                     <NoRecordsTemplate>
                                         没有任何数据
+                       
                                     </NoRecordsTemplate>
                                     <ItemStyle Height="30" />
                                     <AlternatingItemStyle BackColor="#f2f2f2" />
@@ -168,9 +133,11 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
+    </div>
+    <div style="display: none;">
+        <asp:Button ID="btnExportHidden" runat="server" Text="导出" CssClass="mws-button green" OnClick="btnExportHidden_Click" />
     </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContent" runat="server">
@@ -185,21 +152,8 @@
             gridOfRefresh.get_masterTableView().rebind();
         }
 
-        function redirectToMaintenancePage(id) {
-            $.showLoading();
-            window.location.href = "ImportDCInventoryDataDetails.aspx?EntityID=" + id;
+        function exportExcel() {
+            $("#<%=btnExportHidden.ClientID%>").click();
         }
-
-        function openUploadFileWindow(id) {
-            $.showLoading();
-
-            var targetUrl = $.getRootPath() + "Views/Imports/Editors/UploadDCInventoryDataFile.aspx?EntityID=" + id
-                + "&GridClientID=" + "<%= rgEntities.ClientID %>";
-
-            $.openRadWindow(targetUrl, "winUploadFile", true, 800, 300);
-        }
-
     </script>
 </asp:Content>
-
-

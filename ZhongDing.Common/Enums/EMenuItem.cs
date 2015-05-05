@@ -247,6 +247,12 @@ namespace ZhongDing.Common.Enums
         /// 采购计划报表
         /// </summary>
         ProcurePlanReportManage,
+
+        /// <summary>
+        /// 配送公司库存核对表
+        /// </summary>
+        DCInventoryChecklistReport = 114,
+
         /// <summary>
         /// 发票管理
         /// </summary>

@@ -18,23 +18,23 @@
                     </div>
                     <div class="mws-form-row">
                         <div class="float-left width40-percent">
-                            <label>结算年月</label>
+                            <label>库存日期</label>
                             <div class="mws-form-item small">
-                                <telerik:RadMonthYearPicker runat="server" ID="rmypSettlementDate" Width="120"
+                                <telerik:RadDatePicker runat="server" ID="rdpSettlementDate" Width="120"
                                     EnableShadows="true"
                                     MonthYearNavigationSettings-CancelButtonCaption="取消"
                                     MonthYearNavigationSettings-OkButtonCaption="确定"
                                     MonthYearNavigationSettings-TodayButtonCaption="今天"
                                     MonthYearNavigationSettings-DateIsOutOfRangeMessage="日期超出范围"
                                     MonthYearNavigationSettings-EnableScreenBoundaryDetection="true">
-                                </telerik:RadMonthYearPicker>
-                                <telerik:RadToolTip ID="rttSettlementDate" runat="server" TargetControlID="rmypSettlementDate" ShowEvent="OnClick"
+                                </telerik:RadDatePicker>
+                                <telerik:RadToolTip ID="rttSettlementDate" runat="server" TargetControlID="rdpSettlementDate" ShowEvent="OnClick"
                                     Position="MiddleRight" RelativeTo="Element" Text="该项是必选项" AutoCloseDelay="0">
                                 </telerik:RadToolTip>
-                                <asp:RequiredFieldValidator ID="rfvSettlementDate" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="rmypSettlementDate"
-                                    ErrorMessage="请选择结算年月" Text="*" CssClass="field-validation-error">
+                                <asp:RequiredFieldValidator ID="rfvSettlementDate" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="rdpSettlementDate"
+                                    ErrorMessage="请选择库存日期" Text="*" CssClass="field-validation-error">
                                 </asp:RequiredFieldValidator>
-                                <asp:CustomValidator ID="cvSettlementDate" runat="server" ControlToValidate="rmypSettlementDate" ValidationGroup="vgMaintenance"
+                                <asp:CustomValidator ID="cvSettlementDate" runat="server" ControlToValidate="rdpSettlementDate" ValidationGroup="vgMaintenance"
                                     Text="*" CssClass="field-validation-error"></asp:CustomValidator>
                             </div>
                         </div>

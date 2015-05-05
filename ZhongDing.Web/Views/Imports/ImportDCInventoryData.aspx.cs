@@ -78,10 +78,9 @@ namespace ZhongDing.Web.Views.Imports
                 EndDate = rdpEndDate.SelectedDate
             };
 
-            if (rmypSettlementDate.SelectedDate.HasValue)
+            if (rdpSettlementDate.SelectedDate.HasValue)
             {
-                var tempDate = rmypSettlementDate.SelectedDate.Value;
-                uiSearchObj.SettlementDate = new DateTime(tempDate.Year, tempDate.Month, 1);
+                uiSearchObj.SettlementDate = rdpSettlementDate.SelectedDate;
             }
 
             if (!string.IsNullOrEmpty(rcbxDistributionCompany.SelectedValue))
@@ -117,7 +116,7 @@ namespace ZhongDing.Web.Views.Imports
 
         protected void btnReset_Click(object sender, EventArgs e)
         {
-            rmypSettlementDate.Clear();
+            rdpSettlementDate.Clear();
 
             rdpBeginDate.Clear();
             rdpEndDate.Clear();

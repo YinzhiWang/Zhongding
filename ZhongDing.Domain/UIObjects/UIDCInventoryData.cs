@@ -18,6 +18,14 @@ namespace ZhongDing.Domain.UIObjects
 
         public DateTime SettlementDate { get; set; }
 
-        public int? BalanceQty { get; set; }
+        /// <summary>
+        /// 配送公司库存
+        /// </summary>
+        public int? DCBalanceQty { get; set; }
+
+        /// <summary>
+        /// 公司账面库存
+        /// </summary>
+        public int? BookBalanceQty { get; set; }
     }
 }

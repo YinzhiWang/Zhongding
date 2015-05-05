@@ -2074,7 +2074,8 @@
           <Property Name="ProductSpecificationID" Type="int" Nullable="false" />
           <Property Name="ProductSpecification" Type="nvarchar" MaxLength="50" />
           <Property Name="SettlementDate" Type="datetime" Nullable="false" />
-          <Property Name="BalanceQty" Type="int" />
+          <Property Name="DCBalanceQty" Type="int" />
+          <Property Name="BookBalanceQty" Type="int" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
         </EntityType>
@@ -7051,23 +7052,6 @@
             <End Role="ImportFileLog" EntitySet="ImportFileLog" />
             <End Role="ClientImportFileLog" EntitySet="ClientImportFileLog" />
           </AssociationSet>
-          <EntitySet Name="DCInventoryData" EntityType="DbModel.DCInventoryData" />
-          <AssociationSet Name="FK_DCInventoryData_DistributionCompany" Association="DbModel.FK_DCInventoryData_DistributionCompany">
-            <End Role="DistributionCompany" EntitySet="DistributionCompany" />
-            <End Role="DCInventoryData" EntitySet="DCInventoryData" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DCInventoryData_ImportFileLog" Association="DbModel.FK_DCInventoryData_ImportFileLog">
-            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
-            <End Role="DCInventoryData" EntitySet="DCInventoryData" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DCInventoryData_Product" Association="DbModel.FK_DCInventoryData_Product">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="DCInventoryData" EntitySet="DCInventoryData" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DCInventoryData_ProductSpecification" Association="DbModel.FK_DCInventoryData_ProductSpecification">
-            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
-            <End Role="DCInventoryData" EntitySet="DCInventoryData" />
-          </AssociationSet>
           <EntitySet Name="DCImportFileLog" EntityType="DbModel.DCImportFileLog" />
           <AssociationSet Name="FK_DCImportFileLog_DistributionCompany" Association="DbModel.FK_DCImportFileLog_DistributionCompany">
             <End Role="DistributionCompany" EntitySet="DistributionCompany" />
@@ -7489,6 +7473,23 @@
             <End Role="SupplierCautionMoney" EntitySet="SupplierCautionMoney" />
             <End Role="SupplierCautionMoneyDeduction" EntitySet="SupplierCautionMoneyDeduction" />
           </AssociationSet>
+          <EntitySet Name="DCInventoryData" EntityType="DbModel.DCInventoryData" />
+          <AssociationSet Name="FK_DCInventoryData_DistributionCompany" Association="DbModel.FK_DCInventoryData_DistributionCompany">
+            <End Role="DistributionCompany" EntitySet="DistributionCompany" />
+            <End Role="DCInventoryData" EntitySet="DCInventoryData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DCInventoryData_ImportFileLog" Association="DbModel.FK_DCInventoryData_ImportFileLog">
+            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
+            <End Role="DCInventoryData" EntitySet="DCInventoryData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DCInventoryData_Product" Association="DbModel.FK_DCInventoryData_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="DCInventoryData" EntitySet="DCInventoryData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DCInventoryData_ProductSpecification" Association="DbModel.FK_DCInventoryData_ProductSpecification">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="DCInventoryData" EntitySet="DCInventoryData" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -7729,12 +7730,12 @@
           <NavigationProperty Name="ClientTaskRefundApplication" Relationship="DbModel.FK_ClientTaskRefundApplication_Product" FromRole="Product" ToRole="ClientTaskRefundApplication" />
           <NavigationProperty Name="DCFlowData" Relationship="DbModel.FK_DCFlowData_Product" FromRole="Product" ToRole="DCFlowData" />
           <NavigationProperty Name="ClientFlowData" Relationship="DbModel.FK_ClientFlowData_Product" FromRole="Product" ToRole="ClientFlowData" />
-          <NavigationProperty Name="DCInventoryData" Relationship="DbModel.FK_DCInventoryData_Product" FromRole="Product" ToRole="DCInventoryData" />
           <NavigationProperty Name="StockOutDetail" Relationship="DbModel.FK_StockOutDetail_Product" FromRole="Product" ToRole="StockOutDetail" />
           <NavigationProperty Name="DBClientBonus" Relationship="DbModel.FK_DBClientBonus_Product" FromRole="Product" ToRole="DBClientBonus" />
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_Product" FromRole="Product" ToRole="DBContract" />
           <NavigationProperty Name="SalesOrderAppDetail" Relationship="DbModel.FK_SalesOrderAppDetail_Product" FromRole="Product" ToRole="SalesOrderAppDetail" />
           <NavigationProperty Name="SupplierCautionMoney" Relationship="DbModel.FK_SupplierCautionMoney_ProductID" FromRole="Product" ToRole="SupplierCautionMoney" />
+          <NavigationProperty Name="DCInventoryData" Relationship="DbModel.FK_DCInventoryData_Product" FromRole="Product" ToRole="DCInventoryData" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -8190,10 +8191,10 @@
           <NavigationProperty Name="DaBaoRequestApplication" Relationship="DbModel.FK_DaBaoRequestApplication_DistributionCompany" FromRole="DistributionCompany" ToRole="DaBaoRequestApplication" />
           <NavigationProperty Name="StockOut" Relationship="DbModel.FK_StockOut_DistributionCompany" FromRole="DistributionCompany" ToRole="StockOut" />
           <NavigationProperty Name="DCFlowData" Relationship="DbModel.FK_DCFlowData_DistributionCompany" FromRole="DistributionCompany" ToRole="DCFlowData" />
-          <NavigationProperty Name="DCInventoryData" Relationship="DbModel.FK_DCInventoryData_DistributionCompany" FromRole="DistributionCompany" ToRole="DCInventoryData" />
           <NavigationProperty Name="DCImportFileLog" Relationship="DbModel.FK_DCImportFileLog_DistributionCompany" FromRole="DistributionCompany" ToRole="DCImportFileLog" />
           <NavigationProperty Name="DBClientInvoice" Relationship="DbModel.FK_DBClientInvoice_DistributionCompanyID" FromRole="DistributionCompany" ToRole="DBClientInvoice" />
           <NavigationProperty Name="DBClientInvoiceSettlement" Relationship="DbModel.FK_DBClientInvoiceSettlement_DistributionCompany" FromRole="DistributionCompany" ToRole="DBClientInvoiceSettlement" />
+          <NavigationProperty Name="DCInventoryData" Relationship="DbModel.FK_DCInventoryData_DistributionCompany" FromRole="DistributionCompany" ToRole="DCInventoryData" />
         </EntityType>
         <EntityType Name="ClientCompanyCertificate">
           <Key>
@@ -9707,12 +9708,12 @@
           <NavigationProperty Name="ClientTaskRefundApplication" Relationship="DbModel.FK_ClientTaskRefundApplication_ProductSpecification" FromRole="ProductSpecification" ToRole="ClientTaskRefundApplication" />
           <NavigationProperty Name="DCFlowData" Relationship="DbModel.FK_DCFlowData_ProductSpecification" FromRole="ProductSpecification" ToRole="DCFlowData" />
           <NavigationProperty Name="ClientFlowData" Relationship="DbModel.FK_ClientFlowData_ProductSpecification" FromRole="ProductSpecification" ToRole="ClientFlowData" />
-          <NavigationProperty Name="DCInventoryData" Relationship="DbModel.FK_DCInventoryData_ProductSpecification" FromRole="ProductSpecification" ToRole="DCInventoryData" />
           <NavigationProperty Name="StockOutDetail" Relationship="DbModel.FK_StockOutDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="StockOutDetail" />
           <NavigationProperty Name="DBClientBonus" Relationship="DbModel.FK_DBClientBonus_ProductSpecification" FromRole="ProductSpecification" ToRole="DBClientBonus" />
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_ProductSpecification" FromRole="ProductSpecification" ToRole="DBContract" />
           <NavigationProperty Name="SalesOrderAppDetail" Relationship="DbModel.FK_SalesOrderAppDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="SalesOrderAppDetail" />
           <NavigationProperty Name="SupplierCautionMoney" Relationship="DbModel.FK_SupplierCautionMoney_ProductSpecificationID" FromRole="ProductSpecification" ToRole="SupplierCautionMoney" />
+          <NavigationProperty Name="DCInventoryData" Relationship="DbModel.FK_DCInventoryData_ProductSpecification" FromRole="ProductSpecification" ToRole="DCInventoryData" />
         </EntityType>
         <Association Name="FK_ClientInfoProductSetting_ProductSpecification">
           <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
@@ -10848,8 +10849,8 @@
           <NavigationProperty Name="ImportStatus" Relationship="DbModel.FK_ImportFileLog_ImportStatus" FromRole="ImportFileLog" ToRole="ImportStatus" />
           <NavigationProperty Name="ClientFlowData" Relationship="DbModel.FK_ClientFlowData_ImportFileLog" FromRole="ImportFileLog" ToRole="ClientFlowData" />
           <NavigationProperty Name="ClientImportFileLog" Relationship="DbModel.FK_ClientImportFileLog_ImportFileLog" FromRole="ImportFileLog" ToRole="ClientImportFileLog" />
-          <NavigationProperty Name="DCInventoryData" Relationship="DbModel.FK_DCInventoryData_ImportFileLog" FromRole="ImportFileLog" ToRole="DCInventoryData" />
           <NavigationProperty Name="DCImportFileLog" Relationship="DbModel.FK_DCImportFileLog_ImportFileLog" FromRole="ImportFileLog" ToRole="DCImportFileLog" />
+          <NavigationProperty Name="DCInventoryData" Relationship="DbModel.FK_DCInventoryData_ImportFileLog" FromRole="ImportFileLog" ToRole="DCInventoryData" />
         </EntityType>
         <Association Name="FK_DCFlowData_DistributionCompany">
           <End Type="DbModel.DistributionCompany" Role="DistributionCompany" Multiplicity="0..1" />
@@ -11236,75 +11237,6 @@
             </Principal>
             <Dependent Role="ClientImportFileLog">
               <PropertyRef Name="ImportFileLogID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="DCInventoryData">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="DistributionCompanyID" />
-          <Property Type="Int32" Name="ImportFileLogID" Nullable="false" />
-          <Property Type="Int32" Name="ProductID" Nullable="false" />
-          <Property Type="String" Name="ProductName" MaxLength="255" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ProductCode" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
-          <Property Type="String" Name="ProductSpecification" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="DateTime" Name="SettlementDate" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="BalanceQty" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <NavigationProperty Name="DistributionCompany" Relationship="DbModel.FK_DCInventoryData_DistributionCompany" FromRole="DCInventoryData" ToRole="DistributionCompany" />
-          <NavigationProperty Name="ImportFileLog" Relationship="DbModel.FK_DCInventoryData_ImportFileLog" FromRole="DCInventoryData" ToRole="ImportFileLog" />
-          <NavigationProperty Name="Product" Relationship="DbModel.FK_DCInventoryData_Product" FromRole="DCInventoryData" ToRole="Product" />
-          <NavigationProperty Name="ProductSpecification1" Relationship="DbModel.FK_DCInventoryData_ProductSpecification" FromRole="DCInventoryData" ToRole="ProductSpecification" />
-        </EntityType>
-        <Association Name="FK_DCInventoryData_DistributionCompany">
-          <End Type="DbModel.DistributionCompany" Role="DistributionCompany" Multiplicity="0..1" />
-          <End Type="DbModel.DCInventoryData" Role="DCInventoryData" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DistributionCompany">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DCInventoryData">
-              <PropertyRef Name="DistributionCompanyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DCInventoryData_ImportFileLog">
-          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="1" />
-          <End Type="DbModel.DCInventoryData" Role="DCInventoryData" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ImportFileLog">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DCInventoryData">
-              <PropertyRef Name="ImportFileLogID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DCInventoryData_Product">
-          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
-          <End Type="DbModel.DCInventoryData" Role="DCInventoryData" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DCInventoryData">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DCInventoryData_ProductSpecification">
-          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
-          <End Type="DbModel.DCInventoryData" Role="DCInventoryData" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ProductSpecification">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DCInventoryData">
-              <PropertyRef Name="ProductSpecificationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -13137,6 +13069,76 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="DCInventoryData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DistributionCompanyID" />
+          <Property Type="Int32" Name="ImportFileLogID" Nullable="false" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="String" Name="ProductName" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ProductCode" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
+          <Property Type="String" Name="ProductSpecification" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="SettlementDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="DCBalanceQty" />
+          <Property Type="Int32" Name="BookBalanceQty" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <NavigationProperty Name="DistributionCompany" Relationship="DbModel.FK_DCInventoryData_DistributionCompany" FromRole="DCInventoryData" ToRole="DistributionCompany" />
+          <NavigationProperty Name="ImportFileLog" Relationship="DbModel.FK_DCInventoryData_ImportFileLog" FromRole="DCInventoryData" ToRole="ImportFileLog" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_DCInventoryData_Product" FromRole="DCInventoryData" ToRole="Product" />
+          <NavigationProperty Name="ProductSpecification1" Relationship="DbModel.FK_DCInventoryData_ProductSpecification" FromRole="DCInventoryData" ToRole="ProductSpecification" />
+        </EntityType>
+        <Association Name="FK_DCInventoryData_DistributionCompany">
+          <End Type="DbModel.DistributionCompany" Role="DistributionCompany" Multiplicity="0..1" />
+          <End Type="DbModel.DCInventoryData" Role="DCInventoryData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCompany">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DCInventoryData">
+              <PropertyRef Name="DistributionCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCInventoryData_ImportFileLog">
+          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="1" />
+          <End Type="DbModel.DCInventoryData" Role="DCInventoryData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportFileLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DCInventoryData">
+              <PropertyRef Name="ImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCInventoryData_Product">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DbModel.DCInventoryData" Role="DCInventoryData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DCInventoryData">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DCInventoryData_ProductSpecification">
+          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
+          <End Type="DbModel.DCInventoryData" Role="DCInventoryData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DCInventoryData">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -14625,24 +14627,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DCInventoryData">
-            <EntityTypeMapping TypeName="DbModel.DCInventoryData">
-              <MappingFragment StoreEntitySet="DCInventoryData">
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="BalanceQty" ColumnName="BalanceQty" />
-                <ScalarProperty Name="SettlementDate" ColumnName="SettlementDate" />
-                <ScalarProperty Name="ProductSpecification" ColumnName="ProductSpecification" />
-                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
-                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="ImportFileLogID" ColumnName="ImportFileLogID" />
-                <ScalarProperty Name="DistributionCompanyID" ColumnName="DistributionCompanyID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="DCImportFileLog">
             <EntityTypeMapping TypeName="DbModel.DCImportFileLog">
               <MappingFragment StoreEntitySet="DCImportFileLog">
@@ -15196,6 +15180,25 @@
                 <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="SupplierCautionMoneyID" ColumnName="SupplierCautionMoneyID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DCInventoryData">
+            <EntityTypeMapping TypeName="DbModel.DCInventoryData">
+              <MappingFragment StoreEntitySet="DCInventoryData">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="BookBalanceQty" ColumnName="BookBalanceQty" />
+                <ScalarProperty Name="DCBalanceQty" ColumnName="DCBalanceQty" />
+                <ScalarProperty Name="SettlementDate" ColumnName="SettlementDate" />
+                <ScalarProperty Name="ProductSpecification" ColumnName="ProductSpecification" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ImportFileLogID" ColumnName="ImportFileLogID" />
+                <ScalarProperty Name="DistributionCompanyID" ColumnName="DistributionCompanyID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

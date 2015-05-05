@@ -38,12 +38,12 @@ namespace ZhongDing.Domain.Models
             this.ClientTaskRefundApplication = new HashSet<ClientTaskRefundApplication>();
             this.DCFlowData = new HashSet<DCFlowData>();
             this.ClientFlowData = new HashSet<ClientFlowData>();
-            this.DCInventoryData = new HashSet<DCInventoryData>();
             this.StockOutDetail = new HashSet<StockOutDetail>();
             this.DBClientBonus = new HashSet<DBClientBonus>();
             this.DBContract = new HashSet<DBContract>();
             this.SalesOrderAppDetail = new HashSet<SalesOrderAppDetail>();
             this.SupplierCautionMoney = new HashSet<SupplierCautionMoney>();
+            this.DCInventoryData = new HashSet<DCInventoryData>();
         }
     
         public int ID { get; set; }
@@ -97,11 +97,11 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<ClientTaskRefundApplication> ClientTaskRefundApplication { get; set; }
         public virtual ICollection<DCFlowData> DCFlowData { get; set; }
         public virtual ICollection<ClientFlowData> ClientFlowData { get; set; }
-        public virtual ICollection<DCInventoryData> DCInventoryData { get; set; }
         public virtual ICollection<StockOutDetail> StockOutDetail { get; set; }
         public virtual ICollection<DBClientBonus> DBClientBonus { get; set; }
         public virtual ICollection<DBContract> DBContract { get; set; }
         public virtual ICollection<SalesOrderAppDetail> SalesOrderAppDetail { get; set; }
         public virtual ICollection<SupplierCautionMoney> SupplierCautionMoney { get; set; }
+        public virtual ICollection<DCInventoryData> DCInventoryData { get; set; }
     }
 }

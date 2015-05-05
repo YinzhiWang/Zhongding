@@ -11,7 +11,6 @@ using ZhongDing.Domain.UIObjects;
 using ZhongDing.Common.Extension;
 using System.Data.Entity.Core.Objects;
 using ZhongDing.Domain.UISearchObjects;
-using ZhongDing.Common.Extension;
 
 namespace ZhongDing.Business.Repositories.Reports
 {

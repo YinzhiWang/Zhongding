@@ -119,7 +119,7 @@ namespace ZhongDing.Web.Views.Imports.Editors
                         }
                     }
 
-                    rmypSettlementDate.SelectedDate = dcImportFile.SettlementDate;
+                    rdpSettlementDate.SelectedDate = dcImportFile.SettlementDate;
 
                     if (dcImportFile.DistributionCompanyID > 0)
                         rcbxDistributionCompany.SelectedValue = dcImportFile.DistributionCompanyID.ToString();
@@ -161,10 +161,10 @@ namespace ZhongDing.Web.Views.Imports.Editors
         protected void btnSave_Click(object sender, EventArgs e)
         {
 
-            if (rmypSettlementDate.SelectedDate.HasValue
+            if (rdpSettlementDate.SelectedDate.HasValue
                 && !string.IsNullOrEmpty(rcbxDistributionCompany.SelectedValue))
             {
-                var vSettlementDate = rmypSettlementDate.SelectedDate.Value;
+                var vSettlementDate = rdpSettlementDate.SelectedDate.Value;
                 var settlementDate = new DateTime(vSettlementDate.Year, vSettlementDate.Month, 1);
                 var distributionCompanyID = int.Parse(rcbxDistributionCompany.SelectedValue);
 
@@ -172,12 +172,13 @@ namespace ZhongDing.Web.Views.Imports.Editors
                     .GetList(x => x.IsDeleted == false && x.ImportFileLogID != this.CurrentEntityID
                         && x.DistributionCompanyID == distributionCompanyID
                         && x.ImportFileLog.ImportDataTypeID == (int)EImportDataType.DCInventoryData
+                        && x.ImportFileLog.ImportStatusID != (int)EImportStatus.ImportError
                         && x.SettlementDate == settlementDate).Count();
 
                 if (tempImportFileLogCount > 0)
                 {
                     cvSettlementDate.IsValid = false;
-                    cvSettlementDate.ErrorMessage = "该结算年月在当前选择的配送公司下已存在，请选择其他结算年月";
+                    cvSettlementDate.ErrorMessage = "该库存日期在当前选择的配送公司下已存在，请选择其他库存日期";
                 }
             }
 
@@ -205,9 +206,7 @@ namespace ZhongDing.Web.Views.Imports.Editors
 
             dcImportFileLog.DistributionCompanyID = int.Parse(rcbxDistributionCompany.SelectedValue);
 
-            var tempSettlementDate = rmypSettlementDate.SelectedDate.Value;
-
-            dcImportFileLog.SettlementDate = new DateTime(tempSettlementDate.Year, tempSettlementDate.Month, 1);
+            dcImportFileLog.SettlementDate = rdpSettlementDate.SelectedDate.Value;
 
             string fileName = txtFileName.Text.Trim();
 

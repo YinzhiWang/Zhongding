@@ -7,10 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ZhongDing.Web.Views.Imports {
+namespace ZhongDing.Web.Views.Reports {
     
     
-    public partial class ImportDCInventoryData {
+    public partial class DCInventoryChecklistReport {
         
         /// <summary>
         /// loadingPanel control.
@@ -29,6 +29,15 @@ namespace ZhongDing.Web.Views.Imports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadAjaxManager RadAjaxManager1;
+        
+        /// <summary>
+        /// lblTitle control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblTitle;
         
         /// <summary>
         /// divSearch control.
@@ -58,24 +67,6 @@ namespace ZhongDing.Web.Views.Imports {
         protected global::Telerik.Web.UI.RadComboBox rcbxDistributionCompany;
         
         /// <summary>
-        /// rdpBeginDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker rdpBeginDate;
-        
-        /// <summary>
-        /// rdpEndDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadDatePicker rdpEndDate;
-        
-        /// <summary>
         /// btnSearch control.
         /// </summary>
         /// <remarks>
@@ -94,22 +85,13 @@ namespace ZhongDing.Web.Views.Imports {
         protected global::System.Web.UI.WebControls.Button btnReset;
         
         /// <summary>
-        /// btnCancel control.
+        /// btnExport control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnCancel;
-        
-        /// <summary>
-        /// hlkModelExcel control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.HyperLink hlkModelExcel;
+        protected global::System.Web.UI.WebControls.Button btnExport;
         
         /// <summary>
         /// rgEntities control.
@@ -119,6 +101,15 @@ namespace ZhongDing.Web.Views.Imports {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadGrid rgEntities;
+        
+        /// <summary>
+        /// btnExportHidden control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnExportHidden;
         
         /// <summary>
         /// Master property.

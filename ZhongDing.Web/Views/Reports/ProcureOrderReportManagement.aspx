@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ProcureOrderReportManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Reports.ProcureOrderReportManagement" %>
+﻿<%@ Page Title="采购订单报表" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ProcureOrderReportManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Reports.ProcureOrderReportManagement" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 

@@ -2670,6 +2670,7 @@
     <Content Include="Views\Refunds\SupplierTaskRefundMaintenance.aspx" />
     <Content Include="Views\Refunds\SupplierTaskRefundManagement.aspx" />
     <Content Include="Views\Reports\ClientSaleAppReportManagement.aspx" />
+    <Content Include="Views\Reports\DCInventoryChecklistReport.aspx" />
     <Content Include="Views\Reports\ProcurePlanReportManagement.aspx" />
     <Content Include="Views\Reports\StockInDetailReportManagement.aspx" />
     <Content Include="Views\Reports\StockOutDetailReportManagement.aspx" />
@@ -3578,6 +3579,13 @@
     <Compile Include="Views\Reports\ClientSaleAppReportManagement.aspx.designer.cs">
       <DependentUpon>ClientSaleAppReportManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Reports\DCInventoryChecklistReport.aspx.cs">
+      <DependentUpon>DCInventoryChecklistReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reports\DCInventoryChecklistReport.aspx.designer.cs">
+      <DependentUpon>DCInventoryChecklistReport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Reports\ProcurePlanReportManagement.aspx.cs">
       <DependentUpon>ProcurePlanReportManagement.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3826,7 +3834,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
