@@ -72,8 +72,6 @@ namespace ZhongDing.Business.Repositories
                             CreatedOn = tcaisd == null ? cid.CreatedOn : tcaisd.CreatedOn
                         };
 
-
-
             if (uiSearchObj.OnlyIncludeChecked)
                 query = query.Where(x => x.IsChecked == true);
 
@@ -86,117 +84,6 @@ namespace ZhongDing.Business.Repositories
                 if (item.IsChecked == false)
                     item.SettlementQty = item.ToBeSettlementQty;
             }
-
-            return uiEntities;
-
-
-
-            //IQueryable<UIClientAttachedInvoiceSettlementDetail> query1 = (from caisd in DB.ClientAttachedInvoiceSettlementDetail
-            //                                                              join cid in DB.ClientInvoiceDetail on caisd.ClientInvoiceDetailID equals cid.ID
-            //                                                              join ci in DB.ClientInvoice on cid.ClientInvoiceID equals ci.ID
-            //                                                              join c in DB.Company on ci.CompanyID equals c.ID
-            //                                                              join sod in DB.StockOutDetail on caisd.StockOutDetailID equals sod.ID
-            //                                                              join soad in DB.SalesOrderAppDetail on sod.SalesOrderAppDetailID equals soad.ID
-            //                                                              join p in DB.Product on sod.ProductID equals p.ID
-            //                                                              join ps in DB.ProductSpecification on sod.ProductSpecificationID equals ps.ID
-            //                                                              where caisd.IsDeleted == false
-            //                                                              && caisd.ClientAttachedInvoiceSettlementID == uiSearchObj.ClientAttachedInvoiceSettlementID
-            //                                                              && (!uiSearchObj.BeginDate.HasValue || ci.InvoiceDate >= uiSearchObj.BeginDate)
-            //                                                              && (!uiSearchObj.EndDate.HasValue || ci.InvoiceDate < uiSearchObj.EndDate)
-            //                                                              select new UIClientAttachedInvoiceSettlementDetail()
-            //                                                              {
-            //                                                                  ID = caisd.ID,
-            //                                                                  ClientInvoiceDetailID = caisd.ClientInvoiceDetailID,
-            //                                                                  StockOutDetailID = caisd.StockOutDetailID,
-            //                                                                  ClientCompanyID = ci.ClientCompanyID,
-            //                                                                  InvoiceDate = ci.InvoiceDate,
-            //                                                                  InvoiceNumber = ci.InvoiceNumber,
-            //                                                                  TotalInvoiceAmount = cid.Amount,
-            //                                                                  ProductName = p.ProductName,
-            //                                                                  Specification = ps.Specification,
-            //                                                                  SalesPrice = soad.SalesPrice,
-            //                                                                  InvoicePrice = soad.InvoicePrice ?? 0,
-            //                                                                  InvoiceQty = cid.Qty ?? 0,
-            //                                                                  SettledQty = (DB.ClientAttachedInvoiceSettlementDetail.Any(x => x.IsDeleted == false
-            //                                                                      && x.ClientInvoiceDetailID == caisd.ClientInvoiceDetailID && x.StockOutDetailID == sod.ID)
-            //                                                                      ? DB.ClientAttachedInvoiceSettlementDetail.Where(x => x.IsDeleted == false
-            //                                                                        && x.ClientInvoiceDetailID == caisd.ClientInvoiceDetailID && x.StockOutDetailID == sod.ID)
-            //                                                                        .Sum(x => x.SettlementQty ?? 0)
-            //                                                                      : 0),
-            //                                                                  SettlementQty = caisd.SettlementQty ?? 0,
-            //                                                                  SettlementAmount = caisd.SettlementAmount,
-            //                                                                  InvoiceTypeID = cid.InvoiceTypeID,
-            //                                                                  InvoiceSettlementRatio = (cid.InvoiceTypeID == (int)EInvoiceType.HighRatio
-            //                                                                    ? c.ClientTaxHighRatio : (cid.InvoiceTypeID == (int)EInvoiceType.LowRatio
-            //                                                                        ? c.ClientTaxLowRatio : ((cid.InvoiceTypeID == (int)EInvoiceType.DeductionRatio && c.EnableTaxDeduction == true)
-            //                                                                            ? c.ClientTaxDeductionRatio : null))),
-            //                                                                  IsChecked = true,
-            //                                                                  CreatedOn = caisd.CreatedOn
-            //                                                              });
-
-
-            //if (uiSearchObj.OnlyIncludeChecked)
-            //{
-            //    uiEntities = query1.OrderByDescending(x => x.CreatedOn).ToList();
-
-            //    foreach (var item in uiEntities)
-            //    {
-            //        item.ToBeSettlementQty = item.InvoiceQty - item.SettledQty;
-            //    }
-
-            //    return uiEntities;
-            //}
-
-            //IQueryable<UIClientAttachedInvoiceSettlementDetail> query2 = (from cid in DB.ClientInvoiceDetail
-            //                                                              join ci in DB.ClientInvoice on cid.ClientInvoiceID equals ci.ID
-            //                                                              join c in DB.Company on ci.CompanyID equals c.ID
-            //                                                              join cc in DB.ClientCompany on ci.ClientCompanyID equals cc.ID
-            //                                                              join sod in DB.StockOutDetail on cid.StockOutDetailID equals sod.ID
-            //                                                              join soa in DB.SalesOrderApplication on sod.SalesOrderApplicationID equals soa.ID
-            //                                                              join soad in DB.SalesOrderAppDetail on sod.SalesOrderAppDetailID equals soad.ID
-            //                                                              join p in DB.Product on sod.ProductID equals p.ID
-            //                                                              join ps in DB.ProductSpecification on sod.ProductSpecificationID equals ps.ID
-            //                                                              where ci.IsDeleted == false && ci.IsSettled != true
-            //                                                              && ci.CompanyID == uiSearchObj.CompanyID
-            //                                                              && ci.ClientCompanyID == uiSearchObj.ClientCompanyID
-            //                                                              && ci.SaleOrderTypeID == (int)ESaleOrderType.AttachedMode
-            //                                                              && (!uiSearchObj.BeginDate.HasValue || ci.InvoiceDate >= uiSearchObj.BeginDate)
-            //                                                              && (!uiSearchObj.EndDate.HasValue || ci.InvoiceDate < uiSearchObj.EndDate)
-            //                                                              select new UIClientAttachedInvoiceSettlementDetail
-            //                                                              {
-            //                                                                  ID = 0,
-            //                                                                  ClientInvoiceDetailID = cid.ID,
-            //                                                                  StockOutDetailID = cid.StockOutDetailID,
-            //                                                                  ClientCompanyID = ci.ClientCompanyID,
-            //                                                                  InvoiceDate = ci.InvoiceDate,
-            //                                                                  InvoiceNumber = ci.InvoiceNumber,
-            //                                                                  TotalInvoiceAmount = cid.Amount,
-            //                                                                  ProductName = p.ProductName,
-            //                                                                  Specification = ps.Specification,
-            //                                                                  SalesPrice = soad.SalesPrice,
-            //                                                                  InvoicePrice = soad.InvoicePrice ?? 0,
-            //                                                                  InvoiceQty = cid.Qty ?? 0,
-            //                                                                  SettledQty = 0,
-            //                                                                  SettlementQty = cid.Qty ?? 0,
-            //                                                                  SettlementAmount = (soad.InvoicePrice ?? 0) * (cid.Qty ?? 0),
-            //                                                                  InvoiceTypeID = cid.InvoiceTypeID,
-            //                                                                  InvoiceSettlementRatio = (cid.InvoiceTypeID == (int)EInvoiceType.HighRatio
-            //                                                                    ? c.ClientTaxHighRatio : (cid.InvoiceTypeID == (int)EInvoiceType.LowRatio
-            //                                                                        ? c.ClientTaxLowRatio : ((cid.InvoiceTypeID == (int)EInvoiceType.DeductionRatio && c.EnableTaxDeduction == true)
-            //                                                                            ? c.ClientTaxDeductionRatio : null))),
-            //                                                                  IsChecked = false,
-            //                                                                  CreatedOn = ci.CreatedOn
-            //                                                              });
-
-
-            //var query = query1.Union(query2);
-
-            //uiEntities = query.OrderByDescending(x => x.CreatedOn).ToList();
-
-            //foreach (var item in uiEntities)
-            //{
-            //    item.ToBeSettlementQty = item.InvoiceQty - item.SettledQty;
-            //}
 
             return uiEntities;
         }
