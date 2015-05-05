@@ -111,7 +111,7 @@
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
                         
-                             <telerik:GridBoundColumn UniqueName="StatusName" HeaderText="状态" DataField="StatusName">
+                             <telerik:GridBoundColumn UniqueName="WorkflowStatus" HeaderText="状态" DataField="WorkflowStatus">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
                         

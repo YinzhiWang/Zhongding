@@ -74,9 +74,10 @@ namespace ZhongDing.Business.Repositories
                                      IsStop = q.IsStop,
                                      SupplierName = supplier.SupplierName,
                                      ProductSpecification = productSpecification.Specification,
-                                     StatusName = workflowStatus.StatusName,
+                                     WorkflowStatus = workflowStatus.StatusName,
+                                     WorkflowStatusID = q.WorkflowStatusID,
                                      CreatedByUserID = q.CreatedBy.Value,
-                                     CreatedByUserName = user.UserName
+                                     CreatedByUserName = user.FullName
                                  }).ToList();
                 }
                 else
@@ -100,9 +101,10 @@ namespace ZhongDing.Business.Repositories
                                      IsStop = q.IsStop,
                                      SupplierName = supplier.SupplierName,
                                      ProductSpecification = productSpecification.Specification,
-                                     StatusName = workflowStatus.StatusName,
+                                     WorkflowStatus = workflowStatus.StatusName,
+                                     WorkflowStatusID = q.WorkflowStatusID,
                                      CreatedByUserID = q.CreatedBy.Value,
-                                     CreatedByUserName = user.UserName,
+                                     CreatedByUserName = user.FullName,
                                      //已返款总额
                                      RefundedAmount = (from sra in DB.ApplicationPayment.Where(x => x.IsDeleted == false && x.WorkflowID == (int)EWorkflow.SupplierCautionMoneyApply
                                                            && x.ApplicationID == q.ID && x.PaymentTypeID == (int)EPaymentType.Income)

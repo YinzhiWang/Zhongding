@@ -247,6 +247,51 @@ namespace ZhongDing.Web.Views.CautionMoneys {
         protected global::Telerik.Web.UI.RadTextBox txtRemark;
         
         /// <summary>
+        /// divComments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divComments;
+        
+        /// <summary>
+        /// RadDockLayout1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDockLayout RadDockLayout1;
+        
+        /// <summary>
+        /// RadDockZone1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDockZone RadDockZone1;
+        
+        /// <summary>
+        /// RadDock1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDock RadDock1;
+        
+        /// <summary>
+        /// rgAppNotes control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid rgAppNotes;
+        
+        /// <summary>
         /// divAuditAll control.
         /// </summary>
         /// <remarks>

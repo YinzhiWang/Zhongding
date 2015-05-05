@@ -6,6 +6,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+     <style>
+        div#divGridCombox td, td:first-child {
+            border-left-style: solid;
+        }
+    </style>
      <telerik:RadAjaxLoadingPanel ID="loadingPanel" runat="server">
     </telerik:RadAjaxLoadingPanel>
     <telerik:RadAjaxManager runat="server" ID="RadAjaxManager1">
@@ -200,7 +205,50 @@
                                 </telerik:RadTextBox>
                             </div>
                         </div>
-
+                         <div class="mws-form-row" runat="server" id="divComments">
+                            <label>备注历史</label>
+                            <div class="mws-form-item medium">
+                                <telerik:RadDockLayout runat="server" ID="RadDockLayout1">
+                                    <telerik:RadDockZone runat="server" ID="RadDockZone1" Orientation="Vertical"
+                                        Width="99%" FitDocks="true" BorderStyle="None">
+                                        <telerik:RadDock ID="RadDock1" Title="备注历史记录" runat="server" AllowedZones="RadDockZone1" Font-Size="12px"
+                                            DefaultCommands="ExpandCollapse" EnableAnimation="true" EnableDrag="false"
+                                            DockMode="Docked" ExpandText="展开" CollapseText="折叠">
+                                            <ContentTemplate>
+                                                <div class="toppadding10"></div>
+                                                <telerik:RadGrid ID="rgAppNotes" runat="server"
+                                                    AllowPaging="false" AllowSorting="true" AutoGenerateColumns="false" Skin="Silk" Width="99.5%"
+                                                    ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
+                                                    OnNeedDataSource="rgAppNotes_NeedDataSource">
+                                                    <MasterTableView Width="100%" DataKeyNames="ID" ShowHeader="true" BackColor="#fafafa">
+                                                        <Columns>
+                                                            <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
+                                                            </telerik:GridBoundColumn>
+                                                            <telerik:GridBoundColumn UniqueName="CreatedOn" HeaderText="创建时间" DataField="CreatedOn" DataFormatString="{0:yyyy/MM/dd HH:mm:ss}">
+                                                                <ItemStyle HorizontalAlign="Left" Width="20%" />
+                                                            </telerik:GridBoundColumn>
+                                                            <telerik:GridBoundColumn UniqueName="CreatedBy" HeaderText="创建人" DataField="CreatedBy">
+                                                                <ItemStyle HorizontalAlign="Left" Width="15%" />
+                                                            </telerik:GridBoundColumn>
+                                                            <telerik:GridBoundColumn UniqueName="Note" HeaderText="备注内容" DataField="Note">
+                                                                <ItemStyle HorizontalAlign="Left" />
+                                                            </telerik:GridBoundColumn>
+                                                        </Columns>
+                                                        <NoRecordsTemplate>
+                                                            没有任何数据
+                                                        </NoRecordsTemplate>
+                                                        <ItemStyle Height="30" />
+                                                        <AlternatingItemStyle BackColor="#f2f2f2" />
+                                                    </MasterTableView>
+                                                    <ClientSettings EnableRowHoverStyle="true" />
+                                                </telerik:RadGrid>
+                                            </ContentTemplate>
+                                        </telerik:RadDock>
+                                    </telerik:RadDockZone>
+                                </telerik:RadDockLayout>
+                            </div>
+                        </div>
+                           <div class="height20"></div>
                         <div class="mws-panel grid_8 mws-collapsible" data-collapseid="panel-procure-audit" runat="server" id="divAuditAll">
                             <div class="mws-panel-header">
                                 <span class="mws-i-24 i-creditcard">审核</span>
@@ -763,6 +811,12 @@
 
             window.location.href = "SupplierCautionMoneyApplyManagement.aspx";
         }
+        function refreshMaintenancePage(sender, args) {
+
+            var currentEntityID = $("#<%= hdnCurrentEntityID.ClientID %>").val();
+
+            redirectToPage("Views/CautionMoneys/SupplierCautionMoneyMaintenance.aspx?EntityID=" + currentEntityID);
+         }
         function onResponseEnd(sender, args) {
 
             var eventTarget = args.get_eventTarget();

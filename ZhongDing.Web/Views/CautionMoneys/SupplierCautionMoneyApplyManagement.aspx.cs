@@ -68,19 +68,66 @@ namespace ZhongDing.Web.Views.CautionMoneys
 
             }
         }
+        private IList<int> _CanAccessUserIDs;
+        private IList<int> CanAccessUserIDs
+        {
+            get
+            {
+                if (_CanAccessUserIDs == null || _CanAccessUserIDs.Count == 0)
+                {
+                    _CanAccessUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.NewSupplierCautionMoneyApply);
+                }
 
+                return _CanAccessUserIDs;
+            }
+        }
         private void BindSupplierCautionMoney(bool isNeedRebind)
         {
+
+            IList<int> includeWorkflowStatusIDs = PageWorkflowStatusRepository
+         .GetCanAccessIDsByUserID(this.CurrentWorkFlowID, CurrentUser.UserID);
+
+            if (includeWorkflowStatusIDs == null)
+            {
+                includeWorkflowStatusIDs = new List<int>();
+                includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Completed);
+            }
+            else
+            {
+                if (this.CanAccessUserIDs.Contains(CurrentUser.UserID) || this.CanEditUserIDs.Contains(CurrentUser.UserID))
+                {
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.TemporarySave))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.TemporarySave);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Submit))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Submit);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ReturnBasicInfo))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ReturnBasicInfo);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ApprovedByDeptManagers))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ApprovedByDeptManagers);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ApprovedByTreasurers))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ApprovedByTreasurers);
+
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.Completed))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.Completed);
+                }
+            }
             UISearchSupplierCautionMoney uiSearchObj = new UISearchSupplierCautionMoney()
             {
                 BeginDate = rdpBeginDate.SelectedDate,
                 EndDate = rdpEndDate.SelectedDate,
-                WorkflowStatusIDs = new int[] { (int)EWorkflowStatus.TemporarySave, (int)EWorkflowStatus.ReturnBasicInfo,
-                (int)EWorkflowStatus.Submit,(int)EWorkflowStatus.ApprovedByDeptManagers,
-                (int)EWorkflowStatus.ApprovedByTreasurers},
+                //WorkflowStatusIDs = new int[] { (int)EWorkflowStatus.TemporarySave, (int)EWorkflowStatus.ReturnBasicInfo,
+                //(int)EWorkflowStatus.Submit,(int)EWorkflowStatus.ApprovedByDeptManagers,
+                //(int)EWorkflowStatus.ApprovedByTreasurers},
                 SupplierName = txtSupplierName.Text.Trim(),
                 ProductName = txtProductName.Text.Trim()
             };
+            uiSearchObj.WorkflowStatusIDs = includeWorkflowStatusIDs.ToArray();
+
+
 
             int totalRecords = 0;
 
@@ -104,11 +151,11 @@ namespace ZhongDing.Web.Views.CautionMoneys
         protected void rgSupplierCautionMoneys_DeleteCommand(object sender, GridCommandEventArgs e)
         {
             GridEditableItem editableItem = e.Item as GridEditableItem;
-            var SupplierCautionMoneyID = editableItem.GetDataKeyValue("ID").ToIntOrNull();
+            var supplierCautionMoneyID = editableItem.GetDataKeyValue("ID").ToIntOrNull();
 
-            if (SupplierCautionMoneyID.BiggerThanZero())
+            if (supplierCautionMoneyID.BiggerThanZero())
             {
-
+                PageSupplierCautionMoneyRepository.DeleteByID(supplierCautionMoneyID);
                 PageSupplierCautionMoneyRepository.Save();
                 rgSupplierCautionMoneys.Rebind();
             }
@@ -194,12 +241,11 @@ namespace ZhongDing.Web.Views.CautionMoneys
                                     break;
 
                                 case EWorkflowStatus.Submit:
+                                case EWorkflowStatus.ApprovedByDeptManagers:
                                     linkHtml += "审核";
                                     break;
-
-                                case EWorkflowStatus.ApprovedByDeptManagers:
                                 case EWorkflowStatus.ApprovedByTreasurers:
-                                    linkHtml += "查看";
+                                    linkHtml += "支付";
                                     break;
                             }
                         }

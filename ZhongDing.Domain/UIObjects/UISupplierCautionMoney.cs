@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ZhongDing.Domain.UIObjects
 {
-    public class UISupplierCautionMoney
+    public class UISupplierCautionMoney : UIWorkflowBase
     {
-        public int ID { get; set; }
+     
         public string SupplierName { get; set; }
         public string ProductName { get; set; }
         public string ProductSpecification { get; set; }
@@ -16,12 +16,12 @@ namespace ZhongDing.Domain.UIObjects
         public System.DateTime EndDate { get; set; }
         public decimal PaymentCautionMoney { get; set; }
         public decimal TakeBackCautionMoney { get; set; }
-      
-      
+
+
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
-        public int WorkflowStatusID { get; set; }
+   
         public bool IsStop { get; set; }
         public Nullable<System.DateTime> StoppedOn { get; set; }
         public Nullable<int> StoppedBy { get; set; }
@@ -31,12 +31,10 @@ namespace ZhongDing.Domain.UIObjects
 
         public string CreatedByUserName { get; set; }
 
-        public string StatusName { get; set; }
-
         public int CreatedByUserID { get; set; }
 
         public decimal RefundedAmount { get; set; }
         public decimal DeductedAmount { get; set; }
-        
+
     }
 }
