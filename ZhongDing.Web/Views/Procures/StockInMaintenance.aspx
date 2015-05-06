@@ -22,6 +22,7 @@
                 </UpdatedControls>
             </telerik:AjaxSetting>
         </AjaxSettings>
+        <ClientEvents OnResponseEnd="onRequestEnd" />
     </telerik:RadAjaxManager>
 
     <div class="container">
@@ -66,8 +67,6 @@
                                         Display="Dynamic" CssClass="field-validation-error"
                                         ValidationGroup="vgMaintenance" Text="*">
                                     </asp:RequiredFieldValidator>
-                                    <asp:Button ID="btnSearchOrders" runat="server" Text="查询订单" CssClass="mws-button green"
-                                        CausesValidation="false" OnClientClick="openChooseOrderProductWindow();return false;" />
                                 </div>
                             </div>
                             <div class="float-left">
@@ -90,7 +89,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mws-form-row"  runat="server" id="divComment">
+                        <div class="mws-form-row" runat="server" id="divComment">
                             <label>备注</label>
                             <div class="mws-form-item medium">
                                 <telerik:RadTextBox runat="server" ID="txtComment" Width="90%" MaxLength="1000"
@@ -162,7 +161,7 @@
                                             OnBatchEditCommand="rgStockInDetails_BatchEditCommand">
                                             <MasterTableView Width="100%" DataKeyNames="ID,ProcureOrderAppID,ProcureOrderAppDetailID,ProductID,ProductSpecificationID,WarehouseID" CommandItemDisplay="Top" EditMode="Batch"
                                                 ShowHeadersWhenNoRecords="true" BackColor="#fafafa" ClientDataKeyNames="ID,ProcureCount,ToBeInQty">
-                                                <CommandItemSettings ShowAddNewRecordButton="false" ShowSaveChangesButton="true" ShowCancelChangesButton="false"
+                                                <CommandItemSettings ShowAddNewRecordButton="true" AddNewRecordText="添加" ShowSaveChangesButton="true" ShowCancelChangesButton="false"
                                                     SaveChangesText="保存" CancelChangesText="取消" RefreshText="刷新" />
                                                 <BatchEditingSettings EditType="Cell" />
                                                 <Columns>
@@ -371,7 +370,7 @@
         }
 
         function onCellValueChanged(sender, args) {
-            debugger;
+            //debugger;
 
             var tableView = args.get_tableView();
 
@@ -544,8 +543,30 @@
             }
         }
 
+        function rebuildAddNewCommands() {
+            var addNewBtn = $("input[id$='_AddNewRecordButton']");
+            var addNewLink = $("a[id$='_InitInsertButton']");
+
+            if (addNewBtn.length > 0 && addNewLink.length > 0) {
+
+                var commandParent = addNewBtn.parent();
+                commandParent.prepend("<input type=\"button\" class=\"rgAdd\" title=\"添加\" onclick=\"openChooseOrderProductWindow(); return false;\" />"
+                    + "<a href=\"javascript:void(0)\" title=\"添加\" onclick=\"openChooseOrderProductWindow(); return false;\">添加</a>");
+                //删除必须放在获取parent对象后面
+                addNewBtn.remove();
+                addNewLink.remove();
+            }
+        }
+
+        function onRequestEnd(sender, args)
+        {
+            rebuildAddNewCommands();
+        }
+
         $(document).ready(function () {
             currentEntityID = $("#<%= hdnCurrentEntityID.ClientID %>").val();
+
+            rebuildAddNewCommands();
         });
 
     </script>

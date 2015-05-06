@@ -54,6 +54,9 @@
                     border-left-color: #cccccc;
                     border-left-width: 1px;
                     border-left-style: solid;
+                    font-size: 13px;
+                    font-family: 'Microsoft Yahei',Arial,Helvetica,sans-serif,'微软雅黑';
+                    font-weight: normal;
                 }
 
                     .RadGrid_Silk .rgHeader a {

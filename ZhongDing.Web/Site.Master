@@ -176,8 +176,8 @@
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/StockInDetailReportManagement.aspx');">入库明细表</a></li>
                                     <li data-level="2" data-menuitemid="106">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/ProcurePlanReportManagement.aspx');">采购计划表</a></li>
-                                    
-                                    
+
+
                                     <li data-level="2" data-menuitemid="114">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/DCInventoryChecklistReport.aspx');">配送公司库存核对表</a></li>
 
@@ -237,6 +237,9 @@
                     border-left-color: #cccccc;
                     border-left-width: 1px;
                     border-left-style: solid;
+                    font-size: 13px;
+                    font-family: 'Microsoft Yahei',Arial,Helvetica,sans-serif,'微软雅黑';
+                    font-weight: normal;
                 }
 
                     .RadGrid_Silk .rgHeader a {

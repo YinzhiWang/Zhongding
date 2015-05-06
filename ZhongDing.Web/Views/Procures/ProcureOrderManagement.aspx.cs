@@ -427,6 +427,7 @@ namespace ZhongDing.Web.Views.Procures
                     {
                         switch (workflowStatus)
                         {
+                            case EWorkflowStatus.Paid:
                             case EWorkflowStatus.Shipping:
                                 isShowStopLink = true;
                                 break;

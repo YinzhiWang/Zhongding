@@ -265,7 +265,6 @@ namespace ZhongDing.Web.Views.Procures
         /// </summary>
         private void InitDefaultData()
         {
-            btnSearchOrders.Visible = false;
             btnSubmit.Visible = false;
             btnEntryStock.Visible = false;
             divComment.Visible = false;
@@ -291,8 +290,6 @@ namespace ZhongDing.Web.Views.Procures
 
             btnSave.Visible = false;
             btnSubmit.Visible = false;
-
-            btnSearchOrders.Visible = false;
 
             //目的是禁用Cell编辑
             rgStockInDetails.MasterTableView.EditMode = GridEditMode.InPlace;
@@ -612,7 +609,14 @@ namespace ZhongDing.Web.Views.Procures
 
                         PageStockInDetailRepository.Save();
 
+                        Session[WebUtility.WebSessionNames.StockInDetailData] = PageStockInDetailRepository.GetUIList(new UISearchStockInDetail
+                        {
+                            StockInID = this.CurrentEntity.ID
+                        });
+
                         hdnGridCellValueChangedCount.Value = "0";
+
+                        rgStockInDetails.Rebind();
                     }
                 }
                 else

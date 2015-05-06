@@ -1989,7 +1989,6 @@
           </Key>
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="DBContractID" Type="int" />
-          <Property Name="YearOfTask" Type="int" />
           <Property Name="MonthOfTask" Type="int" />
           <Property Name="Quantity" Type="int" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
@@ -6484,7 +6483,6 @@
             <End Role="DeptDistrict" EntitySet="DeptDistrict" />
             <End Role="DeptMarket" EntitySet="DeptMarket" />
           </AssociationSet>
-          <EntitySet Name="DBContractTaskAssignment" EntityType="DbModel.DBContractTaskAssignment" />
           <EntitySet Name="DepartmentProductRecord" EntityType="DbModel.DepartmentProductRecord" />
           <EntitySet Name="DepartmentProductSalesBonus" EntityType="DbModel.DepartmentProductSalesBonus" />
           <EntitySet Name="DepartmentProductSalesPlan" EntityType="DbModel.DepartmentProductSalesPlan" />
@@ -7143,10 +7141,6 @@
             <End Role="DBContract" EntitySet="DBContract" />
             <End Role="DBContractHospital" EntitySet="DBContractHospital" />
           </AssociationSet>
-          <AssociationSet Name="FK_DBContractTaskAssignment_DBContract" Association="DbModel.FK_DBContractTaskAssignment_DBContract">
-            <End Role="DBContract" EntitySet="DBContract" />
-            <End Role="DBContractTaskAssignment" EntitySet="DBContractTaskAssignment" />
-          </AssociationSet>
           <AssociationSet Name="FK_DCFlowDataDetail_DBContract" Association="DbModel.FK_DCFlowDataDetail_DBContract">
             <End Role="DBContract" EntitySet="DBContract" />
             <End Role="DCFlowDataDetail" EntitySet="DCFlowDataDetail" />
@@ -7489,6 +7483,11 @@
           <AssociationSet Name="FK_DCInventoryData_ProductSpecification" Association="DbModel.FK_DCInventoryData_ProductSpecification">
             <End Role="ProductSpecification" EntitySet="ProductSpecification" />
             <End Role="DCInventoryData" EntitySet="DCInventoryData" />
+          </AssociationSet>
+          <EntitySet Name="DBContractTaskAssignment" EntityType="DbModel.DBContractTaskAssignment" />
+          <AssociationSet Name="FK_DBContractTaskAssignment_DBContract" Association="DbModel.FK_DBContractTaskAssignment_DBContract">
+            <End Role="DBContract" EntitySet="DBContract" />
+            <End Role="DBContractTaskAssignment" EntitySet="DBContractTaskAssignment" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
@@ -8571,22 +8570,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="DBContractTaskAssignment">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="DBContractID" />
-          <Property Type="Int32" Name="YearOfTask" />
-          <Property Type="Int32" Name="MonthOfTask" />
-          <Property Type="Int32" Name="Quantity" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContractTaskAssignment_DBContract" FromRole="DBContractTaskAssignment" ToRole="DBContract" />
-        </EntityType>
         <EntityType Name="DepartmentProductRecord">
           <Key>
             <PropertyRef Name="ID" />
@@ -11513,9 +11496,9 @@
           <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_DBContract_ProductSpecification" FromRole="DBContract" ToRole="ProductSpecification" />
           <NavigationProperty Name="Users" Relationship="DbModel.FK_DBContract_Users" FromRole="DBContract" ToRole="Users" />
           <NavigationProperty Name="DBContractHospital" Relationship="DbModel.FK_DBContractHospital_DBContract" FromRole="DBContract" ToRole="DBContractHospital" />
-          <NavigationProperty Name="DBContractTaskAssignment" Relationship="DbModel.FK_DBContractTaskAssignment_DBContract" FromRole="DBContract" ToRole="DBContractTaskAssignment" />
           <NavigationProperty Name="DCFlowDataDetail" Relationship="DbModel.FK_DCFlowDataDetail_DBContract" FromRole="DBContract" ToRole="DCFlowDataDetail" />
           <NavigationProperty Name="ClientUser" Relationship="DbModel.FK_DBContract_ClientUser" FromRole="DBContract" ToRole="ClientUser" />
+          <NavigationProperty Name="DBContractTaskAssignment" Relationship="DbModel.FK_DBContractTaskAssignment_DBContract" FromRole="DBContract" ToRole="DBContractTaskAssignment" />
         </EntityType>
         <Association Name="FK_DBClientBonus_DBContract">
           <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="1" />
@@ -11645,18 +11628,6 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="DBContractHospital">
-              <PropertyRef Name="DBContractID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DBContractTaskAssignment_DBContract">
-          <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="0..1" />
-          <End Type="DbModel.DBContractTaskAssignment" Role="DBContractTaskAssignment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DBContract">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="DBContractTaskAssignment">
               <PropertyRef Name="DBContractID" />
             </Dependent>
           </ReferentialConstraint>
@@ -13139,6 +13110,33 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="DBContractTaskAssignment">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DBContractID" />
+          <Property Type="Int32" Name="MonthOfTask" />
+          <Property Type="Int32" Name="Quantity" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContractTaskAssignment_DBContract" FromRole="DBContractTaskAssignment" ToRole="DBContract" />
+        </EntityType>
+        <Association Name="FK_DBContractTaskAssignment_DBContract">
+          <End Type="DbModel.DBContract" Role="DBContract" Multiplicity="0..1" />
+          <End Type="DbModel.DBContractTaskAssignment" Role="DBContractTaskAssignment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DBContract">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DBContractTaskAssignment">
+              <PropertyRef Name="DBContractID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -13667,22 +13665,6 @@
               <MappingFragment StoreEntitySet="DeptMarket">
                 <ScalarProperty Name="MarketName" ColumnName="MarketName" />
                 <ScalarProperty Name="DeptDistrictID" ColumnName="DeptDistrictID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="DBContractTaskAssignment">
-            <EntityTypeMapping TypeName="DbModel.DBContractTaskAssignment">
-              <MappingFragment StoreEntitySet="DBContractTaskAssignment">
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="MonthOfTask" ColumnName="MonthOfTask" />
-                <ScalarProperty Name="YearOfTask" ColumnName="YearOfTask" />
-                <ScalarProperty Name="DBContractID" ColumnName="DBContractID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -15199,6 +15181,21 @@
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ImportFileLogID" ColumnName="ImportFileLogID" />
                 <ScalarProperty Name="DistributionCompanyID" ColumnName="DistributionCompanyID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DBContractTaskAssignment">
+            <EntityTypeMapping TypeName="DbModel.DBContractTaskAssignment">
+              <MappingFragment StoreEntitySet="DBContractTaskAssignment">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="MonthOfTask" ColumnName="MonthOfTask" />
+                <ScalarProperty Name="DBContractID" ColumnName="DBContractID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

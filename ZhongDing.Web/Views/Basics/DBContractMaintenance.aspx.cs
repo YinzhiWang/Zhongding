@@ -284,7 +284,7 @@ namespace ZhongDing.Web.Views.Basics
 
                     int currentYear = DateTime.Now.Year;
 
-                    var taskAssignments = currentEntity.DBContractTaskAssignment.Where(x => x.IsDeleted == false && x.YearOfTask == currentYear).ToList();
+                    var taskAssignments = currentEntity.DBContractTaskAssignment.Where(x => x.IsDeleted == false).ToList();
 
                     var taskAssignmentMonth1 = taskAssignments.FirstOrDefault(x => x.MonthOfTask == (int)EMonthOfYear.January);
                     if (taskAssignmentMonth1 != null)
@@ -653,17 +653,9 @@ namespace ZhongDing.Web.Views.Basics
 
             #region 任务量配置
 
-            int currentYear = DateTime.Now.Year;
-
-            //删除其他年份的配置
-            foreach (var taskAssignment in currentEntity.DBContractTaskAssignment
-                .Where(x => x.IsDeleted == false && x.YearOfTask != currentYear))
-            {
-                taskAssignment.IsDeleted = true;
-            }
 
             var taskAssignments = currentEntity.DBContractTaskAssignment
-                .Where(x => x.IsDeleted == false && x.YearOfTask == currentYear).ToList();
+                .Where(x => x.IsDeleted == false).ToList();
 
             #region 一月配置
 
@@ -673,7 +665,6 @@ namespace ZhongDing.Web.Views.Basics
             {
                 taskAssignmentMonth1 = new DBContractTaskAssignment()
                 {
-                    YearOfTask = currentYear,
                     MonthOfTask = (int)EMonthOfYear.January
                 };
 
@@ -692,7 +683,6 @@ namespace ZhongDing.Web.Views.Basics
             {
                 taskAssignmentMonth2 = new DBContractTaskAssignment()
                 {
-                    YearOfTask = currentYear,
                     MonthOfTask = (int)EMonthOfYear.February
                 };
 
@@ -711,7 +701,6 @@ namespace ZhongDing.Web.Views.Basics
             {
                 taskAssignmentMonth3 = new DBContractTaskAssignment()
                 {
-                    YearOfTask = currentYear,
                     MonthOfTask = (int)EMonthOfYear.March
                 };
 
@@ -730,7 +719,6 @@ namespace ZhongDing.Web.Views.Basics
             {
                 taskAssignmentMonth4 = new DBContractTaskAssignment()
                 {
-                    YearOfTask = currentYear,
                     MonthOfTask = (int)EMonthOfYear.April
                 };
 
@@ -749,7 +737,6 @@ namespace ZhongDing.Web.Views.Basics
             {
                 taskAssignmentMonth5 = new DBContractTaskAssignment()
                 {
-                    YearOfTask = currentYear,
                     MonthOfTask = (int)EMonthOfYear.May
                 };
 
@@ -768,7 +755,6 @@ namespace ZhongDing.Web.Views.Basics
             {
                 taskAssignmentMonth6 = new DBContractTaskAssignment()
                 {
-                    YearOfTask = currentYear,
                     MonthOfTask = (int)EMonthOfYear.June
                 };
 
@@ -787,7 +773,6 @@ namespace ZhongDing.Web.Views.Basics
             {
                 taskAssignmentMonth7 = new DBContractTaskAssignment()
                 {
-                    YearOfTask = currentYear,
                     MonthOfTask = (int)EMonthOfYear.July
                 };
 
@@ -806,7 +791,6 @@ namespace ZhongDing.Web.Views.Basics
             {
                 taskAssignmentMonth8 = new DBContractTaskAssignment()
                 {
-                    YearOfTask = currentYear,
                     MonthOfTask = (int)EMonthOfYear.August
                 };
 
@@ -825,7 +809,6 @@ namespace ZhongDing.Web.Views.Basics
             {
                 taskAssignmentMonth9 = new DBContractTaskAssignment()
                 {
-                    YearOfTask = currentYear,
                     MonthOfTask = (int)EMonthOfYear.September
                 };
 
@@ -844,7 +827,6 @@ namespace ZhongDing.Web.Views.Basics
             {
                 taskAssignmentMonth10 = new DBContractTaskAssignment()
                 {
-                    YearOfTask = currentYear,
                     MonthOfTask = (int)EMonthOfYear.October
                 };
 
@@ -863,7 +845,6 @@ namespace ZhongDing.Web.Views.Basics
             {
                 taskAssignmentMonth11 = new DBContractTaskAssignment()
                 {
-                    YearOfTask = currentYear,
                     MonthOfTask = (int)EMonthOfYear.November
                 };
 
@@ -882,7 +863,6 @@ namespace ZhongDing.Web.Views.Basics
             {
                 taskAssignmentMonth12 = new DBContractTaskAssignment()
                 {
-                    YearOfTask = currentYear,
                     MonthOfTask = (int)EMonthOfYear.December
                 };
 

@@ -59,7 +59,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<DeptMarketDivision> DeptMarketDivision { get; set; }
         public DbSet<DeptMarketProduct> DeptMarketProduct { get; set; }
         public DbSet<DeptMarket> DeptMarket { get; set; }
-        public DbSet<DBContractTaskAssignment> DBContractTaskAssignment { get; set; }
         public DbSet<DepartmentProductRecord> DepartmentProductRecord { get; set; }
         public DbSet<DepartmentProductSalesBonus> DepartmentProductSalesBonus { get; set; }
         public DbSet<DepartmentProductSalesPlan> DepartmentProductSalesPlan { get; set; }
@@ -145,5 +144,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<ClientAttachedInvoiceSettlement> ClientAttachedInvoiceSettlement { get; set; }
         public DbSet<SupplierCautionMoneyDeduction> SupplierCautionMoneyDeduction { get; set; }
         public DbSet<DCInventoryData> DCInventoryData { get; set; }
+        public DbSet<DBContractTaskAssignment> DBContractTaskAssignment { get; set; }
     }
 }

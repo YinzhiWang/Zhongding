@@ -17,7 +17,6 @@ namespace ZhongDing.Domain.Models
     {
         public int ID { get; set; }
         public Nullable<int> DBContractID { get; set; }
-        public Nullable<int> YearOfTask { get; set; }
         public Nullable<int> MonthOfTask { get; set; }
         public Nullable<int> Quantity { get; set; }
         public bool IsDeleted { get; set; }
