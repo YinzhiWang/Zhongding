@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ClientInfoInvoiceMaintenance.aspx.cs" Inherits="ZhongDing.Web.Views.Invoices.ClientInfoInvoiceMaintenance" %>
+﻿<%@ Page Title="客户发票维护" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ClientInfoInvoiceMaintenance.aspx.cs" Inherits="ZhongDing.Web.Views.Invoices.ClientInfoInvoiceMaintenance" %>
 
 
 <%@ MasterType VirtualPath="~/Site.Master" %>

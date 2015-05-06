@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SupplierCautionMoneyApplyManagement.aspx.cs" Inherits="ZhongDing.Web.Views.CautionMoneys.SupplierCautionMoneyApplyManagement" %>
+﻿<%@ Page Title="供应商保证金管理" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SupplierCautionMoneyApplyManagement.aspx.cs" Inherits="ZhongDing.Web.Views.CautionMoneys.SupplierCautionMoneyApplyManagement" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 

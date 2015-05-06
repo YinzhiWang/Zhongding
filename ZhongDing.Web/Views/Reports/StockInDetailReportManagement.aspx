@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="StockInDetailReportManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Reports.StockInDetailReportManagement" %>
+﻿<%@ Page Title="入库明细报表" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="StockInDetailReportManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Reports.StockInDetailReportManagement" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ProcurePlanReportManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Reports.ProcurePlanReportManagement" %>
+﻿<%@ Page Title="采购计划报表" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ProcurePlanReportManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Reports.ProcurePlanReportManagement" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 
@@ -64,7 +64,7 @@
                     </tr>
                 </table>
                 <telerik:RadGrid ID="rgProcureOrderReports" runat="server" PageSize="10"
-                    Height="500"
+                   
                     AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
                     MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
                     ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
