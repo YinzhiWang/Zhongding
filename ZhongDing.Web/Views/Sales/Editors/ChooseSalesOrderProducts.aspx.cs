@@ -390,12 +390,12 @@ namespace ZhongDing.Web.Views.Sales.Editors
 
                                         if (tempTaxQty > 0)
                                         {
-                                            tempTaxQty -= canOutStockInDetail.BalanceQty;
-
                                             if ((tempTaxQty - canOutStockInDetail.BalanceQty) > 0)
                                                 curTaxQty = canOutStockInDetail.BalanceQty;
                                             else if ((tempTaxQty - canOutStockInDetail.BalanceQty) == 0)
                                                 curTaxQty = tempTaxQty;
+
+                                            tempTaxQty -= canOutStockInDetail.BalanceQty;
                                         }
                                     }
 
