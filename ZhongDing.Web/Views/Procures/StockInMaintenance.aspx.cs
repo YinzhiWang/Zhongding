@@ -180,58 +180,47 @@ namespace ZhongDing.Web.Views.Procures
 
                 switch (workfolwStatus)
                 {
+                    case EWorkflowStatus.TemporarySave:
+                        #region 暂存（订单创建者或有修改权限的用户才能修改）
+                        if (CurrentUser.UserID == this.CurrentEntity.CreatedBy
+                            || this.CanEditUserIDs.Contains(CurrentUser.UserID))
+                            ShowSaveButtons(true);
+                        else
+                            DisabledBasicInfoControls();
+
+                        ShowEntryStockControls(false);
+
+                        #endregion
+
+                        break;
                     case EWorkflowStatus.ToBeInWarehouse:
-                    case EWorkflowStatus.InWarehouse:
+                        #region 已提交，待入库
+
+                        if (!this.CanEditUserIDs.Contains(CurrentUser.UserID))
+                            DisabledBasicInfoControls();
+
+                        if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
+                            ShowEntryStockControls(true);
+                        else
+                            ShowEntryStockControls(false);
+
                         btnPrint.Visible = true;
+
+                        #endregion
+
+                        break;
+                    case EWorkflowStatus.InWarehouse:
+                        #region 已入库
+                        if (!this.CanEditUserIDs.Contains(CurrentUser.UserID))
+                            DisabledBasicInfoControls();
+
+                        ShowEntryStockControls(false);
+
+                        btnPrint.Visible = true;
+
+                        #endregion
                         break;
                 }
-
-                //if (CanEditUserIDs.Contains(CurrentUser.UserID))
-                //{
-                //    btnSave.Visible = true;
-                //    btnSubmit.Visible = false;
-                //    ShowEntryStockControls(false);
-                //}
-                //else
-                //{
-                    switch (workfolwStatus)
-                    {
-                        case EWorkflowStatus.TemporarySave:
-                            #region 暂存（订单创建者或有修改权限的用户才能修改）
-                            if (CurrentUser.UserID == this.CurrentEntity.CreatedBy
-                                || this.CanEditUserIDs.Contains(CurrentUser.UserID))
-                                ShowSaveButtons(true);
-                            else
-                                DisabledBasicInfoControls();
-
-                            ShowEntryStockControls(false);
-
-                            #endregion
-
-                            break;
-                        case EWorkflowStatus.ToBeInWarehouse:
-                            #region 已提交，待入库
-
-                            DisabledBasicInfoControls();
-
-                            if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
-                                ShowEntryStockControls(true);
-                            else
-                                ShowEntryStockControls(false);
-
-                            #endregion
-
-                            break;
-                        case EWorkflowStatus.InWarehouse:
-                            #region 已入库,不能修改
-
-                            DisabledBasicInfoControls();
-                            ShowEntryStockControls(false);
-
-                            #endregion
-                            break;
-                    }
-                //}
 
                 var uiSearchStockInDetailObj = new UISearchStockInDetail()
                 {
@@ -750,6 +739,7 @@ namespace ZhongDing.Web.Views.Procures
 
                     IStockInRepository stockInRepository = new StockInRepository();
                     IProcureOrderApplicationRepository procureOrderAppRepository = new ProcureOrderApplicationRepository();
+                    IApplicationNoteRepository appNoteAppRepository = new ApplicationNoteRepository();
 
                     procureOrderAppRepository.SetDbModel(db);
                     stockInRepository.SetDbModel(db);
@@ -758,6 +748,24 @@ namespace ZhongDing.Web.Views.Procures
 
                     if (currentEntity != null)
                     {
+                        if (this.CanEditUserIDs.Contains(CurrentUser.UserID))
+                        {
+                            currentEntity.EntryDate = rdpEntryDate.SelectedDate;
+                            currentEntity.SupplierID = Convert.ToInt32(rcbxSupplier.SelectedValue);
+
+                            if (!string.IsNullOrEmpty(txtComment.Text.Trim()))
+                            {
+                                var appNote = new ApplicationNote();
+                                appNote.WorkflowID = (int)EWorkflow.StockIn;
+                                appNote.WorkflowStepID = (int)EWorkflowStep.NewStockIn;
+                                appNote.NoteTypeID = (int)EAppNoteType.Comment;
+                                appNote.ApplicationID = currentEntity.ID;
+                                appNote.Note = txtComment.Text.Trim();
+
+                                appNoteAppRepository.Add(appNote);
+                            }
+                        }
+
                         var procureOrderAppIDs = currentEntity.StockInDetail.Where(x => x.IsDeleted == false)
                             .Select(x => x.ProcureOrderAppID).Distinct();
 

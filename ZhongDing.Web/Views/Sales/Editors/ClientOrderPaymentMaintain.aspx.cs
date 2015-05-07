@@ -178,6 +178,9 @@ namespace ZhongDing.Web.Views.Sales.Editors
                         .Select(x => x.BankAccountID.HasValue ? x.BankAccountID.Value : GlobalConst.INVALID_INT)
                         .ToList();
 
+                    if (bankAccountIDs.Count == 0)
+                        bankAccountIDs.Add(GlobalConst.INVALID_INT);
+
                     var uiSearchObj = new UISearchDropdownItem
                     {
                         IncludeItemValues = bankAccountIDs

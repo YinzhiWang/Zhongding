@@ -303,6 +303,7 @@ namespace ZhongDing.Web.Views.Procures
                         switch (workflowStatus)
                         {
                             case EWorkflowStatus.TemporarySave:
+                            case EWorkflowStatus.ToBeInWarehouse:
                                 isShowDeleteLink = true;
                                 break;
                         }

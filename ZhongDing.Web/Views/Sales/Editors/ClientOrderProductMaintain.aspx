@@ -150,7 +150,7 @@
                             <div class="mws-form-item small">
                                 <telerik:RadNumericTextBox runat="server" ID="txtGiftCount" CssClass="mws-textinput" Type="Number" ShowSpinButtons="true"
                                     NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator="" MinValue="0" MaxValue="999999999"
-                                    MaxLength="10">
+                                    MaxLength="10" ClientEvents-OnValueChanged="onGiftCountValueChanged">
                                 </telerik:RadNumericTextBox>
                             </div>
                         </div>
@@ -262,10 +262,14 @@
                         if (extensionObj.NumberInLargePackage > 0) {
 
                             var countValue = $find("<%= txtCount.ClientID %>").get_value();
+                            var giftCountValue = $find("<%= txtGiftCount.ClientID %>").get_value();
 
                             if (!isNaN(countValue)) {
 
-                                var packagesCount = countValue / extensionObj.NumberInLargePackage;
+                                if (!isNaN(giftCountValue))
+                                    countValue += giftCountValue;
+
+                                var packagesCount = parseFloat(countValue / extensionObj.NumberInLargePackage).toFixed(2);
 
                                 $("#<%= lblNumberOfPackages.ClientID %>").text(packagesCount);
                             }
@@ -281,6 +285,11 @@
 
         function onCountValueChanged(sender, eventArgs) {
             calTotalAmount();
+
+            setPackagesAndUnit();
+        }
+
+        function onGiftCountValueChanged(sender, eventArgs) {
 
             setPackagesAndUnit();
         }

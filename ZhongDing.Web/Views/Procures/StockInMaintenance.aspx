@@ -156,7 +156,7 @@
                                             AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false"
                                             MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" Height="480" ShowHeader="true" ShowFooter="true"
                                             ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                                            OnNeedDataSource="rgStockInDetails_NeedDataSource" 
+                                            OnNeedDataSource="rgStockInDetails_NeedDataSource"
                                             OnItemCreated="rgStockInDetails_ItemCreated" OnColumnCreated="rgStockInDetails_ColumnCreated"
                                             OnBatchEditCommand="rgStockInDetails_BatchEditCommand">
                                             <MasterTableView Width="100%" DataKeyNames="ID,ProcureOrderAppID,ProcureOrderAppDetailID,ProductID,ProductSpecificationID,WarehouseID" CommandItemDisplay="Top" EditMode="Batch"
@@ -298,7 +298,7 @@
 
                         <div class="mws-button-row">
                             <asp:Button ID="btnSave" runat="server" Text="保存" CssClass="mws-button green" CausesValidation="true" ValidationGroup="vgMaintenance" OnClientClick="return checkGridCellValueChanged();" OnClick="btnSave_Click" />
-                            <asp:Button ID="btnSubmit" runat="server" Text="提交" CssClass="mws-button green" CausesValidation="true" OnClientClick="return checkGridCellValueChanged();" OnClick="btnSubmit_Click" />
+                            <asp:Button ID="btnSubmit" runat="server" Text="提交" CssClass="mws-button green" CausesValidation="true" OnClientClick="return checkGridCellValueChanged();" OnClick="btnSubmit_Click" Visible="false" />
                             <asp:Button ID="btnEntryStock" runat="server" Text="确认入库" CssClass="mws-button green" CausesValidation="true" OnClick="btnEntryStock_Click" />
                             <asp:Button ID="btnPrint" runat="server" Text="打印" CssClass="mws-button green" CausesValidation="true" OnClientClick="openPrintPage();return false;" Visible="false" />
                             <asp:Button ID="btnCancel" runat="server" Text="取消" UseSubmitBehavior="false" CssClass="mws-button green" OnClientClick="redirectToPage('Views/Procures/StockInManagement.aspx');return false;" />
