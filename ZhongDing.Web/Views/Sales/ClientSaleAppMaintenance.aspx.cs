@@ -1209,7 +1209,9 @@ namespace ZhongDing.Web.Views.Sales
                         }
                         else
                         {
-                            totalPayAmount += appPayments.Sum(x => ((x.Amount.HasValue ? x.Amount.Value : 0) + (x.Fee.HasValue ? x.Fee.Value : 0)));
+                            totalPayAmount += appPayments.Count() > 0
+                                ? appPayments.Sum(x => ((x.Amount.HasValue ? x.Amount.Value : 0) + (x.Fee.HasValue ? x.Fee.Value : 0)))
+                                : 0;
 
                             //还需要加上抵扣的总金额
                             //totalPayAmount += 
