@@ -186,14 +186,14 @@ namespace ZhongDing.Web.Views.Procures
                         break;
                 }
 
-                if (CanEditUserIDs.Contains(CurrentUser.UserID))
-                {
-                    btnSave.Visible = true;
-                    btnSubmit.Visible = false;
-                    ShowEntryStockControls(false);
-                }
-                else
-                {
+                //if (CanEditUserIDs.Contains(CurrentUser.UserID))
+                //{
+                //    btnSave.Visible = true;
+                //    btnSubmit.Visible = false;
+                //    ShowEntryStockControls(false);
+                //}
+                //else
+                //{
                     switch (workfolwStatus)
                     {
                         case EWorkflowStatus.TemporarySave:
@@ -231,7 +231,7 @@ namespace ZhongDing.Web.Views.Procures
                             #endregion
                             break;
                     }
-                }
+                //}
 
                 var uiSearchStockInDetailObj = new UISearchStockInDetail()
                 {
@@ -381,22 +381,6 @@ namespace ZhongDing.Web.Views.Procures
             rgStockInDetails.DataSource = stockInDetailData.Where(x => x.IsDeleted == false);
         }
 
-        protected void rgStockInDetails_DeleteCommand(object sender, GridCommandEventArgs e)
-        {
-            GridEditableItem editableItem = e.Item as GridEditableItem;
-
-            String sid = editableItem.GetDataKeyValue("ID").ToString();
-
-            int id = 0;
-            if (int.TryParse(sid, out id))
-            {
-                PageStockInDetailRepository.DeleteByID(id);
-                PageStockInDetailRepository.Save();
-            }
-
-            rgStockInDetails.Rebind();
-        }
-
         protected void rgStockInDetails_ItemCreated(object sender, GridItemEventArgs e)
         {
             if (e.Item is GridCommandItem)
@@ -445,7 +429,8 @@ namespace ZhongDing.Web.Views.Procures
         {
             if (rgStockInDetails.Items.Count > 0)
             {
-                Page.Validate("BatchEditingValidationGroup");
+                bool isNeedValidate = false;
+                bool isNeedSave = false;
 
                 var stockInDetailData = (List<UIStockInDetail>)Session[WebUtility.WebSessionNames.StockInDetailData];
 
@@ -473,6 +458,8 @@ namespace ZhongDing.Web.Views.Procures
 
                     if (curEntity != null)
                     {
+                        isNeedSave = true;
+
                         #region 处理当前实体
 
                         var curWarehouse = warehouses.FirstOrDefault(x => x.ItemValue == warehouseID);
@@ -489,6 +476,8 @@ namespace ZhongDing.Web.Views.Procures
                             case GridBatchEditingCommandType.Insert:
                                 break;
                             case GridBatchEditingCommandType.Update:
+
+                                isNeedValidate = true;
 
                                 curEntity.WarehouseID = warehouseID;
 
@@ -542,7 +531,7 @@ namespace ZhongDing.Web.Views.Procures
 
                 #endregion
 
-                if (IsValid)
+                if (isNeedValidate)
                 {
                     int inValidCount = 0;
 
@@ -564,65 +553,60 @@ namespace ZhongDing.Web.Views.Procures
 
                         return;
                     }
-                    else
+                }
+
+                if (isNeedSave)
+                {
+                    foreach (var item in stockInDetailData)
                     {
+                        StockInDetail stockInDetail = null;
 
-                        foreach (var item in stockInDetailData)
+                        if (item.ID > 0)
                         {
-                            StockInDetail stockInDetail = null;
+                            stockInDetail = PageStockInDetailRepository.GetByID(item.ID);
 
-                            if (item.ID > 0)
+                            if (item.IsDeleted)
+                                stockInDetail.IsDeleted = item.IsDeleted;
+                        }
+                        else
+                        {
+                            if (!item.IsDeleted)
                             {
-                                stockInDetail = PageStockInDetailRepository.GetByID(item.ID);
-
-                                if (item.IsDeleted)
-                                    stockInDetail.IsDeleted = item.IsDeleted;
-                            }
-                            else
-                            {
-                                if (!item.IsDeleted)
+                                stockInDetail = new StockInDetail
                                 {
-                                    stockInDetail = new StockInDetail
-                                    {
-                                        StockInID = item.StockInID,
-                                        ProcureOrderAppID = item.ProcureOrderAppID,
-                                        ProcureOrderAppDetailID = item.ProcureOrderAppDetailID,
-                                        ProductID = item.ProductID,
-                                        ProductSpecificationID = item.ProductSpecificationID
-                                    };
+                                    StockInID = item.StockInID,
+                                    ProcureOrderAppID = item.ProcureOrderAppID,
+                                    ProcureOrderAppDetailID = item.ProcureOrderAppDetailID,
+                                    ProductID = item.ProductID,
+                                    ProductSpecificationID = item.ProductSpecificationID
+                                };
 
-                                    PageStockInDetailRepository.Add(stockInDetail);
-                                }
-                            }
-
-                            if (stockInDetail != null && !item.IsDeleted)
-                            {
-                                stockInDetail.WarehouseID = item.WarehouseID;
-                                stockInDetail.InQty = item.InQty;
-                                stockInDetail.BatchNumber = item.BatchNumber;
-                                stockInDetail.ExpirationDate = item.ExpirationDate;
-                                stockInDetail.LicenseNumber = item.LicenseNumber;
-                                stockInDetail.IsMortgagedProduct = item.IsMortgagedProduct;
-                                stockInDetail.ProcurePrice = item.ProcurePrice;
+                                PageStockInDetailRepository.Add(stockInDetail);
                             }
                         }
 
-                        PageStockInDetailRepository.Save();
-
-                        Session[WebUtility.WebSessionNames.StockInDetailData] = PageStockInDetailRepository.GetUIList(new UISearchStockInDetail
+                        if (stockInDetail != null && !item.IsDeleted)
                         {
-                            StockInID = this.CurrentEntity.ID
-                        });
-
-                        hdnGridCellValueChangedCount.Value = "0";
-
-                        rgStockInDetails.Rebind();
+                            stockInDetail.WarehouseID = item.WarehouseID;
+                            stockInDetail.InQty = item.InQty;
+                            stockInDetail.BatchNumber = item.BatchNumber;
+                            stockInDetail.ExpirationDate = item.ExpirationDate;
+                            stockInDetail.LicenseNumber = item.LicenseNumber;
+                            stockInDetail.IsMortgagedProduct = item.IsMortgagedProduct;
+                            stockInDetail.ProcurePrice = item.ProcurePrice;
+                        }
                     }
-                }
-                else
-                {
-                    cvStockInDetails.IsValid = false;
-                    cvStockInDetails.ErrorMessage = "请更正以下错误:<br />基本数量、货品批号、过期日期、批准文号均为必填项";
+
+                    PageStockInDetailRepository.Save();
+
+                    Session[WebUtility.WebSessionNames.StockInDetailData] = PageStockInDetailRepository.GetUIList(new UISearchStockInDetail
+                    {
+                        StockInID = this.CurrentEntity.ID
+                    });
+
+                    hdnGridCellValueChangedCount.Value = "0";
+
+                    rgStockInDetails.Rebind();
                 }
             }
         }

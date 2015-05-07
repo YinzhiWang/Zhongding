@@ -188,6 +188,7 @@ namespace ZhongDing.Business.Repositories
                                   FactoryName = s.FactoryName,
                                   ProcureCount = q.ProcureCount,
                                   ProcurePrice = q.ProcurePrice,
+                                  NumberInLargePackage = ps.NumberInLargePackage,
                                   NumberOfPackages = (decimal)q.ProcureCount / (decimal)(ps.NumberInLargePackage.HasValue ? ps.NumberInLargePackage.Value : 1),
                                   InQty = DB.StockInDetail.Any(x => x.IsDeleted == false && x.ProcureOrderAppDetailID == q.ID)
                                   ? DB.StockInDetail.Where(x => x.IsDeleted == false && x.ProcureOrderAppDetailID == q.ID).Sum(x => x.InQty) : 0,
@@ -265,7 +266,8 @@ namespace ZhongDing.Business.Repositories
                                      FactoryName = s.FactoryName,
                                      ProcureCount = q.ProcureCount,
                                      ProcurePrice = q.ProcurePrice,
-                                     NumberOfPackages = (decimal)q.ProcureCount / (decimal)(ps.NumberInLargePackage.HasValue ? ps.NumberInLargePackage.Value : 1),
+                                     NumberInLargePackage = ps.NumberInLargePackage.HasValue ? ps.NumberInLargePackage.Value : 1,
+                                     //NumberOfPackages = (decimal)q.ProcureCount / (decimal)(ps.NumberInLargePackage.HasValue ? ps.NumberInLargePackage.Value : 1),
                                      InQty = DB.StockInDetail.Any(x => x.IsDeleted == false && x.ProcureOrderAppDetailID == q.ID)
                                      ? DB.StockInDetail.Where(x => x.IsDeleted == false && x.ProcureOrderAppDetailID == q.ID).Sum(x => x.InQty) : 0,
                                      ToBeInQty = q.ProcureCount - (DB.StockInDetail.Any(x => x.IsDeleted == false && x.ProcureOrderAppDetailID == q.ID)
@@ -283,6 +285,11 @@ namespace ZhongDing.Business.Repositories
                     uiEntities = tempQuery.OrderByDescending(x => x.CreatedOn)
                         .Skip(pageIndex * pageSize)
                         .Take(pageSize).ToList();
+
+                    foreach (var item in uiEntities)
+                    {
+                        item.NumberOfPackages = (decimal)item.ToBeInQty / (decimal)item.NumberInLargePackage;
+                    }
                 }
             }
 

@@ -149,6 +149,8 @@ namespace ZhongDing.Web.Views.Procures.Editors
                 int productID = Convert.ToInt32(editableItem.GetDataKeyValue("ProductID").ToString());
                 int productSpecificationID = Convert.ToInt32(editableItem.GetDataKeyValue("ProductSpecificationID").ToString());
                 int warehouseID = Convert.ToInt32(editableItem.GetDataKeyValue("WarehouseID").ToString());
+                int? numberInLargePackage = Convert.ToInt32(editableItem.GetDataKeyValue("NumberInLargePackage") != null
+                    ? editableItem.GetDataKeyValue("NumberInLargePackage").ToString() : "1");
 
                 Hashtable newValues = new Hashtable();
                 editableItem.ExtractValues(newValues);
@@ -185,6 +187,7 @@ namespace ZhongDing.Web.Views.Procures.Editors
                         ProcureCount = procureCount,
                         ProcurePrice = procurePrice,
                         LicenseNumber = licenseNumber,
+                        NumberInLargePackage = numberInLargePackage,
                         NumberOfPackages = numberOfPackages,
                         InQty = toBeInQty,
                         ToBeInQty = toBeInQty,

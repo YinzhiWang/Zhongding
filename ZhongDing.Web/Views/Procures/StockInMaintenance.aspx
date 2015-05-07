@@ -156,11 +156,11 @@
                                             AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false"
                                             MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" Height="480" ShowHeader="true" ShowFooter="true"
                                             ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                                            OnNeedDataSource="rgStockInDetails_NeedDataSource" OnDeleteCommand="rgStockInDetails_DeleteCommand"
+                                            OnNeedDataSource="rgStockInDetails_NeedDataSource" 
                                             OnItemCreated="rgStockInDetails_ItemCreated" OnColumnCreated="rgStockInDetails_ColumnCreated"
                                             OnBatchEditCommand="rgStockInDetails_BatchEditCommand">
                                             <MasterTableView Width="100%" DataKeyNames="ID,ProcureOrderAppID,ProcureOrderAppDetailID,ProductID,ProductSpecificationID,WarehouseID" CommandItemDisplay="Top" EditMode="Batch"
-                                                ShowHeadersWhenNoRecords="true" BackColor="#fafafa" ClientDataKeyNames="ID,ProcureCount,ToBeInQty">
+                                                ShowHeadersWhenNoRecords="true" BackColor="#fafafa" ClientDataKeyNames="ID,ProcureCount,ToBeInQty,NumberInLargePackage">
                                                 <CommandItemSettings ShowAddNewRecordButton="true" AddNewRecordText="添加" ShowSaveChangesButton="true" ShowCancelChangesButton="false"
                                                     SaveChangesText="保存" CancelChangesText="取消" RefreshText="刷新" />
                                                 <BatchEditingSettings EditType="Cell" />
@@ -213,10 +213,13 @@
                                                             </span>
                                                         </EditItemTemplate>
                                                     </telerik:GridTemplateColumn>
-                                                    <telerik:GridBoundColumn UniqueName="NumberOfPackages" HeaderText="件数" DataField="NumberOfPackages" DataFormatString="{0:N2}" ReadOnly="true">
+                                                    <telerik:GridTemplateColumn UniqueName="NumberOfPackages" HeaderText="件数" DataField="NumberOfPackages" SortExpression="NumberOfPackages" ReadOnly="true">
                                                         <HeaderStyle Width="80" />
                                                         <ItemStyle HorizontalAlign="Left" Width="80" />
-                                                    </telerik:GridBoundColumn>
+                                                        <ItemTemplate>
+                                                            <asp:Label ID="lblNumberOfPackages" runat="server" Text='<%# Eval("NumberOfPackages","{0:N2}") %>'></asp:Label>
+                                                        </ItemTemplate>
+                                                    </telerik:GridTemplateColumn>
                                                     <telerik:GridTemplateColumn UniqueName="BatchNumber" HeaderText="货品批号" DataField="BatchNumber" SortExpression="BatchNumber">
                                                         <HeaderStyle Width="160" />
                                                         <ItemStyle HorizontalAlign="Left" Width="160" />
@@ -370,7 +373,7 @@
         }
 
         function onCellValueChanged(sender, args) {
-            //debugger;
+            debugger;
 
             var tableView = args.get_tableView();
 
@@ -384,6 +387,32 @@
                 oChangedCount = oChangedCount - 1;
 
             hdnGridCellValueChangedCount.val(oChangedCount);
+
+            //NumberInLargePackage
+
+            var colUniqueName = args.get_columnUniqueName();
+
+            if (colUniqueName.toLowerCase() === "inqty") {
+
+                var curInQty = args.get_editorValue();
+
+                var tableView = args.get_tableView();
+
+                var curRow = args.get_row();
+
+                var dataItemIndex = curRow.rowIndex - 1;
+
+                var numberInLargePackage = parseInt(tableView.get_dataItems()[dataItemIndex].getDataKeyValue("NumberInLargePackage"));
+
+                if (numberInLargePackage == NaN)
+                    numberInLargePackage = 1;
+
+                var lblNumberOfPackages = $($telerik.findElement(curRow, "lblNumberOfPackages"));
+
+                if (lblNumberOfPackages) {
+                    lblNumberOfPackages.text(parseFloat(curInQty / numberInLargePackage).toFixed(2));
+                }
+            }
         }
 
         function onCellValueChanging(sender, args) {
@@ -558,8 +587,7 @@
             }
         }
 
-        function onRequestEnd(sender, args)
-        {
+        function onRequestEnd(sender, args) {
             rebuildAddNewCommands();
         }
 

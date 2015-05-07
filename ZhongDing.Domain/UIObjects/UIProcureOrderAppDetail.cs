@@ -40,6 +40,8 @@ namespace ZhongDing.Domain.UIObjects
         /// </summary>
         public int ToBeInQty { get; set; }
 
+        public int? NumberInLargePackage { get; set; }
+
         public decimal NumberOfPackages { get; set; }
 
         public decimal ProcurePrice { get; set; }

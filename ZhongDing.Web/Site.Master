@@ -396,21 +396,28 @@
                 }
 
                 function onRowMouseOver(sender, eventArgs) {
-                    eventArgs.get_gridDataItem().addCssClass("grid-over-row");
+                    var dataItem = eventArgs.get_gridDataItem();
+                    if (dataItem) {
+                        dataItem.addCssClass("grid-over-row");
+                        
+                        var curRow = $(dataItem.get_element());
 
-                    var curRow = $(eventArgs.get_gridDataItem().get_element());
-
-                    if (curRow.hasClass("rgAltRow"))
-                        curRow.css({ "background-color": "" });
+                        if (curRow.hasClass("rgAltRow"))
+                            curRow.css({ "background-color": "" });
+                    }
                 }
 
                 function onRowMouseOut(sender, eventArgs) {
-                    eventArgs.get_gridDataItem().removeCssClass("grid-over-row");
 
-                    var curRow = $(eventArgs.get_gridDataItem().get_element());
+                    var dataItem = eventArgs.get_gridDataItem();
+                    if (dataItem) {
+                        dataItem.removeCssClass("grid-over-row");
 
-                    if (curRow.hasClass("rgAltRow"))
-                        curRow.css({ "background-color": "#f2f2f2" });
+                        var curRow = $(dataItem.get_element());
+
+                        if (curRow.hasClass("rgAltRow"))
+                            curRow.css({ "background-color": "#f2f2f2" });
+                    }
                 }
 
             </script>

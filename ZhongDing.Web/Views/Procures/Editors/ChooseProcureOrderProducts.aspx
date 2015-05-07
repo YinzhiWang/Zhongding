@@ -35,7 +35,7 @@
                             MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" Height="460" ShowHeader="true" ShowFooter="true"
                             ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
                             OnNeedDataSource="rgSupplierProcureOrderDetails_NeedDataSource">
-                            <MasterTableView Width="100%" DataKeyNames="ID,ProcureOrderAppID,ProductID,ProductSpecificationID,WarehouseID" CommandItemDisplay="None"
+                            <MasterTableView Width="100%" DataKeyNames="ID,ProcureOrderAppID,ProductID,ProductSpecificationID,WarehouseID,NumberInLargePackage" CommandItemDisplay="None"
                                 ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                                 <Columns>
                                     <telerik:GridClientSelectColumn UniqueName="ClientSelectColumn" HeaderText="全选">
