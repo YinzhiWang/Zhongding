@@ -373,7 +373,6 @@
         }
 
         function onCellValueChanged(sender, args) {
-            debugger;
 
             var tableView = args.get_tableView();
 
@@ -387,8 +386,6 @@
                 oChangedCount = oChangedCount - 1;
 
             hdnGridCellValueChangedCount.val(oChangedCount);
-
-            //NumberInLargePackage
 
             var colUniqueName = args.get_columnUniqueName();
 
