@@ -75,7 +75,7 @@
                 </table>
                 <telerik:RadGrid ID="rgProcureOrderReports" runat="server" PageSize="10"
                                             AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false"
-                                            MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" Height="500" ShowHeader="true" ShowFooter="true"
+                                            MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" Height="520" ShowHeader="true" ShowFooter="true"
                     ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
                     OnNeedDataSource="rgProcureOrderReports_NeedDataSource" OnDeleteCommand="rgProcureOrderReports_DeleteCommand"
                     OnItemCreated="rgProcureOrderReports_ItemCreated" OnColumnCreated="rgProcureOrderReports_ColumnCreated" OnItemDataBound="rgProcureOrderReports_ItemDataBound">
@@ -84,7 +84,7 @@
                       <ColumnGroups>
                             <telerik:GridColumnGroup Name="AlreadyInQty" HeaderText="已执行数量" HeaderStyle-Font-Size="Small"
                                 HeaderStyle-HorizontalAlign="Center" />
-                            <telerik:GridColumnGroup Name="StopInQty" HeaderText="终止数量" HeaderStyle-Font-Size="Small"
+                            <telerik:GridColumnGroup Name="StopInQty" HeaderText="中止数量" HeaderStyle-Font-Size="Small"
                                 HeaderStyle-HorizontalAlign="Center" />
                             <telerik:GridColumnGroup Name="NotInQtyGroup" HeaderText="未执行数量" HeaderStyle-Font-Size="Small"
                                 HeaderStyle-HorizontalAlign="Center" />
@@ -230,7 +230,7 @@
                     <ClientSettings EnableRowHoverStyle="true">
                         <ClientEvents  />
                         <Selecting AllowRowSelect="True" />
-                        <Scrolling AllowScroll="true" FrozenColumnsCount="2" SaveScrollPosition="true" UseStaticHeaders="true" />
+                        <Scrolling AllowScroll="true" SaveScrollPosition="true" UseStaticHeaders="true" />
                     </ClientSettings>
                        <HeaderStyle Width="100%" />
                 </telerik:RadGrid>

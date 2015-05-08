@@ -35,5 +35,15 @@ namespace ZhongDing.Business.IRepositories
         /// <returns>System.Nullable{System.Int32}.</returns>
         int? GetStockOutQty(UISearchStockOut uiSearchObj);
 
+        /// <summary>
+        /// 获取UI List，分页 ForTransportFee
+        /// </summary>
+        /// <param name="uiSearchObj"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="totalRecords"></param>
+        /// <returns></returns>
+        IList<UIStockOut> GetUIListForTransportFee(UISearchStockOut uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
+
     }
 }

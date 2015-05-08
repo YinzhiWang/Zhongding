@@ -334,21 +334,21 @@ namespace ZhongDing.Web.Views.Reports
             fieldFuncs.Add(x => x.ProductName);
             fieldFuncs.Add(x => x.Specification);
             fieldFuncs.Add(x => x.UnitName);
-            fieldFuncs.Add(x => x.SalesPrice.ToString());
+            fieldFuncs.Add(x => x.SalesPrice.ToString("f2"));
             fieldFuncs.Add(x => x.Count.ToString());
-            fieldFuncs.Add(x => x.TotalSalesAmount.ToString());
+            fieldFuncs.Add(x => x.TotalSalesAmount.ToString("f2"));
 
             fieldFuncs.Add(x => x.AlreadyOutQty.ToString());
-            fieldFuncs.Add(x => x.AlreadyOutNumberOfPackages.ToString());
-            fieldFuncs.Add(x => x.AlreadyOutQtySalesPricePrice.ToString());
+            fieldFuncs.Add(x => x.AlreadyOutNumberOfPackages.ToString("f2"));
+            fieldFuncs.Add(x => x.AlreadyOutQtySalesPricePrice.ToString("f2"));
 
             fieldFuncs.Add(x => x.StopOutQty.ToString());
-            fieldFuncs.Add(x => x.StopOutNumberOfPackages.ToString());
-            fieldFuncs.Add(x => x.StopOutQtySalesPricePrice.ToString());
+            fieldFuncs.Add(x => x.StopOutNumberOfPackages.ToString("f2"));
+            fieldFuncs.Add(x => x.StopOutQtySalesPricePrice.ToString("f2"));
 
             fieldFuncs.Add(x => x.NotOutQty.ToString());
-            fieldFuncs.Add(x => x.NotOutNumberOfPackages.ToString());
-            fieldFuncs.Add(x => x.NotOutQtySalesPricePrice.ToString());
+            fieldFuncs.Add(x => x.NotOutNumberOfPackages.ToString("f2"));
+            fieldFuncs.Add(x => x.NotOutQtySalesPricePrice.ToString("f2"));
 
 
             nPOIHelper.ExportToExcel<UIClientSaleAppReport>(

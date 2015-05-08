@@ -73,7 +73,7 @@
         public MemoryStream Export(DataTable dtSource)
         {
             HSSFCellStyle style = (HSSFCellStyle)this.Workbook.CreateCellStyle();
-            this.cellStyle = this.SetContentFormat(600, 10);
+            this.cellStyle = this.SetContentFormat(100, 10);
             style.DataFormat = ((HSSFDataFormat)this.Workbook.CreateDataFormat()).GetFormat("yyyy-mm-dd");
             int[] numArray = new int[dtSource.Columns.Count];
             foreach (DataColumn column in dtSource.Columns)

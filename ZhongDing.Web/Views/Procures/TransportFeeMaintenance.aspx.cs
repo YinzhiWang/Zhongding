@@ -78,13 +78,13 @@ namespace ZhongDing.Web.Views.Procures
             {
                 this.Master.MenuItemID = (int)EMenuItem.TransportFeeManage_StockIn;
                 rbtnStockIn.Checked = true;
-              
+
             }
             else
             {
                 this.Master.MenuItemID = (int)EMenuItem.TransportFeeManage_StockOut;
                 rbtnStockOut.Checked = true;
-              
+
             }
 
 
@@ -143,6 +143,7 @@ namespace ZhongDing.Web.Views.Procures
             else
             {
                 btnDelete.Visible = false;
+                divOtherSections.Visible = false;
                 BindTransportCompanys();
             }
 
@@ -190,7 +191,9 @@ namespace ZhongDing.Web.Views.Procures
 
                 currentEntity.TransportCompanyID = rcbxTransportCompany.SelectedValue.ToInt();
                 currentEntity.TransportCompanyNumber = txtTransportCompanyNumber.Text;
-                currentEntity.TransportFeeType = rbtnStockIn.Checked ? ((int)ETransportFeeType.StockIn) : ((int)ETransportFeeType.StockOut);
+                currentEntity.TransportFeeType = rbtnStockIn.Visible ? 
+                    (rbtnStockIn.Checked ? ((int)ETransportFeeType.StockIn) : ((int)ETransportFeeType.StockOut)) 
+                    : ((int)ETransportFeeType.StockOut);
                 currentEntity.Driver = txtDriver.Text.Trim();
                 currentEntity.DriverTelephone = txtDriverTelephone.Text.Trim();
                 currentEntity.StartPlace = txtStartPlace.Text.Trim();
@@ -205,8 +208,19 @@ namespace ZhongDing.Web.Views.Procures
 
                 PageTransportFeeRepository.Save();
 
-                this.Master.BaseNotification.OnClientHidden = "onClientHidden";
-                this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SAEVED_REDIRECT);
+
+                hdnCurrentEntityID.Value = currentEntity.ID.ToString();
+                if (this.CurrentEntityID.BiggerThanZero())
+                {
+                    this.Master.BaseNotification.OnClientHidden = "onClientHidden";
+                    this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SAEVED_REDIRECT);
+                }
+                else
+                {
+                    this.Master.BaseNotification.OnClientHidden = "refreshMaintenancePage";
+                    this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SAEVED_REFRESH);
+                }
+
             }
         }
 
@@ -285,11 +299,11 @@ namespace ZhongDing.Web.Views.Procures
         {
             GridEditableItem editableItem = e.Item as GridEditableItem;
 
-            var transportFeeStockInId = editableItem.GetDataKeyValue("ID").ToIntOrNull();
-            if (transportFeeStockInId.HasValue && transportFeeStockInId.Value > 0)
+            var transportFeeStockOutId = editableItem.GetDataKeyValue("ID").ToIntOrNull();
+            if (transportFeeStockOutId.HasValue && transportFeeStockOutId.Value > 0)
             {
-                PageTransportFeeStockInRepository.DeleteByID(transportFeeStockInId);
-                PageTransportFeeStockInRepository.Save();
+                PageTransportFeeStockOutRepository.DeleteByID(transportFeeStockOutId);
+                PageTransportFeeStockOutRepository.Save();
                 rgStockOuts.Rebind();
             }
         }

@@ -307,8 +307,17 @@ namespace ZhongDing.Common
                         int columnIndex = 0;
                         foreach (var excelHeader in headerSimpleName)
                         {
-                            var cellValue = properties.First(x => x.Name == excelHeader.Key).GetValue(row, null);
-                            var cellValueText = cellValue == null ? string.Empty : cellValue.ToString();
+                            var property = properties.First(x => x.Name == excelHeader.Key);
+                            var cellValue = property.GetValue(row, null);
+                            string cellValueText = string.Empty;
+                            if (cellValue != null && cellValue.GetType().ToString() == "System.Decimal")
+                            {
+                                cellValueText = decimal.Parse(cellValue.ToString()).ToString("f2");
+                            }
+                            else
+                            {
+                                cellValueText = cellValue == null ? string.Empty : cellValue.ToString();
+                            }
                             ICell cell = dataRow.CreateCell(columnIndex);
                             cell.SetCellValue(cellValueText);
 

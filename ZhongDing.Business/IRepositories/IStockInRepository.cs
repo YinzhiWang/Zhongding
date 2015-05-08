@@ -28,5 +28,15 @@ namespace ZhongDing.Business.IRepositories
         /// <returns>IList{UIStockIn}.</returns>
         IList<UIStockIn> GetUIList(UISearchStockIn uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
 
+        /// <summary>
+        /// 获取UI List，分页   ForTransportFee
+        /// </summary>
+        /// <param name="uiSearchObj"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="totalRecords"></param>
+        /// <returns></returns>
+        IList<UIStockIn> GetUIListForTransportFee(UISearchStockIn uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
+
     }
 }

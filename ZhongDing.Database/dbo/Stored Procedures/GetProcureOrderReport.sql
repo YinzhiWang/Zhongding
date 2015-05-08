@@ -41,7 +41,10 @@ AS
                             dbo.ProcureOrderAppDetail.TotalAmount ,
                             ISNULL(( SELECT SUM(dbo.StockInDetail.InQty)
                                      FROM   dbo.StockInDetail
+                                            JOIN dbo.StockIn ON dbo.StockIn.ID = dbo.StockInDetail.StockInID
                                      WHERE  dbo.StockInDetail.IsDeleted = 0
+                                            AND dbo.StockIn.IsDeleted = 0
+                                            AND dbo.StockIn.WorkflowStatusID = 10
                                             AND dbo.StockInDetail.ProcureOrderAppDetailID = dbo.ProcureOrderAppDetail.ID
                                    ), 0) AS AlreadyInQty ,
                             ISNULL(( SELECT SUM(dbo.StockInDetail.ProcurePrice
@@ -50,8 +53,8 @@ AS
                                      WHERE  dbo.StockInDetail.IsDeleted = 0
                                             AND dbo.StockInDetail.ProcureOrderAppDetailID = dbo.ProcureOrderAppDetail.ID
                                    ), 0) AS AlreadyInQtyProcurePrice ,
-                            dbo.ProductSpecification.NumberInLargePackage,
-							ProcureOrderApplication.IsStop AS ProcureOrderApplicationIsStop
+                            dbo.ProductSpecification.NumberInLargePackage ,
+                            ProcureOrderApplication.IsStop AS ProcureOrderApplicationIsStop
                   FROM      dbo.ProcureOrderAppDetail
                             JOIN dbo.ProcureOrderApplication ON dbo.ProcureOrderAppDetail.ProcureOrderApplicationID = dbo.ProcureOrderApplication.ID
                             JOIN dbo.Supplier ON dbo.ProcureOrderApplication.SupplierID = dbo.Supplier.ID

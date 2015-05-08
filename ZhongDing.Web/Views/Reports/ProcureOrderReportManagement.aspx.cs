@@ -313,21 +313,21 @@ namespace ZhongDing.Web.Views.Reports
             fieldFuncs.Add(x => x.ProductName);
             fieldFuncs.Add(x => x.Specification);
             fieldFuncs.Add(x => x.UnitName);
-            fieldFuncs.Add(x => x.ProcurePrice.ToString());
+            fieldFuncs.Add(x => x.ProcurePrice.ToString("f2"));
             fieldFuncs.Add(x => x.ProcureCount.ToString());
-            fieldFuncs.Add(x => x.TotalAmount.ToString());
+            fieldFuncs.Add(x => x.TotalAmount.ToString("f2"));
 
             fieldFuncs.Add(x => x.AlreadyInQty.ToString());
-            fieldFuncs.Add(x => x.AlreadyInNumberOfPackages.ToString());
-            fieldFuncs.Add(x => x.AlreadyInQtyProcurePrice.ToString());
+            fieldFuncs.Add(x => x.AlreadyInNumberOfPackages.ToString("f2"));
+            fieldFuncs.Add(x => x.AlreadyInQtyProcurePrice.ToString("f2"));
 
             fieldFuncs.Add(x => x.StopInQty.ToString());
-            fieldFuncs.Add(x => x.StopInNumberOfPackages.ToString());
-            fieldFuncs.Add(x => x.StopInQtyProcurePrice.ToString());
+            fieldFuncs.Add(x => x.StopInNumberOfPackages.ToString("f2"));
+            fieldFuncs.Add(x => x.StopInQtyProcurePrice.ToString("f2"));
 
             fieldFuncs.Add(x => x.NotInQty.ToString());
-            fieldFuncs.Add(x => x.NotInNumberOfPackages.ToString());
-            fieldFuncs.Add(x => x.NotInQtyProcurePrice.ToString());
+            fieldFuncs.Add(x => x.NotInNumberOfPackages.ToString("f2"));
+            fieldFuncs.Add(x => x.NotInQtyProcurePrice.ToString("f2"));
 
 
             nPOIHelper.ExportToExcel<UIProcureOrderReport>(

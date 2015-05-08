@@ -5,6 +5,36 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <telerik:RadAjaxLoadingPanel ID="loadingPanel" runat="server">
+    </telerik:RadAjaxLoadingPanel>
+    <telerik:RadAjaxManager runat="server" ID="RadAjaxManager1">
+        <AjaxSettings>
+
+            <telerik:AjaxSetting AjaxControlID="rgStockIns">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="rgStockIns" LoadingPanelID="loadingPanel" />
+
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+              <telerik:AjaxSetting AjaxControlID="rgStockOuts">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="rgStockOuts" LoadingPanelID="loadingPanel" />
+
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="rcbxTransportCompany">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="rcbxTransportCompany" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="rcbxTransportCompany" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="txtDriver" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="txtDriverTelephone" LoadingPanelID="loadingPanel" />
+
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+
+
+        </AjaxSettings>
+    </telerik:RadAjaxManager>
     <div class="container">
 
         <div class="mws-panel grid_8">
@@ -286,7 +316,7 @@
                                                             </td>
                                                             <td class="right-td rightpadding10">
                                                                 <input type="button" class="rgRefresh" onclick="refreshGrid(gridClientIDs.gridStockOuts); return false;" />
-                                                                <a href="javascript:void(0);" onclick="refreshGrid(gridClientIDs.gridStockIns); return false;">刷新</a>
+                                                                <a href="javascript:void(0);" onclick="refreshGrid(gridClientIDs.gridStockOuts); return false;">刷新</a>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -358,7 +388,12 @@
             var transportFeeType = $.getQueryString("TransportFeeType");
             redirectToPage('Views/Procures/TransportFeeManagement.aspx?TransportFeeType=' + transportFeeType);
         }
+        function refreshMaintenancePage(sender, args) {
 
+            var currentEntityID = $("#<%= hdnCurrentEntityID.ClientID %>").val();
+            var transportFeeType = $.getQueryString("TransportFeeType");
+            redirectToPage("Views/Procures/TransportFeeMaintenance.aspx?TransportFeeType=" + transportFeeType + "&EntityID=" + currentEntityID);
+        }
         function onClientBlur(sender, args) {
 
 

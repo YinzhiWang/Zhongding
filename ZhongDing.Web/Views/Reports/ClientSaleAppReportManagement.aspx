@@ -84,7 +84,7 @@
                     </tr>
                 </table>
                 <telerik:RadGrid ID="rgClientSaleAppReports" runat="server" PageSize="10"
-                    Height="460"
+                    Height="480"
                     AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
                     MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
                     ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
@@ -242,7 +242,7 @@
                     <ClientSettings EnableRowHoverStyle="true">
                         <ClientEvents OnGridCreated="GetsGridObject" />
                         <Selecting AllowRowSelect="True" />
-                        <Scrolling AllowScroll="true" FrozenColumnsCount="2" SaveScrollPosition="true" UseStaticHeaders="true" />
+                        <Scrolling AllowScroll="true"  SaveScrollPosition="true" UseStaticHeaders="true" />
                     </ClientSettings>
 
                 </telerik:RadGrid>

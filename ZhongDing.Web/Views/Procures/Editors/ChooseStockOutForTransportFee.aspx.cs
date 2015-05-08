@@ -104,7 +104,7 @@ namespace ZhongDing.Web.Views.Procures.Editors
 
             int totalRecords;
 
-            var items = PageStockOutRepository.GetUIList(uiSearchObj, rgStockOuts.CurrentPageIndex, rgStockOuts.PageSize, out totalRecords);
+            var items = PageStockOutRepository.GetUIListForTransportFee(uiSearchObj, rgStockOuts.CurrentPageIndex, rgStockOuts.PageSize, out totalRecords);
 
             rgStockOuts.DataSource = items;
 

@@ -43,18 +43,20 @@ namespace ZhongDing.Web.Views.Procures
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (TransportFeeType == ETransportFeeType.StockIn)
+            if (!IsPostBack)
             {
-                this.Master.MenuItemID = (int)EMenuItem.TransportFeeManage_StockIn;
-                rcbxTransportFeeType.SelectedValue = ((int)ETransportFeeType.StockIn).ToString();
+                if (TransportFeeType == ETransportFeeType.StockIn)
+                {
+                    this.Master.MenuItemID = (int)EMenuItem.TransportFeeManage_StockIn;
+                    rcbxTransportFeeType.SelectedValue = ((int)ETransportFeeType.StockIn).ToString();
 
+                }
+                else
+                {
+                    this.Master.MenuItemID = (int)EMenuItem.TransportFeeManage_StockOut;
+                    rcbxTransportFeeType.SelectedValue = ((int)ETransportFeeType.StockOut).ToString();
+                }
             }
-            else
-            {
-                this.Master.MenuItemID = (int)EMenuItem.TransportFeeManage_StockOut;
-                rcbxTransportFeeType.SelectedValue = ((int)ETransportFeeType.StockOut).ToString();
-            }
-
         }
 
         private void BindTransportFee(bool isNeedRebind)
