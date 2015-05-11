@@ -184,6 +184,15 @@ namespace ZhongDing.Web.Views.Sales {
         protected global::System.Web.UI.WebControls.CustomValidator cvReceivingBankAccount;
         
         /// <summary>
+        /// tblReceivingBankAccounts control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTable tblReceivingBankAccounts;
+        
+        /// <summary>
         /// rdpGuaranteeExpiration control.
         /// </summary>
         /// <remarks>

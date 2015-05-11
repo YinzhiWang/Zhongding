@@ -174,6 +174,7 @@
                                     ControlToValidate="rcbxReceivingBankAccount" ValidationGroup="vgMaintenance" Display="Dynamic"
                                     Text="*" CssClass="field-validation-error">
                                 </asp:CustomValidator>
+                                <table runat="server" id="tblReceivingBankAccounts" visible="false"></table>
                             </div>
                         </div>
                         <div class="mws-form-row" id="divGuaranteeInfo">

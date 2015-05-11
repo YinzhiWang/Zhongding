@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Telerik.Web.UI;
 using ZhongDing.Business.IRepositories;
@@ -416,7 +417,16 @@ namespace ZhongDing.Web.Views.Sales
                                             int bankAccountID = int.Parse(item.Value);
 
                                             if (CurrentEntity.ClientSaleAppBankAccount.Any(x => x.IsDeleted == false && x.ReceiverBankAccountID == bankAccountID))
+                                            {
                                                 item.Checked = true;
+
+                                                HtmlTableRow trBankAccount = new HtmlTableRow();
+
+                                                trBankAccount.Cells.Add(new HtmlTableCell() { InnerText = item.Text });
+
+                                                tblReceivingBankAccounts.Rows.Add(trBankAccount);
+
+                                            }
                                         }
 
                                         break;
@@ -594,7 +604,8 @@ namespace ZhongDing.Web.Views.Sales
             rcbxClientContact.Enabled = false;
             rdpGuaranteeExpiration.Enabled = false;
             rcbxGuaranteeby.Enabled = false;
-            rcbxReceivingBankAccount.Enabled = false;
+            rcbxReceivingBankAccount.Visible = false;
+            tblReceivingBankAccounts.Visible = true;
 
             txtComment.Enabled = false;
 
