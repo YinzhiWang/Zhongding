@@ -430,7 +430,7 @@
                             <asp:Button ID="btnSubmit" runat="server" Text="提交" CssClass="mws-button green" CausesValidation="true" OnClientClick="return checkGridCellValueChanged();" OnClick="btnSubmit_Click" />
                             <asp:Button ID="btnOutStock" runat="server" Text="确认出库" CssClass="mws-button green" CausesValidation="true" OnClick="btnOutStock_Click" />
                             <asp:Button ID="btnPrint" runat="server" Text="打印" CssClass="mws-button green" CausesValidation="true" OnClientClick="openPrintPage();return false;" Visible="false" />
-                            <asp:Button ID="btnCancel" runat="server" Text="取消" UseSubmitBehavior="false" CssClass="mws-button green" OnClientClick="redirectToPage('Views/Sales/DBStockOutManagement.aspx');return false;" />
+                            <asp:Button ID="btnCancel" runat="server" Text="取消" UseSubmitBehavior="false" CssClass="mws-button green" OnClientClick="redirectToPage('Views/Sales/ClientSaleAppStockOutManagement.aspx');return false;" />
                         </div>
                     </div>
                 </div>

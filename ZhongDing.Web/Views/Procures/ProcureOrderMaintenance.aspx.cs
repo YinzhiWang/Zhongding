@@ -175,123 +175,140 @@ namespace ZhongDing.Web.Views.Procures
                 rdpEstDeliveryDate.MinDate = this.CurrentEntity.OrderDate;
                 cbxIsStop.Checked = this.CurrentEntity.IsStop;
 
-                if (CanEditUserIDs.Contains(CurrentUser.UserID))
+                EWorkflowStatus workfolwStatus = (EWorkflowStatus)this.CurrentEntity.WorkflowStatusID;
+
+                switch (workfolwStatus)
                 {
-                    btnSave.Visible = true;
-                    btnSubmit.Visible = false;
-                    ShowAuditControls(false);
-                }
-                else
-                {
-                    EWorkflowStatus workfolwStatus = (EWorkflowStatus)this.CurrentEntity.WorkflowStatusID;
+                    case EWorkflowStatus.TemporarySave:
+                    case EWorkflowStatus.ReturnBasicInfo:
+                        #region 暂存和基础信息退回（订单创建者才能修改）
 
-                    switch (workfolwStatus)
-                    {
-                        case EWorkflowStatus.TemporarySave:
-                        case EWorkflowStatus.ReturnBasicInfo:
-                            #region 暂存和基础信息退回（订单创建者才能修改）
-
-                            if (CurrentUser.UserID == this.CurrentEntity.CreatedBy
-                                || this.CanEditUserIDs.Contains(CurrentUser.UserID))
-                                ShowSaveButtons(true);
-                            else
-                                DisabledBasicInfoControls();
-
-                            btnAudit.Visible = false;
-                            btnReturn.Visible = false;
-                            divAudit.Visible = false;
-                            divAppPayments.Visible = false;
-
-                            #endregion
-
-                            break;
-                        case EWorkflowStatus.Submit:
-                            #region 已提交，待审核
-
+                        if (CurrentUser.UserID == this.CurrentEntity.CreatedBy
+                            || this.CanEditUserIDs.Contains(CurrentUser.UserID))
+                            ShowSaveButtons(true);
+                        else
                             DisabledBasicInfoControls();
 
-                            divAppPayments.Visible = false;
+                        btnAudit.Visible = false;
+                        btnReturn.Visible = false;
+                        divAudit.Visible = false;
+                        divAppPayments.Visible = false;
 
-                            if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
-                                ShowAuditControls(true);
-                            else
-                                ShowAuditControls(false);
+                        #endregion
 
-                            #endregion
+                        break;
+                    case EWorkflowStatus.Submit:
+                        #region 已提交，待审核
 
-                            break;
-                        case EWorkflowStatus.ApprovedBasicInfo:
-                        case EWorkflowStatus.ReturnPaymentInfo:
-                            #region 基础信息已审核，待填写支付信息或支付信息退回，待修改支付信息
-
+                        if (!this.CanEditUserIDs.Contains(CurrentUser.UserID))
                             DisabledBasicInfoControls();
 
+                        divAppPayments.Visible = false;
+
+                        if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
+                            ShowAuditControls(true);
+                        else
                             ShowAuditControls(false);
 
-                            if (CurrentUser.UserID == this.CurrentEntity.CreatedBy
-                                || this.CanEditUserIDs.Contains(CurrentUser.UserID))
-                                ShowSaveButtons(true);
-                            else
-                            {
-                                ShowSaveButtons(false);
+                        #endregion
 
-                                rgAppPayments.MasterTableView.CommandItemSettings.ShowAddNewRecordButton = false;
-                            }
+                        break;
+                    case EWorkflowStatus.ApprovedBasicInfo:
+                    case EWorkflowStatus.ReturnPaymentInfo:
+                        #region 基础信息已审核，待填写支付信息或支付信息退回，待修改支付信息
 
-                            #endregion
-
-                            break;
-                        case EWorkflowStatus.AuditingOfPaymentInfo:
-                            #region 已填写或修改支付信息，待审核
-
+                        if (!this.CanEditUserIDs.Contains(CurrentUser.UserID))
                             DisabledBasicInfoControls();
 
+                        ShowAuditControls(false);
+
+                        if (CurrentUser.UserID == this.CurrentEntity.CreatedBy
+                            || this.CanEditUserIDs.Contains(CurrentUser.UserID))
+                            ShowSaveButtons(true);
+                        else
+                        {
                             ShowSaveButtons(false);
 
                             rgAppPayments.MasterTableView.CommandItemSettings.ShowAddNewRecordButton = false;
+                        }
 
-                            if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
-                                ShowAuditControls(true);
-                            else
-                                ShowAuditControls(false);
+                        #endregion
 
-                            #endregion
-                            break;
+                        break;
+                    case EWorkflowStatus.AuditingOfPaymentInfo:
+                        #region 已填写或修改支付信息，待审核
 
-                        case EWorkflowStatus.ToBePaid:
-                            #region 支付信息已审核，待支付
-
+                        if (this.CanEditUserIDs.Contains(CurrentUser.UserID))
+                        {
+                            btnSave.Visible = true;
+                            btnSubmit.Visible = false;
+                            rgAppPayments.MasterTableView.CommandItemSettings.ShowAddNewRecordButton = true;
+                        }
+                        else
+                        {
                             DisabledBasicInfoControls();
-
                             ShowSaveButtons(false);
 
+                            rgAppPayments.MasterTableView.CommandItemSettings.ShowAddNewRecordButton = false;
+                        }
+
+                        if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
+                            ShowAuditControls(true);
+                        else
                             ShowAuditControls(false);
 
-                            rgAppPayments.MasterTableView.CommandItemSettings.ShowAddNewRecordButton = false;
+                        #endregion
+                        break;
 
-                            if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
-                                btnPay.Visible = true;
+                    case EWorkflowStatus.ToBePaid:
+                        #region 支付信息已审核，待支付
 
-                            #endregion
-
-                            break;
-                        case EWorkflowStatus.Paid:
-                        case EWorkflowStatus.InWarehouse:
-                        case EWorkflowStatus.Shipping:
-                        case EWorkflowStatus.Completed:
-                            #region 已支付,发货中，已完成不能修改
-
+                        if (this.CanEditUserIDs.Contains(CurrentUser.UserID))
+                        {
+                            btnSave.Visible = true;
+                            btnSubmit.Visible = false;
+                            rgAppPayments.MasterTableView.CommandItemSettings.ShowAddNewRecordButton = true;
+                        }
+                        else
+                        {
                             DisabledBasicInfoControls();
-
                             ShowSaveButtons(false);
 
-                            ShowAuditControls(false);
+                            rgAppPayments.MasterTableView.CommandItemSettings.ShowAddNewRecordButton = false;
+                        }
+
+                        ShowAuditControls(false);
+
+                        if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
+                            btnPay.Visible = true;
+
+                        #endregion
+
+                        break;
+                    case EWorkflowStatus.Paid:
+                    case EWorkflowStatus.InWarehouse:
+                    case EWorkflowStatus.Shipping:
+                    case EWorkflowStatus.Completed:
+                        #region 已支付,发货中，已完成不能修改
+
+                        if (this.CanEditUserIDs.Contains(CurrentUser.UserID))
+                        {
+                            btnSave.Visible = true;
+                            btnSubmit.Visible = false;
+                            rgAppPayments.MasterTableView.CommandItemSettings.ShowAddNewRecordButton = true;
+                        }
+                        else
+                        {
+                            DisabledBasicInfoControls();
+                            ShowSaveButtons(false);
 
                             rgAppPayments.MasterTableView.CommandItemSettings.ShowAddNewRecordButton = false;
+                        }
 
-                            #endregion
-                            break;
-                    }
+                        ShowAuditControls(false);
+
+                        #endregion
+                        break;
                 }
             }
             else
@@ -500,9 +517,10 @@ namespace ZhongDing.Web.Views.Procures
         protected void rgAppPayments_ColumnCreated(object sender, GridColumnCreatedEventArgs e)
         {
             if (this.CurrentEntity != null
-                && (this.CurrentEntity.CreatedBy == CurrentUser.UserID || this.CanEditUserIDs.Contains(CurrentUser.UserID))
-                && (this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.ApprovedBasicInfo
-                || this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.ReturnPaymentInfo))
+                && (this.CanEditUserIDs.Contains(CurrentUser.UserID)
+                || (this.CurrentEntity.CreatedBy == CurrentUser.UserID
+                    && (this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.ApprovedBasicInfo
+                        || this.CurrentEntity.WorkflowStatusID == (int)EWorkflowStatus.ReturnPaymentInfo))))
             {
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT).Visible = true;
                 e.OwnerTableView.Columns.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = true;
@@ -538,17 +556,6 @@ namespace ZhongDing.Web.Views.Procures
                         }
                     };
 
-                    //if (e.Item.ItemIndex < 0)
-                    //{
-                    //    var excludeItemValues = PageAppPaymentRepository
-                    //    .GetList(x => x.ApplicationID == this.CurrentEntityID)
-                    //    .Select(x => x.FromBankAccountID.HasValue ? x.FromBankAccountID.Value : GlobalConst.INVALID_INT)
-                    //    .ToList();
-
-                    //    if (excludeItemValues.Count > 0)
-                    //        uiSearchObj.ExcludeItemValues = excludeItemValues;
-                    //}
-
                     var bankAccounts = PageBankAccountRepository.GetDropdownItems(uiSearchObj);
                     rcbxFromAccount.DataSource = bankAccounts;
                     rcbxFromAccount.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
@@ -570,17 +577,6 @@ namespace ZhongDing.Web.Views.Procures
                             OwnerTypeID = (int)EOwnerType.Supplier,
                         }
                     };
-
-                    //if (e.Item.ItemIndex < 0)
-                    //{
-                    //    var excludeItemValues = PageAppPaymentRepository
-                    //        .GetList(x => x.ApplicationID == this.CurrentEntityID)
-                    //        .Select(x => x.ToBankAccountID.HasValue ? x.ToBankAccountID.Value : GlobalConst.INVALID_INT)
-                    //        .ToList();
-
-                    //    if (excludeItemValues.Count > 0)
-                    //        uiSearchObj.ExcludeItemValues = excludeItemValues;
-                    //}
 
                     if (!string.IsNullOrEmpty(rcbxSupplier.SelectedValue))
                     {
@@ -842,9 +838,11 @@ namespace ZhongDing.Web.Views.Procures
                     case (int)EWorkflowStatus.ApprovedBasicInfo:
                     case (int)EWorkflowStatus.ReturnPaymentInfo:
 
-                        if (PageAppPaymentRepository.GetList(x => x.ApplicationID == this.CurrentEntity.ID).Count() > 0)
+                        if (PageAppPaymentRepository.GetList(x => x.WorkflowID == CurrentWorkFlowID
+                            && x.ApplicationID == this.CurrentEntity.ID).Count() > 0)
                         {
-                            var orderPaymentTotalAmount = PageAppPaymentRepository.GetList(x => x.ApplicationID == this.CurrentEntity.ID).Sum(x => x.Amount);
+                            var orderPaymentTotalAmount = PageAppPaymentRepository.GetList(x => x.WorkflowID == CurrentWorkFlowID
+                                && x.ApplicationID == this.CurrentEntity.ID).Sum(x => x.Amount);
                             var orderTotalAmount = this.CurrentEntity.ProcureOrderAppDetail.Where(x => x.IsDeleted == false).Sum(x => x.TotalAmount);
 
                             if (orderPaymentTotalAmount == orderTotalAmount)
@@ -901,26 +899,58 @@ namespace ZhongDing.Web.Views.Procures
 
                     if (currentEntity != null)
                     {
-                        var appNote = new ApplicationNote();
-                        appNote.WorkflowID = (int)EWorkflow.ProcureOrder;
-                        appNote.NoteTypeID = (int)EAppNoteType.AuditOpinion;
-                        appNoteRepository.Add(appNote);
+                        if (CanEditUserIDs.Contains(CurrentUser.UserID))
+                        {
+                            currentEntity.OrderDate = rdpOrderDate.SelectedDate.HasValue
+                                ? rdpOrderDate.SelectedDate.Value : DateTime.Now;
+                            currentEntity.SupplierID = Convert.ToInt32(rcbxSupplier.SelectedValue);
+                            currentEntity.EstDeliveryDate = rdpEstDeliveryDate.SelectedDate;
+
+                            if (!string.IsNullOrEmpty(txtComment.Text.Trim()))
+                            {
+                                var appNote = new ApplicationNote();
+                                appNote.WorkflowID = CurrentWorkFlowID;
+
+                                appNote.NoteTypeID = (int)EAppNoteType.Comment;
+                                appNote.ApplicationID = currentEntity.ID;
+                                appNote.Note = txtComment.Text.Trim();
+
+                                switch (currentEntity.WorkflowStatusID)
+                                {
+                                    case (int)EWorkflowStatus.Submit:
+                                        appNote.WorkflowStepID = (int)EWorkflowStep.AuditProcureOrder;
+                                        break;
+
+                                    case (int)EWorkflowStatus.AuditingOfPaymentInfo:
+                                        appNote.WorkflowStepID = (int)EWorkflowStep.AuditPaymentInfo;
+
+                                        break;
+                                }
+
+                                appNoteRepository.Add(appNote);
+                            }
+                        }
+
+                        var appAuditNote = new ApplicationNote();
+                        appAuditNote.WorkflowID = CurrentWorkFlowID;
+                        appAuditNote.NoteTypeID = (int)EAppNoteType.AuditOpinion;
+                        appNoteRepository.Add(appAuditNote);
 
                         switch (currentEntity.WorkflowStatusID)
                         {
                             case (int)EWorkflowStatus.Submit:
-                                appNote.WorkflowStepID = (int)EWorkflowStep.AuditProcureOrder;
-                                appNote.ApplicationID = currentEntity.ID;
-                                appNote.Note = txtAuditComment.Text.Trim();
+                                appAuditNote.WorkflowStepID = (int)EWorkflowStep.AuditProcureOrder;
+                                appAuditNote.ApplicationID = currentEntity.ID;
+                                appAuditNote.Note = txtAuditComment.Text.Trim();
 
                                 currentEntity.WorkflowStatusID = (int)EWorkflowStatus.ApprovedBasicInfo;
 
                                 break;
 
                             case (int)EWorkflowStatus.AuditingOfPaymentInfo:
-                                appNote.WorkflowStepID = (int)EWorkflowStep.AuditPaymentInfo;
-                                appNote.ApplicationID = currentEntity.ID;
-                                appNote.Note = txtAuditComment.Text.Trim();
+                                appAuditNote.WorkflowStepID = (int)EWorkflowStep.AuditPaymentInfo;
+                                appAuditNote.ApplicationID = currentEntity.ID;
+                                appAuditNote.Note = txtAuditComment.Text.Trim();
 
                                 currentEntity.WorkflowStatusID = (int)EWorkflowStatus.ToBePaid;
 
@@ -962,26 +992,58 @@ namespace ZhongDing.Web.Views.Procures
 
                     if (currentEntity != null)
                     {
-                        var appNote = new ApplicationNote();
-                        appNote.WorkflowID = (int)EWorkflow.ProcureOrder;
-                        appNote.NoteTypeID = (int)EAppNoteType.AuditOpinion;
-                        appNoteRepository.Add(appNote);
+                        if (CanEditUserIDs.Contains(CurrentUser.UserID))
+                        {
+                            currentEntity.OrderDate = rdpOrderDate.SelectedDate.HasValue
+                                ? rdpOrderDate.SelectedDate.Value : DateTime.Now;
+                            currentEntity.SupplierID = Convert.ToInt32(rcbxSupplier.SelectedValue);
+                            currentEntity.EstDeliveryDate = rdpEstDeliveryDate.SelectedDate;
+
+                            if (!string.IsNullOrEmpty(txtComment.Text.Trim()))
+                            {
+                                var appNote = new ApplicationNote();
+                                appNote.WorkflowID = CurrentWorkFlowID;
+
+                                appNote.NoteTypeID = (int)EAppNoteType.Comment;
+                                appNote.ApplicationID = currentEntity.ID;
+                                appNote.Note = txtComment.Text.Trim();
+
+                                switch (currentEntity.WorkflowStatusID)
+                                {
+                                    case (int)EWorkflowStatus.Submit:
+                                        appNote.WorkflowStepID = (int)EWorkflowStep.AuditProcureOrder;
+                                        break;
+
+                                    case (int)EWorkflowStatus.AuditingOfPaymentInfo:
+                                        appNote.WorkflowStepID = (int)EWorkflowStep.AuditPaymentInfo;
+
+                                        break;
+                                }
+
+                                appNoteRepository.Add(appNote);
+                            }
+                        }
+
+                        var appAuditNote = new ApplicationNote();
+                        appAuditNote.WorkflowID = CurrentWorkFlowID;
+                        appAuditNote.NoteTypeID = (int)EAppNoteType.AuditOpinion;
+                        appNoteRepository.Add(appAuditNote);
 
                         switch (currentEntity.WorkflowStatusID)
                         {
                             case (int)EWorkflowStatus.Submit:
-                                appNote.WorkflowStepID = (int)EWorkflowStep.AuditProcureOrder;
-                                appNote.ApplicationID = currentEntity.ID;
-                                appNote.Note = txtAuditComment.Text.Trim();
+                                appAuditNote.WorkflowStepID = (int)EWorkflowStep.AuditProcureOrder;
+                                appAuditNote.ApplicationID = currentEntity.ID;
+                                appAuditNote.Note = txtAuditComment.Text.Trim();
 
                                 currentEntity.WorkflowStatusID = (int)EWorkflowStatus.ReturnBasicInfo;
 
                                 break;
 
                             case (int)EWorkflowStatus.AuditingOfPaymentInfo:
-                                appNote.WorkflowStepID = (int)EWorkflowStep.AuditPaymentInfo;
-                                appNote.ApplicationID = currentEntity.ID;
-                                appNote.Note = txtAuditComment.Text.Trim();
+                                appAuditNote.WorkflowStepID = (int)EWorkflowStep.AuditPaymentInfo;
+                                appAuditNote.ApplicationID = currentEntity.ID;
+                                appAuditNote.Note = txtAuditComment.Text.Trim();
 
                                 currentEntity.WorkflowStatusID = (int)EWorkflowStatus.ReturnPaymentInfo;
 
@@ -1010,37 +1072,73 @@ namespace ZhongDing.Web.Views.Procures
 
                     IProcureOrderApplicationRepository orderAppRepository = new ProcureOrderApplicationRepository();
                     IApplicationPaymentRepository appPaymentRepository = new ApplicationPaymentRepository();
-                    //IApplicationNoteRepository appNoteRepository = new ApplicationNoteRepository();
+                    IApplicationNoteRepository appNoteRepository = new ApplicationNoteRepository();
 
                     orderAppRepository.SetDbModel(db);
                     appPaymentRepository.SetDbModel(db);
-                    //appNoteRepository.SetDbModel(db);
+                    appNoteRepository.SetDbModel(db);
 
                     var currentEntity = orderAppRepository.GetByID(this.CurrentEntityID);
 
                     if (currentEntity != null)
                     {
-                        currentEntity.WorkflowStatusID = (int)EWorkflowStatus.Paid;
-
-                        var appPayments = appPaymentRepository.GetList(x => x.WorkflowID == CurrentWorkFlowID && x.ApplicationID == currentEntity.ID);
-
-                        foreach (var item in appPayments)
+                        if (appPaymentRepository.GetList(x => x.WorkflowID == CurrentWorkFlowID
+                            && x.ApplicationID == this.CurrentEntity.ID).Count() > 0)
                         {
-                            item.PaymentStatusID = (int)EPaymentStatus.Paid;
+                            var orderPaymentTotalAmount = appPaymentRepository.GetList(x => x.WorkflowID == CurrentWorkFlowID
+                                && x.ApplicationID == this.CurrentEntity.ID).Sum(x => x.Amount);
+                            var orderTotalAmount = this.CurrentEntity.ProcureOrderAppDetail.Where(x => x.IsDeleted == false).Sum(x => x.TotalAmount);
+
+                            if (orderPaymentTotalAmount == orderTotalAmount)
+                            {
+                                if (CanEditUserIDs.Contains(CurrentUser.UserID))
+                                {
+                                    currentEntity.OrderDate = rdpOrderDate.SelectedDate.HasValue
+                                    ? rdpOrderDate.SelectedDate.Value : DateTime.Now;
+                                    currentEntity.SupplierID = Convert.ToInt32(rcbxSupplier.SelectedValue);
+                                    currentEntity.EstDeliveryDate = rdpEstDeliveryDate.SelectedDate;
+
+                                    if (!string.IsNullOrEmpty(txtComment.Text.Trim()))
+                                    {
+                                        var appNote = new ApplicationNote();
+                                        appNote.WorkflowID = CurrentWorkFlowID;
+
+                                        appNote.NoteTypeID = (int)EAppNoteType.Comment;
+                                        appNote.ApplicationID = currentEntity.ID;
+                                        appNote.WorkflowStepID = (int)EWorkflowStep.ProcureOrderCashier;
+                                        appNote.Note = txtComment.Text.Trim();
+                                        appNoteRepository.Add(appNote);
+                                    }
+                                }
+
+                                currentEntity.WorkflowStatusID = (int)EWorkflowStatus.Paid;
+
+                                var appPayments = appPaymentRepository.GetList(x => x.WorkflowID == CurrentWorkFlowID && x.ApplicationID == currentEntity.ID);
+
+                                foreach (var item in appPayments)
+                                {
+                                    item.PaymentStatusID = (int)EPaymentStatus.Paid;
+                                }
+
+                                unitOfWork.SaveChanges();
+
+                                this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
+                                this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_SUCCESS;
+                                this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_OPERATE_REDIRECT);
+                            }
+                            else
+                            {
+                                this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
+                                this.Master.BaseNotification.AutoCloseDelay = 1000;
+                                this.Master.BaseNotification.Show("支付总金额不等于订单总金额，不能确认支付");
+                            }
                         }
-
-                        //var appNote = new ApplicationNote();
-                        //appNote.WorkflowID = (int)EWorkflow.ProcureOrder;
-                        //appNote.WorkflowStepID = (int)EWorkflowStep.ProcureOrderCashier;
-                        //appNote.NoteTypeID = (int)EAppNoteType.Comment;
-                        //appNote.ApplicationID = currentEntity.ID;
-                        //appNote.Note = "订单已支付（由系统自动生成）";
-                        //appNoteRepository.Add(appNote);
-
-                        unitOfWork.SaveChanges();
-
-                        this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
-                        this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_OPERATE_REDIRECT);
+                        else
+                        {
+                            this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
+                            this.Master.BaseNotification.AutoCloseDelay = 1000;
+                            this.Master.BaseNotification.Show("支付信息为空，不能确认支付");
+                        }
                     }
                 }
             }

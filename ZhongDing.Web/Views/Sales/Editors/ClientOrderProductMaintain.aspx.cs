@@ -227,9 +227,26 @@ namespace ZhongDing.Web.Views.Sales.Editors
                 int productID;
                 if (int.TryParse(rcbxProduct.SelectedValue, out productID))
                 {
+                    IList<int> excludeItemValues = new List<int>();
+
+                    if (CurrentOwnerEntity.SalesOrderApplication != null)
+                    {
+                        var salesOrderAppDetails = CurrentOwnerEntity.SalesOrderApplication.SalesOrderAppDetail
+                            .Where(x => x.IsDeleted == false);
+
+                        var salesOrderAppDetail = salesOrderAppDetails.Where(x => x.ID == this.CurrentEntityID).FirstOrDefault();
+
+                        if (salesOrderAppDetail == null)
+                        {
+                            excludeItemValues = salesOrderAppDetails.Where(x => x.ProductID == productID)
+                                 .Select(x => x.ProductSpecificationID).ToList();
+                        }
+                    }
+
                     var productSpecifications = PageProductSpecificationRepository.GetDropdownItems(new UISearchDropdownItem()
                     {
-                        Extension = new UISearchExtension { ProductID = productID }
+                        Extension = new UISearchExtension { ProductID = productID },
+                        ExcludeItemValues = excludeItemValues
                     });
 
                     ddlProductSpecification.DataSource = productSpecifications;
@@ -340,6 +357,8 @@ namespace ZhongDing.Web.Views.Sales.Editors
                     break;
             }
 
+            BindProducts();
+
             if (CurrentOwnerEntity.SalesOrderApplication != null)
             {
                 if (CurrentOwnerEntity.SalesOrderApplication.SaleOrderTypeID == (int)ESaleOrderType.AttachedMode)
@@ -353,8 +372,6 @@ namespace ZhongDing.Web.Views.Sales.Editors
                 if (salesOrderAppDetail != null)
                 {
                     rcbxWarehouse.SelectedValue = salesOrderAppDetail.WarehouseID.ToString();
-
-                    BindProducts();
 
                     rcbxProduct.SelectedValue = salesOrderAppDetail.ProductID.ToString();
 
@@ -379,13 +396,7 @@ namespace ZhongDing.Web.Views.Sales.Editors
                     txtTotalSalesAmount.DbValue = salesOrderAppDetail.TotalSalesAmount;
                     txtInvoicePrice.DbValue = salesOrderAppDetail.InvoicePrice;
                 }
-                else
-                {
-                    BindProducts(salesOrderAppDetails.Select(x => x.ProductID).ToList());
-                }
             }
-            else
-                BindProducts();
         }
 
         /// <summary>

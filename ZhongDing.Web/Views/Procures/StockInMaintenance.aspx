@@ -368,7 +368,7 @@
                 var targetUrl = $.getRootPath() + "Views/Procures/Editors/ChooseProcureOrderProducts.aspx?SupplierID=" + supplierID
                 + "&OwnerEntityID=" + currentEntityID + "&GridClientID=" + gridClientIDs.gridStockInDetails;
 
-                $.openRadWindow(targetUrl, "winProductSpecification", true, 800, 600);
+                $.openRadWindow(targetUrl, "winProductSpecification", true, 1000, 600);
             }
         }
 

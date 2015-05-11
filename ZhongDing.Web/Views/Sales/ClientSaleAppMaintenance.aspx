@@ -344,7 +344,7 @@
                                                     <telerik:GridBoundColumn UniqueName="SalesQty" HeaderText="基本数量" DataField="SalesQty">
                                                         <ItemStyle HorizontalAlign="Left" Width="60" />
                                                     </telerik:GridBoundColumn>
-                                                    <telerik:GridBoundColumn UniqueName="NumberOfPackages" HeaderText="件数" DataField="NumberOfPackages">
+                                                    <telerik:GridBoundColumn UniqueName="NumberOfPackages" HeaderText="件数" DataField="NumberOfPackages" DataFormatString="{0:N2}">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
                                                     <telerik:GridBoundColumn UniqueName="SalesPrice" HeaderText="单价" DataField="SalesPrice" DataFormatString="{0:C2}">

@@ -118,6 +118,10 @@ namespace ZhongDing.Business.Repositories
                     && uiSearchObj.IncludeItemValues.Count > 0)
                     whereFuncs.Add(x => uiSearchObj.IncludeItemValues.Contains(x.ID));
 
+                if (uiSearchObj.ExcludeItemValues != null
+                    && uiSearchObj.ExcludeItemValues.Count > 0)
+                    whereFuncs.Add(x => !uiSearchObj.ExcludeItemValues.Contains(x.ID));
+
                 if (!string.IsNullOrEmpty(uiSearchObj.ItemText))
                     whereFuncs.Add(x => x.Specification.Contains(uiSearchObj.ItemText));
 

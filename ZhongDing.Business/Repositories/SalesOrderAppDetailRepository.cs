@@ -54,7 +54,7 @@ namespace ZhongDing.Business.Repositories
                                   SalesQty = q.Count,
                                   TotalSalesAmount = q.TotalSalesAmount,
                                   GiftCount = q.GiftCount,
-                                  NumberOfPackages = q.Count / (ps.NumberInLargePackage.HasValue ? ps.NumberInLargePackage.Value : 1),
+                                  NumberOfPackages = (decimal)(q.Count + q.GiftCount ?? 0) / (decimal)(ps.NumberInLargePackage.HasValue ? ps.NumberInLargePackage.Value : 1),
                                   Warehouse = tw == null ? string.Empty : tw.Name
                               }).ToList();
             }
@@ -104,7 +104,7 @@ namespace ZhongDing.Business.Repositories
                                   SalesQty = q.Count,
                                   TotalSalesAmount = q.TotalSalesAmount,
                                   GiftCount = q.GiftCount,
-                                  NumberOfPackages = q.Count / (ps.NumberInLargePackage.HasValue ? ps.NumberInLargePackage.Value : 1),
+                                  NumberOfPackages = (decimal)(q.Count + q.GiftCount ?? 0) / (decimal)(ps.NumberInLargePackage.HasValue ? ps.NumberInLargePackage.Value : 1),
                                   Warehouse = tw == null ? string.Empty : tw.Name
                               }).ToList();
             }

@@ -441,8 +441,8 @@
         </telerik:RadNotification>
 
         <telerik:RadWindowManager ID="radWindowManager" VisibleStatusbar="false" Width="600" Height="400"
-            ReloadOnShow="true" EnableShadow="true" Overlay="true" Localization-Close="关闭" IconUrl="~/Content/icons/16/edit.png"
-            runat="server" Opacity="100" Behaviors="Close,Move" Modal="true" OnClientBeforeShow="OnClientBeforeShow">
+            ReloadOnShow="true" EnableShadow="true" Overlay="true" IconUrl="~/Content/icons/16/edit.png"
+            runat="server" Opacity="100" Behaviors="Close,Move,Resize,Maximize" Modal="true" OnClientBeforeShow="OnClientBeforeShow">
             <AlertTemplate>
                 <div class="rwDialogPopup radalert">
                     <div class="rwDialogText">
@@ -468,6 +468,7 @@
                     </div>
                 </div>
             </ConfirmTemplate>
+            <Localization Close="关闭" Maximize="最大化" Restore="还原" />
         </telerik:RadWindowManager>
     </form>
 </body>
