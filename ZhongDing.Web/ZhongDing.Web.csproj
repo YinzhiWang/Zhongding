@@ -2670,6 +2670,7 @@
     <Content Include="Views\Refunds\SupplierTaskRefundMaintenance.aspx" />
     <Content Include="Views\Refunds\SupplierTaskRefundManagement.aspx" />
     <Content Include="Views\Reports\ClientSaleAppReportManagement.aspx" />
+    <Content Include="Views\Reports\DBClientQuarterlyAssessmentReport.aspx" />
     <Content Include="Views\Reports\InventorySummaryDetailReportManagement.aspx" />
     <Content Include="Views\Reports\InventorySummaryReportManagement.aspx" />
     <Content Include="Views\Reports\DCInventoryChecklistReport.aspx" />
@@ -3580,6 +3581,13 @@
     </Compile>
     <Compile Include="Views\Reports\ClientSaleAppReportManagement.aspx.designer.cs">
       <DependentUpon>ClientSaleAppReportManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\DBClientQuarterlyAssessmentReport.aspx.cs">
+      <DependentUpon>DBClientQuarterlyAssessmentReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reports\DBClientQuarterlyAssessmentReport.aspx.designer.cs">
+      <DependentUpon>DBClientQuarterlyAssessmentReport.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Reports\InventorySummaryDetailReportManagement.aspx.cs">
       <DependentUpon>InventorySummaryDetailReportManagement.aspx</DependentUpon>

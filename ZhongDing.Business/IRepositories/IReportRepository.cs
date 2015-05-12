@@ -36,6 +36,23 @@ namespace ZhongDing.Business.IRepositories
         
         IList<UIProcurePlanReport> GetProcurePlanReport(UISearchProcurePlanReport uiSearchObj);
 
+        /// <summary>
+        /// 大包客户季度考核表
+        /// </summary>
+        /// <param name="uiSearchObj">The UI search obj.</param>
+        /// <returns>IList{UIDBClientQuarterlyAssessmentReport}.</returns>
+        IList<UIDBClientQuarterlyAssessmentReport> GetDBClientQuarterlyAssessmentReport(UISearchDBClientQuarterlyAssessmentReport uiSearchObj);
+
+        /// <summary>
+        /// 大包客户季度考核表
+        /// </summary>
+        /// <param name="uiSearchObj">The UI search obj.</param>
+        /// <param name="pageIndex">Index of the page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="totalRecords">The total records.</param>
+        /// <returns>IList{UIDBClientQuarterlyAssessmentReport}.</returns>
+        IList<UIDBClientQuarterlyAssessmentReport> GetDBClientQuarterlyAssessmentReport(UISearchDBClientQuarterlyAssessmentReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
+
         IList<UIInventorySummaryReport> GetInventorySummaryReport(UISearchInventorySummaryReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
 
         IList<UIInventorySummaryDetailReport> GetInventorySummaryDetailReport(UISearchInventorySummaryDetailReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
@@ -43,5 +60,6 @@ namespace ZhongDing.Business.IRepositories
         IList<UIInventorySummaryReport> GetInventorySummaryReport(UISearchInventorySummaryReport uiSearchObj);
 
         IList<UIInventorySummaryDetailReport> GetInventorySummaryDetailReport(UISearchInventorySummaryDetailReport uiSearchObj);
+
     }
 }

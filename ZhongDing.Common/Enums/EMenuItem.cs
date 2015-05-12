@@ -247,10 +247,17 @@ namespace ZhongDing.Common.Enums
         /// 采购计划报表
         /// </summary>
         ProcurePlanReportManage,
+
         /// <summary>
         /// 库存汇总表
         /// </summary>
         InventorySummaryReportManage = 107,
+
+        /// <summary>
+        /// 大包客户季度考核表
+        /// </summary>
+        DBClientQuarterlyAssessmentReport = 112,
+
         /// <summary>
         /// 配送公司库存核对表
         /// </summary>

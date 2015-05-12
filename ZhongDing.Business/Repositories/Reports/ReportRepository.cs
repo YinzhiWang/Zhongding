@@ -347,6 +347,273 @@ namespace ZhongDing.Business.Repositories.Reports
 
         }
 
+        #region 大包客户季度考核表
+
+        public IList<UIDBClientQuarterlyAssessmentReport> GetDBClientQuarterlyAssessmentReport(UISearchDBClientQuarterlyAssessmentReport uiSearchObj)
+        {
+            IList<UIDBClientQuarterlyAssessmentReport> uiEntities = new List<UIDBClientQuarterlyAssessmentReport>();
+
+            if (uiSearchObj.Year > 0 && uiSearchObj.Quarter > 0)
+            {
+                int beginMonth = 1;
+                int endMonth = 3;
+
+                EQuarter quarter = (EQuarter)uiSearchObj.Quarter;
+
+                switch (quarter)
+                {
+                    case EQuarter.Quarter1:
+                        beginMonth = (int)EMonthOfYear.January;
+                        endMonth = (int)EMonthOfYear.March;
+                        break;
+                    case EQuarter.Quarter2:
+                        beginMonth = (int)EMonthOfYear.April;
+                        endMonth = (int)EMonthOfYear.June;
+                        break;
+                    case EQuarter.Quarter3:
+                        beginMonth = (int)EMonthOfYear.July;
+                        endMonth = (int)EMonthOfYear.September;
+                        break;
+                    case EQuarter.Quarter4:
+                        beginMonth = (int)EMonthOfYear.October;
+                        endMonth = (int)EMonthOfYear.December;
+                        break;
+                }
+
+                DateTime firstMonth = new DateTime(uiSearchObj.Year, beginMonth, 1);
+                DateTime secondMonth = firstMonth.AddMonths(1);
+                DateTime thirdMonth = firstMonth.AddMonths(2);
+                DateTime endOfQuarter = thirdMonth.AddMonths(1);
+
+                uiEntities = (from dbc in DB.DBContract
+                              join dbch in DB.DBContractHospital on dbc.ID equals dbch.DBContractID
+                              join p in DB.Product on dbc.ProductID equals p.ID
+                              join ps in DB.ProductSpecification on dbc.ProductSpecificationID equals ps.ID
+                              join cu in DB.ClientUser on dbc.ClientUserID equals cu.ID
+                              join ht in DB.HospitalType on dbc.HospitalTypeID equals ht.ID
+                              join h in DB.Hospital on dbch.HospitalID equals h.ID
+                              where dbc.IsDeleted == false && dbc.IsTempContract != true
+                              && (!uiSearchObj.ClientUserID.HasValue || dbc.ClientUserID == uiSearchObj.ClientUserID)
+                              select new UIDBClientQuarterlyAssessmentReport
+                              {
+                                  ClientUserName = cu.ClientName,
+                                  HospitalType = ht.TypeName,
+                                  ProductName = p.ProductName,
+                                  Specification = ps.Specification,
+                                  HospitalName = h.HospitalName,
+                                  PromotionExpense = dbc.PromotionExpense,
+                                  QuarterTaskAssignment = DB.DBContractTaskAssignment.Any(x => x.DBContractID == dbc.ID && x.MonthOfTask >= beginMonth && x.MonthOfTask <= endMonth)
+                                  ? DB.DBContractTaskAssignment.Where(x => x.DBContractID == dbc.ID && x.MonthOfTask >= beginMonth && x.MonthOfTask <= endMonth)
+                                     .Sum(x => x.Quantity ?? 0) : 0,
+                                  FirstMonthSalesQty = (from fdd in DB.DCFlowDataDetail
+                                                        join fd in DB.DCFlowData on fdd.DCFlowDataID equals fd.ID
+                                                        where fd.IsCorrectlyFlow == true && fdd.DBContractID == dbc.ID
+                                                        && fd.ProductID == dbc.ProductID && fd.ProductSpecificationID == dbc.ProductSpecificationID
+                                                        && fdd.ClientUserID == dbc.ClientUserID
+                                                        && fdd.HospitalID == dbch.HospitalID && fdd.SaleDate >= firstMonth
+                                                        && fdd.SaleDate < secondMonth
+                                                        select new { fdd.SaleQty }).Any(x => x.SaleQty > 0) ?
+                                                        (from fdd in DB.DCFlowDataDetail
+                                                         join fd in DB.DCFlowData on fdd.DCFlowDataID equals fd.ID
+                                                         where fd.IsCorrectlyFlow == true && fdd.DBContractID == dbc.ID
+                                                         && fd.ProductID == dbc.ProductID && fd.ProductSpecificationID == dbc.ProductSpecificationID
+                                                         && fdd.ClientUserID == dbc.ClientUserID
+                                                         && fdd.HospitalID == dbch.HospitalID && fdd.SaleDate >= firstMonth
+                                                         && fdd.SaleDate < secondMonth
+                                                         select new { fdd.SaleQty }).Sum(x => x.SaleQty) : 0,
+
+                                  SecondMonthSalesQty = (from fdd in DB.DCFlowDataDetail
+                                                         join fd in DB.DCFlowData on fdd.DCFlowDataID equals fd.ID
+                                                         where fd.IsCorrectlyFlow == true && fdd.DBContractID == dbc.ID
+                                                         && fd.ProductID == dbc.ProductID && fd.ProductSpecificationID == dbc.ProductSpecificationID
+                                                         && fdd.ClientUserID == dbc.ClientUserID
+                                                         && fdd.HospitalID == dbch.HospitalID && fdd.SaleDate >= secondMonth
+                                                         && fdd.SaleDate < thirdMonth
+                                                         select new { fdd.SaleQty }).Any(x => x.SaleQty > 0) ?
+                                                        (from fdd in DB.DCFlowDataDetail
+                                                         join fd in DB.DCFlowData on fdd.DCFlowDataID equals fd.ID
+                                                         where fd.IsCorrectlyFlow == true && fdd.DBContractID == dbc.ID
+                                                         && fd.ProductID == dbc.ProductID && fd.ProductSpecificationID == dbc.ProductSpecificationID
+                                                         && fdd.ClientUserID == dbc.ClientUserID
+                                                         && fdd.HospitalID == dbch.HospitalID && fdd.SaleDate >= secondMonth
+                                                         && fdd.SaleDate < thirdMonth
+                                                         select new { fdd.SaleQty }).Sum(x => x.SaleQty) : 0,
+                                  ThirdMonthSalesQty = (from fdd in DB.DCFlowDataDetail
+                                                        join fd in DB.DCFlowData on fdd.DCFlowDataID equals fd.ID
+                                                        where fd.IsCorrectlyFlow == true && fdd.DBContractID == dbc.ID
+                                                        && fd.ProductID == dbc.ProductID && fd.ProductSpecificationID == dbc.ProductSpecificationID
+                                                        && fdd.ClientUserID == dbc.ClientUserID
+                                                        && fdd.HospitalID == dbch.HospitalID && fdd.SaleDate >= thirdMonth
+                                                        && fdd.SaleDate < endOfQuarter
+                                                        select new { fdd.SaleQty }).Any(x => x.SaleQty > 0) ?
+                                                        (from fdd in DB.DCFlowDataDetail
+                                                         join fd in DB.DCFlowData on fdd.DCFlowDataID equals fd.ID
+                                                         where fd.IsCorrectlyFlow == true && fdd.DBContractID == dbc.ID
+                                                         && fd.ProductID == dbc.ProductID && fd.ProductSpecificationID == dbc.ProductSpecificationID
+                                                         && fdd.ClientUserID == dbc.ClientUserID
+                                                         && fdd.HospitalID == dbch.HospitalID && fdd.SaleDate >= thirdMonth
+                                                         && fdd.SaleDate < endOfQuarter
+                                                         select new { fdd.SaleQty }).Sum(x => x.SaleQty) : 0,
+
+
+                              }).ToList();
+
+                foreach (var uiEntity in uiEntities)
+                {
+                    var totalQuarterQty = uiEntity.FirstMonthSalesQty + uiEntity.SecondMonthSalesQty + uiEntity.ThirdMonthSalesQty;
+                    uiEntity.QuarterAmount = totalQuarterQty * uiEntity.PromotionExpense ?? 0M;
+
+                    if (totalQuarterQty > 0
+                        && totalQuarterQty < uiEntity.QuarterTaskAssignment)
+                    {
+                        uiEntity.RewardRate = -0.05M;
+
+                        uiEntity.RewardAmount = uiEntity.QuarterAmount * uiEntity.RewardRate;
+                    }
+                }
+            }
+
+            return uiEntities;
+        }
+
+        public IList<UIDBClientQuarterlyAssessmentReport> GetDBClientQuarterlyAssessmentReport(UISearchDBClientQuarterlyAssessmentReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
+        {
+            IList<UIDBClientQuarterlyAssessmentReport> uiEntities = new List<UIDBClientQuarterlyAssessmentReport>();
+
+            int total = 0;
+
+            if (uiSearchObj.Year > 0 && uiSearchObj.Quarter > 0)
+            {
+                int beginMonth = 1;
+                int endMonth = 3;
+
+                EQuarter quarter = (EQuarter)uiSearchObj.Quarter;
+
+                switch (quarter)
+                {
+                    case EQuarter.Quarter1:
+                        beginMonth = (int)EMonthOfYear.January;
+                        endMonth = (int)EMonthOfYear.March;
+                        break;
+                    case EQuarter.Quarter2:
+                        beginMonth = (int)EMonthOfYear.April;
+                        endMonth = (int)EMonthOfYear.June;
+                        break;
+                    case EQuarter.Quarter3:
+                        beginMonth = (int)EMonthOfYear.July;
+                        endMonth = (int)EMonthOfYear.September;
+                        break;
+                    case EQuarter.Quarter4:
+                        beginMonth = (int)EMonthOfYear.October;
+                        endMonth = (int)EMonthOfYear.December;
+                        break;
+                }
+
+                DateTime firstMonth = new DateTime(uiSearchObj.Year, beginMonth, 1);
+                DateTime secondMonth = firstMonth.AddMonths(1);
+                DateTime thirdMonth = firstMonth.AddMonths(2);
+                DateTime endOfQuarter = thirdMonth.AddMonths(1);
+
+                var query = (from dbc in DB.DBContract
+                             join dbch in DB.DBContractHospital on dbc.ID equals dbch.DBContractID
+                             join p in DB.Product on dbc.ProductID equals p.ID
+                             join ps in DB.ProductSpecification on dbc.ProductSpecificationID equals ps.ID
+                             join cu in DB.ClientUser on dbc.ClientUserID equals cu.ID
+                             join ht in DB.HospitalType on dbc.HospitalTypeID equals ht.ID
+                             join h in DB.Hospital on dbch.HospitalID equals h.ID
+                             where dbc.IsDeleted == false && dbc.IsTempContract != true
+                             && (!uiSearchObj.ClientUserID.HasValue || dbc.ClientUserID == uiSearchObj.ClientUserID)
+                             select new UIDBClientQuarterlyAssessmentReport
+                             {
+                                 ClientUserName = cu.ClientName,
+                                 HospitalType = ht.TypeName,
+                                 ProductName = p.ProductName,
+                                 Specification = ps.Specification,
+                                 HospitalName = h.HospitalName,
+                                 PromotionExpense = dbc.PromotionExpense,
+                                 QuarterTaskAssignment = DB.DBContractTaskAssignment.Any(x => x.DBContractID == dbc.ID && x.MonthOfTask >= beginMonth && x.MonthOfTask <= endMonth)
+                                 ? DB.DBContractTaskAssignment.Where(x => x.DBContractID == dbc.ID && x.MonthOfTask >= beginMonth && x.MonthOfTask <= endMonth)
+                                    .Sum(x => x.Quantity ?? 0) : 0,
+                                 FirstMonthSalesQty = (from fdd in DB.DCFlowDataDetail
+                                                       join fd in DB.DCFlowData on fdd.DCFlowDataID equals fd.ID
+                                                       where fd.IsCorrectlyFlow == true && fdd.DBContractID == dbc.ID
+                                                       && fd.ProductID == dbc.ProductID && fd.ProductSpecificationID == dbc.ProductSpecificationID
+                                                       && fdd.ClientUserID == dbc.ClientUserID
+                                                       && fdd.HospitalID == dbch.HospitalID && fdd.SaleDate >= firstMonth
+                                                       && fdd.SaleDate < secondMonth
+                                                       select new { fdd.SaleQty }).Any(x => x.SaleQty > 0) ?
+                                                       (from fdd in DB.DCFlowDataDetail
+                                                        join fd in DB.DCFlowData on fdd.DCFlowDataID equals fd.ID
+                                                        where fd.IsCorrectlyFlow == true && fdd.DBContractID == dbc.ID
+                                                        && fd.ProductID == dbc.ProductID && fd.ProductSpecificationID == dbc.ProductSpecificationID
+                                                        && fdd.ClientUserID == dbc.ClientUserID
+                                                        && fdd.HospitalID == dbch.HospitalID && fdd.SaleDate >= firstMonth
+                                                        && fdd.SaleDate < secondMonth
+                                                        select new { fdd.SaleQty }).Sum(x => x.SaleQty) : 0,
+
+                                 SecondMonthSalesQty = (from fdd in DB.DCFlowDataDetail
+                                                        join fd in DB.DCFlowData on fdd.DCFlowDataID equals fd.ID
+                                                        where fd.IsCorrectlyFlow == true && fdd.DBContractID == dbc.ID
+                                                        && fd.ProductID == dbc.ProductID && fd.ProductSpecificationID == dbc.ProductSpecificationID
+                                                        && fdd.ClientUserID == dbc.ClientUserID
+                                                        && fdd.HospitalID == dbch.HospitalID && fdd.SaleDate >= secondMonth
+                                                        && fdd.SaleDate < thirdMonth
+                                                        select new { fdd.SaleQty }).Any(x => x.SaleQty > 0) ?
+                                                       (from fdd in DB.DCFlowDataDetail
+                                                        join fd in DB.DCFlowData on fdd.DCFlowDataID equals fd.ID
+                                                        where fd.IsCorrectlyFlow == true && fdd.DBContractID == dbc.ID
+                                                        && fd.ProductID == dbc.ProductID && fd.ProductSpecificationID == dbc.ProductSpecificationID
+                                                        && fdd.ClientUserID == dbc.ClientUserID
+                                                        && fdd.HospitalID == dbch.HospitalID && fdd.SaleDate >= secondMonth
+                                                        && fdd.SaleDate < thirdMonth
+                                                        select new { fdd.SaleQty }).Sum(x => x.SaleQty) : 0,
+                                 ThirdMonthSalesQty = (from fdd in DB.DCFlowDataDetail
+                                                       join fd in DB.DCFlowData on fdd.DCFlowDataID equals fd.ID
+                                                       where fd.IsCorrectlyFlow == true && fdd.DBContractID == dbc.ID
+                                                       && fd.ProductID == dbc.ProductID && fd.ProductSpecificationID == dbc.ProductSpecificationID
+                                                       && fdd.ClientUserID == dbc.ClientUserID
+                                                       && fdd.HospitalID == dbch.HospitalID && fdd.SaleDate >= thirdMonth
+                                                       && fdd.SaleDate < endOfQuarter
+                                                       select new { fdd.SaleQty }).Any(x => x.SaleQty > 0) ?
+                                                       (from fdd in DB.DCFlowDataDetail
+                                                        join fd in DB.DCFlowData on fdd.DCFlowDataID equals fd.ID
+                                                        where fd.IsCorrectlyFlow == true && fdd.DBContractID == dbc.ID
+                                                        && fd.ProductID == dbc.ProductID && fd.ProductSpecificationID == dbc.ProductSpecificationID
+                                                        && fdd.ClientUserID == dbc.ClientUserID
+                                                        && fdd.HospitalID == dbch.HospitalID && fdd.SaleDate >= thirdMonth
+                                                        && fdd.SaleDate < endOfQuarter
+                                                        select new { fdd.SaleQty }).Sum(x => x.SaleQty) : 0,
+
+
+                             });
+
+                total = query.Count();
+
+                uiEntities = query.OrderByDescending(x => x.QuarterTaskAssignment)
+                    .Skip(pageIndex * pageSize).Take(pageSize).ToList();
+
+                foreach (var uiEntity in uiEntities)
+                {
+                    var totalQuarterQty = uiEntity.FirstMonthSalesQty + uiEntity.SecondMonthSalesQty + uiEntity.ThirdMonthSalesQty;
+                    uiEntity.QuarterAmount = totalQuarterQty * uiEntity.PromotionExpense ?? 0M;
+
+                    if (totalQuarterQty > 0
+                        && totalQuarterQty < uiEntity.QuarterTaskAssignment)
+                    {
+                        uiEntity.RewardRate = -0.05M;
+
+                        uiEntity.RewardAmount = uiEntity.QuarterAmount * uiEntity.RewardRate;
+                    }
+                }
+            }
+
+            totalRecords = total;
+
+            return uiEntities;
+        }
+
+        #endregion
+
 
         public IList<UIInventorySummaryReport> GetInventorySummaryReport(UISearchInventorySummaryReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
         {

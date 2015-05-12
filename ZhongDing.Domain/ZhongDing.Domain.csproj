@@ -461,6 +461,7 @@
     <Compile Include="UIObjects\UIDaBaoAppDetail.cs" />
     <Compile Include="UIObjects\UIDBClientInvoiceSettlement.cs" />
     <Compile Include="UIObjects\UIDBClientInvoiceSettlementDetail.cs" />
+    <Compile Include="UIObjects\UIDBClientQuarterlyAssessmentReport.cs" />
     <Compile Include="UIObjects\UIDBClientSettleBonus.cs" />
     <Compile Include="UIObjects\UIDBClientSettleBonusPayment.cs" />
     <Compile Include="UIObjects\UIDBClientSettlement.cs" />
@@ -555,6 +556,7 @@
     <Compile Include="UISearchObjects\UISearchDaBaoAppDetail.cs" />
     <Compile Include="UISearchObjects\UISearchDBClientInvoiceSettlement.cs" />
     <Compile Include="UISearchObjects\UISearchDBClientInvoiceSettlementDetail.cs" />
+    <Compile Include="UISearchObjects\UISearchDBClientQuarterlyAssessmentReport.cs" />
     <Compile Include="UISearchObjects\UISearchDBClientSettleBonus.cs" />
     <Compile Include="UISearchObjects\UISearchDBClientSettlement.cs" />
     <Compile Include="UISearchObjects\UISearchDBContract.cs" />
