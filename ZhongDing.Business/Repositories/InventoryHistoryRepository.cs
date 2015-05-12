@@ -151,7 +151,7 @@ namespace ZhongDing.Business.Repositories
                          sid.InQty
                      })
                      .GroupBy(x => new { x.WarehouseID, x.ProductID, x.ProductSpecificationID, x.BatchNumber, x.LicenseNumber, x.ExpirationDate })
-                     .Select(x => new UIInventoryHistory
+                     .Select (x => new UIInventoryHistory
                      {
                          WarehouseID = x.Key.WarehouseID,
                          ProductID = x.Key.ProductID,

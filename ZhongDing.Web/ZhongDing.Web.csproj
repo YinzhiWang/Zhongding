@@ -2670,6 +2670,8 @@
     <Content Include="Views\Refunds\SupplierTaskRefundMaintenance.aspx" />
     <Content Include="Views\Refunds\SupplierTaskRefundManagement.aspx" />
     <Content Include="Views\Reports\ClientSaleAppReportManagement.aspx" />
+    <Content Include="Views\Reports\InventorySummaryDetailReportManagement.aspx" />
+    <Content Include="Views\Reports\InventorySummaryReportManagement.aspx" />
     <Content Include="Views\Reports\DCInventoryChecklistReport.aspx" />
     <Content Include="Views\Reports\ProcurePlanReportManagement.aspx" />
     <Content Include="Views\Reports\StockInDetailReportManagement.aspx" />
@@ -3579,6 +3581,20 @@
     <Compile Include="Views\Reports\ClientSaleAppReportManagement.aspx.designer.cs">
       <DependentUpon>ClientSaleAppReportManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Reports\InventorySummaryDetailReportManagement.aspx.cs">
+      <DependentUpon>InventorySummaryDetailReportManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reports\InventorySummaryDetailReportManagement.aspx.designer.cs">
+      <DependentUpon>InventorySummaryDetailReportManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\InventorySummaryReportManagement.aspx.cs">
+      <DependentUpon>InventorySummaryReportManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reports\InventorySummaryReportManagement.aspx.designer.cs">
+      <DependentUpon>InventorySummaryReportManagement.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Reports\DCInventoryChecklistReport.aspx.cs">
       <DependentUpon>DCInventoryChecklistReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3834,7 +3850,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

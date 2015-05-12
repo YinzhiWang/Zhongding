@@ -176,6 +176,8 @@
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/StockInDetailReportManagement.aspx');">入库明细表</a></li>
                                     <li data-level="2" data-menuitemid="106">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/ProcurePlanReportManagement.aspx');">采购计划表</a></li>
+                                     <li data-level="2" data-menuitemid="107">
+                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/InventorySummaryReportManagement.aspx');">库存汇总表</a></li>
 
 
                                     <li data-level="2" data-menuitemid="114">

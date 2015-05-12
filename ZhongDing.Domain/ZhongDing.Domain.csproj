@@ -485,6 +485,8 @@
     <Compile Include="UIObjects\UIImportErrorLog.cs" />
     <Compile Include="UIObjects\UIImportFileLog.cs" />
     <Compile Include="UIObjects\UIInventoryHistory.cs" />
+    <Compile Include="UIObjects\UIInventorySummaryDetailReport.cs" />
+    <Compile Include="UIObjects\UIInventorySummaryReport.cs" />
     <Compile Include="UIObjects\UIProcureOrderAppDetail.cs" />
     <Compile Include="UIObjects\UIProcureOrderAppDetailReport.cs" />
     <Compile Include="UIObjects\UIProcureOrderApplication.cs" />
@@ -575,6 +577,8 @@
     <Compile Include="UISearchObjects\UISearchImportErrorLog.cs" />
     <Compile Include="UISearchObjects\UISearchImportFileLog.cs" />
     <Compile Include="UISearchObjects\UISearchInventoryHistory.cs" />
+    <Compile Include="UISearchObjects\UISearchInventorySummaryDetailReport.cs" />
+    <Compile Include="UISearchObjects\UISearchInventorySummaryReport.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderAppDetail.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderAppDetailReport.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderApplication.cs" />

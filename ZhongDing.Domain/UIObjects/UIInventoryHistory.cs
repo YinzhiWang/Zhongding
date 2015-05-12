@@ -33,5 +33,9 @@ namespace ZhongDing.Domain.UIObjects
         public decimal Amount { get; set; }
 
         public int NumberInLargePackage { get; set; }
+
+        public int NewInQty { get; set; }
+
+        public int NewOutQty { get; set; }
     }
 }

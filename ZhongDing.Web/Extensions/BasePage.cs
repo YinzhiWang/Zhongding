@@ -156,5 +156,60 @@ namespace ZhongDing.Web
             Response.Redirect("~/NoAccess.aspx", true); //没有权限访问
         }
 
+        /// <summary>
+        /// 获取url的string参数.
+        /// </summary>
+        /// <param name="parameterKey">The parameter key.</param>
+        /// <returns>System.String.</returns>
+        public string StrParameter(string parameterKey)
+        {
+            string parameterValue = "";
+            if (Request.QueryString[parameterKey] != null)
+            {
+                parameterValue = Request.QueryString[parameterKey].ToString();
+            }
+            else
+            {
+                parameterValue = "";
+            }
+            return parameterValue;
+        }
+        /// <summary>
+        /// 获取url的int参数
+        /// </summary>
+        /// <param name="parameterKey"></param>
+        /// <returns></returns>
+        public int? IntParameter(string parameterKey)
+        {
+            int? parameterValue = null;
+            if (Request.QueryString[parameterKey] != null)
+            {
+                int temp = 0;
+                if (int.TryParse(Request.QueryString[parameterKey].ToString(), out temp))
+                {
+                    parameterValue = temp;
+                }
+            }
+            return parameterValue;
+        }
+        /// <summary>
+        /// 获取url的DateTime参数
+        /// </summary>
+        /// <param name="parameterKey"></param>
+        /// <returns></returns>
+        public DateTime? DateTimeParameter(string parameterKey)
+        {
+            DateTime? parameterValue = null;
+            if (Request.QueryString[parameterKey] != null)
+            {
+                string tempStr = Request.QueryString[parameterKey].ToString();
+                DateTime tempDateTime;
+                if (DateTime.TryParse(tempStr, out tempDateTime))
+                {
+                    parameterValue = tempDateTime;
+                }
+            }
+            return parameterValue;
+        }
     }
 }
