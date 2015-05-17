@@ -149,5 +149,12 @@ namespace ZhongDing.Business.Repositories
 
             return uiDropdownItems;
         }
+
+
+        public Warehouse GetByWarehouseName(string warehouseName)
+        {
+            var item = DB.Warehouse.Where(x => x.IsDeleted == false && x.Name == warehouseName).FirstOrDefault();
+            return item;
+        }
     }
 }

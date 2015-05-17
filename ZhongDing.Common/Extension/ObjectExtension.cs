@@ -22,7 +22,7 @@ namespace ZhongDing.Common.Extension
                 throw new Exception("不能为null");
             return obj.ToString();
         }
-        public static string StringOrNull(this object obj)
+        public static string ToStringOrNull(this object obj)
         {
             if (obj == null)
                 return string.Empty;
@@ -84,7 +84,29 @@ namespace ZhongDing.Common.Extension
             }
             return result;
         }
-
+        public static DateTime ToDateTime(this object obj)
+        {
+            if (obj == null)
+                throw new Exception("不能为null");
+            return DateTime.Parse(obj.ToString());
+        }
+        public static DateTime? ToDateTimeOrNull(this object obj)
+        {
+            DateTime result;
+            if (obj == null)
+                return null;
+            try
+            {
+                if (DateTime.TryParse(obj.ToString(), out result))
+                {
+                    return result;
+                }
+            }
+            catch
+            {
+            }
+            return null;
+        }
         public static string GetName<T>(this object obj, Expression<Func<T>> propertyExpression)
         {
             if (propertyExpression != null)

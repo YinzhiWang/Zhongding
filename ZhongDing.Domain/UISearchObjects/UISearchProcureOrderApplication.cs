@@ -14,5 +14,7 @@ namespace ZhongDing.Domain.UISearchObjects
 
         public int SupplierID { get; set; }
 
+
+        public bool IsImport { get; set; }
     }
 }

@@ -53,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\DynamicLinq.cs" />
+    <Compile Include="IRepositories\IProcureOrderAppDetailImportDataRepository.cs" />
     <Compile Include="IRepositories\IClientAttachedInvoiceSettlementDetailRepository.cs" />
     <Compile Include="IRepositories\ICautionMoneyTypeRepository.cs" />
     <Compile Include="IRepositories\IClientAttachedInvoiceSettlementRepository.cs" />
@@ -72,6 +73,8 @@
     <Compile Include="IRepositories\IDBClientSettlementRepository.cs" />
     <Compile Include="IRepositories\IDCInventoryDataRepository.cs" />
     <Compile Include="IRepositories\IHospitalTypeRepository.cs" />
+    <Compile Include="IRepositories\IProcureOrderApplicationImportDataRepository.cs" />
+    <Compile Include="IRepositories\IProcureOrderApplicationImportFileLogRepository.cs" />
     <Compile Include="IRepositories\ISupplierCautionMoneyDeductionRepository.cs" />
     <Compile Include="IRepositories\ISupplierCautionMoneyRepository.cs" />
     <Compile Include="IRepositories\ISupplierInvoiceDetailRepository.cs" />
@@ -194,6 +197,7 @@
     <Compile Include="Repositories\ClientTaskRefundAppRepository.cs" />
     <Compile Include="Repositories\ClientUserRepository.cs" />
     <Compile Include="Repositories\CompanyRepository.cs" />
+    <Compile Include="Repositories\ProcureOrderAppDetailImportDataRepository.cs" />
     <Compile Include="Repositories\CostTypeRepository.cs" />
     <Compile Include="Repositories\DBClientInvoiceDetailRepository.cs" />
     <Compile Include="Repositories\DBClientInvoiceRepository.cs" />
@@ -231,6 +235,8 @@
     <Compile Include="Repositories\InventoryHistoryRepository.cs" />
     <Compile Include="Repositories\OwnerTypeRepository.cs" />
     <Compile Include="Repositories\ProcureOrderAppDetailRepository.cs" />
+    <Compile Include="Repositories\ProcureOrderApplicationImportDataRepository.cs" />
+    <Compile Include="Repositories\ProcureOrderApplicationImportFileLogRepository.cs" />
     <Compile Include="Repositories\ProcureOrderApplicationRepository.cs" />
     <Compile Include="Repositories\ProductBasicPriceRepository.cs" />
     <Compile Include="Repositories\ProductCategoryRepository.cs" />

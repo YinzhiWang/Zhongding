@@ -29,7 +29,8 @@ namespace ZhongDing.Common
         private static readonly string CONFIGKEY_UPLOADFILEPATH_DCFLOWDATA = "UploadFilePath.DCFlowData";
         private static readonly string CONFIGKEY_UPLOADFILEPATH_DCINVENTORYDATA = "UploadFilePath.DCInventoryData";
         private static readonly string CONFIGKEY_UPLOADFILEPATH_CLIENTFLOWDATA = "UploadFilePath.ClientFlowData";
-
+        private static readonly string CONFIGKEY_UPLOADFILEPATH_PROCUREORDERDATA = "UploadFilePath.ProcureOrderData";
+        
 
 
         private static readonly string CONFIGKEY_MEMBERSHIP_PASSWORDRESETLENGTH = "Membership.PasswordResetLength";
@@ -241,6 +242,18 @@ namespace ZhongDing.Common
             get
             {
                 return ConfigurationManager.AppSettings[CONFIGKEY_UPLOADFILEPATH_CLIENTFLOWDATA];
+            }
+        }
+
+        /// <summary>
+        /// 商业客户流向数据上传路径
+        /// </summary>
+        /// <value>The upload file path client flow data.</value>
+        public static string UploadFilePathProcureOrderData
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[CONFIGKEY_UPLOADFILEPATH_PROCUREORDERDATA];
             }
         }
 

@@ -27,5 +27,7 @@ namespace ZhongDing.Business.IRepositories
         /// <param name="totalRecords">总记录数.</param>
         /// <returns>IList{UIProduct}.</returns>
         IList<UIProduct> GetUIList(UISearchProduct uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
+
+        Product GetByProductCode(string productCode);
     }
 }

@@ -76,6 +76,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
@@ -2613,6 +2614,9 @@
     <Content Include="Views\HRM\WorkflowPermissionMaintenance.aspx" />
     <Content Include="Views\HRM\WorkflowPermissionManagement.aspx" />
     <Content Include="Views\Imports\ClientFlowDataManagement.aspx" />
+    <Content Include="Views\Imports\ProcureOrderImportDataDetails.aspx" />
+    <Content Include="Views\Imports\ProcureOrderImportData.aspx" />
+    <Content Include="Views\Imports\ProcureOrderDataManagement.aspx" />
     <Content Include="Views\Imports\DCFlowDataManagement.aspx" />
     <Content Include="Views\Imports\DCFlowDataMaintenance.aspx" />
     <Content Include="Views\Imports\DCInventoryDataManagement.aspx" />
@@ -2708,6 +2712,7 @@
     <Content Include="Content\Templates\XXXX配送公司流向数据%28XXXX年XX月%29.xlsx" />
     <Content Include="Content\Templates\XXXX客户流向数据%28XXXX年XX月%29.xlsx" />
     <Content Include="Content\Templates\XXXX配送公司库存数据%28XXXX年XX月%29.xlsx" />
+    <Content Include="Content\Templates\XXXX采购订单导入%28XXXX年XX月%29.xlsx" />
     <None Include="Scripts\jquery-1.11.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\jquery-1.11.1.min.js" />
@@ -3182,6 +3187,27 @@
     </Compile>
     <Compile Include="Views\Imports\ClientFlowDataManagement.aspx.designer.cs">
       <DependentUpon>ClientFlowDataManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Imports\ProcureOrderImportDataDetails.aspx.cs">
+      <DependentUpon>ProcureOrderImportDataDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\ProcureOrderImportDataDetails.aspx.designer.cs">
+      <DependentUpon>ProcureOrderImportDataDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Imports\ProcureOrderImportData.aspx.cs">
+      <DependentUpon>ProcureOrderImportData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\ProcureOrderImportData.aspx.designer.cs">
+      <DependentUpon>ProcureOrderImportData.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Imports\ProcureOrderDataManagement.aspx.cs">
+      <DependentUpon>ProcureOrderDataManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\ProcureOrderDataManagement.aspx.designer.cs">
+      <DependentUpon>ProcureOrderDataManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Imports\DCFlowDataManagement.aspx.cs">
       <DependentUpon>DCFlowDataManagement.aspx</DependentUpon>

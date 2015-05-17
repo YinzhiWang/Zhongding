@@ -204,5 +204,12 @@ namespace ZhongDing.Business.Repositories
 
             return uiDropdownItems;
         }
+
+
+        public Product GetByProductCode(string productCode)
+        {
+            var item = GetList(x => x.ProductCode == productCode).FirstOrDefault();
+            return item;
+        }
     }
 }

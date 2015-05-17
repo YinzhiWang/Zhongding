@@ -615,10 +615,45 @@ namespace ZhongDing.Common
             /// </summary>
             public static readonly string INVENTORY_BALANCE_QTY = "库存数量";
 
+            /// <summary>
+            /// 订单号
+            /// </summary>
+            public static readonly string ORDER_CODE = "订单号";
+
+
             #endregion
 
+            /// <summary>
+            /// 订单日期
+            /// </summary>
+            public static readonly string ORDER_DATE = "订单日期";
+            /// <summary>
+            /// 供应商
+            /// </summary>
+            public static readonly string SUPPLIER_NAME = "供应商";
+            /// <summary>
+            /// 交货日期
+            /// </summary>
+            public static readonly string ESTDELIVERY_DATE = "交货日期";
+            /// <summary>
+            /// 入库仓库
+            /// </summary>
+            public static readonly string STOCKIN_WAREHOUSE_NAME="入库仓库";
 
+            /// <summary>
+            /// 采购数量
+            /// </summary>
+            public static readonly string PROCURE_COUNT = "基本数量";
 
+            /// <summary>
+            /// 采购数量
+            /// </summary>
+            public static readonly string PROCURE_PRICE = "采购单价";
+
+            /// <summary>
+            /// 采购金额
+            /// </summary>
+            public static readonly string PROCURE_TOTAL_AMOUNT = "采购金额";
         }
 
         #endregion

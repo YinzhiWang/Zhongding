@@ -293,7 +293,16 @@
     <Compile Include="Models\ProcureOrderAppDetail.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ProcureOrderAppDetailImportData.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProcureOrderApplication.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProcureOrderApplicationImportData.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProcureOrderApplicationImportFileLog.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Product.cs">
@@ -489,8 +498,11 @@
     <Compile Include="UIObjects\UIInventorySummaryDetailReport.cs" />
     <Compile Include="UIObjects\UIInventorySummaryReport.cs" />
     <Compile Include="UIObjects\UIProcureOrderAppDetail.cs" />
+    <Compile Include="UIObjects\UIProcureOrderAppDetailImportData.cs" />
     <Compile Include="UIObjects\UIProcureOrderAppDetailReport.cs" />
     <Compile Include="UIObjects\UIProcureOrderApplication.cs" />
+    <Compile Include="UIObjects\UIProcureOrderApplicationImportData.cs" />
+    <Compile Include="UIObjects\UIProcureOrderApplicationImportFileLog.cs" />
     <Compile Include="UIObjects\UIProcureOrderApplicationPaymentReport.cs" />
     <Compile Include="UIObjects\UIProcureOrderReport.cs" />
     <Compile Include="UIObjects\UIProduct.cs" />
@@ -529,6 +541,7 @@
     <Compile Include="UIObjects\UIWarehouse.cs" />
     <Compile Include="UIObjects\UIWorkflowBase.cs" />
     <Compile Include="UIObjects\UIWorkflowStep.cs" />
+    <Compile Include="UISearchObjects\UISearchProcureOrderAppDetailImportData.cs" />
     <Compile Include="UISearchObjects\UISearchClientAttachedInvoiceSettlement.cs" />
     <Compile Include="UISearchObjects\UISearchClientAttachedInvoiceSettlementDetail.cs" />
     <Compile Include="UISearchObjects\UISearchClientInvoiceSettlement.cs" />
@@ -584,6 +597,7 @@
     <Compile Include="UISearchObjects\UISearchProcureOrderAppDetail.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderAppDetailReport.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderApplication.cs" />
+    <Compile Include="UISearchObjects\UISearchProcureOrderApplicationImportData.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderApplicationPaymentReport.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderReport.cs" />
     <Compile Include="UISearchObjects\UISearchProduct.cs" />

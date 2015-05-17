@@ -27,5 +27,12 @@ namespace ZhongDing.Business.IRepositories
         /// <param name="totalRecords">总记录数.</param>
         /// <returns>IList{UIWarehouse}.</returns>
         IList<UIWarehouse> GetUIList(UISearchWarehouse uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
+
+        /// <summary>
+        /// Get By WarehouseName
+        /// </summary>
+        /// <param name="warehouseName"></param>
+        /// <returns></returns>
+        Warehouse GetByWarehouseName(string warehouseName);
     }
 }

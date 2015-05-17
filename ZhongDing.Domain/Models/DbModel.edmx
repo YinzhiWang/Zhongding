@@ -81,7 +81,10 @@
           <EntitySet Name="PaymentStatus" EntityType="DbModel.Store.PaymentStatus" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PaymentType" EntityType="DbModel.Store.PaymentType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ProcureOrderAppDetail" EntityType="DbModel.Store.ProcureOrderAppDetail" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ProcureOrderAppDetailImportData" EntityType="DbModel.Store.ProcureOrderAppDetailImportData" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ProcureOrderApplication" EntityType="DbModel.Store.ProcureOrderApplication" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ProcureOrderApplicationImportData" EntityType="DbModel.Store.ProcureOrderApplicationImportData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ProcureOrderApplicationImportFileLog" EntityType="DbModel.Store.ProcureOrderApplicationImportFileLog" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Product" EntityType="DbModel.Store.Product" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ProductBasicPrice" EntityType="DbModel.Store.ProductBasicPrice" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ProductCategory" EntityType="DbModel.Store.ProductCategory" store:Type="Tables" Schema="dbo" />
@@ -818,6 +821,10 @@
             <End Role="Warehouse" EntitySet="Warehouse" />
             <End Role="ProcureOrderAppDetail" EntitySet="ProcureOrderAppDetail" />
           </AssociationSet>
+          <AssociationSet Name="FK_ProcureOrderAppDetailImportData_ProcureOrderApplicationImportDataID" Association="DbModel.Store.FK_ProcureOrderAppDetailImportData_ProcureOrderApplicationImportDataID">
+            <End Role="ProcureOrderApplicationImportData" EntitySet="ProcureOrderApplicationImportData" />
+            <End Role="ProcureOrderAppDetailImportData" EntitySet="ProcureOrderAppDetailImportData" />
+          </AssociationSet>
           <AssociationSet Name="FK_ProcureOrderApplication_Supplier" Association="DbModel.Store.FK_ProcureOrderApplication_Supplier">
             <End Role="Supplier" EntitySet="Supplier" />
             <End Role="ProcureOrderApplication" EntitySet="ProcureOrderApplication" />
@@ -825,6 +832,14 @@
           <AssociationSet Name="FK_ProcureOrderApplication_WorkflowStatus" Association="DbModel.Store.FK_ProcureOrderApplication_WorkflowStatus">
             <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
             <End Role="ProcureOrderApplication" EntitySet="ProcureOrderApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcureOrderApplicationImportData_ProcureOrderApplicationImportFileLogID" Association="DbModel.Store.FK_ProcureOrderApplicationImportData_ProcureOrderApplicationImportFileLogID">
+            <End Role="ProcureOrderApplicationImportFileLog" EntitySet="ProcureOrderApplicationImportFileLog" />
+            <End Role="ProcureOrderApplicationImportData" EntitySet="ProcureOrderApplicationImportData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcureOrderApplicationImportFileLog_ImportFileLogID" Association="DbModel.Store.FK_ProcureOrderApplicationImportFileLog_ImportFileLogID">
+            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
+            <End Role="ProcureOrderApplicationImportFileLog" EntitySet="ProcureOrderApplicationImportFileLog" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Company" Association="DbModel.Store.FK_Product_Company">
             <End Role="Company" EntitySet="Company" />
@@ -2394,6 +2409,23 @@
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
         </EntityType>
+        <EntityType Name="ProcureOrderAppDetailImportData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ProcureOrderApplicationImportDataID" Type="int" Nullable="false" />
+          <Property Name="ProcureOrderAppDetailID" Type="int" Nullable="false" />
+          <Property Name="WarehouseName" Type="nvarchar" MaxLength="256" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="256" />
+          <Property Name="Specification" Type="nvarchar" MaxLength="256" />
+          <Property Name="ProcureCount" Type="int" />
+          <Property Name="ProcurePrice" Type="decimal" />
+          <Property Name="TotalAmount" Type="decimal" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="UnitOfMeasurement" Type="nvarchar" MaxLength="256" />
+        </EntityType>
         <EntityType Name="ProcureOrderApplication">
           <Key>
             <PropertyRef Name="ID" />
@@ -2412,6 +2444,30 @@
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="IsImport" Type="bit" />
+        </EntityType>
+        <EntityType Name="ProcureOrderApplicationImportData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EstDeliveryDate" Type="datetime" Nullable="false" />
+          <Property Name="ProcureOrderApplicationImportFileLogID" Type="int" Nullable="false" />
+          <Property Name="ProcureOrderApplicationID" Type="int" Nullable="false" />
+          <Property Name="OrderCode" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="SupplierName" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="OrderDate" Type="datetime" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="ProcureOrderApplicationImportFileLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ImportFileLogID" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -5200,6 +5256,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProcureOrderAppDetailImportData_ProcureOrderApplicationImportDataID">
+          <End Role="ProcureOrderApplicationImportData" Type="DbModel.Store.ProcureOrderApplicationImportData" Multiplicity="1" />
+          <End Role="ProcureOrderAppDetailImportData" Type="DbModel.Store.ProcureOrderAppDetailImportData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProcureOrderApplicationImportData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProcureOrderAppDetailImportData">
+              <PropertyRef Name="ProcureOrderApplicationImportDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProcureOrderApplication_Supplier">
           <End Role="Supplier" Type="DbModel.Store.Supplier" Multiplicity="1" />
           <End Role="ProcureOrderApplication" Type="DbModel.Store.ProcureOrderApplication" Multiplicity="*" />
@@ -5221,6 +5289,30 @@
             </Principal>
             <Dependent Role="ProcureOrderApplication">
               <PropertyRef Name="WorkflowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcureOrderApplicationImportData_ProcureOrderApplicationImportFileLogID">
+          <End Role="ProcureOrderApplicationImportFileLog" Type="DbModel.Store.ProcureOrderApplicationImportFileLog" Multiplicity="1" />
+          <End Role="ProcureOrderApplicationImportData" Type="DbModel.Store.ProcureOrderApplicationImportData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProcureOrderApplicationImportFileLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProcureOrderApplicationImportData">
+              <PropertyRef Name="ProcureOrderApplicationImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcureOrderApplicationImportFileLog_ImportFileLogID">
+          <End Role="ImportFileLog" Type="DbModel.Store.ImportFileLog" Multiplicity="1" />
+          <End Role="ProcureOrderApplicationImportFileLog" Type="DbModel.Store.ProcureOrderApplicationImportFileLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportFileLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProcureOrderApplicationImportFileLog">
+              <PropertyRef Name="ImportFileLogID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7489,6 +7581,21 @@
             <End Role="DBContract" EntitySet="DBContract" />
             <End Role="DBContractTaskAssignment" EntitySet="DBContractTaskAssignment" />
           </AssociationSet>
+          <EntitySet Name="ProcureOrderAppDetailImportData" EntityType="DbModel.ProcureOrderAppDetailImportData" />
+          <EntitySet Name="ProcureOrderApplicationImportData" EntityType="DbModel.ProcureOrderApplicationImportData" />
+          <EntitySet Name="ProcureOrderApplicationImportFileLog" EntityType="DbModel.ProcureOrderApplicationImportFileLog" />
+          <AssociationSet Name="FK_ProcureOrderApplicationImportFileLog_ImportFileLogID" Association="DbModel.FK_ProcureOrderApplicationImportFileLog_ImportFileLogID">
+            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
+            <End Role="ProcureOrderApplicationImportFileLog" EntitySet="ProcureOrderApplicationImportFileLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcureOrderAppDetailImportData_ProcureOrderApplicationImportDataID" Association="DbModel.FK_ProcureOrderAppDetailImportData_ProcureOrderApplicationImportDataID">
+            <End Role="ProcureOrderApplicationImportData" EntitySet="ProcureOrderApplicationImportData" />
+            <End Role="ProcureOrderAppDetailImportData" EntitySet="ProcureOrderAppDetailImportData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProcureOrderApplicationImportData_ProcureOrderApplicationImportFileLogID" Association="DbModel.FK_ProcureOrderApplicationImportData_ProcureOrderApplicationImportFileLogID">
+            <End Role="ProcureOrderApplicationImportFileLog" EntitySet="ProcureOrderApplicationImportFileLog" />
+            <End Role="ProcureOrderApplicationImportData" EntitySet="ProcureOrderApplicationImportData" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -9022,6 +9129,7 @@
           <NavigationProperty Name="Supplier" Relationship="DbModel.FK_ProcureOrderApplication_Supplier" FromRole="ProcureOrderApplication" ToRole="Supplier" />
           <NavigationProperty Name="WorkflowStatus" Relationship="DbModel.FK_ProcureOrderApplication_WorkflowStatus" FromRole="ProcureOrderApplication" ToRole="WorkflowStatus" />
           <NavigationProperty Name="StockInDetail" Relationship="DbModel.FK_StockInDetail_ProcureOrderApplication" FromRole="ProcureOrderApplication" ToRole="StockInDetail" />
+          <Property Type="Boolean" Name="IsImport" />
         </EntityType>
         <Association Name="FK_ProcureOrderAppDetail_ProcureOrderApplication">
           <End Type="DbModel.ProcureOrderApplication" Role="ProcureOrderApplication" Multiplicity="1" />
@@ -10834,6 +10942,7 @@
           <NavigationProperty Name="ClientImportFileLog" Relationship="DbModel.FK_ClientImportFileLog_ImportFileLog" FromRole="ImportFileLog" ToRole="ClientImportFileLog" />
           <NavigationProperty Name="DCImportFileLog" Relationship="DbModel.FK_DCImportFileLog_ImportFileLog" FromRole="ImportFileLog" ToRole="DCImportFileLog" />
           <NavigationProperty Name="DCInventoryData" Relationship="DbModel.FK_DCInventoryData_ImportFileLog" FromRole="ImportFileLog" ToRole="DCInventoryData" />
+          <NavigationProperty Name="ProcureOrderApplicationImportFileLog" Relationship="DbModel.FK_ProcureOrderApplicationImportFileLog_ImportFileLogID" FromRole="ImportFileLog" ToRole="ProcureOrderApplicationImportFileLog" />
         </EntityType>
         <Association Name="FK_DCFlowData_DistributionCompany">
           <End Type="DbModel.DistributionCompany" Role="DistributionCompany" Multiplicity="0..1" />
@@ -13137,6 +13246,87 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ProcureOrderAppDetailImportData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="Int32" Name="ProcureOrderApplicationImportDataID" Nullable="false" />
+          <Property Type="Int32" Name="ProcureOrderAppDetailID" Nullable="false" />
+          <Property Type="String" Name="WarehouseName" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ProductName" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Specification" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ProcureCount" />
+          <Property Type="Decimal" Name="ProcurePrice" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="TotalAmount" Precision="18" Scale="0" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <NavigationProperty Name="ProcureOrderApplicationImportData" Relationship="DbModel.FK_ProcureOrderAppDetailImportData_ProcureOrderApplicationImportDataID" FromRole="ProcureOrderAppDetailImportData" ToRole="ProcureOrderApplicationImportData" />
+          <Property Type="String" Name="UnitOfMeasurement" MaxLength="256" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ProcureOrderApplicationImportData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ProcureOrderApplicationImportFileLogID" Nullable="false" />
+          <Property Type="Int32" Name="ProcureOrderApplicationID" Nullable="false" />
+          <Property Type="String" Name="OrderCode" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="OrderDate" Nullable="false" Precision="3" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <NavigationProperty Name="ProcureOrderAppDetailImportData" Relationship="DbModel.FK_ProcureOrderAppDetailImportData_ProcureOrderApplicationImportDataID" FromRole="ProcureOrderApplicationImportData" ToRole="ProcureOrderAppDetailImportData" />
+          <NavigationProperty Name="ProcureOrderApplicationImportFileLog" Relationship="DbModel.FK_ProcureOrderApplicationImportData_ProcureOrderApplicationImportFileLogID" FromRole="ProcureOrderApplicationImportData" ToRole="ProcureOrderApplicationImportFileLog" />
+          <Property Type="DateTime" Name="EstDeliveryDate" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="ProcureOrderApplicationImportFileLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ImportFileLogID" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <NavigationProperty Name="ImportFileLog" Relationship="DbModel.FK_ProcureOrderApplicationImportFileLog_ImportFileLogID" FromRole="ProcureOrderApplicationImportFileLog" ToRole="ImportFileLog" />
+          <NavigationProperty Name="ProcureOrderApplicationImportData" Relationship="DbModel.FK_ProcureOrderApplicationImportData_ProcureOrderApplicationImportFileLogID" FromRole="ProcureOrderApplicationImportFileLog" ToRole="ProcureOrderApplicationImportData" />
+        </EntityType>
+        <Association Name="FK_ProcureOrderApplicationImportFileLog_ImportFileLogID">
+          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="1" />
+          <End Type="DbModel.ProcureOrderApplicationImportFileLog" Role="ProcureOrderApplicationImportFileLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportFileLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProcureOrderApplicationImportFileLog">
+              <PropertyRef Name="ImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcureOrderAppDetailImportData_ProcureOrderApplicationImportDataID">
+          <End Type="DbModel.ProcureOrderApplicationImportData" Role="ProcureOrderApplicationImportData" Multiplicity="1" />
+          <End Type="DbModel.ProcureOrderAppDetailImportData" Role="ProcureOrderAppDetailImportData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProcureOrderApplicationImportData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProcureOrderAppDetailImportData">
+              <PropertyRef Name="ProcureOrderApplicationImportDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProcureOrderApplicationImportData_ProcureOrderApplicationImportFileLogID">
+          <End Type="DbModel.ProcureOrderApplicationImportFileLog" Role="ProcureOrderApplicationImportFileLog" Multiplicity="1" />
+          <End Type="DbModel.ProcureOrderApplicationImportData" Role="ProcureOrderApplicationImportData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProcureOrderApplicationImportFileLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ProcureOrderApplicationImportData">
+              <PropertyRef Name="ProcureOrderApplicationImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -13860,6 +14050,7 @@
           <EntitySetMapping Name="ProcureOrderApplication">
             <EntityTypeMapping TypeName="DbModel.ProcureOrderApplication">
               <MappingFragment StoreEntitySet="ProcureOrderApplication">
+                <ScalarProperty Name="IsImport" ColumnName="IsImport" />
                 <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
                 <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -15196,6 +15387,49 @@
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="MonthOfTask" ColumnName="MonthOfTask" />
                 <ScalarProperty Name="DBContractID" ColumnName="DBContractID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProcureOrderAppDetailImportData">
+            <EntityTypeMapping TypeName="DbModel.ProcureOrderAppDetailImportData">
+              <MappingFragment StoreEntitySet="ProcureOrderAppDetailImportData">
+                <ScalarProperty Name="UnitOfMeasurement" ColumnName="UnitOfMeasurement" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="ProcurePrice" ColumnName="ProcurePrice" />
+                <ScalarProperty Name="ProcureCount" ColumnName="ProcureCount" />
+                <ScalarProperty Name="Specification" ColumnName="Specification" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
+                <ScalarProperty Name="ProcureOrderAppDetailID" ColumnName="ProcureOrderAppDetailID" />
+                <ScalarProperty Name="ProcureOrderApplicationImportDataID" ColumnName="ProcureOrderApplicationImportDataID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProcureOrderApplicationImportData">
+            <EntityTypeMapping TypeName="DbModel.ProcureOrderApplicationImportData">
+              <MappingFragment StoreEntitySet="ProcureOrderApplicationImportData">
+                <ScalarProperty Name="EstDeliveryDate" ColumnName="EstDeliveryDate" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
+                <ScalarProperty Name="ProcureOrderApplicationID" ColumnName="ProcureOrderApplicationID" />
+                <ScalarProperty Name="ProcureOrderApplicationImportFileLogID" ColumnName="ProcureOrderApplicationImportFileLogID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProcureOrderApplicationImportFileLog">
+            <EntityTypeMapping TypeName="DbModel.ProcureOrderApplicationImportFileLog">
+              <MappingFragment StoreEntitySet="ProcureOrderApplicationImportFileLog">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ImportFileLogID" ColumnName="ImportFileLogID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

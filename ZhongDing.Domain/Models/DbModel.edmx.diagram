@@ -390,6 +390,12 @@
         <AssociationConnector Association="DbModel.FK_DCInventoryData_ProductSpecification" />
         <EntityTypeShape EntityType="DbModel.DBContractTaskAssignment" Width="1.5" PointX="15.75" PointY="176.125" />
         <AssociationConnector Association="DbModel.FK_DBContractTaskAssignment_DBContract" />
+        <EntityTypeShape EntityType="DbModel.ProcureOrderAppDetailImportData" Width="1.5" PointX="7.9284547473902141" PointY="30.39597761556319" />
+        <EntityTypeShape EntityType="DbModel.ProcureOrderApplicationImportData" Width="1.5" PointX="3.1872389107883157" PointY="9.41248284718603" />
+        <EntityTypeShape EntityType="DbModel.ProcureOrderApplicationImportFileLog" Width="1.5" PointX="4.2594827824549206" PointY="14.790797404381818" />
+        <AssociationConnector Association="DbModel.FK_ProcureOrderApplicationImportFileLog_ImportFileLogID" />
+        <AssociationConnector Association="DbModel.FK_ProcureOrderAppDetailImportData_ProcureOrderApplicationImportDataID" />
+        <AssociationConnector Association="DbModel.FK_ProcureOrderApplicationImportData_ProcureOrderApplicationImportFileLogID" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

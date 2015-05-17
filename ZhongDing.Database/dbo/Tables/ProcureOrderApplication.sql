@@ -13,10 +13,13 @@
     [CreatedBy]        INT           NULL,
     [LastModifiedOn]   DATETIME      NULL,
     [LastModifiedBy]   INT           NULL,
+    [IsImport]         BIT           CONSTRAINT [DF_ProcureOrderApplication_IsImport] DEFAULT ((0)) NULL,
     CONSTRAINT [PK_ClientOrderApplication] PRIMARY KEY CLUSTERED ([ID] ASC),
     CONSTRAINT [FK_ProcureOrderApplication_Supplier] FOREIGN KEY ([SupplierID]) REFERENCES [dbo].[Supplier] ([ID]),
     CONSTRAINT [FK_ProcureOrderApplication_WorkflowStatus] FOREIGN KEY ([WorkflowStatusID]) REFERENCES [dbo].[WorkflowStatus] ([ID])
 );
+
+
 
 
 

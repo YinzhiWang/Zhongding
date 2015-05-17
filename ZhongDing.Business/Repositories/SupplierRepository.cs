@@ -205,5 +205,10 @@ namespace ZhongDing.Business.Repositories
 
             return uiDropdownItems;
         }
+        public Supplier GetBySupplierName(string supplierName)
+        {
+            var item = DB.Supplier.Where(x => x.IsDeleted == false && x.SupplierName == supplierName).FirstOrDefault();
+            return item;
+        }
     }
 }

@@ -34,6 +34,12 @@ namespace ZhongDing.Business.IRepositories
         /// <param name="supplierID">供应商ID.</param>
         /// <returns>IList{UISupplierBankAccount}.</returns>
         IList<UISupplierBankAccount> GetBankAccounts(int? supplierID);
+        /// <summary>
+        /// Get By Name
+        /// </summary>
+        /// <param name="supplierName"></param>
+        /// <returns></returns>
+        Supplier GetBySupplierName(string supplierName);
 
     }
 }

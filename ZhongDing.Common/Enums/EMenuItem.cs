@@ -210,6 +210,11 @@ namespace ZhongDing.Common.Enums
         DCInventoryData,
 
         /// <summary>
+        /// 采购订单导入
+        /// </summary>
+        ProcureOrderData,
+
+        /// <summary>
         /// 提成与考核管理
         /// </summary>
         BonusAndAssessmentManage = 90,

@@ -122,6 +122,12 @@ namespace ZhongDing.Business.Repositories
 
                 if (uiSearchObj.WorkflowStatusID > 0)
                     whereFuncs.Add(x => x.WorkflowStatusID.Equals(uiSearchObj.WorkflowStatusID));
+
+                if (uiSearchObj.IsImport)
+                {
+                    whereFuncs.Add(x => x.IsImport == uiSearchObj.IsImport);
+
+                }
             }
 
             query = GetList(pageIndex, pageSize, whereFuncs, GlobalConst.OrderByExpression.CREATEDON_DESC, out total);
