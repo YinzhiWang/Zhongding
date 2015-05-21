@@ -315,21 +315,47 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 供应商保证金部门领导审核
         /// </summary>
-        AuditSupplierCautionMoneyApplyByDeptManagers,
+        AuditSupplierCautionMoneyApplyByDeptManagers = 62,
 
         /// <summary>
         /// 供应商保证金财务主管审核
         /// </summary>
-        AuditSupplierCautionMoneyApplyByTreasurers,
+        AuditSupplierCautionMoneyApplyByTreasurers = 63,
 
         /// <summary>
         /// 供应商保证金出纳支付
         /// </summary>
-        PaySupplierCautionMoneyApply,
+        PaySupplierCautionMoneyApply = 64,
 
         /// <summary>
         /// 修改供应商保证金申请
         /// </summary>
-        EditSupplierCautionMoneyApply,
+        EditSupplierCautionMoneyApply = 65,
+
+
+        /// <summary>
+        /// 新增客户保证金退款申请
+        /// </summary>
+        NewClientCautionMoneyReturnApply = 66,
+
+        /// <summary>
+        /// 客户保证金退款申请部门领导审核
+        /// </summary>
+        AuditClientCautionMoneyReturnApplyByDeptManagers = 67,
+
+        /// <summary>
+        /// 客户保证金退款申请财务主管审核
+        /// </summary>
+        AuditClientCautionMoneyReturnApplyByTreasurers = 68,
+
+        /// <summary>
+        /// 客户保证金退款申请出纳支付
+        /// </summary>
+        PayClientCautionMoneyReturnApply = 69,
+
+        /// <summary>
+        /// 修改客户保证金退款申请申请
+        /// </summary>
+        EditClientCautionMoneyReturnApply = 70,
     }
 }

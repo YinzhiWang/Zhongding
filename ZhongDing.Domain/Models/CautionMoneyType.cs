@@ -18,10 +18,12 @@ namespace ZhongDing.Domain.Models
         public CautionMoneyType()
         {
             this.SupplierCautionMoney = new HashSet<SupplierCautionMoney>();
+            this.ClientCautionMoney = new HashSet<ClientCautionMoney>();
         }
     
         public int ID { get; set; }
         public string Name { get; set; }
+        public Nullable<int> Type { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -34,5 +36,6 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual ICollection<SupplierCautionMoney> SupplierCautionMoney { get; set; }
+        public virtual ICollection<ClientCautionMoney> ClientCautionMoney { get; set; }
     }
 }

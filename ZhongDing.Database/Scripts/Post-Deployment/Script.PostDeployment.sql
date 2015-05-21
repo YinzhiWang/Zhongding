@@ -1050,3 +1050,51 @@ INSERT [CautionMoneyType] ([ID],[Name]) VALUES ( 3,N'开发保证金')
 INSERT [CautionMoneyType] ([ID],[Name]) VALUES ( 4,N'销量保证金')
 COMMIT TRANSACTION
 ---- end --- 4/30/2015 -- 初始化供应商保证金类型 -- by Nwang
+
+---- start --- 5/20/2015 -- 初始化客户保证金类型 -- by Nwang
+BEGIN TRANSACTION
+UPDATE dbo.CautionMoneyType SET [Type]=1
+INSERT [CautionMoneyType] ([ID],[Name],[Type]) VALUES ( 5,N'市场保证金',2)
+INSERT [CautionMoneyType] ([ID],[Name],[Type]) VALUES ( 6,N'开发保证金',2)
+INSERT [CautionMoneyType] ([ID],[Name],[Type]) VALUES ( 7,N'销量保证金',2)
+INSERT [CautionMoneyType] ([ID],[Name],[Type]) VALUES ( 8,N'其他保证金',2)
+COMMIT TRANSACTION
+---- end --- 5/20/2015 -- 初始化客户保证金类型 -- by Nwang
+
+
+---- start --- 5/20/2015 -- 初始化工作流状态关联数据(客户保证金申请) -- by Nwang
+
+BEGIN TRANSACTION
+GO
+ALTER TABLE [dbo].[WorkflowStep] DROP CONSTRAINT [FK_WorkflowStep_Workflow]
+ALTER TABLE [dbo].[WorkflowStepStatus] DROP CONSTRAINT [FK_WorkflowStepStatus_WorkflowStatus]
+ALTER TABLE [dbo].[WorkflowStepStatus] DROP CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep]
+GO
+SET IDENTITY_INSERT [dbo].[Workflow] ON
+INSERT INTO [dbo].[Workflow] ([ID], [WorkflowName], [IsActive], [IsDeleted]) VALUES (20, N'客户保证金退回申请', 1, 0)
+SET IDENTITY_INSERT [dbo].[Workflow] OFF
+GO
+SET IDENTITY_INSERT [dbo].[WorkflowStep] ON
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (66, 20, N'新增客户保证金退回申请', 0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (67, 20, N'客户保证金退回申请部门经理审核', 0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (68, 20, N'客户保证金退回申请财务主管审核', 0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (69, 20, N'客户保证金退回出纳支付', 0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (70, 20, N'修改客户保证金退回申请', 0)
+SET IDENTITY_INSERT [dbo].[WorkflowStep] OFF
+GO
+SET IDENTITY_INSERT [dbo].[WorkflowStepStatus] ON
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (68, 66, 1, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (69, 66, 4, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (70, 67, 2, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (71, 68, 17, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (72, 69, 16, 0)
+SET IDENTITY_INSERT [dbo].[WorkflowStepStatus] OFF
+
+ALTER TABLE [dbo].[WorkflowStep]
+    ADD CONSTRAINT [FK_WorkflowStep_Workflow] FOREIGN KEY ([WorkflowID]) REFERENCES [dbo].[Workflow] ([ID])
+ALTER TABLE [dbo].[WorkflowStepStatus]
+    ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStatus] FOREIGN KEY ([WorkflowStatusID]) REFERENCES [dbo].[WorkflowStatus] ([ID])
+ALTER TABLE [dbo].[WorkflowStepStatus]
+    ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep] FOREIGN KEY ([WorkflowStepID]) REFERENCES [dbo].[WorkflowStep] ([ID])
+COMMIT TRANSACTION
+---- end --- 5/20/2015 -- 初始化工作流状态关联数据(客户保证金申请) -- by Nwang

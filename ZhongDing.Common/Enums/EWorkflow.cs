@@ -95,7 +95,15 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 供应商 保证金申请 
         /// </summary>
-        SupplierCautionMoneyApply
+        SupplierCautionMoneyApply,
+        /// <summary>
+        /// 客户保证金
+        /// </summary>
+        ClientCautionMoney = 19,
+        /// <summary>
+        /// 客户保证金退回申请
+        /// </summary>
+        ClientCautionMoneyReturnApply = 20
 
     }
 }

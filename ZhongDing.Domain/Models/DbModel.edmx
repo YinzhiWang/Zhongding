@@ -18,6 +18,8 @@
           <EntitySet Name="CertificateType" EntityType="DbModel.Store.CertificateType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ClientAttachedInvoiceSettlement" EntityType="DbModel.Store.ClientAttachedInvoiceSettlement" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ClientAttachedInvoiceSettlementDetail" EntityType="DbModel.Store.ClientAttachedInvoiceSettlementDetail" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ClientCautionMoney" EntityType="DbModel.Store.ClientCautionMoney" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ClientCautionMoneyReturnApplication" EntityType="DbModel.Store.ClientCautionMoneyReturnApplication" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ClientCompany" EntityType="DbModel.Store.ClientCompany" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ClientCompanyCertificate" EntityType="DbModel.Store.ClientCompanyCertificate" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ClientFlowData" EntityType="DbModel.Store.ClientFlowData" store:Type="Tables" Schema="dbo" />
@@ -232,6 +234,38 @@
           <AssociationSet Name="FK_ClientAttachedInvoiceSettlementDetail_StockOutDetail" Association="DbModel.Store.FK_ClientAttachedInvoiceSettlementDetail_StockOutDetail">
             <End Role="StockOutDetail" EntitySet="StockOutDetail" />
             <End Role="ClientAttachedInvoiceSettlementDetail" EntitySet="ClientAttachedInvoiceSettlementDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientCautionMoney_CautionMoneyTypeID" Association="DbModel.Store.FK_ClientCautionMoney_CautionMoneyTypeID">
+            <End Role="CautionMoneyType" EntitySet="CautionMoneyType" />
+            <End Role="ClientCautionMoney" EntitySet="ClientCautionMoney" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientCautionMoney_ClientUserID" Association="DbModel.Store.FK_ClientCautionMoney_ClientUserID">
+            <End Role="ClientUser" EntitySet="ClientUser" />
+            <End Role="ClientCautionMoney" EntitySet="ClientCautionMoney" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientCautionMoney_CompanyID" Association="DbModel.Store.FK_ClientCautionMoney_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="ClientCautionMoney" EntitySet="ClientCautionMoney" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientCautionMoney_DepartmentID" Association="DbModel.Store.FK_ClientCautionMoney_DepartmentID">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="ClientCautionMoney" EntitySet="ClientCautionMoney" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientCautionMoney_ProductID" Association="DbModel.Store.FK_ClientCautionMoney_ProductID">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ClientCautionMoney" EntitySet="ClientCautionMoney" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientCautionMoney_ProductSpecificationID" Association="DbModel.Store.FK_ClientCautionMoney_ProductSpecificationID">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="ClientCautionMoney" EntitySet="ClientCautionMoney" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientCautionMoneyReturnApplication_ClientCautionMoneyID" Association="DbModel.Store.FK_ClientCautionMoneyReturnApplication_ClientCautionMoneyID">
+            <End Role="ClientCautionMoney" EntitySet="ClientCautionMoney" />
+            <End Role="ClientCautionMoneyReturnApplication" EntitySet="ClientCautionMoneyReturnApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientCautionMoneyReturnApplication_WorkflowStatusID" Association="DbModel.Store.FK_ClientCautionMoneyReturnApplication_WorkflowStatusID">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="ClientCautionMoneyReturnApplication" EntitySet="ClientCautionMoneyReturnApplication" />
           </AssociationSet>
           <AssociationSet Name="FK_ClientCompanyCertificate_Certificate" Association="DbModel.Store.FK_ClientCompanyCertificate_Certificate">
             <End Role="Certificate" EntitySet="Certificate" />
@@ -1320,6 +1354,7 @@
           </Key>
           <Property Name="ID" Type="int" Nullable="false" />
           <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Type" Type="int" />
         </EntityType>
         <EntityType Name="Certificate">
           <Key>
@@ -1398,6 +1433,49 @@
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="ClientCautionMoney">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
+          <Property Name="ClientUserID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="ProductSpecificationID" Type="int" Nullable="false" />
+          <Property Name="CautionMoneyTypeID" Type="int" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="WorkflowStatusID" Type="int" Nullable="false" />
+          <Property Name="IsStop" Type="bit" Nullable="false" />
+          <Property Name="StoppedOn" Type="datetime" />
+          <Property Name="StoppedBy" Type="int" />
+          <Property Name="Remark" Type="nvarchar" MaxLength="256" />
+          <Property Name="CompanyID" Type="int" Nullable="false" />
+          <Property Name="Payer" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="ClientCautionMoneyReturnApplication">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ClientCautionMoneyID" Type="int" Nullable="false" />
+          <Property Name="ApplyDate" Type="datetime" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Reason" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="WorkflowStatusID" Type="int" Nullable="false" />
+          <Property Name="PaidDate" Type="datetime" />
+          <Property Name="PaidBy" Type="int" />
+          <Property Name="IsStop" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ClientCompany">
           <Key>
@@ -3489,6 +3567,102 @@
             </Principal>
             <Dependent Role="ClientAttachedInvoiceSettlementDetail">
               <PropertyRef Name="StockOutDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientCautionMoney_CautionMoneyTypeID">
+          <End Role="CautionMoneyType" Type="DbModel.Store.CautionMoneyType" Multiplicity="1" />
+          <End Role="ClientCautionMoney" Type="DbModel.Store.ClientCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CautionMoneyType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientCautionMoney">
+              <PropertyRef Name="CautionMoneyTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientCautionMoney_ClientUserID">
+          <End Role="ClientUser" Type="DbModel.Store.ClientUser" Multiplicity="1" />
+          <End Role="ClientCautionMoney" Type="DbModel.Store.ClientCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientCautionMoney">
+              <PropertyRef Name="ClientUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientCautionMoney_CompanyID">
+          <End Role="Company" Type="DbModel.Store.Company" Multiplicity="1" />
+          <End Role="ClientCautionMoney" Type="DbModel.Store.ClientCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientCautionMoney">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientCautionMoney_DepartmentID">
+          <End Role="Department" Type="DbModel.Store.Department" Multiplicity="1" />
+          <End Role="ClientCautionMoney" Type="DbModel.Store.ClientCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientCautionMoney">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientCautionMoney_ProductID">
+          <End Role="Product" Type="DbModel.Store.Product" Multiplicity="1" />
+          <End Role="ClientCautionMoney" Type="DbModel.Store.ClientCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientCautionMoney">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientCautionMoney_ProductSpecificationID">
+          <End Role="ProductSpecification" Type="DbModel.Store.ProductSpecification" Multiplicity="1" />
+          <End Role="ClientCautionMoney" Type="DbModel.Store.ClientCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientCautionMoney">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientCautionMoneyReturnApplication_ClientCautionMoneyID">
+          <End Role="ClientCautionMoney" Type="DbModel.Store.ClientCautionMoney" Multiplicity="1" />
+          <End Role="ClientCautionMoneyReturnApplication" Type="DbModel.Store.ClientCautionMoneyReturnApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientCautionMoney">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientCautionMoneyReturnApplication">
+              <PropertyRef Name="ClientCautionMoneyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientCautionMoneyReturnApplication_WorkflowStatusID">
+          <End Role="WorkflowStatus" Type="DbModel.Store.WorkflowStatus" Multiplicity="1" />
+          <End Role="ClientCautionMoneyReturnApplication" Type="DbModel.Store.ClientCautionMoneyReturnApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientCautionMoneyReturnApplication">
+              <PropertyRef Name="WorkflowStatusID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7596,6 +7770,40 @@
             <End Role="ProcureOrderApplicationImportFileLog" EntitySet="ProcureOrderApplicationImportFileLog" />
             <End Role="ProcureOrderApplicationImportData" EntitySet="ProcureOrderApplicationImportData" />
           </AssociationSet>
+          <EntitySet Name="ClientCautionMoneyReturnApplication" EntityType="DbModel.ClientCautionMoneyReturnApplication" />
+          <AssociationSet Name="FK_ClientCautionMoneyReturnApplication_WorkflowStatusID" Association="DbModel.FK_ClientCautionMoneyReturnApplication_WorkflowStatusID">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="ClientCautionMoneyReturnApplication" EntitySet="ClientCautionMoneyReturnApplication" />
+          </AssociationSet>
+          <EntitySet Name="ClientCautionMoney" EntityType="DbModel.ClientCautionMoney" />
+          <AssociationSet Name="FK_ClientCautionMoney_CautionMoneyTypeID" Association="DbModel.FK_ClientCautionMoney_CautionMoneyTypeID">
+            <End Role="CautionMoneyType" EntitySet="CautionMoneyType" />
+            <End Role="ClientCautionMoney" EntitySet="ClientCautionMoney" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientCautionMoney_ClientUserID" Association="DbModel.FK_ClientCautionMoney_ClientUserID">
+            <End Role="ClientUser" EntitySet="ClientUser" />
+            <End Role="ClientCautionMoney" EntitySet="ClientCautionMoney" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientCautionMoney_CompanyID" Association="DbModel.FK_ClientCautionMoney_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="ClientCautionMoney" EntitySet="ClientCautionMoney" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientCautionMoney_DepartmentID" Association="DbModel.FK_ClientCautionMoney_DepartmentID">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="ClientCautionMoney" EntitySet="ClientCautionMoney" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientCautionMoney_ProductID" Association="DbModel.FK_ClientCautionMoney_ProductID">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ClientCautionMoney" EntitySet="ClientCautionMoney" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientCautionMoney_ProductSpecificationID" Association="DbModel.FK_ClientCautionMoney_ProductSpecificationID">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="ClientCautionMoney" EntitySet="ClientCautionMoney" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientCautionMoneyReturnApplication_ClientCautionMoneyID" Association="DbModel.FK_ClientCautionMoneyReturnApplication_ClientCautionMoneyID">
+            <End Role="ClientCautionMoney" EntitySet="ClientCautionMoney" />
+            <End Role="ClientCautionMoneyReturnApplication" EntitySet="ClientCautionMoneyReturnApplication" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -7781,6 +7989,7 @@
           <NavigationProperty Name="DBClientInvoiceSettlement" Relationship="DbModel.FK_DBClientInvoiceSettlement_Company" FromRole="Company" ToRole="DBClientInvoiceSettlement" />
           <NavigationProperty Name="SupplierCautionMoney" Relationship="DbModel.FK_SupplierCautionMoney_CompanyID" FromRole="Company" ToRole="SupplierCautionMoney" />
           <NavigationProperty Name="ClientAttachedInvoiceSettlement" Relationship="DbModel.FK_ClientAttachedInvoiceSettlement_Company" FromRole="Company" ToRole="ClientAttachedInvoiceSettlement" />
+          <NavigationProperty Name="ClientCautionMoney" Relationship="DbModel.FK_ClientCautionMoney_CompanyID" FromRole="Company" ToRole="ClientCautionMoney" />
         </EntityType>
         <EntityType Name="OwnerType">
           <Key>
@@ -7842,6 +8051,7 @@
           <NavigationProperty Name="SalesOrderAppDetail" Relationship="DbModel.FK_SalesOrderAppDetail_Product" FromRole="Product" ToRole="SalesOrderAppDetail" />
           <NavigationProperty Name="SupplierCautionMoney" Relationship="DbModel.FK_SupplierCautionMoney_ProductID" FromRole="Product" ToRole="SupplierCautionMoney" />
           <NavigationProperty Name="DCInventoryData" Relationship="DbModel.FK_DCInventoryData_Product" FromRole="Product" ToRole="DCInventoryData" />
+          <NavigationProperty Name="ClientCautionMoney" Relationship="DbModel.FK_ClientCautionMoney_ProductID" FromRole="Product" ToRole="ClientCautionMoney" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -8523,6 +8733,7 @@
           <NavigationProperty Name="DaBaoRequestApplication" Relationship="DbModel.FK_DaBaoRequestApplication_Department" FromRole="Department" ToRole="DaBaoRequestApplication" />
           <NavigationProperty Name="ClientInfoProductSetting" Relationship="DbModel.FK_ClientInfoProductSetting_Department" FromRole="Department" ToRole="ClientInfoProductSetting" />
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_Department" FromRole="Department" ToRole="DBContract" />
+          <NavigationProperty Name="ClientCautionMoney" Relationship="DbModel.FK_ClientCautionMoney_DepartmentID" FromRole="Department" ToRole="ClientCautionMoney" />
         </EntityType>
         <Association Name="FK_Department_DeptDistrict">
           <End Type="DbModel.DeptDistrict" Role="DeptDistrict" Multiplicity="0..1" />
@@ -9022,6 +9233,7 @@
           <NavigationProperty Name="ClientInvoiceSettlement" Relationship="DbModel.FK_ClientInvoiceSettlement_WorkflowStatus" FromRole="WorkflowStatus" ToRole="ClientInvoiceSettlement" />
           <NavigationProperty Name="SupplierCautionMoney" Relationship="DbModel.FK_SupplierCautionMoney_WorkflowStatusID" FromRole="WorkflowStatus" ToRole="SupplierCautionMoney" />
           <NavigationProperty Name="ClientAttachedInvoiceSettlement" Relationship="DbModel.FK_ClientAttachedInvoiceSettlement_WorkflowStatus" FromRole="WorkflowStatus" ToRole="ClientAttachedInvoiceSettlement" />
+          <NavigationProperty Name="ClientCautionMoneyReturnApplication" Relationship="DbModel.FK_ClientCautionMoneyReturnApplication_WorkflowStatusID" FromRole="WorkflowStatus" ToRole="ClientCautionMoneyReturnApplication" />
         </EntityType>
         <EntityType Name="WorkflowStepStatus">
           <Key>
@@ -9805,6 +10017,7 @@
           <NavigationProperty Name="SalesOrderAppDetail" Relationship="DbModel.FK_SalesOrderAppDetail_ProductSpecification" FromRole="ProductSpecification" ToRole="SalesOrderAppDetail" />
           <NavigationProperty Name="SupplierCautionMoney" Relationship="DbModel.FK_SupplierCautionMoney_ProductSpecificationID" FromRole="ProductSpecification" ToRole="SupplierCautionMoney" />
           <NavigationProperty Name="DCInventoryData" Relationship="DbModel.FK_DCInventoryData_ProductSpecification" FromRole="ProductSpecification" ToRole="DCInventoryData" />
+          <NavigationProperty Name="ClientCautionMoney" Relationship="DbModel.FK_ClientCautionMoney_ProductSpecificationID" FromRole="ProductSpecification" ToRole="ClientCautionMoney" />
         </EntityType>
         <Association Name="FK_ClientInfoProductSetting_ProductSpecification">
           <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
@@ -11925,6 +12138,7 @@
           <NavigationProperty Name="FactoryManagerRefundApplication" Relationship="DbModel.FK_FactoryManagerRefundApplication_ClientUser" FromRole="ClientUser" ToRole="FactoryManagerRefundApplication" />
           <NavigationProperty Name="StockOut" Relationship="DbModel.FK_StockOut_ClientUser" FromRole="ClientUser" ToRole="StockOut" />
           <NavigationProperty Name="ClientAttachedInvoiceSettlement" Relationship="DbModel.FK_ClientAttachedInvoiceSettlement_ClientUser" FromRole="ClientUser" ToRole="ClientAttachedInvoiceSettlement" />
+          <NavigationProperty Name="ClientCautionMoney" Relationship="DbModel.FK_ClientCautionMoney_ClientUserID" FromRole="ClientUser" ToRole="ClientCautionMoney" />
         </EntityType>
         <Association Name="FK_ClientUser_BankAccount">
           <End Type="DbModel.BankAccount" Role="BankAccount" Multiplicity="0..1" />
@@ -12806,6 +13020,8 @@
           <Property Type="Int32" Name="ID" Nullable="false" />
           <Property Type="String" Name="Name" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="SupplierCautionMoney" Relationship="DbModel.FK_SupplierCautionMoney_CautionMoneyTypeID" FromRole="CautionMoneyType" ToRole="SupplierCautionMoney" />
+          <Property Type="Int32" Name="Type" />
+          <NavigationProperty Name="ClientCautionMoney" Relationship="DbModel.FK_ClientCautionMoney_CautionMoneyTypeID" FromRole="CautionMoneyType" ToRole="ClientCautionMoney" />
         </EntityType>
         <EntityType Name="SupplierCautionMoney">
           <Key>
@@ -13324,6 +13540,154 @@
             </Principal>
             <Dependent Role="ProcureOrderApplicationImportData">
               <PropertyRef Name="ProcureOrderApplicationImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ClientCautionMoneyReturnApplication">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ClientCautionMoneyID" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="String" Name="Reason" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <Property Type="Int32" Name="WorkflowStatusID" Nullable="false" />
+          <NavigationProperty Name="WorkflowStatus" Relationship="DbModel.FK_ClientCautionMoneyReturnApplication_WorkflowStatusID" FromRole="ClientCautionMoneyReturnApplication" ToRole="WorkflowStatus" />
+          <NavigationProperty Name="ClientCautionMoney" Relationship="DbModel.FK_ClientCautionMoneyReturnApplication_ClientCautionMoneyID" FromRole="ClientCautionMoneyReturnApplication" ToRole="ClientCautionMoney" />
+          <Property Type="DateTime" Name="PaidDate" Precision="3" />
+          <Property Type="Int32" Name="PaidBy" />
+          <Property Type="DateTime" Name="ApplyDate" Nullable="false" Precision="3" />
+          <Property Type="Boolean" Name="IsStop" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_ClientCautionMoneyReturnApplication_WorkflowStatusID">
+          <End Type="DbModel.WorkflowStatus" Role="WorkflowStatus" Multiplicity="1" />
+          <End Type="DbModel.ClientCautionMoneyReturnApplication" Role="ClientCautionMoneyReturnApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientCautionMoneyReturnApplication">
+              <PropertyRef Name="WorkflowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ClientCautionMoney">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DepartmentID" Nullable="false" />
+          <Property Type="Int32" Name="ClientUserID" Nullable="false" />
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="Int32" Name="ProductSpecificationID" Nullable="false" />
+          <Property Type="Int32" Name="CautionMoneyTypeID" Nullable="false" />
+          <Property Type="DateTime" Name="EndDate" Nullable="false" Precision="3" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <Property Type="Int32" Name="WorkflowStatusID" Nullable="false" />
+          <Property Type="Boolean" Name="IsStop" Nullable="false" />
+          <Property Type="DateTime" Name="StoppedOn" Precision="3" />
+          <Property Type="Int32" Name="StoppedBy" />
+          <Property Type="String" Name="Remark" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="CompanyID" Nullable="false" />
+          <Property Type="String" Name="Payer" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CautionMoneyType" Relationship="DbModel.FK_ClientCautionMoney_CautionMoneyTypeID" FromRole="ClientCautionMoney" ToRole="CautionMoneyType" />
+          <NavigationProperty Name="ClientUser" Relationship="DbModel.FK_ClientCautionMoney_ClientUserID" FromRole="ClientCautionMoney" ToRole="ClientUser" />
+          <NavigationProperty Name="Company" Relationship="DbModel.FK_ClientCautionMoney_CompanyID" FromRole="ClientCautionMoney" ToRole="Company" />
+          <NavigationProperty Name="Department" Relationship="DbModel.FK_ClientCautionMoney_DepartmentID" FromRole="ClientCautionMoney" ToRole="Department" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_ClientCautionMoney_ProductID" FromRole="ClientCautionMoney" ToRole="Product" />
+          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_ClientCautionMoney_ProductSpecificationID" FromRole="ClientCautionMoney" ToRole="ProductSpecification" />
+          <NavigationProperty Name="ClientCautionMoneyReturnApplication" Relationship="DbModel.FK_ClientCautionMoneyReturnApplication_ClientCautionMoneyID" FromRole="ClientCautionMoney" ToRole="ClientCautionMoneyReturnApplication" />
+        </EntityType>
+        <Association Name="FK_ClientCautionMoney_CautionMoneyTypeID">
+          <End Type="DbModel.CautionMoneyType" Role="CautionMoneyType" Multiplicity="1" />
+          <End Type="DbModel.ClientCautionMoney" Role="ClientCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CautionMoneyType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientCautionMoney">
+              <PropertyRef Name="CautionMoneyTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientCautionMoney_ClientUserID">
+          <End Type="DbModel.ClientUser" Role="ClientUser" Multiplicity="1" />
+          <End Type="DbModel.ClientCautionMoney" Role="ClientCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientCautionMoney">
+              <PropertyRef Name="ClientUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientCautionMoney_CompanyID">
+          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="DbModel.ClientCautionMoney" Role="ClientCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientCautionMoney">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientCautionMoney_DepartmentID">
+          <End Type="DbModel.Department" Role="Department" Multiplicity="1" />
+          <End Type="DbModel.ClientCautionMoney" Role="ClientCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientCautionMoney">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientCautionMoney_ProductID">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="DbModel.ClientCautionMoney" Role="ClientCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientCautionMoney">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientCautionMoney_ProductSpecificationID">
+          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
+          <End Type="DbModel.ClientCautionMoney" Role="ClientCautionMoney" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientCautionMoney">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientCautionMoneyReturnApplication_ClientCautionMoneyID">
+          <End Type="DbModel.ClientCautionMoney" Role="ClientCautionMoney" Multiplicity="1" />
+          <End Type="DbModel.ClientCautionMoneyReturnApplication" Role="ClientCautionMoneyReturnApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientCautionMoney">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientCautionMoneyReturnApplication">
+              <PropertyRef Name="ClientCautionMoneyID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -15255,6 +15619,7 @@
           <EntitySetMapping Name="CautionMoneyType">
             <EntityTypeMapping TypeName="DbModel.CautionMoneyType">
               <MappingFragment StoreEntitySet="CautionMoneyType">
+                <ScalarProperty Name="Type" ColumnName="Type" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
@@ -15430,6 +15795,51 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="ImportFileLogID" ColumnName="ImportFileLogID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientCautionMoneyReturnApplication">
+            <EntityTypeMapping TypeName="DbModel.ClientCautionMoneyReturnApplication">
+              <MappingFragment StoreEntitySet="ClientCautionMoneyReturnApplication">
+                <ScalarProperty Name="IsStop" ColumnName="IsStop" />
+                <ScalarProperty Name="ApplyDate" ColumnName="ApplyDate" />
+                <ScalarProperty Name="PaidBy" ColumnName="PaidBy" />
+                <ScalarProperty Name="PaidDate" ColumnName="PaidDate" />
+                <ScalarProperty Name="WorkflowStatusID" ColumnName="WorkflowStatusID" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Reason" ColumnName="Reason" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="ClientCautionMoneyID" ColumnName="ClientCautionMoneyID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientCautionMoney">
+            <EntityTypeMapping TypeName="DbModel.ClientCautionMoney">
+              <MappingFragment StoreEntitySet="ClientCautionMoney">
+                <ScalarProperty Name="Payer" ColumnName="Payer" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="Remark" ColumnName="Remark" />
+                <ScalarProperty Name="StoppedBy" ColumnName="StoppedBy" />
+                <ScalarProperty Name="StoppedOn" ColumnName="StoppedOn" />
+                <ScalarProperty Name="IsStop" ColumnName="IsStop" />
+                <ScalarProperty Name="WorkflowStatusID" ColumnName="WorkflowStatusID" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="CautionMoneyTypeID" ColumnName="CautionMoneyTypeID" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ClientUserID" ColumnName="ClientUserID" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

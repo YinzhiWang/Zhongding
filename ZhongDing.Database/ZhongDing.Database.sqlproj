@@ -424,6 +424,8 @@
     <Build Include="dbo\Tables\ProcureOrderApplicationImportFileLog.sql" />
     <Build Include="dbo\Tables\ProcureOrderApplicationImportData.sql" />
     <Build Include="dbo\Tables\ProcureOrderAppDetailImportData.sql" />
+    <Build Include="dbo\Tables\ClientCautionMoneyReturnApplication.sql" />
+    <Build Include="dbo\Tables\ClientCautionMoney.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

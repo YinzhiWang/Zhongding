@@ -38,6 +38,7 @@ namespace ZhongDing.Domain.Models
             this.SalesOrderAppDetail = new HashSet<SalesOrderAppDetail>();
             this.SupplierCautionMoney = new HashSet<SupplierCautionMoney>();
             this.DCInventoryData = new HashSet<DCInventoryData>();
+            this.ClientCautionMoney = new HashSet<ClientCautionMoney>();
         }
     
         public int ID { get; set; }
@@ -86,5 +87,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<SalesOrderAppDetail> SalesOrderAppDetail { get; set; }
         public virtual ICollection<SupplierCautionMoney> SupplierCautionMoney { get; set; }
         public virtual ICollection<DCInventoryData> DCInventoryData { get; set; }
+        public virtual ICollection<ClientCautionMoney> ClientCautionMoney { get; set; }
     }
 }

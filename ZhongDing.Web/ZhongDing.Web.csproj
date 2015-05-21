@@ -2602,6 +2602,10 @@
     <Content Include="Views\Basics\Editors\SupplierContractMaintain.aspx" />
     <Content Include="Views\Basics\WarehouseMaintenance.aspx" />
     <Content Include="Views\Basics\WarehouseManagement.aspx" />
+    <Content Include="Views\CautionMoneys\ClientCautionMoneyManagement.aspx" />
+    <Content Include="Views\CautionMoneys\ClientCautionMoneyReturnApplyManagement.aspx" />
+    <Content Include="Views\CautionMoneys\ClientCautionMoneyMaintenance.aspx" />
+    <Content Include="Views\CautionMoneys\ClientCautionMoneyReturnApplyMaintenance.aspx" />
     <Content Include="Views\CautionMoneys\SupplierCautionMoneyApplyManagement.aspx" />
     <Content Include="Views\CautionMoneys\SupplierCautionMoneyMaintenance.aspx" />
     <Content Include="Views\CautionMoneys\SupplierCautionMoneyManagement.aspx" />
@@ -3103,6 +3107,34 @@
     </Compile>
     <Compile Include="Views\Basics\WarehouseManagement.aspx.designer.cs">
       <DependentUpon>WarehouseManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CautionMoneys\ClientCautionMoneyManagement.aspx.cs">
+      <DependentUpon>ClientCautionMoneyManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\CautionMoneys\ClientCautionMoneyManagement.aspx.designer.cs">
+      <DependentUpon>ClientCautionMoneyManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CautionMoneys\ClientCautionMoneyReturnApplyManagement.aspx.cs">
+      <DependentUpon>ClientCautionMoneyReturnApplyManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\CautionMoneys\ClientCautionMoneyReturnApplyManagement.aspx.designer.cs">
+      <DependentUpon>ClientCautionMoneyReturnApplyManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CautionMoneys\ClientCautionMoneyMaintenance.aspx.cs">
+      <DependentUpon>ClientCautionMoneyMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\CautionMoneys\ClientCautionMoneyMaintenance.aspx.designer.cs">
+      <DependentUpon>ClientCautionMoneyMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CautionMoneys\ClientCautionMoneyReturnApplyMaintenance.aspx.cs">
+      <DependentUpon>ClientCautionMoneyReturnApplyMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\CautionMoneys\ClientCautionMoneyReturnApplyMaintenance.aspx.designer.cs">
+      <DependentUpon>ClientCautionMoneyReturnApplyMaintenance.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\CautionMoneys\SupplierCautionMoneyApplyManagement.aspx.cs">
       <DependentUpon>SupplierCautionMoneyApplyManagement.aspx</DependentUpon>
@@ -3884,7 +3916,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

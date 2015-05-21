@@ -317,6 +317,14 @@ namespace ZhongDing.Common.Enums
         /// 供应商保证金支出申请管理
         /// </summary>
         SupplierCautionMoneyApplyManage = 202,
+        /// <summary>
+        /// 客户商保证金管理
+        /// </summary>
+        ClientCautionMoneyManage = 203,
+        /// <summary>
+        /// 客户商保证金退回申请管理
+        /// </summary>
+        ClientCautionMoneyReturnApplyManage = 204,
 
     }
 }

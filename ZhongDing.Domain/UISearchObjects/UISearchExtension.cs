@@ -86,6 +86,10 @@ namespace ZhongDing.Domain.UISearchObjects
         /// 如果一个client user 没有一个有效的client info，则该client user 是无效的
         /// </summary>
         public bool OnlyIncludeValidClientUser { get; set; }
-
+        /// <summary>
+        /// 保证金类别
+        /// </summary>
+        public int CautionMoneyTypeCategory { get; set; }
+      
     }
 }
