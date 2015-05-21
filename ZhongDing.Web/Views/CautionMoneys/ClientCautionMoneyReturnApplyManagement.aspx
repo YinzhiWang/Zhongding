@@ -38,7 +38,7 @@
             <div class="mws-panel-body">
                 <table runat="server" id="tblSearch" class="leftmargin10">
                     <tr class="height40">
-                        <th class="width100 middle-td">终止日期：</th>
+                        <th class="width100 middle-td">申请日期：</th>
                         <td class="middle-td" colspan="1">
                             <telerik:RadDatePicker runat="server" ID="rdpBeginDate" Width="120"></telerik:RadDatePicker>
                             -&nbsp;&nbsp;

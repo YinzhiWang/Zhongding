@@ -135,9 +135,9 @@ namespace ZhongDing.Web.Views.CautionMoneys
         protected void btnReset_Click(object sender, EventArgs e)
         {
             rdpEndDate.SelectedDate = rdpBeginDate.SelectedDate = null;
+            rcbxDepartment.SelectedValue = string.Empty;
 
             txtProductName.Text = txtClientName.Text = string.Empty;
-
             BindClientCautionMoney(true);
         }
     }

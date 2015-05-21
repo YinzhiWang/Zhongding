@@ -8,6 +8,7 @@ using ZhongDing.Business.IRepositories;
 using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UIObjects;
+using ZhongDing.Common.Extension;
 
 namespace ZhongDing.Business.Repositories
 {
@@ -32,10 +33,22 @@ namespace ZhongDing.Business.Repositories
                 {
                     whereFuncs.Add(x => x.WorkflowStatusID == uiSearchObj.WorkflowStatusID);
                 }
+                if (uiSearchObj.BeginDate.HasValue)
+                {
+                    whereFuncs.Add(x => x.EndDate >= uiSearchObj.BeginDate);
+                }
+                if (uiSearchObj.EndDate.HasValue)
+                {
+                    whereFuncs.Add(x => x.EndDate <= uiSearchObj.EndDate);
+                }
+                if (uiSearchObj.DepartmentID.BiggerThanZero())
+                {
+                    whereFuncs.Add(x => x.DepartmentID == uiSearchObj.DepartmentID);
+                }
 
             }
 
-            query = GetList(pageIndex, pageSize, whereFuncs, out total);
+            query = GetList(whereFuncs);
 
             if (query != null)
             {
@@ -89,7 +102,19 @@ namespace ZhongDing.Business.Repositories
                                                              x.IsDeleted == false) on ccra.ID equals ap.ApplicationID
                                                              select ap.Amount).Sum() : 0
                                   };
-                uiEntitys = queryResult.ToList();
+
+                if (uiSearchObj.ClientName.HasValue())
+                {
+                    queryResult = queryResult.Where(x => x.ClientName.Contains(uiSearchObj.ClientName));
+                }
+                if (uiSearchObj.ProductName.HasValue())
+                {
+                    queryResult = queryResult.Where(x => x.ProductName.Contains(uiSearchObj.ProductName));
+                }
+                total = queryResult.Count();
+
+                uiEntitys = queryResult.OrderByDescending(x => x.ID)
+                    .Skip(pageSize * pageIndex).Take(pageSize).ToList();
             }
             uiEntitys.ForEach(x =>
             {
@@ -99,7 +124,7 @@ namespace ZhongDing.Business.Repositories
             return uiEntitys;
         }
 
-        
+
         public UIClientCautionMoney GetUIClientCautionMoneyByID(int id)
         {
             int totalRecords = 0;

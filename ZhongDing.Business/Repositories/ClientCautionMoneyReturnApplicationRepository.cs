@@ -94,10 +94,21 @@ namespace ZhongDing.Business.Repositories
                     whereFuncs.Add(x => uiSearchObj.IncludeWorkflowStatusIDs.Contains(x.WorkflowStatusID));
 
                 }
-
+                if (uiSearchObj.BeginDate.HasValue)
+                {
+                    whereFuncs.Add(x => x.ApplyDate >= uiSearchObj.BeginDate);
+                }
+                if (uiSearchObj.EndDate.HasValue)
+                {
+                    whereFuncs.Add(x => x.ApplyDate <= uiSearchObj.EndDate);
+                }
+                if (uiSearchObj.DepartmentID.BiggerThanZero())
+                {
+                    whereFuncs.Add(x => x.ClientCautionMoney.DepartmentID == uiSearchObj.DepartmentID);
+                }
             }
 
-            query = GetList(pageIndex, pageSize, whereFuncs, out total);
+            query = GetList(whereFuncs );
 
             if (query != null)
             {
@@ -131,8 +142,19 @@ namespace ZhongDing.Business.Repositories
                                       ClientName = clientUser.ClientName,
                                       DepartmentName = department.DepartmentName,
                                   };
+
+                if (uiSearchObj.ClientName.HasValue())
+                {
+                    queryResult = queryResult.Where(x => x.ClientName.Contains(uiSearchObj.ClientName));
+                }
+                if (uiSearchObj.ProductName.HasValue())
+                {
+                    queryResult = queryResult.Where(x => x.ProductName.Contains(uiSearchObj.ProductName));
+                }
                 total = queryResult.Count();
-                uiEntitys = queryResult.ToList();
+
+                uiEntitys = queryResult.OrderByDescending(x => x.ID)
+                    .Skip(pageSize * pageIndex).Take(pageSize).ToList();
             }
 
             totalRecords = total;
