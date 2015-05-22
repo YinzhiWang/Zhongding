@@ -263,6 +263,11 @@ namespace ZhongDing.Common.Enums
         InventorySummaryReportManage = 107,
 
         /// <summary>
+        /// 配送公司流向结算表
+        /// </summary>
+        DCFlowSettlementReport = 110,
+
+        /// <summary>
         /// 大包客户季度考核表
         /// </summary>
         DBClientQuarterlyAssessmentReport = 112,
