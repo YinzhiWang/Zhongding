@@ -954,7 +954,7 @@ namespace ZhongDing.Business.Repositories.Reports
             }
             if (uiSearchObj.EndDate.HasValue)
             {
-                uiSearchObj.EndDate=uiSearchObj.EndDate.Value.AddDays(1);
+                uiSearchObj.EndDate = uiSearchObj.EndDate.Value.AddDays(1);
                 queryBaseInfoIn = queryBaseInfoIn.Where(x => x.EntryOrOutDate < uiSearchObj.EndDate);
                 queryBaseInfoOut = queryBaseInfoOut.Where(x => x.EntryOrOutDate < uiSearchObj.EndDate);
             }
@@ -988,6 +988,120 @@ namespace ZhongDing.Business.Repositories.Reports
             int totalRecords = 0;
             BuildInventorySummaryDetailReport(uiSearchObj, 0, 10000000, out totalRecords, out result);
             return result;
+        }
+
+        public IList<UIDCFlowSettlementReport> GetDCFlowSettlementReport(UISearchDCFlowSettlementReport uiSearchObj)
+        {
+            IList<UIDCFlowSettlementReport> uiEntities = new List<UIDCFlowSettlementReport>();
+
+            DateTime startDate = (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue;
+            DateTime endDate = (DateTime)System.Data.SqlTypes.SqlDateTime.MaxValue;
+
+            if (uiSearchObj.SaleDate.HasValue)
+            {
+                startDate = uiSearchObj.SaleDate.Value;
+                endDate = startDate.AddMonths(1);
+            }
+
+            var query = (from fdd in DB.DCFlowDataDetail
+                         join fd in DB.DCFlowData on fdd.DCFlowDataID equals fd.ID
+                         join dbc in DB.DBContract on fdd.DBContractID equals dbc.ID
+                         join dc in DB.DistributionCompany on fd.DistributionCompanyID equals dc.ID
+                         join p in DB.Product on fd.ProductID equals p.ID
+                         join ps in DB.ProductSpecification on fd.ProductSpecificationID equals ps.ID
+                         join cu in DB.ClientUser on dbc.ClientUserID equals cu.ID
+                         join h in DB.Hospital on fdd.HospitalID equals h.ID
+                         join ht in DB.HospitalType on dbc.HospitalTypeID equals ht.ID
+                         where fd.IsCorrectlyFlow == true && fdd.SaleDate >= startDate
+                         && fdd.SaleDate < endDate
+                         select new
+                         {
+                             ClientUserName = cu.ClientName,
+                             HospitalTypeName = ht.TypeName,
+                             ProductName = p.ProductName,
+                             Specification = ps.Specification,
+                             HospitalName = h.HospitalName,
+                             SaleQty = fdd.SaleQty,
+                             SaleDate = fdd.SaleDate,
+                             DistributionCompanyName = dc.Name,
+                             PromotionExpense = fdd.SaleQty * (dbc.PromotionExpense ?? 0)
+                         })
+                        .GroupBy(x => new { x.ClientUserName, x.HospitalTypeName, x.ProductName, x.Specification, x.HospitalName, x.SaleDate, x.DistributionCompanyName })
+                        .Select(g => new UIDCFlowSettlementReport
+                        {
+                            ClientUserName = g.Key.ClientUserName,
+                            HospitalTypeName = g.Key.HospitalTypeName,
+                            ProductName = g.Key.ProductName,
+                            Specification = g.Key.Specification,
+                            HospitalName = g.Key.HospitalName,
+                            SaleQty = g.Sum(x => x.SaleQty),
+                            SaleDate = g.Key.SaleDate,
+                            DistributionCompanyName = g.Key.DistributionCompanyName,
+                            TotalPromotionExpense = g.Sum(x => x.PromotionExpense)
+                        });
+
+
+            uiEntities = query.ToList();
+
+            return uiEntities;
+        }
+
+        public IList<UIDCFlowSettlementReport> GetDCFlowSettlementReport(UISearchDCFlowSettlementReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
+        {
+            IList<UIDCFlowSettlementReport> uiEntities = new List<UIDCFlowSettlementReport>();
+
+            DateTime startDate = (DateTime)System.Data.SqlTypes.SqlDateTime.MinValue;
+            DateTime endDate = (DateTime)System.Data.SqlTypes.SqlDateTime.MaxValue;
+
+            if (uiSearchObj.SaleDate.HasValue)
+            {
+                startDate = uiSearchObj.SaleDate.Value;
+                endDate = startDate.AddMonths(1);
+            }
+
+            var query = (from fdd in DB.DCFlowDataDetail
+                         join fd in DB.DCFlowData on fdd.DCFlowDataID equals fd.ID
+                         join dbc in DB.DBContract on fdd.DBContractID equals dbc.ID
+                         join dc in DB.DistributionCompany on fd.DistributionCompanyID equals dc.ID
+                         join p in DB.Product on fd.ProductID equals p.ID
+                         join ps in DB.ProductSpecification on fd.ProductSpecificationID equals ps.ID
+                         join cu in DB.ClientUser on dbc.ClientUserID equals cu.ID
+                         join h in DB.Hospital on fdd.HospitalID equals h.ID
+                         join ht in DB.HospitalType on dbc.HospitalTypeID equals ht.ID
+                         where fd.IsCorrectlyFlow == true && fdd.SaleDate >= startDate
+                         && fdd.SaleDate < endDate
+                         select new
+                         {
+                             ClientUserName = cu.ClientName,
+                             HospitalTypeName = ht.TypeName,
+                             ProductName = p.ProductName,
+                             Specification = ps.Specification,
+                             HospitalName = h.HospitalName,
+                             SaleQty = fdd.SaleQty,
+                             SaleDate = fdd.SaleDate,
+                             DistributionCompanyName = dc.Name,
+                             PromotionExpense = fdd.SaleQty * (dbc.PromotionExpense ?? 0)
+                         })
+                        .GroupBy(x => new { x.ClientUserName, x.HospitalTypeName, x.ProductName, x.Specification, x.HospitalName, x.SaleDate, x.DistributionCompanyName })
+                        .Select(g => new UIDCFlowSettlementReport
+                        {
+                            ClientUserName = g.Key.ClientUserName,
+                            HospitalTypeName = g.Key.HospitalTypeName,
+                            ProductName = g.Key.ProductName,
+                            Specification = g.Key.Specification,
+                            HospitalName = g.Key.HospitalName,
+                            SaleQty = g.Sum(x => x.SaleQty),
+                            SaleDate = g.Key.SaleDate,
+                            DistributionCompanyName = g.Key.DistributionCompanyName,
+                            TotalPromotionExpense = g.Sum(x => x.PromotionExpense)
+                        });
+
+            totalRecords = query.Count();
+
+            uiEntities = query.OrderBy(x => x.SaleDate)
+                .Skip(pageSize * pageIndex).Take(pageSize).ToList();
+
+            return uiEntities;
         }
     }
 }

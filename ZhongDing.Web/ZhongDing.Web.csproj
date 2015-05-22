@@ -2682,6 +2682,7 @@
     <Content Include="Views\Refunds\SupplierTaskRefundManagement.aspx" />
     <Content Include="Views\Reports\ClientSaleAppReportManagement.aspx" />
     <Content Include="Views\Reports\DBClientQuarterlyAssessmentReport.aspx" />
+    <Content Include="Views\Reports\DCFlowSettlementReport.aspx" />
     <Content Include="Views\Reports\InventorySummaryDetailReportManagement.aspx" />
     <Content Include="Views\Reports\InventorySummaryReportManagement.aspx" />
     <Content Include="Views\Reports\DCInventoryChecklistReport.aspx" />
@@ -3672,6 +3673,13 @@
     <Compile Include="Views\Reports\DBClientQuarterlyAssessmentReport.aspx.designer.cs">
       <DependentUpon>DBClientQuarterlyAssessmentReport.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Reports\DCFlowSettlementReport.aspx.cs">
+      <DependentUpon>DCFlowSettlementReport.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reports\DCFlowSettlementReport.aspx.designer.cs">
+      <DependentUpon>DCFlowSettlementReport.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Reports\InventorySummaryDetailReportManagement.aspx.cs">
       <DependentUpon>InventorySummaryDetailReportManagement.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3917,7 +3925,9 @@
       <LastGenOutput>RadGrid.Main.zh-CN.designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

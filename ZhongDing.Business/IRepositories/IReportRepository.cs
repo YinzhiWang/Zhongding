@@ -61,5 +61,22 @@ namespace ZhongDing.Business.IRepositories
 
         IList<UIInventorySummaryDetailReport> GetInventorySummaryDetailReport(UISearchInventorySummaryDetailReport uiSearchObj);
 
+        /// <summary>
+        /// 配送公司流向结算表
+        /// </summary>
+        /// <param name="uiSearchObj">The UI search obj.</param>
+        /// <returns>IList{UIDCFlowSettlementReport}.</returns>
+        IList<UIDCFlowSettlementReport> GetDCFlowSettlementReport(UISearchDCFlowSettlementReport uiSearchObj);
+
+        /// <summary>
+        /// 配送公司流向结算表
+        /// </summary>
+        /// <param name="uiSearchObj">The UI search obj.</param>
+        /// <param name="pageIndex">Index of the page.</param>
+        /// <param name="pageSize">Size of the page.</param>
+        /// <param name="totalRecords">The total records.</param>
+        /// <returns>IList{UIDCFlowSettlementReport}.</returns>
+        IList<UIDCFlowSettlementReport> GetDCFlowSettlementReport(UISearchDCFlowSettlementReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
+
     }
 }

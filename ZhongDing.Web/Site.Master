@@ -176,13 +176,14 @@
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/StockInDetailReportManagement.aspx');">入库明细表</a></li>
                                     <li data-level="2" data-menuitemid="106">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/ProcurePlanReportManagement.aspx');">采购计划表</a></li>
-
-                                    <li data-level="2" data-menuitemid="112">
-                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/DBClientQuarterlyAssessmentReport.aspx');">大包客户季度考核表</a></li>
-
                                     <li data-level="2" data-menuitemid="107">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/InventorySummaryReportManagement.aspx');">库存汇总表</a></li>
 
+                                    <li data-level="2" data-menuitemid="110">
+                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/DCFlowSettlementReport.aspx');">配送公司流向结算表</a></li>
+
+                                    <li data-level="2" data-menuitemid="112">
+                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/DBClientQuarterlyAssessmentReport.aspx');">大包客户季度考核表</a></li>
 
                                     <li data-level="2" data-menuitemid="114">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/DCInventoryChecklistReport.aspx');">配送公司库存核对表</a></li>

@@ -496,6 +496,7 @@
     <Compile Include="UIObjects\UIDBContractHospital.cs" />
     <Compile Include="UIObjects\UIDCFlowData.cs" />
     <Compile Include="UIObjects\UIDCFlowDataDetail.cs" />
+    <Compile Include="UIObjects\UIDCFlowSettlementReport.cs" />
     <Compile Include="UIObjects\UIDCImportFileLog.cs" />
     <Compile Include="UIObjects\UIDCInventoryData.cs" />
     <Compile Include="UIObjects\UIDepartment.cs" />
@@ -562,6 +563,7 @@
     <Compile Include="UIObjects\UIWorkflowStep.cs" />
     <Compile Include="UISearchObjects\UISearchClientCautionMoney.cs" />
     <Compile Include="UISearchObjects\UISearchClientCautionMoneyReturnApplication.cs" />
+    <Compile Include="UISearchObjects\UISearchDCFlowSettlementReport.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderAppDetailImportData.cs" />
     <Compile Include="UISearchObjects\UISearchClientAttachedInvoiceSettlement.cs" />
     <Compile Include="UISearchObjects\UISearchClientAttachedInvoiceSettlementDetail.cs" />
