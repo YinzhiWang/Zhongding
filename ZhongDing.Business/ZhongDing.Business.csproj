@@ -77,6 +77,9 @@
     <Compile Include="IRepositories\IHospitalTypeRepository.cs" />
     <Compile Include="IRepositories\IProcureOrderApplicationImportDataRepository.cs" />
     <Compile Include="IRepositories\IProcureOrderApplicationImportFileLogRepository.cs" />
+    <Compile Include="IRepositories\IStockInDetailImportDataRepository.cs" />
+    <Compile Include="IRepositories\IStockInImportDataRepository.cs" />
+    <Compile Include="IRepositories\IStockInImportFileLogRepository.cs" />
     <Compile Include="IRepositories\ISupplierCautionMoneyDeductionRepository.cs" />
     <Compile Include="IRepositories\ISupplierCautionMoneyRepository.cs" />
     <Compile Include="IRepositories\ISupplierInvoiceDetailRepository.cs" />
@@ -201,6 +204,8 @@
     <Compile Include="Repositories\ClientTaskRefundAppRepository.cs" />
     <Compile Include="Repositories\ClientUserRepository.cs" />
     <Compile Include="Repositories\CompanyRepository.cs" />
+    <Compile Include="Repositories\StockInDetailImportDataRepository.cs" />
+    <Compile Include="Repositories\StockInImportDataRepository.cs" />
     <Compile Include="Repositories\ProcureOrderAppDetailImportDataRepository.cs" />
     <Compile Include="Repositories\CostTypeRepository.cs" />
     <Compile Include="Repositories\DBClientInvoiceDetailRepository.cs" />
@@ -255,6 +260,7 @@
     <Compile Include="Repositories\SalesOrderApplicationRepository.cs" />
     <Compile Include="Repositories\SaleTypeRepository.cs" />
     <Compile Include="Repositories\StockInDetailRepository.cs" />
+    <Compile Include="Repositories\StockInImportFileLogRepository.cs" />
     <Compile Include="Repositories\StockInRepository.cs" />
     <Compile Include="Repositories\StockOutDetailRepository.cs" />
     <Compile Include="Repositories\StockOutRepository.cs" />

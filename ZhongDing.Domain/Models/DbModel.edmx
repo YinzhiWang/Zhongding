@@ -101,6 +101,9 @@
           <EntitySet Name="SaleType" EntityType="DbModel.Store.SaleType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="StockIn" EntityType="DbModel.Store.StockIn" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="StockInDetail" EntityType="DbModel.Store.StockInDetail" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="StockInDetailImportData" EntityType="DbModel.Store.StockInDetailImportData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="StockInImportData" EntityType="DbModel.Store.StockInImportData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="StockInImportFileLog" EntityType="DbModel.Store.StockInImportFileLog" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="StockOut" EntityType="DbModel.Store.StockOut" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="StockOutDetail" EntityType="DbModel.Store.StockOutDetail" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Supplier" EntityType="DbModel.Store.Supplier" store:Type="Tables" Schema="dbo" />
@@ -986,6 +989,18 @@
           <AssociationSet Name="FK_StockInDetail_Warehouse" Association="DbModel.Store.FK_StockInDetail_Warehouse">
             <End Role="Warehouse" EntitySet="Warehouse" />
             <End Role="StockInDetail" EntitySet="StockInDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockInDetailImportData_StockInImportDataID" Association="DbModel.Store.FK_StockInDetailImportData_StockInImportDataID">
+            <End Role="StockInImportData" EntitySet="StockInImportData" />
+            <End Role="StockInDetailImportData" EntitySet="StockInDetailImportData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockInImportData_StockInImportFileLogID" Association="DbModel.Store.FK_StockInImportData_StockInImportFileLogID">
+            <End Role="StockInImportFileLog" EntitySet="StockInImportFileLog" />
+            <End Role="StockInImportData" EntitySet="StockInImportData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockInImportFileLog_ImportFileLogID" Association="DbModel.Store.FK_StockInImportFileLog_ImportFileLogID">
+            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
+            <End Role="StockInImportFileLog" EntitySet="StockInImportFileLog" />
           </AssociationSet>
           <AssociationSet Name="FK_StockOut_ClientCompany" Association="DbModel.Store.FK_StockOut_ClientCompany">
             <End Role="ClientCompany" EntitySet="ClientCompany" />
@@ -2736,6 +2751,7 @@
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="IsImport" Type="bit" />
         </EntityType>
         <EntityType Name="StockInDetail">
           <Key>
@@ -2759,6 +2775,53 @@
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="StockInDetailImportData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="StockInImportDataID" Type="int" Nullable="false" />
+          <Property Name="ProcureOrderAppID" Type="int" Nullable="false" />
+          <Property Name="ProcureOrderAppDetailID" Type="int" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="255" />
+          <Property Name="ProductSpecification" Type="nvarchar" MaxLength="255" />
+          <Property Name="WarehouseName" Type="nvarchar" MaxLength="255" />
+          <Property Name="ProcurePrice" Type="money" Nullable="false" />
+          <Property Name="InQty" Type="int" Nullable="false" />
+          <Property Name="BatchNumber" Type="nvarchar" MaxLength="255" />
+          <Property Name="ExpirationDate" Type="datetime" />
+          <Property Name="LicenseNumber" Type="nvarchar" MaxLength="255" />
+          <Property Name="IsMortgagedProduct" Type="bit" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="UnitOfMeasurement" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="StockInImportData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="StockInID" Type="int" />
+          <Property Name="StockInImportFileLogID" Type="int" Nullable="false" />
+          <Property Name="Code" Type="nvarchar" MaxLength="50" />
+          <Property Name="EntryDate" Type="datetime" />
+          <Property Name="SupplierName" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="StockInImportFileLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ImportFileLogID" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="StockOut">
           <Key>
@@ -5826,6 +5889,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_StockInDetailImportData_StockInImportDataID">
+          <End Role="StockInImportData" Type="DbModel.Store.StockInImportData" Multiplicity="1" />
+          <End Role="StockInDetailImportData" Type="DbModel.Store.StockInDetailImportData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockInImportData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockInDetailImportData">
+              <PropertyRef Name="StockInImportDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockInImportData_StockInImportFileLogID">
+          <End Role="StockInImportFileLog" Type="DbModel.Store.StockInImportFileLog" Multiplicity="1" />
+          <End Role="StockInImportData" Type="DbModel.Store.StockInImportData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockInImportFileLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockInImportData">
+              <PropertyRef Name="StockInImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockInImportFileLog_ImportFileLogID">
+          <End Role="ImportFileLog" Type="DbModel.Store.ImportFileLog" Multiplicity="1" />
+          <End Role="StockInImportFileLog" Type="DbModel.Store.StockInImportFileLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportFileLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockInImportFileLog">
+              <PropertyRef Name="ImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_StockOut_ClientCompany">
           <End Role="ClientCompany" Type="DbModel.Store.ClientCompany" Multiplicity="0..1" />
           <End Role="StockOut" Type="DbModel.Store.StockOut" Multiplicity="*" />
@@ -7804,6 +7903,21 @@
             <End Role="ClientCautionMoney" EntitySet="ClientCautionMoney" />
             <End Role="ClientCautionMoneyReturnApplication" EntitySet="ClientCautionMoneyReturnApplication" />
           </AssociationSet>
+          <EntitySet Name="StockInDetailImportData" EntityType="DbModel.StockInDetailImportData" />
+          <EntitySet Name="StockInImportData" EntityType="DbModel.StockInImportData" />
+          <EntitySet Name="StockInImportFileLog" EntityType="DbModel.StockInImportFileLog" />
+          <AssociationSet Name="FK_StockInImportFileLog_ImportFileLogID" Association="DbModel.FK_StockInImportFileLog_ImportFileLogID">
+            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
+            <End Role="StockInImportFileLog" EntitySet="StockInImportFileLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockInDetailImportData_StockInImportDataID" Association="DbModel.FK_StockInDetailImportData_StockInImportDataID">
+            <End Role="StockInImportData" EntitySet="StockInImportData" />
+            <End Role="StockInDetailImportData" EntitySet="StockInDetailImportData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StockInImportData_StockInImportFileLogID" Association="DbModel.FK_StockInImportData_StockInImportFileLogID">
+            <End Role="StockInImportFileLog" EntitySet="StockInImportFileLog" />
+            <End Role="StockInImportData" EntitySet="StockInImportData" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -9412,6 +9526,7 @@
           <NavigationProperty Name="Supplier" Relationship="DbModel.FK_StockIn_Supplier" FromRole="StockIn" ToRole="Supplier" />
           <NavigationProperty Name="WorkflowStatus" Relationship="DbModel.FK_StockIn_WorkflowStatus" FromRole="StockIn" ToRole="WorkflowStatus" />
           <NavigationProperty Name="StockInDetail" Relationship="DbModel.FK_StockInDetail_StockIn" FromRole="StockIn" ToRole="StockInDetail" />
+          <Property Type="Boolean" Name="IsImport" />
         </EntityType>
         <Association Name="FK_StockIn_Supplier">
           <End Type="DbModel.Supplier" Role="Supplier" Multiplicity="1" />
@@ -11156,6 +11271,7 @@
           <NavigationProperty Name="DCImportFileLog" Relationship="DbModel.FK_DCImportFileLog_ImportFileLog" FromRole="ImportFileLog" ToRole="DCImportFileLog" />
           <NavigationProperty Name="DCInventoryData" Relationship="DbModel.FK_DCInventoryData_ImportFileLog" FromRole="ImportFileLog" ToRole="DCInventoryData" />
           <NavigationProperty Name="ProcureOrderApplicationImportFileLog" Relationship="DbModel.FK_ProcureOrderApplicationImportFileLog_ImportFileLogID" FromRole="ImportFileLog" ToRole="ProcureOrderApplicationImportFileLog" />
+          <NavigationProperty Name="StockInImportFileLog" Relationship="DbModel.FK_StockInImportFileLog_ImportFileLogID" FromRole="ImportFileLog" ToRole="StockInImportFileLog" />
         </EntityType>
         <Association Name="FK_DCFlowData_DistributionCompany">
           <End Type="DbModel.DistributionCompany" Role="DistributionCompany" Multiplicity="0..1" />
@@ -13691,6 +13807,94 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="StockInDetailImportData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="StockInImportDataID" Nullable="false" />
+          <Property Type="Int32" Name="ProcureOrderAppID" Nullable="false" />
+          <Property Type="Int32" Name="ProcureOrderAppDetailID" Nullable="false" />
+          <Property Type="String" Name="ProductName" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ProductSpecification" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="WarehouseName" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="ProcurePrice" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="InQty" Nullable="false" />
+          <Property Type="String" Name="BatchNumber" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="ExpirationDate" Precision="3" />
+          <Property Type="String" Name="LicenseNumber" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsMortgagedProduct" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="StockInImportData" Relationship="DbModel.FK_StockInDetailImportData_StockInImportDataID" FromRole="StockInDetailImportData" ToRole="StockInImportData" />
+          <Property Type="String" Name="UnitOfMeasurement" MaxLength="255" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="StockInImportData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="StockInImportFileLogID" Nullable="false" />
+          <Property Type="String" Name="Code" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="EntryDate" Precision="3" />
+          <Property Type="String" Name="SupplierName" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="StockInDetailImportData" Relationship="DbModel.FK_StockInDetailImportData_StockInImportDataID" FromRole="StockInImportData" ToRole="StockInDetailImportData" />
+          <NavigationProperty Name="StockInImportFileLog" Relationship="DbModel.FK_StockInImportData_StockInImportFileLogID" FromRole="StockInImportData" ToRole="StockInImportFileLog" />
+          <Property Type="Int32" Name="StockInID" />
+        </EntityType>
+        <EntityType Name="StockInImportFileLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ImportFileLogID" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <NavigationProperty Name="ImportFileLog" Relationship="DbModel.FK_StockInImportFileLog_ImportFileLogID" FromRole="StockInImportFileLog" ToRole="ImportFileLog" />
+          <NavigationProperty Name="StockInImportData" Relationship="DbModel.FK_StockInImportData_StockInImportFileLogID" FromRole="StockInImportFileLog" ToRole="StockInImportData" />
+        </EntityType>
+        <Association Name="FK_StockInImportFileLog_ImportFileLogID">
+          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="1" />
+          <End Type="DbModel.StockInImportFileLog" Role="StockInImportFileLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportFileLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockInImportFileLog">
+              <PropertyRef Name="ImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockInDetailImportData_StockInImportDataID">
+          <End Type="DbModel.StockInImportData" Role="StockInImportData" Multiplicity="1" />
+          <End Type="DbModel.StockInDetailImportData" Role="StockInDetailImportData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockInImportData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockInDetailImportData">
+              <PropertyRef Name="StockInImportDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StockInImportData_StockInImportFileLogID">
+          <End Type="DbModel.StockInImportFileLog" Role="StockInImportFileLog" Multiplicity="1" />
+          <End Type="DbModel.StockInImportData" Role="StockInImportData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StockInImportFileLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="StockInImportData">
+              <PropertyRef Name="StockInImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -14451,6 +14655,7 @@
           <EntitySetMapping Name="StockIn">
             <EntityTypeMapping TypeName="DbModel.StockIn">
               <MappingFragment StoreEntitySet="StockIn">
+                <ScalarProperty Name="IsImport" ColumnName="IsImport" />
                 <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
                 <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -15840,6 +16045,56 @@
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ClientUserID" ColumnName="ClientUserID" />
                 <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockInDetailImportData">
+            <EntityTypeMapping TypeName="DbModel.StockInDetailImportData">
+              <MappingFragment StoreEntitySet="StockInDetailImportData">
+                <ScalarProperty Name="UnitOfMeasurement" ColumnName="UnitOfMeasurement" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsMortgagedProduct" ColumnName="IsMortgagedProduct" />
+                <ScalarProperty Name="LicenseNumber" ColumnName="LicenseNumber" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="BatchNumber" ColumnName="BatchNumber" />
+                <ScalarProperty Name="InQty" ColumnName="InQty" />
+                <ScalarProperty Name="ProcurePrice" ColumnName="ProcurePrice" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
+                <ScalarProperty Name="ProductSpecification" ColumnName="ProductSpecification" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProcureOrderAppDetailID" ColumnName="ProcureOrderAppDetailID" />
+                <ScalarProperty Name="ProcureOrderAppID" ColumnName="ProcureOrderAppID" />
+                <ScalarProperty Name="StockInImportDataID" ColumnName="StockInImportDataID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockInImportData">
+            <EntityTypeMapping TypeName="DbModel.StockInImportData">
+              <MappingFragment StoreEntitySet="StockInImportData">
+                <ScalarProperty Name="StockInID" ColumnName="StockInID" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
+                <ScalarProperty Name="EntryDate" ColumnName="EntryDate" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="StockInImportFileLogID" ColumnName="StockInImportFileLogID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StockInImportFileLog">
+            <EntityTypeMapping TypeName="DbModel.StockInImportFileLog">
+              <MappingFragment StoreEntitySet="StockInImportFileLog">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ImportFileLogID" ColumnName="ImportFileLogID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

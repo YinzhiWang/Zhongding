@@ -142,8 +142,8 @@
                                     <li data-level="2" data-menuitemid="81"><a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/ClientFlowDataManagement.aspx');">商业客户销售流向</a></li>
                                     <li data-level="2" data-menuitemid="82"><a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/DCFlowDataManagement.aspx');">配送公司流向</a></li>
                                     <li data-level="2" data-menuitemid="83"><a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/DCInventoryDataManagement.aspx');">配送公司库存数据</a></li>
-                                    <li data-level="2" data-menuitemid="84"><a  href="javascript:void(0);" onclick="redirectToPage('Views/Imports/ProcureOrderDataManagement.aspx');">采购订单导入</a></li>
-                                    <li data-level="2"><a href="form_elements.html">收货入库单导入</a></li>
+                                    <li data-level="2" data-menuitemid="84"><a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/ProcureOrderDataManagement.aspx');">采购订单导入</a></li>
+                                    <li data-level="2" data-menuitemid="85"><a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/StockInDataManagement.aspx');">收货入库单导入</a></li>
                                     <li data-level="2"><a href="form_elements.html">客户订单导入</a></li>
                                     <li data-level="2"><a href="form_elements.html">出库单导入</a></li>
                                     <li data-level="2"><a href="form_elements.html">大包订单导入</a></li>
@@ -176,11 +176,11 @@
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/StockInDetailReportManagement.aspx');">入库明细表</a></li>
                                     <li data-level="2" data-menuitemid="106">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/ProcurePlanReportManagement.aspx');">采购计划表</a></li>
-                                    
+
                                     <li data-level="2" data-menuitemid="112">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/DBClientQuarterlyAssessmentReport.aspx');">大包客户季度考核表</a></li>
 
-                                     <li data-level="2" data-menuitemid="107">
+                                    <li data-level="2" data-menuitemid="107">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/InventorySummaryReportManagement.aspx');">库存汇总表</a></li>
 
 
@@ -216,12 +216,12 @@
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/CautionMoneys/SupplierCautionMoneyManagement.aspx');">供应商保证金管理</a></li>
                                     <li data-level="2" data-menuitemid="202">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/CautionMoneys/SupplierCautionMoneyApplyManagement.aspx');">供应商保证金申请</a></li>
-                                  <li data-level="2" data-menuitemid="203">
+                                    <li data-level="2" data-menuitemid="203">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/CautionMoneys/ClientCautionMoneyManagement.aspx');">客户保证金管理</a></li>
                                     <li data-level="2" data-menuitemid="204">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/CautionMoneys/ClientCautionMoneyReturnApplyManagement.aspx');">客户保证金退回申请</a></li>
-                             
-                                     </ul>
+
+                                </ul>
                             </li>
                         </ul>
                     </div>

@@ -150,5 +150,8 @@ namespace ZhongDing.Domain.Models
         public DbSet<ProcureOrderApplicationImportFileLog> ProcureOrderApplicationImportFileLog { get; set; }
         public DbSet<ClientCautionMoneyReturnApplication> ClientCautionMoneyReturnApplication { get; set; }
         public DbSet<ClientCautionMoney> ClientCautionMoney { get; set; }
+        public DbSet<StockInDetailImportData> StockInDetailImportData { get; set; }
+        public DbSet<StockInImportData> StockInImportData { get; set; }
+        public DbSet<StockInImportFileLog> StockInImportFileLog { get; set; }
     }
 }

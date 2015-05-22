@@ -406,6 +406,12 @@
         <AssociationConnector Association="DbModel.FK_ClientCautionMoney_ProductID" />
         <AssociationConnector Association="DbModel.FK_ClientCautionMoney_ProductSpecificationID" />
         <AssociationConnector Association="DbModel.FK_ClientCautionMoneyReturnApplication_ClientCautionMoneyID" />
+        <EntityTypeShape EntityType="DbModel.StockInDetailImportData" Width="1.5" PointX="4.633134721141837" PointY="9.4660035862894745" />
+        <EntityTypeShape EntityType="DbModel.StockInImportData" Width="1.5" PointX="11.287778611894595" PointY="18.4630297210361" />
+        <EntityTypeShape EntityType="DbModel.StockInImportFileLog" Width="1.5" PointX="1.7279980935752382" PointY="12.185372447681321" />
+        <AssociationConnector Association="DbModel.FK_StockInImportFileLog_ImportFileLogID" />
+        <AssociationConnector Association="DbModel.FK_StockInDetailImportData_StockInImportDataID" />
+        <AssociationConnector Association="DbModel.FK_StockInImportData_StockInImportFileLogID" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

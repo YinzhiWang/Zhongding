@@ -30,6 +30,7 @@ namespace ZhongDing.Common
         private static readonly string CONFIGKEY_UPLOADFILEPATH_DCINVENTORYDATA = "UploadFilePath.DCInventoryData";
         private static readonly string CONFIGKEY_UPLOADFILEPATH_CLIENTFLOWDATA = "UploadFilePath.ClientFlowData";
         private static readonly string CONFIGKEY_UPLOADFILEPATH_PROCUREORDERDATA = "UploadFilePath.ProcureOrderData";
+        private static readonly string CONFIGKEY_UPLOADFILEPATH_STOCKINDATA = "UploadFilePath.StockInData";
         
 
 
@@ -246,7 +247,7 @@ namespace ZhongDing.Common
         }
 
         /// <summary>
-        /// 商业客户流向数据上传路径
+        /// 采购订单 导入
         /// </summary>
         /// <value>The upload file path client flow data.</value>
         public static string UploadFilePathProcureOrderData
@@ -256,7 +257,17 @@ namespace ZhongDing.Common
                 return ConfigurationManager.AppSettings[CONFIGKEY_UPLOADFILEPATH_PROCUREORDERDATA];
             }
         }
-
+        /// <summary>
+        /// 入库单 导入
+        /// </summary>
+        /// <value>The upload file path client flow data.</value>
+        public static string UploadFilePathStockInData
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[CONFIGKEY_UPLOADFILEPATH_STOCKINDATA];
+            }
+        }
         /// <summary>
         /// 密码恢复时格式长度
         /// </summary>

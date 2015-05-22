@@ -17,7 +17,7 @@ namespace ZhongDing.Common
         /// 无效的Int:-1
         /// </summary>
         public static readonly int INVALID_INT = -1;
-
+        
         /// <summary>
         /// 系统母版页主标题
         /// </summary>
@@ -638,15 +638,15 @@ namespace ZhongDing.Common
             /// <summary>
             /// 入库仓库
             /// </summary>
-            public static readonly string STOCKIN_WAREHOUSE_NAME="入库仓库";
+            public static readonly string STOCKIN_WAREHOUSE_NAME = "入库仓库";
 
             /// <summary>
-            /// 采购数量
+            /// 基本数量
             /// </summary>
             public static readonly string PROCURE_COUNT = "基本数量";
 
             /// <summary>
-            /// 采购数量
+            /// 采购单价
             /// </summary>
             public static readonly string PROCURE_PRICE = "采购单价";
 
@@ -654,6 +654,49 @@ namespace ZhongDing.Common
             /// 采购金额
             /// </summary>
             public static readonly string PROCURE_TOTAL_AMOUNT = "采购金额";
+
+
+            /// <summary>
+            /// 入库单编号
+            /// </summary>
+            public static readonly string STOCKIN_ORDER_CODE = "入库单编号";
+
+            /// <summary>
+            /// 入库日期
+            /// </summary>
+            public static readonly string STOCKIN_ORDER_DATE = "入库日期";
+
+             /// <summary>
+            /// 采购订单编号
+            /// </summary>
+            public static readonly string PROCURE_ORDER_CODE = "采购订单编号";
+
+            /// <summary>
+            /// 货品批号
+            /// </summary>
+            public static readonly string BATCH_NUMBER = "货品批号";
+
+            /// <summary>
+            /// 过期日期
+            /// </summary>
+            public static readonly string EXPIRATION_DATE = "过期日期";
+
+            /// <summary>
+            /// 批准文号
+            /// </summary>
+            public static readonly string LICENSE_NUMBER = "批准文号";
+
+             /// <summary>
+            /// 抵款货物
+            /// </summary>
+            public static readonly string MORTGAGED_PRODUCT = "抵款货物";
+
+            /// <summary>
+            /// 基本数量
+            /// </summary>
+            public static readonly string STOCKIN_COUNT = "基本数量";
+            
+
         }
 
         #endregion

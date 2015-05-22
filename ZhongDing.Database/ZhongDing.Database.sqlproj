@@ -426,6 +426,9 @@
     <Build Include="dbo\Tables\ProcureOrderAppDetailImportData.sql" />
     <Build Include="dbo\Tables\ClientCautionMoneyReturnApplication.sql" />
     <Build Include="dbo\Tables\ClientCautionMoney.sql" />
+    <Build Include="dbo\Tables\StockInImportFileLog.sql" />
+    <Build Include="dbo\Tables\StockInImportData.sql" />
+    <Build Include="dbo\Tables\StockInDetailImportData.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

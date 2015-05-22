@@ -2618,6 +2618,9 @@
     <Content Include="Views\HRM\WorkflowPermissionMaintenance.aspx" />
     <Content Include="Views\HRM\WorkflowPermissionManagement.aspx" />
     <Content Include="Views\Imports\ClientFlowDataManagement.aspx" />
+    <Content Include="Views\Imports\StockInImportDataDetails.aspx" />
+    <Content Include="Views\Imports\StockInImportData.aspx" />
+    <Content Include="Views\Imports\StockInDataManagement.aspx" />
     <Content Include="Views\Imports\ProcureOrderImportDataDetails.aspx" />
     <Content Include="Views\Imports\ProcureOrderImportData.aspx" />
     <Content Include="Views\Imports\ProcureOrderDataManagement.aspx" />
@@ -2717,6 +2720,7 @@
     <Content Include="Content\Templates\XXXX客户流向数据%28XXXX年XX月%29.xlsx" />
     <Content Include="Content\Templates\XXXX配送公司库存数据%28XXXX年XX月%29.xlsx" />
     <Content Include="Content\Templates\XXXX采购订单导入%28XXXX年XX月%29.xlsx" />
+    <Content Include="Content\Templates\XXXX采购入库单导入%28XXXX年XX月%29.xlsx" />
     <None Include="Scripts\jquery-1.11.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\jquery-1.11.1.min.js" />
@@ -3219,6 +3223,27 @@
     </Compile>
     <Compile Include="Views\Imports\ClientFlowDataManagement.aspx.designer.cs">
       <DependentUpon>ClientFlowDataManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Imports\StockInImportDataDetails.aspx.cs">
+      <DependentUpon>StockInImportDataDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\StockInImportDataDetails.aspx.designer.cs">
+      <DependentUpon>StockInImportDataDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Imports\StockInImportData.aspx.cs">
+      <DependentUpon>StockInImportData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\StockInImportData.aspx.designer.cs">
+      <DependentUpon>StockInImportData.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Imports\StockInDataManagement.aspx.cs">
+      <DependentUpon>StockInDataManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\StockInDataManagement.aspx.designer.cs">
+      <DependentUpon>StockInDataManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Imports\ProcureOrderImportDataDetails.aspx.cs">
       <DependentUpon>ProcureOrderImportDataDetails.aspx</DependentUpon>

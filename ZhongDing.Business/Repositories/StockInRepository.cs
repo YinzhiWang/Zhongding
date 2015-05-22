@@ -119,6 +119,10 @@ namespace ZhongDing.Business.Repositories
 
                 if (uiSearchObj.WorkflowStatusID > 0)
                     whereFuncs.Add(x => x.WorkflowStatusID.Equals(uiSearchObj.WorkflowStatusID));
+                if (uiSearchObj.IsImport.HasValue)
+                {
+                    whereFuncs.Add(x => x.IsImport == uiSearchObj.IsImport);
+                }
             }
 
             query = GetList(pageIndex, pageSize, whereFuncs, GlobalConst.OrderByExpression.CREATEDON_DESC, out total);
@@ -198,7 +202,7 @@ namespace ZhongDing.Business.Repositories
                               join ws in DB.WorkflowStatus on q.WorkflowStatusID equals ws.ID
                               join cu in DB.Users on q.CreatedBy equals cu.UserID into tempCU
                               from tcu in tempCU.DefaultIfEmpty()
-                              join transportFeeStockIn in DB.TransportFeeStockIn.Where(x=>x.IsDeleted==false) on q.ID equals transportFeeStockIn.StockInID into tempTransportFeeStockIns
+                              join transportFeeStockIn in DB.TransportFeeStockIn.Where(x => x.IsDeleted == false) on q.ID equals transportFeeStockIn.StockInID into tempTransportFeeStockIns
                               from tempTransportFeeStockIn in tempTransportFeeStockIns.DefaultIfEmpty()
                               where tempTransportFeeStockIn == null && q.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse
                               orderby q.CreatedOn descending

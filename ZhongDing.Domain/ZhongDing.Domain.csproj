@@ -353,6 +353,15 @@
     <Compile Include="Models\StockInDetail.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\StockInDetailImportData.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StockInImportData.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\StockInImportFileLog.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\StockOut.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -522,7 +531,9 @@
     <Compile Include="UIObjects\UISalesOrderAppDetail.cs" />
     <Compile Include="UIObjects\UIStockIn.cs" />
     <Compile Include="UIObjects\UIStockInDetail.cs" />
+    <Compile Include="UIObjects\UIStockInDetailImportData.cs" />
     <Compile Include="UIObjects\UIStockInDetailReport.cs" />
+    <Compile Include="UIObjects\UIStockInImportFileLog.cs" />
     <Compile Include="UIObjects\UIStockOut.cs" />
     <Compile Include="UIObjects\UIStockOutDetail.cs" />
     <Compile Include="UIObjects\UIStockOutDetailReport.cs" />
@@ -616,6 +627,7 @@
     <Compile Include="UISearchObjects\UISearchStockIn.cs" />
     <Compile Include="UISearchObjects\UISearchStockInDetail.cs" />
     <Compile Include="UISearchObjects\UISearchStockInDetailReport.cs" />
+    <Compile Include="UISearchObjects\UISearchStockInImportFileLog.cs" />
     <Compile Include="UISearchObjects\UISearchStockOut.cs" />
     <Compile Include="UISearchObjects\UISearchStockOutDetail.cs" />
     <Compile Include="UISearchObjects\UISearchStockOutDetailReport.cs" />
@@ -636,6 +648,7 @@
     <Compile Include="UISearchObjects\UISearchWarehouse.cs" />
     <Compile Include="UISearchObjects\UISearchWorkflowBase.cs" />
     <Compile Include="UISearchObjects\UISearchWorkflowStep.cs" />
+    <Compile Include="UISearchObjects\UIStockInDetailImportData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

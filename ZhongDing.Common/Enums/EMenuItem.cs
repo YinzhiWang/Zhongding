@@ -212,7 +212,11 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 采购订单导入
         /// </summary>
-        ProcureOrderData,
+        ProcureOrderData=84,
+        /// <summary>
+        /// 采购订单导入
+        /// </summary>
+        StockInData = 85,
 
         /// <summary>
         /// 提成与考核管理
