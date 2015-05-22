@@ -134,6 +134,7 @@
     <Content Include="Account\Login.aspx" />
     <Content Include="Account\Logout.aspx" />
     <Content Include="Account\Register.aspx" />
+    <Content Include="App_Data\ReadMe.txt" />
     <Content Include="Content\core\button.css" />
     <Content Include="Content\core\core.css" />
     <Content Include="Content\core\error.css" />
@@ -3925,9 +3926,7 @@
       <LastGenOutput>RadGrid.Main.zh-CN.designer.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
