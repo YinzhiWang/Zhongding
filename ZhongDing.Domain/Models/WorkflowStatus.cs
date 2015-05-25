@@ -23,7 +23,6 @@ namespace ZhongDing.Domain.Models
             this.DaBaoApplication = new HashSet<DaBaoApplication>();
             this.DaBaoRequestApplication = new HashSet<DaBaoRequestApplication>();
             this.StockOut = new HashSet<StockOut>();
-            this.ClientSaleApplication = new HashSet<ClientSaleApplication>();
             this.ClientRefundApplication = new HashSet<ClientRefundApplication>();
             this.FactoryManagerRefundApplication = new HashSet<FactoryManagerRefundApplication>();
             this.ClientTaskRefundApplication = new HashSet<ClientTaskRefundApplication>();
@@ -32,6 +31,7 @@ namespace ZhongDing.Domain.Models
             this.SupplierCautionMoney = new HashSet<SupplierCautionMoney>();
             this.ClientAttachedInvoiceSettlement = new HashSet<ClientAttachedInvoiceSettlement>();
             this.ClientCautionMoneyReturnApplication = new HashSet<ClientCautionMoneyReturnApplication>();
+            this.ClientSaleApplication = new HashSet<ClientSaleApplication>();
         }
     
         public int ID { get; set; }
@@ -55,7 +55,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<DaBaoApplication> DaBaoApplication { get; set; }
         public virtual ICollection<DaBaoRequestApplication> DaBaoRequestApplication { get; set; }
         public virtual ICollection<StockOut> StockOut { get; set; }
-        public virtual ICollection<ClientSaleApplication> ClientSaleApplication { get; set; }
         public virtual ICollection<ClientRefundApplication> ClientRefundApplication { get; set; }
         public virtual ICollection<FactoryManagerRefundApplication> FactoryManagerRefundApplication { get; set; }
         public virtual ICollection<ClientTaskRefundApplication> ClientTaskRefundApplication { get; set; }
@@ -64,5 +63,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<SupplierCautionMoney> SupplierCautionMoney { get; set; }
         public virtual ICollection<ClientAttachedInvoiceSettlement> ClientAttachedInvoiceSettlement { get; set; }
         public virtual ICollection<ClientCautionMoneyReturnApplication> ClientCautionMoneyReturnApplication { get; set; }
+        public virtual ICollection<ClientSaleApplication> ClientSaleApplication { get; set; }
     }
 }

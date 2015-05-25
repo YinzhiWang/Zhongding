@@ -9,5 +9,6 @@ namespace ZhongDing.Business.IRepositories
 {
     public interface IClientUserRepository : IBaseRepository<ClientUser>, IGenerateDropdownItems
     {
+        ClientUser GetClientUserByClientName(string clientName);
     }
 }

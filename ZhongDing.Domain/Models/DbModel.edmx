@@ -36,6 +36,8 @@
           <EntitySet Name="ClientRefundApplication" EntityType="DbModel.Store.ClientRefundApplication" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ClientSaleAppBankAccount" EntityType="DbModel.Store.ClientSaleAppBankAccount" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ClientSaleApplication" EntityType="DbModel.Store.ClientSaleApplication" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ClientSaleApplicationImportData" EntityType="DbModel.Store.ClientSaleApplicationImportData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ClientSaleApplicationImportFileLog" EntityType="DbModel.Store.ClientSaleApplicationImportFileLog" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ClientTaskRefundApplication" EntityType="DbModel.Store.ClientTaskRefundApplication" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ClientUser" EntityType="DbModel.Store.ClientUser" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Company" EntityType="DbModel.Store.Company" store:Type="Tables" Schema="dbo" />
@@ -97,7 +99,9 @@
           <EntitySet Name="Roles" EntityType="DbModel.Store.Roles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SaleOrderType" EntityType="DbModel.Store.SaleOrderType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SalesOrderAppDetail" EntityType="DbModel.Store.SalesOrderAppDetail" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SalesOrderAppDetailImportData" EntityType="DbModel.Store.SalesOrderAppDetailImportData" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SalesOrderApplication" EntityType="DbModel.Store.SalesOrderApplication" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SalesOrderApplicationImportData" EntityType="DbModel.Store.SalesOrderApplicationImportData" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SaleType" EntityType="DbModel.Store.SaleType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="StockIn" EntityType="DbModel.Store.StockIn" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="StockInDetail" EntityType="DbModel.Store.StockInDetail" store:Type="Tables" Schema="dbo" />
@@ -481,6 +485,14 @@
           <AssociationSet Name="FK_ClientSaleApplication_WorkflowStatus" Association="DbModel.Store.FK_ClientSaleApplication_WorkflowStatus">
             <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
             <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleApplicationImportData_SalesOrderApplicationImportDataID" Association="DbModel.Store.FK_ClientSaleApplicationImportData_SalesOrderApplicationImportDataID">
+            <End Role="SalesOrderApplicationImportData" EntitySet="SalesOrderApplicationImportData" />
+            <End Role="ClientSaleApplicationImportData" EntitySet="ClientSaleApplicationImportData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleApplicationImportFileLog_ImportFileLogID" Association="DbModel.Store.FK_ClientSaleApplicationImportFileLog_ImportFileLogID">
+            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
+            <End Role="ClientSaleApplicationImportFileLog" EntitySet="ClientSaleApplicationImportFileLog" />
           </AssociationSet>
           <AssociationSet Name="FK_ClientTaskRefundApplication_ClientCompany" Association="DbModel.Store.FK_ClientTaskRefundApplication_ClientCompany">
             <End Role="ClientCompany" EntitySet="ClientCompany" />
@@ -953,6 +965,14 @@
           <AssociationSet Name="FK_SalesOrderAppDetail_Warehouse" Association="DbModel.Store.FK_SalesOrderAppDetail_Warehouse">
             <End Role="Warehouse" EntitySet="Warehouse" />
             <End Role="SalesOrderAppDetail" EntitySet="SalesOrderAppDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesOrderAppDetailImportData_SalesOrderAppDetailID" Association="DbModel.Store.FK_SalesOrderAppDetailImportData_SalesOrderAppDetailID">
+            <End Role="SalesOrderAppDetail" EntitySet="SalesOrderAppDetail" />
+            <End Role="SalesOrderAppDetailImportData" EntitySet="SalesOrderAppDetailImportData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesOrderAppDetailImportData_SalesOrderApplicationImportDataID" Association="DbModel.Store.FK_SalesOrderAppDetailImportData_SalesOrderApplicationImportDataID">
+            <End Role="SalesOrderApplicationImportData" EntitySet="SalesOrderApplicationImportData" />
+            <End Role="SalesOrderAppDetailImportData" EntitySet="SalesOrderAppDetailImportData" />
           </AssociationSet>
           <AssociationSet Name="FK_SalesOrderApplication_SaleOrderType" Association="DbModel.Store.FK_SalesOrderApplication_SaleOrderType">
             <End Role="SaleOrderType" EntitySet="SaleOrderType" />
@@ -1777,7 +1797,7 @@
           <Property Name="ClientUserID" Type="int" Nullable="false" />
           <Property Name="ClientCompanyID" Type="int" Nullable="false" />
           <Property Name="DeliveryModeID" Type="int" />
-          <Property Name="ClientContactID" Type="int" Nullable="false" />
+          <Property Name="ClientContactID" Type="int" />
           <Property Name="Guaranteeby" Type="int" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
@@ -1793,6 +1813,28 @@
           <Property Name="ReceiverPhone" Type="nvarchar" MaxLength="50" />
           <Property Name="ReceiverAddress" Type="nvarchar" MaxLength="500" />
           <Property Name="ReceiverFax" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ClientSaleApplicationImportData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SalesOrderApplicationImportDataID" Type="int" Nullable="false" />
+          <Property Name="ClientUserName" Type="nvarchar" MaxLength="256" />
+          <Property Name="ClientCompanyName" Type="nvarchar" MaxLength="256" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="ClientSaleApplicationImportFileLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ImportFileLogID" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
         </EntityType>
         <EntityType Name="ClientTaskRefundApplication">
           <Key>
@@ -2713,6 +2755,28 @@
           <Property Name="LastModifiedBy" Type="int" />
           <Property Name="WarehouseID" Type="int" />
         </EntityType>
+        <EntityType Name="SalesOrderAppDetailImportData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SalesOrderApplicationImportDataID" Type="int" Nullable="false" />
+          <Property Name="SalesOrderAppDetailID" Type="int" Nullable="false" />
+          <Property Name="ProductName" Type="nvarchar" MaxLength="255" />
+          <Property Name="ProductSpecification" Type="nvarchar" MaxLength="255" />
+          <Property Name="WarehouseName" Type="nvarchar" MaxLength="255" />
+          <Property Name="UnitOfMeasurement" Type="nvarchar" MaxLength="255" />
+          <Property Name="Count" Type="int" Nullable="false" />
+          <Property Name="SalesPrice" Type="money" Nullable="false" />
+          <Property Name="InvoicePrice" Type="money" />
+          <Property Name="TotalSalesAmount" Type="money" Nullable="false" />
+          <Property Name="GiftCount" Type="int" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
         <EntityType Name="SalesOrderApplication">
           <Key>
             <PropertyRef Name="ID" />
@@ -2729,6 +2793,22 @@
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="IsImport" Type="bit" />
+        </EntityType>
+        <EntityType Name="SalesOrderApplicationImportData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SalesOrderApplicationID" Type="int" />
+          <Property Name="SaleOrderType" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="OrderCode" Type="nvarchar" MaxLength="50" />
+          <Property Name="OrderDate" Type="datetime" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="SaleApplicationImportFileLogID" Type="int" />
         </EntityType>
         <EntityType Name="SaleType">
           <Key>
@@ -4306,7 +4386,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ClientSaleApplication_ClientInfoContact">
-          <End Role="ClientInfoContact" Type="DbModel.Store.ClientInfoContact" Multiplicity="1" />
+          <End Role="ClientInfoContact" Type="DbModel.Store.ClientInfoContact" Multiplicity="0..1" />
           <End Role="ClientSaleApplication" Type="DbModel.Store.ClientSaleApplication" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="ClientInfoContact">
@@ -4362,6 +4442,30 @@
             </Principal>
             <Dependent Role="ClientSaleApplication">
               <PropertyRef Name="WorkflowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleApplicationImportData_SalesOrderApplicationImportDataID">
+          <End Role="SalesOrderApplicationImportData" Type="DbModel.Store.SalesOrderApplicationImportData" Multiplicity="1" />
+          <End Role="ClientSaleApplicationImportData" Type="DbModel.Store.ClientSaleApplicationImportData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesOrderApplicationImportData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplicationImportData">
+              <PropertyRef Name="SalesOrderApplicationImportDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleApplicationImportFileLog_ImportFileLogID">
+          <End Role="ImportFileLog" Type="DbModel.Store.ImportFileLog" Multiplicity="1" />
+          <End Role="ClientSaleApplicationImportFileLog" Type="DbModel.Store.ClientSaleApplicationImportFileLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportFileLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplicationImportFileLog">
+              <PropertyRef Name="ImportFileLogID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5781,6 +5885,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SalesOrderAppDetailImportData_SalesOrderAppDetailID">
+          <End Role="SalesOrderAppDetail" Type="DbModel.Store.SalesOrderAppDetail" Multiplicity="1" />
+          <End Role="SalesOrderAppDetailImportData" Type="DbModel.Store.SalesOrderAppDetailImportData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesOrderAppDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SalesOrderAppDetailImportData">
+              <PropertyRef Name="SalesOrderAppDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesOrderAppDetailImportData_SalesOrderApplicationImportDataID">
+          <End Role="SalesOrderApplicationImportData" Type="DbModel.Store.SalesOrderApplicationImportData" Multiplicity="1" />
+          <End Role="SalesOrderAppDetailImportData" Type="DbModel.Store.SalesOrderAppDetailImportData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesOrderApplicationImportData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SalesOrderAppDetailImportData">
+              <PropertyRef Name="SalesOrderApplicationImportDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SalesOrderApplication_SaleOrderType">
           <End Role="SaleOrderType" Type="DbModel.Store.SaleOrderType" Multiplicity="1" />
           <End Role="SalesOrderApplication" Type="DbModel.Store.SalesOrderApplication" Multiplicity="*" />
@@ -7131,35 +7259,6 @@
             <End Role="SaleOrderType" EntitySet="SaleOrderType" />
             <End Role="SalesOrderApplication" EntitySet="SalesOrderApplication" />
           </AssociationSet>
-          <EntitySet Name="ClientSaleApplication" EntityType="DbModel.ClientSaleApplication" />
-          <AssociationSet Name="FK_ClientSaleApplication_ClientCompany" Association="DbModel.FK_ClientSaleApplication_ClientCompany">
-            <End Role="ClientCompany" EntitySet="ClientCompany" />
-            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClientSaleApplication_ClientInfoContact" Association="DbModel.FK_ClientSaleApplication_ClientInfoContact">
-            <End Role="ClientInfoContact" EntitySet="ClientInfoContact" />
-            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClientSaleAppBankAccount_ClientSaleApplication" Association="DbModel.FK_ClientSaleAppBankAccount_ClientSaleApplication">
-            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
-            <End Role="ClientSaleAppBankAccount" EntitySet="ClientSaleAppBankAccount" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClientSaleApplication_Company" Association="DbModel.FK_ClientSaleApplication_Company">
-            <End Role="Company" EntitySet="Company" />
-            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClientSaleApplication_SalesOrderApplication" Association="DbModel.FK_ClientSaleApplication_SalesOrderApplication">
-            <End Role="SalesOrderApplication" EntitySet="SalesOrderApplication" />
-            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClientSaleApplication_WorkflowStatus" Association="DbModel.FK_ClientSaleApplication_WorkflowStatus">
-            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
-            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
-          </AssociationSet>
-          <AssociationSet Name="FK_GuaranteeLog_ClientSaleApplication" Association="DbModel.FK_GuaranteeLog_ClientSaleApplication">
-            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
-            <End Role="GuaranteeLog" EntitySet="GuaranteeLog" />
-          </AssociationSet>
           <EntitySet Name="ProductHighPrice" EntityType="DbModel.ProductHighPrice" />
           <AssociationSet Name="FK_ProductHighPrice_Product" Association="DbModel.FK_ProductHighPrice_Product">
             <End Role="Product" EntitySet="Product" />
@@ -7198,10 +7297,6 @@
           <EntitySet Name="ClientRefundApplication" EntityType="DbModel.ClientRefundApplication" />
           <AssociationSet Name="FK_ClientRefundApplication_ClientCompany" Association="DbModel.FK_ClientRefundApplication_ClientCompany">
             <End Role="ClientCompany" EntitySet="ClientCompany" />
-            <End Role="ClientRefundApplication" EntitySet="ClientRefundApplication" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ClientRefundApplication_ClientSaleApplication" Association="DbModel.FK_ClientRefundApplication_ClientSaleApplication">
-            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
             <End Role="ClientRefundApplication" EntitySet="ClientRefundApplication" />
           </AssociationSet>
           <AssociationSet Name="FK_ClientRefundApplication_Company" Association="DbModel.FK_ClientRefundApplication_Company">
@@ -7572,10 +7667,6 @@
             <End Role="ClientUser" EntitySet="ClientUser" />
             <End Role="ClientRefundApplication" EntitySet="ClientRefundApplication" />
           </AssociationSet>
-          <AssociationSet Name="FK_ClientSaleApplication_ClientUser" Association="DbModel.FK_ClientSaleApplication_ClientUser">
-            <End Role="ClientUser" EntitySet="ClientUser" />
-            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
-          </AssociationSet>
           <AssociationSet Name="FK_ClientTaskRefundApplication_ClientUser" Association="DbModel.FK_ClientTaskRefundApplication_ClientUser">
             <End Role="ClientUser" EntitySet="ClientUser" />
             <End Role="ClientTaskRefundApplication" EntitySet="ClientTaskRefundApplication" />
@@ -7918,6 +8009,63 @@
             <End Role="StockInImportFileLog" EntitySet="StockInImportFileLog" />
             <End Role="StockInImportData" EntitySet="StockInImportData" />
           </AssociationSet>
+          <EntitySet Name="ClientSaleApplicationImportFileLog" EntityType="DbModel.ClientSaleApplicationImportFileLog" />
+          <AssociationSet Name="FK_ClientSaleApplicationImportFileLog_ImportFileLogID" Association="DbModel.FK_ClientSaleApplicationImportFileLog_ImportFileLogID">
+            <End Role="ImportFileLog" EntitySet="ImportFileLog" />
+            <End Role="ClientSaleApplicationImportFileLog" EntitySet="ClientSaleApplicationImportFileLog" />
+          </AssociationSet>
+          <EntitySet Name="SalesOrderAppDetailImportData" EntityType="DbModel.SalesOrderAppDetailImportData" />
+          <EntitySet Name="SalesOrderApplicationImportData" EntityType="DbModel.SalesOrderApplicationImportData" />
+          <AssociationSet Name="FK_SalesOrderAppDetailImportData_SalesOrderAppDetailID" Association="DbModel.FK_SalesOrderAppDetailImportData_SalesOrderAppDetailID">
+            <End Role="SalesOrderAppDetail" EntitySet="SalesOrderAppDetail" />
+            <End Role="SalesOrderAppDetailImportData" EntitySet="SalesOrderAppDetailImportData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalesOrderAppDetailImportData_SalesOrderApplicationImportDataID" Association="DbModel.FK_SalesOrderAppDetailImportData_SalesOrderApplicationImportDataID">
+            <End Role="SalesOrderApplicationImportData" EntitySet="SalesOrderApplicationImportData" />
+            <End Role="SalesOrderAppDetailImportData" EntitySet="SalesOrderAppDetailImportData" />
+          </AssociationSet>
+          <EntitySet Name="ClientSaleApplication" EntityType="DbModel.ClientSaleApplication" />
+          <AssociationSet Name="FK_ClientSaleApplication_ClientCompany" Association="DbModel.FK_ClientSaleApplication_ClientCompany">
+            <End Role="ClientCompany" EntitySet="ClientCompany" />
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleApplication_ClientInfoContact" Association="DbModel.FK_ClientSaleApplication_ClientInfoContact">
+            <End Role="ClientInfoContact" EntitySet="ClientInfoContact" />
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientRefundApplication_ClientSaleApplication" Association="DbModel.FK_ClientRefundApplication_ClientSaleApplication">
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+            <End Role="ClientRefundApplication" EntitySet="ClientRefundApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleAppBankAccount_ClientSaleApplication" Association="DbModel.FK_ClientSaleAppBankAccount_ClientSaleApplication">
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+            <End Role="ClientSaleAppBankAccount" EntitySet="ClientSaleAppBankAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleApplication_ClientUser" Association="DbModel.FK_ClientSaleApplication_ClientUser">
+            <End Role="ClientUser" EntitySet="ClientUser" />
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleApplication_Company" Association="DbModel.FK_ClientSaleApplication_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleApplication_SalesOrderApplication" Association="DbModel.FK_ClientSaleApplication_SalesOrderApplication">
+            <End Role="SalesOrderApplication" EntitySet="SalesOrderApplication" />
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClientSaleApplication_WorkflowStatus" Association="DbModel.FK_ClientSaleApplication_WorkflowStatus">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GuaranteeLog_ClientSaleApplication" Association="DbModel.FK_GuaranteeLog_ClientSaleApplication">
+            <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
+            <End Role="GuaranteeLog" EntitySet="GuaranteeLog" />
+          </AssociationSet>
+          <EntitySet Name="ClientSaleApplicationImportData" EntityType="DbModel.ClientSaleApplicationImportData" />
+          <AssociationSet Name="FK_ClientSaleApplicationImportData_SalesOrderApplicationImportDataID" Association="DbModel.FK_ClientSaleApplicationImportData_SalesOrderApplicationImportDataID">
+            <End Role="SalesOrderApplicationImportData" EntitySet="SalesOrderApplicationImportData" />
+            <End Role="ClientSaleApplicationImportData" EntitySet="ClientSaleApplicationImportData" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -8063,8 +8211,8 @@
           <Property Type="Int32" Name="CreatedBy" />
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
-          <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_ClientInfoContact" FromRole="ClientInfoContact" ToRole="ClientSaleApplication" />
           <NavigationProperty Name="ClientInfo" Relationship="DbModel.FK_ClientInfoContact_ClientInfo" FromRole="ClientInfoContact" ToRole="ClientInfo" />
+          <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_ClientInfoContact" FromRole="ClientInfoContact" ToRole="ClientSaleApplication" />
         </EntityType>
         <EntityType Name="Company">
           <Key>
@@ -8090,7 +8238,6 @@
           <NavigationProperty Name="DaBaoApplication" Relationship="DbModel.FK_DaBaoApplication_Company" FromRole="Company" ToRole="DaBaoApplication" />
           <NavigationProperty Name="DaBaoRequestApplication" Relationship="DbModel.FK_DaBaoRequestApplication_Company" FromRole="Company" ToRole="DaBaoRequestApplication" />
           <NavigationProperty Name="StockOut" Relationship="DbModel.FK_StockOut_Company" FromRole="Company" ToRole="StockOut" />
-          <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_Company" FromRole="Company" ToRole="ClientSaleApplication" />
           <NavigationProperty Name="ClientRefundApplication" Relationship="DbModel.FK_ClientRefundApplication_Company" FromRole="Company" ToRole="ClientRefundApplication" />
           <NavigationProperty Name="FactoryManagerRefundApplication" Relationship="DbModel.FK_FactoryManagerRefundApplication_Company" FromRole="Company" ToRole="FactoryManagerRefundApplication" />
           <NavigationProperty Name="SupplierRefundApplication" Relationship="DbModel.FK_SupplierRefundApplication_Company" FromRole="Company" ToRole="SupplierRefundApplication" />
@@ -8104,6 +8251,7 @@
           <NavigationProperty Name="SupplierCautionMoney" Relationship="DbModel.FK_SupplierCautionMoney_CompanyID" FromRole="Company" ToRole="SupplierCautionMoney" />
           <NavigationProperty Name="ClientAttachedInvoiceSettlement" Relationship="DbModel.FK_ClientAttachedInvoiceSettlement_Company" FromRole="Company" ToRole="ClientAttachedInvoiceSettlement" />
           <NavigationProperty Name="ClientCautionMoney" Relationship="DbModel.FK_ClientCautionMoney_CompanyID" FromRole="Company" ToRole="ClientCautionMoney" />
+          <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_Company" FromRole="Company" ToRole="ClientSaleApplication" />
         </EntityType>
         <EntityType Name="OwnerType">
           <Key>
@@ -8737,7 +8885,6 @@
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="ClientCompanyCertificate" Relationship="DbModel.FK_ClientCompanyCertificate_ClientCompany" FromRole="ClientCompany" ToRole="ClientCompanyCertificate" />
           <NavigationProperty Name="StockOut" Relationship="DbModel.FK_StockOut_ClientCompany" FromRole="ClientCompany" ToRole="StockOut" />
-          <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_ClientCompany" FromRole="ClientCompany" ToRole="ClientSaleApplication" />
           <NavigationProperty Name="ClientRefundApplication" Relationship="DbModel.FK_ClientRefundApplication_ClientCompany" FromRole="ClientCompany" ToRole="ClientRefundApplication" />
           <NavigationProperty Name="ClientTaskRefundApplication" Relationship="DbModel.FK_ClientTaskRefundApplication_ClientCompany" FromRole="ClientCompany" ToRole="ClientTaskRefundApplication" />
           <NavigationProperty Name="ClientFlowData" Relationship="DbModel.FK_ClientFlowData_ClientCompany" FromRole="ClientCompany" ToRole="ClientFlowData" />
@@ -8747,6 +8894,7 @@
           <NavigationProperty Name="ClientInvoiceSettlement" Relationship="DbModel.FK_ClientInvoiceSettlement_ClientCompany" FromRole="ClientCompany" ToRole="ClientInvoiceSettlement" />
           <NavigationProperty Name="ClientInvoiceSettlementDetail" Relationship="DbModel.FK_ClientInvoiceSettlementDetail_ClientCompany" FromRole="ClientCompany" ToRole="ClientInvoiceSettlementDetail" />
           <NavigationProperty Name="ClientAttachedInvoiceSettlement" Relationship="DbModel.FK_ClientAttachedInvoiceSettlement_ClientCompany" FromRole="ClientCompany" ToRole="ClientAttachedInvoiceSettlement" />
+          <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_ClientCompany" FromRole="ClientCompany" ToRole="ClientSaleApplication" />
         </EntityType>
         <Association Name="FK_ClientCompanyCertificate_ClientCompany">
           <End Type="DbModel.ClientCompany" Role="ClientCompany" Multiplicity="1" />
@@ -9339,7 +9487,6 @@
           <NavigationProperty Name="DaBaoApplication" Relationship="DbModel.FK_DaBaoApplication_WorkflowStatus" FromRole="WorkflowStatus" ToRole="DaBaoApplication" />
           <NavigationProperty Name="DaBaoRequestApplication" Relationship="DbModel.FK_DaBaoRequestApplication_WorkflowStatus" FromRole="WorkflowStatus" ToRole="DaBaoRequestApplication" />
           <NavigationProperty Name="StockOut" Relationship="DbModel.FK_StockOut_WorkflowStatus" FromRole="WorkflowStatus" ToRole="StockOut" />
-          <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_WorkflowStatus" FromRole="WorkflowStatus" ToRole="ClientSaleApplication" />
           <NavigationProperty Name="ClientRefundApplication" Relationship="DbModel.FK_ClientRefundApplication_WorkflowStatus" FromRole="WorkflowStatus" ToRole="ClientRefundApplication" />
           <NavigationProperty Name="FactoryManagerRefundApplication" Relationship="DbModel.FK_FactoryManagerRefundApplication_WorkflowStatus" FromRole="WorkflowStatus" ToRole="FactoryManagerRefundApplication" />
           <NavigationProperty Name="ClientTaskRefundApplication" Relationship="DbModel.FK_ClientTaskRefundApplication_WorkflowStatus" FromRole="WorkflowStatus" ToRole="ClientTaskRefundApplication" />
@@ -9348,6 +9495,7 @@
           <NavigationProperty Name="SupplierCautionMoney" Relationship="DbModel.FK_SupplierCautionMoney_WorkflowStatusID" FromRole="WorkflowStatus" ToRole="SupplierCautionMoney" />
           <NavigationProperty Name="ClientAttachedInvoiceSettlement" Relationship="DbModel.FK_ClientAttachedInvoiceSettlement_WorkflowStatus" FromRole="WorkflowStatus" ToRole="ClientAttachedInvoiceSettlement" />
           <NavigationProperty Name="ClientCautionMoneyReturnApplication" Relationship="DbModel.FK_ClientCautionMoneyReturnApplication_WorkflowStatusID" FromRole="WorkflowStatus" ToRole="ClientCautionMoneyReturnApplication" />
+          <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_WorkflowStatus" FromRole="WorkflowStatus" ToRole="ClientSaleApplication" />
         </EntityType>
         <EntityType Name="WorkflowStepStatus">
           <Key>
@@ -10327,9 +10475,10 @@
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="DaBaoApplication" Relationship="DbModel.FK_DaBaoApplication_SalesOrderApplication" FromRole="SalesOrderApplication" ToRole="DaBaoApplication" />
           <NavigationProperty Name="SaleOrderType" Relationship="DbModel.FK_SalesOrderApplication_SaleOrderType" FromRole="SalesOrderApplication" ToRole="SaleOrderType" />
-          <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_SalesOrderApplication" FromRole="SalesOrderApplication" ToRole="ClientSaleApplication" />
           <NavigationProperty Name="StockOutDetail" Relationship="DbModel.FK_StockOutDetail_SalesOrderApplication" FromRole="SalesOrderApplication" ToRole="StockOutDetail" />
           <NavigationProperty Name="SalesOrderAppDetail" Relationship="DbModel.FK_SalesOrderAppDetail_SalesOrderApplication" FromRole="SalesOrderApplication" ToRole="SalesOrderAppDetail" />
+          <Property Type="Boolean" Name="IsImport" />
+          <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_SalesOrderApplication" FromRole="SalesOrderApplication" ToRole="ClientSaleApplication" />
         </EntityType>
         <Association Name="FK_DaBaoApplication_SalesOrderApplication">
           <End Type="DbModel.SalesOrderApplication" Role="SalesOrderApplication" Multiplicity="1" />
@@ -10352,125 +10501,6 @@
             </Principal>
             <Dependent Role="SalesOrderApplication">
               <PropertyRef Name="SaleOrderTypeID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="ClientSaleApplication">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Type="Int32" Name="SalesOrderApplicationID" Nullable="false" />
-          <Property Type="Int32" Name="ClientUserID" Nullable="false" />
-          <Property Type="Int32" Name="ClientCompanyID" Nullable="false" />
-          <Property Type="Int32" Name="DeliveryModeID" />
-          <Property Type="Int32" Name="ClientContactID" Nullable="false" />
-          <Property Type="Int32" Name="Guaranteeby" />
-          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
-          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
-          <Property Type="Int32" Name="CreatedBy" />
-          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
-          <Property Type="Int32" Name="LastModifiedBy" />
-          <Property Type="Int32" Name="WorkflowStatusID" Nullable="false" />
-          <Property Type="Int32" Name="CompanyID" Nullable="false" />
-          <Property Type="Boolean" Name="IsGuaranteed" Nullable="false" />
-          <Property Type="DateTime" Name="GuaranteeExpirationDate" Precision="3" />
-          <Property Type="String" Name="ClientContactPhone" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ReceiverName" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ReceiverPhone" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ReceiverAddress" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Type="String" Name="ReceiverFax" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ClientCompany" Relationship="DbModel.FK_ClientSaleApplication_ClientCompany" FromRole="ClientSaleApplication" ToRole="ClientCompany" />
-          <NavigationProperty Name="ClientInfoContact" Relationship="DbModel.FK_ClientSaleApplication_ClientInfoContact" FromRole="ClientSaleApplication" ToRole="ClientInfoContact" />
-          <NavigationProperty Name="ClientSaleAppBankAccount" Relationship="DbModel.FK_ClientSaleAppBankAccount_ClientSaleApplication" FromRole="ClientSaleApplication" ToRole="ClientSaleAppBankAccount" />
-          <NavigationProperty Name="Company" Relationship="DbModel.FK_ClientSaleApplication_Company" FromRole="ClientSaleApplication" ToRole="Company" />
-          <NavigationProperty Name="SalesOrderApplication" Relationship="DbModel.FK_ClientSaleApplication_SalesOrderApplication" FromRole="ClientSaleApplication" ToRole="SalesOrderApplication" />
-          <NavigationProperty Name="WorkflowStatus" Relationship="DbModel.FK_ClientSaleApplication_WorkflowStatus" FromRole="ClientSaleApplication" ToRole="WorkflowStatus" />
-          <NavigationProperty Name="GuaranteeLog" Relationship="DbModel.FK_GuaranteeLog_ClientSaleApplication" FromRole="ClientSaleApplication" ToRole="GuaranteeLog" />
-          <NavigationProperty Name="ClientRefundApplication" Relationship="DbModel.FK_ClientRefundApplication_ClientSaleApplication" FromRole="ClientSaleApplication" ToRole="ClientRefundApplication" />
-          <NavigationProperty Name="ClientUser" Relationship="DbModel.FK_ClientSaleApplication_ClientUser" FromRole="ClientSaleApplication" ToRole="ClientUser" />
-        </EntityType>
-        <Association Name="FK_ClientSaleApplication_ClientCompany">
-          <End Type="DbModel.ClientCompany" Role="ClientCompany" Multiplicity="1" />
-          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ClientCompany">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ClientSaleApplication">
-              <PropertyRef Name="ClientCompanyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClientSaleApplication_ClientInfoContact">
-          <End Type="DbModel.ClientInfoContact" Role="ClientInfoContact" Multiplicity="1" />
-          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ClientInfoContact">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ClientSaleApplication">
-              <PropertyRef Name="ClientContactID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClientSaleAppBankAccount_ClientSaleApplication">
-          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="1" />
-          <End Type="DbModel.ClientSaleAppBankAccount" Role="ClientSaleAppBankAccount" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ClientSaleApplication">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ClientSaleAppBankAccount">
-              <PropertyRef Name="ClientSaleApplicationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClientSaleApplication_Company">
-          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
-          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Company">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ClientSaleApplication">
-              <PropertyRef Name="CompanyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClientSaleApplication_SalesOrderApplication">
-          <End Type="DbModel.SalesOrderApplication" Role="SalesOrderApplication" Multiplicity="1" />
-          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="SalesOrderApplication">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ClientSaleApplication">
-              <PropertyRef Name="SalesOrderApplicationID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClientSaleApplication_WorkflowStatus">
-          <End Type="DbModel.WorkflowStatus" Role="WorkflowStatus" Multiplicity="1" />
-          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="WorkflowStatus">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ClientSaleApplication">
-              <PropertyRef Name="WorkflowStatusID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_GuaranteeLog_ClientSaleApplication">
-          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="1" />
-          <End Type="DbModel.GuaranteeLog" Role="GuaranteeLog" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ClientSaleApplication">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="GuaranteeLog">
-              <PropertyRef Name="ClientSaleApplicationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10665,12 +10695,12 @@
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="ClientCompany" Relationship="DbModel.FK_ClientRefundApplication_ClientCompany" FromRole="ClientRefundApplication" ToRole="ClientCompany" />
-          <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientRefundApplication_ClientSaleApplication" FromRole="ClientRefundApplication" ToRole="ClientSaleApplication" />
           <NavigationProperty Name="Company" Relationship="DbModel.FK_ClientRefundApplication_Company" FromRole="ClientRefundApplication" ToRole="Company" />
           <NavigationProperty Name="SaleOrderType" Relationship="DbModel.FK_ClientRefundApplication_SaleOrderType" FromRole="ClientRefundApplication" ToRole="SaleOrderType" />
           <NavigationProperty Name="WorkflowStatus" Relationship="DbModel.FK_ClientRefundApplication_WorkflowStatus" FromRole="ClientRefundApplication" ToRole="WorkflowStatus" />
           <NavigationProperty Name="ClientRefundAppDetail" Relationship="DbModel.FK_ClientRefundAppDetail_ClientRefundApplication" FromRole="ClientRefundApplication" ToRole="ClientRefundAppDetail" />
           <NavigationProperty Name="ClientUser" Relationship="DbModel.FK_ClientRefundApplication_ClientUser" FromRole="ClientRefundApplication" ToRole="ClientUser" />
+          <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientRefundApplication_ClientSaleApplication" FromRole="ClientRefundApplication" ToRole="ClientSaleApplication" />
         </EntityType>
         <Association Name="FK_ClientRefundApplication_ClientCompany">
           <End Type="DbModel.ClientCompany" Role="ClientCompany" Multiplicity="1" />
@@ -10681,18 +10711,6 @@
             </Principal>
             <Dependent Role="ClientRefundApplication">
               <PropertyRef Name="ClientCompanyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClientRefundApplication_ClientSaleApplication">
-          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="1" />
-          <End Type="DbModel.ClientRefundApplication" Role="ClientRefundApplication" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ClientSaleApplication">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ClientRefundApplication">
-              <PropertyRef Name="ClientSaleAppID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -11272,6 +11290,7 @@
           <NavigationProperty Name="DCInventoryData" Relationship="DbModel.FK_DCInventoryData_ImportFileLog" FromRole="ImportFileLog" ToRole="DCInventoryData" />
           <NavigationProperty Name="ProcureOrderApplicationImportFileLog" Relationship="DbModel.FK_ProcureOrderApplicationImportFileLog_ImportFileLogID" FromRole="ImportFileLog" ToRole="ProcureOrderApplicationImportFileLog" />
           <NavigationProperty Name="StockInImportFileLog" Relationship="DbModel.FK_StockInImportFileLog_ImportFileLogID" FromRole="ImportFileLog" ToRole="StockInImportFileLog" />
+          <NavigationProperty Name="ClientSaleApplicationImportFileLog" Relationship="DbModel.FK_ClientSaleApplicationImportFileLog_ImportFileLogID" FromRole="ImportFileLog" ToRole="ClientSaleApplicationImportFileLog" />
         </EntityType>
         <Association Name="FK_DCFlowData_DistributionCompany">
           <End Type="DbModel.DistributionCompany" Role="DistributionCompany" Multiplicity="0..1" />
@@ -12247,7 +12266,6 @@
           <NavigationProperty Name="ClientImportFileLog" Relationship="DbModel.FK_ClientImportFileLog_ClientUser" FromRole="ClientUser" ToRole="ClientImportFileLog" />
           <NavigationProperty Name="ClientInfo" Relationship="DbModel.FK_ClientInfo_ClientUser" FromRole="ClientUser" ToRole="ClientInfo" />
           <NavigationProperty Name="ClientRefundApplication" Relationship="DbModel.FK_ClientRefundApplication_ClientUser" FromRole="ClientUser" ToRole="ClientRefundApplication" />
-          <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_ClientUser" FromRole="ClientUser" ToRole="ClientSaleApplication" />
           <NavigationProperty Name="ClientTaskRefundApplication" Relationship="DbModel.FK_ClientTaskRefundApplication_ClientUser" FromRole="ClientUser" ToRole="ClientTaskRefundApplication" />
           <NavigationProperty Name="DBClientBonus" Relationship="DbModel.FK_DBClientBonus_ClientUser" FromRole="ClientUser" ToRole="DBClientBonus" />
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_ClientUser" FromRole="ClientUser" ToRole="DBContract" />
@@ -12255,6 +12273,7 @@
           <NavigationProperty Name="StockOut" Relationship="DbModel.FK_StockOut_ClientUser" FromRole="ClientUser" ToRole="StockOut" />
           <NavigationProperty Name="ClientAttachedInvoiceSettlement" Relationship="DbModel.FK_ClientAttachedInvoiceSettlement_ClientUser" FromRole="ClientUser" ToRole="ClientAttachedInvoiceSettlement" />
           <NavigationProperty Name="ClientCautionMoney" Relationship="DbModel.FK_ClientCautionMoney_ClientUserID" FromRole="ClientUser" ToRole="ClientCautionMoney" />
+          <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_ClientUser" FromRole="ClientUser" ToRole="ClientSaleApplication" />
         </EntityType>
         <Association Name="FK_ClientUser_BankAccount">
           <End Type="DbModel.BankAccount" Role="BankAccount" Multiplicity="0..1" />
@@ -12360,18 +12379,6 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="ClientRefundApplication">
-              <PropertyRef Name="ClientUserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ClientSaleApplication_ClientUser">
-          <End Type="DbModel.ClientUser" Role="ClientUser" Multiplicity="1" />
-          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ClientUser">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="ClientSaleApplication">
               <PropertyRef Name="ClientUserID" />
             </Dependent>
           </ReferentialConstraint>
@@ -12997,6 +13004,7 @@
           <NavigationProperty Name="SalesOrderApplication" Relationship="DbModel.FK_SalesOrderAppDetail_SalesOrderApplication" FromRole="SalesOrderAppDetail" ToRole="SalesOrderApplication" />
           <NavigationProperty Name="Warehouse" Relationship="DbModel.FK_SalesOrderAppDetail_Warehouse" FromRole="SalesOrderAppDetail" ToRole="Warehouse" />
           <NavigationProperty Name="StockOutDetail" Relationship="DbModel.FK_StockOutDetail_SalesOrderAppDetail" FromRole="SalesOrderAppDetail" ToRole="StockOutDetail" />
+          <NavigationProperty Name="SalesOrderAppDetailImportData" Relationship="DbModel.FK_SalesOrderAppDetailImportData_SalesOrderAppDetailID" FromRole="SalesOrderAppDetail" ToRole="SalesOrderAppDetailImportData" />
         </EntityType>
         <Association Name="FK_SalesOrderAppDetail_Product">
           <End Type="DbModel.Product" Role="Product" Multiplicity="1" />
@@ -13892,6 +13900,262 @@
             </Principal>
             <Dependent Role="StockInImportData">
               <PropertyRef Name="StockInImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ClientSaleApplicationImportFileLog">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ImportFileLogID" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <NavigationProperty Name="ImportFileLog" Relationship="DbModel.FK_ClientSaleApplicationImportFileLog_ImportFileLogID" FromRole="ClientSaleApplicationImportFileLog" ToRole="ImportFileLog" />
+        </EntityType>
+        <Association Name="FK_ClientSaleApplicationImportFileLog_ImportFileLogID">
+          <End Type="DbModel.ImportFileLog" Role="ImportFileLog" Multiplicity="1" />
+          <End Type="DbModel.ClientSaleApplicationImportFileLog" Role="ClientSaleApplicationImportFileLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ImportFileLog">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplicationImportFileLog">
+              <PropertyRef Name="ImportFileLogID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SalesOrderAppDetailImportData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="SalesOrderApplicationImportDataID" Nullable="false" />
+          <Property Type="Int32" Name="SalesOrderAppDetailID" Nullable="false" />
+          <Property Type="String" Name="ProductName" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ProductSpecification" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="WarehouseName" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="UnitOfMeasurement" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="Count" Nullable="false" />
+          <Property Type="Decimal" Name="SalesPrice" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="InvoicePrice" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="TotalSalesAmount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="GiftCount" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="SalesOrderAppDetail" Relationship="DbModel.FK_SalesOrderAppDetailImportData_SalesOrderAppDetailID" FromRole="SalesOrderAppDetailImportData" ToRole="SalesOrderAppDetail" />
+          <NavigationProperty Name="SalesOrderApplicationImportData" Relationship="DbModel.FK_SalesOrderAppDetailImportData_SalesOrderApplicationImportDataID" FromRole="SalesOrderAppDetailImportData" ToRole="SalesOrderApplicationImportData" />
+        </EntityType>
+        <EntityType Name="SalesOrderApplicationImportData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="SalesOrderApplicationID" />
+          <Property Type="String" Name="SaleOrderType" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="OrderCode" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="OrderDate" Precision="3" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="SalesOrderAppDetailImportData" Relationship="DbModel.FK_SalesOrderAppDetailImportData_SalesOrderApplicationImportDataID" FromRole="SalesOrderApplicationImportData" ToRole="SalesOrderAppDetailImportData" />
+          <Property Type="Int32" Name="SaleApplicationImportFileLogID" />
+          <NavigationProperty Name="ClientSaleApplicationImportData" Relationship="DbModel.FK_ClientSaleApplicationImportData_SalesOrderApplicationImportDataID" FromRole="SalesOrderApplicationImportData" ToRole="ClientSaleApplicationImportData" />
+        </EntityType>
+        <Association Name="FK_SalesOrderAppDetailImportData_SalesOrderAppDetailID">
+          <End Type="DbModel.SalesOrderAppDetail" Role="SalesOrderAppDetail" Multiplicity="1" />
+          <End Type="DbModel.SalesOrderAppDetailImportData" Role="SalesOrderAppDetailImportData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesOrderAppDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SalesOrderAppDetailImportData">
+              <PropertyRef Name="SalesOrderAppDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalesOrderAppDetailImportData_SalesOrderApplicationImportDataID">
+          <End Type="DbModel.SalesOrderApplicationImportData" Role="SalesOrderApplicationImportData" Multiplicity="1" />
+          <End Type="DbModel.SalesOrderAppDetailImportData" Role="SalesOrderAppDetailImportData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesOrderApplicationImportData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SalesOrderAppDetailImportData">
+              <PropertyRef Name="SalesOrderApplicationImportDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ClientSaleApplication">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="SalesOrderApplicationID" Nullable="false" />
+          <Property Type="Int32" Name="ClientUserID" Nullable="false" />
+          <Property Type="Int32" Name="ClientCompanyID" Nullable="false" />
+          <Property Type="Int32" Name="DeliveryModeID" />
+          <Property Type="Int32" Name="ClientContactID" />
+          <Property Type="Int32" Name="Guaranteeby" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <Property Type="Int32" Name="WorkflowStatusID" Nullable="false" />
+          <Property Type="Int32" Name="CompanyID" Nullable="false" />
+          <Property Type="Boolean" Name="IsGuaranteed" Nullable="false" />
+          <Property Type="DateTime" Name="GuaranteeExpirationDate" Precision="3" />
+          <Property Type="String" Name="ClientContactPhone" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ReceiverName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ReceiverPhone" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ReceiverAddress" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ReceiverFax" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ClientCompany" Relationship="DbModel.FK_ClientSaleApplication_ClientCompany" FromRole="ClientSaleApplication" ToRole="ClientCompany" />
+          <NavigationProperty Name="ClientInfoContact" Relationship="DbModel.FK_ClientSaleApplication_ClientInfoContact" FromRole="ClientSaleApplication" ToRole="ClientInfoContact" />
+          <NavigationProperty Name="ClientRefundApplication" Relationship="DbModel.FK_ClientRefundApplication_ClientSaleApplication" FromRole="ClientSaleApplication" ToRole="ClientRefundApplication" />
+          <NavigationProperty Name="ClientSaleAppBankAccount" Relationship="DbModel.FK_ClientSaleAppBankAccount_ClientSaleApplication" FromRole="ClientSaleApplication" ToRole="ClientSaleAppBankAccount" />
+          <NavigationProperty Name="ClientUser" Relationship="DbModel.FK_ClientSaleApplication_ClientUser" FromRole="ClientSaleApplication" ToRole="ClientUser" />
+          <NavigationProperty Name="Company" Relationship="DbModel.FK_ClientSaleApplication_Company" FromRole="ClientSaleApplication" ToRole="Company" />
+          <NavigationProperty Name="SalesOrderApplication" Relationship="DbModel.FK_ClientSaleApplication_SalesOrderApplication" FromRole="ClientSaleApplication" ToRole="SalesOrderApplication" />
+          <NavigationProperty Name="WorkflowStatus" Relationship="DbModel.FK_ClientSaleApplication_WorkflowStatus" FromRole="ClientSaleApplication" ToRole="WorkflowStatus" />
+          <NavigationProperty Name="GuaranteeLog" Relationship="DbModel.FK_GuaranteeLog_ClientSaleApplication" FromRole="ClientSaleApplication" ToRole="GuaranteeLog" />
+        </EntityType>
+        <Association Name="FK_ClientSaleApplication_ClientCompany">
+          <End Type="DbModel.ClientCompany" Role="ClientCompany" Multiplicity="1" />
+          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientCompany">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplication">
+              <PropertyRef Name="ClientCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleApplication_ClientInfoContact">
+          <End Type="DbModel.ClientInfoContact" Role="ClientInfoContact" Multiplicity="0..1" />
+          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientInfoContact">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplication">
+              <PropertyRef Name="ClientContactID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientRefundApplication_ClientSaleApplication">
+          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="1" />
+          <End Type="DbModel.ClientRefundApplication" Role="ClientRefundApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientSaleApplication">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientRefundApplication">
+              <PropertyRef Name="ClientSaleAppID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleAppBankAccount_ClientSaleApplication">
+          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="1" />
+          <End Type="DbModel.ClientSaleAppBankAccount" Role="ClientSaleAppBankAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientSaleApplication">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleAppBankAccount">
+              <PropertyRef Name="ClientSaleApplicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleApplication_ClientUser">
+          <End Type="DbModel.ClientUser" Role="ClientUser" Multiplicity="1" />
+          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientUser">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplication">
+              <PropertyRef Name="ClientUserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleApplication_Company">
+          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplication">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleApplication_SalesOrderApplication">
+          <End Type="DbModel.SalesOrderApplication" Role="SalesOrderApplication" Multiplicity="1" />
+          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesOrderApplication">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplication">
+              <PropertyRef Name="SalesOrderApplicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClientSaleApplication_WorkflowStatus">
+          <End Type="DbModel.WorkflowStatus" Role="WorkflowStatus" Multiplicity="1" />
+          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplication">
+              <PropertyRef Name="WorkflowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GuaranteeLog_ClientSaleApplication">
+          <End Type="DbModel.ClientSaleApplication" Role="ClientSaleApplication" Multiplicity="1" />
+          <End Type="DbModel.GuaranteeLog" Role="GuaranteeLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClientSaleApplication">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GuaranteeLog">
+              <PropertyRef Name="ClientSaleApplicationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ClientSaleApplicationImportData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="SalesOrderApplicationImportDataID" Nullable="false" />
+          <Property Type="String" Name="ClientUserName" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ClientCompanyName" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="SalesOrderApplicationImportData" Relationship="DbModel.FK_ClientSaleApplicationImportData_SalesOrderApplicationImportDataID" FromRole="ClientSaleApplicationImportData" ToRole="SalesOrderApplicationImportData" />
+        </EntityType>
+        <Association Name="FK_ClientSaleApplicationImportData_SalesOrderApplicationImportDataID">
+          <End Type="DbModel.SalesOrderApplicationImportData" Role="SalesOrderApplicationImportData" Multiplicity="1" />
+          <End Type="DbModel.ClientSaleApplicationImportData" Role="ClientSaleApplicationImportData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalesOrderApplicationImportData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ClientSaleApplicationImportData">
+              <PropertyRef Name="SalesOrderApplicationImportDataID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -14903,6 +15167,7 @@
           <EntitySetMapping Name="SalesOrderApplication">
             <EntityTypeMapping TypeName="DbModel.SalesOrderApplication">
               <MappingFragment StoreEntitySet="SalesOrderApplication">
+                <ScalarProperty Name="IsImport" ColumnName="IsImport" />
                 <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
                 <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -14914,33 +15179,6 @@
                 <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
                 <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
                 <ScalarProperty Name="SaleOrderTypeID" ColumnName="SaleOrderTypeID" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ClientSaleApplication">
-            <EntityTypeMapping TypeName="DbModel.ClientSaleApplication">
-              <MappingFragment StoreEntitySet="ClientSaleApplication">
-                <ScalarProperty Name="ReceiverFax" ColumnName="ReceiverFax" />
-                <ScalarProperty Name="ReceiverAddress" ColumnName="ReceiverAddress" />
-                <ScalarProperty Name="ReceiverPhone" ColumnName="ReceiverPhone" />
-                <ScalarProperty Name="ReceiverName" ColumnName="ReceiverName" />
-                <ScalarProperty Name="ClientContactPhone" ColumnName="ClientContactPhone" />
-                <ScalarProperty Name="GuaranteeExpirationDate" ColumnName="GuaranteeExpirationDate" />
-                <ScalarProperty Name="IsGuaranteed" ColumnName="IsGuaranteed" />
-                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-                <ScalarProperty Name="WorkflowStatusID" ColumnName="WorkflowStatusID" />
-                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
-                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
-                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
-                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Guaranteeby" ColumnName="Guaranteeby" />
-                <ScalarProperty Name="ClientContactID" ColumnName="ClientContactID" />
-                <ScalarProperty Name="DeliveryModeID" ColumnName="DeliveryModeID" />
-                <ScalarProperty Name="ClientCompanyID" ColumnName="ClientCompanyID" />
-                <ScalarProperty Name="ClientUserID" ColumnName="ClientUserID" />
-                <ScalarProperty Name="SalesOrderApplicationID" ColumnName="SalesOrderApplicationID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -16095,6 +16333,96 @@
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
                 <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
                 <ScalarProperty Name="ImportFileLogID" ColumnName="ImportFileLogID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientSaleApplicationImportFileLog">
+            <EntityTypeMapping TypeName="DbModel.ClientSaleApplicationImportFileLog">
+              <MappingFragment StoreEntitySet="ClientSaleApplicationImportFileLog">
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ImportFileLogID" ColumnName="ImportFileLogID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SalesOrderAppDetailImportData">
+            <EntityTypeMapping TypeName="DbModel.SalesOrderAppDetailImportData">
+              <MappingFragment StoreEntitySet="SalesOrderAppDetailImportData">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="GiftCount" ColumnName="GiftCount" />
+                <ScalarProperty Name="TotalSalesAmount" ColumnName="TotalSalesAmount" />
+                <ScalarProperty Name="InvoicePrice" ColumnName="InvoicePrice" />
+                <ScalarProperty Name="SalesPrice" ColumnName="SalesPrice" />
+                <ScalarProperty Name="Count" ColumnName="Count" />
+                <ScalarProperty Name="UnitOfMeasurement" ColumnName="UnitOfMeasurement" />
+                <ScalarProperty Name="WarehouseName" ColumnName="WarehouseName" />
+                <ScalarProperty Name="ProductSpecification" ColumnName="ProductSpecification" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="SalesOrderAppDetailID" ColumnName="SalesOrderAppDetailID" />
+                <ScalarProperty Name="SalesOrderApplicationImportDataID" ColumnName="SalesOrderApplicationImportDataID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SalesOrderApplicationImportData">
+            <EntityTypeMapping TypeName="DbModel.SalesOrderApplicationImportData">
+              <MappingFragment StoreEntitySet="SalesOrderApplicationImportData">
+                <ScalarProperty Name="SaleApplicationImportFileLogID" ColumnName="SaleApplicationImportFileLogID" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="OrderCode" ColumnName="OrderCode" />
+                <ScalarProperty Name="SaleOrderType" ColumnName="SaleOrderType" />
+                <ScalarProperty Name="SalesOrderApplicationID" ColumnName="SalesOrderApplicationID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientSaleApplication">
+            <EntityTypeMapping TypeName="DbModel.ClientSaleApplication">
+              <MappingFragment StoreEntitySet="ClientSaleApplication">
+                <ScalarProperty Name="ReceiverFax" ColumnName="ReceiverFax" />
+                <ScalarProperty Name="ReceiverAddress" ColumnName="ReceiverAddress" />
+                <ScalarProperty Name="ReceiverPhone" ColumnName="ReceiverPhone" />
+                <ScalarProperty Name="ReceiverName" ColumnName="ReceiverName" />
+                <ScalarProperty Name="ClientContactPhone" ColumnName="ClientContactPhone" />
+                <ScalarProperty Name="GuaranteeExpirationDate" ColumnName="GuaranteeExpirationDate" />
+                <ScalarProperty Name="IsGuaranteed" ColumnName="IsGuaranteed" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="WorkflowStatusID" ColumnName="WorkflowStatusID" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Guaranteeby" ColumnName="Guaranteeby" />
+                <ScalarProperty Name="ClientContactID" ColumnName="ClientContactID" />
+                <ScalarProperty Name="DeliveryModeID" ColumnName="DeliveryModeID" />
+                <ScalarProperty Name="ClientCompanyID" ColumnName="ClientCompanyID" />
+                <ScalarProperty Name="ClientUserID" ColumnName="ClientUserID" />
+                <ScalarProperty Name="SalesOrderApplicationID" ColumnName="SalesOrderApplicationID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientSaleApplicationImportData">
+            <EntityTypeMapping TypeName="DbModel.ClientSaleApplicationImportData">
+              <MappingFragment StoreEntitySet="ClientSaleApplicationImportData">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="ClientCompanyName" ColumnName="ClientCompanyName" />
+                <ScalarProperty Name="ClientUserName" ColumnName="ClientUserName" />
+                <ScalarProperty Name="SalesOrderApplicationImportDataID" ColumnName="SalesOrderApplicationImportDataID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

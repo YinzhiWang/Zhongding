@@ -144,7 +144,7 @@
                                     <li data-level="2" data-menuitemid="83"><a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/DCInventoryDataManagement.aspx');">配送公司库存数据</a></li>
                                     <li data-level="2" data-menuitemid="84"><a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/ProcureOrderDataManagement.aspx');">采购订单导入</a></li>
                                     <li data-level="2" data-menuitemid="85"><a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/StockInDataManagement.aspx');">收货入库单导入</a></li>
-                                    <li data-level="2"><a href="form_elements.html">客户订单导入</a></li>
+                                    <li data-level="2" data-menuitemid="86"><a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/ClientSaleApplicationDataManagement.aspx');">客户订单导入</a></li>
                                     <li data-level="2"><a href="form_elements.html">出库单导入</a></li>
                                     <li data-level="2"><a href="form_elements.html">大包订单导入</a></li>
                                     <li data-level="2"><a href="form_elements.html">大包出库单导入</a></li>

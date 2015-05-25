@@ -21,7 +21,6 @@ namespace ZhongDing.Domain.Models
             this.ClientImportFileLog = new HashSet<ClientImportFileLog>();
             this.ClientInfo = new HashSet<ClientInfo>();
             this.ClientRefundApplication = new HashSet<ClientRefundApplication>();
-            this.ClientSaleApplication = new HashSet<ClientSaleApplication>();
             this.ClientTaskRefundApplication = new HashSet<ClientTaskRefundApplication>();
             this.DBClientBonus = new HashSet<DBClientBonus>();
             this.DBContract = new HashSet<DBContract>();
@@ -29,6 +28,7 @@ namespace ZhongDing.Domain.Models
             this.StockOut = new HashSet<StockOut>();
             this.ClientAttachedInvoiceSettlement = new HashSet<ClientAttachedInvoiceSettlement>();
             this.ClientCautionMoney = new HashSet<ClientCautionMoney>();
+            this.ClientSaleApplication = new HashSet<ClientSaleApplication>();
         }
     
         public int ID { get; set; }
@@ -55,7 +55,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<ClientImportFileLog> ClientImportFileLog { get; set; }
         public virtual ICollection<ClientInfo> ClientInfo { get; set; }
         public virtual ICollection<ClientRefundApplication> ClientRefundApplication { get; set; }
-        public virtual ICollection<ClientSaleApplication> ClientSaleApplication { get; set; }
         public virtual ICollection<ClientTaskRefundApplication> ClientTaskRefundApplication { get; set; }
         public virtual ICollection<DBClientBonus> DBClientBonus { get; set; }
         public virtual ICollection<DBContract> DBContract { get; set; }
@@ -63,5 +62,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<StockOut> StockOut { get; set; }
         public virtual ICollection<ClientAttachedInvoiceSettlement> ClientAttachedInvoiceSettlement { get; set; }
         public virtual ICollection<ClientCautionMoney> ClientCautionMoney { get; set; }
+        public virtual ICollection<ClientSaleApplication> ClientSaleApplication { get; set; }
     }
 }

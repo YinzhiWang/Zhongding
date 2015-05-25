@@ -42,7 +42,7 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ICollection<ClientSaleApplication> ClientSaleApplication { get; set; }
         public virtual ClientInfo ClientInfo { get; set; }
+        public virtual ICollection<ClientSaleApplication> ClientSaleApplication { get; set; }
     }
 }

@@ -17,9 +17,9 @@ namespace ZhongDing.Domain.Models
     {
         public ClientSaleApplication()
         {
+            this.ClientRefundApplication = new HashSet<ClientRefundApplication>();
             this.ClientSaleAppBankAccount = new HashSet<ClientSaleAppBankAccount>();
             this.GuaranteeLog = new HashSet<GuaranteeLog>();
-            this.ClientRefundApplication = new HashSet<ClientRefundApplication>();
         }
     
         public int ID { get; set; }
@@ -27,7 +27,7 @@ namespace ZhongDing.Domain.Models
         public int ClientUserID { get; set; }
         public int ClientCompanyID { get; set; }
         public Nullable<int> DeliveryModeID { get; set; }
-        public int ClientContactID { get; set; }
+        public Nullable<int> ClientContactID { get; set; }
         public Nullable<int> Guaranteeby { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
@@ -56,12 +56,12 @@ namespace ZhongDing.Domain.Models
     
         public virtual ClientCompany ClientCompany { get; set; }
         public virtual ClientInfoContact ClientInfoContact { get; set; }
+        public virtual ICollection<ClientRefundApplication> ClientRefundApplication { get; set; }
         public virtual ICollection<ClientSaleAppBankAccount> ClientSaleAppBankAccount { get; set; }
+        public virtual ClientUser ClientUser { get; set; }
         public virtual Company Company { get; set; }
         public virtual SalesOrderApplication SalesOrderApplication { get; set; }
         public virtual WorkflowStatus WorkflowStatus { get; set; }
         public virtual ICollection<GuaranteeLog> GuaranteeLog { get; set; }
-        public virtual ICollection<ClientRefundApplication> ClientRefundApplication { get; set; }
-        public virtual ClientUser ClientUser { get; set; }
     }
 }

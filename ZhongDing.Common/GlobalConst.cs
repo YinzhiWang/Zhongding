@@ -639,6 +639,10 @@ namespace ZhongDing.Common
             /// 入库仓库
             /// </summary>
             public static readonly string STOCKIN_WAREHOUSE_NAME = "入库仓库";
+            /// <summary>
+            /// 出库仓库
+            /// </summary>
+            public static readonly string STOCKOUT_WAREHOUSE_NAME = "出库仓库";
 
             /// <summary>
             /// 基本数量
@@ -651,11 +655,19 @@ namespace ZhongDing.Common
             public static readonly string PROCURE_PRICE = "采购单价";
 
             /// <summary>
+            /// 单价
+            /// </summary>
+            public static readonly string PRICE = "单价";
+
+            /// <summary>
             /// 采购金额
             /// </summary>
             public static readonly string PROCURE_TOTAL_AMOUNT = "采购金额";
 
-
+            /// <summary>
+            /// 金额
+            /// </summary>
+            public static readonly string AMOUNT = "金额";
             /// <summary>
             /// 入库单编号
             /// </summary>
@@ -695,8 +707,23 @@ namespace ZhongDing.Common
             /// 基本数量
             /// </summary>
             public static readonly string STOCKIN_COUNT = "基本数量";
-            
 
+            /// <summary>
+            /// 订单编号
+            /// </summary>
+            public static readonly string CLIENT_ORDER_CODE = "订单编号";
+
+            /// <summary>
+            /// 客户名称
+            /// </summary>
+            public static readonly string CLIENT_USER_NAME = "客户名称";
+
+            /// <summary>
+            /// 商业单位
+            /// </summary>
+            public static readonly string CLIENT_COMPANY_NAME = "商业单位";
+         
+            
         }
 
         #endregion

@@ -18,9 +18,9 @@ namespace ZhongDing.Domain.Models
         public SalesOrderApplication()
         {
             this.DaBaoApplication = new HashSet<DaBaoApplication>();
-            this.ClientSaleApplication = new HashSet<ClientSaleApplication>();
             this.StockOutDetail = new HashSet<StockOutDetail>();
             this.SalesOrderAppDetail = new HashSet<SalesOrderAppDetail>();
+            this.ClientSaleApplication = new HashSet<ClientSaleApplication>();
         }
     
         public int ID { get; set; }
@@ -35,6 +35,7 @@ namespace ZhongDing.Domain.Models
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
+        public Nullable<bool> IsImport { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -48,8 +49,8 @@ namespace ZhongDing.Domain.Models
     
         public virtual ICollection<DaBaoApplication> DaBaoApplication { get; set; }
         public virtual SaleOrderType SaleOrderType { get; set; }
-        public virtual ICollection<ClientSaleApplication> ClientSaleApplication { get; set; }
         public virtual ICollection<StockOutDetail> StockOutDetail { get; set; }
         public virtual ICollection<SalesOrderAppDetail> SalesOrderAppDetail { get; set; }
+        public virtual ICollection<ClientSaleApplication> ClientSaleApplication { get; set; }
     }
 }

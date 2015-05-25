@@ -116,5 +116,16 @@ namespace ZhongDing.Business.Repositories
 
             return uiDropdownItems;
         }
+
+
+        public ClientCompany GetClientCompanyByClientCompanyNameAndClientUserID(string clientCompanyName, int clientUserID)
+        {
+            var query = from cc in DB.ClientCompany
+                        join ci in DB.ClientInfo on cc.ID equals ci.ClientCompanyID
+                        where cc.IsDeleted == false && ci.ClientUserID == clientUserID && cc.Name.ToLower() == clientCompanyName.ToLower()
+                        select cc;
+            var entity = query.FirstOrDefault();
+            return entity;
+        }
     }
 }

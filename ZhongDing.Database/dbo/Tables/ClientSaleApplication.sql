@@ -4,7 +4,7 @@
     [ClientUserID]            INT            NOT NULL,
     [ClientCompanyID]         INT            NOT NULL,
     [DeliveryModeID]          INT            NULL,
-    [ClientContactID]         INT            NOT NULL,
+    [ClientContactID]         INT            NULL,
     [Guaranteeby]             INT            NULL,
     [IsDeleted]               BIT            CONSTRAINT [DF_ClientSaleApplication_IsDeleted] DEFAULT ((0)) NOT NULL,
     [CreatedOn]               DATETIME       CONSTRAINT [DF_ClientSaleApplication_CreatedOn] DEFAULT (getdate()) NOT NULL,
@@ -28,6 +28,8 @@
     CONSTRAINT [FK_ClientSaleApplication_SalesOrderApplication] FOREIGN KEY ([SalesOrderApplicationID]) REFERENCES [dbo].[SalesOrderApplication] ([ID]),
     CONSTRAINT [FK_ClientSaleApplication_WorkflowStatus] FOREIGN KEY ([WorkflowStatusID]) REFERENCES [dbo].[WorkflowStatus] ([ID])
 );
+
+
 
 
 

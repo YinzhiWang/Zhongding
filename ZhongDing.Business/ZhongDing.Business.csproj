@@ -55,6 +55,8 @@
     <Compile Include="Extensions\DynamicLinq.cs" />
     <Compile Include="IRepositories\IClientCautionMoneyRepository.cs" />
     <Compile Include="IRepositories\IClientCautionMoneyReturnApplicationRepository.cs" />
+    <Compile Include="IRepositories\IClientSaleApplicationImportDataRepository.cs" />
+    <Compile Include="IRepositories\IClientSaleApplicationImportFileLogRepository.cs" />
     <Compile Include="IRepositories\IProcureOrderAppDetailImportDataRepository.cs" />
     <Compile Include="IRepositories\IClientAttachedInvoiceSettlementDetailRepository.cs" />
     <Compile Include="IRepositories\ICautionMoneyTypeRepository.cs" />
@@ -77,6 +79,8 @@
     <Compile Include="IRepositories\IHospitalTypeRepository.cs" />
     <Compile Include="IRepositories\IProcureOrderApplicationImportDataRepository.cs" />
     <Compile Include="IRepositories\IProcureOrderApplicationImportFileLogRepository.cs" />
+    <Compile Include="IRepositories\ISalesOrderAppDetailImportDataRepository.cs" />
+    <Compile Include="IRepositories\ISalesOrderApplicationImportDataRepository.cs" />
     <Compile Include="IRepositories\IStockInDetailImportDataRepository.cs" />
     <Compile Include="IRepositories\IStockInImportDataRepository.cs" />
     <Compile Include="IRepositories\IStockInImportFileLogRepository.cs" />
@@ -200,10 +204,14 @@
     <Compile Include="Repositories\ClientInvoiceSettlementRepository.cs" />
     <Compile Include="Repositories\ClientRefundAppDetailRepository.cs" />
     <Compile Include="Repositories\ClientRefundApplicationRepository.cs" />
+    <Compile Include="Repositories\ClientSaleApplicationImportFileLogRepository.cs" />
     <Compile Include="Repositories\ClientSaleApplicationRepository.cs" />
     <Compile Include="Repositories\ClientTaskRefundAppRepository.cs" />
     <Compile Include="Repositories\ClientUserRepository.cs" />
     <Compile Include="Repositories\CompanyRepository.cs" />
+    <Compile Include="Repositories\ClientSaleApplicationImportDataRepository.cs" />
+    <Compile Include="Repositories\SalesOrderAppDetailImportDataRepository.cs" />
+    <Compile Include="Repositories\SalesOrderApplicationImportDataRepository.cs" />
     <Compile Include="Repositories\StockInDetailImportDataRepository.cs" />
     <Compile Include="Repositories\StockInImportDataRepository.cs" />
     <Compile Include="Repositories\ProcureOrderAppDetailImportDataRepository.cs" />

@@ -11,9 +11,12 @@
     [CreatedBy]       INT           NULL,
     [LastModifiedOn]  DATETIME      NULL,
     [LastModifiedBy]  INT           NULL,
+    [IsImport]        BIT           CONSTRAINT [DF_SalesOrderApplication_IsImport] DEFAULT ((0)) NULL,
     CONSTRAINT [PK_SalesOrderApplication] PRIMARY KEY CLUSTERED ([ID] ASC),
     CONSTRAINT [FK_SalesOrderApplication_SaleOrderType] FOREIGN KEY ([SaleOrderTypeID]) REFERENCES [dbo].[SaleOrderType] ([ID])
 );
+
+
 
 
 

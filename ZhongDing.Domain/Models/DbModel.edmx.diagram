@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="85e6c93c719943c78d71edfd0be34866" Name="Diagram1" ZoomLevel="100">
+      <Diagram DiagramId="85e6c93c719943c78d71edfd0be34866" Name="Diagram1" ZoomLevel="49">
         <EntityTypeShape EntityType="DbModel.AccountType" Width="1.5" PointX="0.75" PointY="142.75" />
         <EntityTypeShape EntityType="DbModel.aspnet_Membership" Width="1.5" PointX="3.75" PointY="95.25" />
         <EntityTypeShape EntityType="DbModel.aspnet_Roles" Width="1.5" PointX="0.75" PointY="1.375" />
@@ -168,14 +168,6 @@
         <EntityTypeShape EntityType="DbModel.SalesOrderApplication" Width="1.5" PointX="3.75" PointY="109.375" />
         <AssociationConnector Association="DbModel.FK_DaBaoApplication_SalesOrderApplication" />
         <AssociationConnector Association="DbModel.FK_SalesOrderApplication_SaleOrderType" />
-        <EntityTypeShape EntityType="DbModel.ClientSaleApplication" Width="1.5" PointX="23" PointY="144.5" />
-        <AssociationConnector Association="DbModel.FK_ClientSaleApplication_ClientCompany" />
-        <AssociationConnector Association="DbModel.FK_ClientSaleApplication_ClientInfoContact" />
-        <AssociationConnector Association="DbModel.FK_ClientSaleAppBankAccount_ClientSaleApplication" />
-        <AssociationConnector Association="DbModel.FK_ClientSaleApplication_Company" />
-        <AssociationConnector Association="DbModel.FK_ClientSaleApplication_SalesOrderApplication" />
-        <AssociationConnector Association="DbModel.FK_ClientSaleApplication_WorkflowStatus" />
-        <AssociationConnector Association="DbModel.FK_GuaranteeLog_ClientSaleApplication" />
         <EntityTypeShape EntityType="DbModel.ProductHighPrice" Width="1.5" PointX="26.75" PointY="162" />
         <AssociationConnector Association="DbModel.FK_ProductHighPrice_Product" />
         <AssociationConnector Association="DbModel.FK_ProductHighPrice_ProductSpecification" />
@@ -189,7 +181,6 @@
         <AssociationConnector Association="DbModel.FK_SupplierDeduction_Supplier" />
         <EntityTypeShape EntityType="DbModel.ClientRefundApplication" Width="1.5" PointX="31.25" PointY="151.625" />
         <AssociationConnector Association="DbModel.FK_ClientRefundApplication_ClientCompany" />
-        <AssociationConnector Association="DbModel.FK_ClientRefundApplication_ClientSaleApplication" />
         <AssociationConnector Association="DbModel.FK_ClientRefundApplication_Company" />
         <AssociationConnector Association="DbModel.FK_ClientRefundApplication_SaleOrderType" />
         <AssociationConnector Association="DbModel.FK_ClientRefundApplication_WorkflowStatus" />
@@ -306,7 +297,6 @@
         <AssociationConnector Association="DbModel.FK_ClientInfoContact_ClientInfo" />
         <AssociationConnector Association="DbModel.FK_ClientInfoProductSetting_ClientInfo" />
         <AssociationConnector Association="DbModel.FK_ClientRefundApplication_ClientUser" />
-        <AssociationConnector Association="DbModel.FK_ClientSaleApplication_ClientUser" />
         <AssociationConnector Association="DbModel.FK_ClientTaskRefundApplication_ClientUser" />
         <AssociationConnector Association="DbModel.FK_DBClientBonus_ClientUser" />
         <AssociationConnector Association="DbModel.FK_DBContract_ClientUser" />
@@ -412,6 +402,24 @@
         <AssociationConnector Association="DbModel.FK_StockInImportFileLog_ImportFileLogID" />
         <AssociationConnector Association="DbModel.FK_StockInDetailImportData_StockInImportDataID" />
         <AssociationConnector Association="DbModel.FK_StockInImportData_StockInImportFileLogID" />
+        <EntityTypeShape EntityType="DbModel.ClientSaleApplicationImportFileLog" Width="1.5" PointX="10.491612904934032" PointY="4.1916996558158193" />
+        <AssociationConnector Association="DbModel.FK_ClientSaleApplicationImportFileLog_ImportFileLogID" />
+        <EntityTypeShape EntityType="DbModel.SalesOrderAppDetailImportData" Width="1.5" PointX="8.4008168449629181" PointY="19.247910851262468" />
+        <EntityTypeShape EntityType="DbModel.SalesOrderApplicationImportData" Width="1.5" PointX="11.220217136303063" PointY="6.93606750990081" />
+        <AssociationConnector Association="DbModel.FK_SalesOrderAppDetailImportData_SalesOrderAppDetailID" />
+        <AssociationConnector Association="DbModel.FK_SalesOrderAppDetailImportData_SalesOrderApplicationImportDataID" />
+        <EntityTypeShape EntityType="DbModel.ClientSaleApplication" Width="1.5" PointX="10.074606214684717" PointY="19.190360644455236" />
+        <AssociationConnector Association="DbModel.FK_ClientSaleApplication_ClientCompany" />
+        <AssociationConnector Association="DbModel.FK_ClientSaleApplication_ClientInfoContact" />
+        <AssociationConnector Association="DbModel.FK_ClientRefundApplication_ClientSaleApplication" />
+        <AssociationConnector Association="DbModel.FK_ClientSaleAppBankAccount_ClientSaleApplication" />
+        <AssociationConnector Association="DbModel.FK_ClientSaleApplication_ClientUser" />
+        <AssociationConnector Association="DbModel.FK_ClientSaleApplication_Company" />
+        <AssociationConnector Association="DbModel.FK_ClientSaleApplication_SalesOrderApplication" />
+        <AssociationConnector Association="DbModel.FK_ClientSaleApplication_WorkflowStatus" />
+        <AssociationConnector Association="DbModel.FK_GuaranteeLog_ClientSaleApplication" />
+        <EntityTypeShape EntityType="DbModel.ClientSaleApplicationImportData" Width="1.5" PointX="9.8725703236984881" PointY="18.865280115448535" />
+        <AssociationConnector Association="DbModel.FK_ClientSaleApplicationImportData_SalesOrderApplicationImportDataID" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

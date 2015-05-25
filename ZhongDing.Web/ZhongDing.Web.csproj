@@ -2619,6 +2619,9 @@
     <Content Include="Views\HRM\WorkflowPermissionMaintenance.aspx" />
     <Content Include="Views\HRM\WorkflowPermissionManagement.aspx" />
     <Content Include="Views\Imports\ClientFlowDataManagement.aspx" />
+    <Content Include="Views\Imports\ClientSaleApplicationDataManagement.aspx" />
+    <Content Include="Views\Imports\ClientSaleApplicationImportData.aspx" />
+    <Content Include="Views\Imports\ClientSaleApplicationImportDataDetails.aspx" />
     <Content Include="Views\Imports\StockInImportDataDetails.aspx" />
     <Content Include="Views\Imports\StockInImportData.aspx" />
     <Content Include="Views\Imports\StockInDataManagement.aspx" />
@@ -2723,6 +2726,7 @@
     <Content Include="Content\Templates\XXXX配送公司库存数据%28XXXX年XX月%29.xlsx" />
     <Content Include="Content\Templates\XXXX采购订单导入%28XXXX年XX月%29.xlsx" />
     <Content Include="Content\Templates\XXXX采购入库单导入%28XXXX年XX月%29.xlsx" />
+    <Content Include="Content\Templates\XXXX客户订单导入%28XXXX年XX月%29.xlsx" />
     <None Include="Scripts\jquery-1.11.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.11.1.js" />
     <Content Include="Scripts\jquery-1.11.1.min.js" />
@@ -3225,6 +3229,27 @@
     </Compile>
     <Compile Include="Views\Imports\ClientFlowDataManagement.aspx.designer.cs">
       <DependentUpon>ClientFlowDataManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Imports\ClientSaleApplicationDataManagement.aspx.cs">
+      <DependentUpon>ClientSaleApplicationDataManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\ClientSaleApplicationDataManagement.aspx.designer.cs">
+      <DependentUpon>ClientSaleApplicationDataManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Imports\ClientSaleApplicationImportData.aspx.cs">
+      <DependentUpon>ClientSaleApplicationImportData.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\ClientSaleApplicationImportData.aspx.designer.cs">
+      <DependentUpon>ClientSaleApplicationImportData.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Imports\ClientSaleApplicationImportDataDetails.aspx.cs">
+      <DependentUpon>ClientSaleApplicationImportDataDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Imports\ClientSaleApplicationImportDataDetails.aspx.designer.cs">
+      <DependentUpon>ClientSaleApplicationImportDataDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Imports\StockInImportDataDetails.aspx.cs">
       <DependentUpon>StockInImportDataDetails.aspx</DependentUpon>
@@ -3950,7 +3975,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

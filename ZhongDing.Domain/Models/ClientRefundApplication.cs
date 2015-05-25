@@ -49,11 +49,11 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual ClientCompany ClientCompany { get; set; }
-        public virtual ClientSaleApplication ClientSaleApplication { get; set; }
         public virtual Company Company { get; set; }
         public virtual SaleOrderType SaleOrderType { get; set; }
         public virtual WorkflowStatus WorkflowStatus { get; set; }
         public virtual ICollection<ClientRefundAppDetail> ClientRefundAppDetail { get; set; }
         public virtual ClientUser ClientUser { get; set; }
+        public virtual ClientSaleApplication ClientSaleApplication { get; set; }
     }
 }

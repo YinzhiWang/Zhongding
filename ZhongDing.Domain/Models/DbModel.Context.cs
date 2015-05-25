@@ -90,7 +90,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<GuaranteeLog> GuaranteeLog { get; set; }
         public DbSet<SaleOrderType> SaleOrderType { get; set; }
         public DbSet<SalesOrderApplication> SalesOrderApplication { get; set; }
-        public DbSet<ClientSaleApplication> ClientSaleApplication { get; set; }
         public DbSet<ProductHighPrice> ProductHighPrice { get; set; }
         public DbSet<ApplicationPayment> ApplicationPayment { get; set; }
         public DbSet<SupplierDeduction> SupplierDeduction { get; set; }
@@ -153,5 +152,10 @@ namespace ZhongDing.Domain.Models
         public DbSet<StockInDetailImportData> StockInDetailImportData { get; set; }
         public DbSet<StockInImportData> StockInImportData { get; set; }
         public DbSet<StockInImportFileLog> StockInImportFileLog { get; set; }
+        public DbSet<ClientSaleApplicationImportFileLog> ClientSaleApplicationImportFileLog { get; set; }
+        public DbSet<SalesOrderAppDetailImportData> SalesOrderAppDetailImportData { get; set; }
+        public DbSet<SalesOrderApplicationImportData> SalesOrderApplicationImportData { get; set; }
+        public DbSet<ClientSaleApplication> ClientSaleApplication { get; set; }
+        public DbSet<ClientSaleApplicationImportData> ClientSaleApplicationImportData { get; set; }
     }
 }

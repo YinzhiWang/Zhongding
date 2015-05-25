@@ -8,6 +8,7 @@ using ZhongDing.Business.IRepositories;
 using ZhongDing.Business.Repositories;
 using ZhongDing.Common;
 using ZhongDing.Web.Extensions;
+using ZhongDing.Common.Extension;
 
 namespace ZhongDing.Web
 {
@@ -210,6 +211,25 @@ namespace ZhongDing.Web
                 }
             }
             return parameterValue;
+        }
+
+        public void ShowErrorMessage(string msg, string onClientHidden = null)
+        {
+            SiteMaster siteMaster = (SiteMaster)this.Master;
+            if (onClientHidden.IsNotNullOrEmpty())
+                siteMaster.BaseNotification.OnClientHidden = onClientHidden;
+            siteMaster.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
+            siteMaster.BaseNotification.AutoCloseDelay = 1000;
+            siteMaster.BaseNotification.Show(msg);
+        }
+        public void ShowSuccessMessage(string msg, string onClientHidden = null)
+        {
+            SiteMaster siteMaster = (SiteMaster)this.Master;
+            if (onClientHidden.IsNotNullOrEmpty())
+                siteMaster.BaseNotification.OnClientHidden = onClientHidden;
+            siteMaster.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_SUCCESS;
+            siteMaster.BaseNotification.AutoCloseDelay = 1000;
+            siteMaster.BaseNotification.Show(msg);
         }
     }
 }

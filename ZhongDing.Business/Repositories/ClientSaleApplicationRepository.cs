@@ -130,6 +130,10 @@ namespace ZhongDing.Business.Repositories
                     uiSearchObj.EndDate = uiSearchObj.EndDate.Value.AddDays(1);
                     whereFuncs.Add(x => x.CreatedOn < uiSearchObj.EndDate);
                 }
+                if (uiSearchObj.IsImport.HasValue)
+                {
+                    whereFuncs.Add(x => x.SalesOrderApplication.IsImport == uiSearchObj.IsImport);
+                }
             }
 
             query = GetList(pageIndex, pageSize, whereFuncs, GlobalConst.OrderByExpression.CREATEDON_DESC, out total);

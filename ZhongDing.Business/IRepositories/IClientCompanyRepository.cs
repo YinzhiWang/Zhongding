@@ -28,5 +28,7 @@ namespace ZhongDing.Business.IRepositories
         /// <returns>IList{UIClientCompany}.</returns>
         IList<UIClientCompany> GetUIList(UISearchClientCompany uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
 
+
+        ClientCompany GetClientCompanyByClientCompanyNameAndClientUserID(string clientCompanyName, int clientUserID);
     }
 }
