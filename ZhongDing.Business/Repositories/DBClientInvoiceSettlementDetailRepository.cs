@@ -77,9 +77,11 @@ namespace ZhongDing.Business.Repositories
 
             //未结算的发票
             var query = DB.DBClientInvoice.Where(x => x.IsDeleted == false && x.IsSettled != true
-                && x.DBClientInvoiceSettlementDetail.Where(y => y.IsDeleted == false
+                && ((x.DBClientInvoiceSettlementDetail.Any(y => y.IsDeleted == false
+                    && y.DBClientInvoiceSettlement.IsCanceled == false) 
+                    ? x.DBClientInvoiceSettlementDetail.Where(y => y.IsDeleted == false
                     && y.DBClientInvoiceSettlement.IsCanceled == false)
-                .Sum(y => y.ReceiveAmount) < x.Amount);
+                    .Sum(y => y.ReceiveAmount) : 0) < x.Amount));
 
             var whereFuncs = new List<Expression<Func<DBClientInvoice, bool>>>();
 
