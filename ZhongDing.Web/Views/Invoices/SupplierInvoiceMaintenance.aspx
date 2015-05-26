@@ -89,7 +89,7 @@
                         <div class="mws-form-row" style="padding-top: 10px; padding-left: 0px; padding-right: 1px;">
                             <telerik:RadGrid ID="rgProcureOrderAppDetails" runat="server" PageSize="10" AllowCustomPaging="true"
                                 AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false" AllowMultiRowSelection="true"
-                                MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" Height="500" ShowHeader="true" ShowFooter="true"
+                                MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true" ShowFooter="true"
                                 ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
                                 OnNeedDataSource="rgProcureOrderAppDetails_NeedDataSource" OnItemDataBound="rgProcureOrderAppDetails_ItemDataBound"
                                 OnColumnCreated="rgProcureOrderAppDetails_ColumnCreated">

@@ -38,7 +38,12 @@ $(document).ready(function () {
 	    var parent = $(this).parent();
 	    var parentLevel = parent.attr("data-level");
 
+	    var currentTopLevelIsStatus = null;
+
 	    if (parentLevel && parentLevel == "1") {
+
+	        currentTopLevelIsStatus = $(this).next('ul').css("display");
+
 	        $("div#mws-navigation ul li[data-level='1']").each(function (i, e) {
 	            $(this).removeClass("active");
 	        });
@@ -71,9 +76,14 @@ $(document).ready(function () {
 	    }
 
 	    if ($(this).next('ul').size() !== 0) {
-	        $(this).next('ul').slideToggle('fast', function () {
-	            $(this).toggleClass('closed');
-	        });
+	        
+	        if (currentTopLevelIsStatus == "none") {
+	            $(this).next('ul').slideToggle('fast', function () {
+	                $(this).toggleClass('closed');
+	            });
+	        } else {
+	            $(this).next('ul').hide();
+	        }
 	        event.preventDefault();
 	    }
 	});

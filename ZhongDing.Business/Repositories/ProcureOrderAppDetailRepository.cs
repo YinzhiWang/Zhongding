@@ -327,11 +327,11 @@ namespace ZhongDing.Business.Repositories
                     whereFuncs.Add(x => !uiSearchObj.ExcludeIDs.Contains(x.ID));
             }
 
-            query = GetList(pageIndex, pageSize, whereFuncs, out total);
+            query = GetList(whereFuncs);
 
             if (query != null)
             {
-                uiEntities = (from q in query
+                var queryResult = (from q in query
                               join procureOrderApplication in DB.ProcureOrderApplication on q.ProcureOrderApplicationID equals procureOrderApplication.ID
                               join w in DB.Warehouse on q.WarehouseID equals w.ID
                               join p in DB.Product on q.ProductID equals p.ID
@@ -354,7 +354,11 @@ namespace ZhongDing.Business.Repositories
                                   TaxAmount = q.TaxAmount,
                                   ProcureOrderApplicationOrderCode = procureOrderApplication.OrderCode,
                                   ProcureOrderApplicationOrderDate = procureOrderApplication.OrderDate
-                              }).Where(x => x.SupplierInvoiceDetailTotalAmount < x.TaxAmount).ToList();
+                              }).Where(x => x.SupplierInvoiceDetailTotalAmount < x.TaxAmount);
+
+                total = queryResult.Count();
+                uiEntities = queryResult.OrderByDescending(x => x.ID)
+                        .Skip(pageIndex * pageSize).Take(pageSize).ToList();
 
                 uiEntities.ForEach(x =>
                 {

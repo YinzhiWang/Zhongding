@@ -429,6 +429,10 @@
     <Build Include="dbo\Tables\StockInImportFileLog.sql" />
     <Build Include="dbo\Tables\StockInImportData.sql" />
     <Build Include="dbo\Tables\StockInDetailImportData.sql" />
+    <Build Include="dbo\Tables\SalesOrderApplicationImportData.sql" />
+    <Build Include="dbo\Tables\SalesOrderAppDetailImportData.sql" />
+    <Build Include="dbo\Tables\ClientSaleApplicationImportFileLog.sql" />
+    <Build Include="dbo\Tables\ClientSaleApplicationImportData.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />
