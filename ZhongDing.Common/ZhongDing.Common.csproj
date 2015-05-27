@@ -101,6 +101,7 @@
     <Compile Include="Enums\EPaymentMethod.cs" />
     <Compile Include="Enums\EPaymentStatus.cs" />
     <Compile Include="Enums\EPaymentType.cs" />
+    <Compile Include="Enums\EPermissionOption.cs" />
     <Compile Include="Enums\EProductCategory.cs" />
     <Compile Include="Enums\EQuarter.cs" />
     <Compile Include="Enums\EReceiverType.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="NPOIHelper\Excel\NPOIHelper.cs" />
     <Compile Include="NPOIHelper\Excel\Root.cs" />
     <Compile Include="NPOIHelper\Helpers\NPOIUtility.cs" />
+    <Compile Include="PermissionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sms\BaseSmsSender.cs" />
     <Compile Include="Sms\BaseSmsSenderParameter.cs" />

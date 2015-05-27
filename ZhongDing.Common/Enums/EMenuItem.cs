@@ -104,6 +104,10 @@ namespace ZhongDing.Common.Enums
         /// 工作流权限管理
         /// </summary>
         WorkflowPermissionManage,
+        /// <summary>
+        /// 用户组管理
+        /// </summary>
+        UserGroupManage,
 
         /// <summary>
         /// 采购管理

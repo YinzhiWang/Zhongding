@@ -1098,3 +1098,78 @@ ALTER TABLE [dbo].[WorkflowStepStatus]
     ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep] FOREIGN KEY ([WorkflowStepID]) REFERENCES [dbo].[WorkflowStep] ([ID])
 COMMIT TRANSACTION
 ---- end --- 5/20/2015 -- 初始化工作流状态关联数据(客户保证金申请) -- by Nwang
+
+
+
+---- start --- 5/27/2015 -- 初始化菜单模块权限 -- by Nwang
+BEGIN TRANSACTION
+ALTER TABLE [dbo].[UserGroupPermission] DROP CONSTRAINT [FK_UserGroupPermission_PermissionID]
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (1, N'账套管理
+', 1, 1, 1, 0, 0, 0, 0, '2015-05-26 21:05:56.713', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (2, N'银行账号管理
+', 1, 1, 1, 0, 0, 0, 0, '2015-05-26 21:07:48.913', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (3, N'供应商管理
+', 1, 1, 1, 0, 0, 0, 0, '2015-05-26 21:08:13.907', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (4, N'商业单位管理
+', 1, 1, 1, 0, 0, 0, 0, '2015-05-26 21:08:35.070', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (5, N'客户管理
+', 1, 1, 1, 0, 0, 0, 0, '2015-05-26 21:08:48.620', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (6, N'仓库管理
+', 1, 1, 1, 0, 0, 0, 0, '2015-05-26 21:09:03.063', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (7, N'配送公司管理
+', 1, 1, 1, 0, 0, 0, 0, '2015-05-26 21:09:24.773', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (8, N'大包客户协议管理
+', 1, 1, 1, 0, 0, 0, 0, '2015-05-26 21:09:45.333', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (9, N'商业客户流向管理
+', 1, 1, 1, 0, 0, 0, 0, '2015-05-26 21:10:02.237', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (10, N'部门销售计划及提成策略
+', 1, 1, 1, 0, 0, 0, 0, '2015-05-26 21:10:15.487', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (11, N'物流公司管理
+', 1, 1, 1, 0, 0, 0, 0, '2015-05-26 21:10:27.837', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (12, N'货品管理
+', 1, 1, 1, 0, 0, 0, 0, '2015-05-26 21:10:51.790', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (13, N'货品定价管理
+', 1, 1, 1, 0, 0, 0, 0, '2015-05-26 21:11:05.190', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (14, N'库存货品信息
+', 1, 1, 1, 0, 0, 0, 0, '2015-05-26 21:11:44.440', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (15, N'部门管理
+', 1, 1, 1, 0, 0, 0, 0, '2015-05-26 21:12:17.983', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (16, N'员工管理
+', 1, 1, 1, 0, 0, 0, 0, '2015-05-26 21:12:31.817', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (17, N'权限管理
+', 1, 1, 1, 0, 0, 0, 0, '2015-05-26 21:12:43.750', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (18, N'报销类型管理
+', 1, 1, 1, 0, 0, 0, 0, '2015-05-26 21:13:35.980', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (19, N'物流费用管理
+', 1, 1, 1, 0, 0, 0, 0, '2015-05-26 21:23:12.960', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (20, N'担保收款
+', 1, 1, 1, 0, 0, 0, 0, '2015-05-26 21:23:31.363', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (21, N'数据导入
+', 1, 0, 0, 0, 0, 0, 0, '2015-05-26 21:23:46.160', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (22, N'部门月提成
+', 1, 1, 1, 0, 0, 0, 0, '2015-05-26 21:24:06.440', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (23, N'采购订单报表
+', 0, 0, 0, 1, 0, 1, 0, '2015-05-26 21:24:53.297', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (24, N'采购付款明细表
+', 0, 0, 0, 1, 0, 1, 0, '2015-05-26 21:25:14.140', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (25, N'销售订单报表
+', 0, 0, 0, 1, 0, 1, 0, '2015-05-26 21:25:26.920', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (26, N'出库明细表
+', 0, 0, 0, 1, 0, 1, 0, '2015-05-26 21:25:39.633', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (27, N'入库明细表
+', 0, 0, 0, 1, 0, 1, 0, '2015-05-26 21:25:52.307', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (28, N'采购计划表
+', 0, 0, 0, 1, 0, 1, 0, '2015-05-26 21:26:05.093', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (29, N'库存汇总表
+', 0, 0, 0, 1, 0, 1, 0, '2015-05-26 21:26:18.663', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (30, N'配送公司流向结算表
+', 0, 0, 0, 1, 0, 1, 0, '2015-05-26 21:26:33.203', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (31, N'大包客户季度考核表
+', 0, 0, 0, 1, 0, 1, 0, '2015-05-26 21:26:44.380', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (32, N'配送公司库存核对表
+', 0, 0, 0, 1, 0, 1, 0, '2015-05-26 21:26:56.437', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (33, N'发票管理
+', 1, 1, 1, 0, 0, 0, 0, '2015-05-26 21:27:13.770', NULL, NULL, NULL)
+ALTER TABLE [dbo].[UserGroupPermission] WITH NOCHECK ADD CONSTRAINT [FK_UserGroupPermission_PermissionID] FOREIGN KEY ([PermissionID]) REFERENCES [dbo].[Permission] ([ID])
+COMMIT TRANSACTION
+---- end --- 5/27/2015 -- 初始化菜单模块权限 -- by Nwang

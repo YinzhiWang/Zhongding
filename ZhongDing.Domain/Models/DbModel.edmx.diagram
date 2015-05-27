@@ -420,6 +420,17 @@
         <AssociationConnector Association="DbModel.FK_GuaranteeLog_ClientSaleApplication" />
         <EntityTypeShape EntityType="DbModel.ClientSaleApplicationImportData" Width="1.5" PointX="9.8725703236984881" PointY="18.865280115448535" />
         <AssociationConnector Association="DbModel.FK_ClientSaleApplicationImportData_SalesOrderApplicationImportDataID" />
+        <EntityTypeShape EntityType="DbModel.UserGroup" Width="1.5" PointX="10.450217272364636" PointY="26.849887562380118" />
+        <EntityTypeShape EntityType="DbModel.UserGroupPermission" Width="1.5" PointX="8.4715419972648576" PointY="10.186028917406699" />
+        <EntityTypeShape EntityType="DbModel.UserGroupUser" Width="1.5" PointX="5.2292026789994921" PointY="23.711745109274865" />
+        <AssociationConnector Association="DbModel.FK_UserGroupPermission_UserGroupID" />
+        <AssociationConnector Association="DbModel.FK_UserGroupUser_UserGroupID" />
+        <AssociationConnector Association="DbModel.FK_UserGroupUser_UserID" />
+        <EntityTypeShape EntityType="DbModel.Permission" Width="1.5" PointX="4.341454409221865" PointY="29.772386639272973" />
+        <AssociationConnector Association="DbModel.FK_UserGroupPermission_PermissionID" />
+        <EntityTypeShape EntityType="DbModel.WorkflowStepUserGroup" Width="1.5" PointX="10.732254288500293" PointY="3.7189705538186106" />
+        <AssociationConnector Association="DbModel.FK_WorkflowStepUserGroup_UserGroupID" />
+        <AssociationConnector Association="DbModel.FK_WorkflowStepUserGroup_WorkflowStep" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

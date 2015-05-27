@@ -247,7 +247,7 @@ namespace ZhongDing.Web.Views.Invoices
             };
 
             int totalRecords;
-
+            
             var procureOrderAppDetails = PageProcureOrderAppDetailRepository.GetSupplierInvoiceChooseProcureOrderAppDetailUIList(uiSearchObj,
                 rgProcureOrderAppDetails.CurrentPageIndex, rgProcureOrderAppDetails.PageSize, out totalRecords);
 

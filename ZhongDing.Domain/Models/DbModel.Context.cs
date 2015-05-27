@@ -157,5 +157,10 @@ namespace ZhongDing.Domain.Models
         public DbSet<SalesOrderApplicationImportData> SalesOrderApplicationImportData { get; set; }
         public DbSet<ClientSaleApplication> ClientSaleApplication { get; set; }
         public DbSet<ClientSaleApplicationImportData> ClientSaleApplicationImportData { get; set; }
+        public DbSet<UserGroup> UserGroup { get; set; }
+        public DbSet<UserGroupPermission> UserGroupPermission { get; set; }
+        public DbSet<UserGroupUser> UserGroupUser { get; set; }
+        public DbSet<Permission> Permission { get; set; }
+        public DbSet<WorkflowStepUserGroup> WorkflowStepUserGroup { get; set; }
     }
 }

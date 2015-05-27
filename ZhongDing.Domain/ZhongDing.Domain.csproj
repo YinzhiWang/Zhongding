@@ -302,6 +302,9 @@
     <Compile Include="Models\PaymentType.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Permission.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ProcureOrderAppDetail.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -443,6 +446,15 @@
     <Compile Include="Models\UserBonus.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserGroup.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserGroupPermission.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserGroupUser.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Users.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -462,6 +474,9 @@
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\WorkflowStepUser.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\WorkflowStepUserGroup.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -573,12 +588,16 @@
     <Compile Include="UIObjects\UITransportFeeStockIn.cs" />
     <Compile Include="UIObjects\UITransportFeeStockOut.cs" />
     <Compile Include="UIObjects\UIUser.cs" />
+    <Compile Include="UIObjects\UIUserGroup.cs" />
+    <Compile Include="UIObjects\UIUserGroupPermission.cs" />
     <Compile Include="UIObjects\UIWarehouse.cs" />
     <Compile Include="UIObjects\UIWorkflowBase.cs" />
     <Compile Include="UIObjects\UIWorkflowStep.cs" />
     <Compile Include="UISearchObjects\UISearchClientCautionMoney.cs" />
     <Compile Include="UISearchObjects\UISearchClientCautionMoneyReturnApplication.cs" />
-	<Compile Include="UISearchObjects\UISearchClientSaleApplicationImportFileLog.cs" />	<Compile Include="UISearchObjects\UISearchDCFlowSettlementReport.cs" />    <Compile Include="UISearchObjects\UISearchProcureOrderAppDetailImportData.cs" />
+    <Compile Include="UISearchObjects\UISearchClientSaleApplicationImportFileLog.cs" />
+    <Compile Include="UISearchObjects\UISearchDCFlowSettlementReport.cs" />
+    <Compile Include="UISearchObjects\UISearchProcureOrderAppDetailImportData.cs" />
     <Compile Include="UISearchObjects\UISearchClientAttachedInvoiceSettlement.cs" />
     <Compile Include="UISearchObjects\UISearchClientAttachedInvoiceSettlementDetail.cs" />
     <Compile Include="UISearchObjects\UISearchClientInvoiceSettlement.cs" />
@@ -662,6 +681,8 @@
     <Compile Include="UISearchObjects\UISearchTransportCompany.cs" />
     <Compile Include="UISearchObjects\UISearchTransportFee.cs" />
     <Compile Include="UISearchObjects\UISearchUser.cs" />
+    <Compile Include="UISearchObjects\UISearchUserGroup.cs" />
+    <Compile Include="UISearchObjects\UISearchUserGroupPermission.cs" />
     <Compile Include="UISearchObjects\UISearchWarehouse.cs" />
     <Compile Include="UISearchObjects\UISearchWorkflowBase.cs" />
     <Compile Include="UISearchObjects\UISearchWorkflowStep.cs" />

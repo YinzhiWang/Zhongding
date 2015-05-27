@@ -85,6 +85,9 @@
                             <telerik:GridBoundColumn UniqueName="StepUserNames" HeaderText="用户" DataField="StepUserNames">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
+                              <telerik:GridBoundColumn UniqueName="StepUserGroupNames" HeaderText="用户组" DataField="StepUserGroupNames">
+                                <ItemStyle HorizontalAlign="Left" />
+                            </telerik:GridBoundColumn>
                             <%--<telerik:GridBoundColumn UniqueName="CreatedBy" HeaderText="创建人" DataField="CreatedBy">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>

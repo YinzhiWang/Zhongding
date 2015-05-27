@@ -58,6 +58,34 @@
                                 </telerik:RadListBox>
                             </div>
                         </div>
+                          <div class="mws-form-row">
+                            <div class="float-left width55-percent">
+                                <telerik:RadListBox runat="server" ID="lbxAllUserGroup" AllowTransfer="true" AllowTransferOnDoubleClick="true"
+                                    TransferMode="Move" TransferToID="lbxSelectedUserGroup" Width="98%" Height="200">
+                                    <HeaderTemplate>
+                                        <table class="width100-percent">
+                                            <tr>
+                                                <td>全部用户组</td>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                    <ButtonSettings Position="Right" ShowDelete="false" ShowReorder="false"
+                                        TransferButtons="All" VerticalAlign="Bottom" AreaWidth="35" />
+                                    <Localization AllToRight="全部移到右边" AllToLeft="全部移到左边" ToRight="移到右边" ToLeft="移到左边" />
+                                </telerik:RadListBox>
+                            </div>
+                            <div class="float-left width45-percent">
+                                <telerik:RadListBox runat="server" ID="lbxSelectedUserGroup" AllowTransferOnDoubleClick="true" Width="100%" Height="200">
+                                    <HeaderTemplate>
+                                        <table class="width100-percent">
+                                            <tr>
+                                                <td>已选用户组</td>
+                                            </tr>
+                                        </table>
+                                    </HeaderTemplate>
+                                </telerik:RadListBox>
+                            </div>
+                        </div>
                         <div class="height20">
                         </div>
                         <div class="mws-button-row">

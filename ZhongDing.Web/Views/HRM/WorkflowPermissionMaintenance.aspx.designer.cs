@@ -58,6 +58,24 @@ namespace ZhongDing.Web.Views.HRM {
         protected global::Telerik.Web.UI.RadListBox lbxSelectedUsers;
         
         /// <summary>
+        /// lbxAllUserGroup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadListBox lbxAllUserGroup;
+        
+        /// <summary>
+        /// lbxSelectedUserGroup control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadListBox lbxSelectedUserGroup;
+        
+        /// <summary>
         /// btnSave control.
         /// </summary>
         /// <remarks>

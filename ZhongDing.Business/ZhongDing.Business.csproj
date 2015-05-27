@@ -170,6 +170,8 @@
     <Compile Include="IRepositories\ITransportFeeStockOutSmsReminderRepository.cs" />
     <Compile Include="IRepositories\IUnitOfMeasurementRepository.cs" />
     <Compile Include="IRepositories\IUnitOfWork.cs" />
+    <Compile Include="IRepositories\IUserGroupPermissionRepository.cs" />
+    <Compile Include="IRepositories\IUserGroupRepository.cs" />
     <Compile Include="IRepositories\IUsersRepository.cs" />
     <Compile Include="IRepositories\IWarehouseRepository.cs" />
     <Compile Include="IRepositories\IWorkflowRepository.cs" />
@@ -293,6 +295,8 @@
     <Compile Include="Repositories\TransportFeeStockOutSmsReminderRepository.cs" />
     <Compile Include="Repositories\UnitOfMeasurementRepository.cs" />
     <Compile Include="Repositories\UnitOfWork.cs" />
+    <Compile Include="Repositories\UserGroupPermissionRepository.cs" />
+    <Compile Include="Repositories\UserGroupRepository.cs" />
     <Compile Include="Repositories\UsersRepository.cs" />
     <Compile Include="Repositories\WarehouseRepository.cs" />
     <Compile Include="Repositories\WorkflowRepository.cs" />

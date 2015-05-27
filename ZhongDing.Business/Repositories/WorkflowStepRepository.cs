@@ -89,12 +89,14 @@ namespace ZhongDing.Business.Repositories
                                   ID = q.ID,
                                   WorkfolwName = wf.WorkflowName,
                                   StepName = q.StepName,
-                                  StepUserIDs = q.WorkflowStepUser.Where(x => x.IsDeleted == false).Select(x => x.UserID)
+                                  StepUserIDs = q.WorkflowStepUser.Where(x => x.IsDeleted == false).Select(x => x.UserID),
+                                  StepUserGroupIDs = q.WorkflowStepUserGroup.Where(x => x.IsDeleted == false).Select(x => x.UserGroupID)
                               }).ToList();
 
                 foreach (var entity in uiEntities)
                 {
                     entity.StepUserNames = string.Join(", ", DB.Users.Where(x => entity.StepUserIDs.Contains(x.UserID)).Select(x => x.FullName).ToList());
+                    entity.StepUserGroupNames = string.Join(", ", DB.UserGroup.Where(x => entity.StepUserGroupIDs.Contains(x.ID)).Select(x => x.GroupName).ToList());
                 }
             }
 

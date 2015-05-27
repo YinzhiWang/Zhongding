@@ -2610,6 +2610,9 @@
     <Content Include="Views\CautionMoneys\SupplierCautionMoneyApplyManagement.aspx" />
     <Content Include="Views\CautionMoneys\SupplierCautionMoneyMaintenance.aspx" />
     <Content Include="Views\CautionMoneys\SupplierCautionMoneyManagement.aspx" />
+    <Content Include="Views\HRM\UserGroupPermissionMaintenance.aspx" />
+    <Content Include="Views\HRM\UserGroupMaintenance.aspx" />
+    <Content Include="Views\HRM\UserGroupManagement.aspx" />
     <Content Include="Views\HRM\DepartmentMaintenance.aspx" />
     <Content Include="Views\HRM\DepartmentManagement.aspx" />
     <Content Include="Views\HRM\Editors\DeptMarketDivisionMaintain.aspx" />
@@ -3166,6 +3169,27 @@
     </Compile>
     <Compile Include="Views\CautionMoneys\SupplierCautionMoneyManagement.aspx.designer.cs">
       <DependentUpon>SupplierCautionMoneyManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HRM\UserGroupPermissionMaintenance.aspx.cs">
+      <DependentUpon>UserGroupPermissionMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\HRM\UserGroupPermissionMaintenance.aspx.designer.cs">
+      <DependentUpon>UserGroupPermissionMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HRM\UserGroupMaintenance.aspx.cs">
+      <DependentUpon>UserGroupMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\HRM\UserGroupMaintenance.aspx.designer.cs">
+      <DependentUpon>UserGroupMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HRM\UserGroupManagement.aspx.cs">
+      <DependentUpon>UserGroupManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\HRM\UserGroupManagement.aspx.designer.cs">
+      <DependentUpon>UserGroupManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\HRM\DepartmentMaintenance.aspx.cs">
       <DependentUpon>DepartmentMaintenance.aspx</DependentUpon>
@@ -3975,7 +3999,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

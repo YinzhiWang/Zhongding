@@ -29,7 +29,17 @@ namespace ZhongDing.Web.Views.HRM
                 return _PageWorkflowStepRepository;
             }
         }
+        private IUserGroupRepository _PageUserGroupRepository;
+        protected IUserGroupRepository PageUserGroupRepository
+        {
+            get
+            {
+                if (_PageUserGroupRepository == null)
+                    _PageUserGroupRepository = new UserGroupRepository();
 
+                return _PageUserGroupRepository;
+            }
+        }
         #endregion
 
         protected void Page_Load(object sender, EventArgs e)
@@ -62,38 +72,70 @@ namespace ZhongDing.Web.Views.HRM
                 var currentEntity = PageWorkflowStepRepository.GetByID(this.CurrentEntityID);
 
                 var selectedUserIDs = new List<int>();
-
+                var selectedUserGroupIDs = new List<int>();
                 if (currentEntity != null)
                 {
                     lblWorkflowName.Text = currentEntity.Workflow.WorkflowName;
                     lblWorkflowStepName.Text = currentEntity.StepName;
+                    {
+                        selectedUserIDs = currentEntity.WorkflowStepUser
+                            .Where(x => x.IsDeleted == false).Select(x => x.UserID).ToList();
 
-                    selectedUserIDs = currentEntity.WorkflowStepUser
-                        .Where(x => x.IsDeleted == false).Select(x => x.UserID).ToList();
+                        if (selectedUserIDs.Count == 0)
+                            selectedUserIDs.Add(GlobalConst.INVALID_INT);
 
-                    if (selectedUserIDs.Count == 0)
-                        selectedUserIDs.Add(GlobalConst.INVALID_INT);
+                        var uiSearchSelectedObj = new UISearchDropdownItem();
+                        uiSearchSelectedObj.IncludeItemValues = selectedUserIDs;
 
-                    var uiSearchSelectedObj = new UISearchDropdownItem();
-                    uiSearchSelectedObj.IncludeItemValues = selectedUserIDs;
+                        var selectedUsers = PageUsersRepository.GetDropdownItems(uiSearchSelectedObj);
 
-                    var selectedUsers = PageUsersRepository.GetDropdownItems(uiSearchSelectedObj);
+                        lbxSelectedUsers.DataSource = selectedUsers;
+                        lbxSelectedUsers.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+                        lbxSelectedUsers.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+                        lbxSelectedUsers.DataBind();
+                    }
+                    //---------------------------------------------------------------------------
+                    {
+                        selectedUserGroupIDs = currentEntity.WorkflowStepUserGroup
+                            .Where(x => x.IsDeleted == false).Select(x => x.UserGroupID).ToList();
+                        if (selectedUserGroupIDs.Count == 0)
+                            selectedUserGroupIDs.Add(GlobalConst.INVALID_INT);
 
-                    lbxSelectedUsers.DataSource = selectedUsers;
-                    lbxSelectedUsers.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
-                    lbxSelectedUsers.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
-                    lbxSelectedUsers.DataBind();
+                        var uiSearchSelectedObj = new UISearchDropdownItem();
+                        uiSearchSelectedObj.IncludeItemValues = selectedUserGroupIDs;
+
+                        var selectedUserGroups = PageUserGroupRepository.GetDropdownItems(uiSearchSelectedObj);
+
+                        lbxSelectedUserGroup.DataSource = selectedUserGroups;
+                        lbxSelectedUserGroup.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+                        lbxSelectedUserGroup.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+                        lbxSelectedUserGroup.DataBind();
+                    }
                 }
+                {
+                    var uiSearchAllUserObj = new UISearchDropdownItem();
+                    uiSearchAllUserObj.ExcludeItemValues = selectedUserIDs;
 
-                var uiSearchAllObj = new UISearchDropdownItem();
-                uiSearchAllObj.ExcludeItemValues = selectedUserIDs;
 
-                var allUsers = PageUsersRepository.GetDropdownItems(uiSearchAllObj);
+                    var allUsers = PageUsersRepository.GetDropdownItems(uiSearchAllUserObj);
 
-                lbxAllUsers.DataSource = allUsers;
-                lbxAllUsers.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
-                lbxAllUsers.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
-                lbxAllUsers.DataBind();
+                    lbxAllUsers.DataSource = allUsers;
+                    lbxAllUsers.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+                    lbxAllUsers.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+                    lbxAllUsers.DataBind();
+                }
+                //------------------------------------------------------------------------
+                {
+                    var uiSearchAllUserGroupObj = new UISearchDropdownItem();
+                    uiSearchAllUserGroupObj.ExcludeItemValues = selectedUserGroupIDs;
+
+                    var allUserGroup = PageUserGroupRepository.GetDropdownItems(uiSearchAllUserGroupObj);
+
+                    lbxAllUserGroup.DataSource = allUserGroup;
+                    lbxAllUserGroup.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+                    lbxAllUserGroup.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+                    lbxAllUserGroup.DataBind();
+                }
             }
         }
 
@@ -110,31 +152,59 @@ namespace ZhongDing.Web.Views.HRM
 
                 if (currentEntity != null)
                 {
-                    var oldStepUsers = currentEntity.WorkflowStepUser.Where(x => x.IsDeleted == false);
-
-                    if (lbxSelectedUsers.Items.Count > 0)
                     {
-                        foreach (RadListBoxItem item in lbxSelectedUsers.Items)
+                        var oldStepUsers = currentEntity.WorkflowStepUser.Where(x => x.IsDeleted == false);
+
+                        if (lbxSelectedUsers.Items.Count > 0)
                         {
-                            var curStepUser = oldStepUsers.FirstOrDefault(x => x.UserID.ToString() == item.Value);
-
-                            if (curStepUser == null)
+                            foreach (RadListBoxItem item in lbxSelectedUsers.Items)
                             {
-                                curStepUser = new WorkflowStepUser();
-                                curStepUser.UserID = int.Parse(item.Value);
+                                var curStepUser = oldStepUsers.FirstOrDefault(x => x.UserID.ToString() == item.Value);
 
-                                currentEntity.WorkflowStepUser.Add(curStepUser);
+                                if (curStepUser == null)
+                                {
+                                    curStepUser = new WorkflowStepUser();
+                                    curStepUser.UserID = int.Parse(item.Value);
+
+                                    currentEntity.WorkflowStepUser.Add(curStepUser);
+                                }
                             }
                         }
-                    }
- 
-                    //删除之前的未被选择的用户
-                    foreach (var item in oldStepUsers)
-                    {
-                        if (!lbxSelectedUsers.Items.Any(x => x.Value == item.UserID.ToString()))
-                            item.IsDeleted = true;
-                    }
 
+                        //删除之前的未被选择的用户
+                        foreach (var item in oldStepUsers)
+                        {
+                            if (!lbxSelectedUsers.Items.Any(x => x.Value == item.UserID.ToString()))
+                                item.IsDeleted = true;
+                        }
+                    }
+                    //-------------------------------------------------------------------------------------------------------------
+                    {
+                        var oldStepUserGroup = currentEntity.WorkflowStepUserGroup.Where(x => x.IsDeleted == false);
+
+                        if (lbxSelectedUserGroup.Items.Count > 0)
+                        {
+                            foreach (RadListBoxItem item in lbxSelectedUserGroup.Items)
+                            {
+                                var curStepUserGroup = oldStepUserGroup.FirstOrDefault(x => x.UserGroupID.ToString() == item.Value);
+
+                                if (curStepUserGroup == null)
+                                {
+                                    curStepUserGroup = new WorkflowStepUserGroup();
+                                    curStepUserGroup.UserGroupID = int.Parse(item.Value);
+
+                                    currentEntity.WorkflowStepUserGroup.Add(curStepUserGroup);
+                                }
+                            }
+                        }
+
+                        //删除之前的未被选择的用户
+                        foreach (var item in oldStepUserGroup)
+                        {
+                            if (!lbxSelectedUserGroup.Items.Any(x => x.Value == item.UserGroupID.ToString()))
+                                item.IsDeleted = true;
+                        }
+                    }
                     PageWorkflowStepRepository.Save();
 
                     this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";

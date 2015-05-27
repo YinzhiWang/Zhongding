@@ -16,6 +16,10 @@ namespace ZhongDing.Domain.UIObjects
 
         public string StepUserNames { get; set; }
 
+        public string StepUserGroupNames { get; set; }
+
         public IEnumerable<int> StepUserIDs { get; set; }
+
+        public IEnumerable<int> StepUserGroupIDs { get; set; }
     }
 }

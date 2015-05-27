@@ -84,6 +84,7 @@
           <EntitySet Name="OwnerType" EntityType="DbModel.Store.OwnerType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PaymentStatus" EntityType="DbModel.Store.PaymentStatus" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="PaymentType" EntityType="DbModel.Store.PaymentType" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Permission" EntityType="DbModel.Store.Permission" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ProcureOrderAppDetail" EntityType="DbModel.Store.ProcureOrderAppDetail" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ProcureOrderAppDetailImportData" EntityType="DbModel.Store.ProcureOrderAppDetailImportData" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ProcureOrderApplication" EntityType="DbModel.Store.ProcureOrderApplication" store:Type="Tables" Schema="dbo" />
@@ -131,6 +132,9 @@
           <EntitySet Name="TransportFeeStockOutSmsReminder" EntityType="DbModel.Store.TransportFeeStockOutSmsReminder" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UnitOfMeasurement" EntityType="DbModel.Store.UnitOfMeasurement" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="UserBonus" EntityType="DbModel.Store.UserBonus" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserGroup" EntityType="DbModel.Store.UserGroup" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserGroupPermission" EntityType="DbModel.Store.UserGroupPermission" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="UserGroupUser" EntityType="DbModel.Store.UserGroupUser" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Users" EntityType="DbModel.Store.Users" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Warehouse" EntityType="DbModel.Store.Warehouse" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Workflow" EntityType="DbModel.Store.Workflow" store:Type="Tables" Schema="dbo" />
@@ -138,6 +142,7 @@
           <EntitySet Name="WorkflowStep" EntityType="DbModel.Store.WorkflowStep" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="WorkflowStepStatus" EntityType="DbModel.Store.WorkflowStepStatus" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="WorkflowStepUser" EntityType="DbModel.Store.WorkflowStepUser" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="WorkflowStepUserGroup" EntityType="DbModel.Store.WorkflowStepUserGroup" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK__aspnet_Me__UserI__10566F31" Association="DbModel.Store.FK__aspnet_Me__UserI__10566F31">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
@@ -1234,6 +1239,22 @@
             <End Role="TransportFeeStockOut" EntitySet="TransportFeeStockOut" />
             <End Role="TransportFeeStockOutSmsReminder" EntitySet="TransportFeeStockOutSmsReminder" />
           </AssociationSet>
+          <AssociationSet Name="FK_UserGroupPermission_PermissionID" Association="DbModel.Store.FK_UserGroupPermission_PermissionID">
+            <End Role="Permission" EntitySet="Permission" />
+            <End Role="UserGroupPermission" EntitySet="UserGroupPermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGroupPermission_UserGroupID" Association="DbModel.Store.FK_UserGroupPermission_UserGroupID">
+            <End Role="UserGroup" EntitySet="UserGroup" />
+            <End Role="UserGroupPermission" EntitySet="UserGroupPermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGroupUser_UserGroupID" Association="DbModel.Store.FK_UserGroupUser_UserGroupID">
+            <End Role="UserGroup" EntitySet="UserGroup" />
+            <End Role="UserGroupUser" EntitySet="UserGroupUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGroupUser_UserID" Association="DbModel.Store.FK_UserGroupUser_UserID">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserGroupUser" EntitySet="UserGroupUser" />
+          </AssociationSet>
           <AssociationSet Name="FK_Users_aspnet_Users" Association="DbModel.Store.FK_Users_aspnet_Users">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="Users" EntitySet="Users" />
@@ -1269,6 +1290,14 @@
           <AssociationSet Name="FK_WorkflowStepUser_WorkflowStep" Association="DbModel.Store.FK_WorkflowStepUser_WorkflowStep">
             <End Role="WorkflowStep" EntitySet="WorkflowStep" />
             <End Role="WorkflowStepUser" EntitySet="WorkflowStepUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkflowStepUserGroup_UserGroupID" Association="DbModel.Store.FK_WorkflowStepUserGroup_UserGroupID">
+            <End Role="UserGroup" EntitySet="UserGroup" />
+            <End Role="WorkflowStepUserGroup" EntitySet="WorkflowStepUserGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkflowStepUserGroup_WorkflowStep" Association="DbModel.Store.FK_WorkflowStepUserGroup_WorkflowStep">
+            <End Role="WorkflowStep" EntitySet="WorkflowStep" />
+            <End Role="WorkflowStepUserGroup" EntitySet="WorkflowStepUserGroup" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="AccountType">
@@ -2525,6 +2554,24 @@
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="PaymentTypeName" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="Permission">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="HasCreate" Type="bit" Nullable="false" />
+          <Property Name="HasEdit" Type="bit" Nullable="false" />
+          <Property Name="HasDelete" Type="bit" Nullable="false" />
+          <Property Name="HasView" Type="bit" Nullable="false" />
+          <Property Name="HasPrint" Type="bit" Nullable="false" />
+          <Property Name="HasExport" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
         <EntityType Name="ProcureOrderAppDetail">
           <Key>
             <PropertyRef Name="ID" />
@@ -3311,6 +3358,46 @@
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
         </EntityType>
+        <EntityType Name="UserGroup">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="UserGroupPermission">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserGroupID" Type="int" Nullable="false" />
+          <Property Name="PermissionID" Type="int" Nullable="false" />
+          <Property Name="Value" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="UserGroupUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="UserGroupID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="UserID" />
@@ -3395,6 +3482,19 @@
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="WorkflowStepID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="WorkflowStepUserGroup">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="WorkflowStepID" Type="int" Nullable="false" />
+          <Property Name="UserGroupID" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
@@ -6689,6 +6789,54 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_UserGroupPermission_PermissionID">
+          <End Role="Permission" Type="DbModel.Store.Permission" Multiplicity="1" />
+          <End Role="UserGroupPermission" Type="DbModel.Store.UserGroupPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permission">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserGroupPermission">
+              <PropertyRef Name="PermissionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGroupPermission_UserGroupID">
+          <End Role="UserGroup" Type="DbModel.Store.UserGroup" Multiplicity="1" />
+          <End Role="UserGroupPermission" Type="DbModel.Store.UserGroupPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserGroup">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserGroupPermission">
+              <PropertyRef Name="UserGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGroupUser_UserGroupID">
+          <End Role="UserGroup" Type="DbModel.Store.UserGroup" Multiplicity="1" />
+          <End Role="UserGroupUser" Type="DbModel.Store.UserGroupUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserGroup">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserGroupUser">
+              <PropertyRef Name="UserGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGroupUser_UserID">
+          <End Role="Users" Type="DbModel.Store.Users" Multiplicity="1" />
+          <End Role="UserGroupUser" Type="DbModel.Store.UserGroupUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserGroupUser">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Users_aspnet_Users">
           <End Role="aspnet_Users" Type="DbModel.Store.aspnet_Users" Multiplicity="0..1" />
           <End Role="Users" Type="DbModel.Store.Users" Multiplicity="*" />
@@ -6793,6 +6941,30 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="WorkflowStepUser">
+              <PropertyRef Name="WorkflowStepID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkflowStepUserGroup_UserGroupID">
+          <End Role="UserGroup" Type="DbModel.Store.UserGroup" Multiplicity="1" />
+          <End Role="WorkflowStepUserGroup" Type="DbModel.Store.WorkflowStepUserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserGroup">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WorkflowStepUserGroup">
+              <PropertyRef Name="UserGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkflowStepUserGroup_WorkflowStep">
+          <End Role="WorkflowStep" Type="DbModel.Store.WorkflowStep" Multiplicity="1" />
+          <End Role="WorkflowStepUserGroup" Type="DbModel.Store.WorkflowStepUserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStep">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WorkflowStepUserGroup">
               <PropertyRef Name="WorkflowStepID" />
             </Dependent>
           </ReferentialConstraint>
@@ -8066,6 +8238,35 @@
             <End Role="SalesOrderApplicationImportData" EntitySet="SalesOrderApplicationImportData" />
             <End Role="ClientSaleApplicationImportData" EntitySet="ClientSaleApplicationImportData" />
           </AssociationSet>
+          <EntitySet Name="UserGroup" EntityType="DbModel.UserGroup" />
+          <EntitySet Name="UserGroupPermission" EntityType="DbModel.UserGroupPermission" />
+          <EntitySet Name="UserGroupUser" EntityType="DbModel.UserGroupUser" />
+          <AssociationSet Name="FK_UserGroupPermission_UserGroupID" Association="DbModel.FK_UserGroupPermission_UserGroupID">
+            <End Role="UserGroup" EntitySet="UserGroup" />
+            <End Role="UserGroupPermission" EntitySet="UserGroupPermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGroupUser_UserGroupID" Association="DbModel.FK_UserGroupUser_UserGroupID">
+            <End Role="UserGroup" EntitySet="UserGroup" />
+            <End Role="UserGroupUser" EntitySet="UserGroupUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_UserGroupUser_UserID" Association="DbModel.FK_UserGroupUser_UserID">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="UserGroupUser" EntitySet="UserGroupUser" />
+          </AssociationSet>
+          <EntitySet Name="Permission" EntityType="DbModel.Permission" />
+          <AssociationSet Name="FK_UserGroupPermission_PermissionID" Association="DbModel.FK_UserGroupPermission_PermissionID">
+            <End Role="Permission" EntitySet="Permission" />
+            <End Role="UserGroupPermission" EntitySet="UserGroupPermission" />
+          </AssociationSet>
+          <EntitySet Name="WorkflowStepUserGroup" EntityType="DbModel.WorkflowStepUserGroup" />
+          <AssociationSet Name="FK_WorkflowStepUserGroup_UserGroupID" Association="DbModel.FK_WorkflowStepUserGroup_UserGroupID">
+            <End Role="UserGroup" EntitySet="UserGroup" />
+            <End Role="WorkflowStepUserGroup" EntitySet="WorkflowStepUserGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkflowStepUserGroup_WorkflowStep" Association="DbModel.FK_WorkflowStepUserGroup_WorkflowStep">
+            <End Role="WorkflowStep" EntitySet="WorkflowStep" />
+            <End Role="WorkflowStepUserGroup" EntitySet="WorkflowStepUserGroup" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -8486,6 +8687,7 @@
           <NavigationProperty Name="DeptMarketDivision" Relationship="DbModel.FK_DeptMarketDivision_Users" FromRole="Users" ToRole="DeptMarketDivision" />
           <NavigationProperty Name="WorkflowStepUser" Relationship="DbModel.FK_WorkflowStepUser_Users" FromRole="Users" ToRole="WorkflowStepUser" />
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_Users" FromRole="Users" ToRole="DBContract" />
+          <NavigationProperty Name="UserGroupUser" Relationship="DbModel.FK_UserGroupUser_UserID" FromRole="Users" ToRole="UserGroupUser" />
         </EntityType>
         <Association Name="FK_BankAccount_AccountType">
           <End Type="DbModel.AccountType" Role="AccountType" Multiplicity="0..1" />
@@ -9435,6 +9637,7 @@
           <NavigationProperty Name="Workflow" Relationship="DbModel.FK_WorkflowStep_Workflow" FromRole="WorkflowStep" ToRole="Workflow" />
           <NavigationProperty Name="WorkflowStepStatus" Relationship="DbModel.FK_WorkflowStepStatus_WorkflowStep" FromRole="WorkflowStep" ToRole="WorkflowStepStatus" />
           <NavigationProperty Name="ApplicationNote" Relationship="DbModel.FK_ApplicationNote_WorkflowStep" FromRole="WorkflowStep" ToRole="ApplicationNote" />
+          <NavigationProperty Name="WorkflowStepUserGroup" Relationship="DbModel.FK_WorkflowStepUserGroup_WorkflowStep" FromRole="WorkflowStep" ToRole="WorkflowStepUserGroup" />
         </EntityType>
         <Association Name="FK_WorkflowStepUser_WorkflowStep">
           <End Type="DbModel.WorkflowStep" Role="WorkflowStep" Multiplicity="1" />
@@ -14159,6 +14362,159 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="UserGroup">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="String" Name="GroupName" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="UserGroupPermission" Relationship="DbModel.FK_UserGroupPermission_UserGroupID" FromRole="UserGroup" ToRole="UserGroupPermission" />
+          <NavigationProperty Name="UserGroupUser" Relationship="DbModel.FK_UserGroupUser_UserGroupID" FromRole="UserGroup" ToRole="UserGroupUser" />
+          <Property Type="String" Name="Comment" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="WorkflowStepUserGroup" Relationship="DbModel.FK_WorkflowStepUserGroup_UserGroupID" FromRole="UserGroup" ToRole="WorkflowStepUserGroup" />
+        </EntityType>
+        <EntityType Name="UserGroupPermission">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="UserGroupID" Nullable="false" />
+          <Property Type="Int32" Name="PermissionID" Nullable="false" />
+          <Property Type="Int32" Name="Value" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="UserGroup" Relationship="DbModel.FK_UserGroupPermission_UserGroupID" FromRole="UserGroupPermission" ToRole="UserGroup" />
+          <NavigationProperty Name="Permission" Relationship="DbModel.FK_UserGroupPermission_PermissionID" FromRole="UserGroupPermission" ToRole="Permission" />
+        </EntityType>
+        <EntityType Name="UserGroupUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="UserGroupID" Nullable="false" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="UserGroup" Relationship="DbModel.FK_UserGroupUser_UserGroupID" FromRole="UserGroupUser" ToRole="UserGroup" />
+          <NavigationProperty Name="Users" Relationship="DbModel.FK_UserGroupUser_UserID" FromRole="UserGroupUser" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_UserGroupPermission_UserGroupID">
+          <End Type="DbModel.UserGroup" Role="UserGroup" Multiplicity="1" />
+          <End Type="DbModel.UserGroupPermission" Role="UserGroupPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserGroup">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserGroupPermission">
+              <PropertyRef Name="UserGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGroupUser_UserGroupID">
+          <End Type="DbModel.UserGroup" Role="UserGroup" Multiplicity="1" />
+          <End Type="DbModel.UserGroupUser" Role="UserGroupUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserGroup">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserGroupUser">
+              <PropertyRef Name="UserGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_UserGroupUser_UserID">
+          <End Type="DbModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="DbModel.UserGroupUser" Role="UserGroupUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="UserGroupUser">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Permission">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" />
+          <Property Type="String" Name="Name" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="HasCreate" Nullable="false" />
+          <Property Type="Boolean" Name="HasEdit" Nullable="false" />
+          <Property Type="Boolean" Name="HasDelete" Nullable="false" />
+          <Property Type="Boolean" Name="HasView" Nullable="false" />
+          <Property Type="Boolean" Name="HasPrint" Nullable="false" />
+          <Property Type="Boolean" Name="HasExport" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="UserGroupPermission" Relationship="DbModel.FK_UserGroupPermission_PermissionID" FromRole="Permission" ToRole="UserGroupPermission" />
+        </EntityType>
+        <Association Name="FK_UserGroupPermission_PermissionID">
+          <End Type="DbModel.Permission" Role="Permission" Multiplicity="1" />
+          <End Type="DbModel.UserGroupPermission" Role="UserGroupPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Permission">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="UserGroupPermission">
+              <PropertyRef Name="PermissionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="WorkflowStepUserGroup">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="WorkflowStepID" Nullable="false" />
+          <Property Type="Int32" Name="UserGroupID" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="UserGroup" Relationship="DbModel.FK_WorkflowStepUserGroup_UserGroupID" FromRole="WorkflowStepUserGroup" ToRole="UserGroup" />
+          <NavigationProperty Name="WorkflowStep" Relationship="DbModel.FK_WorkflowStepUserGroup_WorkflowStep" FromRole="WorkflowStepUserGroup" ToRole="WorkflowStep" />
+        </EntityType>
+        <Association Name="FK_WorkflowStepUserGroup_UserGroupID">
+          <End Type="DbModel.UserGroup" Role="UserGroup" Multiplicity="1" />
+          <End Type="DbModel.WorkflowStepUserGroup" Role="WorkflowStepUserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UserGroup">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WorkflowStepUserGroup">
+              <PropertyRef Name="UserGroupID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkflowStepUserGroup_WorkflowStep">
+          <End Type="DbModel.WorkflowStep" Role="WorkflowStep" Multiplicity="1" />
+          <End Type="DbModel.WorkflowStepUserGroup" Role="WorkflowStepUserGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStep">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WorkflowStepUserGroup">
+              <PropertyRef Name="WorkflowStepID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -16423,6 +16779,82 @@
                 <ScalarProperty Name="ClientCompanyName" ColumnName="ClientCompanyName" />
                 <ScalarProperty Name="ClientUserName" ColumnName="ClientUserName" />
                 <ScalarProperty Name="SalesOrderApplicationImportDataID" ColumnName="SalesOrderApplicationImportDataID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserGroup">
+            <EntityTypeMapping TypeName="DbModel.UserGroup">
+              <MappingFragment StoreEntitySet="UserGroup">
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserGroupPermission">
+            <EntityTypeMapping TypeName="DbModel.UserGroupPermission">
+              <MappingFragment StoreEntitySet="UserGroupPermission">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="PermissionID" ColumnName="PermissionID" />
+                <ScalarProperty Name="UserGroupID" ColumnName="UserGroupID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserGroupUser">
+            <EntityTypeMapping TypeName="DbModel.UserGroupUser">
+              <MappingFragment StoreEntitySet="UserGroupUser">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserGroupID" ColumnName="UserGroupID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permission">
+            <EntityTypeMapping TypeName="DbModel.Permission">
+              <MappingFragment StoreEntitySet="Permission">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="HasExport" ColumnName="HasExport" />
+                <ScalarProperty Name="HasPrint" ColumnName="HasPrint" />
+                <ScalarProperty Name="HasView" ColumnName="HasView" />
+                <ScalarProperty Name="HasDelete" ColumnName="HasDelete" />
+                <ScalarProperty Name="HasEdit" ColumnName="HasEdit" />
+                <ScalarProperty Name="HasCreate" ColumnName="HasCreate" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkflowStepUserGroup">
+            <EntityTypeMapping TypeName="DbModel.WorkflowStepUserGroup">
+              <MappingFragment StoreEntitySet="WorkflowStepUserGroup">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="UserGroupID" ColumnName="UserGroupID" />
+                <ScalarProperty Name="WorkflowStepID" ColumnName="WorkflowStepID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
