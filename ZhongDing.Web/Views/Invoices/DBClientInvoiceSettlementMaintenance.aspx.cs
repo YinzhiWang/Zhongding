@@ -416,8 +416,9 @@ namespace ZhongDing.Web.Views.Invoices
                     {
                         var dbClientInvoice = dbClientInvoices.FirstOrDefault(x => x.ID == dictDBClientInvoice.Key);
 
-                        decimal receivedAmount = dbcisdRepository.GetList(x => x.DBClientInvoiceID == dbClientInvoice.ID)
-                            .Sum(x => x.ReceiveAmount);
+                        decimal receivedAmount = dbcisdRepository.GetList().Any(x => x.IsDeleted == false && x.DBClientInvoiceID == dbClientInvoice.ID)
+                            ? dbcisdRepository.GetList(x => x.IsDeleted == false && x.DBClientInvoiceID == dbClientInvoice.ID).Sum(x => x.ReceiveAmount)
+                            : 0;
 
                         if ((receivedAmount + dictDBClientInvoice.Value) == dbClientInvoice.Amount)
                         {
