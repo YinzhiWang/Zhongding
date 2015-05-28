@@ -95,7 +95,7 @@
                           <ColumnGroups>
                             <telerik:GridColumnGroup Name="AlreadyOutQty" HeaderText="已执行数量" HeaderStyle-Font-Size="Small"
                                 HeaderStyle-HorizontalAlign="Center" />
-                            <telerik:GridColumnGroup Name="StopOutQty" HeaderText="终止数量" HeaderStyle-Font-Size="Small"
+                            <telerik:GridColumnGroup Name="StopOutQty" HeaderText="中止数量" HeaderStyle-Font-Size="Small"
                                 HeaderStyle-HorizontalAlign="Center" />
                             <telerik:GridColumnGroup Name="NotOutQty" HeaderText="未执行数量" HeaderStyle-Font-Size="Small"
                                 HeaderStyle-HorizontalAlign="Center" />

@@ -74,6 +74,7 @@
                     </tr>
                 </table>
                 <telerik:RadGrid ID="rgProcureOrderReports" runat="server" PageSize="10"
+                     AllowCustomPaging="true"
                                             AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false"
                                             MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" Height="520" ShowHeader="true" ShowFooter="true"
                     ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"

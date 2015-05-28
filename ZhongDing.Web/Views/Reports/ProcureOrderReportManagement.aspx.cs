@@ -295,7 +295,7 @@ namespace ZhongDing.Web.Views.Reports
                     new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="1,1,20,20"},
 
                     new AttributeList(){ title="已执行数量", cellregion="0,0,12,14"},
-                    new AttributeList(){ title="终止数量", cellregion="0,0,15,17"},
+                    new AttributeList(){ title="中止数量", cellregion="0,0,15,17"},
                     new AttributeList(){ title="未执行数量", cellregion="0,0,18,20"},
 
                     }

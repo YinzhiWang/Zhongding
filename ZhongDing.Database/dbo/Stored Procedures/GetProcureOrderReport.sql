@@ -76,6 +76,8 @@ AS
                             AND ( @productId IS NULL
                                   OR dbo.ProcureOrderAppDetail.ProductID = @productId
                                 )
+                            AND dbo.ProcureOrderApplication.WorkflowStatusID IN (
+                            8, 14, 15 )
                 ) AS temp
         WHERE   temp.rowId BETWEEN @startRecord AND @endRecord
 		
@@ -102,5 +104,7 @@ AS
                                     AND ( @productId IS NULL
                                           OR dbo.ProcureOrderAppDetail.ProductID = @productId
                                         )
+                                    AND dbo.ProcureOrderApplication.WorkflowStatusID IN (
+                                    8, 14, 15 )
                            )
     END
