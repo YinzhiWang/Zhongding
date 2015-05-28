@@ -81,12 +81,12 @@ namespace ZhongDing.Web.Views.HRM
 
         protected void rgUserGroups_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
-
+            base.PermissionOptionCheckGridCreate(e.Item);
         }
 
         protected void rgUserGroups_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
         {
-
+            base.PermissionOptionCheckGridDelete(e.OwnerTableView.Columns);
         }
 
         protected void rgUserGroups_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
@@ -105,6 +105,18 @@ namespace ZhongDing.Web.Views.HRM
             txtGroupName.Text = string.Empty;
 
             BindUserGroup(true);
+        }
+
+
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.PermissionManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
         }
     }
 }

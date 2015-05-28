@@ -40,6 +40,7 @@ namespace ZhongDing.Web.Views.HRM
             if (!IsPostBack)
             {
                 LoadEntityData();
+                base.PermissionOptionCheckButtonDelete(btnDelete);
             }
 
         }
@@ -50,7 +51,7 @@ namespace ZhongDing.Web.Views.HRM
             {
                 var currentEntity = PageUserGroupRepository.GetByID(this.CurrentEntityID);
 
-             
+
 
                 var selectedUserIDs = new List<int>();
 
@@ -91,6 +92,17 @@ namespace ZhongDing.Web.Views.HRM
             }
             else
             {
+                var uiSearchAllObj = new UISearchDropdownItem();
+                //uiSearchAllObj.ExcludeItemValues = selectedUserIDs;
+
+                var allUsers = PageUsersRepository.GetDropdownItems(uiSearchAllObj);
+
+                lbxAllUsers.DataSource = allUsers;
+                lbxAllUsers.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+                lbxAllUsers.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+                lbxAllUsers.DataBind();
+
+
                 btnDelete.Visible = false;
 
             }
@@ -157,6 +169,7 @@ namespace ZhongDing.Web.Views.HRM
                 this.Master.BaseNotification.OnClientHidden = "onClientHidden";
                 this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SAEVED_REDIRECT);
             }
+
         }
 
         protected void btnDelete_Click(object sender, EventArgs e)
@@ -170,6 +183,17 @@ namespace ZhongDing.Web.Views.HRM
                 this.Master.BaseNotification.OnClientHidden = "onClientHidden";
                 this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_DELETED_REDIRECT);
             }
+        }
+
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.PermissionManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
         }
     }
 }

@@ -35,7 +35,9 @@ namespace ZhongDing.Web.Views.Basics
 
             if (!IsPostBack)
             {
+               
                 LoadEntityData();
+                base.PermissionOptionCheckButtonDelete(btnDelete);
             }
 
         }
@@ -97,7 +99,7 @@ namespace ZhongDing.Web.Views.Basics
                 currentEntity.Driver = txtDriver.Text.Trim();
                 currentEntity.DriverTelephone = txtDriverTelephone.Text.Trim();
                 currentEntity.Remark = txtRemark.Text.Trim();
-         
+
                 PageTransportCompanyRepository.Save();
 
                 this.Master.BaseNotification.OnClientHidden = "onClientHidden";
@@ -116,6 +118,18 @@ namespace ZhongDing.Web.Views.Basics
                 this.Master.BaseNotification.OnClientHidden = "onClientHidden";
                 this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_DELETED_REDIRECT);
             }
+        }
+
+
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.TransportCompanyManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
         }
     }
 }

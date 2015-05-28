@@ -82,12 +82,12 @@ namespace ZhongDing.Web.Views.Basics
 
         protected void rgWarehouses_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
-
+            base.PermissionOptionCheckGridCreate(e.Item);
         }
 
         protected void rgWarehouses_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
         {
-
+            base.PermissionOptionCheckGridDelete(e.OwnerTableView.Columns);
         }
 
         protected void rgWarehouses_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
@@ -106,6 +106,16 @@ namespace ZhongDing.Web.Views.Basics
             txtName.Text = string.Empty;
 
             BindWarehouses(true);
+        }
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.WarehouseManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
         }
     }
 }

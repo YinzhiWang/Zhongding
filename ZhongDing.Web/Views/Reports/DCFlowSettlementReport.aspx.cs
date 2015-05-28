@@ -37,7 +37,10 @@ namespace ZhongDing.Web.Views.Reports
         {
             this.Master.MenuItemID = (int)EMenuItem.DCFlowSettlementReport;
 
-
+            if (!IsPostBack)
+            {
+                base.PermissionOptionCheckButtonExport(btnExport);
+            }
         }
 
         #region Private Methods
@@ -65,10 +68,6 @@ namespace ZhongDing.Web.Views.Reports
             if (isNeedRebind)
                 rgEntities.Rebind();
 
-            if (totalRecords > 0)
-                btnExport.Visible = true;
-            else
-                btnExport.Visible = false;
         }
 
 
@@ -184,5 +183,16 @@ namespace ZhongDing.Web.Views.Reports
             string filename = excelPath;
             Response.TransmitFile(filename);
         }
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.DCFlowSettlementReport;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.View;
+        }
+
     }
 }

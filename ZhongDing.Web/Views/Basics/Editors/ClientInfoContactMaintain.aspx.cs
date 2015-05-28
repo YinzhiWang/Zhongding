@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using ZhongDing.Business.IRepositories;
 using ZhongDing.Business.Repositories;
 using ZhongDing.Common;
+using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
 
 namespace ZhongDing.Web.Views.Basics.Editors
@@ -132,6 +133,17 @@ namespace ZhongDing.Web.Views.Basics.Editors
 
                 }
             }
+        }
+
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.ClientInfoManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
         }
     }
 }

@@ -43,16 +43,17 @@
                                 <label>用户组描述</label>
                                 <div class="mws-form-item small">
                                     <telerik:RadTextBox runat="server" ID="txtComment" CssClass="mws-textinput" Width="200px" MaxLength="100"></telerik:RadTextBox>
-                              
+
                                 </div>
 
                             </div>
                         </div>
 
-                         <div class="mws-form-row">
+                        <div class="mws-form-row">
                             <div class="float-left width55-percent">
                                 <telerik:RadListBox runat="server" ID="lbxAllUsers" AllowTransfer="true" AllowTransferOnDoubleClick="true"
-                                    TransferMode="Move" TransferToID="lbxSelectedUsers" Width="98%" Height="200">
+                                    SelectionMode="Multiple"
+                                    TransferMode="Move" TransferToID="lbxSelectedUsers" Width="98%" Height="500">
                                     <HeaderTemplate>
                                         <table class="width100-percent">
                                             <tr>
@@ -66,7 +67,8 @@
                                 </telerik:RadListBox>
                             </div>
                             <div class="float-left width45-percent">
-                                <telerik:RadListBox runat="server" ID="lbxSelectedUsers" AllowTransferOnDoubleClick="true" Width="100%" Height="200">
+                                <telerik:RadListBox runat="server" ID="lbxSelectedUsers" AllowTransferOnDoubleClick="true" Width="100%" Height="500"
+                                    SelectionMode="Multiple">
                                     <HeaderTemplate>
                                         <table class="width100-percent">
                                             <tr>
@@ -79,7 +81,7 @@
                         </div>
 
 
-<%--                        <div class="mws-form-row">
+                        <%--                        <div class="mws-form-row">
                             <label>备注</label>
                             <div class="mws-form-item medium">
                                 <telerik:RadTextBox runat="server" ID="txtRemark" Width="90%" MaxLength="1000"

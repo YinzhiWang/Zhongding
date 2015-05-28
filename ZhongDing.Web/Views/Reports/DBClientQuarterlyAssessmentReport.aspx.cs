@@ -56,6 +56,7 @@ namespace ZhongDing.Web.Views.Reports
                 BindYears();
 
                 BindClientUsers();
+                base.PermissionOptionCheckButtonExport(btnExport);
             }
         }
 
@@ -112,10 +113,6 @@ namespace ZhongDing.Web.Views.Reports
             if (isNeedRebind)
                 rgEntities.Rebind();
 
-            if (totalRecords > 0)
-                btnExport.Visible = true;
-            else
-                btnExport.Visible = false;
         }
 
 
@@ -295,6 +292,15 @@ namespace ZhongDing.Web.Views.Reports
                 this.Master.BaseNotification.AutoCloseDelay = 1000;
                 this.Master.BaseNotification.Show("请先选择查询条件，再导出数据");
             }
+        }
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.DBClientQuarterlyAssessmentReport;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.View;
         }
 
     }

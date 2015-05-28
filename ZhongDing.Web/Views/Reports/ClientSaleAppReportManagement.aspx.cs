@@ -90,6 +90,7 @@ namespace ZhongDing.Web.Views.Reports
                 BindClientUsers();
                 BindProducts();
                 BindClientCompanies();
+                base.PermissionOptionCheckButtonExport(btnExport);
             }
 
         }
@@ -365,6 +366,16 @@ namespace ZhongDing.Web.Views.Reports
 
 
 
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.ClientSaleAppReportManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.View;
+        }
 
     }
 }

@@ -146,5 +146,16 @@ namespace ZhongDing.Web.Views.Imports
 
             rgFailedLogs.DataSource = entities;
         }
+
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.DataImport;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Create;
+        }
     }
 }

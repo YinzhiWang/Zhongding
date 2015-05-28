@@ -23,9 +23,9 @@ namespace ZhongDing.Business.Repositories
             List<Expression<Func<UserGroupPermission, bool>>> whereFuncs = new List<Expression<Func<UserGroupPermission, bool>>>();
 
             var query = from permission in DB.Permission
-                        join userGroupPermission in DB.UserGroupPermission.Where(x => x.IsDeleted == false) on permission.ID equals userGroupPermission.PermissionID into tempUserGroupPermissionList
+                        join userGroupPermission in DB.UserGroupPermission.Where(x => x.IsDeleted == false && x.UserGroupID == uiSearchObj.UserGroupID.Value) on permission.ID equals userGroupPermission.PermissionID into tempUserGroupPermissionList
                         from tempUserGroupPermission in tempUserGroupPermissionList.DefaultIfEmpty()
-                        where permission.IsDeleted == false && (tempUserGroupPermission == null || (tempUserGroupPermission.IsDeleted == false && tempUserGroupPermission.UserGroupID == uiSearchObj.UserGroupID.Value))
+                        where permission.IsDeleted == false
                         select new UIUserGroupPermission()
                         {
                             UserGroupPermissionID = tempUserGroupPermission == null ? 0 : tempUserGroupPermission.ID,

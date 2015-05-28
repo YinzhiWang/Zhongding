@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using ZhongDing.Common.Enums;
 
 namespace ZhongDing.Web.Account
 {
@@ -22,6 +23,15 @@ namespace ZhongDing.Web.Account
             }
 
             Response.Redirect(FormsAuthentication.LoginUrl, true);
+        }
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.NULL;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.None;
         }
     }
 }

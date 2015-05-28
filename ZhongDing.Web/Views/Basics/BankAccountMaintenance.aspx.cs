@@ -82,6 +82,8 @@ namespace ZhongDing.Web.Views.Basics
 
             if (!IsPostBack)
             {
+                base.PermissionOptionCheckButtonDelete(btnDelete);
+
                 BindAccountTypes();
 
                 LoadBankAccount();
@@ -198,5 +200,16 @@ namespace ZhongDing.Web.Views.Basics
 
         #endregion
 
+
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.BankAccountManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
+        }
     }
 }

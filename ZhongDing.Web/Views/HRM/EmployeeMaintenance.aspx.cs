@@ -45,6 +45,7 @@ namespace ZhongDing.Web.Views.HRM
                 BindDepartments();
 
                 LoadCurrentEntity();
+                base.PermissionOptionCheckButtonDelete(btnDelete);
             }
         }
 
@@ -409,6 +410,14 @@ namespace ZhongDing.Web.Views.HRM
             return isSuccess;
         }
 
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.EmployeeManagement;
+        }
 
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
+        }
     }
 }

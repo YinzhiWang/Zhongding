@@ -74,10 +74,12 @@ namespace ZhongDing.Web.Views.Basics
 
             if (!IsPostBack)
             {
+               
                 BindClientUsers();
                 BindClientCompanies();
 
                 LoadClientInfo();
+                base.PermissionOptionCheckButtonDelete(btnDelete);
             }
         }
 
@@ -455,7 +457,15 @@ namespace ZhongDing.Web.Views.Basics
             }
         }
 
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.ClientInfoManagement;
+        }
 
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
+        }
 
     }
 }

@@ -159,5 +159,15 @@ namespace ZhongDing.Web.Views.Imports
          
             BindEntities(true);
         }
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.DataImport;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Create;
+        }
     }
 }

@@ -80,12 +80,12 @@ namespace ZhongDing.Web.Views.Basics
 
         protected void rgTransportCompanys_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
-
+            base.PermissionOptionCheckGridCreate(e.Item);
         }
 
         protected void rgTransportCompanys_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
         {
-
+            base.PermissionOptionCheckGridDelete(e.OwnerTableView.Columns);
         }
 
         protected void rgTransportCompanys_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
@@ -104,6 +104,18 @@ namespace ZhongDing.Web.Views.Basics
             txtCompanyName.Text = string.Empty;
 
             BindTransportCompany(true);
+        }
+
+
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.TransportCompanyManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
         }
     }
 }

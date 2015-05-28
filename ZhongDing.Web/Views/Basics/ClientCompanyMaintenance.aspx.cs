@@ -68,6 +68,7 @@ namespace ZhongDing.Web.Views.Basics
             if (!IsPostBack)
             {
                 LoadCurrentEntity();
+                base.PermissionOptionCheckButtonDelete(btnDelete);
             }
         }
 
@@ -233,6 +234,18 @@ namespace ZhongDing.Web.Views.Basics
                 this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
                 this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_DELETED_REDIRECT);
             }
+        }
+
+
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.ClientCompanyManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
         }
     }
 }

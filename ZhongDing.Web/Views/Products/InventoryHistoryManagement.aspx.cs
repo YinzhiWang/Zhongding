@@ -102,5 +102,16 @@ namespace ZhongDing.Web.Views.Products
 
             BindInventoryHistorys(true);
         }
+
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.InventoryHistoryManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.View;
+        }
     }
 }

@@ -54,6 +54,7 @@ namespace ZhongDing.Web.Views.Reports
             if (!IsPostBack)
             {
                 BindDistributionCompanies();
+                base.PermissionOptionCheckButtonExport(btnExport);
             }
         }
 
@@ -98,10 +99,6 @@ namespace ZhongDing.Web.Views.Reports
             if (isNeedRebind)
                 rgEntities.Rebind();
 
-            if (totalRecords > 0)
-                btnExport.Visible = true;
-            else
-                btnExport.Visible = false;
         }
 
         #endregion
@@ -243,5 +240,16 @@ namespace ZhongDing.Web.Views.Reports
             }
 
         }
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.DCInventoryChecklistReport;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.View;
+        }
+
     }
 }

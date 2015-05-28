@@ -177,6 +177,7 @@
     <Compile Include="IRepositories\IWorkflowRepository.cs" />
     <Compile Include="IRepositories\IWorkflowStatusRepository.cs" />
     <Compile Include="IRepositories\IWorkflowStepRepository.cs" />
+    <Compile Include="IRepositories\IPermissionRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\AccountTypeRepository.cs" />
     <Compile Include="Repositories\ApplicationNoteRepository.cs" />
@@ -212,6 +213,7 @@
     <Compile Include="Repositories\ClientUserRepository.cs" />
     <Compile Include="Repositories\CompanyRepository.cs" />
     <Compile Include="Repositories\ClientSaleApplicationImportDataRepository.cs" />
+    <Compile Include="Repositories\PermissionRepository.cs" />
     <Compile Include="Repositories\SalesOrderAppDetailImportDataRepository.cs" />
     <Compile Include="Repositories\SalesOrderApplicationImportDataRepository.cs" />
     <Compile Include="Repositories\StockInDetailImportDataRepository.cs" />

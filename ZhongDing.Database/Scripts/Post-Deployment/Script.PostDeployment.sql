@@ -1173,3 +1173,20 @@ INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete
 ALTER TABLE [dbo].[UserGroupPermission] WITH NOCHECK ADD CONSTRAINT [FK_UserGroupPermission_PermissionID] FOREIGN KEY ([PermissionID]) REFERENCES [dbo].[Permission] ([ID])
 COMMIT TRANSACTION
 ---- end --- 5/27/2015 -- 初始化菜单模块权限 -- by Nwang
+
+
+
+
+---- start --- 5/28/2015 -- 更新菜单模块权限 -- by Nwang
+BEGIN TRANSACTION
+GO
+ALTER TABLE [dbo].[UserGroupPermission] DROP CONSTRAINT [FK_UserGroupPermission_PermissionID]
+
+GO
+UPDATE [dbo].[Permission] SET [HasCreate]=0, [HasDelete]=0 WHERE [ID]=13
+UPDATE [dbo].[Permission] SET [HasCreate]=0, [HasEdit]=0, [HasDelete]=0, [HasView]=1 WHERE [ID]=14
+GO
+ALTER TABLE [dbo].[UserGroupPermission] WITH NOCHECK ADD CONSTRAINT [FK_UserGroupPermission_PermissionID] FOREIGN KEY ([PermissionID]) REFERENCES [dbo].[Permission] ([ID])
+COMMIT TRANSACTION
+GO
+---- end --- 5/28/2015 -- 更新菜单模块权限 -- by Nwang

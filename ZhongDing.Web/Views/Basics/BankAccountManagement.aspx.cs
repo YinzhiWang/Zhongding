@@ -138,12 +138,12 @@ namespace ZhongDing.Web.Views.Basics
 
         protected void rgBankAccounts_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
-
+            base.PermissionOptionCheckGridCreate(e.Item);
         }
 
         protected void rgBankAccounts_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
         {
-
+            base.PermissionOptionCheckGridDelete(e.OwnerTableView.Columns);
         }
 
         protected void rgBankAccounts_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
@@ -168,5 +168,15 @@ namespace ZhongDing.Web.Views.Basics
         }
 
         #endregion
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.BankAccountManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
+        }
     }
 }

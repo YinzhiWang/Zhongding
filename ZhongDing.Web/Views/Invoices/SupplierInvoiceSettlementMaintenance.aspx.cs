@@ -440,5 +440,16 @@ namespace ZhongDing.Web.Views.Invoices
                 this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_PARAMETER_ERROR_REDIRECT);
             }
         }
+
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.InvoiceManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
+        }
     }
 }

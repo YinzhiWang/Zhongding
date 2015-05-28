@@ -147,12 +147,12 @@ namespace ZhongDing.Web.Views.Basics
 
         protected void rgSuppliers_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
-
+            base.PermissionOptionCheckGridCreate(e.Item);
         }
 
         protected void rgSuppliers_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
         {
-
+            base.PermissionOptionCheckGridDelete(e.OwnerTableView.Columns);
         }
 
         protected void rgSuppliers_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
@@ -171,6 +171,17 @@ namespace ZhongDing.Web.Views.Basics
             txtSupplierName.Text = string.Empty;
 
             BindSuppliers(true);
+        }
+
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.SupplierManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
         }
     }
 }

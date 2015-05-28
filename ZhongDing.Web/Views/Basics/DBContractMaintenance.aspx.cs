@@ -127,6 +127,7 @@ namespace ZhongDing.Web.Views.Basics
 
             if (!IsPostBack)
             {
+              
                 BindClientUsers();
 
                 BindDepartments();
@@ -136,7 +137,7 @@ namespace ZhongDing.Web.Views.Basics
                 BindHospitalTypes();
 
                 LoadCurrentEntity();
-
+                base.PermissionOptionCheckButtonDelete(btnDelete);
             }
         }
 
@@ -932,6 +933,16 @@ namespace ZhongDing.Web.Views.Basics
                 this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
                 this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_DELETED_REDIRECT);
             }
+        }
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.DBContractManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
         }
     }
 }

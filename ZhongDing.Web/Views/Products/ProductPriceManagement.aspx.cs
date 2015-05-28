@@ -551,6 +551,18 @@ namespace ZhongDing.Web.Views.Products
 
         #endregion
 
+
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.ProductPriceManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
+        }
+
     }
 }
 
