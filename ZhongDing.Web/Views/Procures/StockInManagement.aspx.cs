@@ -227,6 +227,8 @@ namespace ZhongDing.Web.Views.Procures
                             appNoteRepository.Delete(item);
                         }
 
+                        stockInRepository.Delete(currentEntity);
+
                         unitOfWork.SaveChanges();
                     }
                 }
