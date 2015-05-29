@@ -369,8 +369,10 @@ namespace ZhongDing.Web.Views.Sales.Editors
                                 foreach (var canOutStockInDetail in canOutStockInDetails.OrderBy(x => x.ExpirationDate))
                                 {
                                     var tempStockOutDetail = CurrentOwnerEntity.StockOutDetail.FirstOrDefault(x => x.IsDeleted == false
-                                        && x.WarehouseID == warehouseID && x.ProductID == productID && x.ProductSpecificationID == productSpecificationID
-                                        && x.BatchNumber == canOutStockInDetail.BatchNumber && x.LicenseNumber == canOutStockInDetail.LicenseNumber);
+                                        && x.SalesOrderApplicationID == salesOrderApplicationID && x.WarehouseID == warehouseID
+                                        && x.ProductID == productID && x.ProductSpecificationID == productSpecificationID
+                                        && x.BatchNumber == canOutStockInDetail.BatchNumber
+                                        && x.LicenseNumber == canOutStockInDetail.LicenseNumber);
 
                                     int curOutQty = 0;
                                     int curTaxQty = 0;
