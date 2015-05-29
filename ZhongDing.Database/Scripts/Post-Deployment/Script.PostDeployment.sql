@@ -1061,6 +1061,26 @@ INSERT [CautionMoneyType] ([ID],[Name],[Type]) VALUES ( 8,N'其他保证金',2)
 COMMIT TRANSACTION
 ---- end --- 5/20/2015 -- 初始化客户保证金类型 -- by Nwang
 
+---- start --- 5/20/2015 -- 初始化工作流状态关联数据(客户保证金) -- by Nwang
+
+BEGIN TRANSACTION
+GO
+ALTER TABLE [dbo].[WorkflowStep] DROP CONSTRAINT [FK_WorkflowStep_Workflow]
+ALTER TABLE [dbo].[WorkflowStepStatus] DROP CONSTRAINT [FK_WorkflowStepStatus_WorkflowStatus]
+ALTER TABLE [dbo].[WorkflowStepStatus] DROP CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep]
+GO
+SET IDENTITY_INSERT [dbo].[Workflow] ON
+INSERT INTO [dbo].[Workflow] ([ID], [WorkflowName], [IsActive], [IsDeleted]) VALUES (19, N'客户保证金', 1, 0)
+SET IDENTITY_INSERT [dbo].[Workflow] OFF
+GO
+ALTER TABLE [dbo].[WorkflowStep]
+    ADD CONSTRAINT [FK_WorkflowStep_Workflow] FOREIGN KEY ([WorkflowID]) REFERENCES [dbo].[Workflow] ([ID])
+ALTER TABLE [dbo].[WorkflowStepStatus]
+    ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStatus] FOREIGN KEY ([WorkflowStatusID]) REFERENCES [dbo].[WorkflowStatus] ([ID])
+ALTER TABLE [dbo].[WorkflowStepStatus]
+    ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep] FOREIGN KEY ([WorkflowStepID]) REFERENCES [dbo].[WorkflowStep] ([ID])
+COMMIT TRANSACTION
+---- end --- 5/20/2015 -- 初始化工作流状态关联数据(客户保证金) -- by Nwang
 
 ---- start --- 5/20/2015 -- 初始化工作流状态关联数据(客户保证金申请) -- by Nwang
 
@@ -1098,7 +1118,6 @@ ALTER TABLE [dbo].[WorkflowStepStatus]
     ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep] FOREIGN KEY ([WorkflowStepID]) REFERENCES [dbo].[WorkflowStep] ([ID])
 COMMIT TRANSACTION
 ---- end --- 5/20/2015 -- 初始化工作流状态关联数据(客户保证金申请) -- by Nwang
-
 
 
 ---- start --- 5/27/2015 -- 初始化菜单模块权限 -- by Nwang
@@ -1175,8 +1194,6 @@ COMMIT TRANSACTION
 ---- end --- 5/27/2015 -- 初始化菜单模块权限 -- by Nwang
 
 
-
-
 ---- start --- 5/28/2015 -- 更新菜单模块权限 -- by Nwang
 BEGIN TRANSACTION
 GO
@@ -1194,23 +1211,3 @@ GO
 
 
 
----- start --- 5/29/2015 -- 初始化工作流状态关联数据(客户保证金) -- by Nwang
-
-BEGIN TRANSACTION
-GO
-ALTER TABLE [dbo].[WorkflowStep] DROP CONSTRAINT [FK_WorkflowStep_Workflow]
-ALTER TABLE [dbo].[WorkflowStepStatus] DROP CONSTRAINT [FK_WorkflowStepStatus_WorkflowStatus]
-ALTER TABLE [dbo].[WorkflowStepStatus] DROP CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep]
-GO
-SET IDENTITY_INSERT [dbo].[Workflow] ON
-INSERT INTO [dbo].[Workflow] ([ID], [WorkflowName], [IsActive], [IsDeleted]) VALUES (19, N'客户保证金', 1, 0)
-SET IDENTITY_INSERT [dbo].[Workflow] OFF
-GO
-ALTER TABLE [dbo].[WorkflowStep]
-    ADD CONSTRAINT [FK_WorkflowStep_Workflow] FOREIGN KEY ([WorkflowID]) REFERENCES [dbo].[Workflow] ([ID])
-ALTER TABLE [dbo].[WorkflowStepStatus]
-    ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStatus] FOREIGN KEY ([WorkflowStatusID]) REFERENCES [dbo].[WorkflowStatus] ([ID])
-ALTER TABLE [dbo].[WorkflowStepStatus]
-    ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep] FOREIGN KEY ([WorkflowStepID]) REFERENCES [dbo].[WorkflowStep] ([ID])
-COMMIT TRANSACTION
----- end --- 5/29/2015 -- 初始化工作流状态关联数据(客户保证金) -- by Nwang
