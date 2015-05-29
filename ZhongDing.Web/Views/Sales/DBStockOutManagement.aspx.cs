@@ -223,6 +223,8 @@ namespace ZhongDing.Web.Views.Sales
                             appNoteRepository.Delete(item);
                         }
 
+                        stockOutRepository.Delete(currentEntity);
+
                         unitOfWork.SaveChanges();
                     }
                 }
