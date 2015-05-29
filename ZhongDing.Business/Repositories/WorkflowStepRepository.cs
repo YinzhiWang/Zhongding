@@ -147,7 +147,17 @@ namespace ZhongDing.Business.Repositories
                        && wsu.WorkflowStepID == stepID
                        select wsu.UserID).ToList();
 
-            return userIDs;
+            var userIDsFromUserGroup = (from wsu in DB.WorkflowStepUserGroup
+                                        join ws in DB.WorkflowStep on wsu.WorkflowStepID equals ws.ID
+                                        join userGroupUser in DB.UserGroupUser on wsu.UserGroupID equals userGroupUser.UserGroupID
+                                        where ws.IsDeleted == false
+                                        && wsu.IsDeleted == false
+                                        && userGroupUser.IsDeleted == false
+                                        && wsu.WorkflowStepID == stepID
+                                        group userGroupUser by new { userGroupUser.UserID } into g
+                                        select g.Key.UserID).ToList();
+
+            return userIDs.Union(userIDsFromUserGroup).ToList();
         }
 
         public IList<int> GetCanAccessUserIDsByIDs(IList<int> stepIDs)
@@ -161,7 +171,18 @@ namespace ZhongDing.Business.Repositories
                        && stepIDs.Contains(wsu.WorkflowStepID)
                        select wsu.UserID).ToList();
 
-            return userIDs;
+
+            var userIDsFromUserGroup = (from wsu in DB.WorkflowStepUserGroup
+                                        join ws in DB.WorkflowStep on wsu.WorkflowStepID equals ws.ID
+                                        join userGroupUser in DB.UserGroupUser on wsu.UserGroupID equals userGroupUser.UserGroupID
+                                        where ws.IsDeleted == false
+                                        && wsu.IsDeleted == false
+                                        && userGroupUser.IsDeleted == false
+                                        && stepIDs.Contains(wsu.WorkflowStepID)
+                                        group userGroupUser by new { userGroupUser.UserID } into g
+                                        select g.Key.UserID).ToList();
+
+            return userIDs.Union(userIDsFromUserGroup).ToList();
         }
     }
 }

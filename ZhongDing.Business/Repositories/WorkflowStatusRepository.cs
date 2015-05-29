@@ -53,7 +53,21 @@ namespace ZhongDing.Business.Repositories
                        && wsp.WorkflowID == workflowID
                        select wsu.UserID).ToList();
 
-            return userIDs;
+            var userIDsFromUserGroup = (from wss in DB.WorkflowStepStatus
+                                        join ws in DB.WorkflowStatus on wss.WorkflowStatusID equals ws.ID
+                                        join wsp in DB.WorkflowStep on wss.WorkflowStepID equals wsp.ID
+                                        join workflowStepUserGroup in DB.WorkflowStepUserGroup on wss.WorkflowStepID equals workflowStepUserGroup.WorkflowStepID
+                                        join userGroupUser in DB.UserGroupUser on workflowStepUserGroup.UserGroupID equals userGroupUser.UserGroupID
+                                        where ws.IsDeleted == false
+                                        && wss.IsDeleted == false
+                                        && workflowStepUserGroup.IsDeleted == false
+                                        && userGroupUser.IsDeleted == false
+                                        && wss.WorkflowStatusID == statusID
+                                        && wsp.WorkflowID == workflowID
+                                        group userGroupUser by new { userGroupUser.UserID } into g
+                                        select g.Key.UserID).ToList();
+
+            return userIDs.Union(userIDsFromUserGroup).ToList();
         }
 
         public IList<int> GetCanAccessIDsByUserID(int userID)
@@ -69,7 +83,18 @@ namespace ZhongDing.Business.Repositories
                          && wsu.UserID == userID
                          select wss.WorkflowStatusID).ToList();
 
-            return statusIDs;
+            var statusIDsFromUserGroup = (from wss in DB.WorkflowStepStatus
+                                          join ws in DB.WorkflowStatus on wss.WorkflowStatusID equals ws.ID
+                                          join workflowStepUserGroup in DB.WorkflowStepUserGroup on wss.WorkflowStepID equals workflowStepUserGroup.WorkflowStepID
+                                          join userGroupUser in DB.UserGroupUser on workflowStepUserGroup.UserGroupID equals userGroupUser.UserGroupID
+                                          where ws.IsDeleted == false
+                                          && wss.IsDeleted == false
+                                          && workflowStepUserGroup.IsDeleted == false
+                                          && userGroupUser.IsDeleted == false
+                                          && userGroupUser.UserID == userID
+                                          group wss by new { wss.WorkflowStatusID } into g
+                                          select g.Key.WorkflowStatusID).ToList();
+            return statusIDs.Union(statusIDsFromUserGroup).ToList();
         }
 
         public IList<int> GetCanAccessIDsByUserID(int workflowID, int userID)
@@ -87,7 +112,21 @@ namespace ZhongDing.Business.Repositories
                          && wsp.WorkflowID == workflowID
                          select wss.WorkflowStatusID).ToList();
 
-            return statusIDs;
+            var statusIDsFromUserGroup = (from wss in DB.WorkflowStepStatus
+                                          join ws in DB.WorkflowStatus on wss.WorkflowStatusID equals ws.ID
+                                          join wsp in DB.WorkflowStep on wss.WorkflowStepID equals wsp.ID
+                                          join workflowStepUserGroup in DB.WorkflowStepUserGroup on wss.WorkflowStepID equals workflowStepUserGroup.WorkflowStepID
+                                          join userGroupUser in DB.UserGroupUser on workflowStepUserGroup.UserGroupID equals userGroupUser.UserGroupID
+                                          where ws.IsDeleted == false
+                                          && wss.IsDeleted == false
+                                          && workflowStepUserGroup.IsDeleted == false
+                                          && userGroupUser.IsDeleted == false
+                                          && userGroupUser.UserID == userID
+                                          && wsp.WorkflowID == workflowID
+                                          group wss by new { wss.WorkflowStatusID } into g
+                                          select g.Key.WorkflowStatusID).ToList();
+
+            return statusIDs.Union(statusIDsFromUserGroup).ToList();
         }
     }
 }
