@@ -170,9 +170,9 @@
         }
 
         function redirectToProcureOrderMaintenancePage(id) {
-            $.showLoading();
+            //$.showLoading();
 
-            window.location.href = $.getRootPath() + "/Views/Procures/ProcureOrderMaintenance.aspx?EntityID=" + id;
+            window.open($.getRootPath() + "/Views/Procures/ProcureOrderMaintenance.aspx?EntityID=" + id,"_blank");
         }
         function exportExcel() {
             $("#<%=btnExportHidden.ClientID%>").click();

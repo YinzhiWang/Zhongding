@@ -76,7 +76,7 @@
                             <telerik:GridBoundColumn UniqueName="UnitName" HeaderText="基本单位" DataField="UnitName">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="NumberOfPackages" HeaderText="件数" DataField="NumberOfPackages">
+                            <telerik:GridBoundColumn UniqueName="NumberOfPackages" HeaderText="件数" DataField="NumberOfPackages" DataFormatString="{0:f2}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
                           <telerik:GridBoundColumn UniqueName="BalanceQty" HeaderText="总库存量" DataField="BalanceQty">

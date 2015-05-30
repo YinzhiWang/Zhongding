@@ -92,7 +92,7 @@
                     OnItemCreated="rgClientSaleAppReports_ItemCreated" OnColumnCreated="rgClientSaleAppReports_ColumnCreated" OnItemDataBound="rgClientSaleAppReports_ItemDataBound">
                     <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
                         ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
-                          <ColumnGroups>
+                        <ColumnGroups>
                             <telerik:GridColumnGroup Name="AlreadyOutQty" HeaderText="已执行数量" HeaderStyle-Font-Size="Small"
                                 HeaderStyle-HorizontalAlign="Center" />
                             <telerik:GridColumnGroup Name="StopOutQty" HeaderText="中止数量" HeaderStyle-Font-Size="Small"
@@ -129,8 +129,8 @@
                                 <HeaderStyle Width="100px" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="ProductCode" HeaderText="货品编号" DataField="ProductCode">
-                                <ItemStyle HorizontalAlign="Left" Width="200px" />
-                                <HeaderStyle Width="200px" />
+                                <ItemStyle HorizontalAlign="Left" Width="100" />
+                                <HeaderStyle Width="100" />
                             </telerik:GridBoundColumn>
 
                             <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品名称" DataField="ProductName">
@@ -148,64 +148,64 @@
                             </telerik:GridBoundColumn>
 
                             <telerik:GridBoundColumn UniqueName="SalesPrice" HeaderText="销售单价" DataField="SalesPrice" DataFormatString="￥{0:f2}">
-                                <ItemStyle HorizontalAlign="Left" Width="100px" />
-                                <HeaderStyle Width="100px" />
+                                <ItemStyle HorizontalAlign="Left" Width="80" />
+                                <HeaderStyle Width="80" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="Count" HeaderText="数量" DataField="Count">
-                                <ItemStyle HorizontalAlign="Left" Width="100px" />
-                                <HeaderStyle Width="100px" />
+                                <ItemStyle HorizontalAlign="Left" Width="60" />
+                                <HeaderStyle Width="60" />
                             </telerik:GridBoundColumn>
 
                             <telerik:GridBoundColumn UniqueName="TotalSalesAmount" HeaderText="金额" DataField="TotalSalesAmount" DataFormatString="￥{0:f2}">
-                                <ItemStyle HorizontalAlign="Left" Width="200px" />
-                                <HeaderStyle Width="200px" />
+                                <ItemStyle HorizontalAlign="Left" Width="100" />
+                                <HeaderStyle Width="100" />
                             </telerik:GridBoundColumn>
 
-                               <%------%>
+                            <%------%>
 
-                            <telerik:GridBoundColumn UniqueName="AlreadyOutQty" HeaderText="基本数量" DataField="AlreadyOutQty" ColumnGroupName="AlreadyOutQty" >
-                                <ItemStyle HorizontalAlign="Left" Width="100px" />
-                                <HeaderStyle Width="100px" />
+                            <telerik:GridBoundColumn UniqueName="AlreadyOutQty" HeaderText="基本数量" DataField="AlreadyOutQty" ColumnGroupName="AlreadyOutQty">
+                                <ItemStyle HorizontalAlign="Left" Width="80" />
+                                <HeaderStyle Width="80" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="AlreadyOutNumberOfPackages" HeaderText="件数" DataField="AlreadyOutNumberOfPackages" ColumnGroupName="AlreadyOutQty">
-                                <ItemStyle HorizontalAlign="Left" Width="80px" />
-                                <HeaderStyle Width="80px" />
+                                <ItemStyle HorizontalAlign="Left" Width="60" />
+                                <HeaderStyle Width="60" />
                             </telerik:GridBoundColumn>
 
                             <telerik:GridBoundColumn UniqueName="AlreadyOutQtySalesPricePrice" HeaderText="金额" DataField="AlreadyOutQtySalesPricePrice" DataFormatString="￥{0:f2}" ColumnGroupName="AlreadyOutQty">
-                                <ItemStyle HorizontalAlign="Left" Width="160px" />
-                                <HeaderStyle Width="160px" />
+                                <ItemStyle HorizontalAlign="Left" Width="100" />
+                                <HeaderStyle Width="100" />
                             </telerik:GridBoundColumn>
                             <%------%>
 
                             <telerik:GridBoundColumn UniqueName="StopOutQty" HeaderText="基本数量" DataField="StopOutQty" ColumnGroupName="StopOutQty">
-                                <ItemStyle HorizontalAlign="Left" Width="100px" />
-                                <HeaderStyle Width="100px" />
+                                <ItemStyle HorizontalAlign="Left" Width="80" />
+                                <HeaderStyle Width="80" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="StopOutNumberOfPackages" HeaderText="件数" DataField="StopOutNumberOfPackages" ColumnGroupName="StopOutQty">
-                                <ItemStyle HorizontalAlign="Left" Width="80px" />
-                                <HeaderStyle Width="80px" />
+                                <ItemStyle HorizontalAlign="Left" Width="60" />
+                                <HeaderStyle Width="60" />
                             </telerik:GridBoundColumn>
 
                             <telerik:GridBoundColumn UniqueName="StopOutQtySalesPricePrice" HeaderText="金额" DataField="StopOutQtySalesPricePrice" DataFormatString="￥{0:f2}" ColumnGroupName="StopOutQty">
-                                <ItemStyle HorizontalAlign="Left" Width="160px" />
-                                <HeaderStyle Width="160px" />
+                                <ItemStyle HorizontalAlign="Left" Width="100" />
+                                <HeaderStyle Width="100" />
                             </telerik:GridBoundColumn>
 
                             <%------%>
 
                             <telerik:GridBoundColumn UniqueName="NotOutQty" HeaderText="基本数量" DataField="NotOutQty" ColumnGroupName="NotOutQty">
-                                <ItemStyle HorizontalAlign="Left" Width="100px" />
-                                <HeaderStyle Width="100px" />
+                                <ItemStyle HorizontalAlign="Left" Width="80" />
+                                <HeaderStyle Width="80" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="NotOutNumberOfPackages" HeaderText="件数" DataField="NotOutNumberOfPackages" ColumnGroupName="NotOutQty">
-                                <ItemStyle HorizontalAlign="Left" Width="80px" />
-                                <HeaderStyle Width="80px" />
+                                <ItemStyle HorizontalAlign="Left" Width="60" />
+                                <HeaderStyle Width="60" />
                             </telerik:GridBoundColumn>
 
                             <telerik:GridBoundColumn UniqueName="NotOutQtySalesPricePrice" HeaderText="金额" DataField="NotOutQtySalesPricePrice" DataFormatString="￥{0:f2}" ColumnGroupName="NotOutQty">
-                                <ItemStyle HorizontalAlign="Left" Width="160px" />
-                                <HeaderStyle Width="160px" />
+                                <ItemStyle HorizontalAlign="Left" Width="100" />
+                                <HeaderStyle Width="100" />
                             </telerik:GridBoundColumn>
 
                         </Columns>
@@ -242,7 +242,7 @@
                     <ClientSettings EnableRowHoverStyle="true">
                         <ClientEvents OnGridCreated="GetsGridObject" />
                         <Selecting AllowRowSelect="True" />
-                        <Scrolling AllowScroll="true"  SaveScrollPosition="true" UseStaticHeaders="true" />
+                        <Scrolling AllowScroll="true" SaveScrollPosition="true" UseStaticHeaders="true" />
                     </ClientSettings>
 
                 </telerik:RadGrid>

@@ -24,7 +24,7 @@ namespace ZhongDing.Business.Repositories
                             ID = transportFeeStockIn.ID,
                             Code = stockIn.Code,
                             EntryDate = stockIn.EntryDate,
-                            CreatedByText = user.UserName
+                            CreatedByText = user.FullName
                         };
             total = query.Count();
 

@@ -141,13 +141,21 @@ namespace ZhongDing.Web
                 int userID = CurrentUser.UserID;
                 IDictionary<int, int> permossionIDAndValues = PagePermissionRepository.GetPermossionIDAndValues(userID);
 
-                ((HiddenField)Page.Master.FindControl("hfIsSystemAdmin")).Value = IsSystemAdminUser.ToString();
-                ((HiddenField)Page.Master.FindControl("hfPermissions")).Value = Utility.JsonSeralize(permossionIDAndValues);
+                var hfIsSystemAdmin = ((HiddenField)Page.Master.FindControl("hfIsSystemAdmin"));
+                if (hfIsSystemAdmin != null)
+                    hfIsSystemAdmin.Value = IsSystemAdminUser.ToString();
+
+                var hfPermissions = ((HiddenField)Page.Master.FindControl("hfPermissions"));
+                if (hfPermissions != null)
+                    hfPermissions.Value = Utility.JsonSeralize(permossionIDAndValues);
 
                 this.PermissionCheck(permossionIDAndValues);
 
                 IList<int> workflowIDs = PageWorkflowRepository.GetCanAccessWorkflowsByUserID(userID);
-                ((HiddenField)Page.Master.FindControl("hfWorkFlowIDs")).Value = Utility.JsonSeralize(workflowIDs);
+
+                var hfWorkFlowIDs = ((HiddenField)Page.Master.FindControl("hfWorkFlowIDs"));
+                if (hfWorkFlowIDs != null)
+                    hfWorkFlowIDs.Value = Utility.JsonSeralize(workflowIDs);
 
                 this.WorkflowPermissionCheck(workflowIDs);
             }
