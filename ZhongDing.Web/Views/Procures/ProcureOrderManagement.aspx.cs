@@ -510,6 +510,10 @@ namespace ZhongDing.Web.Views.Procures
             BindEntities(true);
         }
 
-        
+
+        protected override EWorkflow PagePermissionWorkflowID()
+        {
+            return EWorkflow.ProcureOrder;
+        }
     }
 }

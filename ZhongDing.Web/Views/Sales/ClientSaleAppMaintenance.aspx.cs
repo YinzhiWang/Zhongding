@@ -213,7 +213,10 @@ namespace ZhongDing.Web.Views.Sales
         {
             return (int)EWorkflow.ClientOrder;
         }
-
+        protected override EWorkflow PagePermissionWorkflowID()
+        {
+            return EWorkflow.ClientOrder;
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             this.Master.MenuItemID = (int)EMenuItem.ClientOrderManage;

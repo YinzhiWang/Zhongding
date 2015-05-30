@@ -12,6 +12,10 @@ namespace ZhongDing.Common.Enums
     public enum EWorkflow : int
     {
         /// <summary>
+        /// NULL
+        /// </summary>
+        NULL = -1,
+        /// <summary>
         /// 采购订单
         /// </summary>
         ProcureOrder = 1,

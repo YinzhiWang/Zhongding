@@ -115,7 +115,10 @@ namespace ZhongDing.Web.Views.Sales
         {
             return (int)EWorkflow.DBOrder;
         }
-
+        protected override EWorkflow PagePermissionWorkflowID()
+        {
+            return EWorkflow.DBOrder;
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             this.Master.MenuItemID = (int)EMenuItem.DBOrderManage;

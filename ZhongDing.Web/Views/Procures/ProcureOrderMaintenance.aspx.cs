@@ -1149,5 +1149,10 @@ namespace ZhongDing.Web.Views.Procures
 
 
         #endregion
+
+        protected override EWorkflow PagePermissionWorkflowID()
+        {
+            return EWorkflow.ProcureOrder;
+        }
     }
 }

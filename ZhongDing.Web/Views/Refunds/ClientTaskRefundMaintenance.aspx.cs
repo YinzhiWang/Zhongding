@@ -241,7 +241,10 @@ namespace ZhongDing.Web.Views.Refunds
         {
             return (int)EWorkflow.ClientTaskRefunds;
         }
-
+        protected override EWorkflow PagePermissionWorkflowID()
+        {
+            return EWorkflow.ClientTaskRefunds;
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {

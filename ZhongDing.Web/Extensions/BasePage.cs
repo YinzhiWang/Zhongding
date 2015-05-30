@@ -12,6 +12,7 @@ using ZhongDing.Common.Extension;
 using ZhongDing.Common.Enums;
 using Telerik.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.Script.Serialization;
 
 namespace ZhongDing.Web
 {
@@ -91,6 +92,19 @@ namespace ZhongDing.Web
                 return _PagePermissionRepository;
             }
         }
+        private IWorkflowRepository _PageWorkflowRepository;
+        protected IWorkflowRepository PageWorkflowRepository
+        {
+            get
+            {
+                if (_PageWorkflowRepository == null)
+                    _PageWorkflowRepository = new WorkflowRepository();
+
+                return _PageWorkflowRepository;
+            }
+        }
+
+
 
         #endregion
 
@@ -102,6 +116,10 @@ namespace ZhongDing.Web
         protected virtual EPermission PagePermissionID()
         {
             return EPermission.NULL;
+        }
+        protected virtual EWorkflow PagePermissionWorkflowID()
+        {
+            return EWorkflow.NULL;
         }
         protected virtual EPermissionOption PageAccessEPermissionOption()
         {
@@ -122,8 +140,16 @@ namespace ZhongDing.Web
             {
                 int userID = CurrentUser.UserID;
                 IDictionary<int, int> permossionIDAndValues = PagePermissionRepository.GetPermossionIDAndValues(userID);
+
+                ((HiddenField)Page.Master.FindControl("hfIsSystemAdmin")).Value = IsSystemAdminUser.ToString();
+                ((HiddenField)Page.Master.FindControl("hfPermissions")).Value = Utility.JsonSeralize(permossionIDAndValues);
+
                 this.PermissionCheck(permossionIDAndValues);
 
+                IList<int> workflowIDs = PageWorkflowRepository.GetCanAccessWorkflowsByUserID(userID);
+                ((HiddenField)Page.Master.FindControl("hfWorkFlowIDs")).Value = Utility.JsonSeralize(workflowIDs);
+
+                this.WorkflowPermissionCheck(workflowIDs);
             }
             else //未登录用户强制退出并清理session后跳转到登录页面
             {
@@ -153,6 +179,7 @@ namespace ZhongDing.Web
             base.OnPreInit(e);
         }
 
+
         protected EPermissionOption PermissionOption = EPermissionOption.None;
 
         protected bool IsSystemAdminUser
@@ -163,6 +190,23 @@ namespace ZhongDing.Web
                 return userID == GlobalConst.DEFAULT_SYSTEM_ADMIN_USERID;
             }
         }
+        private void WorkflowPermissionCheck(IList<int> workflowIDs)
+        {
+            int userID = CurrentUser.UserID;
+            EWorkflow currentPagePermissionWorkflowID = this.PagePermissionWorkflowID();
+
+            if (currentPagePermissionWorkflowID != EWorkflow.NULL)
+            {
+                if (userID != GlobalConst.DEFAULT_SYSTEM_ADMIN_USERID)
+                {
+                    if (!workflowIDs.Contains((int)currentPagePermissionWorkflowID))
+                    {
+                        this.RedirectToNoAccessPage(); //没有权限访问
+                    }
+                }
+            }
+        }
+
         protected virtual void PermissionCheck(IDictionary<int, int> permossionIDAndValues)
         {
             int userID = CurrentUser.UserID;

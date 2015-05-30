@@ -66,127 +66,122 @@
                             <li data-level="1" data-menuitemid="1"><a href="javascript:void(0);" onclick="redirectToPage('Home.aspx');" class="mws-i-24 i-home">首页</a></li>
                             <li data-level="1" data-menuitemid="2"><a href="#" class="mws-i-24 i-file-cabinet">基本信息管理</a>
                                 <ul>
-                                    <li data-level="2" data-menuitemid="3"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/CompanyManagement.aspx');">帐套管理</a></li>
-                                    <li data-level="2" data-menuitemid="4"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/BankAccountManagement.aspx');">银行帐号管理</a></li>
-                                    <li data-level="2" data-menuitemid="5"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/SupplierManagement.aspx');">供应商管理</a></li>
-                                    <li data-level="2" data-menuitemid="6"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/ClientCompanyManagement.aspx');">商业单位管理</a></li>
-                                    <li data-level="2" data-menuitemid="7"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/ClientInfoManagement.aspx');">客户管理</a></li>
-                                    <li data-level="2" data-menuitemid="8"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/WarehouseManagement.aspx');">仓库管理</a></li>
-                                    <li data-level="2" data-menuitemid="9"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/DistributionCompanyManagement.aspx');">配送公司管理</a></li>
-                                    <li data-level="2" data-menuitemid="10"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/DBContractManagement.aspx');">大包客户协议管理</a></li>
-                                    <li data-level="2" data-menuitemid="11"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/ClientInfoProductFlowManagement.aspx');">商业客户流向管理</a></li>
-                                    <li data-level="2" data-menuitemid="12"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/DeptProductSalesPlanAndBonusManagement.aspx');">部门销售计划及提成策略</a></li>
-                                    <li data-level="2" data-menuitemid="13"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/TransportCompanyManagement.aspx');">物流公司管理</a></li>
+                                    <li data-level="2" data-menuitemid="3" data-permissionname="账套管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/CompanyManagement.aspx');">帐套管理</a></li>
+                                    <li data-level="2" data-menuitemid="4" data-permissionname="银行账号管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/BankAccountManagement.aspx');">银行帐号管理</a></li>
+                                    <li data-level="2" data-menuitemid="5" data-permissionname="供应商管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/SupplierManagement.aspx');">供应商管理</a></li>
+                                    <li data-level="2" data-menuitemid="6" data-permissionname="商业单位管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/ClientCompanyManagement.aspx');">商业单位管理</a></li>
+                                    <li data-level="2" data-menuitemid="7" data-permissionname="客户管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/ClientInfoManagement.aspx');">客户管理</a></li>
+                                    <li data-level="2" data-menuitemid="8" data-permissionname="仓库管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/WarehouseManagement.aspx');">仓库管理</a></li>
+                                    <li data-level="2" data-menuitemid="9" data-permissionname="配送公司管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/DistributionCompanyManagement.aspx');">配送公司管理</a></li>
+                                    <li data-level="2" data-menuitemid="10" data-permissionname="大包客户协议管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/DBContractManagement.aspx');">大包客户协议管理</a></li>
+                                    <li data-level="2" data-menuitemid="11" data-permissionname="商业客户流向管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/ClientInfoProductFlowManagement.aspx');">商业客户流向管理</a></li>
+                                    <li data-level="2" data-menuitemid="12" data-permissionname="部门销售计划及提成策略" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/DeptProductSalesPlanAndBonusManagement.aspx');">部门销售计划及提成策略</a></li>
+                                    <li data-level="2" data-menuitemid="13" data-permissionname="物流公司管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/TransportCompanyManagement.aspx');">物流公司管理</a></li>
                                 </ul>
                             </li>
                             <li data-level="1" data-menuitemid="20"><a href="#" class="mws-i-24 i-price-tags">货品管理</a>
                                 <ul class="hide">
-                                    <li data-level="2" data-menuitemid="21"><a href="javascript:void(0);" onclick="redirectToPage('Views/Products/ProductManagement.aspx');">货品管理</a></li>
-                                    <li data-level="2" data-menuitemid="22"><a href="javascript:void(0);" onclick="redirectToPage('Views/Products/ProductPriceManagement.aspx');">货品定价管理</a></li>
-                                    <li data-level="2" data-menuitemid="23"><a href="javascript:void(0);" onclick="redirectToPage('Views/Products/InventoryHistoryManagement.aspx');">库存货品信息</a></li>
+                                    <li data-level="2" data-menuitemid="21" data-permissionname="货品管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Products/ProductManagement.aspx');">货品管理</a></li>
+                                    <li data-level="2" data-menuitemid="22" data-permissionname="货品定价管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Products/ProductPriceManagement.aspx');">货品定价管理</a></li>
+                                    <li data-level="2" data-menuitemid="23" data-permissionname="库存货品信息" data-permissionoptionname="View"><a href="javascript:void(0);" onclick="redirectToPage('Views/Products/InventoryHistoryManagement.aspx');">库存货品信息</a></li>
                                 </ul>
 
                             </li>
                             <li data-level="1" data-menuitemid="30"><a href="#" class="mws-i-24 i-group">人事管理</a>
                                 <ul class="hide">
-                                    <li data-level="2" data-menuitemid="31"><a href="javascript:void(0);" onclick="redirectToPage('Views/HRM/DepartmentManagement.aspx');">部门管理</a></li>
-                                    <li data-level="2" data-menuitemid="32"><a href="javascript:void(0);" onclick="redirectToPage('Views/HRM/EmployeeManagement.aspx');">员工管理</a></li>
-                                    <li data-level="2" data-menuitemid="33"><a href="javascript:void(0);" onclick="redirectToPage('Views/HRM/WorkflowPermissionManagement.aspx');">权限管理</a></li>
-                                    <li data-level="2" data-menuitemid="34"><a href="javascript:void(0);" onclick="redirectToPage('Views/HRM/UserGroupManagement.aspx');">用户组管理</a></li>
-                                    <li data-level="2"><a href="#">报销类型管理</a></li>
+                                    <li data-level="2" data-menuitemid="31" data-permissionname="部门管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/HRM/DepartmentManagement.aspx');">部门管理</a></li>
+                                    <li data-level="2" data-menuitemid="32" data-permissionname="员工管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/HRM/EmployeeManagement.aspx');">员工管理</a></li>
+                                    <li data-level="2" data-menuitemid="33" data-permissionname="权限管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/HRM/WorkflowPermissionManagement.aspx');">权限管理</a></li>
+                                    <li data-level="2" data-menuitemid="34" data-permissionname="权限管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/HRM/UserGroupManagement.aspx');">用户组管理</a></li>
+                                    <li data-level="2" data-permissionname="报销类型管理" data-permissionoptionname="Edit"><a href="#">报销类型管理</a></li>
                                 </ul>
                             </li>
                             <li data-level="1"><a href="#" class="mws-i-24 i-clipboard-1">固定资产管理</a></li>
 
                             <li data-level="1" data-menuitemid="50"><a href="#" class="mws-i-24 i-box-incoming">采购订单管理</a>
                                 <ul class="hide">
-                                    <li data-level="2" data-menuitemid="51"><a href="javascript:void(0);" onclick="redirectToPage('Views/Procures/ProcureOrderManagement.aspx');">采购订单</a>
-                                        <%--<ul>
-                                            <li data-level="3"><a href="#">采购管理1</a></li>
-                                            <li data-level="3"><a href="#">采购管理2</a></li>
-                                            <li data-level="3"><a href="#">采购管理3</a></li>
-                                        </ul>--%>
+                                    <li data-level="2" data-menuitemid="51" data-permissionworkflowname="采购订单"><a href="javascript:void(0);" onclick="redirectToPage('Views/Procures/ProcureOrderManagement.aspx');">采购订单</a>
                                     </li>
-                                    <li data-level="2" data-menuitemid="52"><a href="javascript:void(0);" onclick="redirectToPage('Views/Procures/StockInManagement.aspx');">入库单</a></li>
+                                    <li data-level="2" data-menuitemid="52" data-permissionworkflowname="采购入库单"><a href="javascript:void(0);" onclick="redirectToPage('Views/Procures/StockInManagement.aspx');">入库单</a></li>
 
-                                    <li data-level="2" data-menuitemid="53"><a href="javascript:void(0);" onclick="redirectToPage('Views/Procures/TransportFeeManagement.aspx?TransportFeeType=StockIn');">物流费用管理</a></li>
+                                    <li data-level="2" data-menuitemid="53" data-permissionname="物流费用管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Procures/TransportFeeManagement.aspx?TransportFeeType=StockIn');">物流费用管理</a></li>
 
                                 </ul>
                             </li>
                             <li data-level="1" data-menuitemid="60"><a href="table.html" class="mws-i-24 i-box-outgoing">销售订单管理</a>
                                 <ul class="hide">
-                                    <li data-level="2" data-menuitemid="61"><a href="javascript:void(0);" onclick="redirectToPage('Views/Sales/ClientSaleAppManagement.aspx');">客户订单</a></li>
-                                    <li data-level="2" data-menuitemid="62"><a href="javascript:void(0);" onclick="redirectToPage('Views/Sales/ClientSaleAppStockOutManagement.aspx');">出库单</a></li>
-                                    <li data-level="2" data-menuitemid="63"><a href="javascript:void(0);" onclick="redirectToPage('Views/Sales/DBAppRequestManagement.aspx');">大包配送申请单</a></li>
-                                    <li data-level="2" data-menuitemid="64"><a href="javascript:void(0);" onclick="redirectToPage('Views/Sales/DBAppManagement.aspx');">大包配送订单</a></li>
-                                    <li data-level="2" data-menuitemid="65"><a href="javascript:void(0);" onclick="redirectToPage('Views/Sales/DBStockOutManagement.aspx');">大包出库单</a></li>
-                                    <li data-level="2" data-menuitemid="66"><a href="#">担保收款</a></li>
+                                    <li data-level="2" data-menuitemid="61" data-permissionworkflowname="客户订单"><a href="javascript:void(0);" onclick="redirectToPage('Views/Sales/ClientSaleAppManagement.aspx');">客户订单</a></li>
+                                    <li data-level="2" data-menuitemid="62" data-permissionworkflowname="客户订单出库单"><a href="javascript:void(0);" onclick="redirectToPage('Views/Sales/ClientSaleAppStockOutManagement.aspx');">出库单</a></li>
+                                    <li data-level="2" data-menuitemid="63" data-permissionworkflowname="大包申请单"><a href="javascript:void(0);" onclick="redirectToPage('Views/Sales/DBAppRequestManagement.aspx');">大包配送申请单</a></li>
+                                    <li data-level="2" data-menuitemid="64" data-permissionworkflowname="大包配送订单"><a href="javascript:void(0);" onclick="redirectToPage('Views/Sales/DBAppManagement.aspx');">大包配送订单</a></li>
+                                    <li data-level="2" data-menuitemid="65" data-permissionworkflowname="大包出库单"><a href="javascript:void(0);" onclick="redirectToPage('Views/Sales/DBStockOutManagement.aspx');">大包出库单</a></li>
+                                    <li data-level="2" data-menuitemid="66" data-permissionworkflowname="采购订单"><a href="#">担保收款</a></li>
 
-                                    <li data-level="2" data-menuitemid="67"><a href="javascript:void(0);" onclick="redirectToPage('Views/Procures/TransportFeeManagement.aspx?TransportFeeType=StockOut');">物流费用管理</a></li>
+                                    <li data-level="2" data-menuitemid="67" data-permissionname="物流费用管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Procures/TransportFeeManagement.aspx?TransportFeeType=StockOut');">物流费用管理</a></li>
 
                                 </ul>
                             </li>
                             <li data-level="1" data-menuitemid="70">
                                 <a href="#" class="mws-i-24 i-bills-stack">返款管理</a>
                                 <ul class="hide">
-                                    <li data-level="2" data-menuitemid="71"><a href="javascript:void(0);" onclick="redirectToPage('Views/Refunds/SupplierRefundManagement.aspx');">供应商返款(高开高返)</a></li>
-                                    <li data-level="2" data-menuitemid="72"><a href="javascript:void(0);" onclick="redirectToPage('Views/Refunds/ClientRefundManagement.aspx');">客户返款(高开高返)</a></li>
-                                    <li data-level="2" data-menuitemid="73"><a href="javascript:void(0);" onclick="redirectToPage('Views/Refunds/FMRefundAppManagement.aspx');">厂家经理返款</a></li>
-                                    <li data-level="2" data-menuitemid="74"><a href="javascript:void(0);" onclick="redirectToPage('Views/Refunds/SupplierTaskRefundManagement.aspx');">供应商任务返款</a></li>
-                                    <li data-level="2" data-menuitemid="75"><a href="javascript:void(0);" onclick="redirectToPage('Views/Refunds/ClientTaskRefundManagement.aspx');">客户奖励返款</a></li>
+                                    <li data-level="2" data-menuitemid="71" data-permissionworkflowname="供应商返款"><a href="javascript:void(0);" onclick="redirectToPage('Views/Refunds/SupplierRefundManagement.aspx');">供应商返款(高开高返)</a></li>
+                                    <li data-level="2" data-menuitemid="72" data-permissionworkflowname="客户返款"><a href="javascript:void(0);" onclick="redirectToPage('Views/Refunds/ClientRefundManagement.aspx');">客户返款(高开高返)</a></li>
+                                    <li data-level="2" data-menuitemid="73" data-permissionworkflowname="厂家经理返款"><a href="javascript:void(0);" onclick="redirectToPage('Views/Refunds/FMRefundAppManagement.aspx');">厂家经理返款</a></li>
+                                    <li data-level="2" data-menuitemid="74" data-permissionworkflowname="供应商任务返款"><a href="javascript:void(0);" onclick="redirectToPage('Views/Refunds/SupplierTaskRefundManagement.aspx');">供应商任务返款</a></li>
+                                    <li data-level="2" data-menuitemid="75" data-permissionworkflowname="客户任务奖励返款"><a href="javascript:void(0);" onclick="redirectToPage('Views/Refunds/ClientTaskRefundManagement.aspx');">客户奖励返款</a></li>
                                 </ul>
                             </li>
 
                             <li data-level="1" data-menuitemid="80">
                                 <a href="#" class="mws-i-24 i-link">数据导入</a>
                                 <ul class="hide">
-                                    <li data-level="2" data-menuitemid="81"><a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/ClientFlowDataManagement.aspx');">商业客户销售流向</a></li>
-                                    <li data-level="2" data-menuitemid="82"><a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/DCFlowDataManagement.aspx');">配送公司流向</a></li>
-                                    <li data-level="2" data-menuitemid="83"><a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/DCInventoryDataManagement.aspx');">配送公司库存数据</a></li>
-                                    <li data-level="2" data-menuitemid="84"><a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/ProcureOrderDataManagement.aspx');">采购订单导入</a></li>
-                                    <li data-level="2" data-menuitemid="85"><a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/StockInDataManagement.aspx');">收货入库单导入</a></li>
-                                    <li data-level="2" data-menuitemid="86"><a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/ClientSaleApplicationDataManagement.aspx');">客户订单导入</a></li>
-                                    <li data-level="2"><a href="form_elements.html">出库单导入</a></li>
-                                    <li data-level="2"><a href="form_elements.html">大包订单导入</a></li>
-                                    <li data-level="2"><a href="form_elements.html">大包出库单导入</a></li>
+                                    <li data-level="2" data-menuitemid="81" data-permissionname="数据导入" data-permissionoptionname="Create"><a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/ClientFlowDataManagement.aspx');">商业客户销售流向</a></li>
+                                    <li data-level="2" data-menuitemid="82" data-permissionname="数据导入" data-permissionoptionname="Create"><a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/DCFlowDataManagement.aspx');">配送公司流向</a></li>
+                                    <li data-level="2" data-menuitemid="83" data-permissionname="数据导入" data-permissionoptionname="Create"><a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/DCInventoryDataManagement.aspx');">配送公司库存数据</a></li>
+                                    <li data-level="2" data-menuitemid="84" data-permissionname="数据导入" data-permissionoptionname="Create"><a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/ProcureOrderDataManagement.aspx');">采购订单导入</a></li>
+                                    <li data-level="2" data-menuitemid="85" data-permissionname="数据导入" data-permissionoptionname="Create"><a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/StockInDataManagement.aspx');">收货入库单导入</a></li>
+                                    <li data-level="2" data-menuitemid="86" data-permissionname="数据导入" data-permissionoptionname="Create"><a href="javascript:void(0);" onclick="redirectToPage('Views/Imports/ClientSaleApplicationDataManagement.aspx');">客户订单导入</a></li>
+                                    <li data-level="2" data-permissionname="数据导入" data-permissionoptionname="Create"><a href="form_elements.html">出库单导入</a></li>
+                                    <li data-level="2" data-permissionname="数据导入" data-permissionoptionname="Create"><a href="form_elements.html">大包订单导入</a></li>
+                                    <li data-level="2" data-permissionname="数据导入" data-permissionoptionname="Create"><a href="form_elements.html">大包出库单导入</a></li>
                                 </ul>
                             </li>
 
                             <li data-level="1" data-menuitemid="90">
                                 <a href="#" class="mws-i-24 i-link">提成与考核</a>
                                 <ul class="hide">
-                                    <li data-level="2" data-menuitemid="91"><a href="javascript:void(0);" onclick="redirectToPage('Views/Settlements/DBClientSettleBonusManagement.aspx');">大包客户提成结算</a></li>
-                                    <li data-level="2" data-menuitemid="92"><a href="#">部门月提成</a></li>
+                                    <li data-level="2" data-menuitemid="91" data-permissionworkflowname="大包客户提成结算"><a href="javascript:void(0);" onclick="redirectToPage('Views/Settlements/DBClientSettleBonusManagement.aspx');">大包客户提成结算</a></li>
+                                    <%--<li data-level="2" data-menuitemid="92"><a href="#">部门月提成</a></li>--%>
                                 </ul>
                             </li>
 
                             <li data-level="1" data-menuitemid="100">
                                 <a href="#" class="mws-i-24 i-chart-8">报表管理</a>
                                 <ul class="hide">
-                                    <li data-level="2" data-menuitemid="101">
+                                    <li data-level="2" data-menuitemid="101" data-permissionname="采购订单报表" data-permissionoptionname="View">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/ProcureOrderReportManagement.aspx');">采购订单报表</a></li>
-                                    <li data-level="2" data-menuitemid="102">
+                                    <li data-level="2" data-menuitemid="102" data-permissionname="采购付款明细表" data-permissionoptionname="View">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/ProcureOrderApplicationPaymentReportManagement.aspx');">采购付款明细表</a>
                                     </li>
-                                    <li data-level="2" data-menuitemid="103">
+                                    <li data-level="2" data-menuitemid="103" data-permissionname="销售订单报表" data-permissionoptionname="View">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/ClientSaleAppReportManagement.aspx');">销售订单报表</a>
                                     </li>
-                                    <li data-level="2" data-menuitemid="104">
+                                    <li data-level="2" data-menuitemid="104" data-permissionname="出库明细表" data-permissionoptionname="View">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/StockOutDetailReportManagement.aspx');">出库明细表</a></li>
-                                    <li data-level="2" data-menuitemid="105">
+                                    <li data-level="2" data-menuitemid="105" data-permissionname="入库明细表" data-permissionoptionname="View">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/StockInDetailReportManagement.aspx');">入库明细表</a></li>
-                                    <li data-level="2" data-menuitemid="106">
+                                    <li data-level="2" data-menuitemid="106" data-permissionname="采购计划表" data-permissionoptionname="View">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/ProcurePlanReportManagement.aspx');">采购计划表</a></li>
-                                    <li data-level="2" data-menuitemid="107">
+                                    <li data-level="2" data-menuitemid="107" data-permissionname="库存汇总表" data-permissionoptionname="View">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/InventorySummaryReportManagement.aspx');">库存汇总表</a></li>
 
-                                    <li data-level="2" data-menuitemid="110">
+                                    <li data-level="2" data-menuitemid="110" data-permissionname="配送公司流向结算表" data-permissionoptionname="View">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/DCFlowSettlementReport.aspx');">配送公司流向结算表</a></li>
 
-                                    <li data-level="2" data-menuitemid="112">
+                                    <li data-level="2" data-menuitemid="112" data-permissionname="大包客户季度考核表" data-permissionoptionname="View">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/DBClientQuarterlyAssessmentReport.aspx');">大包客户季度考核表</a></li>
 
-                                    <li data-level="2" data-menuitemid="114">
+                                    <li data-level="2" data-menuitemid="114" data-permissionname="配送公司库存核对表" data-permissionoptionname="View">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/DCInventoryChecklistReport.aspx');">配送公司库存核对表</a></li>
 
 
@@ -195,38 +190,39 @@
                             <li data-level="1" data-menuitemid="150">
                                 <a href="#" class="mws-i-24 i-tags-2">发票管理</a>
                                 <ul class="hide">
-                                    <li data-level="2" data-menuitemid="151">
+                                    <li data-level="2" data-menuitemid="151" data-permissionname="发票管理" data-permissionoptionname="Edit">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Invoices/SupplierInvoiceManagement.aspx');">供应商发票管理</a></li>
-                                    <li data-level="2" data-menuitemid="152">
+                                    <li data-level="2" data-menuitemid="152" data-permissionname="发票管理" data-permissionoptionname="Edit">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Invoices/ClientInfoInvoiceManagement.aspx');">客户发票管理</a></li>
-                                    <li data-level="2" data-menuitemid="153">
+                                    <li data-level="2" data-menuitemid="153" data-permissionname="发票管理" data-permissionoptionname="Edit">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Invoices/DBClientInfoInvoiceManagement.aspx');">大包发票管理</a></li>
-                                    <li data-level="2" data-menuitemid="154">
+                                    <li data-level="2" data-menuitemid="154" data-permissionname="发票管理" data-permissionoptionname="Edit">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Invoices/SupplierInvoiceSettlementManagement.aspx');">供应商发票结算</a></li>
-                                    <li data-level="2" data-menuitemid="155">
+                                    <li data-level="2" data-menuitemid="155" data-permissionname="发票管理" data-permissionoptionname="Edit">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Invoices/ClientInvoiceSettlementManagement.aspx');">客户发票结算</a></li>
-                                    <li data-level="2" data-menuitemid="156">
+                                    <li data-level="2" data-menuitemid="156" data-permissionname="发票管理" data-permissionoptionname="Edit">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Invoices/DBClientInvoiceSettlementManagement.aspx');">大包收款管理</a></li>
-                                    <li data-level="2" data-menuitemid="157">
+                                    <li data-level="2" data-menuitemid="157" data-permissionname="发票管理" data-permissionoptionname="Edit">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Invoices/ClientAttachedInvoiceSettlementManagement.aspx');">挂靠发票结算</a></li>
                                 </ul>
                             </li>
                             <li data-level="1" data-menuitemid="200">
                                 <a href="#" class="mws-i-24 i-tags-2">保证金管理</a>
                                 <ul class="hide">
-                                    <li data-level="2" data-menuitemid="201">
+                                    <li data-level="2" data-menuitemid="201" data-permissionworkflowname="供应商保证金申请">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/CautionMoneys/SupplierCautionMoneyManagement.aspx');">供应商保证金管理</a></li>
-                                    <li data-level="2" data-menuitemid="202">
+                                    <li data-level="2" data-menuitemid="202" data-permissionworkflowname="供应商保证金申请">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/CautionMoneys/SupplierCautionMoneyApplyManagement.aspx');">供应商保证金申请</a></li>
-                                    <li data-level="2" data-menuitemid="203">
+                                    <li data-level="2" data-menuitemid="203" data-permissionworkflowname="客户保证金退回申请">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/CautionMoneys/ClientCautionMoneyManagement.aspx');">客户保证金管理</a></li>
-                                    <li data-level="2" data-menuitemid="204">
+                                    <li data-level="2" data-menuitemid="204" data-permissionworkflowname="客户保证金退回申请">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/CautionMoneys/ClientCautionMoneyReturnApplyManagement.aspx');">客户保证金退回申请</a></li>
 
                                 </ul>
                             </li>
                         </ul>
                     </div>
+
                     <!-- End Navigation -->
                 </div>
 
@@ -238,7 +234,9 @@
             </div>
             <!-- End Main Wrapper -->
         </div>
-
+        <asp:HiddenField ID="hfIsSystemAdmin" runat="server" />
+        <asp:HiddenField ID="hfPermissions" runat="server" />
+        <asp:HiddenField ID="hfWorkFlowIDs" runat="server" />
         <style type="text/css">
             .RadGrid_Silk {
             }
@@ -310,13 +308,222 @@
         </style>
 
         <telerik:RadCodeBlock runat="server" ID="mainCodeBlock">
+            <script type="text/javascript">
+                var EPermissionOption = { None: 0, Create: 1, Edit: 2, Delete: 4, View: 8, Print: 16, Export: 32 };
+                var EPermission = {
+                    1: "账套管理",
+                    2: "银行账号管理",
+                    3: "供应商管理",
+                    4: "商业单位管理",
+                    5: "客户管理",
+                    6: "仓库管理",
+                    7: "配送公司管理",
+                    8: "大包客户协议管理",
+                    9: "商业客户流向管理",
+                    10: "部门销售计划及提成策略",
+                    11: "物流公司管理",
+                    12: "货品管理",
+                    13: "货品定价管理",
+                    14: "库存货品信息",
+                    15: "部门管理",
+                    16: "员工管理",
+                    17: "权限管理",
+                    18: "报销类型管理",
+                    19: "物流费用管理",
+                    20: "担保收款",
+                    21: "数据导入",
+                    22: "部门月提成",
+                    23: "采购订单报表",
+                    24: "采购付款明细表",
+                    25: "销售订单报表",
+                    26: "出库明细表",
+                    27: "入库明细表",
+                    28: "采购计划表",
+                    29: "库存汇总表",
+                    30: "配送公司流向结算表",
+                    31: "大包客户季度考核表",
+                    32: "配送公司库存核对表",
+                    33: "发票管理"
+                };
+                var EWorkflow = {
+                    1: "采购订单",
+                    2: "采购入库单",
+                    3: "大包申请单",
+                    4: "大包配送订单",
+                    5: "大包出库单",
+                    6: "客户订单",
+                    7: "客户订单出库单",
+                    8: "供应商返款",
+                    9: "客户返款",
+                    10: "厂家经理返款",
+                    11: "供应商任务返款",
+                    12: "客户任务奖励返款",
+                    13: "大包客户提成结算",
+                    14: "供应商发票结算",
+                    15: "客户发票结算",
+                    16: "大包收款",
+                    17: "挂靠发票结算",
+                    18: "供应商保证金申请",
+                    19: "客户保证金",
+                    20: "客户保证金退回申请"
+                };
+            </script>
 
             <script type="text/javascript">
 
+                function getPermissionID(name) {
+
+                    var json = EPermission;
+                    var id = null;
+                    $.each(json, function (i) {
+                        var key = i;
+                        var value = json[i];
+                        if (value.toString() == name.toString()) {
+                            id = key;
+                        }
+                    });
+                    return id;
+                }
+                function getWorkflowPermissionID(name) {
+
+                    var json = EWorkflow;
+                    var id = null;
+                    $.each(json, function (i) {
+                        var key = i;
+                        var value = json[i];
+                        if (value.toString() == name.toString()) {
+                            id = key;
+                        }
+                    });
+                    return id;
+                }
+                function getPermissionOptionID(name) {
+                    if (name == "None")
+                        return EPermissionOption.None;
+                    if (name == "Create")
+                        return EPermissionOption.Create;
+                    if (name == "Edit")
+                        return EPermissionOption.Edit;
+                    if (name == "Delete")
+                        return EPermissionOption.Delete;
+                    if (name == "View")
+                        return EPermissionOption.View;
+                    if (name == "Print")
+                        return EPermissionOption.Print;
+                    if (name == "Export")
+                        return EPermissionOption.Export;
+                }
+                function checkPermission(id) {
+                    var permissions = $("#hfPermissions").val();
+                    var jsonPermissions = $.parseJSON(permissions);
+                    var hasPermission = false;
+                    $.each(jsonPermissions, function (i) {
+                        var key = i;
+                        var value = jsonPermissions[i];
+                        if (key == id) {
+                            hasPermission = true;
+                        }
+                    });
+                    return hasPermission;
+                }
+                function checkWorkflowPermission(id) {
+                    var permissions = $("#hfWorkFlowIDs").val();
+                    var jsonPermissions = $.parseJSON(permissions);
+                    var hasPermission = false;
+                    $.each(jsonPermissions, function (i) {
+                        var key = i;
+                        var value = jsonPermissions[i];
+                        if (value == id) {
+                            hasPermission = true;
+                        }
+                    });
+                    return hasPermission;
+                }
+                function getPermissionValue(id) {
+                    var permissions = $("#hfPermissions").val();
+                    var jsonPermissions = $.parseJSON(permissions);
+                    var permissionValue = null;
+                    $.each(jsonPermissions, function (i) {
+                        var key = i;
+                        var value = jsonPermissions[i];
+                        if (key == id) {
+                            permissionValue = value;
+                        }
+                    });
+                    return permissionValue;
+                }
+                function checkMenu() {
+                    var isSystemAdmin = $("#hfIsSystemAdmin").val();
+                    if (isSystemAdmin == "True")
+                        return;
+                    var permissions = $("#hfPermissions").val();
+                    console.log(permissions);
+                    var jsonPermissions = $.parseJSON(permissions);
+                    $.each(jsonPermissions, function (i) {
+                        var key = i;
+                        var value = jsonPermissions[i];
+
+                        var Create = ((value & EPermissionOption.Create) == EPermissionOption.Create);
+                        var Edit = ((value & EPermissionOption.Edit) == EPermissionOption.Edit);
+                        var Delete = ((value & EPermissionOption.Delete) == EPermissionOption.Delete);
+                        var View = ((value & EPermissionOption.View) == EPermissionOption.View);
+                        var Print = ((value & EPermissionOption.Print) == EPermissionOption.Print);
+                        var Export = ((value & EPermissionOption.Export) == EPermissionOption.Export);
+                        //(((int)type & (int)value) == (int)value);
+                        //alert(key + ":" + value + " create:" + Create + " Edit:" + Edit + " Delete：" + Delete + " View:" + View + " Print:" + Print + "Export:" + Export);
+                    });
+
+                    $("div#mws-navigation ul li[data-level='2']").each(function (i, e) {
+                        var permissionName = $(this).data("permissionname");
+                        var permissionOptionName = $(this).data("permissionoptionname");
+                        if (permissionName && permissionOptionName) {
+                            var permission = getPermissionID(permissionName);
+                            var permissionOption = getPermissionOptionID(permissionOptionName);
+                            //console.log("permission:" + permission + " permissionOption:" + permissionOption);
+                            if (permission && permissionOption) {
+                                console.log("permission:" + permission + " permissionName:" + permissionName + " permissionoption:" + permissionOption);
+                                var hasPermission = checkPermission(permission);
+                                //console.log("hasPermission:" + hasPermission);
+                                if (hasPermission) {
+                                    var permissionValue = getPermissionValue(permission);
+
+                                    var hasPermissionOption = ((permissionValue & permissionOption) == permissionOption);
+                                    if (hasPermissionOption)
+                                    { }
+                                    else {
+                                        $(this).remove();
+                                    }
+                                }
+                                else {
+                                    $(this).remove();
+                                }
+                            }
+                        }
+                        var permissionWorkflowName = $(this).data("permissionworkflowname");
+                        if (permissionWorkflowName) {
+                            var workflowPermissionID = getWorkflowPermissionID(permissionWorkflowName);
+                            if (checkWorkflowPermission(workflowPermissionID))
+                            { }
+                            else {
+                                $(this).remove();
+                            }
+                        }
+                    });
+                    $("div#mws-navigation ul li[data-level='1']").each(function (i, e) {
+                        if ($(this).text() != "首页") {
+                            var itemCount = $(this).find("ul li[data-level='2']").length;
+                            if (itemCount == 0) {
+                                $(this).remove();
+                            }
+                        }
+                    });
+                }
                 var loadingPanel;//加载遮罩层
                 var menuItemID;
 
                 $(document).ready(function () {
+
+                    checkMenu();
 
                     //BrowserDetect.init();
 

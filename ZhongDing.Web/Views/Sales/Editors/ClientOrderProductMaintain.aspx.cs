@@ -151,7 +151,10 @@ namespace ZhongDing.Web.Views.Sales.Editors
         {
             return (int)EWorkflow.ClientOrder;
         }
-
+        protected override EWorkflow PagePermissionWorkflowID()
+        {
+            return EWorkflow.ClientOrder;
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (CurrentOwnerEntity == null)
