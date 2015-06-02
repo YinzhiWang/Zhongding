@@ -34,7 +34,7 @@
         <div class="mws-panel grid_8">
             <div class="mws-panel-header">
 
-                <span class="mws-i-24 i-table-1" id="lblTitle" runat="server">采购订单报表</span>
+                <span class="mws-i-24 i-table-1" id="lblTitle" runat="server">大包客户结算表</span>
             </div>
             <div class="mws-panel-body">
 
