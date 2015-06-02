@@ -12,6 +12,7 @@ using ZhongDing.Common.Extension;
 using System.Data.Entity.Core.Objects;
 using ZhongDing.Domain.UISearchObjects;
 using ZhongDing.Common.Enums;
+using System.Linq.Expressions;
 
 namespace ZhongDing.Business.Repositories.Reports
 {
@@ -1102,6 +1103,107 @@ namespace ZhongDing.Business.Repositories.Reports
                 .Skip(pageSize * pageIndex).Take(pageSize).ToList();
 
             return uiEntities;
+        }
+
+
+
+         /// <summary>
+        /// 大包客户结算
+        /// </summary>
+        /// <param name="uiSearchObj"></param>
+        /// <returns></returns>
+        public IList<UIDBClientSettlementReport> GetDBClientSettlementReport(UISearchDBClientSettlementReport uiSearchObj)
+        {
+            List<UIDBClientSettlementReport> result = null;
+            int totalRecords = 0;
+            BuildDBClientSettlementReport(uiSearchObj, 0, 10000000, out totalRecords, out result);
+            return result;
+        }
+
+        private void BuildDBClientSettlementReport(UISearchDBClientSettlementReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords, out List<UIDBClientSettlementReport> result)
+        {
+            totalRecords = 0;
+            result = new List<UIDBClientSettlementReport>();
+            IList<UIDBClientSettlementReport> uiEntities = new List<UIDBClientSettlementReport>();
+            int total = 0;
+            IQueryable<DBClientSettleBonus> query = DB.Set<DBClientSettleBonus>(); ;
+            var whereFuncs = new List<Expression<Func<DBClientSettleBonus, bool>>>();
+
+            if (uiSearchObj != null)
+            {
+                whereFuncs.Add(x => x.IsDeleted == false);
+
+                if (uiSearchObj.ID > 0)
+                    whereFuncs.Add(x => x.ID.Equals(uiSearchObj.ID));
+
+                if (uiSearchObj.DBClientSettlementID > 0)
+                    whereFuncs.Add(x => x.DBClientSettlementID.Equals(uiSearchObj.DBClientSettlementID));
+
+
+                if (uiSearchObj.ClientUserID.BiggerThanZero())
+                {
+                    whereFuncs.Add(x => x.DBClientBonus.ClientUserID == uiSearchObj.ClientUserID);
+                }
+                if (uiSearchObj.SettlementDate.HasValue)
+                {
+                    whereFuncs.Add(x => x.DBClientSettlement.SettlementDate == uiSearchObj.SettlementDate);
+                }
+                if (uiSearchObj.IncludeWorkflowStatusIDs != null)
+                {
+                    whereFuncs.Add(x => uiSearchObj.IncludeWorkflowStatusIDs.Contains(x.DBClientSettlement.WorkflowStatusID));
+                }
+            }
+            foreach (var item in whereFuncs)
+            {
+                query = query.Where(item);
+            }
+            total = query.Count();
+
+            if (query != null)
+            {
+                uiEntities = (from q in query
+                              join cb in DB.DBClientBonus on q.DBClientBonusID equals cb.ID
+                              join p in DB.Product on cb.ProductID equals p.ID
+                              join ps in DB.ProductSpecification on cb.ProductSpecificationID equals ps.ID
+                              join cu in DB.ClientUser on cb.ClientUserID equals cu.ID
+                              join ba in DB.BankAccount on cu.DBBankAccountID equals ba.ID into tempBA
+                              from tba in tempBA.DefaultIfEmpty()
+                              select new UIDBClientSettlementReport()
+                              {
+                                  ID = q.ID,
+                                  ClientUserName = cu.ClientName,
+                                  ProductName = p.ProductName,
+                                  Specification = ps.Specification,
+                                  SettlementDate = q.DBClientSettlement.SettlementDate,
+                                  IsNeedSettlement = q.IsNeedSettlement,
+                                  BonusAmount = cb.BonusAmount,
+                                  PerformanceAmount = cb.PerformanceAmount,
+                                  TotalPayAmount = q.TotalPayAmount,
+                                  IsSettled = cb.IsSettled,
+                                  IsManualSettled = q.IsManualSettled,
+                                  ClientDBBankAccount = tba != null
+                                    ? (tba.AccountName + " " + tba.BankBranchName + " " + tba.Account)
+                                    : string.Empty,
+                                  HospitalType = q.DBClientSettlement.HospitalType.TypeName,
+                                  SaleQty = cb.SaleQty,
+                                  PromotionExpense = cb.PromotionExpense,
+                              }).ToList();
+
+                result = uiEntities.ToList();
+            }
+
+            totalRecords = total;
+           
+
+        }
+
+
+
+        public IList<UIDBClientSettlementReport> GetDBClientSettlementReport(UISearchDBClientSettlementReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
+        {
+            List<UIDBClientSettlementReport> result = null;
+            BuildDBClientSettlementReport(uiSearchObj, pageIndex, pageSize, out totalRecords, out result);
+            return result;
         }
     }
 }

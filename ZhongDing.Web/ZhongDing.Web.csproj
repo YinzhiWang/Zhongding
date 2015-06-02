@@ -2689,6 +2689,7 @@
     <Content Include="Views\Refunds\SupplierTaskRefundMaintenance.aspx" />
     <Content Include="Views\Refunds\SupplierTaskRefundManagement.aspx" />
     <Content Include="Views\Reports\ClientSaleAppReportManagement.aspx" />
+    <Content Include="Views\Reports\DBClientSettlementReportManagement.aspx" />
     <Content Include="Views\Reports\DBClientQuarterlyAssessmentReport.aspx" />
     <Content Include="Views\Reports\DCFlowSettlementReport.aspx" />
     <Content Include="Views\Reports\InventorySummaryDetailReportManagement.aspx" />
@@ -3724,6 +3725,13 @@
     <Compile Include="Views\Reports\ClientSaleAppReportManagement.aspx.designer.cs">
       <DependentUpon>ClientSaleAppReportManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Reports\DBClientSettlementReportManagement.aspx.cs">
+      <DependentUpon>DBClientSettlementReportManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reports\DBClientSettlementReportManagement.aspx.designer.cs">
+      <DependentUpon>DBClientSettlementReportManagement.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Reports\DBClientQuarterlyAssessmentReport.aspx.cs">
       <DependentUpon>DBClientQuarterlyAssessmentReport.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -4007,7 +4015,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

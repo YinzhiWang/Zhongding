@@ -480,6 +480,7 @@
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIObjects\UIDBClientSettlementReport.cs" />
     <Compile Include="UIObjects\UIClientAttachedInvoiceSettlement.cs" />
     <Compile Include="UIObjects\UIClientAttachedInvoiceSettlementDetail.cs" />
     <Compile Include="UIObjects\UIClientCautionMoney.cs" />
@@ -596,6 +597,7 @@
     <Compile Include="UISearchObjects\UISearchClientCautionMoney.cs" />
     <Compile Include="UISearchObjects\UISearchClientCautionMoneyReturnApplication.cs" />
     <Compile Include="UISearchObjects\UISearchClientSaleApplicationImportFileLog.cs" />
+    <Compile Include="UISearchObjects\UISearchDBClientSettlementReport.cs" />
     <Compile Include="UISearchObjects\UISearchDCFlowSettlementReport.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderAppDetailImportData.cs" />
     <Compile Include="UISearchObjects\UISearchClientAttachedInvoiceSettlement.cs" />

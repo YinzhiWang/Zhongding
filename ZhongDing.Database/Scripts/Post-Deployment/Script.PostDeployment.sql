@@ -1210,4 +1210,14 @@ GO
 
 
 
-
+---- start --- 06/02/2015 -- 更新菜单模块权限 -- by Nwang
+BEGIN TRANSACTION
+GO
+ALTER TABLE [dbo].[UserGroupPermission] DROP CONSTRAINT [FK_UserGroupPermission_PermissionID]
+GO
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (34, N'大包客户结算表', 0, 0, 0, 1, 0, 1, 0, '2015-06-01 21:23:10.073', NULL, NULL, NULL)
+GO
+ALTER TABLE [dbo].[UserGroupPermission] WITH NOCHECK ADD CONSTRAINT [FK_UserGroupPermission_PermissionID] FOREIGN KEY ([PermissionID]) REFERENCES [dbo].[Permission] ([ID])
+COMMIT TRANSACTION
+GO
+---- end --- 06/02/2015 -- 更新菜单模块权限 -- by Nwang

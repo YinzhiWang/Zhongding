@@ -183,6 +183,8 @@
 
                                     <li data-level="2" data-menuitemid="114" data-permissionname="配送公司库存核对表" data-permissionoptionname="View">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/DCInventoryChecklistReport.aspx');">配送公司库存核对表</a></li>
+                                    <li data-level="2" data-menuitemid="115" data-permissionname="大包客户结算表" data-permissionoptionname="View">
+                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/DBClientSettlementReportManagement.aspx');">大包客户结算表</a></li>
 
 
                                 </ul>
@@ -343,7 +345,8 @@
                     30: "配送公司流向结算表",
                     31: "大包客户季度考核表",
                     32: "配送公司库存核对表",
-                    33: "发票管理"
+                    33: "发票管理",
+                    34: "大包客户结算表"
                 };
                 var EWorkflow = {
                     1: "采购订单",

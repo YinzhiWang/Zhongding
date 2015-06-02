@@ -143,6 +143,12 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// //33	发票管理
         /// </summary>
-        InvoiceManagement = 33
+        InvoiceManagement = 33,
+        /// <summary>
+        /// //34 大包客户结算表
+        /// </summary>
+        DBClientSettlementReportManagement = 34,
+
+
     }
 }
