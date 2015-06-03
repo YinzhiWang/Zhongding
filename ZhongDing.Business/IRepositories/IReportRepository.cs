@@ -86,5 +86,8 @@ namespace ZhongDing.Business.IRepositories
         IList<UIDBClientSettlementReport> GetDBClientSettlementReport(UISearchDBClientSettlementReport uiSearchObj);
         IList<UIDBClientSettlementReport> GetDBClientSettlementReport(UISearchDBClientSettlementReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
 
+
+        IList<UISupplierTaskReport> GetSupplierTaskReport(UISearchSupplierTaskReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
+        IList<UISupplierTaskReport> GetSupplierTaskReport(UISearchSupplierTaskReport uiSearchObj);
     }
 }

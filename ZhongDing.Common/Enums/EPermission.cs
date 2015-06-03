@@ -148,7 +148,10 @@ namespace ZhongDing.Common.Enums
         /// //34 大包客户结算表
         /// </summary>
         DBClientSettlementReportManagement = 34,
-
+        /// <summary>
+        /// //35 供应商任务表
+        /// </summary>
+        SupplierTaskReportManagement = 35
 
     }
 }

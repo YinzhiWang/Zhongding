@@ -1221,3 +1221,16 @@ ALTER TABLE [dbo].[UserGroupPermission] WITH NOCHECK ADD CONSTRAINT [FK_UserGrou
 COMMIT TRANSACTION
 GO
 ---- end --- 06/02/2015 -- 更新菜单模块权限 -- by Nwang
+
+
+
+---- start --- 06/03/2015 -- 更新菜单模块权限 -- by Nwang
+BEGIN TRANSACTION
+GO
+ALTER TABLE [dbo].[UserGroupPermission] DROP CONSTRAINT [FK_UserGroupPermission_PermissionID]
+GO
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (35, N'供应商任务统计表', 0, 0, 0, 1, 0, 1, 0, '2015-06-02 17:12:46.520', NULL, NULL, NULL)
+GO
+ALTER TABLE [dbo].[UserGroupPermission] WITH NOCHECK ADD CONSTRAINT [FK_UserGroupPermission_PermissionID] FOREIGN KEY ([PermissionID]) REFERENCES [dbo].[Permission] ([ID])
+COMMIT TRANSACTION
+---- end --- 06/03/2015 -- 更新菜单模块权限 -- by Nwang

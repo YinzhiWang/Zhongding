@@ -1107,7 +1107,7 @@ namespace ZhongDing.Business.Repositories.Reports
 
 
 
-         /// <summary>
+        /// <summary>
         /// 大包客户结算
         /// </summary>
         /// <param name="uiSearchObj"></param>
@@ -1193,7 +1193,7 @@ namespace ZhongDing.Business.Repositories.Reports
             }
 
             totalRecords = total;
-           
+
 
         }
 
@@ -1205,5 +1205,147 @@ namespace ZhongDing.Business.Repositories.Reports
             BuildDBClientSettlementReport(uiSearchObj, pageIndex, pageSize, out totalRecords, out result);
             return result;
         }
+
+
+        public IList<UISupplierTaskReport> GetSupplierTaskReport(UISearchSupplierTaskReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
+        {
+            List<UISupplierTaskReport> result = null;
+            BuildSupplierTaskReport(uiSearchObj, pageIndex, pageSize, out totalRecords, out result);
+            return result;
+        }
+        public IList<UISupplierTaskReport> GetSupplierTaskReport(UISearchSupplierTaskReport uiSearchObj)
+        {
+            List<UISupplierTaskReport> result = null;
+            int totalRecords = 0;
+            BuildSupplierTaskReport(uiSearchObj, 0, 10000000, out totalRecords, out result);
+            return result;
+        }
+        private void BuildSupplierTaskReport(UISearchSupplierTaskReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords, out List<UISupplierTaskReport> result)
+        {
+            totalRecords = 0;
+            result = new List<UISupplierTaskReport>();
+            List<UISupplierTaskReport> uiEntities = new List<UISupplierTaskReport>();
+            int total = 0;
+            DateTime? date = uiSearchObj.Date;
+            int yearOfTask = date.Value.Year;
+            int monthOfTask = date.Value.Month;
+            DateTime validDate = new DateTime(yearOfTask, monthOfTask, 1);
+            var query = from supplierContract in DB.SupplierContract
+                        join supplier in DB.Supplier on supplierContract.SupplierID equals supplier.ID
+                        join p in DB.Product on supplierContract.ProductID equals p.ID
+                        join ps in DB.ProductSpecification on supplierContract.ProductSpecificationID equals ps.ID
+                        where supplierContract.IsDeleted == false
+                        && supplier.IsDeleted == false
+                        && supplier.CompanyID == uiSearchObj.CompanyID
+                        && supplierContract.IsNeedTaskAssignment == true
+                        && supplierContract.ExpirationDate > validDate && supplierContract.CreatedOn < validDate
+                        select new UISupplierTaskReport()
+                        {
+                            ID = supplierContract.ID,
+                            ProductID = p.ID,
+                            ProductName = p.ProductName,
+                            SupplierID = supplierContract.SupplierID,
+                            SupplierName = supplier.SupplierName,
+                            ProductSpecificationID = ps.ID,
+                            Specification = ps.Specification,
+                            TaskQuantity =
+                                DB.SupplierTaskAssignment.Where(x => x.IsDeleted == false
+                                && x.SupplierID == supplierContract.SupplierID && x.ContractID == supplierContract.ID
+                                && x.YearOfTask == yearOfTask && x.MonthOfTask == monthOfTask).Any() ?
+                                DB.SupplierTaskAssignment.Where(x => x.IsDeleted == false
+                                && x.SupplierID == supplierContract.SupplierID && x.ContractID == supplierContract.ID
+                                && x.YearOfTask == yearOfTask && x.MonthOfTask == monthOfTask).FirstOrDefault().Quantity : 0,
+                            AlreadyProcureCount = 0
+                        };
+            if (uiSearchObj.SupplierID.BiggerThanZero())
+            {
+                query = query.Where(x => x.SupplierID == uiSearchObj.SupplierID);
+            }
+            //query = query.Where(x => x.TaskQuantity > 0);
+
+
+            var queryResult = from q in query
+                              select new UISupplierTaskReport()
+                              {
+                                  ID = q.ID,
+                                  ProductID = q.ProductID,
+                                  ProductName = q.ProductName,
+                                  SupplierID = q.SupplierID,
+                                  SupplierName = q.SupplierName,
+                                  ProductSpecificationID = q.ProductSpecificationID,
+                                  Specification = q.Specification,
+                                  TaskQuantity = q.TaskQuantity,
+                                  AlreadyProcureCount = 0
+                                  //AlreadyProcureCount =
+                                  //    DB.ProcureOrderAppDetail.Where(x => x.IsDeleted == false && x.ProcureOrderApplication.IsDeleted == false
+                                  //    && x.ProductID == q.ProductID && x.ProductSpecificationID == q.ProductSpecificationID
+                                  //    && x.ProcureOrderApplication.WorkflowStatusID == (int)EWorkflowStatus.Completed
+                                  //    && x.ProcureOrderApplication.EstDeliveryDate >= start && x.ProcureOrderApplication.EstDeliveryDate < end).Any() ?
+                                  //    DB.ProcureOrderAppDetail.Where(x => x.IsDeleted == false && x.ProcureOrderApplication.IsDeleted == false
+                                  //    && x.ProductID == q.ProductID && x.ProductSpecificationID == q.ProductSpecificationID
+                                  //    && x.ProcureOrderApplication.WorkflowStatusID == (int)EWorkflowStatus.Completed
+                                  //    && x.ProcureOrderApplication.EstDeliveryDate >= start && x.ProcureOrderApplication.EstDeliveryDate < end).Sum(x => x.ProcureCount) : 0M
+                              };
+
+            total = queryResult.Count();
+            uiEntities = queryResult.OrderBy(x => x.ID).Skip(pageSize * pageIndex).Take(pageSize).ToList();
+            uiEntities.ForEach(x =>
+            {
+                x.Date = uiSearchObj.Date;
+                x.AlreadyProcureCount = GetAlreadyProcureCountForSupplierTaskReport(x.ProductID, x.ProductSpecificationID, uiSearchObj.Date.Value);
+            });
+            result = uiEntities;
+            totalRecords = total;
+        }
+
+        private int GetAlreadyProcureCountForSupplierTaskReport(int productID, int productSpecificationID, DateTime date)
+        {
+            //仅仅计算 交货日期是 当前月的
+            DateTime start = new DateTime(date.Year, date.Month, 1);
+            DateTime end = start.AddMonths(1);
+            List<int> needStatus = new List<int>() { (int)EWorkflowStatus.Paid, (int)EWorkflowStatus.Shipping, (int)EWorkflowStatus.Completed };
+            var query = from procureOrderAppDetail in DB.ProcureOrderAppDetail
+                        join procureOrderApplication in DB.ProcureOrderApplication on procureOrderAppDetail.ProcureOrderApplicationID equals procureOrderApplication.ID
+                        where procureOrderAppDetail.IsDeleted == false
+                        && procureOrderApplication.IsDeleted == false
+                        && procureOrderAppDetail.ProductID == productID
+                        && procureOrderAppDetail.ProductSpecificationID == productSpecificationID
+                        && needStatus.Contains(procureOrderApplication.WorkflowStatusID)
+                        && procureOrderApplication.OrderDate >= start && procureOrderApplication.OrderDate < end
+                        select new
+                        {
+                            ProcureOrderApplicationID = procureOrderApplication.ID,
+                            ProcureOrderAppDetailID = procureOrderAppDetail.ID,
+                            ProcureCount = procureOrderAppDetail.ProcureCount,
+                            IsStop = procureOrderApplication.IsStop,
+                            AlreadyInQty = procureOrderApplication.IsStop ? (
+                                DB.StockInDetail.Where(x => x.IsDeleted == false
+                                && x.StockIn.IsDeleted == false
+                                && x.StockIn.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse
+                                && x.ProcureOrderAppDetailID == procureOrderAppDetail.ID).Any() ?
+                                DB.StockInDetail.Where(x => x.IsDeleted == false
+                                && x.StockIn.IsDeleted == false
+                                && x.StockIn.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse
+                                && x.ProcureOrderAppDetailID == procureOrderAppDetail.ID).Sum(x => x.InQty)
+                                : 0) : 0
+                        };
+            var tempResult = query.ToList();
+            int count = 0;
+            tempResult.ForEach(x =>
+            {
+                if (x.IsStop)
+                {
+                    count += x.AlreadyInQty;
+                }
+                else
+                {
+                    count += x.ProcureCount;
+                }
+            });
+
+            return count;
+        }
+
+
     }
 }

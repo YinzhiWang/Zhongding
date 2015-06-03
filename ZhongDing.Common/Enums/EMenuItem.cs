@@ -289,6 +289,10 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         DBClientSettlementReportManage = 115,
 
+        /// <summary>
+        /// 供应商任务统计
+        /// </summary>
+        SupplierTaskReportManage=116,
 
 
         /// <summary>

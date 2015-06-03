@@ -583,6 +583,7 @@
     <Compile Include="UIObjects\UISupplierInvoiceSettlementDetail.cs" />
     <Compile Include="UIObjects\UISupplierRefundApp.cs" />
     <Compile Include="UIObjects\UISupplierRefundAppDetail.cs" />
+    <Compile Include="UIObjects\UISupplierTaskReport.cs" />
     <Compile Include="UIObjects\UIToBeOutSalesOrderDetail.cs" />
     <Compile Include="UIObjects\UITransportCompany.cs" />
     <Compile Include="UIObjects\UITransportFee.cs" />
@@ -679,6 +680,7 @@
     <Compile Include="UISearchObjects\UISearchSupplierInvoiceSettlement.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierInvoiceSettlementDetail.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierRefundApp.cs" />
+    <Compile Include="UISearchObjects\UISearchSupplierTaskReport.cs" />
     <Compile Include="UISearchObjects\UISearchToBeOutSalesOrderDetail.cs" />
     <Compile Include="UISearchObjects\UISearchTransportCompany.cs" />
     <Compile Include="UISearchObjects\UISearchTransportFee.cs" />
