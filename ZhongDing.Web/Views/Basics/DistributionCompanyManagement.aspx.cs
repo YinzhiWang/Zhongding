@@ -79,12 +79,12 @@ namespace ZhongDing.Web.Views.Basics
 
         protected void rgEntities_ItemCreated(object sender, GridItemEventArgs e)
         {
-
+            base.PermissionOptionCheckGridCreate(e.Item);
         }
 
         protected void rgEntities_ColumnCreated(object sender, GridColumnCreatedEventArgs e)
         {
-
+            base.PermissionOptionCheckGridDelete(e.OwnerTableView.Columns);
         }
 
         protected void rgEntities_ItemDataBound(object sender, GridItemEventArgs e)
@@ -103,6 +103,16 @@ namespace ZhongDing.Web.Views.Basics
             txtName.Text = string.Empty;
 
             BindEntities(true);
+        }
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.DistributionCompanyManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
         }
     }
 }

@@ -123,12 +123,12 @@ namespace ZhongDing.Web.Views.Invoices
 
         protected void rgClientInvoices_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
-
+            base.PermissionOptionCheckGridCreate(e.Item);
         }
 
         protected void rgClientInvoices_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
         {
-
+            base.PermissionOptionCheckGridDelete(e.OwnerTableView.Columns);
         }
 
         protected void rgClientInvoices_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
@@ -148,6 +148,18 @@ namespace ZhongDing.Web.Views.Invoices
             txtInvoiceNumber.Text = rcbxClientCompany.Text = rcbxClientCompany.SelectedValue = string.Empty;
            
             BindClientInvoice(true);
+        }
+
+
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.InvoiceManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
         }
     }
 }

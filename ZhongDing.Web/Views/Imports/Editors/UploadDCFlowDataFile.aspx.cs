@@ -247,5 +247,16 @@ namespace ZhongDing.Web.Views.Imports.Editors
             this.Master.BaseNotification.OnClientHidden = "onClientHidden";
             this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_SUCCESS_SAEVED_CLOSE_WIN);
         }
+
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.DataImport;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Create;
+        }
     }
 }

@@ -8,6 +8,7 @@ using Telerik.Web.UI;
 using ZhongDing.Business.IRepositories;
 using ZhongDing.Business.Repositories;
 using ZhongDing.Business.Repositories.Reports;
+using ZhongDing.Common;
 using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UISearchObjects;
@@ -128,15 +129,15 @@ namespace ZhongDing.Web.Views.Basics
 
             rgCompanies.Rebind();
         }
-
         protected void rgCompanies_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
-
+            base.PermissionOptionCheckGridCreate(e.Item);
         }
+
 
         protected void rgCompanies_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
         {
-
+            base.PermissionOptionCheckGridDelete(e.OwnerTableView.Columns);
         }
 
         protected void rgCompanies_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
@@ -158,5 +159,14 @@ namespace ZhongDing.Web.Views.Basics
         }
 
         #endregion
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.CompanyManagement;
+        }
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
+        }
     }
 }

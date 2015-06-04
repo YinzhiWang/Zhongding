@@ -92,7 +92,7 @@ namespace ZhongDing.Web.Views.Procures
             {
 
                 LoadEntityData();
-
+                base.PermissionOptionCheckButtonDelete(btnDelete);
             }
 
         }
@@ -191,8 +191,8 @@ namespace ZhongDing.Web.Views.Procures
 
                 currentEntity.TransportCompanyID = rcbxTransportCompany.SelectedValue.ToInt();
                 currentEntity.TransportCompanyNumber = txtTransportCompanyNumber.Text;
-                currentEntity.TransportFeeType = rbtnStockIn.Visible ? 
-                    (rbtnStockIn.Checked ? ((int)ETransportFeeType.StockIn) : ((int)ETransportFeeType.StockOut)) 
+                currentEntity.TransportFeeType = rbtnStockIn.Visible ?
+                    (rbtnStockIn.Checked ? ((int)ETransportFeeType.StockIn) : ((int)ETransportFeeType.StockOut))
                     : ((int)ETransportFeeType.StockOut);
                 currentEntity.Driver = txtDriver.Text.Trim();
                 currentEntity.DriverTelephone = txtDriverTelephone.Text.Trim();
@@ -306,6 +306,16 @@ namespace ZhongDing.Web.Views.Procures
                 PageTransportFeeStockOutRepository.Save();
                 rgStockOuts.Rebind();
             }
+        }
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.TransportFeeManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
         }
     }
 }

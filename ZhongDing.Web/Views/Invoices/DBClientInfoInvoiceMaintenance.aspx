@@ -130,18 +130,18 @@
                                             <HeaderStyle Width="30" />
                                             <ItemStyle Width="30" />
                                         </telerik:GridClientSelectColumn>
-                                        <telerik:GridBoundColumn UniqueName="StockOutCode" HeaderText="出库单单号" DataField="StockOutCode" ReadOnly="true">
+                                        <telerik:GridBoundColumn UniqueName="StockOutCode" HeaderText="出库单编号" DataField="StockOutCode" ReadOnly="true">
                                             <HeaderStyle Width="160px" />
                                             <ItemStyle HorizontalAlign="Left" Width="160px" />
                                         </telerik:GridBoundColumn>
-                                        <telerik:GridBoundColumn UniqueName="SaleOrderType" HeaderText="订单类型" DataField="SaleOrderType" ReadOnly="true">
+                                        <%--<telerik:GridBoundColumn UniqueName="SaleOrderType" HeaderText="订单类型" DataField="SaleOrderType" ReadOnly="true">
                                             <HeaderStyle Width="160px" />
                                             <ItemStyle HorizontalAlign="Left" Width="160px" />
-                                        </telerik:GridBoundColumn>
-                                        <telerik:GridBoundColumn UniqueName="ClientName" HeaderText="客户名称" DataField="ClientName" ReadOnly="true">
+                                        </telerik:GridBoundColumn>--%>
+                                   <%--     <telerik:GridBoundColumn UniqueName="ClientName" HeaderText="客户名称" DataField="ClientName" ReadOnly="true">
                                             <HeaderStyle Width="100px" />
                                             <ItemStyle HorizontalAlign="Left" Width="100px" />
-                                        </telerik:GridBoundColumn>
+                                        </telerik:GridBoundColumn>--%>
 
                                         <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品名称" DataField="ProductName" ReadOnly="true">
                                             <HeaderStyle Width="200px" />
@@ -163,10 +163,10 @@
                                             <HeaderStyle Width="160" />
                                             <ItemStyle HorizontalAlign="Left" Width="160" />
                                         </telerik:GridBoundColumn>
-                                        <telerik:GridBoundColumn UniqueName="Warehouse" HeaderText="出库仓库" DataField="Warehouse" ReadOnly="true">
+                                        <%--<telerik:GridBoundColumn UniqueName="Warehouse" HeaderText="出库仓库" DataField="Warehouse" ReadOnly="true">
                                             <HeaderStyle Width="80" />
                                             <ItemStyle HorizontalAlign="Left" Width="80" />
-                                        </telerik:GridBoundColumn>
+                                        </telerik:GridBoundColumn>--%>
                                         <%-- <telerik:GridBoundColumn UniqueName="ProcureCount" HeaderText="数量" DataField="ProcureCount" ReadOnly="true">
                                             <HeaderStyle Width="80" />
                                             <ItemStyle HorizontalAlign="Left" Width="80" />

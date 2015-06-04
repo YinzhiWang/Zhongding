@@ -8,6 +8,7 @@ using Telerik.Web.UI;
 using ZhongDing.Business.IRepositories;
 using ZhongDing.Business.Repositories;
 using ZhongDing.Common;
+using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
 using ZhongDing.Web.Extensions;
 
@@ -292,6 +293,16 @@ namespace ZhongDing.Web.Views.Imports.Editors
                 this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
                 this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_PARAMETER_ERROR_CLOSE_WIN);
             }
+        }
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.DataImport;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Create;
         }
     }
 }

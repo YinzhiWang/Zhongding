@@ -192,7 +192,10 @@ namespace ZhongDing.Web.Views.Refunds
         {
             return (int)EWorkflow.ClientRefunds;
         }
-
+        protected override EWorkflow PagePermissionWorkflowID()
+        {
+            return EWorkflow.ClientRefunds;
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             this.Master.MenuItemID = (int)EMenuItem.ClientRefundsManage;

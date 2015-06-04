@@ -305,5 +305,15 @@ namespace ZhongDing.Web.Views.Imports.Editors
         }
 
 
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.DataImport;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Create;
+        }
     }
 }

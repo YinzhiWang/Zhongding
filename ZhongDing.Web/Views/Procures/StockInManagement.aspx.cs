@@ -227,6 +227,8 @@ namespace ZhongDing.Web.Views.Procures
                             appNoteRepository.Delete(item);
                         }
 
+                        stockInRepository.Delete(currentEntity);
+
                         unitOfWork.SaveChanges();
                     }
                 }
@@ -389,6 +391,11 @@ namespace ZhongDing.Web.Views.Procures
             rcbxWorkflowStatus.ClearSelection();
 
             BindEntities(true);
+        }
+
+        protected override EWorkflow PagePermissionWorkflowID()
+        {
+            return EWorkflow.StockIn;
         }
     }
 }

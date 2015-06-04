@@ -65,6 +65,7 @@ namespace ZhongDing.Web.Views.Reports
             {
                 BindSuppliers();
                 BindProducts();
+                base.PermissionOptionCheckButtonExport(btnExport);
             }
 
         }
@@ -267,15 +268,15 @@ namespace ZhongDing.Web.Views.Reports
                     rowspan = 2,
                     sheetname = "采购订单报表",
                     defaultheight = null,
-                    defaultwidth = 20,
+                    defaultwidth = 12,
                     head = new List<AttributeList>(){
                     new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,0,0"},
-                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,1,1"},
-                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,2,2"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,1,1", width=20},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,2,2", width=20},
                     new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,3,3"},
                     new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,4,4"},
                     new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,5,5"},
-                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,6,6"},
+                    new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,6,6", width=20},
                     new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,7,7"},
                     new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,8,8"},
                     new AttributeList(){ title=excelHeadersQueue.Dequeue().Name, cellregion="0,1,9,9"},
@@ -346,6 +347,14 @@ namespace ZhongDing.Web.Views.Reports
 
 
 
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.ProcureOrderReportManagement;
+        }
 
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.View;
+        }
     }
 }

@@ -39,5 +39,30 @@ namespace ZhongDing.Business.Repositories
 
             return uiDropdownItems;
         }
+
+        public IList<int> GetCanAccessWorkflowsByUserID(int userID)
+        {
+            IList<int> workflowIDs = new List<int>();
+
+            workflowIDs = (from wsu in DB.WorkflowStepUser
+                           join ws in DB.WorkflowStep on wsu.WorkflowStepID equals ws.ID
+                           where ws.IsDeleted == false
+                           && wsu.IsDeleted == false
+                           && wsu.UserID == userID
+                           group ws by new { ws.WorkflowID } into g
+                           select g.Key.WorkflowID).ToList();
+
+            var workflowIDsFromUserGroup = (from wsu in DB.WorkflowStepUserGroup
+                                            join ws in DB.WorkflowStep on wsu.WorkflowStepID equals ws.ID
+                                            join userGroupUser in DB.UserGroupUser on wsu.UserGroupID equals userGroupUser.UserGroupID
+                                            where ws.IsDeleted == false
+                                            && wsu.IsDeleted == false
+                                            && userGroupUser.IsDeleted == false
+                                            && userGroupUser.UserID == userID
+                                            group ws by new { ws.WorkflowID } into g
+                                            select g.Key.WorkflowID).ToList();
+
+            return workflowIDs.Union(workflowIDsFromUserGroup).ToList();
+        }
     }
 }

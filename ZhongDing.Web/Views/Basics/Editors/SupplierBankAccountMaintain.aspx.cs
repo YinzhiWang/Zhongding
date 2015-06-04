@@ -169,5 +169,18 @@ namespace ZhongDing.Web.Views.Basics.Editors
                     args.IsValid = false;
             }
         }
+
+
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.SupplierManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
+        }
+    
     }
 }

@@ -9,5 +9,6 @@ namespace ZhongDing.Business.IRepositories
 {
     public interface IWorkflowRepository : IBaseRepository<Workflow>, IGenerateDropdownItems
     {
+        IList<int> GetCanAccessWorkflowsByUserID(int userID);
     }
 }

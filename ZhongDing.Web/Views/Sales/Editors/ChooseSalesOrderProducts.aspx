@@ -245,7 +245,11 @@
 
             if (gridItem) {
 
+                //获取可用库存余额
                 var validBalanceQty = calculateValidInventory(gridItem);
+
+                //设置最大值为当前可用库存余额
+                sender.set_maxValue(validBalanceQty);
 
                 var newValue = eventArgs.get_newValue();
 
@@ -271,7 +275,6 @@
                         radNotification.show();
 
                         sender.set_value(validBalanceQty);
-                        sender.set_maxValue(validBalanceQty);
                     }
                 }
                 else {
@@ -452,7 +455,6 @@
             var productID = parseInt(gridItem.getDataKeyValue("ProductID"));
             var productSpecificationID = parseInt(gridItem.getDataKeyValue("ProductSpecificationID"));
             var warehouseID = 0;
-            var currentOutQty = 0;
 
             var warehouseItem = null;
 
@@ -474,12 +476,6 @@
                     var extensionData = JSON.parse(extensionAttr);
                     totalBalanceQty = extensionData.BalanceQty
                 }
-            }
-
-            var txtCurrentOutQty = $telerik.findControl(gridItemElement, "txtCurrentOutQty");
-            var tempCurrentOutQty = txtCurrentOutQty.get_value();
-            if (tempCurrentOutQty) {
-                currentOutQty = parseInt(tempCurrentOutQty);
             }
 
             var selectedTotalOutQty = 0;

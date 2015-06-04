@@ -76,7 +76,7 @@
                             <telerik:GridBoundColumn UniqueName="UnitName" HeaderText="基本单位" DataField="UnitName">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="NumberOfPackages" HeaderText="件数" DataField="NumberOfPackages">
+                            <telerik:GridBoundColumn UniqueName="NumberOfPackages" HeaderText="件数" DataField="NumberOfPackages" DataFormatString="{0:f2}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
                           <telerik:GridBoundColumn UniqueName="BalanceQty" HeaderText="总库存量" DataField="BalanceQty">
@@ -106,10 +106,10 @@
                             <table class="width100-percent">
                                 <tr>
                                     <td>
-                                        <asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
+                                       <%-- <asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
                                             <input type="button" class="rgAdd" onclick="redirectToMaintenancePage(-1); return false;" />
                                             <a href="javascript:void(0)" onclick="redirectToMaintenancePage(-1); return false;">添加</a>
-                                        </asp:Panel>
+                                        </asp:Panel>--%>
                                         <%--<asp:Panel ID="plExportCommand" runat="server" CssClass="width80 float-left">
                                             <input type="button" class="rgExpXLS" onclick="exportExcel(); return false;" />
                                             <a href="javascript:void(0);" onclick="exportExcel(); return false;">导出excel</a>

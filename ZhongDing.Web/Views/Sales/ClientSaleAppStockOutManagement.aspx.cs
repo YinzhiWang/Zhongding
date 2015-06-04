@@ -84,7 +84,10 @@ namespace ZhongDing.Web.Views.Sales
         {
             return (int)EWorkflow.ClientOrderStockOut;
         }
-
+        protected override EWorkflow PagePermissionWorkflowID()
+        {
+            return EWorkflow.ClientOrderStockOut;
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             this.Master.MenuItemID = (int)EMenuItem.ClientOrderStockOutManage;

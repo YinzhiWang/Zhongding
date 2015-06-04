@@ -12,6 +12,7 @@ using ZhongDing.Common.Extension;
 using System.Data.Entity.Core.Objects;
 using ZhongDing.Domain.UISearchObjects;
 using ZhongDing.Common.Enums;
+using System.Linq.Expressions;
 
 namespace ZhongDing.Business.Repositories.Reports
 {
@@ -1103,5 +1104,248 @@ namespace ZhongDing.Business.Repositories.Reports
 
             return uiEntities;
         }
+
+
+
+        /// <summary>
+        /// 大包客户结算
+        /// </summary>
+        /// <param name="uiSearchObj"></param>
+        /// <returns></returns>
+        public IList<UIDBClientSettlementReport> GetDBClientSettlementReport(UISearchDBClientSettlementReport uiSearchObj)
+        {
+            List<UIDBClientSettlementReport> result = null;
+            int totalRecords = 0;
+            BuildDBClientSettlementReport(uiSearchObj, 0, 10000000, out totalRecords, out result);
+            return result;
+        }
+
+        private void BuildDBClientSettlementReport(UISearchDBClientSettlementReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords, out List<UIDBClientSettlementReport> result)
+        {
+            totalRecords = 0;
+            result = new List<UIDBClientSettlementReport>();
+            IList<UIDBClientSettlementReport> uiEntities = new List<UIDBClientSettlementReport>();
+            int total = 0;
+            IQueryable<DBClientSettleBonus> query = DB.Set<DBClientSettleBonus>(); ;
+            var whereFuncs = new List<Expression<Func<DBClientSettleBonus, bool>>>();
+
+            if (uiSearchObj != null)
+            {
+                whereFuncs.Add(x => x.IsDeleted == false);
+
+                if (uiSearchObj.ID > 0)
+                    whereFuncs.Add(x => x.ID.Equals(uiSearchObj.ID));
+
+                if (uiSearchObj.DBClientSettlementID > 0)
+                    whereFuncs.Add(x => x.DBClientSettlementID.Equals(uiSearchObj.DBClientSettlementID));
+
+
+                if (uiSearchObj.ClientUserID.BiggerThanZero())
+                {
+                    whereFuncs.Add(x => x.DBClientBonus.ClientUserID == uiSearchObj.ClientUserID);
+                }
+                if (uiSearchObj.SettlementDate.HasValue)
+                {
+                    whereFuncs.Add(x => x.DBClientSettlement.SettlementDate == uiSearchObj.SettlementDate);
+                }
+                if (uiSearchObj.IncludeWorkflowStatusIDs != null)
+                {
+                    whereFuncs.Add(x => uiSearchObj.IncludeWorkflowStatusIDs.Contains(x.DBClientSettlement.WorkflowStatusID));
+                }
+            }
+            foreach (var item in whereFuncs)
+            {
+                query = query.Where(item);
+            }
+            total = query.Count();
+
+            if (query != null)
+            {
+                uiEntities = (from q in query
+                              join cb in DB.DBClientBonus on q.DBClientBonusID equals cb.ID
+                              join p in DB.Product on cb.ProductID equals p.ID
+                              join ps in DB.ProductSpecification on cb.ProductSpecificationID equals ps.ID
+                              join cu in DB.ClientUser on cb.ClientUserID equals cu.ID
+                              join ba in DB.BankAccount on cu.DBBankAccountID equals ba.ID into tempBA
+                              from tba in tempBA.DefaultIfEmpty()
+                              select new UIDBClientSettlementReport()
+                              {
+                                  ID = q.ID,
+                                  ClientUserName = cu.ClientName,
+                                  ProductName = p.ProductName,
+                                  Specification = ps.Specification,
+                                  SettlementDate = q.DBClientSettlement.SettlementDate,
+                                  IsNeedSettlement = q.IsNeedSettlement,
+                                  BonusAmount = cb.BonusAmount,
+                                  PerformanceAmount = cb.PerformanceAmount,
+                                  TotalPayAmount = q.TotalPayAmount,
+                                  IsSettled = cb.IsSettled,
+                                  IsManualSettled = q.IsManualSettled,
+                                  ClientDBBankAccount = tba != null
+                                    ? (tba.AccountName + " " + tba.BankBranchName + " " + tba.Account)
+                                    : string.Empty,
+                                  HospitalType = q.DBClientSettlement.HospitalType.TypeName,
+                                  SaleQty = cb.SaleQty,
+                                  PromotionExpense = cb.PromotionExpense,
+                              }).ToList();
+
+                result = uiEntities.ToList();
+            }
+
+            totalRecords = total;
+
+
+        }
+
+
+
+        public IList<UIDBClientSettlementReport> GetDBClientSettlementReport(UISearchDBClientSettlementReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
+        {
+            List<UIDBClientSettlementReport> result = null;
+            BuildDBClientSettlementReport(uiSearchObj, pageIndex, pageSize, out totalRecords, out result);
+            return result;
+        }
+
+
+        public IList<UISupplierTaskReport> GetSupplierTaskReport(UISearchSupplierTaskReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
+        {
+            List<UISupplierTaskReport> result = null;
+            BuildSupplierTaskReport(uiSearchObj, pageIndex, pageSize, out totalRecords, out result);
+            return result;
+        }
+        public IList<UISupplierTaskReport> GetSupplierTaskReport(UISearchSupplierTaskReport uiSearchObj)
+        {
+            List<UISupplierTaskReport> result = null;
+            int totalRecords = 0;
+            BuildSupplierTaskReport(uiSearchObj, 0, 10000000, out totalRecords, out result);
+            return result;
+        }
+        private void BuildSupplierTaskReport(UISearchSupplierTaskReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords, out List<UISupplierTaskReport> result)
+        {
+            totalRecords = 0;
+            result = new List<UISupplierTaskReport>();
+            List<UISupplierTaskReport> uiEntities = new List<UISupplierTaskReport>();
+            int total = 0;
+            DateTime? date = uiSearchObj.Date;
+            int yearOfTask = date.Value.Year;
+            int monthOfTask = date.Value.Month;
+            DateTime validDate = new DateTime(yearOfTask, monthOfTask, 1);
+            var query = from supplierContract in DB.SupplierContract
+                        join supplier in DB.Supplier on supplierContract.SupplierID equals supplier.ID
+                        join p in DB.Product on supplierContract.ProductID equals p.ID
+                        join ps in DB.ProductSpecification on supplierContract.ProductSpecificationID equals ps.ID
+                        where supplierContract.IsDeleted == false
+                        && supplier.IsDeleted == false
+                        && supplier.CompanyID == uiSearchObj.CompanyID
+                        && supplierContract.IsNeedTaskAssignment == true
+                        && supplierContract.ExpirationDate > validDate && supplierContract.CreatedOn < validDate
+                        select new UISupplierTaskReport()
+                        {
+                            ID = supplierContract.ID,
+                            ProductID = p.ID,
+                            ProductName = p.ProductName,
+                            SupplierID = supplierContract.SupplierID,
+                            SupplierName = supplier.SupplierName,
+                            ProductSpecificationID = ps.ID,
+                            Specification = ps.Specification,
+                            TaskQuantity =
+                                DB.SupplierTaskAssignment.Where(x => x.IsDeleted == false
+                                && x.SupplierID == supplierContract.SupplierID && x.ContractID == supplierContract.ID
+                                && x.YearOfTask == yearOfTask && x.MonthOfTask == monthOfTask).Any() ?
+                                DB.SupplierTaskAssignment.Where(x => x.IsDeleted == false
+                                && x.SupplierID == supplierContract.SupplierID && x.ContractID == supplierContract.ID
+                                && x.YearOfTask == yearOfTask && x.MonthOfTask == monthOfTask).FirstOrDefault().Quantity : 0,
+                            AlreadyProcureCount = 0
+                        };
+            if (uiSearchObj.SupplierID.BiggerThanZero())
+            {
+                query = query.Where(x => x.SupplierID == uiSearchObj.SupplierID);
+            }
+            //query = query.Where(x => x.TaskQuantity > 0);
+
+
+            var queryResult = from q in query
+                              select new UISupplierTaskReport()
+                              {
+                                  ID = q.ID,
+                                  ProductID = q.ProductID,
+                                  ProductName = q.ProductName,
+                                  SupplierID = q.SupplierID,
+                                  SupplierName = q.SupplierName,
+                                  ProductSpecificationID = q.ProductSpecificationID,
+                                  Specification = q.Specification,
+                                  TaskQuantity = q.TaskQuantity,
+                                  AlreadyProcureCount = 0
+                                  //AlreadyProcureCount =
+                                  //    DB.ProcureOrderAppDetail.Where(x => x.IsDeleted == false && x.ProcureOrderApplication.IsDeleted == false
+                                  //    && x.ProductID == q.ProductID && x.ProductSpecificationID == q.ProductSpecificationID
+                                  //    && x.ProcureOrderApplication.WorkflowStatusID == (int)EWorkflowStatus.Completed
+                                  //    && x.ProcureOrderApplication.EstDeliveryDate >= start && x.ProcureOrderApplication.EstDeliveryDate < end).Any() ?
+                                  //    DB.ProcureOrderAppDetail.Where(x => x.IsDeleted == false && x.ProcureOrderApplication.IsDeleted == false
+                                  //    && x.ProductID == q.ProductID && x.ProductSpecificationID == q.ProductSpecificationID
+                                  //    && x.ProcureOrderApplication.WorkflowStatusID == (int)EWorkflowStatus.Completed
+                                  //    && x.ProcureOrderApplication.EstDeliveryDate >= start && x.ProcureOrderApplication.EstDeliveryDate < end).Sum(x => x.ProcureCount) : 0M
+                              };
+
+            total = queryResult.Count();
+            uiEntities = queryResult.OrderBy(x => x.ID).Skip(pageSize * pageIndex).Take(pageSize).ToList();
+            uiEntities.ForEach(x =>
+            {
+                x.Date = uiSearchObj.Date;
+                x.AlreadyProcureCount = GetAlreadyProcureCountForSupplierTaskReport(x.ProductID, x.ProductSpecificationID, uiSearchObj.Date.Value);
+            });
+            result = uiEntities;
+            totalRecords = total;
+        }
+
+        private int GetAlreadyProcureCountForSupplierTaskReport(int productID, int productSpecificationID, DateTime date)
+        {
+            //仅仅计算 交货日期是 当前月的
+            DateTime start = new DateTime(date.Year, date.Month, 1);
+            DateTime end = start.AddMonths(1);
+            List<int> needStatus = new List<int>() { (int)EWorkflowStatus.Paid, (int)EWorkflowStatus.Shipping, (int)EWorkflowStatus.Completed };
+            var query = from procureOrderAppDetail in DB.ProcureOrderAppDetail
+                        join procureOrderApplication in DB.ProcureOrderApplication on procureOrderAppDetail.ProcureOrderApplicationID equals procureOrderApplication.ID
+                        where procureOrderAppDetail.IsDeleted == false
+                        && procureOrderApplication.IsDeleted == false
+                        && procureOrderAppDetail.ProductID == productID
+                        && procureOrderAppDetail.ProductSpecificationID == productSpecificationID
+                        && needStatus.Contains(procureOrderApplication.WorkflowStatusID)
+                        && procureOrderApplication.OrderDate >= start && procureOrderApplication.OrderDate < end
+                        select new
+                        {
+                            ProcureOrderApplicationID = procureOrderApplication.ID,
+                            ProcureOrderAppDetailID = procureOrderAppDetail.ID,
+                            ProcureCount = procureOrderAppDetail.ProcureCount,
+                            IsStop = procureOrderApplication.IsStop,
+                            AlreadyInQty = procureOrderApplication.IsStop ? (
+                                DB.StockInDetail.Where(x => x.IsDeleted == false
+                                && x.StockIn.IsDeleted == false
+                                && x.StockIn.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse
+                                && x.ProcureOrderAppDetailID == procureOrderAppDetail.ID).Any() ?
+                                DB.StockInDetail.Where(x => x.IsDeleted == false
+                                && x.StockIn.IsDeleted == false
+                                && x.StockIn.WorkflowStatusID == (int)EWorkflowStatus.InWarehouse
+                                && x.ProcureOrderAppDetailID == procureOrderAppDetail.ID).Sum(x => x.InQty)
+                                : 0) : 0
+                        };
+            var tempResult = query.ToList();
+            int count = 0;
+            tempResult.ForEach(x =>
+            {
+                if (x.IsStop)
+                {
+                    count += x.AlreadyInQty;
+                }
+                else
+                {
+                    count += x.ProcureCount;
+                }
+            });
+
+            return count;
+        }
+
+
     }
 }

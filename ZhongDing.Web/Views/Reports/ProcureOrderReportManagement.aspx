@@ -110,14 +110,14 @@
                             </telerik:GridBoundColumn>
 
                             <telerik:GridBoundColumn UniqueName="WarehouseName" HeaderText="仓库" DataField="WarehouseName" ReadOnly="true">
-                                <ItemStyle HorizontalAlign="Left" Width="200" />
-                                <HeaderStyle Width="200" />
+                                <ItemStyle HorizontalAlign="Left" Width="100" />
+                                <HeaderStyle Width="100" />
                             </telerik:GridBoundColumn>
 
 
                             <telerik:GridBoundColumn UniqueName="ProductCode" HeaderText="货品编号" DataField="ProductCode" ReadOnly="true">
-                                <ItemStyle HorizontalAlign="Left" Width="160" />
-                                <HeaderStyle Width="160" />
+                                <ItemStyle HorizontalAlign="Left" Width="100" />
+                                <HeaderStyle Width="100" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="CategoryName" HeaderText="货品类别" DataField="CategoryName" ReadOnly="true">
                                 <ItemStyle HorizontalAlign="Left" Width="100" />
@@ -129,8 +129,8 @@
                             </telerik:GridBoundColumn>
 
                             <telerik:GridBoundColumn UniqueName="Specification" HeaderText="规格" DataField="Specification" ReadOnly="true">
-                                <ItemStyle HorizontalAlign="Left" Width="160" />
-                                <HeaderStyle Width="160" />
+                                <ItemStyle HorizontalAlign="Left" Width="100" />
+                                <HeaderStyle Width="100" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="UnitName" HeaderText="基本单位" DataField="UnitName" ReadOnly="true">
                                 <ItemStyle HorizontalAlign="Left" Width="60" />
@@ -138,64 +138,64 @@
                             </telerik:GridBoundColumn>
 
                             <telerik:GridBoundColumn UniqueName="ProcurePrice" HeaderText="采购单价" DataField="ProcurePrice" DataFormatString="￥{0:f2}"  ReadOnly="true">
-                                <ItemStyle HorizontalAlign="Left" Width="160" />
-                                <HeaderStyle Width="160" />
+                                <ItemStyle HorizontalAlign="Left" Width="80" />
+                                <HeaderStyle Width="80" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="ProcureCount" HeaderText="数量" DataField="ProcureCount" ReadOnly="true">
-                                <ItemStyle HorizontalAlign="Left" Width="200" />
-                                <HeaderStyle Width="200" />
+                                <ItemStyle HorizontalAlign="Left" Width="60" />
+                                <HeaderStyle Width="60" />
                             </telerik:GridBoundColumn>
 
                             <telerik:GridBoundColumn UniqueName="TotalAmount" HeaderText="金额" DataField="TotalAmount" DataFormatString="￥{0:f2}" ReadOnly="true">
-                                <ItemStyle HorizontalAlign="Left" Width="200" />
-                                <HeaderStyle Width="200" />
+                                <ItemStyle HorizontalAlign="Left" Width="100" />
+                                <HeaderStyle Width="100" />
                             </telerik:GridBoundColumn>
 
                             <%------%>
 
                             <telerik:GridBoundColumn UniqueName="AlreadyInQty" HeaderText="基本数量" DataField="AlreadyInQty" ColumnGroupName="AlreadyInQty"  ReadOnly="true">
-                                <ItemStyle HorizontalAlign="Left" Width="100" />
-                                <HeaderStyle Width="100" />
-                            </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="AlreadyInNumberOfPackages" HeaderText="件数" DataField="AlreadyInNumberOfPackages" ColumnGroupName="AlreadyInQty" ReadOnly="true">
                                 <ItemStyle HorizontalAlign="Left" Width="80" />
                                 <HeaderStyle Width="80" />
                             </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn UniqueName="AlreadyInNumberOfPackages" HeaderText="件数" DataField="AlreadyInNumberOfPackages" ColumnGroupName="AlreadyInQty" ReadOnly="true">
+                                <ItemStyle HorizontalAlign="Left" Width="60" />
+                                <HeaderStyle Width="60" />
+                            </telerik:GridBoundColumn>
 
                             <telerik:GridBoundColumn UniqueName="AlreadyInQtyProcurePrice" HeaderText="金额" DataField="AlreadyInQtyProcurePrice" DataFormatString="￥{0:f2}" ColumnGroupName="AlreadyInQty" ReadOnly="true">
-                                <ItemStyle HorizontalAlign="Left" Width="160" />
-                                <HeaderStyle Width="160" />
+                                <ItemStyle HorizontalAlign="Left" Width="100" />
+                                <HeaderStyle Width="100" />
                             </telerik:GridBoundColumn>
                             <%------%>
 
                             <telerik:GridBoundColumn UniqueName="StopInQty" HeaderText="基本数量" DataField="StopInQty" ColumnGroupName="StopInQty" ReadOnly="true">
-                                <ItemStyle HorizontalAlign="Left" Width="100" />
-                                <HeaderStyle Width="100" />
-                            </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="StopInNumberOfPackages" HeaderText="件数" DataField="StopInNumberOfPackages" ColumnGroupName="StopInQty" ReadOnly="true">
                                 <ItemStyle HorizontalAlign="Left" Width="80" />
                                 <HeaderStyle Width="80" />
                             </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn UniqueName="StopInNumberOfPackages" HeaderText="件数" DataField="StopInNumberOfPackages" ColumnGroupName="StopInQty" ReadOnly="true">
+                                <ItemStyle HorizontalAlign="Left" Width="60" />
+                                <HeaderStyle Width="60" />
+                            </telerik:GridBoundColumn>
 
                             <telerik:GridBoundColumn UniqueName="StopInQtyProcurePrice" HeaderText="金额" DataField="StopInQtyProcurePrice" DataFormatString="￥{0:f2}" ColumnGroupName="StopInQty" ReadOnly="true">
-                                <ItemStyle HorizontalAlign="Left" Width="160" />
-                                <HeaderStyle Width="160" />
+                                <ItemStyle HorizontalAlign="Left" Width="100" />
+                                <HeaderStyle Width="100" />
                             </telerik:GridBoundColumn>
 
                             <%------%>
 
                             <telerik:GridBoundColumn UniqueName="NotInQty" HeaderText="基本数量" DataField="NotInQty" ColumnGroupName="NotInQtyGroup" ReadOnly="true">
-                                <ItemStyle HorizontalAlign="Left" Width="100" />
-                                <HeaderStyle Width="100" />
-                            </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="NotInNumberOfPackages" HeaderText="件数" DataField="NotInNumberOfPackages" ColumnGroupName="NotInQtyGroup" ReadOnly="true">
                                 <ItemStyle HorizontalAlign="Left" Width="80" />
                                 <HeaderStyle Width="80" />
                             </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn UniqueName="NotInNumberOfPackages" HeaderText="件数" DataField="NotInNumberOfPackages" ColumnGroupName="NotInQtyGroup" ReadOnly="true">
+                                <ItemStyle HorizontalAlign="Left" Width="60" />
+                                <HeaderStyle Width="60" />
+                            </telerik:GridBoundColumn>
 
                                <telerik:GridBoundColumn UniqueName="NotInQtyProcurePrice" HeaderText="金额" DataField="NotInQtyProcurePrice" ColumnGroupName="NotInQtyGroup" ReadOnly="true">
-                                <ItemStyle HorizontalAlign="Left" Width="160" />
-                                <HeaderStyle Width="160" />
+                                <ItemStyle HorizontalAlign="Left" Width="100" />
+                                <HeaderStyle Width="100" />
                             </telerik:GridBoundColumn>
                         </Columns>
                         <CommandItemTemplate>

@@ -101,6 +101,7 @@
     <Compile Include="Enums\EPaymentMethod.cs" />
     <Compile Include="Enums\EPaymentStatus.cs" />
     <Compile Include="Enums\EPaymentType.cs" />
+    <Compile Include="Enums\EPermission.cs" />
     <Compile Include="Enums\EPermissionOption.cs" />
     <Compile Include="Enums\EProductCategory.cs" />
     <Compile Include="Enums\EQuarter.cs" />

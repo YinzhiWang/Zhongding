@@ -500,5 +500,10 @@ namespace ZhongDing.Web.Views.Sales
             BindEntities(true);
         }
 
+
+        protected override EWorkflow PagePermissionWorkflowID()
+        {
+            return EWorkflow.ClientOrder;
+        }
     }
 }

@@ -123,6 +123,8 @@ namespace ZhongDing.Web.Views.Products
                 BindDepartments();
 
                 LoadCurrentEntity();
+
+                base.PermissionOptionCheckButtonDelete(btnDelete);
             }
         }
 

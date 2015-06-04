@@ -80,7 +80,10 @@ namespace ZhongDing.Web.Views.Refunds
         }
 
         #endregion
-
+        protected override EWorkflow PagePermissionWorkflowID()
+        {
+            return EWorkflow.SupplierRefunds;
+        }
         protected override int GetCurrentWorkFlowID()
         {
             return (int)EWorkflow.SupplierRefunds;

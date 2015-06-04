@@ -1439,6 +1439,14 @@ namespace ZhongDing.Web.Views.Invoices
 
 
 
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.InvoiceManagement;
+        }
 
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
+        }
     }
 }

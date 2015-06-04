@@ -19,6 +19,10 @@ namespace ZhongDing.Web.Views.CautionMoneys
 {
     public partial class ClientCautionMoneyMaintenance : WorkflowBasePage
     {
+        protected override EWorkflow PagePermissionWorkflowID()
+        {
+            return EWorkflow.ClientCautionMoneyReturnApply;
+        }
         protected override int GetCurrentWorkFlowID()
         {
             return (int)EWorkflow.ClientCautionMoney;

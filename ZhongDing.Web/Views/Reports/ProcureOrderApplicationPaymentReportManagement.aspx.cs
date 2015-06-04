@@ -63,7 +63,7 @@ namespace ZhongDing.Web.Views.Reports
             if (!IsPostBack)
             {
                 BindSuppliers();
-
+                base.PermissionOptionCheckButtonExport(btnExport);
             }
 
         }
@@ -205,6 +205,14 @@ namespace ZhongDing.Web.Views.Reports
 
 
 
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.ProcureOrderApplicationPaymentReportManagement;
+        }
 
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.View;
+        }
     }
 }

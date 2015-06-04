@@ -480,6 +480,7 @@
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIObjects\UIDBClientSettlementReport.cs" />
     <Compile Include="UIObjects\UIClientAttachedInvoiceSettlement.cs" />
     <Compile Include="UIObjects\UIClientAttachedInvoiceSettlementDetail.cs" />
     <Compile Include="UIObjects\UIClientCautionMoney.cs" />
@@ -582,6 +583,7 @@
     <Compile Include="UIObjects\UISupplierInvoiceSettlementDetail.cs" />
     <Compile Include="UIObjects\UISupplierRefundApp.cs" />
     <Compile Include="UIObjects\UISupplierRefundAppDetail.cs" />
+    <Compile Include="UIObjects\UISupplierTaskReport.cs" />
     <Compile Include="UIObjects\UIToBeOutSalesOrderDetail.cs" />
     <Compile Include="UIObjects\UITransportCompany.cs" />
     <Compile Include="UIObjects\UITransportFee.cs" />
@@ -596,6 +598,7 @@
     <Compile Include="UISearchObjects\UISearchClientCautionMoney.cs" />
     <Compile Include="UISearchObjects\UISearchClientCautionMoneyReturnApplication.cs" />
     <Compile Include="UISearchObjects\UISearchClientSaleApplicationImportFileLog.cs" />
+    <Compile Include="UISearchObjects\UISearchDBClientSettlementReport.cs" />
     <Compile Include="UISearchObjects\UISearchDCFlowSettlementReport.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderAppDetailImportData.cs" />
     <Compile Include="UISearchObjects\UISearchClientAttachedInvoiceSettlement.cs" />
@@ -677,6 +680,7 @@
     <Compile Include="UISearchObjects\UISearchSupplierInvoiceSettlement.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierInvoiceSettlementDetail.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierRefundApp.cs" />
+    <Compile Include="UISearchObjects\UISearchSupplierTaskReport.cs" />
     <Compile Include="UISearchObjects\UISearchToBeOutSalesOrderDetail.cs" />
     <Compile Include="UISearchObjects\UISearchTransportCompany.cs" />
     <Compile Include="UISearchObjects\UISearchTransportFee.cs" />

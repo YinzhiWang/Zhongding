@@ -216,7 +216,7 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 采购订单导入
         /// </summary>
-        ProcureOrderData=84,
+        ProcureOrderData = 84,
         /// <summary>
         /// 收货 入库单导入
         /// </summary>
@@ -284,6 +284,16 @@ namespace ZhongDing.Common.Enums
         /// 配送公司库存核对表
         /// </summary>
         DCInventoryChecklistReport = 114,
+        /// <summary>
+        /// 大包客户结算表
+        /// </summary>
+        DBClientSettlementReportManage = 115,
+
+        /// <summary>
+        /// 供应商任务统计
+        /// </summary>
+        SupplierTaskReportManage=116,
+
 
         /// <summary>
         /// 发票管理

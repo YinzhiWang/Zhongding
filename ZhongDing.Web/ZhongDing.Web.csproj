@@ -2536,6 +2536,7 @@
     <Content Include="Content\reset.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Content\text.css" />
+    <Content Include="NoAccess.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -2688,6 +2689,8 @@
     <Content Include="Views\Refunds\SupplierTaskRefundMaintenance.aspx" />
     <Content Include="Views\Refunds\SupplierTaskRefundManagement.aspx" />
     <Content Include="Views\Reports\ClientSaleAppReportManagement.aspx" />
+    <Content Include="Views\Reports\SupplierTaskReportManagement.aspx" />
+    <Content Include="Views\Reports\DBClientSettlementReportManagement.aspx" />
     <Content Include="Views\Reports\DBClientQuarterlyAssessmentReport.aspx" />
     <Content Include="Views\Reports\DCFlowSettlementReport.aspx" />
     <Content Include="Views\Reports\InventorySummaryDetailReportManagement.aspx" />
@@ -2832,6 +2835,13 @@
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="NoAccess.aspx.cs">
+      <DependentUpon>NoAccess.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="NoAccess.aspx.designer.cs">
+      <DependentUpon>NoAccess.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3715,6 +3725,20 @@
     </Compile>
     <Compile Include="Views\Reports\ClientSaleAppReportManagement.aspx.designer.cs">
       <DependentUpon>ClientSaleAppReportManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\SupplierTaskReportManagement.aspx.cs">
+      <DependentUpon>SupplierTaskReportManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reports\SupplierTaskReportManagement.aspx.designer.cs">
+      <DependentUpon>SupplierTaskReportManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\DBClientSettlementReportManagement.aspx.cs">
+      <DependentUpon>DBClientSettlementReportManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reports\DBClientSettlementReportManagement.aspx.designer.cs">
+      <DependentUpon>DBClientSettlementReportManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Reports\DBClientQuarterlyAssessmentReport.aspx.cs">
       <DependentUpon>DBClientQuarterlyAssessmentReport.aspx</DependentUpon>

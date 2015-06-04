@@ -146,12 +146,12 @@ namespace ZhongDing.Web.Views.Products
 
         protected void rgEntities_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
-
+            base.PermissionOptionCheckGridCreate(e.Item);
         }
 
         protected void rgEntities_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
         {
-
+            base.PermissionOptionCheckGridDelete(e.OwnerTableView.Columns);
         }
 
         protected void rgEntities_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
@@ -170,6 +170,16 @@ namespace ZhongDing.Web.Views.Products
             txtProductName.Text = string.Empty;
 
             BindProducts(true);
+        }
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.ProductManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
         }
     }
 }

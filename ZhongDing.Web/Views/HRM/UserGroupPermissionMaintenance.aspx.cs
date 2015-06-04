@@ -253,5 +253,17 @@ namespace ZhongDing.Web.Views.HRM
         {
 
         }
+
+
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.PermissionManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
+        }
     }
 }

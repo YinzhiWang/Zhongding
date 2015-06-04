@@ -637,5 +637,16 @@ namespace ZhongDing.Web.Views.Basics.Editors
             rgContractFiles.Rebind();
         }
 
+
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.SupplierManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
+        }
     }
 }

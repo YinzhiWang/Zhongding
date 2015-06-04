@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using ZhongDing.Business.IRepositories;
 using ZhongDing.Business.Repositories;
 using ZhongDing.Common;
+using ZhongDing.Common.Enums;
 
 namespace ZhongDing.Web.Views.Imports.Editors
 {
@@ -75,5 +76,17 @@ namespace ZhongDing.Web.Views.Imports.Editors
 
 
         #endregion
+
+
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.DataImport;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Create;
+        }
     }
 }

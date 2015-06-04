@@ -9,6 +9,10 @@ using ZhongDing.Business.Repositories;
 using ZhongDing.Common;
 using ZhongDing.Web.Extensions;
 using ZhongDing.Common.Extension;
+using ZhongDing.Common.Enums;
+using Telerik.Web.UI;
+using System.Web.UI.WebControls;
+using System.Web.Script.Serialization;
 
 namespace ZhongDing.Web
 {
@@ -77,6 +81,30 @@ namespace ZhongDing.Web
                 return _PageUsersRepository;
             }
         }
+        private IPermissionRepository _PagePermissionRepository;
+        protected IPermissionRepository PagePermissionRepository
+        {
+            get
+            {
+                if (_PagePermissionRepository == null)
+                    _PagePermissionRepository = new PermissionRepository();
+
+                return _PagePermissionRepository;
+            }
+        }
+        private IWorkflowRepository _PageWorkflowRepository;
+        protected IWorkflowRepository PageWorkflowRepository
+        {
+            get
+            {
+                if (_PageWorkflowRepository == null)
+                    _PageWorkflowRepository = new WorkflowRepository();
+
+                return _PageWorkflowRepository;
+            }
+        }
+
+
 
         #endregion
 
@@ -85,11 +113,18 @@ namespace ZhongDing.Web
         /// 虚方法：获取页面权限ID，每个需要控制权限的页面都要override该方法
         /// </summary>
         /// <returns>System.Int32.</returns>
-        //protected virtual int PagePermissionID()
-        //{
-        //    return (int)EPermission.NULL;
-        //}
-
+        protected virtual EPermission PagePermissionID()
+        {
+            return EPermission.NULL;
+        }
+        protected virtual EWorkflow PagePermissionWorkflowID()
+        {
+            return EWorkflow.NULL;
+        }
+        protected virtual EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.None;
+        }
         #endregion
 
 
@@ -103,15 +138,26 @@ namespace ZhongDing.Web
                 && CurrentUser.UserID > 0
                 && CurrentUser.CompanyID > 0)//已登录用户检查用户权限
             {
-                //string[] userRoles = Roles.GetRolesForUser();
+                int userID = CurrentUser.UserID;
+                IDictionary<int, int> permossionIDAndValues = PagePermissionRepository.GetPermossionIDAndValues(userID);
 
-                //IList<int> rolePermossionIDs = PagePermissionRepository.GetPermissionsByRoleNames(userRoles).Select(x => x.ID).ToList();
+                var hfIsSystemAdmin = ((HiddenField)Page.Master.FindControl("hfIsSystemAdmin"));
+                if (hfIsSystemAdmin != null)
+                    hfIsSystemAdmin.Value = IsSystemAdminUser.ToString();
 
-                //int currentPagePermissionID = this.PagePermissionID();
+                var hfPermissions = ((HiddenField)Page.Master.FindControl("hfPermissions"));
+                if (hfPermissions != null)
+                    hfPermissions.Value = Utility.JsonSeralize(permossionIDAndValues);
 
-                //if (!rolePermossionIDs.Contains(currentPagePermissionID)
-                //    && (currentPagePermissionID == (int)EPermission.NULL))
-                //    this.RedirectToNoAccessPage(); //没有权限访问
+                this.PermissionCheck(permossionIDAndValues);
+
+                IList<int> workflowIDs = PageWorkflowRepository.GetCanAccessWorkflowsByUserID(userID);
+
+                var hfWorkFlowIDs = ((HiddenField)Page.Master.FindControl("hfWorkFlowIDs"));
+                if (hfWorkFlowIDs != null)
+                    hfWorkFlowIDs.Value = Utility.JsonSeralize(workflowIDs);
+
+                this.WorkflowPermissionCheck(workflowIDs);
             }
             else //未登录用户强制退出并清理session后跳转到登录页面
             {
@@ -140,6 +186,135 @@ namespace ZhongDing.Web
 
             base.OnPreInit(e);
         }
+
+
+        protected EPermissionOption PermissionOption = EPermissionOption.None;
+
+        protected bool IsSystemAdminUser
+        {
+            get
+            {
+                int userID = CurrentUser.UserID;
+                return userID == GlobalConst.DEFAULT_SYSTEM_ADMIN_USERID;
+            }
+        }
+        private void WorkflowPermissionCheck(IList<int> workflowIDs)
+        {
+            int userID = CurrentUser.UserID;
+            EWorkflow currentPagePermissionWorkflowID = this.PagePermissionWorkflowID();
+
+            if (currentPagePermissionWorkflowID != EWorkflow.NULL)
+            {
+                if (userID != GlobalConst.DEFAULT_SYSTEM_ADMIN_USERID)
+                {
+                    if (!workflowIDs.Contains((int)currentPagePermissionWorkflowID))
+                    {
+                        this.RedirectToNoAccessPage(); //没有权限访问
+                    }
+                }
+            }
+        }
+
+        protected virtual void PermissionCheck(IDictionary<int, int> permossionIDAndValues)
+        {
+            int userID = CurrentUser.UserID;
+            int currentPagePermissionID = (int)this.PagePermissionID();
+
+            if (currentPagePermissionID != (int)EPermission.NULL)
+            {
+                if (userID != GlobalConst.DEFAULT_SYSTEM_ADMIN_USERID)
+                {
+                    if (!permossionIDAndValues.ContainsKey(currentPagePermissionID))
+                    {
+                        this.RedirectToNoAccessPage(); //没有权限访问
+                    }
+                    else
+                    {
+                        EPermissionOption permissionValue = PermissionManager.ConverEnum(permossionIDAndValues[currentPagePermissionID]);
+                        this.PermissionOption = permissionValue;
+                        EPermissionOption pageAccessEPermissionOption = this.PageAccessEPermissionOption();
+                        if (pageAccessEPermissionOption == EPermissionOption.None)
+                        {
+
+                        }
+                        else
+                        {
+                            if (!PermissionManager.HasRight(permissionValue, pageAccessEPermissionOption))
+                            {
+                                this.RedirectToNoAccessPage(); //没有权限访问
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        protected void PermissionOptionCheckGridCreate(GridItem item)
+        {
+            if (item is GridCommandItem)
+            {
+                GridCommandItem commandItem = item as GridCommandItem;
+                Panel plAddCommand = commandItem.FindControl("plAddCommand") as Panel;
+                if (plAddCommand != null)
+                {
+                    plAddCommand.Visible = this.HasPermissionCreate;
+                }
+            }
+        }
+        protected void PermissionOptionCheckGridDelete(GridColumnCollection gridColumnCollection)
+        {
+            gridColumnCollection.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = this.HasPermissionDelete;
+        }
+        protected void PermissionOptionCheckButtonDelete(Control button)
+        {
+            button.Visible = this.HasPermissionDelete;
+        }
+        protected void PermissionOptionCheckButtonExport(Control button)
+        {
+            button.Visible = this.HasPermissionExport;
+        }
+        protected bool HasPermissionCreate
+        {
+            get
+            {
+                return IsSystemAdminUser || PermissionManager.HasRight(this.PermissionOption, EPermissionOption.Create);
+            }
+        }
+        protected bool HasPermissionEdit
+        {
+            get
+            {
+                return IsSystemAdminUser || PermissionManager.HasRight(this.PermissionOption, EPermissionOption.Edit);
+            }
+        }
+        protected bool HasPermissionDelete
+        {
+            get
+            {
+                return IsSystemAdminUser || PermissionManager.HasRight(this.PermissionOption, EPermissionOption.Delete);
+            }
+        }
+        protected bool HasPermissionView
+        {
+            get
+            {
+                return IsSystemAdminUser || PermissionManager.HasRight(this.PermissionOption, EPermissionOption.View);
+            }
+        }
+        protected bool HasPermissionPrint
+        {
+            get
+            {
+                return IsSystemAdminUser || PermissionManager.HasRight(this.PermissionOption, EPermissionOption.Print);
+            }
+        }
+        protected bool HasPermissionExport
+        {
+            get
+            {
+                return IsSystemAdminUser || PermissionManager.HasRight(this.PermissionOption, EPermissionOption.Export);
+            }
+        }
+
 
         public string BaseUrl
         {
@@ -222,6 +397,14 @@ namespace ZhongDing.Web
             siteMaster.BaseNotification.AutoCloseDelay = 1000;
             siteMaster.BaseNotification.Show(msg);
         }
+        public void ShowErrorMessage(string msg, int delay)
+        {
+            SiteMaster siteMaster = (SiteMaster)this.Master;
+
+            siteMaster.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
+            siteMaster.BaseNotification.AutoCloseDelay = delay;
+            siteMaster.BaseNotification.Show(msg);
+        }
         public void ShowSuccessMessage(string msg, string onClientHidden = null)
         {
             SiteMaster siteMaster = (SiteMaster)this.Master;
@@ -231,5 +414,7 @@ namespace ZhongDing.Web
             siteMaster.BaseNotification.AutoCloseDelay = 1000;
             siteMaster.BaseNotification.Show(msg);
         }
+
+
     }
 }

@@ -97,6 +97,7 @@ namespace ZhongDing.Web.Views.Invoices
             {
                 BindDistributionCompanies();
                 LoadEntityData();
+                base.PermissionOptionCheckButtonDelete(btnDelete);
             }
 
         }
@@ -205,7 +206,7 @@ namespace ZhongDing.Web.Views.Invoices
                         Amount = txtDBClientInvoiceDetailAmount.Value.ToDecimal(),
                         StockOutDetailID = stockOutDetailID,
                         DBClientInvoiceID = currentEntity.ID,
-                        
+
                     };
                     PageDBClientInvoiceDetailRepository.Add(DBClientInvoiceDetail);
 
@@ -304,6 +305,14 @@ namespace ZhongDing.Web.Views.Invoices
         }
 
 
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.InvoiceManagement;
+        }
 
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
+        }
     }
 }

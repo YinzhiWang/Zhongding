@@ -54,7 +54,9 @@ namespace ZhongDing.Web.Views.Basics
 
             if (!IsPostBack)
             {
+               
                 LoadCompany();
+                base.PermissionOptionCheckButtonDelete(btnDelete);
             }
 
         }
@@ -140,6 +142,16 @@ namespace ZhongDing.Web.Views.Basics
             {
                 args.IsValid = false;
             }
+        }
+
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.CompanyManagement;
+        }
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
         }
     }
 }

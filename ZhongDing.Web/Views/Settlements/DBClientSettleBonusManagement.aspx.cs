@@ -72,7 +72,10 @@ namespace ZhongDing.Web.Views.Settlements
         {
             return (int)EWorkflow.DBClientSettleBonus;
         }
-
+        protected override EWorkflow PagePermissionWorkflowID()
+        {
+            return EWorkflow.DBClientSettleBonus;
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             this.Master.MenuItemID = (int)EMenuItem.DBClientSettleBonusManage;

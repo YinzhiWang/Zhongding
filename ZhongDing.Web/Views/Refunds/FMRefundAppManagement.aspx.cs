@@ -108,7 +108,10 @@ namespace ZhongDing.Web.Views.Refunds
         {
             return (int)EWorkflow.FactoryManagerRefunds;
         }
-
+        protected override EWorkflow PagePermissionWorkflowID()
+        {
+            return EWorkflow.FactoryManagerRefunds;
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             this.Master.MenuItemID = (int)EMenuItem.FactoryManagerRefundsManage;

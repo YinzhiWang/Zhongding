@@ -151,7 +151,7 @@ namespace ZhongDing.Business.Repositories
                          sid.InQty
                      })
                      .GroupBy(x => new { x.WarehouseID, x.ProductID, x.ProductSpecificationID, x.BatchNumber, x.LicenseNumber, x.ExpirationDate })
-                     .Select (x => new UIInventoryHistory
+                     .Select(x => new UIInventoryHistory
                      {
                          WarehouseID = x.Key.WarehouseID,
                          ProductID = x.Key.ProductID,
@@ -228,8 +228,10 @@ namespace ZhongDing.Business.Repositories
             {
                 queryEx = queryEx.Where(x => x.ProductName.Contains(uiSearchObj.ProductName));
             }
-            totalRecords = query.Count();
-            query = query.OrderBy(x => x.WarehouseID).Skip(pageSize * pageIndex).Take(pageSize);
+            //totalRecords = query.Count();
+            //由于这里的计算 先计算最后一次Service跑完 到现在的库存变化，然后取出Service所计算出来的库存，两者合并得来的，金内存后才合并的，因此如果要在此过滤>0的 
+            //没有办法在分页了，分页也是徒劳，因为数据已经在内存了。因此这里直接取出所有数据吧
+            //query = query.OrderBy(x => x.WarehouseID).Skip(pageSize * pageIndex).Take(pageSize);
             inventoryHistories = queryEx.ToList();
             if (lastInventoryHistory != null)
             {
@@ -251,10 +253,12 @@ namespace ZhongDing.Business.Repositories
                         m.BalanceQty += balanceQty;
                     }
                     m.Amount = m.BalanceQty * m.ProcurePrice;
-                    m.NumberOfPackages = m.BalanceQty / m.NumberInLargePackage;
+                    m.NumberOfPackages = m.BalanceQty.ToDecimal() / m.NumberInLargePackage.ToDecimal();
                 });
             }
-
+            inventoryHistories = inventoryHistories.Where(x => x.BalanceQty > 0).ToList();
+            totalRecords = inventoryHistories.Count;
+            inventoryHistories = inventoryHistories.OrderBy(x => x.WarehouseID).Skip(pageSize * pageIndex).Take(pageSize).ToList();
             return inventoryHistories;
         }
 

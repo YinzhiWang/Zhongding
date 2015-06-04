@@ -106,12 +106,12 @@ namespace ZhongDing.Web.Views.Procures
 
         protected void rgTransportFees_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
-
+            base.PermissionOptionCheckGridCreate(e.Item);
         }
 
         protected void rgTransportFees_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
         {
-
+            base.PermissionOptionCheckGridDelete(e.OwnerTableView.Columns);
         }
 
         protected void rgTransportFees_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
@@ -131,6 +131,16 @@ namespace ZhongDing.Web.Views.Procures
             rcbxTransportFeeType.SelectedIndex = 0;
 
             BindTransportFee(true);
+        }
+
+        protected override EPermission PagePermissionID()
+        {
+            return EPermission.TransportFeeManagement;
+        }
+
+        protected override EPermissionOption PageAccessEPermissionOption()
+        {
+            return EPermissionOption.Edit;
         }
     }
 }

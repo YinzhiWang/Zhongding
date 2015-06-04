@@ -352,7 +352,7 @@
                     cell.SetCellValue(list.title);
                     cell.CellStyle = this.SetCellStyle(list);
                 }
-                if (!(root.root.defaultwidth.HasValue || !list.width.HasValue))
+                if (list.width.HasValue)
                 {
                     this.sheet.SetColumnWidth(num2, list.width.Value * 0x100);
                 }
