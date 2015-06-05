@@ -51,6 +51,11 @@ namespace ZhongDing.Common.Extension
                 return true;
             return false;
         }
+        /// <summary>
+        /// Not Null And Not Empty And Not WhiteSpace
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
         public static bool HasValue(this string s)
         {
             if (string.IsNullOrEmpty(s))

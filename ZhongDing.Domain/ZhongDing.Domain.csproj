@@ -344,6 +344,9 @@
     <Compile Include="Models\ProductSpecification.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ReimbursementType.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Roles.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -561,6 +564,7 @@
     <Compile Include="UIObjects\UIProductHighPrice.cs" />
     <Compile Include="UIObjects\UIProductPrice.cs" />
     <Compile Include="UIObjects\UIProductSpecification.cs" />
+    <Compile Include="UIObjects\UIReimbursementType.cs" />
     <Compile Include="UIObjects\UISalesOrderAppDetail.cs" />
     <Compile Include="UIObjects\UISalesOrderAppDetailImportData.cs" />
     <Compile Include="UIObjects\UISalesOrderApplicationImportData.cs" />
@@ -664,6 +668,7 @@
     <Compile Include="UISearchObjects\UISearchProcureOrderReport.cs" />
     <Compile Include="UISearchObjects\UISearchProduct.cs" />
     <Compile Include="UISearchObjects\UISearchProductSpecification.cs" />
+    <Compile Include="UISearchObjects\UISearchReimbursementType.cs" />
     <Compile Include="UISearchObjects\UISearchSalesOrderAppDetail.cs" />
     <Compile Include="UISearchObjects\UISearchSalesOrderAppDetailImportData.cs" />
     <Compile Include="UISearchObjects\UISearchStockIn.cs" />

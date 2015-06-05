@@ -268,7 +268,8 @@ namespace ZhongDing.Web
         }
         protected void PermissionOptionCheckButtonDelete(Control button)
         {
-            button.Visible = this.HasPermissionDelete;
+            if (button.Visible)
+                button.Visible = this.HasPermissionDelete;
         }
         protected void PermissionOptionCheckButtonExport(Control button)
         {

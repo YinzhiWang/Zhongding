@@ -2587,6 +2587,9 @@
     <Content Include="Views\Basics\ClientInfoManagement.aspx" />
     <Content Include="Views\Basics\ClientInfoProductFlowMaintenance.aspx" />
     <Content Include="Views\Basics\ClientInfoProductFlowManagement.aspx" />
+    <Content Include="Views\Basics\ReimbursementTypeChildMaintenance.aspx" />
+    <Content Include="Views\Basics\ReimbursementTypeMaintenance.aspx" />
+    <Content Include="Views\Basics\ReimbursementTypeManagement.aspx" />
     <Content Include="Views\Basics\MoneyMaintenance.aspx" />
     <Content Include="Views\Basics\MoneyManagement.aspx" />
     <Content Include="Views\Basics\TransportCompanyMaintenance.aspx" />
@@ -2999,6 +3002,27 @@
     </Compile>
     <Compile Include="Views\Basics\CompanyManagement.aspx.designer.cs">
       <DependentUpon>CompanyManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\ReimbursementTypeChildMaintenance.aspx.cs">
+      <DependentUpon>ReimbursementTypeChildMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\ReimbursementTypeChildMaintenance.aspx.designer.cs">
+      <DependentUpon>ReimbursementTypeChildMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\ReimbursementTypeMaintenance.aspx.cs">
+      <DependentUpon>ReimbursementTypeMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\ReimbursementTypeMaintenance.aspx.designer.cs">
+      <DependentUpon>ReimbursementTypeMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\ReimbursementTypeManagement.aspx.cs">
+      <DependentUpon>ReimbursementTypeManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\ReimbursementTypeManagement.aspx.designer.cs">
+      <DependentUpon>ReimbursementTypeManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Basics\MoneyMaintenance.aspx.cs">
       <DependentUpon>MoneyMaintenance.aspx</DependentUpon>
@@ -4039,7 +4063,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -81,8 +81,11 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         PermissionManagement = 17,
 
-        //18	报销类型管理
 
+        /// <summary>
+        /// //18	报销类型管理
+        /// </summary>
+        ReimbursementTypeManagement = 18,
         /// <summary>
         /// //19	物流费用管理
         /// </summary>
@@ -155,7 +158,8 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 现金管理
         /// </summary>
-        MoneyManagement = 36
+        MoneyManagement = 36,
+
 
     }
 }

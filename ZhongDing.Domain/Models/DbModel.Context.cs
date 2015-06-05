@@ -163,5 +163,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<WorkflowStepUserGroup> WorkflowStepUserGroup { get; set; }
         public DbSet<ApplicationPayment> ApplicationPayment { get; set; }
         public DbSet<BankAccountBalanceHistory> BankAccountBalanceHistory { get; set; }
+        public DbSet<ReimbursementType> ReimbursementType { get; set; }
     }
 }

@@ -78,7 +78,9 @@
                                     <li data-level="2" data-menuitemid="12" data-permissionname="部门销售计划及提成策略" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/DeptProductSalesPlanAndBonusManagement.aspx');">部门销售计划及提成策略</a></li>
                                     <li data-level="2" data-menuitemid="13" data-permissionname="物流公司管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/TransportCompanyManagement.aspx');">物流公司管理</a></li>
                                     <li data-level="2" data-menuitemid="14" data-permissionname="现金管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/MoneyManagement.aspx');">现金管理</a></li>
-
+                                    <li data-level="2" data-menuitemid="15" data-permissionname="报销类型管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/ReimbursementTypeManagement.aspx');">报销类型管理</a></li>
+                                 
+                                    
                                 </ul>
                             </li>
                             <li data-level="1" data-menuitemid="20"><a href="#" class="mws-i-24 i-price-tags">货品管理</a>
@@ -95,7 +97,6 @@
                                     <li data-level="2" data-menuitemid="32" data-permissionname="员工管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/HRM/EmployeeManagement.aspx');">员工管理</a></li>
                                     <li data-level="2" data-menuitemid="33" data-permissionname="权限管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/HRM/WorkflowPermissionManagement.aspx');">权限管理</a></li>
                                     <li data-level="2" data-menuitemid="34" data-permissionname="权限管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/HRM/UserGroupManagement.aspx');">用户组管理</a></li>
-                                    <li data-level="2" data-permissionname="报销类型管理" data-permissionoptionname="Edit"><a href="#">报销类型管理</a></li>
                                 </ul>
                             </li>
                             <li data-level="1"><a href="#" class="mws-i-24 i-clipboard-1">固定资产管理</a></li>

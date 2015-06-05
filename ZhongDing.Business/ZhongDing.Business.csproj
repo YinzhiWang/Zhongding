@@ -80,6 +80,7 @@
     <Compile Include="IRepositories\IHospitalTypeRepository.cs" />
     <Compile Include="IRepositories\IProcureOrderApplicationImportDataRepository.cs" />
     <Compile Include="IRepositories\IProcureOrderApplicationImportFileLogRepository.cs" />
+    <Compile Include="IRepositories\IReimbursementTypeRepository.cs" />
     <Compile Include="IRepositories\ISalesOrderAppDetailImportDataRepository.cs" />
     <Compile Include="IRepositories\ISalesOrderApplicationImportDataRepository.cs" />
     <Compile Include="IRepositories\IStockInDetailImportDataRepository.cs" />
@@ -216,6 +217,7 @@
     <Compile Include="Repositories\CompanyRepository.cs" />
     <Compile Include="Repositories\ClientSaleApplicationImportDataRepository.cs" />
     <Compile Include="Repositories\PermissionRepository.cs" />
+    <Compile Include="Repositories\ReimbursementTypeRepository.cs" />
     <Compile Include="Repositories\SalesOrderAppDetailImportDataRepository.cs" />
     <Compile Include="Repositories\SalesOrderApplicationImportDataRepository.cs" />
     <Compile Include="Repositories\StockInDetailImportDataRepository.cs" />

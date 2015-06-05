@@ -71,6 +71,10 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         MoneyManage,
         /// <summary>
+        /// 报销类型管理
+        /// </summary>
+        ReimbursementTypeManage,
+        /// <summary>
         /// 货品信息管理
         /// </summary>
         ProductInfoManage = 20,
@@ -356,6 +360,8 @@ namespace ZhongDing.Common.Enums
         /// 客户商保证金退回申请管理
         /// </summary>
         ClientCautionMoneyReturnApplyManage = 204,
+
+
 
     }
 }
