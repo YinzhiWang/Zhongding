@@ -2587,6 +2587,8 @@
     <Content Include="Views\Basics\ClientInfoManagement.aspx" />
     <Content Include="Views\Basics\ClientInfoProductFlowMaintenance.aspx" />
     <Content Include="Views\Basics\ClientInfoProductFlowManagement.aspx" />
+    <Content Include="Views\Basics\MoneyMaintenance.aspx" />
+    <Content Include="Views\Basics\MoneyManagement.aspx" />
     <Content Include="Views\Basics\TransportCompanyMaintenance.aspx" />
     <Content Include="Views\Basics\TransportCompanyManagement.aspx" />
     <Content Include="Views\Basics\DBContractMaintenance.aspx" />
@@ -2997,6 +2999,20 @@
     </Compile>
     <Compile Include="Views\Basics\CompanyManagement.aspx.designer.cs">
       <DependentUpon>CompanyManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\MoneyMaintenance.aspx.cs">
+      <DependentUpon>MoneyMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\MoneyMaintenance.aspx.designer.cs">
+      <DependentUpon>MoneyMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\MoneyManagement.aspx.cs">
+      <DependentUpon>MoneyManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\MoneyManagement.aspx.designer.cs">
+      <DependentUpon>MoneyManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Basics\TransportCompanyMaintenance.aspx.cs">
       <DependentUpon>TransportCompanyMaintenance.aspx</DependentUpon>
@@ -4023,7 +4039,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

@@ -1234,3 +1234,16 @@ GO
 ALTER TABLE [dbo].[UserGroupPermission] WITH NOCHECK ADD CONSTRAINT [FK_UserGroupPermission_PermissionID] FOREIGN KEY ([PermissionID]) REFERENCES [dbo].[Permission] ([ID])
 COMMIT TRANSACTION
 ---- end --- 06/03/2015 -- 更新菜单模块权限 -- by Nwang
+
+
+---- start --- 06/05/2015 -- 更新菜单模块权限 -- by Nwang
+BEGIN TRANSACTION
+ALTER TABLE [dbo].[UserGroupPermission] DROP CONSTRAINT [FK_UserGroupPermission_PermissionID]
+GO
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (36, N'现金管理', 1, 1, 1, 0, 0, 0, 0, '2015-06-03 15:39:37.630', NULL, NULL, NULL)
+GO
+ALTER TABLE [dbo].[UserGroupPermission] WITH NOCHECK ADD CONSTRAINT [FK_UserGroupPermission_PermissionID] FOREIGN KEY ([PermissionID]) REFERENCES [dbo].[Permission] ([ID])
+COMMIT TRANSACTION
+---- end --- 06/05/2015 -- 更新菜单模块权限 -- by Nwang
+
+

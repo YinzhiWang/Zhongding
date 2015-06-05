@@ -41,10 +41,10 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ApplicationPayment ApplicationPayment { get; set; }
-        public virtual ApplicationPayment ApplicationPayment1 { get; set; }
         public virtual Supplier Supplier { get; set; }
         public virtual SupplierInvoice SupplierInvoice { get; set; }
         public virtual SupplierInvoiceSettlement SupplierInvoiceSettlement { get; set; }
+        public virtual ApplicationPayment ApplicationPayment { get; set; }
+        public virtual ApplicationPayment ApplicationPayment1 { get; set; }
     }
 }

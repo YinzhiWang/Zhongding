@@ -151,7 +151,11 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// //35 供应商任务表
         /// </summary>
-        SupplierTaskReportManagement = 35
+        SupplierTaskReportManagement = 35,
+        /// <summary>
+        /// 现金管理
+        /// </summary>
+        MoneyManagement = 36
 
     }
 }

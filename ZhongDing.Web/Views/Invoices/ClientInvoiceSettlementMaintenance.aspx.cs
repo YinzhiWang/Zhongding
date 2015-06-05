@@ -536,6 +536,8 @@ namespace ZhongDing.Web.Views.Invoices
                     uiEntity = (UIApplicationPayment)gridDataItem.DataItem;
 
                 var rdpPayDate = (RadDatePicker)e.Item.FindControl("rdpPayDate");
+                if (rdpPayDate != null)
+                    rdpPayDate.MinDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
                 if (rdpPayDate != null && uiEntity != null)
                     rdpPayDate.SelectedDate = uiEntity.PayDate;
                 else
@@ -583,6 +585,7 @@ namespace ZhongDing.Web.Views.Invoices
                 ApplicationPayment appPayment = new ApplicationPayment();
 
                 var rdpPayDate = (RadDatePicker)e.Item.FindControl("rdpPayDate");
+
                 appPayment.PayDate = rdpPayDate.SelectedDate;
 
                 var rcbxFromAccount = (RadComboBox)e.Item.FindControl("rcbxFromAccount");

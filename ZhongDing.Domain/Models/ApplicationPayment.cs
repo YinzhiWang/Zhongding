@@ -17,17 +17,17 @@ namespace ZhongDing.Domain.Models
     {
         public ApplicationPayment()
         {
-            this.SupplierInvoiceSettlementDetail = new HashSet<SupplierInvoiceSettlementDetail>();
-            this.SupplierInvoiceSettlementDetail1 = new HashSet<SupplierInvoiceSettlementDetail>();
-            this.DBClientInvoiceSettlementDetail = new HashSet<DBClientInvoiceSettlementDetail>();
-            this.DBClientInvoiceSettlementDetail1 = new HashSet<DBClientInvoiceSettlementDetail>();
             this.ClientAttachedInvoiceSettlement = new HashSet<ClientAttachedInvoiceSettlement>();
             this.ClientAttachedInvoiceSettlement1 = new HashSet<ClientAttachedInvoiceSettlement>();
+            this.DBClientInvoiceSettlementDetail = new HashSet<DBClientInvoiceSettlementDetail>();
+            this.DBClientInvoiceSettlementDetail1 = new HashSet<DBClientInvoiceSettlementDetail>();
+            this.SupplierInvoiceSettlementDetail = new HashSet<SupplierInvoiceSettlementDetail>();
+            this.SupplierInvoiceSettlementDetail1 = new HashSet<SupplierInvoiceSettlementDetail>();
         }
     
         public int ID { get; set; }
-        public int ApplicationID { get; set; }
-        public int WorkflowID { get; set; }
+        public Nullable<int> ApplicationID { get; set; }
+        public Nullable<int> WorkflowID { get; set; }
         public Nullable<int> FromBankAccountID { get; set; }
         public string FromAccount { get; set; }
         public Nullable<int> ToBankAccountID { get; set; }
@@ -59,11 +59,11 @@ namespace ZhongDing.Domain.Models
         public virtual PaymentType PaymentType { get; set; }
         public virtual BankAccount BankAccount1 { get; set; }
         public virtual Workflow Workflow { get; set; }
-        public virtual ICollection<SupplierInvoiceSettlementDetail> SupplierInvoiceSettlementDetail { get; set; }
-        public virtual ICollection<SupplierInvoiceSettlementDetail> SupplierInvoiceSettlementDetail1 { get; set; }
-        public virtual ICollection<DBClientInvoiceSettlementDetail> DBClientInvoiceSettlementDetail { get; set; }
-        public virtual ICollection<DBClientInvoiceSettlementDetail> DBClientInvoiceSettlementDetail1 { get; set; }
         public virtual ICollection<ClientAttachedInvoiceSettlement> ClientAttachedInvoiceSettlement { get; set; }
         public virtual ICollection<ClientAttachedInvoiceSettlement> ClientAttachedInvoiceSettlement1 { get; set; }
+        public virtual ICollection<DBClientInvoiceSettlementDetail> DBClientInvoiceSettlementDetail { get; set; }
+        public virtual ICollection<DBClientInvoiceSettlementDetail> DBClientInvoiceSettlementDetail1 { get; set; }
+        public virtual ICollection<SupplierInvoiceSettlementDetail> SupplierInvoiceSettlementDetail { get; set; }
+        public virtual ICollection<SupplierInvoiceSettlementDetail> SupplierInvoiceSettlementDetail1 { get; set; }
     }
 }

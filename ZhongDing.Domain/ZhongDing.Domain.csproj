@@ -74,6 +74,9 @@
     <Compile Include="Models\BankAccount.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\BankAccountBalanceHistory.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CautionMoneyType.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>

@@ -58,8 +58,6 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ApplicationPayment ApplicationPayment { get; set; }
-        public virtual ApplicationPayment ApplicationPayment1 { get; set; }
         public virtual BankAccount BankAccount { get; set; }
         public virtual ClientCompany ClientCompany { get; set; }
         public virtual ClientUser ClientUser { get; set; }
@@ -67,5 +65,7 @@ namespace ZhongDing.Domain.Models
         public virtual CostType CostType { get; set; }
         public virtual WorkflowStatus WorkflowStatus { get; set; }
         public virtual ICollection<ClientAttachedInvoiceSettlementDetail> ClientAttachedInvoiceSettlementDetail { get; set; }
+        public virtual ApplicationPayment ApplicationPayment { get; set; }
+        public virtual ApplicationPayment ApplicationPayment1 { get; set; }
     }
 }

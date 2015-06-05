@@ -438,7 +438,7 @@ namespace ZhongDing.Web.Views.CautionMoneys
                             }
 
                             currentEntity.WorkflowStatusID = (int)EWorkflowStatus.Paid;
-                            currentEntity.PaidDate = DateTime.Now;
+                            //currentEntity.PaidDate = DateTime.Now;
                             currentEntity.PaidBy = CurrentUser.UserID;
 
                             unitOfWork.SaveChanges();
@@ -920,6 +920,8 @@ namespace ZhongDing.Web.Views.CautionMoneys
                     uiEntity = (UIApplicationPayment)gridDataItem.DataItem;
 
                 var rdpPayDate = (RadDatePicker)e.Item.FindControl("rdpPayDate");
+                if (rdpPayDate != null)
+                    rdpPayDate.MinDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
                 if (rdpPayDate != null && uiEntity != null)
                     rdpPayDate.SelectedDate = uiEntity.PayDate;
                 else
@@ -1181,7 +1183,8 @@ namespace ZhongDing.Web.Views.CautionMoneys
                 }
 
                 var rdpPayDate = (RadDatePicker)e.Item.FindControl("rdpPayDate");
-
+                if (rdpPayDate != null)
+                    rdpPayDate.MinDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
                 if (rdpPayDate != null)
                     rdpPayDate.MaxDate = DateTime.Now;
 

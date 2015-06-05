@@ -109,5 +109,30 @@ namespace ZhongDing.Common
                 return (long)Math.Floor(dVal);
             return (long)Math.Ceiling(dVal);
         }
+
+        public static long ConvertDateInterval(DateInterval dateInterval)
+        {
+            if (dateInterval == DateInterval.Day)
+            {
+                return 1000 * 60 * 60 * 24;
+            }
+            if (dateInterval == DateInterval.Hour)
+            {
+                return 1000 * 60 * 60;
+            }
+            if (dateInterval == DateInterval.Minute)
+            {
+                return 1000 * 60;
+            }
+            if (dateInterval == DateInterval.Month)
+            {
+                return 1000l * 60 * 60 * 24 * 30;
+            }
+            if (dateInterval == DateInterval.Second)
+            {
+                return 1000;
+            }
+            return 1000;
+        }
     }
 }

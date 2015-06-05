@@ -16,5 +16,13 @@ namespace ZhongDing.Domain.UISearchObjects
 
         public DateTime? PayDate { get; set; }
 
+
+        public int PaymentStatusID { get; set; }
+
+        public int? BankAccountID { get; set; }
+
+        public int CompanyID { get; set; }
+
+        public List<int> IncludeBankAccountIDs { get; set; }
     }
 }

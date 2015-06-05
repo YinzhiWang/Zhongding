@@ -77,6 +77,8 @@
                                     <li data-level="2" data-menuitemid="11" data-permissionname="商业客户流向管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/ClientInfoProductFlowManagement.aspx');">商业客户流向管理</a></li>
                                     <li data-level="2" data-menuitemid="12" data-permissionname="部门销售计划及提成策略" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/DeptProductSalesPlanAndBonusManagement.aspx');">部门销售计划及提成策略</a></li>
                                     <li data-level="2" data-menuitemid="13" data-permissionname="物流公司管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/TransportCompanyManagement.aspx');">物流公司管理</a></li>
+                                    <li data-level="2" data-menuitemid="14" data-permissionname="现金管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/MoneyManagement.aspx');">现金管理</a></li>
+
                                 </ul>
                             </li>
                             <li data-level="1" data-menuitemid="20"><a href="#" class="mws-i-24 i-price-tags">货品管理</a>
@@ -349,7 +351,8 @@
                     32: "配送公司库存核对表",
                     33: "发票管理",
                     34: "大包客户结算表",
-                    35: "供应商任务统计表"
+                    35: "供应商任务统计表",
+                    36: "现金管理"
                 };
                 var EWorkflow = {
                     1: "采购订单",

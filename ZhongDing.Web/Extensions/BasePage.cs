@@ -262,7 +262,9 @@ namespace ZhongDing.Web
         }
         protected void PermissionOptionCheckGridDelete(GridColumnCollection gridColumnCollection)
         {
-            gridColumnCollection.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE).Visible = this.HasPermissionDelete;
+            var col = gridColumnCollection.FindByUniqueName(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE);
+            if (col != null)
+                col.Visible = this.HasPermissionDelete;
         }
         protected void PermissionOptionCheckButtonDelete(Control button)
         {

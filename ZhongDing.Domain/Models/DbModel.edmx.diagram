@@ -171,12 +171,6 @@
         <EntityTypeShape EntityType="DbModel.ProductHighPrice" Width="1.5" PointX="26.75" PointY="162" />
         <AssociationConnector Association="DbModel.FK_ProductHighPrice_Product" />
         <AssociationConnector Association="DbModel.FK_ProductHighPrice_ProductSpecification" />
-        <EntityTypeShape EntityType="DbModel.ApplicationPayment" Width="1.5" PointX="5.25" PointY="146.625" />
-        <AssociationConnector Association="DbModel.FK_ApplicationPayment_FromBankAccount" />
-        <AssociationConnector Association="DbModel.FK_ApplicationPayment_PaymentStatus" />
-        <AssociationConnector Association="DbModel.FK_ApplicationPayment_PaymentType" />
-        <AssociationConnector Association="DbModel.FK_ApplicationPayment_ToBankAccount" />
-        <AssociationConnector Association="DbModel.FK_ApplicationPayment_Workflow" />
         <EntityTypeShape EntityType="DbModel.SupplierDeduction" Width="1.5" PointX="32" PointY="169.875" />
         <AssociationConnector Association="DbModel.FK_SupplierDeduction_Supplier" />
         <EntityTypeShape EntityType="DbModel.ClientRefundApplication" Width="1.5" PointX="31.25" PointY="151.625" />
@@ -304,8 +298,6 @@
         <AssociationConnector Association="DbModel.FK_StockOut_ClientUser" />
         <EntityTypeShape EntityType="DbModel.SupplierInvoice" Width="1.5" PointX="8.25" PointY="158" />
         <EntityTypeShape EntityType="DbModel.SupplierInvoiceSettlementDetail" Width="1.5" PointX="21.5" PointY="158.125" />
-        <AssociationConnector Association="DbModel.FK_SupplierInvoiceSettlementDetail_ApplicationPayment" />
-        <AssociationConnector Association="DbModel.FK_SupplierInvoiceSettlementDetail_CanceledApplicationPayment" />
         <AssociationConnector Association="DbModel.FK_SupplierInvoice_CompanyID" />
         <AssociationConnector Association="DbModel.FK_SupplierInvoice_SupplierID" />
         <AssociationConnector Association="DbModel.FK_SupplierInvoiceSettlementDetail_Supplier" />
@@ -325,8 +317,6 @@
         <AssociationConnector Association="DbModel.FK_ClientInvoiceSettlement_Company" />
         <AssociationConnector Association="DbModel.FK_ClientInvoiceSettlement_WorkflowStatus" />
         <EntityTypeShape EntityType="DbModel.DBClientInvoiceSettlementDetail" Width="1.5" PointX="13.5" PointY="142" />
-        <AssociationConnector Association="DbModel.FK_DBClientInvoiceSettlementDetail_ApplicationPayment" />
-        <AssociationConnector Association="DbModel.FK_DBClientInvoiceSettlementDetail_CanceledApplicationPayment" />
         <EntityTypeShape EntityType="DbModel.DBClientInvoice" Width="1.5" PointX="3" PointY="135.375" />
         <AssociationConnector Association="DbModel.FK_DBClientInvoice_CompanyID" />
         <AssociationConnector Association="DbModel.FK_DBClientInvoice_DistributionCompanyID" />
@@ -361,8 +351,6 @@
         <AssociationConnector Association="DbModel.FK_ClientAttachedInvoiceSettlementDetail_ClientInvoiceDetail" />
         <AssociationConnector Association="DbModel.FK_ClientAttachedInvoiceSettlementDetail_StockOutDetail" />
         <EntityTypeShape EntityType="DbModel.ClientAttachedInvoiceSettlement" Width="1.5" PointX="16.5" PointY="138.5" />
-        <AssociationConnector Association="DbModel.FK_ClientAttachedInvoiceSettlement_ApplicationPayment" />
-        <AssociationConnector Association="DbModel.FK_ClientAttachedInvoiceSettlement_CanceledApplicationPayment" />
         <AssociationConnector Association="DbModel.FK_ClientAttachedInvoiceSettlement_BankAccount" />
         <AssociationConnector Association="DbModel.FK_ClientAttachedInvoiceSettlement_ClientCompany" />
         <AssociationConnector Association="DbModel.FK_ClientAttachedInvoiceSettlement_ClientUser" />
@@ -431,6 +419,20 @@
         <EntityTypeShape EntityType="DbModel.WorkflowStepUserGroup" Width="1.5" PointX="10.732254288500293" PointY="3.7189705538186106" />
         <AssociationConnector Association="DbModel.FK_WorkflowStepUserGroup_UserGroupID" />
         <AssociationConnector Association="DbModel.FK_WorkflowStepUserGroup_WorkflowStep" />
+        <EntityTypeShape EntityType="DbModel.ApplicationPayment" Width="1.5" PointX="0.93320792398099217" PointY="8.0316108204571588" />
+        <AssociationConnector Association="DbModel.FK_ApplicationPayment_FromBankAccount" />
+        <AssociationConnector Association="DbModel.FK_ApplicationPayment_PaymentStatus" />
+        <AssociationConnector Association="DbModel.FK_ApplicationPayment_PaymentType" />
+        <AssociationConnector Association="DbModel.FK_ApplicationPayment_ToBankAccount" />
+        <AssociationConnector Association="DbModel.FK_ApplicationPayment_Workflow" />
+        <AssociationConnector Association="DbModel.FK_ClientAttachedInvoiceSettlement_ApplicationPayment" />
+        <AssociationConnector Association="DbModel.FK_ClientAttachedInvoiceSettlement_CanceledApplicationPayment" />
+        <AssociationConnector Association="DbModel.FK_DBClientInvoiceSettlementDetail_ApplicationPayment" />
+        <AssociationConnector Association="DbModel.FK_DBClientInvoiceSettlementDetail_CanceledApplicationPayment" />
+        <AssociationConnector Association="DbModel.FK_SupplierInvoiceSettlementDetail_ApplicationPayment" />
+        <AssociationConnector Association="DbModel.FK_SupplierInvoiceSettlementDetail_CanceledApplicationPayment" />
+        <EntityTypeShape EntityType="DbModel.BankAccountBalanceHistory" Width="1.5" PointX="6.8364044888114588" PointY="30.952834084142388" />
+        <AssociationConnector Association="DbModel.FK_BankAccountBalanceHistory_BankAccountID" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -33,8 +33,8 @@ namespace ZhongDing.Common
         private static readonly string CONFIGKEY_UPLOADFILEPATH_STOCKINDATA = "UploadFilePath.StockInData";
         private static readonly string CONFIGKEY_UPLOADFILEPATH_CLIENTSALEAPPLICATIONDATA = "UploadFilePath.ClientSaleApplication";
 
-        
-        
+
+
 
 
         private static readonly string CONFIGKEY_MEMBERSHIP_PASSWORDRESETLENGTH = "Membership.PasswordResetLength";
@@ -64,6 +64,18 @@ namespace ZhongDing.Common
         /// 导入数据服务运行的开始时间
         /// </summary>
         private static readonly string CONFIGKEY_IMPORTDATA_SERVICE_STARTTIME = "ImportDataService.StartTime";
+
+        /// <summary>
+        ///  计算银行卡余额服务运行的开始时间
+        /// </summary>
+        private static readonly string CONFIGKEY_CALCULATEBANKACCOUNTBALANCE_SERVICE_STARTTIME = "CalculateBankAccountBalanceService.StartTime";
+
+        /// <summary>
+        /// 计算银行卡余额服务运行的开始时间  间隔
+        /// </summary>
+        private static readonly string CONFIGKEY_CALCULATEBANKACCOUNTBALANCE_SERVICE_INTERVAL = "CalculateBankAccountBalanceService.Interval";
+
+
 
         /// <summary>
         /// 导入数据服务运行的周期
@@ -426,6 +438,43 @@ namespace ZhongDing.Common
                 }
             }
         }
+
+
+        /// <summary>
+        /// 计算银行卡余额开始时间   运行间隔
+        /// </summary>
+        public static int CalculateBankAccountBalanceServiceInterval
+        {
+            get
+            {
+                var sInterval = ConfigurationManager.AppSettings[CONFIGKEY_CALCULATEBANKACCOUNTBALANCE_SERVICE_INTERVAL];
+
+                int iInerval;
+                if (int.TryParse(sInterval, out iInerval))
+                    return iInerval;
+                else
+                    return GlobalConst.WIN_SERVICE_DEFAULT_INTERVAl_HOUR;
+            }
+        }
+
+        /// <summary>
+        /// 计算银行卡余额开始时间
+        /// </summary>
+        public static DateTime CalculateBankAccountBalanceServiceStartTime
+        {
+            get
+            {
+                try
+                {
+                    return DateTime.Parse(ConfigurationManager.AppSettings[CONFIGKEY_CALCULATEBANKACCOUNTBALANCE_SERVICE_STARTTIME]);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
+
 
         /// <summary>
         /// 导入数据服务运行的周期

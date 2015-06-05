@@ -438,6 +438,7 @@
     <Build Include="dbo\Tables\UserGroup.sql" />
     <Build Include="dbo\Tables\Permission.sql" />
     <Build Include="dbo\Tables\WorkflowStepUserGroup.sql" />
+    <Build Include="dbo\Tables\BankAccountBalanceHistory.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

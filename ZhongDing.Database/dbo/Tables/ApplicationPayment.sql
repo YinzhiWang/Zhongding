@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[ApplicationPayment] (
     [ID]                INT             IDENTITY (1, 1) NOT NULL,
-    [ApplicationID]     INT             NOT NULL,
-    [WorkflowID]        INT             NOT NULL,
+    [ApplicationID]     INT             NULL,
+    [WorkflowID]        INT             NULL,
     [FromBankAccountID] INT             NULL,
     [FromAccount]       NVARCHAR (255)  NULL,
     [ToBankAccountID]   INT             NULL,
@@ -24,6 +24,8 @@
     CONSTRAINT [FK_ApplicationPayment_ToBankAccount] FOREIGN KEY ([ToBankAccountID]) REFERENCES [dbo].[BankAccount] ([ID]),
     CONSTRAINT [FK_ApplicationPayment_Workflow] FOREIGN KEY ([WorkflowID]) REFERENCES [dbo].[Workflow] ([ID])
 );
+
+
 
 
 

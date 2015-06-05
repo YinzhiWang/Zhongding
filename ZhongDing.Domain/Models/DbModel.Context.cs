@@ -91,7 +91,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<SaleOrderType> SaleOrderType { get; set; }
         public DbSet<SalesOrderApplication> SalesOrderApplication { get; set; }
         public DbSet<ProductHighPrice> ProductHighPrice { get; set; }
-        public DbSet<ApplicationPayment> ApplicationPayment { get; set; }
         public DbSet<SupplierDeduction> SupplierDeduction { get; set; }
         public DbSet<ClientRefundApplication> ClientRefundApplication { get; set; }
         public DbSet<ClientRefundAppDetail> ClientRefundAppDetail { get; set; }
@@ -162,5 +161,7 @@ namespace ZhongDing.Domain.Models
         public DbSet<UserGroupUser> UserGroupUser { get; set; }
         public DbSet<Permission> Permission { get; set; }
         public DbSet<WorkflowStepUserGroup> WorkflowStepUserGroup { get; set; }
+        public DbSet<ApplicationPayment> ApplicationPayment { get; set; }
+        public DbSet<BankAccountBalanceHistory> BankAccountBalanceHistory { get; set; }
     }
 }

@@ -1118,6 +1118,7 @@ namespace ZhongDing.Web.Views.Procures
                                 foreach (var item in appPayments)
                                 {
                                     item.PaymentStatusID = (int)EPaymentStatus.Paid;
+                                    item.PayDate = DateTime.Now;
                                 }
 
                                 unitOfWork.SaveChanges();

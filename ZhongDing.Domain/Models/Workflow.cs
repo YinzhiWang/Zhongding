@@ -19,8 +19,8 @@ namespace ZhongDing.Domain.Models
         {
             this.WorkflowStep = new HashSet<WorkflowStep>();
             this.ApplicationNote = new HashSet<ApplicationNote>();
-            this.ApplicationPayment = new HashSet<ApplicationPayment>();
             this.SupplierRefundApplication = new HashSet<SupplierRefundApplication>();
+            this.ApplicationPayment = new HashSet<ApplicationPayment>();
         }
     
         public int ID { get; set; }
@@ -40,7 +40,7 @@ namespace ZhongDing.Domain.Models
     
         public virtual ICollection<WorkflowStep> WorkflowStep { get; set; }
         public virtual ICollection<ApplicationNote> ApplicationNote { get; set; }
-        public virtual ICollection<ApplicationPayment> ApplicationPayment { get; set; }
         public virtual ICollection<SupplierRefundApplication> SupplierRefundApplication { get; set; }
+        public virtual ICollection<ApplicationPayment> ApplicationPayment { get; set; }
     }
 }

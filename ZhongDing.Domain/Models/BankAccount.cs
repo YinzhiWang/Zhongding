@@ -20,12 +20,13 @@ namespace ZhongDing.Domain.Models
             this.ClientInfoBankAccount = new HashSet<ClientInfoBankAccount>();
             this.SupplierBankAccount = new HashSet<SupplierBankAccount>();
             this.ClientSaleAppBankAccount = new HashSet<ClientSaleAppBankAccount>();
-            this.ApplicationPayment = new HashSet<ApplicationPayment>();
-            this.ApplicationPayment1 = new HashSet<ApplicationPayment>();
             this.ClientUser = new HashSet<ClientUser>();
             this.SupplierInvoiceSettlement = new HashSet<SupplierInvoiceSettlement>();
             this.DBClientInvoiceSettlement = new HashSet<DBClientInvoiceSettlement>();
             this.ClientAttachedInvoiceSettlement = new HashSet<ClientAttachedInvoiceSettlement>();
+            this.ApplicationPayment = new HashSet<ApplicationPayment>();
+            this.ApplicationPayment1 = new HashSet<ApplicationPayment>();
+            this.BankAccountBalanceHistory = new HashSet<BankAccountBalanceHistory>();
         }
     
         public int ID { get; set; }
@@ -41,6 +42,7 @@ namespace ZhongDing.Domain.Models
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
+        public Nullable<decimal> Balance { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -58,11 +60,12 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<ClientInfoBankAccount> ClientInfoBankAccount { get; set; }
         public virtual ICollection<SupplierBankAccount> SupplierBankAccount { get; set; }
         public virtual ICollection<ClientSaleAppBankAccount> ClientSaleAppBankAccount { get; set; }
-        public virtual ICollection<ApplicationPayment> ApplicationPayment { get; set; }
-        public virtual ICollection<ApplicationPayment> ApplicationPayment1 { get; set; }
         public virtual ICollection<ClientUser> ClientUser { get; set; }
         public virtual ICollection<SupplierInvoiceSettlement> SupplierInvoiceSettlement { get; set; }
         public virtual ICollection<DBClientInvoiceSettlement> DBClientInvoiceSettlement { get; set; }
         public virtual ICollection<ClientAttachedInvoiceSettlement> ClientAttachedInvoiceSettlement { get; set; }
+        public virtual ICollection<ApplicationPayment> ApplicationPayment { get; set; }
+        public virtual ICollection<ApplicationPayment> ApplicationPayment1 { get; set; }
+        public virtual ICollection<BankAccountBalanceHistory> BankAccountBalanceHistory { get; set; }
     }
 }

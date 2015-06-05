@@ -21,5 +21,15 @@ namespace ZhongDing.Domain.UIObjects
         public decimal? Fee { get; set; }
 
         public DateTime? PayDate { get; set; }
+
+        public int PaymentTypeID { get; set; }
+
+        public string PaymentType { get; set; }
+
+        public decimal? OutAmount { get; set; }
+
+        public decimal? InAmount { get; set; }
+
+        public decimal Balance { get; set; }
     }
 }

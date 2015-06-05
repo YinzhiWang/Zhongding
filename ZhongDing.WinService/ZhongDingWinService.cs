@@ -11,16 +11,19 @@ using System.Text;
 using System.Threading.Tasks;
 using ZhongDing.Common;
 using ZhongDing.Common.Enums;
+using ZhongDing.WinService.CustomerTask;
 using ZhongDing.WinService.Lib;
+using ZhongDing.WinService.ServiceTask;
 
 namespace ZhongDing.WinService
 {
-    public partial class ZhongDingWinService : ServiceBase
+    public partial class ZhongDingWinService : CustomerServiceBase
     {
         #region Const
 
         private const string WIN_SERVICE_NAME = "ZhongDing MIS Service";
         private const string WIN_SERVICE_CLASS_NAME = "ZhongDingWinService";
+        private const string WIN_SERVICE_DESCRIPTION = "众鼎医药咨询信息系统服务";
 
         #endregion
 
@@ -56,23 +59,6 @@ namespace ZhongDing.WinService
             InitializeComponent();
         }
 
-        protected override void OnStart(string[] args)
-        {
-            initInterval = 60000;
-
-            Utility.WriteTrace("Execute " + WIN_SERVICE_CLASS_NAME + "：OnStart.");
-
-            this.tmCalculateInventory.Enabled = true;
-            this.tmCalculateInventory.Interval = initInterval;
-            this.tmCalculateInventory.Start();
-            Utility.WriteTrace(WIN_SERVICE_NAME + ": tmCalculateInventory.Start.");
-
-            this.tmImportDCFlowData.Enabled = true;
-            this.tmImportDCFlowData.Interval = initInterval;
-            this.tmImportDCFlowData.Start();
-            Utility.WriteTrace(WIN_SERVICE_NAME + ": tmImportDCFlowData.Start.");
-
-        }
 
         protected override void OnStop()
         {
@@ -333,7 +319,58 @@ namespace ZhongDing.WinService
 
         #endregion
 
-        
+        ServiceTaskContainer serviceTaskContainer = null;
+        void serviceTaskContainer_OnException(ServiceTaskBase arg1, Exception arg2)
+        {
+            Utility.WriteTrace(WIN_SERVICE_NAME + ": " + arg1.ServiceTaskName + " Error:" + arg2.Message);
 
+            Utility.WriteExceptionLog(arg2);
+        }
+
+        public override void Start()
+        {
+            initInterval = 60000;
+
+            Utility.WriteTrace("Execute " + WIN_SERVICE_CLASS_NAME + "：OnStart.");
+
+            this.tmCalculateInventory.Enabled = true;
+            this.tmCalculateInventory.Interval = initInterval;
+            this.tmCalculateInventory.Start();
+            Utility.WriteTrace(WIN_SERVICE_NAME + ": tmCalculateInventory.Start.");
+
+            this.tmImportDCFlowData.Enabled = true;
+            this.tmImportDCFlowData.Interval = initInterval;
+            this.tmImportDCFlowData.Start();
+            Utility.WriteTrace(WIN_SERVICE_NAME + ": tmImportDCFlowData.Start.");
+
+            serviceTaskContainer = new ServiceTaskContainer();
+            serviceTaskContainer.EnableTrace = true;
+            serviceTaskContainer.OnException += serviceTaskContainer_OnException;
+
+            serviceTaskContainer.AddServiceTask(new CalculateBankAccountBalanceTask(new ServiceTaskParameter()
+            {
+                DateIntervalType = DateInterval.Month,
+                InitInterval = 10 * 1000,
+                ProcessInterval = WebConfig.CalculateBankAccountBalanceServiceInterval,//1 month
+                ServiceTaskName = "CalculateBankAccountBalanceTask",
+                ServiceStartTime = WebConfig.CalculateBankAccountBalanceServiceStartTime,//2015-01-13 08:00
+            }));
+            serviceTaskContainer.Start();
+        }
+
+        public override string MyServiceName
+        {
+            get { return WIN_SERVICE_CLASS_NAME; }
+        }
+
+        public override string MyServiceDisplayName
+        {
+            get { return WIN_SERVICE_NAME; }
+        }
+
+        public override string MyServiceDescription
+        {
+            get { return WIN_SERVICE_NAME; }
+        }
     }
 }

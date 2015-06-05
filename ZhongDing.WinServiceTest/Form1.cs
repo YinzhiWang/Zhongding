@@ -44,5 +44,10 @@ namespace ZhongDing.WinServiceTest
             DBClientSettleBonusService.ProcessWork();
         }
 
+        private void btn计算银行卡余额_Click(object sender, EventArgs e)
+        {
+            CalculateBankAccountBalanceService.ProcessWork();
+        }
+
     }
 }

@@ -67,6 +67,10 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         TransportCompanyManage,
         /// <summary>
+        /// 现金管理
+        /// </summary>
+        MoneyManage,
+        /// <summary>
         /// 货品信息管理
         /// </summary>
         ProductInfoManage = 20,
@@ -292,7 +296,7 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 供应商任务统计
         /// </summary>
-        SupplierTaskReportManage=116,
+        SupplierTaskReportManage = 116,
 
 
         /// <summary>
