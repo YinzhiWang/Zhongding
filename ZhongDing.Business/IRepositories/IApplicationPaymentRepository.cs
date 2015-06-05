@@ -28,5 +28,15 @@ namespace ZhongDing.Business.IRepositories
         /// <returns>IList{UIApplicationPayment}.</returns>
         IList<UIApplicationPayment> GetUIList(UISearchApplicationPayment uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
 
+        /// <summary>
+        /// 现金管理
+        /// </summary>
+        /// <param name="uiSearchObj"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="totalRecords"></param>
+        /// <returns></returns>
+        IList<UIApplicationPayment> GetUIListForMoneyManagement(UISearchApplicationPayment uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
+
     }
 }
