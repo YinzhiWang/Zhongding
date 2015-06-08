@@ -26,14 +26,14 @@ AS
         SET @endRecord = @startRecord + @pageSize - 1 
                            
         SELECT  *
-        FROM    ( SELECT    ROW_NUMBER() OVER ( ORDER BY dbo.StockOutDetail.ID ) AS rowId ,
+        FROM    ( SELECT    ROW_NUMBER() OVER ( ORDER BY dbo.StockOut.OutDate ) AS rowId ,
                             dbo.StockOutDetail.ID ,
                             dbo.StockOut.OutDate ,
-                            dbo.StockOut.Code  AS StockOutCode,
+                            dbo.StockOut.Code AS StockOutCode ,
                             dbo.SalesOrderApplication.OrderCode AS SalesOrderApplicationOrderCode ,
                             dbo.ClientUser.ClientName ,
-                            dbo.ClientCompany.Name AS ClientCompanyName,
-                            dbo.Warehouse.Name  AS WarehouseName,
+                            dbo.ClientCompany.Name AS ClientCompanyName ,
+                            dbo.Warehouse.Name AS WarehouseName ,
                             dbo.ProductCategory.CategoryName ,
                             dbo.Product.ProductCode ,
                             dbo.Product.ProductName ,
@@ -48,8 +48,8 @@ AS
                             dbo.StockOutDetail.BatchNumber ,
                             dbo.StockOutDetail.ExpirationDate ,
                             dbo.StockOutDetail.SalesPrice ,
-                            dbo.StockOutDetail.TotalSalesAmount,
-							dbo.StockOutDetail.ProcurePrice
+                            dbo.StockOutDetail.TotalSalesAmount ,
+                            dbo.StockOutDetail.ProcurePrice
                   FROM      dbo.StockOutDetail
                             JOIN dbo.StockOut ON dbo.StockOut.ID = dbo.StockOutDetail.StockOutID
                             JOIN dbo.SalesOrderApplication ON dbo.SalesOrderApplication.ID = dbo.StockOutDetail.SalesOrderApplicationID
@@ -61,6 +61,7 @@ AS
                             JOIN dbo.ProductSpecification ON dbo.StockOutDetail.ProductSpecificationID = dbo.ProductSpecification.ID
                             JOIN dbo.UnitOfMeasurement ON dbo.ProductSpecification.UnitOfMeasurementID = dbo.UnitOfMeasurement.ID
                   WHERE     dbo.StockOutDetail.IsDeleted = 0
+                            AND dbo.StockOut.IsDeleted = 0
                             AND ( @beginDate IS NULL
                                   OR dbo.StockOut.OutDate >= @beginDate
                                 )
@@ -76,10 +77,10 @@ AS
                             AND ( @productId IS NULL
                                   OR dbo.StockOutDetail.ProductID = @productId
                                 )
+                            AND dbo.StockOut.WorkflowStatusID = 13
                 ) AS temp
         WHERE   temp.rowId BETWEEN @startRecord AND @endRecord
-		
-
+      
         SET @totalRecord = ( SELECT COUNT(dbo.StockOutDetail.ID)
                              FROM   dbo.StockOutDetail
                                     JOIN dbo.StockOut ON dbo.StockOut.ID = dbo.StockOutDetail.StockOutID
@@ -92,6 +93,7 @@ AS
                                     JOIN dbo.ProductSpecification ON dbo.StockOutDetail.ProductSpecificationID = dbo.ProductSpecification.ID
                                     JOIN dbo.UnitOfMeasurement ON dbo.ProductSpecification.UnitOfMeasurementID = dbo.UnitOfMeasurement.ID
                              WHERE  dbo.StockOutDetail.IsDeleted = 0
+                                    AND dbo.StockOut.IsDeleted = 0
                                     AND ( @beginDate IS NULL
                                           OR dbo.StockOut.OutDate >= @beginDate
                                         )
@@ -107,5 +109,6 @@ AS
                                     AND ( @productId IS NULL
                                           OR dbo.StockOutDetail.ProductID = @productId
                                         )
+                                    AND dbo.StockOut.WorkflowStatusID = 13
                            )
     END

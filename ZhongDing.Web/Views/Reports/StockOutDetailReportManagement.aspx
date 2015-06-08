@@ -106,7 +106,7 @@
                                 <HeaderStyle Width="100px" />
                             </telerik:GridBoundColumn>
 
-                            <telerik:GridBoundColumn UniqueName="StockOutCode" HeaderText="出库单    号" DataField="StockOutCode">
+                            <telerik:GridBoundColumn UniqueName="StockOutCode" HeaderText="出库单号" DataField="StockOutCode">
                                 <ItemStyle HorizontalAlign="Left" Width="180px" />
                                 <HeaderStyle Width="180px" />
                             </telerik:GridBoundColumn>
@@ -116,8 +116,8 @@
                             </telerik:GridBoundColumn>
 
                             <telerik:GridBoundColumn UniqueName="ClientName" HeaderText="客户" DataField="ClientName">
-                                <ItemStyle HorizontalAlign="Left" Width="100px" />
-                                <HeaderStyle Width="100px" />
+                                <ItemStyle HorizontalAlign="Left" Width="80px" />
+                                <HeaderStyle Width="80px" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="ClientCompanyName" HeaderText="商业单位" DataField="ClientCompanyName">
                                 <ItemStyle HorizontalAlign="Left" Width="260px" />
@@ -128,8 +128,8 @@
 
 
                             <telerik:GridBoundColumn UniqueName="WarehouseName" HeaderText="仓库" DataField="WarehouseName">
-                                <ItemStyle HorizontalAlign="Left" Width="160px" />
-                                <HeaderStyle Width="160px" />
+                                <ItemStyle HorizontalAlign="Left" Width="120px" />
+                                <HeaderStyle Width="120px" />
                             </telerik:GridBoundColumn>
 
 
@@ -147,8 +147,8 @@
                             </telerik:GridBoundColumn>
 
                             <telerik:GridBoundColumn UniqueName="Specification" HeaderText="规格" DataField="Specification">
-                                <ItemStyle HorizontalAlign="Left" Width="100px" />
-                                <HeaderStyle Width="100px" />
+                                <ItemStyle HorizontalAlign="Left" Width="80px" />
+                                <HeaderStyle Width="80px" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="UnitName" HeaderText="基本单位" DataField="UnitName">
                                 <ItemStyle HorizontalAlign="Left" Width="60px" />

@@ -2587,6 +2587,8 @@
     <Content Include="Views\Basics\ClientInfoManagement.aspx" />
     <Content Include="Views\Basics\ClientInfoProductFlowMaintenance.aspx" />
     <Content Include="Views\Basics\ClientInfoProductFlowManagement.aspx" />
+    <Content Include="Views\Basics\BorrowMoneyMaintenance.aspx" />
+    <Content Include="Views\Basics\BorrowMoneyManagement.aspx" />
     <Content Include="Views\Basics\ReimbursementTypeChildMaintenance.aspx" />
     <Content Include="Views\Basics\ReimbursementTypeMaintenance.aspx" />
     <Content Include="Views\Basics\ReimbursementTypeManagement.aspx" />
@@ -3002,6 +3004,20 @@
     </Compile>
     <Compile Include="Views\Basics\CompanyManagement.aspx.designer.cs">
       <DependentUpon>CompanyManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\BorrowMoneyMaintenance.aspx.cs">
+      <DependentUpon>BorrowMoneyMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\BorrowMoneyMaintenance.aspx.designer.cs">
+      <DependentUpon>BorrowMoneyMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\BorrowMoneyManagement.aspx.cs">
+      <DependentUpon>BorrowMoneyManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\BorrowMoneyManagement.aspx.designer.cs">
+      <DependentUpon>BorrowMoneyManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Basics\ReimbursementTypeChildMaintenance.aspx.cs">
       <DependentUpon>ReimbursementTypeChildMaintenance.aspx</DependentUpon>

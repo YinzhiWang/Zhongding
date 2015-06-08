@@ -1,4 +1,4 @@
-﻿<%@ Page Title="供应商任务统计表" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SupplierTaskReportManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Reports.SupplierTaskReportManagement" %>
+﻿<%@ Page Title="借款管理" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="BorrowMoneyManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Basics.BorrowMoneyManagement" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 
@@ -12,18 +12,18 @@
             <telerik:AjaxSetting AjaxControlID="btnSearch">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="tblSearch" />
-                    <telerik:AjaxUpdatedControl ControlID="rgProcureOrderReports" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="rgApplicationPayments" LoadingPanelID="loadingPanel" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="btnReset">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="tblSearch" />
-                    <telerik:AjaxUpdatedControl ControlID="rgProcureOrderReports" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="rgApplicationPayments" LoadingPanelID="loadingPanel" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
-            <telerik:AjaxSetting AjaxControlID="rgProcureOrderReports">
+            <telerik:AjaxSetting AjaxControlID="rgApplicationPayments">
                 <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="rgProcureOrderReports" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="rgApplicationPayments" LoadingPanelID="loadingPanel" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
         </AjaxSettings>
@@ -33,91 +33,85 @@
     <div class="container">
         <div class="mws-panel grid_8">
             <div class="mws-panel-header">
-
-                <span class="mws-i-24 i-table-1" id="lblTitle" runat="server">供应商任务统计表</span>
+                <span class="mws-i-24 i-table-1">借款管理</span>
             </div>
             <div class="mws-panel-body">
-
-                <table runat="server" id="tblSearch" class="leftmargin10" style="margin-top: 10px;">
+                <table runat="server" id="tblSearch" class="leftmargin10">
                     <tr class="height40">
-                        <th class="width100 middle-td">年份月份：</th>
+                        <th class="width100 middle-td">订单日期：</th>
                         <td class="middle-td" colspan="4">
-                            <telerik:RadMonthYearPicker runat="server" ID="rmypSettlementDate" Width="120"
-                                EnableShadows="true" 
-                                MonthYearNavigationSettings-CancelButtonCaption="取消"
-                                MonthYearNavigationSettings-OkButtonCaption="确定"
-                                MonthYearNavigationSettings-TodayButtonCaption="今天"
-                                MonthYearNavigationSettings-DateIsOutOfRangeMessage="日期超出范围"
-                                MonthYearNavigationSettings-EnableScreenBoundaryDetection="true">
-                            </telerik:RadMonthYearPicker>
+                            <telerik:RadDatePicker runat="server" ID="rdpBeginDate" Width="120"></telerik:RadDatePicker>
+                            -&nbsp;&nbsp;
+                            <telerik:RadDatePicker runat="server" ID="rdpEndDate" Width="120"></telerik:RadDatePicker>
                         </td>
-                        <th class="width120 middle-td">客户名称：</th>
-                        <td class="middle-td width280">
-                     
+                        <td></td>
 
-                            <telerik:RadComboBox runat="server" ID="rcbxSupplier" Filter="Contains" AutoPostBack="true"
-                                Width="260" EmptyMessage="--请选择--">
+                    </tr>
+                    <tr class="height40">
+                        <th class="width60 middle-td">银行账号：</th>
+                        <td class="middle-td width400">
+                            <telerik:RadComboBox runat="server" ID="rcbxFromAccount" Filter="Contains" AllowCustomText="false" NoWrap="true"
+                                MarkFirstMatch="true" Height="160px" Width="400px" EmptyMessage="--请选择--">
                             </telerik:RadComboBox>
-
                         </td>
-                        <td>
+
+                        <td class="middle-td leftpadding20">
                             <asp:Button ID="btnSearch" runat="server" Text="查询" CssClass="mws-button green" OnClick="btnSearch_Click" />
                             &nbsp;&nbsp;&nbsp;&nbsp;
                                 <asp:Button ID="btnReset" runat="server" Text="重置" CssClass="mws-button orange" OnClick="btnReset_Click" />
-                            &nbsp;&nbsp;&nbsp;&nbsp;
-                              <asp:Button ID="btnExport" runat="server" Text="导出" CssClass="mws-button green" OnClientClick="exportExcel();return false;" />
+                     
                         </td>
-                        <td></td>
-                    </tr>
 
+                    </tr>
                 </table>
-                <telerik:RadGrid ID="rgProcureOrderReports" runat="server" PageSize="10"
-                    AllowCustomPaging="true"
-                    AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false"
+                <telerik:RadGrid ID="rgApplicationPayments" runat="server" PageSize="10"
+                    AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
                     MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
+                    OnNeedDataSource="rgApplicationPayments_NeedDataSource" OnDeleteCommand="rgApplicationPayments_DeleteCommand"
                     ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                    OnNeedDataSource="rgProcureOrderReports_NeedDataSource" OnDeleteCommand="rgProcureOrderReports_DeleteCommand"
-                    OnItemCreated="rgProcureOrderReports_ItemCreated" OnColumnCreated="rgProcureOrderReports_ColumnCreated" OnItemDataBound="rgProcureOrderReports_ItemDataBound">
+                    OnItemCreated="rgApplicationPayments_ItemCreated" OnColumnCreated="rgApplicationPayments_ColumnCreated" OnItemDataBound="rgApplicationPayments_ItemDataBound">
                     <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
                         ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
-                        <ColumnGroups>
-                        </ColumnGroups>
                         <Columns>
-                            <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
+                            <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false">
+                                <ItemStyle HorizontalAlign="Left" Width="50" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn UniqueName="PayDate" HeaderText="交易日期" DataField="PayDate" DataFormatString="{0:yyyy-MM-dd}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="Date" HeaderText="月份" DataField="Date" DataFormatString="{0:yyyy/MM}">
+                            <telerik:GridBoundColumn UniqueName="Comment" HeaderText="摘要" DataField="Comment">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="SupplierName" HeaderText="供应商" DataField="SupplierName">
+                            <telerik:GridBoundColumn UniqueName="OutAmount" HeaderText="借方" DataField="OutAmount" DataFormatString="￥{0:f2}">
+                                <ItemStyle HorizontalAlign="Left" Width="180" />
+                            </telerik:GridBoundColumn>
+                            <telerik:GridBoundColumn UniqueName="InAmount" HeaderText="贷方" DataField="InAmount" DataFormatString="￥{0:f2}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <%--   <telerik:GridBoundColumn UniqueName="Hospitals" HeaderText="医院" DataField="Hospitals">
-                                                        <ItemStyle HorizontalAlign="Left" />
-                                                    </telerik:GridBoundColumn>--%>
-                            <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品名称" DataField="ProductName">
-                                <ItemStyle HorizontalAlign="Left" Width="60" />
-                            </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="Specification" HeaderText="规格" DataField="Specification">
+                            <telerik:GridBoundColumn UniqueName="PaymentType" HeaderText="方向" DataField="PaymentType">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-
-                            <telerik:GridBoundColumn UniqueName="TaskQuantity" HeaderText="月任务" DataField="TaskQuantity">
-                                <ItemStyle HorizontalAlign="Left" />
-                            </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="AlreadyProcureCount" HeaderText="已采购数量数量" DataField="AlreadyProcureCount">
+                            <telerik:GridBoundColumn UniqueName="Balance" HeaderText="余额" DataField="Balance" DataFormatString="￥{0:f2}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
 
+
+                            <%--<telerik:GridTemplateColumn UniqueName="Audit">
+                                <ItemStyle HorizontalAlign="Center" Width="30" />
+                                <ItemTemplate>
+                                    <a href="javascript:void(0)" onclick="openAuditWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>); return false;">
+                                        <u>审核</u></a>
+                                </ItemTemplate>
+                            </telerik:GridTemplateColumn>--%>
                         </Columns>
                         <CommandItemTemplate>
                             <table class="width100-percent">
                                 <tr>
                                     <td>
-                                        <%--<asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
+                                        <asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
                                             <input type="button" class="rgAdd" onclick="redirectToMaintenancePage(-1); return false;" />
                                             <a href="javascript:void(0)" onclick="redirectToMaintenancePage(-1); return false;">添加</a>
-                                        </asp:Panel>--%>
+                                        </asp:Panel>
                                         <%--<asp:Panel ID="plExportCommand" runat="server" CssClass="width80 float-left">
                                             <input type="button" class="rgExpXLS" onclick="exportExcel(); return false;" />
                                             <a href="javascript:void(0);" onclick="exportExcel(); return false;">导出excel</a>
@@ -139,19 +133,12 @@
                             PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
                             FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
                     </MasterTableView>
-
-                    <ClientSettings EnableRowHoverStyle="true">
-                        <ClientEvents />
-                        <Selecting AllowRowSelect="True" />
-                        <Scrolling AllowScroll="true" SaveScrollPosition="true" UseStaticHeaders="true" />
+                    <ClientSettings>
+                        <ClientEvents OnGridCreated="GetsGridObject" />
                     </ClientSettings>
-                    <HeaderStyle Width="100%" />
                 </telerik:RadGrid>
             </div>
         </div>
-    </div>
-    <div style="display: none;">
-        <asp:Button ID="btnExportHidden" runat="server" Text="导出" CssClass="mws-button green" OnClick="btnExport_Click" />
     </div>
 </asp:Content>
 <asp:Content ID="Content3" ContentPlaceHolderID="scriptContent" runat="server">
@@ -168,11 +155,8 @@
 
         function redirectToMaintenancePage(id) {
             $.showLoading();
-            var ProcureOrderReportType = $.getQueryString("ProcureOrderReportType");
-            window.location.href = "ProcureOrderReportMaintenance.aspx?ProcureOrderReportType=" + ProcureOrderReportType + "&EntityID=" + id;
+            window.location.href = "MoneyMaintenance.aspx?EntityID=" + id;
         }
-        function exportExcel() {
-            $("#<%=btnExportHidden.ClientID%>").click();
-        }
+
     </script>
 </asp:Content>

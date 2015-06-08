@@ -77,7 +77,7 @@
                                         <HeaderStyle Width="120" />
                                         <ItemStyle HorizontalAlign="Left" Width="120" />
                                     </telerik:GridBoundColumn>
-                                    <telerik:GridBoundColumn UniqueName="SupplierName" HeaderText="该供应商" DataField="SupplierName">
+                                    <telerik:GridBoundColumn UniqueName="SupplierName" HeaderText="供应商" DataField="SupplierName">
                                         <HeaderStyle Width="180" />
                                         <ItemStyle HorizontalAlign="Left" Width="180" />
                                     </telerik:GridBoundColumn>

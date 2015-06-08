@@ -86,6 +86,7 @@ namespace ZhongDing.Web.Views.Reports
             {
 
                 BindSuppliers();
+                rmypSettlementDate.SelectedDate = DateTime.Now;
                 base.PermissionOptionCheckButtonExport(btnExport);
             }
 

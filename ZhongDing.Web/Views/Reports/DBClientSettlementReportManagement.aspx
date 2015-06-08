@@ -1,4 +1,4 @@
-﻿<%@ Page Title="采购订单报表" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DBClientSettlementReportManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Reports.DBClientSettlementReportManagement" %>
+﻿<%@ Page Title="大包客户结算表" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="DBClientSettlementReportManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Reports.DBClientSettlementReportManagement" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 

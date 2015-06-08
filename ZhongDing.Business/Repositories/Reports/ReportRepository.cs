@@ -811,22 +811,48 @@ namespace ZhongDing.Business.Repositories.Reports
                                       NewInQty = q.NewInQty,
                                       NewOutQty = q.NewOutQty
                                   };
+
+
                 if (uiSearchObj.ProductID.BiggerThanZero())
                 {
                     queryExInfo = queryExInfo.Where(x => x.ProductID == uiSearchObj.ProductID);
                 }
-                totalRecords = queryExInfo.Count();
-                queryExInfo = queryExInfo.OrderBy(x => x.WarehouseID).Skip(pageSize * pageIndex).Take(pageSize);
+                var queryResult = from q in queryExInfo
+                                  select new UIInventorySummaryReport()
+                                  {
+                                      WarehouseID = q.WarehouseID,
+                                      ProductID = q.ProductID,
+                                      ProductSpecificationID = q.ProductSpecificationID,
+                                      BatchNumber = q.BatchNumber,
+                                      LicenseNumber = q.LicenseNumber,
+                                      ExpirationDate = q.ExpirationDate,
+                                      InQty = q.InQty + q.NewInQty,
+                                      OutQty = q.OutQty + q.NewOutQty,
+                                      ProcurePrice = q.ProcurePrice,
+                                      WarehouseName = q.WarehouseName,
+                                      ProductName = q.ProductName,
+                                      ProductCode = q.ProductCode,
+                                      Specification = q.Specification,
+                                      UnitName = q.UnitName,
+                                      NumberInLargePackage = q.NumberInLargePackage,
+                                      PreBalanceQty = q.PreBalanceQty,
+                                      CurrentBalanceQty = q.NewInQty - q.NewOutQty,
+                                      NewInQty = q.NewInQty,
+                                      NewOutQty = q.NewOutQty
+                                  };
+                queryResult = queryResult.Where(x => !(x.PreBalanceQty == 0 && x.InQty == 0));
+                totalRecords = queryResult.Count();
+                queryExInfo = queryResult.OrderBy(x => x.ProductCode).Skip(pageSize * pageIndex).Take(pageSize);
                 result = queryExInfo.ToList();
 
             }
 
             result.ForEach(x =>
             {
-                x.InQty += x.NewInQty;
-                x.OutQty += x.NewOutQty;
-
-                x.CurrentBalanceQty += (x.NewInQty - x.NewOutQty);
+                //这里的 计算转移到上边的 linq中了
+                //x.InQty += x.NewInQty;
+                //x.OutQty += x.NewOutQty;
+                //x.CurrentBalanceQty += (x.NewInQty - x.NewOutQty);
 
                 x.InQtyPackages = x.InQty.ToDecimal() / x.NumberInLargePackage.ToDecimal();
                 x.OutQtyPackages = x.OutQty.ToDecimal() / x.NumberInLargePackage.ToDecimal();

@@ -138,6 +138,8 @@ namespace ZhongDing.Web.Views.Procures
 
                     txtRemark.Text = currentEntity.Remark;
 
+                    var user = PageUsersRepository.GetByID(currentEntity.CreatedBy);
+                    lblOperator.Text = "操作人：" + (user != null ? user.FullName : ZhongDing.Web.Extensions.SiteUser.GetCurrentSiteUser().UserName);
                 }
             }
             else
@@ -145,9 +147,11 @@ namespace ZhongDing.Web.Views.Procures
                 btnDelete.Visible = false;
                 divOtherSections.Visible = false;
                 BindTransportCompanys();
+
+                lblOperator.Text = "操作人：" + ZhongDing.Web.Extensions.SiteUser.GetCurrentSiteUser().UserName;
             }
 
-            lblOperator.Text = "操作人：" + ZhongDing.Web.Extensions.SiteUser.GetCurrentSiteUser().UserName;
+
         }
         private void BindTransportCompanys(int? ransportCompanyID = null)
         {

@@ -74,13 +74,13 @@
                             <div class="mws-form-row">
                                 <div class="float-left width40-percent">&nbsp;</div>
                                 <div class="float-left">
-                                    <div class="mws-form-item">
+                                    <%--<div class="mws-form-item"></div>--%>
                                         <asp:Button ID="btnSearch" runat="server" Text="查询" CssClass="mws-button green" OnClick="btnSearch_Click" />
                                         &nbsp;&nbsp;
                                         <asp:Button ID="btnReset" runat="server" Text="重置" CssClass="mws-button orange" OnClick="btnReset_Click" />
                                         &nbsp;&nbsp;
                                         <asp:Button ID="btnExport" runat="server" Text="导出" CssClass="mws-button green" OnClientClick="exportExcel();return false;" Visible="false" />
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
