@@ -39,7 +39,7 @@
             <div class="mws-panel-body">
                 <table runat="server" id="tblSearch" class="leftmargin10">
                     <tr class="height40">
-                        <th class="width100 middle-td">订单日期：</th>
+                        <th class="width100 middle-td">出库日期：</th>
                         <td class="middle-td" colspan="3">
                             <telerik:RadDatePicker runat="server" ID="rdpBeginDate" Width="120"></telerik:RadDatePicker>
                             -&nbsp;&nbsp;
@@ -120,26 +120,26 @@
                                 <HeaderStyle Width="100px" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="ClientCompanyName" HeaderText="商业单位" DataField="ClientCompanyName">
-                                <ItemStyle HorizontalAlign="Left" Width="400px" />
-                                <HeaderStyle Width="400px" />
+                                <ItemStyle HorizontalAlign="Left" Width="260px" />
+                                <HeaderStyle Width="260px" />
                             </telerik:GridBoundColumn>
 
 
 
 
                             <telerik:GridBoundColumn UniqueName="WarehouseName" HeaderText="仓库" DataField="WarehouseName">
-                                <ItemStyle HorizontalAlign="Left" Width="200px" />
-                                <HeaderStyle Width="200px" />
+                                <ItemStyle HorizontalAlign="Left" Width="160px" />
+                                <HeaderStyle Width="160px" />
                             </telerik:GridBoundColumn>
 
 
                             <telerik:GridBoundColumn UniqueName="ProductCode" HeaderText="货品编号" DataField="ProductCode">
-                                <ItemStyle HorizontalAlign="Left" Width="200px" />
-                                <HeaderStyle Width="200px" />
+                                <ItemStyle HorizontalAlign="Left" Width="80px" />
+                                <HeaderStyle Width="80px" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="CategoryName" HeaderText="货品类别" DataField="CategoryName">
-                                <ItemStyle HorizontalAlign="Left" Width="100px" />
-                                <HeaderStyle Width="100px" />
+                                <ItemStyle HorizontalAlign="Left" Width="80px" />
+                                <HeaderStyle Width="80px" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品名称" DataField="ProductName">
                                 <ItemStyle HorizontalAlign="Left" Width="200px" />
@@ -183,8 +183,8 @@
                                 <HeaderStyle Width="100px" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="TotalSalesAmount" HeaderText="销售货款" DataField="TotalSalesAmount" DataFormatString="￥{0:f2}">
-                                <ItemStyle HorizontalAlign="Left" Width="160px" />
-                                <HeaderStyle Width="160px" />
+                                <ItemStyle HorizontalAlign="Left" Width="100px" />
+                                <HeaderStyle Width="100px" />
                             </telerik:GridBoundColumn>
 
 

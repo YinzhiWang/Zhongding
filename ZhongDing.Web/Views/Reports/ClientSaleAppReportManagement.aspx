@@ -121,16 +121,16 @@
                             </telerik:GridBoundColumn>
 
                             <telerik:GridBoundColumn UniqueName="ClientCompanyName" HeaderText="商业单位" DataField="ClientCompanyName">
-                                <ItemStyle HorizontalAlign="Left" Width="400px" />
-                                <HeaderStyle Width="400px" />
+                                <ItemStyle HorizontalAlign="Left" Width="260px" />
+                                <HeaderStyle Width="260px" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="CategoryName" HeaderText="货品类别" DataField="CategoryName">
-                                <ItemStyle HorizontalAlign="Left" Width="100px" />
-                                <HeaderStyle Width="100px" />
+                                <ItemStyle HorizontalAlign="Left" Width="80px" />
+                                <HeaderStyle Width="80px" />
                             </telerik:GridBoundColumn>
                             <telerik:GridBoundColumn UniqueName="ProductCode" HeaderText="货品编号" DataField="ProductCode">
-                                <ItemStyle HorizontalAlign="Left" Width="100" />
-                                <HeaderStyle Width="100" />
+                                <ItemStyle HorizontalAlign="Left" Width="80" />
+                                <HeaderStyle Width="80" />
                             </telerik:GridBoundColumn>
 
                             <telerik:GridBoundColumn UniqueName="ProductName" HeaderText="货品名称" DataField="ProductName">
