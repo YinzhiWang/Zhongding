@@ -12,11 +12,14 @@
     [CreatedBy]              INT             NULL,
     [LastModifiedOn]         DATETIME        NULL,
     [LastModifiedBy]         INT             NULL,
+    [StartDate]              DATETIME        NULL,
     CONSTRAINT [PK_SupplierContract] PRIMARY KEY CLUSTERED ([ID] ASC),
     CONSTRAINT [FK_SupplierContract_Product] FOREIGN KEY ([ProductID]) REFERENCES [dbo].[Product] ([ID]),
     CONSTRAINT [FK_SupplierContract_ProductSpecification] FOREIGN KEY ([ProductSpecificationID]) REFERENCES [dbo].[ProductSpecification] ([ID]),
     CONSTRAINT [FK_SupplierContract_Supplier] FOREIGN KEY ([SupplierID]) REFERENCES [dbo].[Supplier] ([ID])
 );
+
+
 
 
 
