@@ -225,10 +225,14 @@ namespace ZhongDing.Web.Views.Sales.Editors
         {
             ddlProductSpecification.Items.Clear();
 
-            if (!string.IsNullOrEmpty(rcbxProduct.SelectedValue))
+            if (!string.IsNullOrEmpty(rcbxProduct.SelectedValue)
+                && !string.IsNullOrEmpty(rcbxWarehouse.SelectedValue))
             {
                 int productID;
-                if (int.TryParse(rcbxProduct.SelectedValue, out productID))
+                int warehouseID;
+
+                if (int.TryParse(rcbxProduct.SelectedValue, out productID)
+                    && int.TryParse(rcbxWarehouse.SelectedValue, out warehouseID))
                 {
                     IList<int> excludeItemValues = new List<int>();
 
@@ -241,7 +245,7 @@ namespace ZhongDing.Web.Views.Sales.Editors
 
                         if (salesOrderAppDetail == null)
                         {
-                            excludeItemValues = salesOrderAppDetails.Where(x => x.ProductID == productID)
+                            excludeItemValues = salesOrderAppDetails.Where(x => x.WarehouseID == warehouseID && x.ProductID == productID)
                                  .Select(x => x.ProductSpecificationID).ToList();
                         }
                     }
@@ -419,6 +423,14 @@ namespace ZhongDing.Web.Views.Sales.Editors
 
         #endregion
 
+        protected void rcbxWarehouse_SelectedIndexChanged(object sender, RadComboBoxSelectedIndexChangedEventArgs e)
+        {
+            rcbxProduct.ClearSelection();
+
+            ddlProductSpecification.ClearSelection();
+            ddlProductSpecification.Items.Clear();
+        }
+
         protected void rcbxProduct_SelectedIndexChanged(object sender, Telerik.Web.UI.RadComboBoxSelectedIndexChangedEventArgs e)
         {
             BindProductSpecifications();
@@ -567,5 +579,7 @@ namespace ZhongDing.Web.Views.Sales.Editors
                 this.Master.BaseNotification.Show(GlobalConst.NotificationSettings.MSG_PARAMETER_ERROR_CLOSE_WIN);
             }
         }
+
+        
     }
 }

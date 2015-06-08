@@ -105,7 +105,7 @@
                             <div class="float-left">
                                 <label>快递单号</label>
                                 <div class="mws-form-item small">
-                               <telerik:RadTextBox  
+                                    <telerik:RadTextBox
                                         runat="server" ID="txtTransportNumber" Width="160px" MaxLength="100">
                                     </telerik:RadTextBox>
                                     <asp:RequiredFieldValidator ID="rfvTransportNumber" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="txtTransportNumber"
@@ -119,7 +119,7 @@
                         <div class="mws-form-row" style="padding-top: 10px; padding-left: 0px; padding-right: 1px;">
                             <telerik:RadGrid ID="rgStockOutDetails" runat="server" PageSize="10" AllowCustomPaging="true"
                                 AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false" AllowMultiRowSelection="true"
-                                MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" Height="540" ShowHeader="true" ShowFooter="true"
+                                MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true" ShowFooter="true"
                                 ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
                                 OnNeedDataSource="rgStockOutDetails_NeedDataSource" OnItemDataBound="rgStockOutDetails_ItemDataBound"
                                 OnColumnCreated="rgStockOutDetails_ColumnCreated">
@@ -138,7 +138,7 @@
                                             <HeaderStyle Width="160px" />
                                             <ItemStyle HorizontalAlign="Left" Width="160px" />
                                         </telerik:GridBoundColumn>--%>
-                                   <%--     <telerik:GridBoundColumn UniqueName="ClientName" HeaderText="客户名称" DataField="ClientName" ReadOnly="true">
+                                        <%--     <telerik:GridBoundColumn UniqueName="ClientName" HeaderText="客户名称" DataField="ClientName" ReadOnly="true">
                                             <HeaderStyle Width="100px" />
                                             <ItemStyle HorizontalAlign="Left" Width="100px" />
                                         </telerik:GridBoundColumn>--%>
@@ -190,7 +190,7 @@
                                             <ItemTemplate>
                                                 <telerik:RadNumericTextBox runat="server" ID="txtDBClientInvoiceDetailQty" Type="Number" MaxLength="9" Width="80" ShowSpinButtons="true"
                                                     MinValue="1" MaxValue="99999999" NumberFormat-DecimalDigits="0" NumberFormat-GroupSeparator="">
-                                                    <ClientEvents OnValueChanging="onDBClientInvoiceDetailAmountChanging" />
+                                                    <ClientEvents OnValueChanging="onDBClientInvoiceDetailAmountChanging"  OnValueChanged="onDBClientInvoiceDetailAmountChanged"/>
                                                 </telerik:RadNumericTextBox>
                                             </ItemTemplate>
                                         </telerik:GridTemplateColumn>
@@ -218,10 +218,14 @@
                                 <ClientSettings EnableRowHoverStyle="true">
                                     <Selecting AllowRowSelect="True" />
                                     <Scrolling AllowScroll="true" FrozenColumnsCount="4" SaveScrollPosition="true" UseStaticHeaders="true" />
-                                    <ClientEvents OnRowSelecting="onRowSelecting" />
+                                    <ClientEvents OnRowSelecting="onRowSelecting"  OnRowSelected="onRowSelected"/>
                                 </ClientSettings>
                                 <HeaderStyle Width="99.8%" />
                             </telerik:RadGrid>
+                            <div class="float-right" runat="server" id="divPaymentSummary">
+                                <span class="bold">支付总金额</span>：<asp:Label ID="lblTotalPaymentAmount" runat="server"></asp:Label>元&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span class="bold">大写</span>：<asp:Label ID="lblCapitalTotalPaymentAmount" runat="server"></asp:Label>
+                            </div>
                         </div>
 
                         <div class="height20"></div>
@@ -289,8 +293,17 @@
                     txtDBClientInvoiceDetailAmount.set_value("");
 
             }
+           
         }
-
+        function onDBClientInvoiceDetailAmountChanged() {
+            showTotalAmountInfo();
+        }
+        function showTotalAmountInfo() {
+            var totalAmount = calculateSelectedTotalDBClientInvoiceDetailAmount();
+            //alert(totalAmount);
+            $("#<%=lblTotalPaymentAmount.ClientID%>").html("¥" + totalAmount);
+            $("#<%=lblCapitalTotalPaymentAmount.ClientID%>").html($.convertToCapitalChinese(totalAmount));
+        }
 
         function onRowSelecting(sender, eventArgs) {
             //debugger;
@@ -299,10 +312,15 @@
             var selectingElement = selectingItem.get_element();
 
             var txtSupplierInvoiceDetailAmount = $telerik.findControl(selectingElement, "txtDBClientInvoiceDetailAmount");
-
+           
         }
-
+        function onRowSelected()
+        {
+            showTotalAmountInfo();
+        }
         function onBtnSaveClick(sender, eventArgs) {
+            showTotalAmountInfo();
+
             var radNotification = $find("<%=radNotification.ClientID%>");
             var txtAmount = $find("<%=txtAmount.ClientID%>");
             var amount = txtAmount.get_value();
@@ -371,12 +389,12 @@
                 var curCurrentTxtDBClientInvoiceDetailAmount = $telerik.findControl(curSelectedItemElement, "txtDBClientInvoiceDetailAmount");
 
                 var curCurrentDBClientInvoiceDetailAmount = curCurrentTxtDBClientInvoiceDetailAmount.get_value();
-
+                //alert(curCurrentDBClientInvoiceDetailAmount);
                 if (curCurrentDBClientInvoiceDetailAmount) {
                     selectedTotalAmount = Number(selectedTotalAmount).add(curCurrentDBClientInvoiceDetailAmount);
                 }
             }
-
+           
             return selectedTotalAmount;
         }
 
