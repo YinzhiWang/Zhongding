@@ -60,7 +60,7 @@ namespace ZhongDing.Business.Repositories
                                     TransportCompanyNumber = q.TransportCompanyNumber,
                                     TransportCompanyName = transportCompany.CompanyName,
                                     TransportFeeType = q.TransportFeeType,
-                                    CreatedByUserName = user.UserName
+                                    CreatedByUserName = user.FullName
                                 }).ToList();
             }
 

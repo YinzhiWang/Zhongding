@@ -59,7 +59,7 @@
                     <div class="mws-form-row" style="padding-top: 0px; padding-left: 0px; padding-right: 1px;">
                         <telerik:RadGrid ID="rgStockOuts" runat="server" PageSize="10"
                             AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false" AllowMultiRowSelection="true"
-                            MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" Height="400" ShowHeader="true" ShowFooter="true"
+                            MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true" ShowFooter="true"
                             ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
                             OnNeedDataSource="rgStockOuts_NeedDataSource">
                             <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="None"
@@ -70,8 +70,8 @@
                                         <ItemStyle Width="40" />
                                     </telerik:GridClientSelectColumn>
                                     <telerik:GridBoundColumn UniqueName="Code" HeaderText="编号" DataField="Code">
-                                        <HeaderStyle Width="160" />
-                                        <ItemStyle HorizontalAlign="Left" Width="160" />
+                                        <HeaderStyle Width="200" />
+                                        <ItemStyle HorizontalAlign="Left" Width="200" />
                                     </telerik:GridBoundColumn>
                                     <telerik:GridBoundColumn UniqueName="ReceiverName" HeaderText="收货人" DataField="ReceiverName" DataFormatString="{0:yyyy/MM/dd}">
                                         <HeaderStyle Width="120" />
