@@ -1418,6 +1418,7 @@
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
           <Property Name="Balance" Type="money" />
+          <Property Name="BalanceDate" Type="datetime" />
         </EntityType>
         <EntityType Name="BankAccountBalanceHistory">
           <Key>
@@ -8410,6 +8411,7 @@
           <NavigationProperty Name="ApplicationPayment1" Relationship="DbModel.FK_ApplicationPayment_ToBankAccount" FromRole="BankAccount" ToRole="ApplicationPayment" />
           <Property Type="Decimal" Name="Balance" Precision="19" Scale="4" />
           <NavigationProperty Name="BankAccountBalanceHistory" Relationship="DbModel.FK_BankAccountBalanceHistory_BankAccountID" FromRole="BankAccount" ToRole="BankAccountBalanceHistory" />
+          <Property Type="DateTime" Name="BalanceDate" Precision="3" />
           </EntityType>
         <EntityType Name="Certificate">
           <Key>
@@ -14675,6 +14677,7 @@
           <EntitySetMapping Name="BankAccount">
             <EntityTypeMapping TypeName="DbModel.BankAccount">
               <MappingFragment StoreEntitySet="BankAccount">
+                <ScalarProperty Name="BalanceDate" ColumnName="BalanceDate" />
                 <ScalarProperty Name="Balance" ColumnName="Balance" />
                 <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
                 <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
