@@ -184,6 +184,33 @@ namespace ZhongDing.Web.Views.Invoices {
         protected global::Telerik.Web.UI.RadGrid rgStockOutDetails;
         
         /// <summary>
+        /// divPaymentSummary control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPaymentSummary;
+        
+        /// <summary>
+        /// lblTotalPaymentAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalPaymentAmount;
+        
+        /// <summary>
+        /// lblCapitalTotalPaymentAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblCapitalTotalPaymentAmount;
+        
+        /// <summary>
         /// btnSave control.
         /// </summary>
         /// <remarks>

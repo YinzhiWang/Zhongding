@@ -1,4 +1,4 @@
-﻿<%@ Page Title="采购计划报表" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="InventorySummaryDetailReportManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Reports.InventorySummaryDetailReportManagement" %>
+﻿<%@ Page Title="库存汇总表详情" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="InventorySummaryDetailReportManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Reports.InventorySummaryDetailReportManagement" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 
