@@ -5,6 +5,15 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="HeadContent" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
+    <style>
+        .rgUserGroupPermissionsHeaderTemplate input, label {
+            float: left;
+        }
+
+        .rgUserGroupPermissionsHeaderTemplate label {
+            width:40px !important;
+        }
+    </style>
     <div class="container">
 
         <div class="mws-panel grid_8">
@@ -26,138 +35,141 @@
                             </div>
                         </div>
                         <div class="mws-form-row">
-                            <label>用户组名称</label>
-                            <div class="mws-form-item toppadding5">
-                                <asp:Label ID="lblUserGroupName" runat="server"></asp:Label>
-                            </div>
+                            <asp:Label ID="lblUserGroupName" runat="server"></asp:Label>
+
                         </div>
                         <div class="height20">
                         </div>
                     </div>
-                    <telerik:RadGrid ID="rgUserGroupPermissions" runat="server" PageSize="10"
-                        AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
-                        MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
-                        ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                        OnNeedDataSource="rgUserGroupPermissions_NeedDataSource" OnDeleteCommand="rgUserGroupPermissions_DeleteCommand"
-                        OnItemCreated="rgUserGroupPermissions_ItemCreated" OnColumnCreated="rgUserGroupPermissions_ColumnCreated" OnItemDataBound="rgUserGroupPermissions_ItemDataBound">
-                        <MasterTableView Width="100%" DataKeyNames="PermissionID" CommandItemDisplay="Top"
-                            ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
-                            <Columns>
-                                <telerik:GridBoundColumn UniqueName="PermissionID" HeaderText="PermissionID" DataField="PermissionID" Visible="false">
-                                    <ItemStyle HorizontalAlign="Left" Width="50" />
-                                </telerik:GridBoundColumn>
-                                <telerik:GridBoundColumn UniqueName="Name" HeaderText="权限名称" DataField="Name">
-                                    <ItemStyle HorizontalAlign="Left" />
-                                </telerik:GridBoundColumn>
-                                <telerik:GridTemplateColumn UniqueName="Create">
-                                    <HeaderStyle Width="40" HorizontalAlign="Center" />
-                                    <ItemStyle HorizontalAlign="Center" Width="40" />
-                                    <ItemTemplate>
-                                        <asp:CheckBox ID="cBoxHasCreate" runat="server" Enabled='<%#DataBinder.Eval(Container.DataItem,"HasCreate") %>' Checked='<%#DataBinder.Eval(Container.DataItem,"HasPermissionCreate") %>' />
-                                    </ItemTemplate>
-                                    <HeaderTemplate>
-                                        <asp:CheckBox ID="cBoxHasCreateAll" runat="server" Text="创建" />
-                                    </HeaderTemplate>
-                                </telerik:GridTemplateColumn>
+                    <div class="rgUserGroupPermissions">
+                        <telerik:RadGrid ID="rgUserGroupPermissions" runat="server" PageSize="10"
+                            AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
+                            MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
+                            ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
+                            OnNeedDataSource="rgUserGroupPermissions_NeedDataSource" OnDeleteCommand="rgUserGroupPermissions_DeleteCommand"
+                            OnItemCreated="rgUserGroupPermissions_ItemCreated" OnColumnCreated="rgUserGroupPermissions_ColumnCreated" OnItemDataBound="rgUserGroupPermissions_ItemDataBound">
+                            <MasterTableView Width="100%" DataKeyNames="PermissionID" CommandItemDisplay="Top"
+                                ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
+                                <Columns>
+                                    <telerik:GridBoundColumn UniqueName="PermissionID" HeaderText="PermissionID" DataField="PermissionID" Visible="false">
+                                        <ItemStyle HorizontalAlign="Left" Width="50" />
+                                    </telerik:GridBoundColumn>
+                                    <telerik:GridBoundColumn UniqueName="Name" HeaderText="权限名称" DataField="Name">
+                                        <ItemStyle HorizontalAlign="Left" />
+                                    </telerik:GridBoundColumn>
+                                    <telerik:GridTemplateColumn UniqueName="Create">
+                                        <HeaderStyle Width="70" HorizontalAlign="Center" />
+                                        <ItemStyle HorizontalAlign="Center" Width="70" />
+                                        <ItemTemplate>
+                                            <asp:CheckBox ID="cBoxHasCreate" runat="server" Enabled='<%#DataBinder.Eval(Container.DataItem,"HasCreate") %>' Checked='<%#DataBinder.Eval(Container.DataItem,"HasPermissionCreate") %>' />
+                                        </ItemTemplate>
+                                        <HeaderTemplate>
+                                            <div class="rgUserGroupPermissionsHeaderTemplate">
+                                                <asp:CheckBox ID="cBoxHasCreateAll" runat="server" Text="创建" /></div>
 
-                                <telerik:GridTemplateColumn UniqueName="Edit">
-                                    <HeaderStyle Width="40" HorizontalAlign="Center" />
-                                    <ItemStyle HorizontalAlign="Center" Width="40" />
-                                    <ItemTemplate>
-                                        <asp:CheckBox ID="cBoxHasEdit" runat="server" Enabled='<%#DataBinder.Eval(Container.DataItem,"HasEdit") %>' Checked='<%#DataBinder.Eval(Container.DataItem,"HasPermissionEdit") %>' />
-                                    </ItemTemplate>
-                                    <HeaderTemplate>
-                                        <asp:CheckBox ID="cBoxHasEditAll" runat="server" Text="修改" />
-                                    </HeaderTemplate>
-                                </telerik:GridTemplateColumn>
+                                        </HeaderTemplate>
+                                    </telerik:GridTemplateColumn>
 
-                                <telerik:GridTemplateColumn UniqueName="Delete">
-                                    <HeaderStyle Width="40" HorizontalAlign="Center" />
-                                    <ItemStyle HorizontalAlign="Center" Width="40" />
-                                    <ItemTemplate>
-                                        <asp:CheckBox ID="cBoxHasDelete" runat="server" Enabled='<%#DataBinder.Eval(Container.DataItem,"HasDelete") %>' Checked='<%#DataBinder.Eval(Container.DataItem,"HasPermissionDelete") %>' />
-                                    </ItemTemplate>
-                                    <HeaderTemplate>
-                                        <asp:CheckBox ID="cBoxHasDeleteAll" runat="server" Text="删除" />
-                                    </HeaderTemplate>
-                                </telerik:GridTemplateColumn>
+                                    <telerik:GridTemplateColumn UniqueName="Edit">
+                                        <HeaderStyle Width="70" HorizontalAlign="Center" />
+                                        <ItemStyle HorizontalAlign="Center" Width="70" />
+                                        <ItemTemplate>
+                                            <asp:CheckBox ID="cBoxHasEdit" runat="server" Enabled='<%#DataBinder.Eval(Container.DataItem,"HasEdit") %>' Checked='<%#DataBinder.Eval(Container.DataItem,"HasPermissionEdit") %>' />
+                                        </ItemTemplate>
+                                        <HeaderTemplate> <div class="rgUserGroupPermissionsHeaderTemplate">
+                                            <asp:CheckBox ID="cBoxHasEditAll" runat="server" Text="修改" /></div>
+                                        </HeaderTemplate>
+                                    </telerik:GridTemplateColumn>
 
-                                <telerik:GridTemplateColumn UniqueName="View">
-                                    <HeaderStyle Width="40" HorizontalAlign="Center" />
-                                    <ItemStyle HorizontalAlign="Center" Width="40" />
-                                    <ItemTemplate>
-                                        <asp:CheckBox ID="cBoxHasView" runat="server" Enabled='<%#DataBinder.Eval(Container.DataItem,"HasView") %>' Checked='<%#DataBinder.Eval(Container.DataItem,"HasPermissionView") %>' />
-                                    </ItemTemplate>
-                                    <HeaderTemplate>
-                                        <asp:CheckBox ID="cBoxHasViewAll" runat="server" Text="查看" />
-                                    </HeaderTemplate>
-                                </telerik:GridTemplateColumn>
+                                    <telerik:GridTemplateColumn UniqueName="Delete">
+                                        <HeaderStyle Width="70" HorizontalAlign="Center" />
+                                        <ItemStyle HorizontalAlign="Center" Width="70" />
+                                        <ItemTemplate>
+                                            <asp:CheckBox ID="cBoxHasDelete" runat="server" Enabled='<%#DataBinder.Eval(Container.DataItem,"HasDelete") %>' Checked='<%#DataBinder.Eval(Container.DataItem,"HasPermissionDelete") %>' />
+                                        </ItemTemplate>
+                                        <HeaderTemplate> <div class="rgUserGroupPermissionsHeaderTemplate">
+                                            <asp:CheckBox ID="cBoxHasDeleteAll" runat="server" Text="删除" /></div>
+                                        </HeaderTemplate>
+                                    </telerik:GridTemplateColumn>
 
-                                <telerik:GridTemplateColumn UniqueName="Print">
-                                    <HeaderStyle Width="40" HorizontalAlign="Center" />
-                                    <ItemStyle HorizontalAlign="Center" Width="40" />
-                                    <ItemTemplate>
-                                        <asp:CheckBox ID="cBoxHasPrint" runat="server" Enabled='<%#DataBinder.Eval(Container.DataItem,"HasPrint") %>' Checked='<%#DataBinder.Eval(Container.DataItem,"HasPermissionPrint") %>' />
-                                    </ItemTemplate>
-                                    <HeaderTemplate>
-                                        <asp:CheckBox ID="cBoxHasPrintAll" runat="server" Text="打印" />
-                                    </HeaderTemplate>
-                                </telerik:GridTemplateColumn>
-                                <telerik:GridTemplateColumn UniqueName="Export">
-                                    <HeaderStyle Width="40" HorizontalAlign="Center" />
-                                    <ItemStyle HorizontalAlign="Center" Width="40" />
-                                    <ItemTemplate>
-                                        <asp:CheckBox ID="cBoxHasExport" runat="server" Enabled='<%#DataBinder.Eval(Container.DataItem,"HasExport") %>' Checked='<%#DataBinder.Eval(Container.DataItem,"HasPermissionExport") %>' />
-                                    </ItemTemplate>
-                                    <HeaderTemplate>
-                                        <asp:CheckBox ID="cBoxHasExportAll" runat="server" Text="导出" />
-                                    </HeaderTemplate>
-                                </telerik:GridTemplateColumn>
-                                <telerik:GridTemplateColumn UniqueName="All">
-                                    <HeaderStyle Width="40" HorizontalAlign="Center" />
-                                    <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" Width="40" />
-                                    <ItemTemplate>
-                                        <asp:CheckBox ID="cBoxRowAll" runat="server" />
-                                        <%--  <input  type="hidden"  name="rowIndex" value=''/>--%>
-                                    </ItemTemplate>
-                                    <HeaderTemplate>
-                                        行全选
-                                    </HeaderTemplate>
-                                </telerik:GridTemplateColumn>
-                            </Columns>
-                            <CommandItemTemplate>
-                                <table class="width100-percent">
-                                    <tr>
-                                        <td>
-                                            <%-- <asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
+                                    <telerik:GridTemplateColumn UniqueName="View">
+                                        <HeaderStyle Width="70" HorizontalAlign="Center" />
+                                        <ItemStyle HorizontalAlign="Center" Width="70" />
+                                        <ItemTemplate>
+                                            <asp:CheckBox ID="cBoxHasView" runat="server" Enabled='<%#DataBinder.Eval(Container.DataItem,"HasView") %>' Checked='<%#DataBinder.Eval(Container.DataItem,"HasPermissionView") %>' />
+                                        </ItemTemplate>
+                                        <HeaderTemplate> <div class="rgUserGroupPermissionsHeaderTemplate">
+                                            <asp:CheckBox ID="cBoxHasViewAll" runat="server" Text="查看" /></div>
+                                        </HeaderTemplate>
+                                    </telerik:GridTemplateColumn>
+
+                                    <telerik:GridTemplateColumn UniqueName="Print">
+                                        <HeaderStyle Width="70" HorizontalAlign="Center" />
+                                        <ItemStyle HorizontalAlign="Center" Width="70" />
+                                        <ItemTemplate>
+                                            <asp:CheckBox ID="cBoxHasPrint" runat="server" Enabled='<%#DataBinder.Eval(Container.DataItem,"HasPrint") %>' Checked='<%#DataBinder.Eval(Container.DataItem,"HasPermissionPrint") %>' />
+                                        </ItemTemplate>
+                                        <HeaderTemplate> <div class="rgUserGroupPermissionsHeaderTemplate">
+                                            <asp:CheckBox ID="cBoxHasPrintAll" runat="server" Text="打印" /></div>
+                                        </HeaderTemplate>
+                                    </telerik:GridTemplateColumn>
+                                    <telerik:GridTemplateColumn UniqueName="Export">
+                                        <HeaderStyle Width="70" HorizontalAlign="Center" />
+                                        <ItemStyle HorizontalAlign="Center" Width="70" />
+                                        <ItemTemplate>
+                                            <asp:CheckBox ID="cBoxHasExport" runat="server" Enabled='<%#DataBinder.Eval(Container.DataItem,"HasExport") %>' Checked='<%#DataBinder.Eval(Container.DataItem,"HasPermissionExport") %>' />
+                                        </ItemTemplate>
+                                        <HeaderTemplate> <div class="rgUserGroupPermissionsHeaderTemplate">
+                                            <asp:CheckBox ID="cBoxHasExportAll" runat="server" Text="导出" /></div>
+                                        </HeaderTemplate>
+                                    </telerik:GridTemplateColumn>
+                                    <telerik:GridTemplateColumn UniqueName="All">
+                                        <HeaderStyle Width="70" HorizontalAlign="Center" />
+                                        <ItemStyle HorizontalAlign="Center" VerticalAlign="Middle" Width="70" />
+                                        <ItemTemplate>
+                                            <asp:CheckBox ID="cBoxRowAll" runat="server" />
+                                            <%--  <input  type="hidden"  name="rowIndex" value=''/>--%>
+                                        </ItemTemplate>
+                                        <HeaderTemplate>
+                                            行全选
+                                        </HeaderTemplate>
+                                    </telerik:GridTemplateColumn>
+                                </Columns>
+                                <CommandItemTemplate>
+                                    <table class="width100-percent">
+                                        <tr>
+                                            <td>
+                                                <%-- <asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
                                                             <input type="button" class="rgAdd" onclick="redirectToMaintenancePage(-1); return false;" />
                                                             <a href="javascript:void(0)" onclick="redirectToMaintenancePage(-1); return false;">添加</a>
                                                         </asp:Panel>--%>
-                                            <%--<asp:Panel ID="plExportCommand" runat="server" CssClass="width80 float-left">
+                                                <%--<asp:Panel ID="plExportCommand" runat="server" CssClass="width80 float-left">
                                             <input type="button" class="rgExpXLS" onclick="exportExcel(); return false;" />
                                             <a href="javascript:void(0);" onclick="exportExcel(); return false;">导出excel</a>
                                         </asp:Panel>--%>
-                                        </td>
-                                        <td class="right-td rightpadding10">
-                                            <input type="button" class="rgRefresh" onclick="refreshGrid(); return false;" />
-                                            <a href="javascript:void(0);" onclick="refreshGrid(); return false;">刷新</a>
-                                        </td>
-                                    </tr>
-                                </table>
-                            </CommandItemTemplate>
-                            <NoRecordsTemplate>
-                                没有任何数据
-                            </NoRecordsTemplate>
-                            <ItemStyle Height="30" />
-                            <AlternatingItemStyle BackColor="#f2f2f2" />
-                            <PagerStyle PagerTextFormat="{4} 第{0}页/共{1}页, 第{2}-{3}条 共{5}条"
-                                PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
-                                FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
-                        </MasterTableView>
-                        <ClientSettings>
-                            <ClientEvents OnGridCreated="GetsGridObject" />
-                        </ClientSettings>
-                    </telerik:RadGrid>
+                                            </td>
+                                            <td class="right-td rightpadding10">
+                                                <input type="button" class="rgRefresh" onclick="refreshGrid(); return false;" />
+                                                <a href="javascript:void(0);" onclick="refreshGrid(); return false;">刷新</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </CommandItemTemplate>
+                                <NoRecordsTemplate>
+                                    没有任何数据
+                                </NoRecordsTemplate>
+                                <ItemStyle Height="30" />
+                                <AlternatingItemStyle BackColor="#f2f2f2" />
+                                <PagerStyle PagerTextFormat="{4} 第{0}页/共{1}页, 第{2}-{3}条 共{5}条"
+                                    PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
+                                    FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
+                            </MasterTableView>
+                            <ClientSettings>
+                                <ClientEvents OnGridCreated="GetsGridObject" />
+                            </ClientSettings>
+                        </telerik:RadGrid>
+
+                    </div>
 
 
 

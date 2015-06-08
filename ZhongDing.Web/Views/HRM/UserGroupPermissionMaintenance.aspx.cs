@@ -68,7 +68,7 @@ namespace ZhongDing.Web.Views.HRM
                 {
 
 
-                    lblUserGroupName.Text = currentEntity.GroupName;
+                    lblUserGroupName.Text = "用户组名称：" + currentEntity.GroupName + "&nbsp;&nbsp;&nbsp;&nbsp;用户组描述：" + currentEntity.Comment;
 
                     //lblWorkflowName.Text = currentEntity.Workflow.WorkflowName;
                     //lblWorkflowStepName.Text = currentEntity.StepName;
