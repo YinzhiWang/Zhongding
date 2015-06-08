@@ -13,11 +13,14 @@
     [LastModifiedOn] DATETIME        NULL,
     [LastModifiedBy] INT             NULL,
     [Balance]        MONEY           NULL,
+    [BalanceDate]    DATETIME        NULL,
     CONSTRAINT [PK_BankAccount] PRIMARY KEY CLUSTERED ([ID] ASC),
     CONSTRAINT [FK_BankAccount_AccountType] FOREIGN KEY ([AccountTypeID]) REFERENCES [dbo].[AccountType] ([ID]),
     CONSTRAINT [FK_BankAccount_Company] FOREIGN KEY ([CompanyID]) REFERENCES [dbo].[Company] ([ID]),
     CONSTRAINT [FK_BankAccount_OwnerType] FOREIGN KEY ([OwnerTypeID]) REFERENCES [dbo].[OwnerType] ([ID])
 );
+
+
 
 
 
