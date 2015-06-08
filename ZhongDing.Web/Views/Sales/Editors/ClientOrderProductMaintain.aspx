@@ -9,6 +9,12 @@
     </telerik:RadAjaxLoadingPanel>
     <telerik:RadAjaxManager runat="server" ID="RadAjaxManager1">
         <AjaxSettings>
+            <telerik:AjaxSetting AjaxControlID="rcbxWarehouse">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="divProducts" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="divProductSpecifications" LoadingPanelID="loadingPanel" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="rcbxProduct">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="divProductSpecifications" LoadingPanelID="loadingPanel" />
@@ -39,7 +45,8 @@
                             <label>出库仓库</label>
                             <div class="mws-form-item small">
                                 <telerik:RadComboBox runat="server" ID="rcbxWarehouse" Filter="Contains"
-                                    AllowCustomText="false" Height="160px" EmptyMessage="--请选择--">
+                                    AllowCustomText="false" Height="160px" EmptyMessage="--请选择--"
+                                    AutoPostBack="true" OnSelectedIndexChanged="rcbxWarehouse_SelectedIndexChanged">
                                 </telerik:RadComboBox>
                                 <telerik:RadToolTip ID="rttWarehouse" runat="server" TargetControlID="rcbxWarehouse" ShowEvent="OnClick"
                                     Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
@@ -51,7 +58,7 @@
                         </div>
                         <div class="float-left width50-percent">
                             <label>货品</label>
-                            <div class="mws-form-item small">
+                            <div class="mws-form-item small" runat="server" id="divProducts">
                                 <telerik:RadComboBox runat="server" ID="rcbxProduct" Filter="Contains" AutoPostBack="true"
                                     AllowCustomText="false" Height="160px" Width="95%" EmptyMessage="--请选择--"
                                     OnSelectedIndexChanged="rcbxProduct_SelectedIndexChanged">
