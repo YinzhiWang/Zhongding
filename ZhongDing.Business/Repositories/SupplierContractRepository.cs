@@ -99,7 +99,8 @@ namespace ZhongDing.Business.Repositories
                                    UnitPrice = q.UnitPrice,
                                    ExpirationDate = q.ExpirationDate,
                                    ProductName = tp == null ? string.Empty : tp.ProductName,
-                                   ProductSpecification = tps == null ? string.Empty : tps.Specification
+                                   ProductSpecification = tps == null ? string.Empty : tps.Specification,
+                                   StartDate = q.StartDate,
                                }).ToList();
             }
 

@@ -14,5 +14,7 @@ namespace ZhongDing.Domain.UIObjects
         public string ProductSpecification { get; set; }
         public Nullable<decimal> UnitPrice { get; set; }
         public Nullable<DateTime> ExpirationDate { get; set; }
+
+        public DateTime? StartDate { get; set; }
     }
 }

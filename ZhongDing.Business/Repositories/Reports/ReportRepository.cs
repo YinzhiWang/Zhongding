@@ -1227,9 +1227,11 @@ namespace ZhongDing.Business.Repositories.Reports
             List<UISupplierTaskReport> uiEntities = new List<UISupplierTaskReport>();
             int total = 0;
             DateTime? date = uiSearchObj.Date;
+            DateTime? now = DateTime.Now;
             int yearOfTask = date.Value.Year;
             int monthOfTask = date.Value.Month;
             DateTime validDate = new DateTime(yearOfTask, monthOfTask, 1);
+            DateTime validDateEnd = validDate.AddMonths(1);
             var query = from supplierContract in DB.SupplierContract
                         join supplier in DB.Supplier on supplierContract.SupplierID equals supplier.ID
                         join p in DB.Product on supplierContract.ProductID equals p.ID
@@ -1238,7 +1240,7 @@ namespace ZhongDing.Business.Repositories.Reports
                         && supplier.IsDeleted == false
                         && supplier.CompanyID == uiSearchObj.CompanyID
                         && supplierContract.IsNeedTaskAssignment == true
-                        && supplierContract.ExpirationDate > validDate && supplierContract.CreatedOn < validDate
+                        && supplierContract.ExpirationDate > now && supplierContract.ExpirationDate > validDate && supplierContract.StartDate <= now && supplierContract.StartDate < validDateEnd
                         select new UISupplierTaskReport()
                         {
                             ID = supplierContract.ID,

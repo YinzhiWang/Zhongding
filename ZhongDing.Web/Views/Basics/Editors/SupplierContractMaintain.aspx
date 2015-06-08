@@ -39,13 +39,29 @@
                             <asp:Label ID="lblSupplierName" runat="server"></asp:Label>
                         </div>
                     </div>
-                    <div class="mws-form-row">
+                     <div class="mws-form-row">
                         <div class="float-left width50-percent">
-                            <label>合同编号</label>
+                           <label>合同编号</label>
                             <div class="mws-form-item">
                                 <telerik:RadTextBox runat="server" ID="txtContractCode" CssClass="mws-textinput" Width="50%"></telerik:RadTextBox>
                                 <asp:RequiredFieldValidator ID="rfvContractCode" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="txtContractCode"
                                     ErrorMessage="合同编号必填" Text="*" CssClass="field-validation-error">
+                                </asp:RequiredFieldValidator>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="mws-form-row">
+                        <div class="float-left width50-percent">
+                             <label>合同开始日期</label>
+                            <div class="mws-form-item">
+                                <telerik:RadDatePicker ID="rdpStartDate" runat="server"
+                                    Calendar-EnableShadows="true" Calendar-FastNavigationSettings-CancelButtonCaption="取消"
+                                    Calendar-FastNavigationSettings-OkButtonCaption="确定" Calendar-FastNavigationSettings-TodayButtonCaption="今天"
+                                    Calendar-FirstDayOfWeek="Monday">
+                                </telerik:RadDatePicker>
+                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="rdpStartDate"
+                                    ErrorMessage="合同开始日期必填" Text="*" CssClass="field-validation-error">
                                 </asp:RequiredFieldValidator>
                             </div>
                         </div>

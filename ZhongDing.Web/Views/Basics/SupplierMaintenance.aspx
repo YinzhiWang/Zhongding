@@ -456,6 +456,9 @@
                                                     <telerik:GridBoundColumn UniqueName="UnitPrice" HeaderText="单价" DataField="UnitPrice" DataFormatString="{0:C2}">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>
+                                                     <telerik:GridBoundColumn UniqueName="StartDate" HeaderText="合同开始日期" DataField="StartDate" DataFormatString="{0:yyyy/MM/dd}">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
                                                     <telerik:GridBoundColumn UniqueName="ExpirationDate" HeaderText="合同终止日期" DataField="ExpirationDate" DataFormatString="{0:yyyy/MM/dd}">
                                                         <ItemStyle HorizontalAlign="Left" />
                                                     </telerik:GridBoundColumn>

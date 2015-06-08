@@ -156,7 +156,7 @@ namespace ZhongDing.Web.Views.Basics.Editors
 
                             txtContractCode.Text = supplierContract.ContractCode;
                             rdpExpirationDate.SelectedDate = supplierContract.ExpirationDate;
-
+                            rdpStartDate.SelectedDate = supplierContract.StartDate;
                             if (supplierContract.ProductID.HasValue)
                                 rcbxProduct.SelectedValue = supplierContract.ProductID.ToString();
 
@@ -302,7 +302,7 @@ namespace ZhongDing.Web.Views.Basics.Editors
 
                     supplierContract.ContractCode = txtContractCode.Text;
                     supplierContract.ExpirationDate = rdpExpirationDate.SelectedDate;
-
+                    supplierContract.StartDate = rdpStartDate.SelectedDate;
                     if (!string.IsNullOrEmpty(rcbxProduct.SelectedValue))
                         supplierContract.ProductID = Convert.ToInt32(rcbxProduct.SelectedValue);
 

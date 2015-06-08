@@ -3141,6 +3141,7 @@
           <Property Name="CreatedBy" Type="int" />
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="StartDate" Type="datetime" />
         </EntityType>
         <EntityType Name="SupplierContractFile">
           <Key>
@@ -9544,6 +9545,7 @@
           <NavigationProperty Name="SupplierContractFile" Relationship="DbModel.FK_SupplierContractFile_SupplierContract" FromRole="SupplierContract" ToRole="SupplierContractFile" />
           <NavigationProperty Name="SupplierTaskAssignment" Relationship="DbModel.FK_SupplierTaskAssignment_SupplierContract" FromRole="SupplierContract" ToRole="SupplierTaskAssignment" />
           <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_SupplierContract_ProductSpecification" FromRole="SupplierContract" ToRole="ProductSpecification" />
+          <Property Type="DateTime" Name="StartDate" Precision="3" />
         </EntityType>
         <EntityType Name="SupplierContractFile">
           <Key>
@@ -15198,6 +15200,7 @@
           <EntitySetMapping Name="SupplierContract">
             <EntityTypeMapping TypeName="DbModel.SupplierContract">
               <MappingFragment StoreEntitySet="SupplierContract">
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
                 <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
                 <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />

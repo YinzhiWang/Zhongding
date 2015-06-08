@@ -67,6 +67,24 @@ namespace ZhongDing.Web.Views.Basics.Editors {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvContractCode;
         
         /// <summary>
+        /// rdpStartDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadDatePicker rdpStartDate;
+        
+        /// <summary>
+        /// RequiredFieldValidator1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
+        
+        /// <summary>
         /// rdpExpirationDate control.
         /// </summary>
         /// <remarks>
