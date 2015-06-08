@@ -85,6 +85,22 @@ namespace ZhongDing.Web.Views.CautionMoneys
                 return _CanAccessUserIDs;
             }
         }
+
+        private IList<int> _CanAddUserIDs;
+        /// <summary>
+        /// 可新增订单的用户
+        /// </summary>
+        private IList<int> CanAddUserIDs
+        {
+            get
+            {
+                if (_CanAddUserIDs == null)
+                    _CanAddUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.NewSupplierCautionMoneyApply);
+
+                return _CanAddUserIDs;
+            }
+        }
+
         private void BindSupplierCautionMoney(bool isNeedRebind)
         {
 
@@ -169,7 +185,19 @@ namespace ZhongDing.Web.Views.CautionMoneys
 
         protected void rgSupplierCautionMoneys_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
+            if (e.Item is GridCommandItem)
+            {
+                GridCommandItem commandItem = e.Item as GridCommandItem;
+                Panel plAddCommand = commandItem.FindControl("plAddCommand") as Panel;
 
+                if (plAddCommand != null)
+                {
+                    if (this.CanAddUserIDs.Contains(CurrentUser.UserID))
+                        plAddCommand.Visible = true;
+                    else
+                        plAddCommand.Visible = false;
+                }
+            }
         }
 
         protected void rgSupplierCautionMoneys_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)

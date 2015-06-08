@@ -1,4 +1,4 @@
-﻿<%@ Page Title="仓库维护" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ReimbursementTypeChildMaintenance.aspx.cs" Inherits="ZhongDing.Web.Views.Basics.ReimbursementTypeChildMaintenance" %>
+﻿<%@ Page Title="报销类型子类别维护" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ReimbursementTypeChildMaintenance.aspx.cs" Inherits="ZhongDing.Web.Views.Basics.ReimbursementTypeChildMaintenance" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 <%@ Register TagPrefix="uc" TagName="CurrentCompany" Src="~/UserControls/UCCurrentCompany.ascx" %>

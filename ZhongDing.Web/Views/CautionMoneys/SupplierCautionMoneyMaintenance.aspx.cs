@@ -387,7 +387,7 @@ namespace ZhongDing.Web.Views.CautionMoneys
                     this.Master.BaseNotification.OnClientHidden = "redirectToManagementPage";
                     this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
                     this.Master.BaseNotification.AutoCloseDelay = 1000;
-                    this.Master.BaseNotification.Show("您没有权限新增客户订单");
+                    this.Master.BaseNotification.Show("您没有权限新增供应商保证金申请");
                 }
                 else
                 {

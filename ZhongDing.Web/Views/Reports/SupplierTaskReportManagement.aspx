@@ -1,4 +1,4 @@
-﻿<%@ Page Title="采购订单报表" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SupplierTaskReportManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Reports.SupplierTaskReportManagement" %>
+﻿<%@ Page Title="供应商任务统计表" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SupplierTaskReportManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Reports.SupplierTaskReportManagement" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 

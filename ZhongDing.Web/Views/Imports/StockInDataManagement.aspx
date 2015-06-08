@@ -1,4 +1,4 @@
-﻿<%@ Page Title="配送公司流向数据" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="StockInDataManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Imports.StockInDataManagement" %>
+﻿<%@ Page Title="已导入入库单记录" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="StockInDataManagement.aspx.cs" Inherits="ZhongDing.Web.Views.Imports.StockInDataManagement" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 
@@ -33,7 +33,7 @@
     <div class="container">
         <div class="mws-panel grid_8">
             <div class="mws-panel-header">
-                <span class="mws-i-24 i-table-1">入库单管理</span>
+                <span class="mws-i-24 i-table-1">已导入入库单记录</span>
             </div>
             <div class="mws-panel-body">
                 <table runat="server" id="tblSearch" class="leftmargin10">

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="权限管理" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UserGroupManagement.aspx.cs" Inherits="ZhongDing.Web.Views.HRM.UserGroupManagement" %>
+﻿<%@ Page Title="用户组管理" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="UserGroupManagement.aspx.cs" Inherits="ZhongDing.Web.Views.HRM.UserGroupManagement" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 

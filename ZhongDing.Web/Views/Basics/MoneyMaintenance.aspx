@@ -1,4 +1,4 @@
-﻿<%@ Page Title="银行账号维护" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MoneyMaintenance.aspx.cs" Inherits="ZhongDing.Web.Views.Basics.MoneyMaintenance" %>
+﻿<%@ Page Title="现金管理维护" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="MoneyMaintenance.aspx.cs" Inherits="ZhongDing.Web.Views.Basics.MoneyMaintenance" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 

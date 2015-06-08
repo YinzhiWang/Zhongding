@@ -1,4 +1,4 @@
-﻿<%@ Page Title="配送公司流向数据" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ProcureOrderImportData.aspx.cs" Inherits="ZhongDing.Web.Views.Imports.ProcureOrderImportData" %>
+﻿<%@ Page Title="采购订单导入记录" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ProcureOrderImportData.aspx.cs" Inherits="ZhongDing.Web.Views.Imports.ProcureOrderImportData" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 

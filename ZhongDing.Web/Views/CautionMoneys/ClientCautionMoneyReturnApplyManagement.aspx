@@ -1,4 +1,4 @@
-﻿<%@ Page Title="供应商保证金管理" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ClientCautionMoneyReturnApplyManagement.aspx.cs" Inherits="ZhongDing.Web.Views.CautionMoneys.ClientCautionMoneyReturnApplyManagement" %>
+﻿<%@ Page Title="客户保证金退回申请管理" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ClientCautionMoneyReturnApplyManagement.aspx.cs" Inherits="ZhongDing.Web.Views.CautionMoneys.ClientCautionMoneyReturnApplyManagement" %>
 
 <%@ MasterType VirtualPath="~/Site.Master" %>
 
