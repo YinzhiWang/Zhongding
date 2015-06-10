@@ -15,8 +15,12 @@ using ZhongDing.Common.Extension;
 
 namespace ZhongDing.Web.Views.Basics
 {
-    public partial class MoneyMaintenance : BasePage
+    public partial class MoneyMaintenance : WorkflowBasePage
     {
+        protected override int GetCurrentWorkFlowID()
+        {
+            return (int)EWorkflow.MoneyManagement;
+        }
         #region Members
 
 
@@ -128,6 +132,7 @@ namespace ZhongDing.Web.Views.Basics
                 PayDate = DateTime.Now,
                 PaymentStatusID = (int)EPaymentStatus.Paid,
                 PaymentTypeID = rddPaymentType.SelectedValue.ToInt(),
+                WorkflowID = CurrentWorkFlowID
             };
 
             if (rddPaymentType.SelectedItem.Text == "收款")
