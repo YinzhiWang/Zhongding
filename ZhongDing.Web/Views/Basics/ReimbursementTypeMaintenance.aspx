@@ -46,78 +46,72 @@
                                 </telerik:RadTextBox>
                             </div>
                         </div>
-                          <div class="mws-form-row">
-                                   <telerik:RadGrid ID="rgReimbursementTypes" runat="server" PageSize="10"
-                            AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
-                            MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
-                            ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                            OnNeedDataSource="rgReimbursementTypes_NeedDataSource" OnDeleteCommand="rgReimbursementTypes_DeleteCommand"
-                            OnItemCreated="rgReimbursementTypes_ItemCreated" OnColumnCreated="rgReimbursementTypes_ColumnCreated" OnItemDataBound="rgReimbursementTypes_ItemDataBound">
-                            <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
-                                ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
-                                <Columns>
-                                    <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false">
-                                        <ItemStyle HorizontalAlign="Left" Width="50" />
-                                    </telerik:GridBoundColumn>
-                                    <telerik:GridBoundColumn UniqueName="Name" HeaderText="报销子类别" DataField="Name">
-                                        <ItemStyle HorizontalAlign="Left" />
-                                    </telerik:GridBoundColumn>
-                                    <telerik:GridBoundColumn UniqueName="Comment" HeaderText="备注" DataField="Comment">
-                                        <ItemStyle HorizontalAlign="Left" />
-                                    </telerik:GridBoundColumn>
+                        <div class="mws-form-row">
+                            <telerik:RadGrid ID="rgReimbursementTypes" runat="server" PageSize="10"
+                                AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
+                                MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
+                                ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
+                                OnNeedDataSource="rgReimbursementTypes_NeedDataSource" OnDeleteCommand="rgReimbursementTypes_DeleteCommand"
+                                OnItemCreated="rgReimbursementTypes_ItemCreated" OnColumnCreated="rgReimbursementTypes_ColumnCreated" OnItemDataBound="rgReimbursementTypes_ItemDataBound">
+                                <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
+                                    ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
+                                    <Columns>
+                                        <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false">
+                                            <ItemStyle HorizontalAlign="Left" Width="50" />
+                                        </telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn UniqueName="Name" HeaderText="报销子类别" DataField="Name">
+                                            <ItemStyle HorizontalAlign="Left" />
+                                        </telerik:GridBoundColumn>
+                                        <telerik:GridBoundColumn UniqueName="Comment" HeaderText="备注" DataField="Comment">
+                                            <ItemStyle HorizontalAlign="Left" />
+                                        </telerik:GridBoundColumn>
 
 
-                                    <telerik:GridTemplateColumn UniqueName="Edit" HeaderStyle-Width="40">
-                                        <ItemStyle HorizontalAlign="Center" Width="40" />
-                                        <ItemTemplate>
-                                            <a href="javascript:void(0);" onclick="redirectToMaintenancePage(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">
-                                                <u>编辑</u></a>
-                                        </ItemTemplate>
-                                    </telerik:GridTemplateColumn>
-                                    <%--<telerik:GridTemplateColumn UniqueName="Audit">
-                                <ItemStyle HorizontalAlign="Center" Width="30" />
-                                <ItemTemplate>
-                                    <a href="javascript:void(0)" onclick="openAuditWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>); return false;">
-                                        <u>审核</u></a>
-                                </ItemTemplate>
-                            </telerik:GridTemplateColumn>--%>
-                                    <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
-                                </Columns>
-                                <CommandItemTemplate>
-                                    <table class="width100-percent">
-                                        <tr>
-                                            <td>
-                                                <asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
-                                                    <input type="button" class="rgAdd" onclick="redirectToMaintenancePage(-1); return false;" />
-                                                    <a href="javascript:void(0)" onclick="redirectToMaintenancePage(-1); return false;">添加</a>
-                                                </asp:Panel>
-                                                <%--<asp:Panel ID="plExportCommand" runat="server" CssClass="width80 float-left">
+                                        <telerik:GridTemplateColumn UniqueName="Edit" HeaderStyle-Width="40">
+                                            <ItemStyle HorizontalAlign="Center" Width="40" />
+                                            <ItemTemplate>
+                                                <a href="javascript:void(0);" onclick="redirectToMaintenancePage(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">
+                                                    <u>编辑</u></a>
+                                            </ItemTemplate>
+                                        </telerik:GridTemplateColumn>
+
+                                        <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
+                                    </Columns>
+                                    <CommandItemTemplate>
+                                        <table class="width100-percent">
+                                            <tr>
+                                                <td>
+                                                    <asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
+                                                        <input type="button" class="rgAdd" onclick="redirectToMaintenancePage(-1); return false;" />
+                                                        <a href="javascript:void(0)" onclick="redirectToMaintenancePage(-1); return false;">添加</a>
+                                                    </asp:Panel>
+                                                    <%--<asp:Panel ID="plExportCommand" runat="server" CssClass="width80 float-left">
                                             <input type="button" class="rgExpXLS" onclick="exportExcel(); return false;" />
                                             <a href="javascript:void(0);" onclick="exportExcel(); return false;">导出excel</a>
                                         </asp:Panel>--%>
-                                            </td>
-                                            <td class="right-td rightpadding10">
-                                                <input type="button" class="rgRefresh" onclick="refreshGrid(); return false;" />
-                                                <a href="javascript:void(0);" onclick="refreshGrid(); return false;">刷新</a>
-                                            </td>
-                                        </tr>
-                                    </table>
-                                </CommandItemTemplate>
-                                <NoRecordsTemplate>
-                                    没有任何数据
-                                </NoRecordsTemplate>
-                                <ItemStyle Height="30" />
-                                <AlternatingItemStyle BackColor="#f2f2f2" />
-                                <PagerStyle PagerTextFormat="{4} 第{0}页/共{1}页, 第{2}-{3}条 共{5}条"
-                                    PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
-                                    FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
-                            </MasterTableView>
-                            <ClientSettings>
-                                <ClientEvents OnGridCreated="GetsGridObject" />
-                            </ClientSettings>
-                        </telerik:RadGrid>
+                                                </td>
+                                                <td class="right-td rightpadding10">
+                                                    <input type="button" class="rgRefresh" onclick="refreshGrid(); return false;" />
+                                                    <a href="javascript:void(0);" onclick="refreshGrid(); return false;">刷新</a>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </CommandItemTemplate>
+                                    <NoRecordsTemplate>
+                                        没有任何数据
+                                    </NoRecordsTemplate>
+                                    <ItemStyle Height="30" />
+                                    <AlternatingItemStyle BackColor="#f2f2f2" />
+                                    <PagerStyle PagerTextFormat="{4} 第{0}页/共{1}页, 第{2}-{3}条 共{5}条"
+                                        PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
+                                        FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
+                                </MasterTableView>
+                                <ClientSettings>
+                                    <ClientEvents OnGridCreated="GetsGridObject" />
+                                </ClientSettings>
+                            </telerik:RadGrid>
                         </div>
-                  
+
                         <div class="height20"></div>
                     </div>
                     <div class="mws-button-row">
@@ -143,12 +137,12 @@
             gridOfRefresh.get_masterTableView().rebind();
         }
         function onClientHidden(sender, args) {
-        
+
             redirectToPage("Views/Basics/ReimbursementTypeManagement.aspx");
         }
         function redirectToMaintenancePage(id) {
             $.showLoading();
-            var parentID=$.getQueryString("EntityID");
+            var parentID = $.getQueryString("EntityID");
             window.location.href = "ReimbursementTypeChildMaintenance.aspx?EntityID=" + id + "&ParentID=" + parentID;
         }
 

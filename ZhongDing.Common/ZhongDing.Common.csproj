@@ -83,6 +83,8 @@
     <Compile Include="Enums\EAccountType.cs" />
     <Compile Include="Enums\EAjaxActionType.cs" />
     <Compile Include="Enums\EAppNoteType.cs" />
+    <Compile Include="Enums\EAttachmenType.cs" />
+    <Compile Include="Enums\EBorrowMoneyStatus.cs" />
     <Compile Include="Enums\ECautionMoneyType.cs" />
     <Compile Include="Enums\ECautionMoneyTypeCategory.cs" />
     <Compile Include="Enums\ECompareOperator.cs" />

@@ -12,8 +12,10 @@
           <EntitySet Name="aspnet_Membership" EntityType="DbModel.Store.aspnet_Membership" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="aspnet_Roles" EntityType="DbModel.Store.aspnet_Roles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="aspnet_Users" EntityType="DbModel.Store.aspnet_Users" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="AttachmentFile" EntityType="DbModel.Store.AttachmentFile" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="BankAccount" EntityType="DbModel.Store.BankAccount" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="BankAccountBalanceHistory" EntityType="DbModel.Store.BankAccountBalanceHistory" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="BorrowMoney" EntityType="DbModel.Store.BorrowMoney" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CautionMoneyType" EntityType="DbModel.Store.CautionMoneyType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Certificate" EntityType="DbModel.Store.Certificate" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CertificateType" EntityType="DbModel.Store.CertificateType" store:Type="Tables" Schema="dbo" />
@@ -1400,6 +1402,22 @@
           <Property Name="IsAnonymous" Type="bit" Nullable="false" />
           <Property Name="LastActivityDate" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="AttachmentFile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="AttachmentHostTableID" Type="int" Nullable="false" />
+          <Property Name="AttachmenTypeID" Type="int" Nullable="false" />
+          <Property Name="FileName" Type="nvarchar" MaxLength="255" />
+          <Property Name="FilePath" Type="nvarchar" MaxLength="512" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="1000" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
         <EntityType Name="BankAccount">
           <Key>
             <PropertyRef Name="ID" />
@@ -1431,6 +1449,23 @@
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="BorrowMoney">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="BorrowDate" Type="datetime" Nullable="false" />
+          <Property Name="BorrowName" Type="nvarchar" Nullable="false" MaxLength="100" />
+          <Property Name="BorrowAmount" Type="money" Nullable="false" />
+          <Property Name="ReturnDate" Type="datetime" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="100" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="Status" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="CautionMoneyType">
           <Key>
@@ -8320,6 +8355,8 @@
             <End Role="BankAccountBalanceHistory" EntitySet="BankAccountBalanceHistory" />
           </AssociationSet>
           <EntitySet Name="ReimbursementType" EntityType="DbModel.ReimbursementType" />
+          <EntitySet Name="AttachmentFile" EntityType="DbModel.AttachmentFile" />
+          <EntitySet Name="BorrowMoney" EntityType="DbModel.BorrowMoney" />
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -14611,6 +14648,39 @@
           <Property Type="Int32" Name="LastModifiedBy" />
           <Property Type="Int32" Name="ParentID" />
         </EntityType>
+        <EntityType Name="AttachmentFile">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="AttachmentHostTableID" Nullable="false" />
+          <Property Type="Int32" Name="AttachmenTypeID" Nullable="false" />
+          <Property Type="String" Name="FileName" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FilePath" MaxLength="512" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Comment" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+        </EntityType>
+        <EntityType Name="BorrowMoney">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="BorrowDate" Nullable="false" Precision="3" />
+          <Property Type="String" Name="BorrowName" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Decimal" Name="BorrowAmount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="DateTime" Name="ReturnDate" Nullable="false" Precision="3" />
+          <Property Type="String" Name="Comment" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <Property Type="Int32" Name="Status" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -16982,6 +17052,41 @@
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AttachmentFile">
+            <EntityTypeMapping TypeName="DbModel.AttachmentFile">
+              <MappingFragment StoreEntitySet="AttachmentFile">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="AttachmenTypeID" ColumnName="AttachmenTypeID" />
+                <ScalarProperty Name="AttachmentHostTableID" ColumnName="AttachmentHostTableID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BorrowMoney">
+            <EntityTypeMapping TypeName="DbModel.BorrowMoney">
+              <MappingFragment StoreEntitySet="BorrowMoney">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="ReturnDate" ColumnName="ReturnDate" />
+                <ScalarProperty Name="BorrowAmount" ColumnName="BorrowAmount" />
+                <ScalarProperty Name="BorrowName" ColumnName="BorrowName" />
+                <ScalarProperty Name="BorrowDate" ColumnName="BorrowDate" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

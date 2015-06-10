@@ -53,7 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\DynamicLinq.cs" />
+    <Compile Include="IRepositories\IAttachmentFileRepository.cs" />
     <Compile Include="IRepositories\IBankAccountBalanceHistoryRepository.cs" />
+    <Compile Include="IRepositories\IBorrowMoneyRepository.cs" />
     <Compile Include="IRepositories\IClientCautionMoneyRepository.cs" />
     <Compile Include="IRepositories\IClientCautionMoneyReturnApplicationRepository.cs" />
     <Compile Include="IRepositories\IClientSaleApplicationImportDataRepository.cs" />
@@ -184,11 +186,13 @@
     <Compile Include="Repositories\AccountTypeRepository.cs" />
     <Compile Include="Repositories\ApplicationNoteRepository.cs" />
     <Compile Include="Repositories\ApplicationPaymentRepository.cs" />
+    <Compile Include="Repositories\AttachmentFileRepository.cs" />
     <Compile Include="Repositories\BankAccountBalanceHistoryRepository.cs" />
     <Compile Include="Repositories\BankAccountRepository.cs" />
     <Compile Include="Repositories\BaseRepository.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Repositories\BorrowMoneyRepository.cs" />
     <Compile Include="Repositories\CautionMoneyTypeRepository.cs" />
     <Compile Include="Repositories\CertificateRepository.cs" />
     <Compile Include="Repositories\CertificateTypeRepository.cs" />

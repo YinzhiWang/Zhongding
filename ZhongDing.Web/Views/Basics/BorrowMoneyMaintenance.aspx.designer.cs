@@ -22,22 +22,13 @@ namespace ZhongDing.Web.Views.Basics {
         protected global::System.Web.UI.WebControls.ValidationSummary vsMaintenance;
         
         /// <summary>
-        /// rddPaymentType control.
+        /// rdpBorrowDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadDropDownList rddPaymentType;
-        
-        /// <summary>
-        /// RadToolTip1 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadToolTip RadToolTip1;
+        protected global::Telerik.Web.UI.RadDatePicker rdpBorrowDate;
         
         /// <summary>
         /// RequiredFieldValidator1 control.
@@ -49,49 +40,49 @@ namespace ZhongDing.Web.Views.Basics {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator1;
         
         /// <summary>
-        /// lblAccount control.
+        /// RadToolTip2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblAccount;
+        protected global::Telerik.Web.UI.RadToolTip RadToolTip2;
         
         /// <summary>
-        /// rcbxFromAccount control.
+        /// txtBorrowName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbxFromAccount;
+        protected global::Telerik.Web.UI.RadTextBox txtBorrowName;
         
         /// <summary>
-        /// rttBankBranchName control.
+        /// rfvTransportCompanyNumber control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadToolTip rttBankBranchName;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvTransportCompanyNumber;
         
         /// <summary>
-        /// rfvFromAccount control.
+        /// RadToolTip1 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvFromAccount;
+        protected global::Telerik.Web.UI.RadToolTip RadToolTip1;
         
         /// <summary>
-        /// txtAmount control.
+        /// txtBorrowAmount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadNumericTextBox txtAmount;
+        protected global::Telerik.Web.UI.RadNumericTextBox txtBorrowAmount;
         
         /// <summary>
         /// rfvFee control.
@@ -103,94 +94,31 @@ namespace ZhongDing.Web.Views.Basics {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvFee;
         
         /// <summary>
-        /// receiveAccountInfo control.
+        /// rdpReturnDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl receiveAccountInfo;
+        protected global::Telerik.Web.UI.RadDatePicker rdpReturnDate;
         
         /// <summary>
-        /// txtAccountName control.
+        /// rfvSendDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtAccountName;
+        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvSendDate;
         
         /// <summary>
-        /// RequiredFieldValidator2 control.
+        /// rttSendDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator2;
-        
-        /// <summary>
-        /// txtBank control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtBank;
-        
-        /// <summary>
-        /// RequiredFieldValidator3 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator RequiredFieldValidator3;
-        
-        /// <summary>
-        /// txtAccount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtAccount;
-        
-        /// <summary>
-        /// rttAccount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::Telerik.Web.UI.RadToolTip rttAccount;
-        
-        /// <summary>
-        /// rfvAccount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvAccount;
-        
-        /// <summary>
-        /// revAccount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RegularExpressionValidator revAccount;
-        
-        /// <summary>
-        /// cvAccount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CustomValidator cvAccount;
+        protected global::Telerik.Web.UI.RadToolTip rttSendDate;
         
         /// <summary>
         /// txtComment control.
@@ -202,6 +130,51 @@ namespace ZhongDing.Web.Views.Basics {
         protected global::Telerik.Web.UI.RadTextBox txtComment;
         
         /// <summary>
+        /// radAsyncUpload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadAsyncUpload radAsyncUpload;
+        
+        /// <summary>
+        /// cvRadAsyncUpload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CustomValidator cvRadAsyncUpload;
+        
+        /// <summary>
+        /// rgAttachmentFiles control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid rgAttachmentFiles;
+        
+        /// <summary>
+        /// divAppPayments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divAppPayments;
+        
+        /// <summary>
+        /// rgAppPayments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadGrid rgAppPayments;
+        
+        /// <summary>
         /// btnSave control.
         /// </summary>
         /// <remarks>
@@ -211,6 +184,15 @@ namespace ZhongDing.Web.Views.Basics {
         protected global::System.Web.UI.WebControls.Button btnSave;
         
         /// <summary>
+        /// btnDelete control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnDelete;
+        
+        /// <summary>
         /// btnCancel control.
         /// </summary>
         /// <remarks>
@@ -218,6 +200,15 @@ namespace ZhongDing.Web.Views.Basics {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnCancel;
+        
+        /// <summary>
+        /// hdnCurrentEntityID control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.HiddenField hdnCurrentEntityID;
         
         /// <summary>
         /// Master property.

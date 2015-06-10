@@ -26,10 +26,10 @@ namespace ZhongDing.Business.Repositories
             if (uiSearchObj != null)
             {
                 if (uiSearchObj.ID > 0)
-                    whereFuncs.Add(x => x.ID.Equals(uiSearchObj.ID));
+                    whereFuncs.Add(x => x.ID == uiSearchObj.ID);
 
                 if (uiSearchObj.WorkflowID > 0)
-                    whereFuncs.Add(x => x.WorkflowID.Equals(uiSearchObj.WorkflowID));
+                    whereFuncs.Add(x => x.WorkflowID == uiSearchObj.WorkflowID);
 
                 if (uiSearchObj.ApplicationID > 0)
                     whereFuncs.Add(x => x.ApplicationID == uiSearchObj.ApplicationID);
@@ -45,6 +45,11 @@ namespace ZhongDing.Business.Repositories
 
                 if (uiSearchObj.PayDate.HasValue)
                     whereFuncs.Add(x => x.PayDate == uiSearchObj.PayDate);
+
+                if (uiSearchObj.PaymentTypeID > 0)
+                {
+                    whereFuncs.Add(x => x.PaymentTypeID == uiSearchObj.PaymentTypeID);
+                }
             }
 
             query = GetList(whereFuncs);
@@ -133,7 +138,8 @@ namespace ZhongDing.Business.Repositories
                                   Fee = q.Fee,
                                   PayDate = q.PayDate,
                                   Comment = q.Comment,
-                                  CreatedBy = tcu == null ? string.Empty : tcu.FullName
+                                  CreatedBy = tcu == null ? string.Empty : tcu.FullName,
+                                  PaymentTypeID = q.PaymentTypeID
                               }).ToList();
             }
 

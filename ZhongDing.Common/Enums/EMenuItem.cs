@@ -75,6 +75,10 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         ReimbursementTypeManage,
         /// <summary>
+        /// 借款管理
+        /// </summary>
+        BorrowMoneyManage = 16,
+        /// <summary>
         /// 货品信息管理
         /// </summary>
         ProductInfoManage = 20,

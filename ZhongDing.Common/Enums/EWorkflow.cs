@@ -107,7 +107,17 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 客户保证金退回申请
         /// </summary>
-        ClientCautionMoneyReturnApply = 20
+        ClientCautionMoneyReturnApply = 20,
+
+        /// <summary>
+        /// 借款管理 21
+        /// </summary>
+        BorrowMoneyManagement = 21,
+
+        /// <summary>
+        /// 现金管理 22
+        /// </summary>
+        MoneyManagement = 22
 
     }
 }

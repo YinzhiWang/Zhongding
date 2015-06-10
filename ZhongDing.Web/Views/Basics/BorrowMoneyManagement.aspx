@@ -12,18 +12,21 @@
             <telerik:AjaxSetting AjaxControlID="btnSearch">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="tblSearch" />
-                    <telerik:AjaxUpdatedControl ControlID="rgApplicationPayments" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="rgBorrowMoneys" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="divPaymentSummary" LoadingPanelID="loadingPanel" />
+
                 </UpdatedControls>
             </telerik:AjaxSetting>
             <telerik:AjaxSetting AjaxControlID="btnReset">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="tblSearch" />
-                    <telerik:AjaxUpdatedControl ControlID="rgApplicationPayments" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="rgBorrowMoneys" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="divPaymentSummary" LoadingPanelID="loadingPanel" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
-            <telerik:AjaxSetting AjaxControlID="rgApplicationPayments">
+            <telerik:AjaxSetting AjaxControlID="rgBorrowMoneys">
                 <UpdatedControls>
-                    <telerik:AjaxUpdatedControl ControlID="rgApplicationPayments" LoadingPanelID="loadingPanel" />
+                    <telerik:AjaxUpdatedControl ControlID="rgBorrowMoneys" LoadingPanelID="loadingPanel" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
         </AjaxSettings>
@@ -38,64 +41,75 @@
             <div class="mws-panel-body">
                 <table runat="server" id="tblSearch" class="leftmargin10">
                     <tr class="height40">
-                        <th class="width100 middle-td">订单日期：</th>
-                        <td class="middle-td" colspan="4">
+                        <th class="width100 middle-td">借款日期：</th>
+                        <td class="middle-td">
                             <telerik:RadDatePicker runat="server" ID="rdpBeginDate" Width="120"></telerik:RadDatePicker>
                             -&nbsp;&nbsp;
                             <telerik:RadDatePicker runat="server" ID="rdpEndDate" Width="120"></telerik:RadDatePicker>
                         </td>
-                        <td></td>
-
-                    </tr>
-                    <tr class="height40">
-                        <th class="width60 middle-td">银行账号：</th>
-                        <td class="middle-td width400">
-                            <telerik:RadComboBox runat="server" ID="rcbxFromAccount" Filter="Contains" AllowCustomText="false" NoWrap="true"
-                                MarkFirstMatch="true" Height="160px" Width="400px" EmptyMessage="--请选择--">
+                        <th class="width100 middle-td" style="text-align: right;">状态：</th>
+                        <td class="middle-td">
+                            <telerik:RadComboBox runat="server" ID="rcbxStatus" Filter="Contains" AllowCustomText="false"
+                                MarkFirstMatch="true" Width="200px" EmptyMessage="--请选择--">
+                                <Items>
+                                    <telerik:RadComboBoxItem Value="-1" Text="" />
+                                    <telerik:RadComboBoxItem Value="1" Text="未还款" />
+                                    <telerik:RadComboBoxItem Value="2" Text="已还款" />
+                                </Items>
                             </telerik:RadComboBox>
                         </td>
 
-                        <td class="middle-td leftpadding20">
+                    </tr>
+                    <tr class="height40">
+                        <th class="width60 middle-td">借款人：</th>
+                        <td class="middle-td width400">
+                            <telerik:RadTextBox runat="server" ID="txtBorrowName" LabelWidth="15%" Width="100%" MaxLength="100"></telerik:RadTextBox>
+                        </td>
+
+                        <td class="middle-td leftpadding20" colspan="2">
                             <asp:Button ID="btnSearch" runat="server" Text="查询" CssClass="mws-button green" OnClick="btnSearch_Click" />
                             &nbsp;&nbsp;&nbsp;&nbsp;
                                 <asp:Button ID="btnReset" runat="server" Text="重置" CssClass="mws-button orange" OnClick="btnReset_Click" />
-                     
+
                         </td>
 
                     </tr>
                 </table>
-                <telerik:RadGrid ID="rgApplicationPayments" runat="server" PageSize="10"
+                <telerik:RadGrid ID="rgBorrowMoneys" runat="server" PageSize="10"
                     AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
                     MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
-                    OnNeedDataSource="rgApplicationPayments_NeedDataSource" OnDeleteCommand="rgApplicationPayments_DeleteCommand"
+                    OnNeedDataSource="rgBorrowMoneys_NeedDataSource" OnDeleteCommand="rgBorrowMoneys_DeleteCommand"
                     ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
-                    OnItemCreated="rgApplicationPayments_ItemCreated" OnColumnCreated="rgApplicationPayments_ColumnCreated" OnItemDataBound="rgApplicationPayments_ItemDataBound">
+                    OnItemCreated="rgBorrowMoneys_ItemCreated" OnColumnCreated="rgBorrowMoneys_ColumnCreated" OnItemDataBound="rgBorrowMoneys_ItemDataBound">
                     <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
                         ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
                         <Columns>
                             <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false">
                                 <ItemStyle HorizontalAlign="Left" Width="50" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="PayDate" HeaderText="交易日期" DataField="PayDate" DataFormatString="{0:yyyy-MM-dd}">
+                            <telerik:GridBoundColumn UniqueName="BorrowDate" HeaderText="借款日期" DataField="BorrowDate" DataFormatString="{0:yyyy-MM-dd}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="Comment" HeaderText="摘要" DataField="Comment">
+                            <telerik:GridBoundColumn UniqueName="BorrowName" HeaderText="借款人" DataField="BorrowName">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="OutAmount" HeaderText="借方" DataField="OutAmount" DataFormatString="￥{0:f2}">
+                            <telerik:GridBoundColumn UniqueName="BorrowAmount" HeaderText="借款金额" DataField="BorrowAmount" DataFormatString="￥{0:f2}">
                                 <ItemStyle HorizontalAlign="Left" Width="180" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="InAmount" HeaderText="贷方" DataField="InAmount" DataFormatString="￥{0:f2}">
+                            <telerik:GridBoundColumn UniqueName="ReturnDate" HeaderText="归还日期" DataField="ReturnDate" DataFormatString="{0:yyyy-MM-dd}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="PaymentType" HeaderText="方向" DataField="PaymentType">
-                                <ItemStyle HorizontalAlign="Left" />
-                            </telerik:GridBoundColumn>
-                            <telerik:GridBoundColumn UniqueName="Balance" HeaderText="余额" DataField="Balance" DataFormatString="￥{0:f2}">
+                            <telerik:GridBoundColumn UniqueName="ReturnAmount" HeaderText="已收回金额" DataField="ReturnAmount" DataFormatString="￥{0:f2}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
 
-
+                            <telerik:GridTemplateColumn UniqueName="Edit" HeaderStyle-Width="40">
+                                <ItemStyle HorizontalAlign="Center" Width="40" />
+                                <ItemTemplate>
+                                    <a href="javascript:void(0);" onclick="redirectToMaintenancePage(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">
+                                        <u>编辑</u></a>
+                                </ItemTemplate>
+                            </telerik:GridTemplateColumn>
                             <%--<telerik:GridTemplateColumn UniqueName="Audit">
                                 <ItemStyle HorizontalAlign="Center" Width="30" />
                                 <ItemTemplate>
@@ -103,6 +117,7 @@
                                         <u>审核</u></a>
                                 </ItemTemplate>
                             </telerik:GridTemplateColumn>--%>
+                            <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
                         </Columns>
                         <CommandItemTemplate>
                             <table class="width100-percent">
@@ -137,6 +152,10 @@
                         <ClientEvents OnGridCreated="GetsGridObject" />
                     </ClientSettings>
                 </telerik:RadGrid>
+                <div class="float-right" runat="server" id="divPaymentSummary">
+                    <span class="bold"></span><asp:Label ID="lblTotalPaymentAmount" runat="server"></asp:Label>元&nbsp;&nbsp;&nbsp;&nbsp;
+                                          <%--  <span class="bold">大写</span>：<asp:Label ID="lblCapitalTotalPaymentAmount" runat="server">--%></asp:Label>
+                </div>
             </div>
         </div>
     </div>
@@ -155,7 +174,7 @@
 
         function redirectToMaintenancePage(id) {
             $.showLoading();
-            window.location.href = "MoneyMaintenance.aspx?EntityID=" + id;
+            window.location.href = "BorrowMoneyMaintenance.aspx?EntityID=" + id;
         }
 
     </script>

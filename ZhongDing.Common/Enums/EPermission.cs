@@ -156,10 +156,13 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         SupplierTaskReportManagement = 35,
         /// <summary>
-        /// 现金管理
+        /// // 36 现金管理
         /// </summary>
         MoneyManagement = 36,
-
+        /// <summary>
+        /// //37 借款管理
+        /// </summary>
+        BorrowMoneyManagement = 37
 
     }
 }

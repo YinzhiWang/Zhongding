@@ -58,13 +58,22 @@ namespace ZhongDing.Web.Views.Basics {
         protected global::Telerik.Web.UI.RadDatePicker rdpEndDate;
         
         /// <summary>
-        /// rcbxFromAccount control.
+        /// rcbxStatus control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadComboBox rcbxFromAccount;
+        protected global::Telerik.Web.UI.RadComboBox rcbxStatus;
+        
+        /// <summary>
+        /// txtBorrowName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::Telerik.Web.UI.RadTextBox txtBorrowName;
         
         /// <summary>
         /// btnSearch control.
@@ -85,13 +94,31 @@ namespace ZhongDing.Web.Views.Basics {
         protected global::System.Web.UI.WebControls.Button btnReset;
         
         /// <summary>
-        /// rgApplicationPayments control.
+        /// rgBorrowMoneys control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadGrid rgApplicationPayments;
+        protected global::Telerik.Web.UI.RadGrid rgBorrowMoneys;
+        
+        /// <summary>
+        /// divPaymentSummary control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divPaymentSummary;
+        
+        /// <summary>
+        /// lblTotalPaymentAmount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTotalPaymentAmount;
         
         /// <summary>
         /// Master property.

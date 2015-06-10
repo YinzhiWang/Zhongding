@@ -32,8 +32,9 @@ namespace ZhongDing.Common
         private static readonly string CONFIGKEY_UPLOADFILEPATH_PROCUREORDERDATA = "UploadFilePath.ProcureOrderData";
         private static readonly string CONFIGKEY_UPLOADFILEPATH_STOCKINDATA = "UploadFilePath.StockInData";
         private static readonly string CONFIGKEY_UPLOADFILEPATH_CLIENTSALEAPPLICATIONDATA = "UploadFilePath.ClientSaleApplication";
+        private static readonly string CONFIGKEY_UPLOADFILEPATH_BORROWMONEY = "UploadFilePath.BorrowMoney";
 
-
+        
 
 
 
@@ -272,6 +273,20 @@ namespace ZhongDing.Common
                 return ConfigurationManager.AppSettings[CONFIGKEY_UPLOADFILEPATH_PROCUREORDERDATA];
             }
         }
+        
+        /// <summary>
+        /// 借款管理 附件
+        /// </summary>
+        /// <value>The upload file path client flow data.</value>
+        public static string UploadFilePathBorrowMoney
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[CONFIGKEY_UPLOADFILEPATH_BORROWMONEY];
+            }
+        }
+        
+
         /// <summary>
         /// 入库单 导入
         /// </summary>

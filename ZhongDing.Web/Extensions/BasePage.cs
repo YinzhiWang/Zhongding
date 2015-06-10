@@ -422,6 +422,31 @@ namespace ZhongDing.Web
             siteMaster.BaseNotification.Show(msg);
         }
 
+        public void DownloadFile(string fileName, string filePath)
+        {
+            Response.ContentType = "application/x-zip-compressed";
+            Response.AddHeader("Content-Disposition", "attachment;filename=" + fileName.UrlEncode());
+            string filename = filePath;
+            Response.TransmitFile(filename);
+        }
 
+        public bool IsNull(params object[] list)
+        {
+            for (int i = 0; i < list.Length; i++)
+            {
+                if (list[i] != null)
+                    return false;
+            }
+            return true;
+        }
+        public bool IsNotNull(params object[] list)
+        {
+            for (int i = 0; i < list.Length; i++)
+            {
+                if (list[i] == null)
+                    return false;
+            }
+            return true;
+        }
     }
 }

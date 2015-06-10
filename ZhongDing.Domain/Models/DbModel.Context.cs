@@ -164,5 +164,7 @@ namespace ZhongDing.Domain.Models
         public DbSet<ApplicationPayment> ApplicationPayment { get; set; }
         public DbSet<BankAccountBalanceHistory> BankAccountBalanceHistory { get; set; }
         public DbSet<ReimbursementType> ReimbursementType { get; set; }
+        public DbSet<AttachmentFile> AttachmentFile { get; set; }
+        public DbSet<BorrowMoney> BorrowMoney { get; set; }
     }
 }

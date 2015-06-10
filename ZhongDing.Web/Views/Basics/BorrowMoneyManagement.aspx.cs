@@ -11,26 +11,32 @@ using ZhongDing.Common;
 using ZhongDing.Common.Enums;
 using ZhongDing.Domain.UISearchObjects;
 using ZhongDing.Common.Extension;
+using ZhongDing.Domain.UIObjects;
 
 namespace ZhongDing.Web.Views.Basics
 {
-    public partial class BorrowMoneyManagement : BasePage
+    public partial class BorrowMoneyManagement : WorkflowBasePage
     {
+        protected override int GetCurrentWorkFlowID()
+        {
+            return (int)EWorkflow.BorrowMoneyManagement;
+        }
         #region Members
 
-        private IBankAccountRepository _PageBankAccountRepository;
-        private IBankAccountRepository PageBankAccountRepository
+        private IBorrowMoneyRepository _PageBorrowMoneyRepository;
+        private IBorrowMoneyRepository PageBorrowMoneyRepository
         {
             get
             {
-                if (_PageBankAccountRepository == null)
+                if (_PageBorrowMoneyRepository == null)
                 {
-                    _PageBankAccountRepository = new BankAccountRepository();
+                    _PageBorrowMoneyRepository = new BorrowMoneyRepository();
                 }
 
-                return _PageBankAccountRepository;
+                return _PageBorrowMoneyRepository;
             }
         }
+
         private IApplicationPaymentRepository _PagePageApplicationPaymentRepository;
         private IApplicationPaymentRepository PageApplicationPaymentRepository
         {
@@ -50,74 +56,82 @@ namespace ZhongDing.Web.Views.Basics
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.Master.MenuItemID = (int)EMenuItem.MoneyManage;
+            this.Master.MenuItemID = (int)EMenuItem.BorrowMoneyManage;
 
             if (!IsPostBack)
             {
-                BindBankAccounts();
+                BindBorrowMoneys();
             }
 
         }
 
         #region Private Methods
 
-        private void BindBankAccounts()
+        private void BindBorrowMoneys()
         {
 
 
-            var uiSearchObj = new UISearchDropdownItem
-            {
-                Extension = new UISearchExtension
-                {
-                    OwnerTypeID = (int)EOwnerType.Company,
-                    CompanyID = CurrentUser.CompanyID,
-                    //AccountTypeID = (int)EAccountType.Company
-                }
-            };
+            //var uiSearchObj = new UISearchDropdownItem
+            //{
+            //    Extension = new UISearchExtension
+            //    {
+            //        OwnerTypeID = (int)EOwnerType.Company,
+            //        CompanyID = CurrentUser.CompanyID,
+            //        //AccountTypeID = (int)EAccountType.Company
+            //    }
+            //};
 
-            var bankAccounts = PageBankAccountRepository.GetDropdownItems(uiSearchObj);
-            rcbxFromAccount.DataSource = bankAccounts;
-            rcbxFromAccount.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
-            rcbxFromAccount.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
-            rcbxFromAccount.DataBind();
-            rcbxFromAccount.SelectedIndex = 0;
+            //var BorrowMoneys = PageBorrowMoneyRepository.GetDropdownItems(uiSearchObj);
+            //rcbxFromAccount.DataSource = BorrowMoneys;
+            //rcbxFromAccount.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
+            //rcbxFromAccount.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
+            //rcbxFromAccount.DataBind();
+            //rcbxFromAccount.SelectedIndex = 0;
 
         }
 
-        private void BindBankAccounts(bool isNeedRebind)
+        private void BindBorrowMoneys(bool isNeedRebind)
         {
-            UISearchApplicationPayment uiSearchObj = new UISearchApplicationPayment()
+            UISearchBorrowMoney uiSearchObj = new UISearchBorrowMoney()
             {
-                PaymentStatusID = (int)EPaymentStatus.Paid,
+                //PaymentStatusID = (int)EPaymentStatus.Paid,
                 BeginDate = rdpBeginDate.SelectedDate,
                 EndDate = rdpEndDate.SelectedDate,
-                BankAccountID = rcbxFromAccount.SelectedValue.ToIntOrNull(),
-                CompanyID = CurrentUser.CompanyID
+                Status = rcbxStatus.SelectedValue.ToIntOrNull(),
+                BorrowName = txtBorrowName.Text.Trim(),
+                //BorrowMoneyID = rcbxFromAccount.SelectedValue.ToIntOrNull(),
+                //CompanyID = CurrentUser.CompanyID
             };
-            if (!uiSearchObj.BankAccountID.HasValue)
-            {
-                var searchObj = new UISearchDropdownItem
-                {
-                    Extension = new UISearchExtension
-                    {
-                        OwnerTypeID = (int)EOwnerType.Company,
-                        CompanyID = CurrentUser.CompanyID
-                    }
-                };
-                var bankAccounts = PageBankAccountRepository.GetDropdownItems(searchObj);
-                uiSearchObj.IncludeBankAccountIDs = bankAccounts.Select(x => x.ItemValue).ToList();
-            }
-
             int totalRecords;
 
-            var companies = PageApplicationPaymentRepository.GetUIListForMoneyManagement(uiSearchObj, rgApplicationPayments.CurrentPageIndex, rgApplicationPayments.PageSize - 1, out totalRecords);
+            var borrowMoneys = PageBorrowMoneyRepository.GetUIList(uiSearchObj, rgBorrowMoneys.CurrentPageIndex, rgBorrowMoneys.PageSize - 1, out totalRecords);
 
-            rgApplicationPayments.VirtualItemCount = totalRecords;
+            rgBorrowMoneys.VirtualItemCount = totalRecords;
 
-            rgApplicationPayments.DataSource = companies;
+            rgBorrowMoneys.DataSource = borrowMoneys;
 
             if (isNeedRebind)
-                rgApplicationPayments.Rebind();
+                rgBorrowMoneys.Rebind();
+            BindPaymentSummary();
+        }
+        private void BindPaymentSummary()
+        {
+            UISearchBorrowMoney uiSearchObj = new UISearchBorrowMoney()
+            {
+                //PaymentStatusID = (int)EPaymentStatus.Paid,
+                BeginDate = rdpBeginDate.SelectedDate,
+                EndDate = rdpEndDate.SelectedDate,
+                Status = rcbxStatus.SelectedValue.ToIntOrNull(),
+                BorrowName = txtBorrowName.Text.Trim(),
+            };
+
+
+            UIBorrowMoneyBalance borrowMoneyBalance = PageBorrowMoneyRepository.CalculateBalance(uiSearchObj);
+
+            lblTotalPaymentAmount.Text = "总计借款：" + borrowMoneyBalance.TotalBorrowAmount.ToString("C2")
+                + "  已还款：" + borrowMoneyBalance.TotalReturnedAmount.ToString("C2");
+            //lblCapitalTotalPaymentAmount.Text = totalPaymentAmount.ToString().ConvertToChineseMoney();
+
         }
 
 
@@ -125,45 +139,52 @@ namespace ZhongDing.Web.Views.Basics
 
         #region Events
 
-        protected void rgApplicationPayments_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
+        protected void rgBorrowMoneys_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
-            BindBankAccounts(false);
+            BindBorrowMoneys(false);
         }
 
-        protected void rgApplicationPayments_DeleteCommand(object sender, Telerik.Web.UI.GridCommandEventArgs e)
+        protected void rgBorrowMoneys_DeleteCommand(object sender, Telerik.Web.UI.GridCommandEventArgs e)
         {
             GridEditableItem editableItem = e.Item as GridEditableItem;
 
-            String sid = editableItem.GetDataKeyValue("ID").ToString();
-
-            int id = 0;
-            if (int.TryParse(sid, out id))
+            int? id = editableItem.GetDataKeyValue("ID").ToString().ToIntOrNull();
+            if (id.BiggerThanZero())
             {
-                PageBankAccountRepository.DeleteByID(id);
-                PageBankAccountRepository.Save();
+
+                var hasApplicationPaymen = PageApplicationPaymentRepository.GetList(x => x.WorkflowID == (int)EWorkflow.BorrowMoneyManagement && x.ApplicationID == id
+                     && x.PaymentStatusID == (int)EPaymentStatus.Paid).Any();
+                if (hasApplicationPaymen)
+                {
+                    ShowErrorMessage("此借款单已经有交易产生，不能删除");
+                }
+                else
+                {
+                    PageBorrowMoneyRepository.DeleteByID(id);
+                    PageBorrowMoneyRepository.Save();
+                }
             }
 
-            rgApplicationPayments.Rebind();
+            rgBorrowMoneys.Rebind();
         }
 
-        protected void rgApplicationPayments_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)
+        protected void rgBorrowMoneys_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
             base.PermissionOptionCheckGridCreate(e.Item);
         }
 
-        protected void rgApplicationPayments_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
+        protected void rgBorrowMoneys_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
         {
-            //base.PermissionOptionCheckGridDelete(e.OwnerTableView.Columns);
+            base.PermissionOptionCheckGridDelete(e.OwnerTableView.Columns);
         }
 
-        protected void rgApplicationPayments_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
+        protected void rgBorrowMoneys_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
-
         }
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            BindBankAccounts(true);
+            BindBorrowMoneys(true);
         }
 
         protected void btnReset_Click(object sender, EventArgs e)
@@ -171,14 +192,16 @@ namespace ZhongDing.Web.Views.Basics
 
             //rcbxFromAccount.ClearSelection();
             rdpEndDate.SelectedDate = rdpBeginDate.SelectedDate = null;
-            BindBankAccounts(true);
+            rcbxStatus.SelectedValue = string.Empty;
+            txtBorrowName.Text = string.Empty;
+            BindBorrowMoneys(true);
         }
 
         #endregion
 
         protected override EPermission PagePermissionID()
         {
-            return EPermission.MoneyManagement;
+            return EPermission.BorrowMoneyManagement;
         }
 
         protected override EPermissionOption PageAccessEPermissionOption()

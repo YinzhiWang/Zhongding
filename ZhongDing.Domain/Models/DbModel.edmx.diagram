@@ -434,6 +434,8 @@
         <EntityTypeShape EntityType="DbModel.BankAccountBalanceHistory" Width="1.5" PointX="6.8364044888114588" PointY="30.952834084142388" />
         <AssociationConnector Association="DbModel.FK_BankAccountBalanceHistory_BankAccountID" />
         <EntityTypeShape EntityType="DbModel.ReimbursementType" Width="1.5" PointX="5.06686994110554" PointY="1.1451076125470492" />
+        <EntityTypeShape EntityType="DbModel.AttachmentFile" Width="1.5" PointX="6.358196751381362" PointY="11.281496157535118" />
+        <EntityTypeShape EntityType="DbModel.BorrowMoney" Width="1.5" PointX="7.0025603021506964" PointY="8.231855709213697" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
