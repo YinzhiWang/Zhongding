@@ -326,7 +326,9 @@ namespace ZhongDing.WinService
 
             Utility.WriteExceptionLog(arg2);
         }
-
+        /// <summary>
+        /// 注意注意：添加新的定时任务  只需要继承ServiceTaskBase 即可 不要在添加新的Timer了，太冗余了
+        /// </summary>
         public override void Start()
         {
             initInterval = 60000;
@@ -349,13 +351,16 @@ namespace ZhongDing.WinService
 
             serviceTaskContainer.AddServiceTask(new CalculateBankAccountBalanceTask(new ServiceTaskParameter()
             {
-                DateIntervalType = DateInterval.Month,
-                InitInterval = 10 * 1000,
-                ProcessInterval = WebConfig.CalculateBankAccountBalanceServiceInterval,//1 month
-                ServiceTaskName = "CalculateBankAccountBalanceTask",
-                ServiceStartTime = WebConfig.CalculateBankAccountBalanceServiceStartTime,//2015-01-13 08:00
+                DateIntervalType = DateInterval.Month,//Timer运行ProcessInterval间隔的单位
+                InitInterval = 10 * 1000,//Timer初始化运行间隔
+                ProcessInterval = WebConfig.CalculateBankAccountBalanceServiceInterval,//1 month 这个是Timer的运行间隔 如一个月运行一次 就设置为1
+                ServiceTaskName = "CalculateBankAccountBalanceTask",//任务名称
+                ServiceStartTime = WebConfig.CalculateBankAccountBalanceServiceStartTime,//2015-01-13 08:00  开始时间
             }));
             serviceTaskContainer.Start();
+            /// <summary>
+            /// 注意注意：添加新的定时任务  只需要继承ServiceTaskBase 即可 不要在添加新的Timer了，太冗余了
+            /// </summary>
         }
 
         public override string MyServiceName

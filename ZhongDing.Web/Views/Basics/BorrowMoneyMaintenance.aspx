@@ -286,6 +286,18 @@
                                                         </div>
                                                     </EditItemTemplate>
                                                 </telerik:GridTemplateColumn>--%>
+                                                  <telerik:GridTemplateColumn UniqueName="Comment" HeaderText="备注" DataField="Comment" SortExpression="Comment">
+                                                    <HeaderStyle Width="20%" />
+                                                    <ItemStyle Width="20%" />
+                                                    <ItemTemplate>
+                                                        <span><%# Eval("Comment") %></span>
+                                                    </ItemTemplate>
+                                                    <EditItemTemplate>
+                                                        <div id="divGridCombox">
+                                                            <telerik:RadTextBox runat="server" ID="txtComment" MaxLength="500" Width="100%"></telerik:RadTextBox>
+                                                        </div>
+                                                    </EditItemTemplate>
+                                                </telerik:GridTemplateColumn>
                                                 <telerik:GridEditCommandColumn UniqueName="Edit" ButtonType="LinkButton" InsertText="保存" EditText="编辑" UpdateText="更新" CancelText="取消">
                                                     <HeaderStyle Width="10%" />
                                                     <ItemStyle Width="10%" />

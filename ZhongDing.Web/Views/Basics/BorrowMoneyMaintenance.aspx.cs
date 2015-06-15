@@ -562,8 +562,8 @@ namespace ZhongDing.Web.Views.Basics
                 }
 
 
-                //var txtFee = (RadNumericTextBox)e.Item.FindControl("txtFee");
-                //appPayment.Fee = (decimal?)txtFee.Value;
+                var txtComment = (RadTextBox)e.Item.FindControl("txtComment");
+                appPayment.Comment = txtComment.Text.Trim();
 
                 appPayment.ApplicationID = this.CurrentEntityID.Value;
                 appPayment.WorkflowID = this.CurrentWorkFlowID;
