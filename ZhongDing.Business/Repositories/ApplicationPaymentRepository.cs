@@ -263,15 +263,15 @@ namespace ZhongDing.Business.Repositories
                     UIApplicationPayment pre = new UIApplicationPayment()
                     {
                         ID = -1,
-                        Comment = "期初余额",
+                        Comment = (pageIndex == 0) ? "期初余额" : "上页的余额",
                         Balance = blance,
-                        PayDate = new DateTime(first.PayDate.Value.Year, first.PayDate.Value.Month, 1)
+                        //PayDate = new DateTime(first.PayDate.Value.Year, first.PayDate.Value.Month, 1)
                     };
                     uiEntities.Insert(0, pre);
                 }
             }
-
-            totalRecords = total;
+            int tempCount = pageIndex + 1;
+            totalRecords = total + tempCount;
 
             return uiEntities;
         }
@@ -299,8 +299,10 @@ namespace ZhongDing.Business.Repositories
             List<Expression<Func<ApplicationPayment, bool>>> whereFuncs = new List<Expression<Func<ApplicationPayment, bool>>>();
             whereFuncs.Add(x => x.FromBankAccountID == bankAccountID || x.ToBankAccountID == bankAccountID);
             whereFuncs.Add(x => x.PaymentStatusID == (int)EPaymentStatus.Paid);
-            whereFuncs.Add(x => x.PayDate <= end && (start == null || x.PayDate >= start));
-            whereFuncs.Add(x => x.ID <= applicationPaymentID);
+            whereFuncs.Add(x => (x.PayDate <= end && (start == null || x.PayDate >= start) && x.ID <= applicationPaymentID) ||
+                (x.PayDate < end && (start == null || x.PayDate >= start)));
+            //whereFuncs.Add(x => x.ID <= applicationPaymentID);
+
 
             //时间段内的所有 applicationPayments
 

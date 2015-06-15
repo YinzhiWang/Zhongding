@@ -33,7 +33,7 @@
     <div class="container">
         <div class="mws-panel grid_8">
             <div class="mws-panel-header">
-                <span class="mws-i-24 i-table-1">现金管理</span>
+                <span class="mws-i-24 i-table-1">交易日期</span>
             </div>
             <div class="mws-panel-body">
                 <table runat="server" id="tblSearch" class="leftmargin10">

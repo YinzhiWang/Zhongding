@@ -102,7 +102,9 @@
                             <telerik:GridBoundColumn UniqueName="ReturnAmount" HeaderText="已收回金额" DataField="ReturnAmount" DataFormatString="￥{0:f2}">
                                 <ItemStyle HorizontalAlign="Left" />
                             </telerik:GridBoundColumn>
-
+                            <telerik:GridBoundColumn UniqueName="Comment" HeaderText="备注" DataField="Comment">
+                                <ItemStyle HorizontalAlign="Left" />
+                            </telerik:GridBoundColumn>
                             <telerik:GridTemplateColumn UniqueName="Edit" HeaderStyle-Width="40">
                                 <ItemStyle HorizontalAlign="Center" Width="40" />
                                 <ItemTemplate>
@@ -153,7 +155,8 @@
                     </ClientSettings>
                 </telerik:RadGrid>
                 <div class="float-right" runat="server" id="divPaymentSummary">
-                    <span class="bold"></span><asp:Label ID="lblTotalPaymentAmount" runat="server"></asp:Label>元&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span class="bold"></span>
+                    <asp:Label ID="lblTotalPaymentAmount" runat="server"></asp:Label>元&nbsp;&nbsp;&nbsp;&nbsp;
                                           <%--  <span class="bold">大写</span>：<asp:Label ID="lblCapitalTotalPaymentAmount" runat="server">--%></asp:Label>
                 </div>
             </div>

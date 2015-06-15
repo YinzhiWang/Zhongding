@@ -223,8 +223,8 @@
                                 <HeaderStyle Width="99.8%" />
                             </telerik:RadGrid>
                             <div class="float-right" runat="server" id="divPaymentSummary">
-                                <span class="bold">支付总金额</span>：<asp:Label ID="lblTotalPaymentAmount" runat="server"></asp:Label>元&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <span class="bold">大写</span>：<asp:Label ID="lblCapitalTotalPaymentAmount" runat="server"></asp:Label>
+                                <span class="bold">发票总金额</span>：<asp:Label ID="lblTotalPaymentAmount" runat="server"></asp:Label>元&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <span class="bold">大写</span>：<asp:Label ID="lblCapitalTotalPaymentAmount" runat="server"></asp:Label>&nbsp;
                             </div>
                         </div>
 

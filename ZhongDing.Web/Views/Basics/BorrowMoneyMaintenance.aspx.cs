@@ -141,6 +141,7 @@ namespace ZhongDing.Web.Views.Basics
 
         private void LoadCurrentEntity()
         {
+            rdpBorrowDate.MinDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
             if (this.CurrentEntityID.BiggerThanZero())
             {
                 var currentEntity = PageBorrowMoneyRepository.GetByID(this.CurrentEntityID);
