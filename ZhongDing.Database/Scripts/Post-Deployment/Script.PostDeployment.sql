@@ -1274,3 +1274,18 @@ COMMIT TRANSACTION
 ---- end --- 06/10/2015 -- 更新菜单模块权限  和 工作流 -- by Nwang
 
 
+---- start --- 06/15/2015 -- 初始化导入数据状态数据 -- by lihong
+SET NUMERIC_ROUNDABORT OFF
+GO
+SET XACT_ABORT, ANSI_PADDING, ANSI_WARNINGS, CONCAT_NULL_YIELDS_NULL, ARITHABORT, QUOTED_IDENTIFIER, ANSI_NULLS ON
+GO
+
+BEGIN TRANSACTION
+SET IDENTITY_INSERT [dbo].[ImportStatus] ON
+INSERT INTO [dbo].[ImportStatus] ([ID], [StatusName]) VALUES (1, N'待导入')
+INSERT INTO [dbo].[ImportStatus] ([ID], [StatusName]) VALUES (2, N'正在导入')
+INSERT INTO [dbo].[ImportStatus] ([ID], [StatusName]) VALUES (3, N'导入出错')
+INSERT INTO [dbo].[ImportStatus] ([ID], [StatusName]) VALUES (4, N'完成')
+SET IDENTITY_INSERT [dbo].[ImportStatus] OFF
+COMMIT TRANSACTION
+---- end --- 06/15/2015 -- 初始化导入数据状态数据 -- by lihong
