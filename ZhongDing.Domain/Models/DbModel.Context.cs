@@ -166,5 +166,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<ReimbursementType> ReimbursementType { get; set; }
         public DbSet<AttachmentFile> AttachmentFile { get; set; }
         public DbSet<BorrowMoney> BorrowMoney { get; set; }
+        public DbSet<DistributionCompanyProductMapping> DistributionCompanyProductMapping { get; set; }
     }
 }

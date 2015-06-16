@@ -73,6 +73,7 @@
           <EntitySet Name="DeptMarketProduct" EntityType="DbModel.Store.DeptMarketProduct" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DeptProductEvaluation" EntityType="DbModel.Store.DeptProductEvaluation" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="DistributionCompany" EntityType="DbModel.Store.DistributionCompany" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="DistributionCompanyProductMapping" EntityType="DbModel.Store.DistributionCompanyProductMapping" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="FactoryManagerRefundApplication" EntityType="DbModel.Store.FactoryManagerRefundApplication" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GuaranteeLog" EntityType="DbModel.Store.GuaranteeLog" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Hospital" EntityType="DbModel.Store.Hospital" store:Type="Tables" Schema="dbo" />
@@ -147,7 +148,7 @@
           <EntitySet Name="WorkflowStepStatus" EntityType="DbModel.Store.WorkflowStepStatus" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="WorkflowStepUser" EntityType="DbModel.Store.WorkflowStepUser" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="WorkflowStepUserGroup" EntityType="DbModel.Store.WorkflowStepUserGroup" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK__aspnet_Me__UserI__10566F31" Association="DbModel.Store.FK__aspnet_Me__UserI__10566F31">
+          <AssociationSet Name="FK__aspnet_Me__UserI__73BA3083" Association="DbModel.Store.FK__aspnet_Me__UserI__73BA3083">
             <End Role="aspnet_Users" EntitySet="aspnet_Users" />
             <End Role="aspnet_Membership" EntitySet="aspnet_Membership" />
           </AssociationSet>
@@ -818,6 +819,18 @@
           <AssociationSet Name="FK_DeptProductEvaluation_Product" Association="DbModel.Store.FK_DeptProductEvaluation_Product">
             <End Role="Product" EntitySet="Product" />
             <End Role="DeptProductEvaluation" EntitySet="DeptProductEvaluation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DistributionCompanyProductMapping_DistributionCompanyID" Association="DbModel.Store.FK_DistributionCompanyProductMapping_DistributionCompanyID">
+            <End Role="DistributionCompany" EntitySet="DistributionCompany" />
+            <End Role="DistributionCompanyProductMapping" EntitySet="DistributionCompanyProductMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DistributionCompanyProductMapping_ProductID" Association="DbModel.Store.FK_DistributionCompanyProductMapping_ProductID">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="DistributionCompanyProductMapping" EntitySet="DistributionCompanyProductMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DistributionCompanyProductMapping_ProductSpecificationID" Association="DbModel.Store.FK_DistributionCompanyProductMapping_ProductSpecificationID">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="DistributionCompanyProductMapping" EntitySet="DistributionCompanyProductMapping" />
           </AssociationSet>
           <AssociationSet Name="FK_FactoryManagerRefundApplication_ClientUser" Association="DbModel.Store.FK_FactoryManagerRefundApplication_ClientUser">
             <End Role="ClientUser" EntitySet="ClientUser" />
@@ -2453,6 +2466,26 @@
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
         </EntityType>
+        <EntityType Name="DistributionCompanyProductMapping">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DistributionCompanyID" Type="int" />
+          <Property Name="DistributionCompanyProductCode" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="DistributionCompanyProductName" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="DistributionCompanyProductSpecification" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="ProductCode" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="ProductName" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="ProductSpecificationName" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="ProductSpecificationID" Type="int" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
         <EntityType Name="FactoryManagerRefundApplication">
           <Key>
             <PropertyRef Name="ID" />
@@ -3571,7 +3604,7 @@
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
         </EntityType>
-        <Association Name="FK__aspnet_Me__UserI__10566F31">
+        <Association Name="FK__aspnet_Me__UserI__73BA3083">
           <End Role="aspnet_Users" Type="DbModel.Store.aspnet_Users" Multiplicity="1" />
           <End Role="aspnet_Membership" Type="DbModel.Store.aspnet_Membership" Multiplicity="0..1" />
           <ReferentialConstraint>
@@ -5584,6 +5617,42 @@
             </Principal>
             <Dependent Role="DeptProductEvaluation">
               <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DistributionCompanyProductMapping_DistributionCompanyID">
+          <End Role="DistributionCompany" Type="DbModel.Store.DistributionCompany" Multiplicity="0..1" />
+          <End Role="DistributionCompanyProductMapping" Type="DbModel.Store.DistributionCompanyProductMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCompany">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DistributionCompanyProductMapping">
+              <PropertyRef Name="DistributionCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DistributionCompanyProductMapping_ProductID">
+          <End Role="Product" Type="DbModel.Store.Product" Multiplicity="0..1" />
+          <End Role="DistributionCompanyProductMapping" Type="DbModel.Store.DistributionCompanyProductMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DistributionCompanyProductMapping">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DistributionCompanyProductMapping_ProductSpecificationID">
+          <End Role="ProductSpecification" Type="DbModel.Store.ProductSpecification" Multiplicity="0..1" />
+          <End Role="DistributionCompanyProductMapping" Type="DbModel.Store.DistributionCompanyProductMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DistributionCompanyProductMapping">
+              <PropertyRef Name="ProductSpecificationID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8357,6 +8426,19 @@
           <EntitySet Name="ReimbursementType" EntityType="DbModel.ReimbursementType" />
           <EntitySet Name="AttachmentFile" EntityType="DbModel.AttachmentFile" />
           <EntitySet Name="BorrowMoney" EntityType="DbModel.BorrowMoney" />
+          <EntitySet Name="DistributionCompanyProductMapping" EntityType="DbModel.DistributionCompanyProductMapping" />
+          <AssociationSet Name="FK_DistributionCompanyProductMapping_DistributionCompanyID" Association="DbModel.FK_DistributionCompanyProductMapping_DistributionCompanyID">
+            <End Role="DistributionCompany" EntitySet="DistributionCompany" />
+            <End Role="DistributionCompanyProductMapping" EntitySet="DistributionCompanyProductMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DistributionCompanyProductMapping_ProductID" Association="DbModel.FK_DistributionCompanyProductMapping_ProductID">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="DistributionCompanyProductMapping" EntitySet="DistributionCompanyProductMapping" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DistributionCompanyProductMapping_ProductSpecificationID" Association="DbModel.FK_DistributionCompanyProductMapping_ProductSpecificationID">
+            <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+            <End Role="DistributionCompanyProductMapping" EntitySet="DistributionCompanyProductMapping" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -8608,6 +8690,7 @@
           <NavigationProperty Name="SupplierCautionMoney" Relationship="DbModel.FK_SupplierCautionMoney_ProductID" FromRole="Product" ToRole="SupplierCautionMoney" />
           <NavigationProperty Name="DCInventoryData" Relationship="DbModel.FK_DCInventoryData_Product" FromRole="Product" ToRole="DCInventoryData" />
           <NavigationProperty Name="ClientCautionMoney" Relationship="DbModel.FK_ClientCautionMoney_ProductID" FromRole="Product" ToRole="ClientCautionMoney" />
+          <NavigationProperty Name="DistributionCompanyProductMapping" Relationship="DbModel.FK_DistributionCompanyProductMapping_ProductID" FromRole="Product" ToRole="DistributionCompanyProductMapping" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -9068,6 +9151,7 @@
           <NavigationProperty Name="DBClientInvoice" Relationship="DbModel.FK_DBClientInvoice_DistributionCompanyID" FromRole="DistributionCompany" ToRole="DBClientInvoice" />
           <NavigationProperty Name="DBClientInvoiceSettlement" Relationship="DbModel.FK_DBClientInvoiceSettlement_DistributionCompany" FromRole="DistributionCompany" ToRole="DBClientInvoiceSettlement" />
           <NavigationProperty Name="DCInventoryData" Relationship="DbModel.FK_DCInventoryData_DistributionCompany" FromRole="DistributionCompany" ToRole="DCInventoryData" />
+          <NavigationProperty Name="DistributionCompanyProductMapping" Relationship="DbModel.FK_DistributionCompanyProductMapping_DistributionCompanyID" FromRole="DistributionCompany" ToRole="DistributionCompanyProductMapping" />
         </EntityType>
         <EntityType Name="ClientCompanyCertificate">
           <Key>
@@ -10578,6 +10662,7 @@
           <NavigationProperty Name="SupplierCautionMoney" Relationship="DbModel.FK_SupplierCautionMoney_ProductSpecificationID" FromRole="ProductSpecification" ToRole="SupplierCautionMoney" />
           <NavigationProperty Name="DCInventoryData" Relationship="DbModel.FK_DCInventoryData_ProductSpecification" FromRole="ProductSpecification" ToRole="DCInventoryData" />
           <NavigationProperty Name="ClientCautionMoney" Relationship="DbModel.FK_ClientCautionMoney_ProductSpecificationID" FromRole="ProductSpecification" ToRole="ClientCautionMoney" />
+          <NavigationProperty Name="DistributionCompanyProductMapping" Relationship="DbModel.FK_DistributionCompanyProductMapping_ProductSpecificationID" FromRole="ProductSpecification" ToRole="DistributionCompanyProductMapping" />
         </EntityType>
         <Association Name="FK_ClientInfoProductSetting_ProductSpecification">
           <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="1" />
@@ -14681,6 +14766,65 @@
           <Property Type="Int32" Name="LastModifiedBy" />
           <Property Type="Int32" Name="Status" Nullable="false" />
         </EntityType>
+        <EntityType Name="DistributionCompanyProductMapping">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DistributionCompanyID" />
+          <Property Type="String" Name="DistributionCompanyProductCode" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="DistributionCompanyProductName" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="DistributionCompanyProductSpecification" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ProductCode" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ProductName" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="ProductSpecificationName" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="Int32" Name="ProductID" />
+          <Property Type="Int32" Name="ProductSpecificationID" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="DistributionCompany" Relationship="DbModel.FK_DistributionCompanyProductMapping_DistributionCompanyID" FromRole="DistributionCompanyProductMapping" ToRole="DistributionCompany" />
+          <NavigationProperty Name="Product" Relationship="DbModel.FK_DistributionCompanyProductMapping_ProductID" FromRole="DistributionCompanyProductMapping" ToRole="Product" />
+          <NavigationProperty Name="ProductSpecification" Relationship="DbModel.FK_DistributionCompanyProductMapping_ProductSpecificationID" FromRole="DistributionCompanyProductMapping" ToRole="ProductSpecification" />
+        </EntityType>
+        <Association Name="FK_DistributionCompanyProductMapping_DistributionCompanyID">
+          <End Type="DbModel.DistributionCompany" Role="DistributionCompany" Multiplicity="0..1" />
+          <End Type="DbModel.DistributionCompanyProductMapping" Role="DistributionCompanyProductMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCompany">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DistributionCompanyProductMapping">
+              <PropertyRef Name="DistributionCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DistributionCompanyProductMapping_ProductID">
+          <End Type="DbModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="DbModel.DistributionCompanyProductMapping" Role="DistributionCompanyProductMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DistributionCompanyProductMapping">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DistributionCompanyProductMapping_ProductSpecificationID">
+          <End Type="DbModel.ProductSpecification" Role="ProductSpecification" Multiplicity="0..1" />
+          <End Type="DbModel.DistributionCompanyProductMapping" Role="DistributionCompanyProductMapping" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSpecification">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="DistributionCompanyProductMapping">
+              <PropertyRef Name="ProductSpecificationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -17087,6 +17231,27 @@
                 <ScalarProperty Name="BorrowAmount" ColumnName="BorrowAmount" />
                 <ScalarProperty Name="BorrowName" ColumnName="BorrowName" />
                 <ScalarProperty Name="BorrowDate" ColumnName="BorrowDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DistributionCompanyProductMapping">
+            <EntityTypeMapping TypeName="DbModel.DistributionCompanyProductMapping">
+              <MappingFragment StoreEntitySet="DistributionCompanyProductMapping">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ProductSpecificationID" ColumnName="ProductSpecificationID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="ProductSpecificationName" ColumnName="ProductSpecificationName" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+                <ScalarProperty Name="DistributionCompanyProductSpecification" ColumnName="DistributionCompanyProductSpecification" />
+                <ScalarProperty Name="DistributionCompanyProductName" ColumnName="DistributionCompanyProductName" />
+                <ScalarProperty Name="DistributionCompanyProductCode" ColumnName="DistributionCompanyProductCode" />
+                <ScalarProperty Name="DistributionCompanyID" ColumnName="DistributionCompanyID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

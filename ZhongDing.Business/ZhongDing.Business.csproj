@@ -60,6 +60,7 @@
     <Compile Include="IRepositories\IClientCautionMoneyReturnApplicationRepository.cs" />
     <Compile Include="IRepositories\IClientSaleApplicationImportDataRepository.cs" />
     <Compile Include="IRepositories\IClientSaleApplicationImportFileLogRepository.cs" />
+    <Compile Include="IRepositories\IDistributionCompanyProductMappingRepository.cs" />
     <Compile Include="IRepositories\IProcureOrderAppDetailImportDataRepository.cs" />
     <Compile Include="IRepositories\IClientAttachedInvoiceSettlementDetailRepository.cs" />
     <Compile Include="IRepositories\ICautionMoneyTypeRepository.cs" />
@@ -220,6 +221,7 @@
     <Compile Include="Repositories\ClientUserRepository.cs" />
     <Compile Include="Repositories\CompanyRepository.cs" />
     <Compile Include="Repositories\ClientSaleApplicationImportDataRepository.cs" />
+    <Compile Include="Repositories\DistributionCompanyProductMappingRepository.cs" />
     <Compile Include="Repositories\PermissionRepository.cs" />
     <Compile Include="Repositories\ReimbursementTypeRepository.cs" />
     <Compile Include="Repositories\SalesOrderAppDetailImportDataRepository.cs" />

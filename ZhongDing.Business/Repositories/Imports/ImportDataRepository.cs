@@ -212,6 +212,9 @@ namespace ZhongDing.Business.Repositories.Imports
 
                 ImportFileLogRepository.Save();
 
+                DCImportFileLog dCImportFileLog = fileLog.DCImportFileLog;
+                int distributionCompanyID = dCImportFileLog.DistributionCompanyID;
+                IDistributionCompanyProductMappingRepository distributionCompanyProductMappingRepository = new DistributionCompanyProductMappingRepository();
                 string errorMsg;
                 int errorRowCount = 0;
                 int rowIndex = 0;
@@ -231,114 +234,129 @@ namespace ZhongDing.Business.Repositories.Imports
                     {
                         rowIndex++;
 
-                        DateTime saleDate;
-                        if (DateTime.TryParse(tempSaleDate, out saleDate))
+                        var distributionCompanyProductMapping = distributionCompanyProductMappingRepository.GetList(x => x.DistributionCompanyID == distributionCompanyID
+                        && x.DistributionCompanyProductCode.ToLower() == productCode.ToLower()
+                        && x.DistributionCompanyProductSpecification.ToLower() == specification.ToLower()).FirstOrDefault();
+                        if (distributionCompanyProductMapping != null
+                            && distributionCompanyProductMapping.ProductID.HasValue
+                            && distributionCompanyProductMapping.ProductSpecificationID.HasValue)
                         {
-                            int saleQty;
-                            if (int.TryParse(tempSaleQty, out saleQty))
+
+
+                            DateTime saleDate;
+                            if (DateTime.TryParse(tempSaleDate, out saleDate))
                             {
-                                var product = ProductRepository.GetList(x =>
-                                    x.ProductCode.ToLower().Equals(productCode.ToLower())).FirstOrDefault();
-
-                                if (product != null)
+                                int saleQty;
+                                if (int.TryParse(tempSaleQty, out saleQty))
                                 {
-                                    var productSpecification = ProductSpecificationRepository
-                                        .GetList(x => x.Specification.ToLower().Equals(specification.ToLower()))
-                                        .FirstOrDefault();
 
-                                    if (productSpecification != null)
+                                    var product = ProductRepository.GetByID(distributionCompanyProductMapping.ProductID);
+
+                                    if (product != null)
                                     {
-                                        var hospital = HospitalRepository.GetList(x =>
-                                            x.HospitalName.ToLower().Equals(flowTo.ToLower())).FirstOrDefault();
+                                        var productSpecification = ProductSpecificationRepository.GetByID(distributionCompanyProductMapping.ProductSpecificationID);
 
-                                        DBContract dBContract = null;
-                                        bool isMatchedContract = false;
-
-                                        if (hospital != null)
+                                        if (productSpecification != null && productSpecification.ProductID == distributionCompanyProductMapping.ProductID)
                                         {
-                                            dBContract = DBContractRepository.GetList(x =>
-                                                x.ProductID == product.ID && x.ProductSpecificationID == productSpecification.ID
-                                                && x.DBContractHospital.Any(y => y.HospitalID == hospital.ID)).FirstOrDefault();
+                                            //设置真实的 productCode 和 productName 和 specification
+                                            productCode = distributionCompanyProductMapping.ProductCode;
+                                            productName = distributionCompanyProductMapping.ProductName;
+                                            specification = distributionCompanyProductMapping.ProductSpecificationName;
 
-                                            if (dBContract != null)
-                                                isMatchedContract = true;
-                                        }
+                                            var hospital = HospitalRepository.GetList(x =>
+                                                x.HospitalName.ToLower().Equals(flowTo.ToLower())).FirstOrDefault();
 
-                                        var dCFlowData = DCFlowDataRepository.GetList(x =>
-                                            x.DistributionCompanyID == fileLog.DCImportFileLog.DistributionCompanyID
-                                            && x.ProductID == product.ID && x.ProductSpecificationID == productSpecification.ID
-                                            && x.SaleDate == saleDate && x.SettlementDate == fileLog.DCImportFileLog.SettlementDate
-                                            && x.FlowTo == flowTo).FirstOrDefault();
+                                            DBContract dBContract = null;
+                                            bool isMatchedContract = false;
 
-                                        //限制重复导入，如果存在就跳过该条记录
-                                        if (dCFlowData == null)
-                                        {
-                                            dCFlowData = new DCFlowData()
+                                            if (hospital != null)
                                             {
-                                                DistributionCompanyID = fileLog.DCImportFileLog.DistributionCompanyID,
-                                                ImportFileLogID = fileLog.ID,
-                                                ProductID = product.ID,
-                                                ProductName = productName,
-                                                ProductCode = productCode,
-                                                ProductSpecificationID = productSpecification.ID,
-                                                ProductSpecification = specification,
-                                                SaleDate = saleDate,
-                                                SaleQty = saleQty,
-                                                SettlementDate = fileLog.DCImportFileLog.SettlementDate,
-                                                FlowTo = flowTo,
-                                                FactoryName = factoryName,
-                                                IsOverwritten = false
-                                            };
+                                                dBContract = DBContractRepository.GetList(x =>
+                                                    x.ProductID == product.ID && x.ProductSpecificationID == productSpecification.ID
+                                                    && x.DBContractHospital.Any(y => y.HospitalID == hospital.ID)).FirstOrDefault();
 
-                                            fileLog.DCFlowData.Add(dCFlowData);
+                                                if (dBContract != null)
+                                                    isMatchedContract = true;
+                                            }
 
-                                            //找到匹配的协议
-                                            if (isMatchedContract)
+                                            var dCFlowData = DCFlowDataRepository.GetList(x =>
+                                                x.DistributionCompanyID == fileLog.DCImportFileLog.DistributionCompanyID
+                                                && x.ProductID == product.ID && x.ProductSpecificationID == productSpecification.ID
+                                                && x.SaleDate == saleDate && x.SettlementDate == fileLog.DCImportFileLog.SettlementDate
+                                                && x.FlowTo == flowTo).FirstOrDefault();
+
+                                            //限制重复导入，如果存在就跳过该条记录
+                                            if (dCFlowData == null)
                                             {
-                                                dCFlowData.HospitalID = hospital.ID;
-                                                dCFlowData.IsCorrectlyFlow = true;
-
-                                                var dCFlowDataDetail = new DCFlowDataDetail()
+                                                dCFlowData = new DCFlowData()
                                                 {
-                                                    DBContractID = dBContract.ID,
-                                                    ContractCode = dBContract.ContractCode,
-                                                    IsTempContract = dBContract.IsTempContract,
-                                                    HospitalID = hospital.ID,
-                                                    HospitalName = hospital.HospitalName,
-                                                    ClientUserID = dBContract.ClientUserID.HasValue
-                                                        ? dBContract.ClientUserID.Value : GlobalConst.INVALID_INT,
-                                                    ClientUserName = dBContract.ClientUser == null
-                                                        ? string.Empty : dBContract.ClientUser.ClientName,
-                                                    InChargeUserID = dBContract.InChargeUserID,
-                                                    InChargeUserFullName = dBContract.Users == null
-                                                        ? string.Empty : dBContract.Users.FullName,
-                                                    UnitOfMeasurementID = dBContract.ProductSpecification != null
-                                                        ? dBContract.ProductSpecification.UnitOfMeasurementID : null,
-                                                    UnitName = (dBContract.ProductSpecification != null && dBContract.ProductSpecification.UnitOfMeasurement != null)
-                                                        ? dBContract.ProductSpecification.UnitOfMeasurement.UnitName : string.Empty,
+                                                    DistributionCompanyID = fileLog.DCImportFileLog.DistributionCompanyID,
+                                                    ImportFileLogID = fileLog.ID,
+                                                    ProductID = product.ID,
+                                                    ProductName = productName,
+                                                    ProductCode = productCode,
+                                                    ProductSpecificationID = productSpecification.ID,
+                                                    ProductSpecification = specification,
                                                     SaleDate = saleDate,
-                                                    SaleQty = saleQty
+                                                    SaleQty = saleQty,
+                                                    SettlementDate = fileLog.DCImportFileLog.SettlementDate,
+                                                    FlowTo = flowTo,
+                                                    FactoryName = factoryName,
+                                                    IsOverwritten = false
                                                 };
 
-                                                dCFlowData.DCFlowDataDetail.Add(dCFlowDataDetail);
+                                                fileLog.DCFlowData.Add(dCFlowData);
+
+                                                //找到匹配的协议
+                                                if (isMatchedContract)
+                                                {
+                                                    dCFlowData.HospitalID = hospital.ID;
+                                                    dCFlowData.IsCorrectlyFlow = true;
+
+                                                    var dCFlowDataDetail = new DCFlowDataDetail()
+                                                    {
+                                                        DBContractID = dBContract.ID,
+                                                        ContractCode = dBContract.ContractCode,
+                                                        IsTempContract = dBContract.IsTempContract,
+                                                        HospitalID = hospital.ID,
+                                                        HospitalName = hospital.HospitalName,
+                                                        ClientUserID = dBContract.ClientUserID.HasValue
+                                                            ? dBContract.ClientUserID.Value : GlobalConst.INVALID_INT,
+                                                        ClientUserName = dBContract.ClientUser == null
+                                                            ? string.Empty : dBContract.ClientUser.ClientName,
+                                                        InChargeUserID = dBContract.InChargeUserID,
+                                                        InChargeUserFullName = dBContract.Users == null
+                                                            ? string.Empty : dBContract.Users.FullName,
+                                                        UnitOfMeasurementID = dBContract.ProductSpecification != null
+                                                            ? dBContract.ProductSpecification.UnitOfMeasurementID : null,
+                                                        UnitName = (dBContract.ProductSpecification != null && dBContract.ProductSpecification.UnitOfMeasurement != null)
+                                                            ? dBContract.ProductSpecification.UnitOfMeasurement.UnitName : string.Empty,
+                                                        SaleDate = saleDate,
+                                                        SaleQty = saleQty
+                                                    };
+
+                                                    dCFlowData.DCFlowDataDetail.Add(dCFlowDataDetail);
+                                                }
+                                                else
+                                                    dCFlowData.IsCorrectlyFlow = false;
                                             }
                                             else
-                                                dCFlowData.IsCorrectlyFlow = false;
+                                                errorMsg += "该条数据在数据库中已存在；";
                                         }
                                         else
-                                            errorMsg += "该条数据在数据库中已存在；";
+                                            errorMsg += GlobalConst.ImportDataColumns.PRODUCT_SPECIFICATION + "不存在；";
                                     }
                                     else
-                                        errorMsg += GlobalConst.ImportDataColumns.PRODUCT_SPECIFICATION + "不存在；";
+                                        errorMsg += GlobalConst.ImportDataColumns.PRODUCT_NAME + "不存在；";
                                 }
                                 else
-                                    errorMsg += GlobalConst.ImportDataColumns.PRODUCT_NAME + "不存在；";
+                                    errorMsg += GlobalConst.ImportDataColumns.SALE_QTY + "格式错误；";
                             }
                             else
-                                errorMsg += GlobalConst.ImportDataColumns.SALE_QTY + "格式错误；";
+                                errorMsg += GlobalConst.ImportDataColumns.SALE_DATE + "格式错误；";
                         }
                         else
-                            errorMsg += GlobalConst.ImportDataColumns.SALE_DATE + "格式错误；";
+                            errorMsg += "配送公司货品映射文件格式错误；";
                     }
                     catch (Exception exp)
                     {
@@ -575,6 +593,7 @@ namespace ZhongDing.Business.Repositories.Imports
                 DateTime settlementDate = fileLog.DCImportFileLog.SettlementDate;
                 int distributionCompanyID = fileLog.DCImportFileLog.DistributionCompanyID;
 
+                IDistributionCompanyProductMappingRepository distributionCompanyProductMappingRepository = new DistributionCompanyProductMappingRepository();
                 string errorMsg;
                 int errorRowCount = 0;
                 int rowIndex = 0;
@@ -591,76 +610,89 @@ namespace ZhongDing.Business.Repositories.Imports
                     {
                         rowIndex++;
 
-                        int dcBalanceQty;
-                        if (int.TryParse(tempBalanceQty, out dcBalanceQty))
+                        var distributionCompanyProductMapping = distributionCompanyProductMappingRepository.GetList(x => x.DistributionCompanyID == distributionCompanyID
+                      && x.DistributionCompanyProductCode.ToLower() == productCode.ToLower()
+                      && x.DistributionCompanyProductSpecification.ToLower() == specification.ToLower()).FirstOrDefault();
+                        if (distributionCompanyProductMapping != null
+                            && distributionCompanyProductMapping.ProductID.HasValue
+                            && distributionCompanyProductMapping.ProductSpecificationID.HasValue)
                         {
-                            var product = ProductRepository.GetList(x =>
-                                x.ProductCode.ToLower().Equals(productCode.ToLower())).FirstOrDefault();
 
-                            if (product != null)
+                            int dcBalanceQty;
+                            if (int.TryParse(tempBalanceQty, out dcBalanceQty))
                             {
-                                var productSpecification = ProductSpecificationRepository
-                                    .GetList(x => x.Specification.ToLower().Equals(specification.ToLower()))
-                                    .FirstOrDefault();
+                                var product = ProductRepository.GetByID(distributionCompanyProductMapping.ProductID);
 
-                                if (productSpecification != null)
+                                if (product != null)
                                 {
-                                    var inventoryData = DCInventoryDataRepository.GetList(x =>
-                                                 x.DistributionCompanyID == distributionCompanyID
-                                                 && x.ProductID == product.ID && x.ProductSpecificationID == productSpecification.ID
-                                                 && x.SettlementDate == settlementDate).FirstOrDefault();
+                                    var productSpecification = ProductSpecificationRepository.GetByID(distributionCompanyProductMapping.ProductSpecificationID);
 
-                                    //限制重复导入，如果存在就跳过该条记录
-                                    if (inventoryData == null)
+                                    if (productSpecification != null && productSpecification.ProductID == distributionCompanyProductMapping.ProductID)
                                     {
-                                        int bookBalanceQty = 0;
+                                        //设置真实的 productCode 和 productName 和 specification
+                                        productCode = distributionCompanyProductMapping.ProductCode;
+                                        productName = distributionCompanyProductMapping.ProductName;
+                                        specification = distributionCompanyProductMapping.ProductSpecificationName;
 
-                                        var queryStockOutDetails = StockOutDetailRepository.GetList(x => x.IsDeleted == false
-                                            && x.StockOut.ReceiverTypeID == (int)EReceiverType.DistributionCompany
-                                            && x.StockOut.WorkflowStatusID == (int)EWorkflowStatus.OutWarehouse
-                                            && x.StockOut.DistributionCompanyID == distributionCompanyID
-                                            && x.ProductID == product.ID && x.ProductSpecificationID == productSpecification.ID
-                                            && x.StockOut.OutDate <= settlementDate);
+                                        var inventoryData = DCInventoryDataRepository.GetList(x =>
+                                                     x.DistributionCompanyID == distributionCompanyID
+                                                     && x.ProductID == product.ID && x.ProductSpecificationID == productSpecification.ID
+                                                     && x.SettlementDate == settlementDate).FirstOrDefault();
 
-                                        int stockOutQty = queryStockOutDetails.Count() > 0 ?
-                                            queryStockOutDetails.Sum(x => x.OutQty) : 0;
-
-                                        var queryDCFlowData = DCFlowDataRepository.GetList(x => x.IsCorrectlyFlow == true
-                                            && x.ProductID == product.ID && x.ProductSpecificationID == productSpecification.ID
-                                            && x.DistributionCompanyID == distributionCompanyID
-                                            && x.SaleDate <= settlementDate);
-
-                                        int flowDataQty = queryDCFlowData.Count() > 0 ? queryDCFlowData.Sum(x => x.SaleQty) : 0;
-
-                                        bookBalanceQty = stockOutQty - flowDataQty;
-
-                                        inventoryData = new DCInventoryData()
+                                        //限制重复导入，如果存在就跳过该条记录
+                                        if (inventoryData == null)
                                         {
-                                            DistributionCompanyID = distributionCompanyID,
-                                            SettlementDate = settlementDate,
-                                            ImportFileLogID = fileLog.ID,
-                                            ProductID = product.ID,
-                                            ProductName = productName,
-                                            ProductCode = productCode,
-                                            ProductSpecificationID = productSpecification.ID,
-                                            ProductSpecification = specification,
-                                            DCBalanceQty = dcBalanceQty,
-                                            BookBalanceQty = bookBalanceQty,
-                                        };
+                                            int bookBalanceQty = 0;
 
-                                        fileLog.DCInventoryData.Add(inventoryData);
+                                            var queryStockOutDetails = StockOutDetailRepository.GetList(x => x.IsDeleted == false
+                                                && x.StockOut.ReceiverTypeID == (int)EReceiverType.DistributionCompany
+                                                && x.StockOut.WorkflowStatusID == (int)EWorkflowStatus.OutWarehouse
+                                                && x.StockOut.DistributionCompanyID == distributionCompanyID
+                                                && x.ProductID == product.ID && x.ProductSpecificationID == productSpecification.ID
+                                                && x.StockOut.OutDate <= settlementDate);
+
+                                            int stockOutQty = queryStockOutDetails.Count() > 0 ?
+                                                queryStockOutDetails.Sum(x => x.OutQty) : 0;
+
+                                            var queryDCFlowData = DCFlowDataRepository.GetList(x => x.IsCorrectlyFlow == true
+                                                && x.ProductID == product.ID && x.ProductSpecificationID == productSpecification.ID
+                                                && x.DistributionCompanyID == distributionCompanyID
+                                                && x.SaleDate <= settlementDate);
+
+                                            int flowDataQty = queryDCFlowData.Count() > 0 ? queryDCFlowData.Sum(x => x.SaleQty) : 0;
+
+                                            bookBalanceQty = stockOutQty - flowDataQty;
+
+                                            inventoryData = new DCInventoryData()
+                                            {
+                                                DistributionCompanyID = distributionCompanyID,
+                                                SettlementDate = settlementDate,
+                                                ImportFileLogID = fileLog.ID,
+                                                ProductID = product.ID,
+                                                ProductName = productName,
+                                                ProductCode = productCode,
+                                                ProductSpecificationID = productSpecification.ID,
+                                                ProductSpecification = specification,
+                                                DCBalanceQty = dcBalanceQty,
+                                                BookBalanceQty = bookBalanceQty,
+                                            };
+
+                                            fileLog.DCInventoryData.Add(inventoryData);
+                                        }
+                                        else
+                                            errorMsg += "该条数据在数据库中已存在；";
                                     }
                                     else
-                                        errorMsg += "该条数据在数据库中已存在；";
+                                        errorMsg += GlobalConst.ImportDataColumns.PRODUCT_SPECIFICATION + "不存在；";
                                 }
                                 else
-                                    errorMsg += GlobalConst.ImportDataColumns.PRODUCT_SPECIFICATION + "不存在；";
+                                    errorMsg += GlobalConst.ImportDataColumns.PRODUCT_NAME + "不存在；";
                             }
                             else
-                                errorMsg += GlobalConst.ImportDataColumns.PRODUCT_NAME + "不存在；";
+                                errorMsg += GlobalConst.ImportDataColumns.SALE_QTY + "格式错误；";
                         }
                         else
-                            errorMsg += GlobalConst.ImportDataColumns.SALE_QTY + "格式错误；";
+                            errorMsg += "配送公司货品映射文件格式错误；";
                     }
                     catch (Exception exp)
                     {

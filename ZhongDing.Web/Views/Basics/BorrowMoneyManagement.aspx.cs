@@ -116,21 +116,21 @@ namespace ZhongDing.Web.Views.Basics
         }
         private void BindPaymentSummary()
         {
-            UISearchBorrowMoney uiSearchObj = new UISearchBorrowMoney()
-            {
-                //PaymentStatusID = (int)EPaymentStatus.Paid,
-                BeginDate = rdpBeginDate.SelectedDate,
-                EndDate = rdpEndDate.SelectedDate,
-                Status = rcbxStatus.SelectedValue.ToIntOrNull(),
-                BorrowName = txtBorrowName.Text.Trim(),
-            };
+            //UISearchBorrowMoney uiSearchObj = new UISearchBorrowMoney()
+            //{
+            //    //PaymentStatusID = (int)EPaymentStatus.Paid,
+            //    BeginDate = rdpBeginDate.SelectedDate,
+            //    EndDate = rdpEndDate.SelectedDate,
+            //    Status = rcbxStatus.SelectedValue.ToIntOrNull(),
+            //    BorrowName = txtBorrowName.Text.Trim(),
+            //};
 
 
-            UIBorrowMoneyBalance borrowMoneyBalance = PageBorrowMoneyRepository.CalculateBalance(uiSearchObj);
+            //UIBorrowMoneyBalance borrowMoneyBalance = PageBorrowMoneyRepository.CalculateBalance(uiSearchObj);
 
-            lblTotalPaymentAmount.Text = "总计借款：" + borrowMoneyBalance.TotalBorrowAmount.ToString("C2")
-                + "  已还款：" + borrowMoneyBalance.TotalReturnedAmount.ToString("C2");
-            //lblCapitalTotalPaymentAmount.Text = totalPaymentAmount.ToString().ConvertToChineseMoney();
+            //lblTotalPaymentAmount.Text = "总计借款：" + borrowMoneyBalance.TotalBorrowAmount.ToString("C2")
+            //    + "  已还款：" + borrowMoneyBalance.TotalReturnedAmount.ToString("C2");
+            ////lblCapitalTotalPaymentAmount.Text = totalPaymentAmount.ToString().ConvertToChineseMoney();
 
         }
 

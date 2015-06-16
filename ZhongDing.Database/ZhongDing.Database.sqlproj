@@ -442,6 +442,7 @@
     <Build Include="dbo\Tables\ReimbursementType.sql" />
     <Build Include="dbo\Tables\BorrowMoney.sql" />
     <Build Include="dbo\Tables\AttachmentFile.sql" />
+    <Build Include="dbo\Tables\DistributionCompanyProductMapping.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

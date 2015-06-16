@@ -269,6 +269,9 @@
     <Compile Include="Models\DistributionCompany.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DistributionCompanyProductMapping.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\FactoryManagerRefundApplication.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
