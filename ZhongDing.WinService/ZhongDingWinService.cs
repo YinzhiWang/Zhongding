@@ -138,7 +138,7 @@ namespace ZhongDing.WinService
         {
             this.tmCalculateInventory.Stop();
 
-            Utility.WriteTrace("Start tmCalculateInventory_Elapsed at：" + DateTime.Now);
+            //Utility.WriteTrace("Start tmCalculateInventory_Elapsed at：" + DateTime.Now);
 
             try
             {
@@ -155,11 +155,9 @@ namespace ZhongDing.WinService
                         if (isRunProcessCalculateInventory == false)
                         {
                             isRunProcessCalculateInventory = true;
-
+                            Utility.WriteTrace("Start tmCalculateInventory_Elapsed at：" + DateTime.Now);
                             CalculateInventoryService.ProcessWork();
-
-                            Utility.WriteTrace(WIN_SERVICE_NAME + ": tmCalculateInventory_Elapsed Processing has finished");
-
+                            Utility.WriteTrace("End tmCalculateInventory_Elapsed at：" + DateTime.Now);
                             isRunProcessCalculateInventory = false;
                         }
                     }
@@ -169,11 +167,9 @@ namespace ZhongDing.WinService
                     if (isRunProcessCalculateInventory == false)
                     {
                         isRunProcessCalculateInventory = true;
-
+                        Utility.WriteTrace("Start tmCalculateInventory_Elapsed at：" + DateTime.Now);
                         CalculateInventoryService.ProcessWork();
-
-                        Utility.WriteTrace(WIN_SERVICE_NAME + ": tmCalculateInventory_Elapsed Processing has finished");
-
+                        Utility.WriteTrace("End tmCalculateInventory_Elapsed at：" + DateTime.Now);
                         isRunProcessCalculateInventory = false;
                     }
                 }
@@ -191,7 +187,7 @@ namespace ZhongDing.WinService
 
                 tmCalculateInventory.Start();
 
-                Utility.WriteTrace("End tmCalculateInventory_Elapsed at：" + DateTime.Now);
+                //Utility.WriteTrace("End tmCalculateInventory_Elapsed at：" + DateTime.Now);
             }
         }
 
@@ -199,7 +195,7 @@ namespace ZhongDing.WinService
         {
             this.tmImportDCFlowData.Stop();
 
-            Utility.WriteTrace("Start tmImportDCFlowData_Elapsed at：" + DateTime.Now);
+            //Utility.WriteTrace("Start tmImportDCFlowData_Elapsed at：" + DateTime.Now);
 
             try
             {
@@ -216,11 +212,9 @@ namespace ZhongDing.WinService
                         if (isRunProcessImportDCFlowData == false)
                         {
                             isRunProcessImportDCFlowData = true;
-
+                            Utility.WriteTrace("Start tmImportDCFlowData_Elapsed at：" + DateTime.Now);
                             ImportDataService.ProcessWork();
-
-                            Utility.WriteTrace(WIN_SERVICE_NAME + ": tmImportDCFlowData_Elapsed Processing has finished");
-
+                            Utility.WriteTrace("End tmImportDCFlowData_Elapsed at：" + DateTime.Now);
                             isRunProcessImportDCFlowData = false;
                         }
                     }
@@ -230,11 +224,9 @@ namespace ZhongDing.WinService
                     if (isRunProcessImportDCFlowData == false)
                     {
                         isRunProcessImportDCFlowData = true;
-
+                        Utility.WriteTrace("Start tmImportDCFlowData_Elapsed at：" + DateTime.Now);
                         ImportDataService.ProcessWork();
-
-                        Utility.WriteTrace(WIN_SERVICE_NAME + ": tmImportDCFlowData_Elapsed Processing has finished");
-
+                        Utility.WriteTrace("End tmImportDCFlowData_Elapsed at：" + DateTime.Now);
                         isRunProcessImportDCFlowData = false;
                     }
                 }
@@ -252,7 +244,7 @@ namespace ZhongDing.WinService
 
                 tmImportDCFlowData.Start();
 
-                Utility.WriteTrace("End tmImportDCFlowData_Elapsed at：" + DateTime.Now);
+                //Utility.WriteTrace("End tmImportDCFlowData_Elapsed at：" + DateTime.Now);
             }
         }
 
@@ -260,7 +252,7 @@ namespace ZhongDing.WinService
         {
             this.tmSettleDBClientBonus.Stop();
 
-            Utility.WriteTrace("Start tmSettleDBClientBonus_Elapsed at：" + DateTime.Now);
+            //Utility.WriteTrace("Start tmSettleDBClientBonus_Elapsed at：" + DateTime.Now);
 
             try
             {
@@ -277,11 +269,9 @@ namespace ZhongDing.WinService
                         if (isRunProcessSettleDBClientBonus == false)
                         {
                             isRunProcessSettleDBClientBonus = true;
-
+                            Utility.WriteTrace("Start tmSettleDBClientBonus_Elapsed at：" + DateTime.Now);
                             DBClientSettleBonusService.ProcessWork();
-
-                            Utility.WriteTrace(WIN_SERVICE_NAME + ": tmSettleDBClientBonus_Elapsed Processing has finished");
-
+                            Utility.WriteTrace("End tmSettleDBClientBonus_Elapsed at：" + DateTime.Now);
                             isRunProcessSettleDBClientBonus = false;
                         }
                     }
@@ -291,11 +281,9 @@ namespace ZhongDing.WinService
                     if (isRunProcessSettleDBClientBonus == false)
                     {
                         isRunProcessSettleDBClientBonus = true;
-
+                        Utility.WriteTrace("Start tmSettleDBClientBonus_Elapsed at：" + DateTime.Now);
                         DBClientSettleBonusService.ProcessWork();
-
-                        Utility.WriteTrace(WIN_SERVICE_NAME + ": tmSettleDBClientBonus_Elapsed Processing has finished");
-
+                        Utility.WriteTrace("End tmSettleDBClientBonus_Elapsed at：" + DateTime.Now);
                         isRunProcessSettleDBClientBonus = false;
                     }
                 }
@@ -313,7 +301,7 @@ namespace ZhongDing.WinService
 
                 tmSettleDBClientBonus.Start();
 
-                Utility.WriteTrace("End tmSettleDBClientBonus_Elapsed at：" + DateTime.Now);
+                //Utility.WriteTrace("End tmSettleDBClientBonus_Elapsed at：" + DateTime.Now);
             }
         }
 

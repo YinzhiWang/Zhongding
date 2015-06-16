@@ -136,27 +136,28 @@ namespace ZhongDing.WinService.ServiceTask
                     if (dtNextRunTime <= DateTime.Now)
                     {
                         sb.Append(" 首次运行");
-                        //LogHelper.WriteLog(new LogBaseEntity() { ActionDetail = "timer_Elapsed", Message = ServiceTaskName + "：OnloadFirst" });
                         ServiceTaskParameter.IsFirstRun = false;
                         if (this.timer.Interval == ServiceTaskParameter.InitInterval)
                         {
                             this.timer.Interval = ServiceTaskParameter.ProcessInterval * DateAndTime.ConvertDateInterval(this.ServiceTaskParameter.DateIntervalType);
                         }
+                        Utility.WriteTrace("Start " + this.ServiceTaskParameter.ServiceTaskName + " at：" + DateTime.Now);
                         this.OnloadFirst();
+                        Utility.WriteTrace("End " + this.ServiceTaskParameter.ServiceTaskName + " at：" + DateTime.Now);
                         sb.Append(" 下次运行时间：" + DateTime.Now.AddMilliseconds(this.timer.Interval).ToString());
                         this.OnEnd();
                     }
                     else
                     {
                         sb.Append(" 探测中 下次运行时间：" + dtNextRunTime.ToString());
-                        //LogHelper.WriteLog(new LogBaseEntity() { ActionDetail = "timer_Elapsed", Message = ServiceTaskName + "探测中" });
                     }
                 }
                 else
                 {
                     sb.Append(" 二次运行");
-                    //LogHelper.WriteLog(new LogBaseEntity() { ActionDetail = "timer_Elapsed", Message = ServiceTaskName + "：OnloadSecond" });
+                    Utility.WriteTrace("Start " + this.ServiceTaskParameter.ServiceTaskName + " at：" + DateTime.Now);
                     this.OnloadSecond();
+                    Utility.WriteTrace("End " + this.ServiceTaskParameter.ServiceTaskName + " at：" + DateTime.Now);
                     sb.Append(" 下次运行时间：" + DateTime.Now.AddMilliseconds(this.timer.Interval).ToString());
                     this.OnEnd();
                 }
@@ -171,7 +172,6 @@ namespace ZhongDing.WinService.ServiceTask
                 stopwatch.Stop();
                 sb.Append(" 耗时：");
                 sb.Append(stopwatch.ElapsedMilliseconds + "Ms");
-                //LogHelper.WriteLog(new LogBaseEntity() { ActionDetail = "timer_Elapsed", Message = sb.ToString() });
                 LogConsole(sb.ToString());
                 this.timer.Start();
             }
