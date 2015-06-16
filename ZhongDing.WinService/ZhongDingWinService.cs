@@ -207,7 +207,7 @@ namespace ZhongDing.WinService
                         isFirstRunProcessImportDCFlowData = false;
 
                         if (tmImportDCFlowData.Interval == initInterval)
-                            tmImportDCFlowData.Interval = WebConfig.ImportDataServiceInterval * 1000 * 60 * 60;
+                            tmImportDCFlowData.Interval = WebConfig.ImportDataServiceInterval * 1000 * 60;//min
 
                         if (isRunProcessImportDCFlowData == false)
                         {
@@ -264,7 +264,7 @@ namespace ZhongDing.WinService
                         isFirstRunProcessSettleDBClientBonus = false;
 
                         if (tmSettleDBClientBonus.Interval == initInterval)
-                            tmSettleDBClientBonus.Interval = WebConfig.SettleDBClientBonusServiceInterval * 1000 * 60 * 60;
+                            tmSettleDBClientBonus.Interval = WebConfig.SettleDBClientBonusServiceInterval * (1000L * 60 * 60 * 24 * 30);//月
 
                         if (isRunProcessSettleDBClientBonus == false)
                         {
