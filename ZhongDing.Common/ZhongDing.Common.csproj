@@ -90,6 +90,7 @@
     <Compile Include="Enums\ECompareOperator.cs" />
     <Compile Include="Enums\EDeliveryMode.cs" />
     <Compile Include="Enums\EDepartmentType.cs" />
+    <Compile Include="Enums\EDepreciationType.cs" />
     <Compile Include="Enums\EExcelType.cs" />
     <Compile Include="Enums\EHospitalType.cs" />
     <Compile Include="Enums\EImportDataType.cs" />
@@ -111,6 +112,7 @@
     <Compile Include="Enums\ESaleOrderType.cs" />
     <Compile Include="Enums\ESalesPlanType.cs" />
     <Compile Include="Enums\ESaleType.cs" />
+    <Compile Include="Enums\EUseStatus.cs" />
     <Compile Include="Enums\EWorkflow.cs" />
     <Compile Include="Enums\EWorkflowStatus.cs" />
     <Compile Include="Enums\EWorkflowStep.cs" />

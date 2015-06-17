@@ -13,24 +13,20 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class DistributionCompanyProductMapping : IEntityExtendedProperty
+    public partial class FixedAssetsType : IEntityExtendedProperty
     {
+        public FixedAssetsType()
+        {
+            this.FixedAssets = new HashSet<FixedAssets>();
+        }
+    
         public int ID { get; set; }
-        public Nullable<int> DistributionCompanyID { get; set; }
-        public string DistributionCompanyProductCode { get; set; }
-        public string DistributionCompanyProductName { get; set; }
-        public string DistributionCompanyProductSpecification { get; set; }
-        public string ProductCode { get; set; }
-        public string ProductName { get; set; }
-        public string ProductSpecificationName { get; set; }
-        public Nullable<int> ProductID { get; set; }
-        public Nullable<int> ProductSpecificationID { get; set; }
+        public string Name { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
-        public string DistributionCompanyName { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -42,8 +38,6 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual DistributionCompany DistributionCompany { get; set; }
-        public virtual Product Product { get; set; }
-        public virtual ProductSpecification ProductSpecification { get; set; }
+        public virtual ICollection<FixedAssets> FixedAssets { get; set; }
     }
 }

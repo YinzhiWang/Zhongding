@@ -162,7 +162,11 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// //37 借款管理
         /// </summary>
-        BorrowMoneyManagement = 37
+        BorrowMoneyManagement = 37,
+        /// <summary>
+        /// 38 固定资产管理
+        /// </summary>
+        FixedAssetsManagement = 38
 
     }
 }

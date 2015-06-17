@@ -440,6 +440,12 @@
         <AssociationConnector Association="DbModel.FK_DistributionCompanyProductMapping_DistributionCompanyID" />
         <AssociationConnector Association="DbModel.FK_DistributionCompanyProductMapping_ProductID" />
         <AssociationConnector Association="DbModel.FK_DistributionCompanyProductMapping_ProductSpecificationID" />
+        <EntityTypeShape EntityType="DbModel.FixedAssets" Width="1.5" PointX="5.9403124311660935" PointY="29.182766138195419" />
+        <EntityTypeShape EntityType="DbModel.FixedAssetsType" Width="1.5" PointX="1.1443641917520968" PointY="10.000221361406251" />
+        <EntityTypeShape EntityType="DbModel.StorageLocation" Width="1.5" PointX="6.4480562575385232" PointY="11.979383891438779" />
+        <AssociationConnector Association="DbModel.FK_FixedAssets_DepartmentID" />
+        <AssociationConnector Association="DbModel.FK_FixedAssets_FixedAssetsTypeID" />
+        <AssociationConnector Association="DbModel.FK_FixedAssets_StorageLocationID" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

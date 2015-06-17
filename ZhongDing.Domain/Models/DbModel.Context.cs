@@ -167,5 +167,8 @@ namespace ZhongDing.Domain.Models
         public DbSet<AttachmentFile> AttachmentFile { get; set; }
         public DbSet<BorrowMoney> BorrowMoney { get; set; }
         public DbSet<DistributionCompanyProductMapping> DistributionCompanyProductMapping { get; set; }
+        public DbSet<FixedAssets> FixedAssets { get; set; }
+        public DbSet<FixedAssetsType> FixedAssetsType { get; set; }
+        public DbSet<StorageLocation> StorageLocation { get; set; }
     }
 }

@@ -1289,3 +1289,23 @@ INSERT INTO [dbo].[ImportStatus] ([ID], [StatusName]) VALUES (4, N'完成')
 SET IDENTITY_INSERT [dbo].[ImportStatus] OFF
 COMMIT TRANSACTION
 ---- end --- 06/15/2015 -- 初始化导入数据状态数据 -- by lihong
+
+
+
+
+---- start --- 06/17/2015 -- 初始化 固定资产类型-- by Nwang
+BEGIN TRANSACTION
+
+ALTER TABLE [dbo].[FixedAssets] DROP CONSTRAINT [FK_FixedAssets_FixedAssetsTypeID]
+ALTER TABLE [dbo].[UserGroupPermission] DROP CONSTRAINT [FK_UserGroupPermission_PermissionID]
+
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (38, N'固定资产管理', 1, 1, 1, 0, 0, 0, 0, '2015-06-16 13:12:43.603', NULL, NULL, NULL)
+
+INSERT INTO [dbo].[FixedAssetsType] ([ID], [Name], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (1, N'计算机', 0, '2015-06-16 11:48:41.337', NULL, NULL, NULL)
+GO
+
+ALTER TABLE [dbo].[FixedAssets] WITH NOCHECK ADD CONSTRAINT [FK_FixedAssets_FixedAssetsTypeID] FOREIGN KEY ([FixedAssetsTypeID]) REFERENCES [dbo].[FixedAssetsType] ([ID])
+
+ALTER TABLE [dbo].[UserGroupPermission] WITH NOCHECK ADD CONSTRAINT [FK_UserGroupPermission_PermissionID] FOREIGN KEY ([PermissionID]) REFERENCES [dbo].[Permission] ([ID])
+COMMIT TRANSACTION
+---- end --- 06/17/2015 -- 初始化导入数据状态数据 -- by Nwang

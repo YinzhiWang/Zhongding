@@ -79,6 +79,10 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         BorrowMoneyManage = 16,
         /// <summary>
+        /// 固定资产管理 17
+        /// </summary>
+        FixedAssetsManage = 17,
+        /// <summary>
         /// 货品信息管理
         /// </summary>
         ProductInfoManage = 20,
@@ -364,6 +368,7 @@ namespace ZhongDing.Common.Enums
         /// 客户商保证金退回申请管理
         /// </summary>
         ClientCautionMoneyReturnApplyManage = 204,
+
 
 
 

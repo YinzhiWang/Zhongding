@@ -61,6 +61,8 @@
     <Compile Include="IRepositories\IClientSaleApplicationImportDataRepository.cs" />
     <Compile Include="IRepositories\IClientSaleApplicationImportFileLogRepository.cs" />
     <Compile Include="IRepositories\IDistributionCompanyProductMappingRepository.cs" />
+    <Compile Include="IRepositories\IFixedAssetsRepository.cs" />
+    <Compile Include="IRepositories\IFixedAssetsTypeRepository.cs" />
     <Compile Include="IRepositories\IProcureOrderAppDetailImportDataRepository.cs" />
     <Compile Include="IRepositories\IClientAttachedInvoiceSettlementDetailRepository.cs" />
     <Compile Include="IRepositories\ICautionMoneyTypeRepository.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="IRepositories\IStockInDetailImportDataRepository.cs" />
     <Compile Include="IRepositories\IStockInImportDataRepository.cs" />
     <Compile Include="IRepositories\IStockInImportFileLogRepository.cs" />
+    <Compile Include="IRepositories\IStorageLocationRepository.cs" />
     <Compile Include="IRepositories\ISupplierCautionMoneyDeductionRepository.cs" />
     <Compile Include="IRepositories\ISupplierCautionMoneyRepository.cs" />
     <Compile Include="IRepositories\ISupplierInvoiceDetailRepository.cs" />
@@ -222,6 +225,8 @@
     <Compile Include="Repositories\CompanyRepository.cs" />
     <Compile Include="Repositories\ClientSaleApplicationImportDataRepository.cs" />
     <Compile Include="Repositories\DistributionCompanyProductMappingRepository.cs" />
+    <Compile Include="Repositories\FixedAssetsRepository.cs" />
+    <Compile Include="Repositories\FixedAssetsTypeRepository.cs" />
     <Compile Include="Repositories\PermissionRepository.cs" />
     <Compile Include="Repositories\ReimbursementTypeRepository.cs" />
     <Compile Include="Repositories\SalesOrderAppDetailImportDataRepository.cs" />
@@ -286,6 +291,7 @@
     <Compile Include="Repositories\StockInRepository.cs" />
     <Compile Include="Repositories\StockOutDetailRepository.cs" />
     <Compile Include="Repositories\StockOutRepository.cs" />
+    <Compile Include="Repositories\StorageLocationRepository.cs" />
     <Compile Include="Repositories\SupplierBankAccountRepository.cs" />
     <Compile Include="Repositories\SupplierCautionMoneyDeductionRepository.cs" />
     <Compile Include="Repositories\SupplierCautionMoneyRepository.cs" />

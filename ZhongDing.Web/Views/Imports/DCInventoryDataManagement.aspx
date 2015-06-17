@@ -120,7 +120,7 @@
                                             <HeaderStyle Width="100" />
                                             <ItemStyle HorizontalAlign="Left" Width="100" />
                                         </telerik:GridBoundColumn>
-                                        <telerik:GridBoundColumn UniqueName="BalanceQty" HeaderText="库存数量" DataField="BalanceQty">
+                                        <telerik:GridBoundColumn UniqueName="DCBalanceQty" HeaderText="库存数量" DataField="DCBalanceQty">
                                             <HeaderStyle Width="100" />
                                             <ItemStyle HorizontalAlign="Left" Width="100" />
                                         </telerik:GridBoundColumn>
