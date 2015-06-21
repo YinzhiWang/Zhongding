@@ -81,8 +81,8 @@
                                     <li data-level="2" data-menuitemid="15" data-permissionname="报销类型管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/ReimbursementTypeManagement.aspx');">报销类型管理</a></li>
                                     <li data-level="2" data-menuitemid="16" data-permissionname="借款管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/BorrowMoneyManagement.aspx');">借款管理</a></li>
                                     <li data-level="2" data-menuitemid="17" data-permissionname="固定资产管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/FixedAssetsManagement.aspx');">固定资产管理</a></li>
-                                 
-                                    
+
+
                                 </ul>
                             </li>
                             <li data-level="1" data-menuitemid="20"><a href="#" class="mws-i-24 i-price-tags">货品管理</a>
@@ -99,6 +99,9 @@
                                     <li data-level="2" data-menuitemid="32" data-permissionname="员工管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/HRM/EmployeeManagement.aspx');">员工管理</a></li>
                                     <li data-level="2" data-menuitemid="33" data-permissionname="权限管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/HRM/WorkflowPermissionManagement.aspx');">权限管理</a></li>
                                     <li data-level="2" data-menuitemid="34" data-permissionname="权限管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/HRM/UserGroupManagement.aspx');">用户组管理</a></li>
+                                    <li data-level="2" data-menuitemid="35" data-permissionworkflowname="工资结算管理"><a href="javascript:void(0);" onclick="redirectToPage('Views/HRM/SalarySettleManagement.aspx');">工资结算管理</a></li>
+
+
                                 </ul>
                             </li>
                             <li data-level="1"><a href="#" class="mws-i-24 i-clipboard-1">固定资产管理</a></li>
@@ -379,7 +382,8 @@
                     17: "挂靠发票结算",
                     18: "供应商保证金申请",
                     19: "客户保证金",
-                    20: "客户保证金退回申请"
+                    20: "客户保证金退回申请",
+                    23: "工资结算管理"
                 };
             </script>
 

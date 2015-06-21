@@ -357,5 +357,32 @@ namespace ZhongDing.Common.Enums
         /// 修改客户保证金退款申请申请
         /// </summary>
         EditClientCautionMoneyReturnApply = 70,
+
+        /// <summary>
+        /// 新增 工资结算管理
+        /// </summary>
+        NewSalarySettle=71,
+        /// <summary>
+        /// 工资结算管理 行政审核
+        /// </summary>
+        AuditSalarySettleByAdministrations = 72,
+        /// <summary>
+        /// 工资结算管理 财务主管审核
+        /// </summary>
+        AuditSalarySettleByTreasurers = 73,
+        /// <summary>
+        /// 工资结算管理 部门领导审核
+        /// </summary>
+        AuditSalarySettleByDeptManagers = 74,
+        /// <summary>
+        /// 工资结算管理 出纳支付
+        /// </summary>
+        PaySalarySettle = 75,
+
+        /// <summary>
+        /// 修改 工资结算管理
+        /// </summary>
+        EditSalarySettle = 76,
+        
     }
 }

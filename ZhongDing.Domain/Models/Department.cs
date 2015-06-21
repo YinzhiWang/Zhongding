@@ -28,6 +28,7 @@ namespace ZhongDing.Domain.Models
             this.DBContract = new HashSet<DBContract>();
             this.ClientCautionMoney = new HashSet<ClientCautionMoney>();
             this.FixedAssets = new HashSet<FixedAssets>();
+            this.SalarySettle = new HashSet<SalarySettle>();
         }
     
         public int ID { get; set; }
@@ -64,5 +65,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<DBContract> DBContract { get; set; }
         public virtual ICollection<ClientCautionMoney> ClientCautionMoney { get; set; }
         public virtual ICollection<FixedAssets> FixedAssets { get; set; }
+        public virtual ICollection<SalarySettle> SalarySettle { get; set; }
     }
 }

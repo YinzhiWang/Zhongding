@@ -2620,6 +2620,8 @@
     <Content Include="Views\CautionMoneys\SupplierCautionMoneyApplyManagement.aspx" />
     <Content Include="Views\CautionMoneys\SupplierCautionMoneyMaintenance.aspx" />
     <Content Include="Views\CautionMoneys\SupplierCautionMoneyManagement.aspx" />
+    <Content Include="Views\HRM\SalarySettleMaintenance.aspx" />
+    <Content Include="Views\HRM\SalarySettleManagement.aspx" />
     <Content Include="Views\HRM\UserGroupPermissionMaintenance.aspx" />
     <Content Include="Views\HRM\UserGroupMaintenance.aspx" />
     <Content Include="Views\HRM\UserGroupManagement.aspx" />
@@ -3251,6 +3253,20 @@
     </Compile>
     <Compile Include="Views\CautionMoneys\SupplierCautionMoneyManagement.aspx.designer.cs">
       <DependentUpon>SupplierCautionMoneyManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HRM\SalarySettleMaintenance.aspx.cs">
+      <DependentUpon>SalarySettleMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\HRM\SalarySettleMaintenance.aspx.designer.cs">
+      <DependentUpon>SalarySettleMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\HRM\SalarySettleManagement.aspx.cs">
+      <DependentUpon>SalarySettleManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\HRM\SalarySettleManagement.aspx.designer.cs">
+      <DependentUpon>SalarySettleManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\HRM\UserGroupPermissionMaintenance.aspx.cs">
       <DependentUpon>UserGroupPermissionMaintenance.aspx</DependentUpon>

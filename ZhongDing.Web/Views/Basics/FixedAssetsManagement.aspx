@@ -153,7 +153,7 @@
 
                         </telerik:RadPageView>
                         <telerik:RadPageView ID="pvDeduction" runat="server">
-                            <div style="margin:20px;">
+                            <div style="margin: 20px;">
                                 <telerik:RadGrid ID="rgStorageLocations" runat="server" PageSize="10"
                                     AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
                                     MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="100%" ShowHeader="true" ShowFooter="false"

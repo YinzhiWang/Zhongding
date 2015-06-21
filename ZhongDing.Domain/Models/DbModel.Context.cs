@@ -170,5 +170,7 @@ namespace ZhongDing.Domain.Models
         public DbSet<FixedAssets> FixedAssets { get; set; }
         public DbSet<FixedAssetsType> FixedAssetsType { get; set; }
         public DbSet<StorageLocation> StorageLocation { get; set; }
+        public DbSet<SalarySettle> SalarySettle { get; set; }
+        public DbSet<SalarySettleDetail> SalarySettleDetail { get; set; }
     }
 }

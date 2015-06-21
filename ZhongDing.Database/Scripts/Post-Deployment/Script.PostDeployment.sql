@@ -1309,3 +1309,49 @@ ALTER TABLE [dbo].[FixedAssets] WITH NOCHECK ADD CONSTRAINT [FK_FixedAssets_Fixe
 ALTER TABLE [dbo].[UserGroupPermission] WITH NOCHECK ADD CONSTRAINT [FK_UserGroupPermission_PermissionID] FOREIGN KEY ([PermissionID]) REFERENCES [dbo].[Permission] ([ID])
 COMMIT TRANSACTION
 ---- end --- 06/17/2015 -- 初始化导入数据状态数据 -- by Nwang
+
+
+
+---- start --- 06/17/2015 -- 初始化工作流状态关联数据(工资结算管理) -- by Nwang
+
+BEGIN TRANSACTION
+GO
+ALTER TABLE [dbo].[WorkflowStep] DROP CONSTRAINT [FK_WorkflowStep_Workflow]
+ALTER TABLE [dbo].[WorkflowStepStatus] DROP CONSTRAINT [FK_WorkflowStepStatus_WorkflowStatus]
+ALTER TABLE [dbo].[WorkflowStepStatus] DROP CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep]
+GO
+SET IDENTITY_INSERT [dbo].[Workflow] ON
+INSERT INTO [dbo].[Workflow] ([ID], [WorkflowName], [IsActive], [IsDeleted]) VALUES (23, N'工资结算管理', 1, 0)
+SET IDENTITY_INSERT [dbo].[Workflow] OFF
+GO
+SET IDENTITY_INSERT [dbo].[WorkflowStep] ON
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (71, 23, N'新增工资结算', 0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (72, 23, N'工资结算行政审核',0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (73, 23, N'工资结算财务主管审核', 0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (74, 23, N'工资结算部门经理审核', 0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (75, 23, N'客户保证金退回出纳支付', 0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (76, 23, N'修改工资结算', 0)
+SET IDENTITY_INSERT [dbo].[WorkflowStep] OFF
+GO
+SET IDENTITY_INSERT [dbo].[WorkflowStepStatus] ON
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (73, 71, 1, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (74, 71, 4, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (75, 72, 2, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (76, 73, 21, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (77, 74, 16, 0)
+INSERT INTO [dbo].[WorkflowStepStatus] ([ID], [WorkflowStepID], [WorkflowStatusID], [IsDeleted]) VALUES (78, 75, 17, 0)
+SET IDENTITY_INSERT [dbo].[WorkflowStepStatus] OFF
+
+SET IDENTITY_INSERT [dbo].[WorkflowStatus] ON
+INSERT INTO [dbo].[WorkflowStatus] ([ID], [StatusName], [Comment], [IsDeleted]) VALUES (21, N'行政审核通过', N'行政审核通过', 0)
+SET IDENTITY_INSERT [dbo].[WorkflowStatus] OFF
+
+
+ALTER TABLE [dbo].[WorkflowStep]
+    ADD CONSTRAINT [FK_WorkflowStep_Workflow] FOREIGN KEY ([WorkflowID]) REFERENCES [dbo].[Workflow] ([ID])
+ALTER TABLE [dbo].[WorkflowStepStatus]
+    ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStatus] FOREIGN KEY ([WorkflowStatusID]) REFERENCES [dbo].[WorkflowStatus] ([ID])
+ALTER TABLE [dbo].[WorkflowStepStatus]
+    ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep] FOREIGN KEY ([WorkflowStepID]) REFERENCES [dbo].[WorkflowStep] ([ID])
+COMMIT TRANSACTION
+---- end --- 06/17/2015 -- 初始化工作流状态关联数据(工资结算管理) -- by Nwang

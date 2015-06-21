@@ -446,6 +446,13 @@
         <AssociationConnector Association="DbModel.FK_FixedAssets_DepartmentID" />
         <AssociationConnector Association="DbModel.FK_FixedAssets_FixedAssetsTypeID" />
         <AssociationConnector Association="DbModel.FK_FixedAssets_StorageLocationID" />
+        <EntityTypeShape EntityType="DbModel.SalarySettle" Width="1.5" PointX="3.6334923355064781" PointY="16.727325193922653" />
+        <EntityTypeShape EntityType="DbModel.SalarySettleDetail" Width="1.5" PointX="3.4384705049164923" PointY="13.277453145607121" />
+        <AssociationConnector Association="DbModel.FK_SalarySettleDetail_ApplicationPaymentID" />
+        <AssociationConnector Association="DbModel.FK_SalarySettle_DepartmentID" />
+        <AssociationConnector Association="DbModel.FK_SalarySettle_WorkflowStatusID" />
+        <AssociationConnector Association="DbModel.FK_SalarySettleDetail_SalarySettleID" />
+        <AssociationConnector Association="DbModel.FK_SalarySettleDetail_UserID" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

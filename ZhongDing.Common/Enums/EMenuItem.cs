@@ -124,6 +124,10 @@ namespace ZhongDing.Common.Enums
         /// 用户组管理
         /// </summary>
         UserGroupManage,
+        /// <summary>
+        /// 工资结算管理
+        /// </summary>
+        SalarySettleManage = 35,
 
         /// <summary>
         /// 采购管理
@@ -368,6 +372,7 @@ namespace ZhongDing.Common.Enums
         /// 客户商保证金退回申请管理
         /// </summary>
         ClientCautionMoneyReturnApplyManage = 204,
+
 
 
 

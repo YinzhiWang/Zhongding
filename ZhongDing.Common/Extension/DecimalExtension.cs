@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace ZhongDing.Common.Extension
 {
-    public static class IntExtension
+    public static class DecimalExtension
     {
-        public static bool BiggerThanZero(this int? value)
+        public static bool BiggerThanZero(this decimal? value)
         {
-            
+
             if (value.HasValue)
             {
                 if (value.Value > 0)

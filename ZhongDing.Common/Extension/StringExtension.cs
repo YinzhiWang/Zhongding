@@ -191,7 +191,12 @@ namespace ZhongDing.Common.Extension
             string num = @"^\d{11}$";
             return Regex.IsMatch(str, num);
         }
+        public static string ReplaceLeftNumber(this string str)
+        {
+            string pattern = @"[^0-9.]";
+            return System.Text.RegularExpressions.Regex.Replace(str, pattern, "");
 
+        }
 
     }
 

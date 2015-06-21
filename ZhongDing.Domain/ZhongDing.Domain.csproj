@@ -365,6 +365,12 @@
     <Compile Include="Models\Roles.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SalarySettle.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SalarySettleDetail.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SaleOrderType.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -587,6 +593,8 @@
     <Compile Include="UIObjects\UIProductPrice.cs" />
     <Compile Include="UIObjects\UIProductSpecification.cs" />
     <Compile Include="UIObjects\UIReimbursementType.cs" />
+    <Compile Include="UIObjects\UISalarySettle.cs" />
+    <Compile Include="UIObjects\UISalarySettleDetail.cs" />
     <Compile Include="UIObjects\UISalesOrderAppDetail.cs" />
     <Compile Include="UIObjects\UISalesOrderAppDetailImportData.cs" />
     <Compile Include="UIObjects\UISalesOrderApplicationImportData.cs" />
@@ -695,6 +703,8 @@
     <Compile Include="UISearchObjects\UISearchProduct.cs" />
     <Compile Include="UISearchObjects\UISearchProductSpecification.cs" />
     <Compile Include="UISearchObjects\UISearchReimbursementType.cs" />
+    <Compile Include="UISearchObjects\UISearchSalarySettle.cs" />
+    <Compile Include="UISearchObjects\UISearchSalarySettleDetail.cs" />
     <Compile Include="UISearchObjects\UISearchSalesOrderAppDetail.cs" />
     <Compile Include="UISearchObjects\UISearchSalesOrderAppDetailImportData.cs" />
     <Compile Include="UISearchObjects\UISearchStockIn.cs" />

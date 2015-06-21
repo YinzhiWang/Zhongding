@@ -106,5 +106,10 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         ToBeSettle,
 
+        /// <summary>
+        /// 行政审核通过
+        /// </summary>
+        ApprovedByAdministrations = 21,
+
     }
 }

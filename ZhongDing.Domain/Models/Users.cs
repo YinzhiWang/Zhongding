@@ -22,6 +22,7 @@ namespace ZhongDing.Domain.Models
             this.WorkflowStepUser = new HashSet<WorkflowStepUser>();
             this.DBContract = new HashSet<DBContract>();
             this.UserGroupUser = new HashSet<UserGroupUser>();
+            this.SalarySettleDetail = new HashSet<SalarySettleDetail>();
         }
     
         public int UserID { get; set; }
@@ -61,5 +62,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<WorkflowStepUser> WorkflowStepUser { get; set; }
         public virtual ICollection<DBContract> DBContract { get; set; }
         public virtual ICollection<UserGroupUser> UserGroupUser { get; set; }
+        public virtual ICollection<SalarySettleDetail> SalarySettleDetail { get; set; }
     }
 }

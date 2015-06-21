@@ -105,6 +105,8 @@
           <EntitySet Name="ProductSpecification" EntityType="DbModel.Store.ProductSpecification" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ReimbursementType" EntityType="DbModel.Store.ReimbursementType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Roles" EntityType="DbModel.Store.Roles" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SalarySettle" EntityType="DbModel.Store.SalarySettle" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SalarySettleDetail" EntityType="DbModel.Store.SalarySettleDetail" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SaleOrderType" EntityType="DbModel.Store.SaleOrderType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SalesOrderAppDetail" EntityType="DbModel.Store.SalesOrderAppDetail" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SalesOrderAppDetailImportData" EntityType="DbModel.Store.SalesOrderAppDetailImportData" store:Type="Tables" Schema="dbo" />
@@ -990,6 +992,26 @@
           <AssociationSet Name="FK_Roles_aspnet_Roles" Association="DbModel.Store.FK_Roles_aspnet_Roles">
             <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
             <End Role="Roles" EntitySet="Roles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalarySettle_DepartmentID" Association="DbModel.Store.FK_SalarySettle_DepartmentID">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="SalarySettle" EntitySet="SalarySettle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalarySettle_WorkflowStatusID" Association="DbModel.Store.FK_SalarySettle_WorkflowStatusID">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="SalarySettle" EntitySet="SalarySettle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalarySettleDetail_ApplicationPaymentID" Association="DbModel.Store.FK_SalarySettleDetail_ApplicationPaymentID">
+            <End Role="ApplicationPayment" EntitySet="ApplicationPayment" />
+            <End Role="SalarySettleDetail" EntitySet="SalarySettleDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalarySettleDetail_SalarySettleID" Association="DbModel.Store.FK_SalarySettleDetail_SalarySettleID">
+            <End Role="SalarySettle" EntitySet="SalarySettle" />
+            <End Role="SalarySettleDetail" EntitySet="SalarySettleDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalarySettleDetail_UserID" Association="DbModel.Store.FK_SalarySettleDetail_UserID">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="SalarySettleDetail" EntitySet="SalarySettleDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_SalesOrderAppDetail_Product" Association="DbModel.Store.FK_SalesOrderAppDetail_Product">
             <End Role="Product" EntitySet="Product" />
@@ -2928,6 +2950,51 @@
           <Property Name="AspnetRoleID" Type="uniqueidentifier" />
           <Property Name="RoleName" Type="nvarchar" MaxLength="256" />
           <Property Name="IsSystemDefault" Type="bit" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="SalarySettle">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SettleDate" Type="datetime" Nullable="false" />
+          <Property Name="DepartmentID" Type="int" Nullable="false" />
+          <Property Name="WorkflowStatusID" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="PaidBy" Type="int" />
+          <Property Name="PaidDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SalarySettleDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SalarySettleID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="BasicSalary" Type="money" Nullable="false" />
+          <Property Name="WorkDay" Type="int" Nullable="false" />
+          <Property Name="MealAllowance" Type="money" />
+          <Property Name="PositionSalary" Type="money" />
+          <Property Name="BonusPay" Type="money" />
+          <Property Name="WorkAgeSalary" Type="money" Nullable="false" />
+          <Property Name="PhoneAllowance" Type="money" />
+          <Property Name="OfficeExpense" Type="money" />
+          <Property Name="OtherAllowance" Type="money" Nullable="false" />
+          <Property Name="NeedPaySalary" Type="money" Nullable="false" />
+          <Property Name="NeedDeduct" Type="money" Nullable="false" />
+          <Property Name="HolidayDeductOfSalary" Type="money" Nullable="false" />
+          <Property Name="HolidayDeductOfMealAllowance" Type="money" Nullable="false" />
+          <Property Name="RealPaySalary" Type="money" Nullable="false" />
+          <Property Name="IsPayed" Type="bit" Nullable="false" />
+          <Property Name="ApplicationPaymentID" Type="int" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
@@ -6194,6 +6261,66 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SalarySettle_DepartmentID">
+          <End Role="Department" Type="DbModel.Store.Department" Multiplicity="1" />
+          <End Role="SalarySettle" Type="DbModel.Store.SalarySettle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SalarySettle">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalarySettle_WorkflowStatusID">
+          <End Role="WorkflowStatus" Type="DbModel.Store.WorkflowStatus" Multiplicity="1" />
+          <End Role="SalarySettle" Type="DbModel.Store.SalarySettle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SalarySettle">
+              <PropertyRef Name="WorkflowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalarySettleDetail_ApplicationPaymentID">
+          <End Role="ApplicationPayment" Type="DbModel.Store.ApplicationPayment" Multiplicity="0..1" />
+          <End Role="SalarySettleDetail" Type="DbModel.Store.SalarySettleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationPayment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SalarySettleDetail">
+              <PropertyRef Name="ApplicationPaymentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalarySettleDetail_SalarySettleID">
+          <End Role="SalarySettle" Type="DbModel.Store.SalarySettle" Multiplicity="1" />
+          <End Role="SalarySettleDetail" Type="DbModel.Store.SalarySettleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalarySettle">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SalarySettleDetail">
+              <PropertyRef Name="SalarySettleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalarySettleDetail_UserID">
+          <End Role="Users" Type="DbModel.Store.Users" Multiplicity="1" />
+          <End Role="SalarySettleDetail" Type="DbModel.Store.SalarySettleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="SalarySettleDetail">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SalesOrderAppDetail_Product">
           <End Role="Product" Type="DbModel.Store.Product" Multiplicity="1" />
           <End Role="SalesOrderAppDetail" Type="DbModel.Store.SalesOrderAppDetail" Multiplicity="*" />
@@ -8560,6 +8687,28 @@
             <End Role="StorageLocation" EntitySet="StorageLocation" />
             <End Role="FixedAssets" EntitySet="FixedAssets" />
           </AssociationSet>
+          <EntitySet Name="SalarySettle" EntityType="DbModel.SalarySettle" />
+          <EntitySet Name="SalarySettleDetail" EntityType="DbModel.SalarySettleDetail" />
+          <AssociationSet Name="FK_SalarySettleDetail_ApplicationPaymentID" Association="DbModel.FK_SalarySettleDetail_ApplicationPaymentID">
+            <End Role="ApplicationPayment" EntitySet="ApplicationPayment" />
+            <End Role="SalarySettleDetail" EntitySet="SalarySettleDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalarySettle_DepartmentID" Association="DbModel.FK_SalarySettle_DepartmentID">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="SalarySettle" EntitySet="SalarySettle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalarySettle_WorkflowStatusID" Association="DbModel.FK_SalarySettle_WorkflowStatusID">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="SalarySettle" EntitySet="SalarySettle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalarySettleDetail_SalarySettleID" Association="DbModel.FK_SalarySettleDetail_SalarySettleID">
+            <End Role="SalarySettle" EntitySet="SalarySettle" />
+            <End Role="SalarySettleDetail" EntitySet="SalarySettleDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SalarySettleDetail_UserID" Association="DbModel.FK_SalarySettleDetail_UserID">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="SalarySettleDetail" EntitySet="SalarySettleDetail" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -8985,6 +9134,7 @@
           <NavigationProperty Name="WorkflowStepUser" Relationship="DbModel.FK_WorkflowStepUser_Users" FromRole="Users" ToRole="WorkflowStepUser" />
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_Users" FromRole="Users" ToRole="DBContract" />
           <NavigationProperty Name="UserGroupUser" Relationship="DbModel.FK_UserGroupUser_UserID" FromRole="Users" ToRole="UserGroupUser" />
+          <NavigationProperty Name="SalarySettleDetail" Relationship="DbModel.FK_SalarySettleDetail_UserID" FromRole="Users" ToRole="SalarySettleDetail" />
         </EntityType>
         <Association Name="FK_BankAccount_AccountType">
           <End Type="DbModel.AccountType" Role="AccountType" Multiplicity="0..1" />
@@ -9497,6 +9647,7 @@
           <NavigationProperty Name="DBContract" Relationship="DbModel.FK_DBContract_Department" FromRole="Department" ToRole="DBContract" />
           <NavigationProperty Name="ClientCautionMoney" Relationship="DbModel.FK_ClientCautionMoney_DepartmentID" FromRole="Department" ToRole="ClientCautionMoney" />
           <NavigationProperty Name="FixedAssets" Relationship="DbModel.FK_FixedAssets_DepartmentID" FromRole="Department" ToRole="FixedAssets" />
+          <NavigationProperty Name="SalarySettle" Relationship="DbModel.FK_SalarySettle_DepartmentID" FromRole="Department" ToRole="SalarySettle" />
         </EntityType>
         <Association Name="FK_Department_DeptDistrict">
           <End Type="DbModel.DeptDistrict" Role="DeptDistrict" Multiplicity="0..1" />
@@ -9999,6 +10150,7 @@
           <NavigationProperty Name="ClientAttachedInvoiceSettlement" Relationship="DbModel.FK_ClientAttachedInvoiceSettlement_WorkflowStatus" FromRole="WorkflowStatus" ToRole="ClientAttachedInvoiceSettlement" />
           <NavigationProperty Name="ClientCautionMoneyReturnApplication" Relationship="DbModel.FK_ClientCautionMoneyReturnApplication_WorkflowStatusID" FromRole="WorkflowStatus" ToRole="ClientCautionMoneyReturnApplication" />
           <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_WorkflowStatus" FromRole="WorkflowStatus" ToRole="ClientSaleApplication" />
+          <NavigationProperty Name="SalarySettle" Relationship="DbModel.FK_SalarySettle_WorkflowStatusID" FromRole="WorkflowStatus" ToRole="SalarySettle" />
         </EntityType>
         <EntityType Name="WorkflowStepStatus">
           <Key>
@@ -14683,6 +14835,7 @@
           <NavigationProperty Name="DBClientInvoiceSettlementDetail1" Relationship="DbModel.FK_DBClientInvoiceSettlementDetail_CanceledApplicationPayment" FromRole="ApplicationPayment" ToRole="DBClientInvoiceSettlementDetail" />
           <NavigationProperty Name="SupplierInvoiceSettlementDetail" Relationship="DbModel.FK_SupplierInvoiceSettlementDetail_ApplicationPayment" FromRole="ApplicationPayment" ToRole="SupplierInvoiceSettlementDetail" />
           <NavigationProperty Name="SupplierInvoiceSettlementDetail1" Relationship="DbModel.FK_SupplierInvoiceSettlementDetail_CanceledApplicationPayment" FromRole="ApplicationPayment" ToRole="SupplierInvoiceSettlementDetail" />
+          <NavigationProperty Name="SalarySettleDetail" Relationship="DbModel.FK_SalarySettleDetail_ApplicationPaymentID" FromRole="ApplicationPayment" ToRole="SalarySettleDetail" />
         </EntityType>
         <Association Name="FK_ApplicationPayment_FromBankAccount">
           <End Type="DbModel.BankAccount" Role="BankAccount" Multiplicity="0..1" />
@@ -15040,6 +15193,117 @@
             </Principal>
             <Dependent Role="FixedAssets">
               <PropertyRef Name="StorageLocationID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SalarySettle">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="SettleDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="DepartmentID" Nullable="false" />
+          <Property Type="Int32" Name="WorkflowStatusID" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Department" Relationship="DbModel.FK_SalarySettle_DepartmentID" FromRole="SalarySettle" ToRole="Department" />
+          <NavigationProperty Name="WorkflowStatus" Relationship="DbModel.FK_SalarySettle_WorkflowStatusID" FromRole="SalarySettle" ToRole="WorkflowStatus" />
+          <NavigationProperty Name="SalarySettleDetail" Relationship="DbModel.FK_SalarySettleDetail_SalarySettleID" FromRole="SalarySettle" ToRole="SalarySettleDetail" />
+          <Property Type="Int32" Name="PaidBy" />
+          <Property Type="DateTime" Name="PaidDate" Precision="3" />
+        </EntityType>
+        <EntityType Name="SalarySettleDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="SalarySettleID" Nullable="false" />
+          <Property Type="Int32" Name="UserID" Nullable="false" />
+          <Property Type="Decimal" Name="BasicSalary" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="WorkDay" Nullable="false" />
+          <Property Type="Decimal" Name="MealAllowance" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="PositionSalary" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="BonusPay" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="WorkAgeSalary" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="PhoneAllowance" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="OfficeExpense" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="OtherAllowance" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="NeedPaySalary" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="NeedDeduct" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="HolidayDeductOfSalary" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="HolidayDeductOfMealAllowance" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="RealPaySalary" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="IsPayed" Nullable="false" />
+          <Property Type="Int32" Name="ApplicationPaymentID" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="ApplicationPayment" Relationship="DbModel.FK_SalarySettleDetail_ApplicationPaymentID" FromRole="SalarySettleDetail" ToRole="ApplicationPayment" />
+          <NavigationProperty Name="SalarySettle" Relationship="DbModel.FK_SalarySettleDetail_SalarySettleID" FromRole="SalarySettleDetail" ToRole="SalarySettle" />
+          <NavigationProperty Name="Users" Relationship="DbModel.FK_SalarySettleDetail_UserID" FromRole="SalarySettleDetail" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK_SalarySettleDetail_ApplicationPaymentID">
+          <End Type="DbModel.ApplicationPayment" Role="ApplicationPayment" Multiplicity="0..1" />
+          <End Type="DbModel.SalarySettleDetail" Role="SalarySettleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationPayment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SalarySettleDetail">
+              <PropertyRef Name="ApplicationPaymentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalarySettle_DepartmentID">
+          <End Type="DbModel.Department" Role="Department" Multiplicity="1" />
+          <End Type="DbModel.SalarySettle" Role="SalarySettle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SalarySettle">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalarySettle_WorkflowStatusID">
+          <End Type="DbModel.WorkflowStatus" Role="WorkflowStatus" Multiplicity="1" />
+          <End Type="DbModel.SalarySettle" Role="SalarySettle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SalarySettle">
+              <PropertyRef Name="WorkflowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalarySettleDetail_SalarySettleID">
+          <End Type="DbModel.SalarySettle" Role="SalarySettle" Multiplicity="1" />
+          <End Type="DbModel.SalarySettleDetail" Role="SalarySettleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SalarySettle">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SalarySettleDetail">
+              <PropertyRef Name="SalarySettleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SalarySettleDetail_UserID">
+          <End Type="DbModel.Users" Role="Users" Multiplicity="1" />
+          <End Type="DbModel.SalarySettleDetail" Role="SalarySettleDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="SalarySettleDetail">
+              <PropertyRef Name="UserID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -17528,6 +17792,53 @@
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Comment" ColumnName="Comment" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SalarySettle">
+            <EntityTypeMapping TypeName="DbModel.SalarySettle">
+              <MappingFragment StoreEntitySet="SalarySettle">
+                <ScalarProperty Name="PaidDate" ColumnName="PaidDate" />
+                <ScalarProperty Name="PaidBy" ColumnName="PaidBy" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="WorkflowStatusID" ColumnName="WorkflowStatusID" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="SettleDate" ColumnName="SettleDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SalarySettleDetail">
+            <EntityTypeMapping TypeName="DbModel.SalarySettleDetail">
+              <MappingFragment StoreEntitySet="SalarySettleDetail">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ApplicationPaymentID" ColumnName="ApplicationPaymentID" />
+                <ScalarProperty Name="IsPayed" ColumnName="IsPayed" />
+                <ScalarProperty Name="RealPaySalary" ColumnName="RealPaySalary" />
+                <ScalarProperty Name="HolidayDeductOfMealAllowance" ColumnName="HolidayDeductOfMealAllowance" />
+                <ScalarProperty Name="HolidayDeductOfSalary" ColumnName="HolidayDeductOfSalary" />
+                <ScalarProperty Name="NeedDeduct" ColumnName="NeedDeduct" />
+                <ScalarProperty Name="NeedPaySalary" ColumnName="NeedPaySalary" />
+                <ScalarProperty Name="OtherAllowance" ColumnName="OtherAllowance" />
+                <ScalarProperty Name="OfficeExpense" ColumnName="OfficeExpense" />
+                <ScalarProperty Name="PhoneAllowance" ColumnName="PhoneAllowance" />
+                <ScalarProperty Name="WorkAgeSalary" ColumnName="WorkAgeSalary" />
+                <ScalarProperty Name="BonusPay" ColumnName="BonusPay" />
+                <ScalarProperty Name="PositionSalary" ColumnName="PositionSalary" />
+                <ScalarProperty Name="MealAllowance" ColumnName="MealAllowance" />
+                <ScalarProperty Name="WorkDay" ColumnName="WorkDay" />
+                <ScalarProperty Name="BasicSalary" ColumnName="BasicSalary" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="SalarySettleID" ColumnName="SalarySettleID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

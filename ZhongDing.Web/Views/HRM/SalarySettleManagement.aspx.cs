@@ -4,51 +4,39 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Telerik.Web.UI;
 using ZhongDing.Business.IRepositories;
 using ZhongDing.Business.Repositories;
+using ZhongDing.Common;
 using ZhongDing.Common.Enums;
 using ZhongDing.Domain.UISearchObjects;
 using ZhongDing.Common.Extension;
-using Telerik.Web.UI;
-using ZhongDing.Web.Extensions;
-using ZhongDing.Common;
 using ZhongDing.Domain.UIObjects;
 
-namespace ZhongDing.Web.Views.CautionMoneys
+namespace ZhongDing.Web.Views.HRM
 {
-    public partial class ClientCautionMoneyReturnApplyManagement : WorkflowBasePage
+    public partial class SalarySettleManagement : WorkflowBasePage
     {
-        #region Members
         protected override EWorkflow PagePermissionWorkflowID()
         {
-            return EWorkflow.ClientCautionMoneyReturnApply;
+            return EWorkflow.SalarySettleManagement;
         }
         protected override int GetCurrentWorkFlowID()
         {
-            return (int)EWorkflow.ClientCautionMoneyReturnApply;
+            return (int)EWorkflow.SalarySettleManagement;
         }
-        private IClientCautionMoneyRepository _PageClientCautionMoneyRepository;
-        private IClientCautionMoneyRepository PageClientCautionMoneyRepository
+        private ISalarySettleRepository _PageSalarySettleRepository;
+        private ISalarySettleRepository PageSalarySettleRepository
         {
             get
             {
-                if (_PageClientCautionMoneyRepository == null)
-                    _PageClientCautionMoneyRepository = new ClientCautionMoneyRepository();
+                if (_PageSalarySettleRepository == null)
+                    _PageSalarySettleRepository = new SalarySettleRepository();
 
-                return _PageClientCautionMoneyRepository;
+                return _PageSalarySettleRepository;
             }
         }
-        private IClientCautionMoneyReturnApplicationRepository _PageClientCautionMoneyReturnApplicationRepository;
-        private IClientCautionMoneyReturnApplicationRepository PageClientCautionMoneyReturnApplicationRepository
-        {
-            get
-            {
-                if (_PageClientCautionMoneyReturnApplicationRepository == null)
-                    _PageClientCautionMoneyReturnApplicationRepository = new ClientCautionMoneyReturnApplicationRepository();
 
-                return _PageClientCautionMoneyReturnApplicationRepository;
-            }
-        }
 
         private IDepartmentRepository _PageDepartmentRepository;
         private IDepartmentRepository PageDepartmentRepository
@@ -63,11 +51,11 @@ namespace ZhongDing.Web.Views.CautionMoneys
         }
 
 
-        #endregion
+
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            this.Master.MenuItemID = (int)EMenuItem.ClientCautionMoneyReturnApplyManage;
+            this.Master.MenuItemID = (int)EMenuItem.SalarySettleManage;
             if (!IsPostBack)
             {
                 BindDepartments();
@@ -91,16 +79,29 @@ namespace ZhongDing.Web.Views.CautionMoneys
             {
                 if (_CanAccessUserIDs == null || _CanAccessUserIDs.Count == 0)
                 {
-                    _CanAccessUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.NewClientCautionMoneyReturnApply);
+                    _CanAccessUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.NewSalarySettle);
                 }
 
                 return _CanAccessUserIDs;
             }
         }
-        private void BindClientCautionMoney(bool isNeedRebind)
+        private IList<int> _CanAddUserIDs;
+        /// <summary>
+        /// 可新增的用户
+        /// </summary>
+        private IList<int> CanAddUserIDs
         {
-            IList<int> includeWorkflowStatusIDs = PageWorkflowStatusRepository
-       .GetCanAccessIDsByUserID(this.CurrentWorkFlowID, CurrentUser.UserID);
+            get
+            {
+                if (_CanAddUserIDs == null)
+                    _CanAddUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.NewSalarySettle);
+
+                return _CanAddUserIDs;
+            }
+        }
+        private void BindSalarySettle(bool isNeedRebind)
+        {
+            IList<int> includeWorkflowStatusIDs = PageWorkflowStatusRepository.GetCanAccessIDsByUserID(this.CurrentWorkFlowID, CurrentUser.UserID);
 
             if (includeWorkflowStatusIDs == null)
             {
@@ -120,6 +121,9 @@ namespace ZhongDing.Web.Views.CautionMoneys
                     if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ReturnBasicInfo))
                         includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ReturnBasicInfo);
 
+                    if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ApprovedByAdministrations))
+                        includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ApprovedByAdministrations);
+
                     if (!includeWorkflowStatusIDs.Contains((int)EWorkflowStatus.ApprovedByDeptManagers))
                         includeWorkflowStatusIDs.Add((int)EWorkflowStatus.ApprovedByDeptManagers);
 
@@ -131,57 +135,70 @@ namespace ZhongDing.Web.Views.CautionMoneys
                 }
             }
 
-            UISearchClientCautionMoneyReturnApplication uiSearchObj = new UISearchClientCautionMoneyReturnApplication()
+            UISearchSalarySettle uiSearchObj = new UISearchSalarySettle()
             {
-                BeginDate = rdpBeginDate.SelectedDate,
-                EndDate = rdpEndDate.SelectedDate,
+                BeginDate = rdpBeginDate.SelectedDate.HasValue ? (new DateTime(rdpBeginDate.SelectedDate.Value.Year, rdpBeginDate.SelectedDate.Value.Month, 1)) : rdpBeginDate.SelectedDate,
+                EndDate = rdpEndDate.SelectedDate.HasValue ? (new DateTime(rdpEndDate.SelectedDate.Value.Year, rdpEndDate.SelectedDate.Value.Month, 1)) : rdpEndDate.SelectedDate,
                 //UnIncludeWorkflowStatusIDs = new List<int>() { (int)EWorkflowStatus.Paid },
                 //NeedStatistics = true,
-                ClientName = txtClientName.Text.Trim(),
-                ProductName = txtProductName.Text.Trim(),
+                //ClientName = txtClientName.Text.Trim(),
+                //ProductName = txtProductName.Text.Trim(),
                 DepartmentID = rcbxDepartment.SelectedValue.ToIntOrNull()
+
             };
             uiSearchObj.IncludeWorkflowStatusIDs = includeWorkflowStatusIDs;
 
             int totalRecords = 0;
 
-            var uiClientCautionMoneys = PageClientCautionMoneyReturnApplicationRepository.GetUIListForClientCautionMoneyReturnApplyManagement(uiSearchObj, rgClientCautionMoneys.CurrentPageIndex, rgClientCautionMoneys.PageSize, out totalRecords);
+            var uiSalarySettles = PageSalarySettleRepository.GetUIList(uiSearchObj, rgSalarySettles.CurrentPageIndex, rgSalarySettles.PageSize, out totalRecords);
 
-            rgClientCautionMoneys.VirtualItemCount = totalRecords;
+            rgSalarySettles.VirtualItemCount = totalRecords;
 
-            rgClientCautionMoneys.DataSource = uiClientCautionMoneys;
+            rgSalarySettles.DataSource = uiSalarySettles;
 
             if (isNeedRebind)
-                rgClientCautionMoneys.Rebind();
+                rgSalarySettles.Rebind();
         }
 
 
-        protected void rgClientCautionMoneys_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
+        protected void rgSalarySettles_NeedDataSource(object sender, Telerik.Web.UI.GridNeedDataSourceEventArgs e)
         {
-            BindClientCautionMoney(false);
+            BindSalarySettle(false);
         }
 
-        protected void rgClientCautionMoneys_DeleteCommand(object sender, GridCommandEventArgs e)
+        protected void rgSalarySettles_DeleteCommand(object sender, GridCommandEventArgs e)
         {
             GridEditableItem editableItem = e.Item as GridEditableItem;
-            var ClientCautionMoneyID = editableItem.GetDataKeyValue("ID").ToIntOrNull();
+            var id = editableItem.GetDataKeyValue("ID").ToIntOrNull();
 
-            if (ClientCautionMoneyID.BiggerThanZero())
+            if (id.BiggerThanZero())
             {
-
-                PageClientCautionMoneyRepository.Save();
-                rgClientCautionMoneys.Rebind();
+                PageSalarySettleRepository.DeleteByID(id);
+                PageSalarySettleRepository.Save();
+                rgSalarySettles.Rebind();
             }
 
 
         }
 
-        protected void rgClientCautionMoneys_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)
+        protected void rgSalarySettles_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
+            if (e.Item is GridCommandItem)
+            {
+                GridCommandItem commandItem = e.Item as GridCommandItem;
+                Panel plAddCommand = commandItem.FindControl("plAddCommand") as Panel;
 
+                if (plAddCommand != null)
+                {
+                    if (this.CanAddUserIDs.Contains(CurrentUser.UserID))
+                        plAddCommand.Visible = true;
+                    else
+                        plAddCommand.Visible = false;
+                }
+            }
         }
 
-        protected void rgClientCautionMoneys_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
+        protected void rgSalarySettles_ColumnCreated(object sender, Telerik.Web.UI.GridColumnCreatedEventArgs e)
         {
 
         }
@@ -189,17 +206,14 @@ namespace ZhongDing.Web.Views.CautionMoneys
 
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            BindClientCautionMoney(true);
+            BindSalarySettle(true);
         }
 
         protected void btnReset_Click(object sender, EventArgs e)
         {
             rdpEndDate.SelectedDate = rdpBeginDate.SelectedDate = null;
             rcbxDepartment.SelectedValue = string.Empty;
-
-            txtProductName.Text = txtClientName.Text = string.Empty;
-
-            BindClientCautionMoney(true);
+            BindSalarySettle(true);
         }
 
         private IList<int> _CanEditUserIDs;
@@ -208,22 +222,22 @@ namespace ZhongDing.Web.Views.CautionMoneys
             get
             {
                 if (_CanEditUserIDs == null)
-                    _CanEditUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.EditClientCautionMoneyReturnApply);
+                    _CanEditUserIDs = PageWorkflowStepRepository.GetCanAccessUserIDsByID((int)EWorkflowStep.EditSalarySettle);
 
                 return _CanEditUserIDs;
             }
         }
-        protected void rgClientCautionMoneys_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
+        protected void rgSalarySettles_ItemDataBound(object sender, Telerik.Web.UI.GridItemEventArgs e)
         {
             if (e.Item.ItemType == GridItemType.Item
               || e.Item.ItemType == GridItemType.AlternatingItem)
             {
                 GridDataItem gridDataItem = e.Item as GridDataItem;
-                var uiEntity = (UIClientCautionMoneyReturnApplication)gridDataItem.DataItem;
+                var uiEntity = (UISalarySettle)gridDataItem.DataItem;
 
                 if (uiEntity != null)
                 {
-                    string linkHtml = "<a href=\"javascript:void(0);\" onclick=\"redirectToClientCautionMoneyReturnApplyMaintenancePage(" + uiEntity.ID + "," + uiEntity.ClientCautionMoneyID + ")\">";
+                    string linkHtml = "<a href=\"javascript:void(0);\" onclick=\"redirectToMaintenancePage(" + uiEntity.ID + ")\">";
 
                     var canAccessUserIDs = PageWorkflowStatusRepository.GetCanAccessUserIDsByID(CurrentWorkFlowID, uiEntity.WorkflowStatusID);
 
@@ -271,10 +285,11 @@ namespace ZhongDing.Web.Views.CautionMoneys
                                     break;
 
                                 case EWorkflowStatus.Submit:
-                                case EWorkflowStatus.ApprovedByDeptManagers:
+                                case EWorkflowStatus.ApprovedByAdministrations:
+                                case EWorkflowStatus.ApprovedByTreasurers:
                                     linkHtml += "审核";
                                     break;
-                                case EWorkflowStatus.ApprovedByTreasurers:
+                                case EWorkflowStatus.ApprovedByDeptManagers:
                                     linkHtml += "支付";
                                     break;
                             }
@@ -297,7 +312,7 @@ namespace ZhongDing.Web.Views.CautionMoneys
                     //    }
                     //}
 
-                    var editColumn = rgClientCautionMoneys.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT);
+                    var editColumn = rgSalarySettles.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_EDIT);
 
                     if (editColumn != null)
                     {
@@ -307,7 +322,7 @@ namespace ZhongDing.Web.Views.CautionMoneys
                             editCell.Text = linkHtml;
                     }
 
-                    var deleteColumn = rgClientCautionMoneys.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE);
+                    var deleteColumn = rgSalarySettles.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_DELETE);
 
                     if (deleteColumn != null)
                     {
@@ -317,7 +332,7 @@ namespace ZhongDing.Web.Views.CautionMoneys
                             deleteCell.Text = string.Empty;
                     }
 
-                    //var stopColumn = rgClientCautionMoneyReturnApplications.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_STOP);
+                    //var stopColumn = rgSalarySettleReturnApplications.MasterTableView.GetColumn(GlobalConst.GridColumnUniqueNames.COLUMN_STOP);
 
                     //if (stopColumn != null)
                     //{

@@ -120,6 +120,7 @@
     <Compile Include="Enums\LogEventType.cs" />
     <Compile Include="Enums\ETransportFeeType.cs" />
     <Compile Include="ExcelHelper.cs" />
+    <Compile Include="Extension\DecimalExtension.cs" />
     <Compile Include="Extension\IntExtension.cs" />
     <Compile Include="Extension\ObjectExtension.cs" />
     <Compile Include="Extension\StringExtension.cs" />
