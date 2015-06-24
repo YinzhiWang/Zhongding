@@ -40,25 +40,27 @@
                     <tr class="height40">
                         <th class="width100 middle-td">结算年月：</th>
                         <td class="middle-td" colspan="1">
-                            <telerik:RadMonthYearPicker runat="server" ID="rdpBeginDate" Width="120"
+                            <table>
+                                <tr>
+                                    <td> <telerik:RadMonthYearPicker runat="server" ID="rdpBeginDate" Width="120"
                                 EnableShadows="true"
                                 MonthYearNavigationSettings-CancelButtonCaption="取消"
                                 MonthYearNavigationSettings-OkButtonCaption="确定"
                                 MonthYearNavigationSettings-TodayButtonCaption="今天"
                                 MonthYearNavigationSettings-DateIsOutOfRangeMessage="日期超出范围"
                                 MonthYearNavigationSettings-EnableScreenBoundaryDetection="true">
-                            </telerik:RadMonthYearPicker>
-
-                            -&nbsp;&nbsp;
-                   
-                             <telerik:RadMonthYearPicker runat="server" ID="rdpEndDate" Width="120"
+                            </telerik:RadMonthYearPicker></td>
+                                    <td> -&nbsp;&nbsp;</td>
+                                    <td><telerik:RadMonthYearPicker runat="server" ID="rdpEndDate" Width="120"
                                  EnableShadows="true"
                                  MonthYearNavigationSettings-CancelButtonCaption="取消"
                                  MonthYearNavigationSettings-OkButtonCaption="确定"
                                  MonthYearNavigationSettings-TodayButtonCaption="今天"
                                  MonthYearNavigationSettings-DateIsOutOfRangeMessage="日期超出范围"
                                  MonthYearNavigationSettings-EnableScreenBoundaryDetection="true">
-                             </telerik:RadMonthYearPicker>
+                             </telerik:RadMonthYearPicker></td>
+                                </tr>
+                            </table>
                         </td>
                         <td class="width80 middle-td">部门：</td>
                         <td class="middle-td width380">
