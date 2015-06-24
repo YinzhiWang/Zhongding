@@ -411,14 +411,16 @@
                                                 </telerik:GridBoundColumn>
                                                 <telerik:GridTemplateColumn UniqueName="FromAccount" HeaderText="出账账户" DataField="FromAccount" SortExpression="FromAccount">
                                                     <ItemTemplate>
-                                                        <table style="width: 100%">
+                                                        <table style="width: 100%;border-width:0px;border-left-width:0px;" border="0">
                                                             <tr>
-                                                                <td>
+                                                                <td style="border-width:0px;border-left-width:0px;">
+                                                                        <div id="divGridCombox">
                                                                     <telerik:RadComboBox runat="server" ID="rcbxFromAccount" Filter="Contains" AllowCustomText="false" NoWrap="true"
                                                                         MarkFirstMatch="true" Height="160px" Width="100%" EmptyMessage="--请选择--">
                                                                     </telerik:RadComboBox>
+                                                                            </div>
                                                                 </td>
-                                                                <td style="width: 200px;">
+                                                                <td style="width: 200px;border-width:0px;border-left-width:0px;"">
                                                                 <asp:CustomValidator ID="rfvFromAccount" runat="server" ErrorMessage="请选择出账账户"
                                         ControlToValidate="rcbxFromAccount" ValidationGroup="vgMaintenance" Display="Dynamic"
                                           CssClass="field-validation-error">
