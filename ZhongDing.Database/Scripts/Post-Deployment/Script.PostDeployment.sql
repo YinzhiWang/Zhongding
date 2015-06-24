@@ -1329,7 +1329,7 @@ INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) V
 INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (72, 23, N'工资结算行政审核',0)
 INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (73, 23, N'工资结算财务主管审核', 0)
 INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (74, 23, N'工资结算部门经理审核', 0)
-INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (75, 23, N'客户保证金退回出纳支付', 0)
+INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (75, 23, N'工资结算出纳支付', 0)
 INSERT INTO [dbo].[WorkflowStep] ([ID], [WorkflowID], [StepName], [IsDeleted]) VALUES (76, 23, N'修改工资结算', 0)
 SET IDENTITY_INSERT [dbo].[WorkflowStep] OFF
 GO
