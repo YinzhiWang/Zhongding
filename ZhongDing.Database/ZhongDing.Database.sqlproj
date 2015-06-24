@@ -446,6 +446,8 @@
     <Build Include="dbo\Tables\StorageLocation.sql" />
     <Build Include="dbo\Tables\FixedAssetsType.sql" />
     <Build Include="dbo\Tables\FixedAssets.sql" />
+    <Build Include="dbo\Tables\SalarySettle.sql" />
+    <Build Include="dbo\Tables\SalarySettleDetail.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />
