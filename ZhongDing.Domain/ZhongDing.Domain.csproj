@@ -428,6 +428,9 @@
     <Compile Include="Models\SupplierCertificate.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\SupplierContact.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\SupplierContract.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -613,6 +616,7 @@
     <Compile Include="UIObjects\UISupplierCautionMoneyAppPayment.cs" />
     <Compile Include="UIObjects\UISupplierCautionMoneyDeduction.cs" />
     <Compile Include="UIObjects\UISupplierCertificate.cs" />
+    <Compile Include="UIObjects\UISupplierContact.cs" />
     <Compile Include="UIObjects\UISupplierContract.cs" />
     <Compile Include="UIObjects\UISupplierContractFile.cs" />
     <Compile Include="UIObjects\UISupplierDeduction.cs" />
@@ -718,6 +722,7 @@
     <Compile Include="UISearchObjects\UISearchSupplier.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierCautionMoney.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierCautionMoneyDeduction.cs" />
+    <Compile Include="UISearchObjects\UISearchSupplierContact.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierContract.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierContractFile.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierDeduction.cs" />

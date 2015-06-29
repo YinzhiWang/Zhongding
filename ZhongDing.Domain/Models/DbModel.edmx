@@ -126,6 +126,7 @@
           <EntitySet Name="SupplierCautionMoney" EntityType="DbModel.Store.SupplierCautionMoney" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierCautionMoneyDeduction" EntityType="DbModel.Store.SupplierCautionMoneyDeduction" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierCertificate" EntityType="DbModel.Store.SupplierCertificate" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SupplierContact" EntityType="DbModel.Store.SupplierContact" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierContract" EntityType="DbModel.Store.SupplierContract" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierContractFile" EntityType="DbModel.Store.SupplierContractFile" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierDeduction" EntityType="DbModel.Store.SupplierDeduction" store:Type="Tables" Schema="dbo" />
@@ -1180,6 +1181,10 @@
           <AssociationSet Name="FK_SupplierCertificate_Supplier" Association="DbModel.Store.FK_SupplierCertificate_Supplier">
             <End Role="Supplier" EntitySet="Supplier" />
             <End Role="SupplierCertificate" EntitySet="SupplierCertificate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierContact_SupplierID" Association="DbModel.Store.FK_SupplierContact_SupplierID">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="SupplierContact" EntitySet="SupplierContact" />
           </AssociationSet>
           <AssociationSet Name="FK_SupplierContract_Product" Association="DbModel.Store.FK_SupplierContract_Product">
             <End Role="Product" EntitySet="Product" />
@@ -3323,6 +3328,22 @@
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="SupplierID" Type="int" Nullable="false" />
           <Property Name="CertificateID" Type="int" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="SupplierContact">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierID" Type="int" Nullable="false" />
+          <Property Name="ContactName" Type="nvarchar" MaxLength="50" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="255" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
@@ -6825,6 +6846,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_SupplierContact_SupplierID">
+          <End Role="Supplier" Type="DbModel.Store.Supplier" Multiplicity="1" />
+          <End Role="SupplierContact" Type="DbModel.Store.SupplierContact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierContact">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SupplierContract_Product">
           <End Role="Product" Type="DbModel.Store.Product" Multiplicity="0..1" />
           <End Role="SupplierContract" Type="DbModel.Store.SupplierContract" Multiplicity="*" />
@@ -8709,6 +8742,11 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="SalarySettleDetail" EntitySet="SalarySettleDetail" />
           </AssociationSet>
+          <EntitySet Name="SupplierContact" EntityType="DbModel.SupplierContact" />
+          <AssociationSet Name="FK_SupplierContact_SupplierID" Association="DbModel.FK_SupplierContact_SupplierID">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="SupplierContact" EntitySet="SupplierContact" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -9043,6 +9081,7 @@
           <NavigationProperty Name="SupplierInvoiceSettlementDetail" Relationship="DbModel.FK_SupplierInvoiceSettlementDetail_Supplier" FromRole="Supplier" ToRole="SupplierInvoiceSettlementDetail" />
           <NavigationProperty Name="SupplierCautionMoney" Relationship="DbModel.FK_SupplierCautionMoney_SupplierID" FromRole="Supplier" ToRole="SupplierCautionMoney" />
           <NavigationProperty Name="SupplierCautionMoneyDeduction" Relationship="DbModel.FK_SupplierCautionMoneyDeduction_SupplierID" FromRole="Supplier" ToRole="SupplierCautionMoneyDeduction" />
+          <NavigationProperty Name="SupplierContact" Relationship="DbModel.FK_SupplierContact_SupplierID" FromRole="Supplier" ToRole="SupplierContact" />
         </EntityType>
         <EntityType Name="SupplierBankAccount">
           <Key>
@@ -15307,6 +15346,35 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="SupplierContact">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="SupplierID" Nullable="false" />
+          <Property Type="String" Name="ContactName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PhoneNumber" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Comment" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Supplier" Relationship="DbModel.FK_SupplierContact_SupplierID" FromRole="SupplierContact" ToRole="Supplier" />
+        </EntityType>
+        <Association Name="FK_SupplierContact_SupplierID">
+          <End Type="DbModel.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="DbModel.SupplierContact" Role="SupplierContact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierContact">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -17839,6 +17907,23 @@
                 <ScalarProperty Name="BasicSalary" ColumnName="BasicSalary" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="SalarySettleID" ColumnName="SalarySettleID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplierContact">
+            <EntityTypeMapping TypeName="DbModel.SupplierContact">
+              <MappingFragment StoreEntitySet="SupplierContact">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

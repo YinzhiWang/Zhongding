@@ -96,6 +96,7 @@
     <Compile Include="IRepositories\IStorageLocationRepository.cs" />
     <Compile Include="IRepositories\ISupplierCautionMoneyDeductionRepository.cs" />
     <Compile Include="IRepositories\ISupplierCautionMoneyRepository.cs" />
+    <Compile Include="IRepositories\ISupplierContactRepository.cs" />
     <Compile Include="IRepositories\ISupplierInvoiceDetailRepository.cs" />
     <Compile Include="IRepositories\ISupplierInvoiceRepository.cs" />
     <Compile Include="IRepositories\ISupplierInvoiceSettlementDetailRepository.cs" />
@@ -300,6 +301,7 @@
     <Compile Include="Repositories\SupplierCautionMoneyDeductionRepository.cs" />
     <Compile Include="Repositories\SupplierCautionMoneyRepository.cs" />
     <Compile Include="Repositories\SupplierCertificateRepository.cs" />
+    <Compile Include="Repositories\SupplierContactRepository.cs" />
     <Compile Include="Repositories\SupplierContractFileRepository.cs" />
     <Compile Include="Repositories\SupplierContractRepository.cs" />
     <Compile Include="Repositories\SupplierDeductionRepository.cs" />

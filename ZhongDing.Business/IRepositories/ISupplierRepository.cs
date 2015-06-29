@@ -41,5 +41,7 @@ namespace ZhongDing.Business.IRepositories
         /// <returns></returns>
         Supplier GetBySupplierName(string supplierName);
 
+
+        IList<UISupplierContact> GetContacts(int? supplyID);
     }
 }

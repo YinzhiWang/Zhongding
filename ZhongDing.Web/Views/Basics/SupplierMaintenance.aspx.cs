@@ -12,6 +12,7 @@ using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
+using ZhongDing.Common.Extension;
 
 namespace ZhongDing.Web.Views.Basics
 {
@@ -82,6 +83,17 @@ namespace ZhongDing.Web.Views.Basics
                 return _PageSupplierContractRepository;
             }
         }
+        private ISupplierContactRepository _PageSupplierContactRepository;
+        private ISupplierContactRepository PageSupplierContactRepository
+        {
+            get
+            {
+                if (_PageSupplierContactRepository == null)
+                    _PageSupplierContactRepository = new SupplierContactRepository();
+
+                return _PageSupplierContactRepository;
+            }
+        }
 
         #endregion
 
@@ -95,7 +107,7 @@ namespace ZhongDing.Web.Views.Basics
 
             if (!IsPostBack)
             {
-                
+
                 LoadSupplier();
                 //base.PermissionOptionCheckButtonDelete(btnDelete);
             }
@@ -113,8 +125,8 @@ namespace ZhongDing.Web.Views.Basics
                 txtSupplierName.Text = this.CurrentEntity.SupplierName;
                 cbxIsProducer.Checked = this.CurrentEntity.IsProducer;
                 txtFactoryName.Text = this.CurrentEntity.FactoryName;
-                txtContactPerson.Text = this.CurrentEntity.ContactPerson;
-                txtPhoneNumber.Text = this.CurrentEntity.PhoneNumber;
+                //txtContactPerson.Text = this.CurrentEntity.ContactPerson;
+                //txtPhoneNumber.Text = this.CurrentEntity.PhoneNumber;
                 txtFax.Text = this.CurrentEntity.Fax;
                 txtDistrict.Text = this.CurrentEntity.District;
                 txtPostalCode.Text = this.CurrentEntity.PostalCode;
@@ -201,8 +213,8 @@ namespace ZhongDing.Web.Views.Basics
                 supplier.SupplierName = txtSupplierName.Text.Trim();
                 supplier.IsProducer = cbxIsProducer.Checked;
                 supplier.FactoryName = txtFactoryName.Text.Trim();
-                supplier.ContactPerson = txtContactPerson.Text.Trim();
-                supplier.PhoneNumber = txtPhoneNumber.Text.Trim();
+                //supplier.ContactPerson = txtContactPerson.Text.Trim();
+                //supplier.PhoneNumber = txtPhoneNumber.Text.Trim();
                 supplier.Fax = txtFax.Text.Trim();
                 supplier.District = txtDistrict.Text.Trim();
                 supplier.PostalCode = txtPostalCode.Text.Trim();
@@ -396,7 +408,24 @@ namespace ZhongDing.Web.Views.Basics
 
             rgContracts.Rebind();
         }
+        protected void rgContacts_NeedDataSource(object sender, GridNeedDataSourceEventArgs e)
+        {
 
+            rgContacts.DataSource = PageSupplierRepository.GetContacts(this.SupplierID);
+        }
+
+        protected void rgContacts_DeleteCommand(object sender, GridCommandEventArgs e)
+        {
+            GridEditableItem editableItem = e.Item as GridEditableItem;
+            var id = editableItem.GetDataKeyValue("ID").ToIntOrNull();
+
+            if (id.BiggerThanZero())
+            {
+                PageSupplierContactRepository.DeleteByID(id);
+                PageSupplierContactRepository.Save();
+            }
+            rgContacts.Rebind();
+        }
 
         protected override EPermission PagePermissionID()
         {

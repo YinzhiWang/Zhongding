@@ -2589,6 +2589,7 @@
     <Content Include="Views\Basics\ClientInfoProductFlowManagement.aspx" />
     <Content Include="Views\Basics\BorrowMoneyMaintenance.aspx" />
     <Content Include="Views\Basics\BorrowMoneyManagement.aspx" />
+    <Content Include="Views\Basics\Editors\SupplierContactMaintain.aspx" />
     <Content Include="Views\Basics\FixedAssetsMaintenance.aspx" />
     <Content Include="Views\Basics\FixedAssetsManagement.aspx" />
     <Content Include="Views\Basics\ReimbursementTypeChildMaintenance.aspx" />
@@ -3022,6 +3023,13 @@
     </Compile>
     <Compile Include="Views\Basics\BorrowMoneyManagement.aspx.designer.cs">
       <DependentUpon>BorrowMoneyManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\Editors\SupplierContactMaintain.aspx.cs">
+      <DependentUpon>SupplierContactMaintain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\Editors\SupplierContactMaintain.aspx.designer.cs">
+      <DependentUpon>SupplierContactMaintain.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Basics\FixedAssetsMaintenance.aspx.cs">
       <DependentUpon>FixedAssetsMaintenance.aspx</DependentUpon>
@@ -4111,7 +4119,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

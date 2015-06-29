@@ -453,6 +453,8 @@
         <AssociationConnector Association="DbModel.FK_SalarySettle_WorkflowStatusID" />
         <AssociationConnector Association="DbModel.FK_SalarySettleDetail_SalarySettleID" />
         <AssociationConnector Association="DbModel.FK_SalarySettleDetail_UserID" />
+        <EntityTypeShape EntityType="DbModel.SupplierContact" Width="1.5" PointX="1.5270191438156271" PointY="28.002520842478852" />
+        <AssociationConnector Association="DbModel.FK_SupplierContact_SupplierID" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

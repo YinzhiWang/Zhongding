@@ -34,6 +34,11 @@
                     <telerik:AjaxUpdatedControl ControlID="rgContracts" LoadingPanelID="loadingPanel" />
                 </UpdatedControls>
             </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="rgContacts">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="rgContacts" LoadingPanelID="loadingPanel" />
+                </UpdatedControls>
+            </telerik:AjaxSetting>
         </AjaxSettings>
         <ClientEvents OnResponseEnd="onResponseEnd" />
     </telerik:RadAjaxManager>
@@ -84,7 +89,7 @@
                                 </asp:RequiredFieldValidator>
                             </div>
                         </div>
-                        <div class="mws-form-row">
+                        <%--<div class="mws-form-row" >
                             <div class="float-left width40-percent">
                                 <label>联系人</label>
                                 <div class="mws-form-item">
@@ -123,7 +128,7 @@
                                         ValidationGroup="vgMaintenance" Text="*"></asp:RegularExpressionValidator>
                                 </div>
                             </div>
-                        </div>
+                        </div>--%>
                         <div class="mws-form-row">
                             <label>传真</label>
                             <div class="mws-form-item">
@@ -155,8 +160,83 @@
                             <div class="mws-form-item medium">
                                 <telerik:RadTextBox runat="server" ID="txtContactAddress" CssClass="mws-textinput" Width="100%" MaxLength="255"></telerik:RadTextBox>
                             </div>
+                        </div> <div class="mws-form-row"
+                          <!--联系人管理 -->
+                            <div class="mws-panel grid_8 mws-collapsible" data-collapseid="panel-contact">
+                                <div class="mws-panel-header">
+                                    <span class="mws-i-24 i-creditcard">联系人管理</span>
+                                </div>
+                                <div class="mws-panel-body">
+                                    <div class="mws-panel-content">
+                                        <telerik:RadGrid ID="rgContacts" runat="server" PageSize="10"
+                                            AllowPaging="True" AllowSorting="True" AutoGenerateColumns="false"
+                                            MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
+                                            ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"
+                                            OnNeedDataSource="rgContacts_NeedDataSource" OnDeleteCommand="rgContacts_DeleteCommand">
+                                            <MasterTableView Width="100%" DataKeyNames="ID" CommandItemDisplay="Top"
+                                                ShowHeadersWhenNoRecords="true" BackColor="#fafafa">
+                                                <Columns>
+                                                    <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false" ReadOnly="true">
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="ContactName" HeaderText="联系人" DataField="ContactName">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="PhoneNumber" HeaderText="联系电话" DataField="PhoneNumber">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridBoundColumn UniqueName="Address" HeaderText="地址" DataField="Address">
+                                                        <ItemStyle HorizontalAlign="Left" />
+                                                    </telerik:GridBoundColumn>
+                                                    <telerik:GridTemplateColumn UniqueName="Comment" HeaderText="备注" DataField="Comment" SortExpression="Comment">
+                                                        <ItemStyle HorizontalAlign="Left" Width="25%" />
+                                                        <ItemTemplate>
+                                                            <span title="<%#DataBinder.Eval(Container.DataItem,"Comment")%>">
+                                                                <%#DataBinder.Eval(Container.DataItem,"Comment")!=null
+                                                                ?DataBinder.Eval(Container.DataItem,"Comment").ToString().CutString(12)
+                                                                :string.Empty%>
+                                                            </span>
+                                                        </ItemTemplate>
+                                                    </telerik:GridTemplateColumn>
+                                                    <telerik:GridTemplateColumn UniqueName="Edit" HeaderStyle-Width="40">
+                                                        <ItemStyle HorizontalAlign="Center" Width="40" />
+                                                        <ItemTemplate>
+                                                            <a href="javascript:void(0);" onclick="openContactWindow(<%#DataBinder.Eval(Container.DataItem,"ID")%>)">
+                                                                <u>编辑</u></a>
+                                                        </ItemTemplate>
+                                                    </telerik:GridTemplateColumn>
+                                                    <telerik:GridButtonColumn Text="删除" UniqueName="Delete" CommandName="Delete" ButtonType="LinkButton" HeaderStyle-Width="40" ItemStyle-Width="40" ItemStyle-HorizontalAlign="Center" ConfirmText="确认删除该条数据吗？" />
+                                                </Columns>
+                                                <CommandItemTemplate>
+                                                    <table class="width100-percent">
+                                                        <tr>
+                                                            <td>
+                                                                <asp:Panel ID="plAddCommand" runat="server" CssClass="width60 float-left">
+                                                                    <input type="button" class="rgAdd" onclick="openContactWindow(-1); return false;" />
+                                                                    <a href="javascript:void(0)" onclick="openContactWindow(-1); return false;">添加</a>
+                                                                </asp:Panel>
+                                                            </td>
+                                                            <td class="right-td rightpadding10">
+                                                                <input type="button" class="rgRefresh" onclick="refreshGrid(gridClientIDs.gridContacts); return false;" />
+                                                                <a href="javascript:void(0);" onclick="refreshGrid(gridClientIDs.gridContacts); return false;">刷新</a>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </CommandItemTemplate>
+                                                <NoRecordsTemplate>
+                                                    没有任何数据
+                                                </NoRecordsTemplate>
+                                                <ItemStyle Height="30" />
+                                                <AlternatingItemStyle BackColor="#f2f2f2" />
+                                                <PagerStyle PagerTextFormat="{4} 第{0}页/共{1}页, 第{2}-{3}条 共{5}条"
+                                                    PageSizeControlType="RadComboBox" PageSizeLabelText="每页条数:"
+                                                    FirstPageToolTip="第一页" PrevPageToolTip="上一页" NextPageToolTip="下一页" LastPageToolTip="最后一页" />
+                                            </MasterTableView>
+                                        </telerik:RadGrid>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-
+                        </div>
                         <div class="mws-form-row" runat="server" id="divOtherSections">
                             <div class="mws-panel grid_8 mws-collapsible" data-collapseid="panel-bank-account">
                                 <div class="mws-panel-header">
@@ -531,6 +611,7 @@
             gridProducerCertificates: "<%= rgProducerCertificates.ClientID %>",
             gridSupplierCertificates: "<%= rgSupplierCertificates.ClientID %>",
             gridContracts: "<%= rgContracts.ClientID %>",
+            gridContacts: "<%= rgContacts.ClientID %>",
         };
 
         function refreshGrid(gridClientID) {
@@ -577,7 +658,14 @@
 
             $.openRadWindow(targetUrl, "winSupplierContract", true, 1000, 600);
         }
+        function openContactWindow(id) {
+            $.showLoading();
 
+            var targetUrl = $.getRootPath() + "Views/Basics/Editors/SupplierContactMaintain.aspx?EntityID=" + id
+                + "&OwnerEntityID=" + $.getQueryString("SupplierID") + "&GridClientID=" + gridClientIDs.gridContacts;
+
+            $.openRadWindow(targetUrl, "winContract", true, 800, 380);
+        }
         function onResponseEnd(sender, args) {
 
             var eventTarget = args.get_eventTarget();
