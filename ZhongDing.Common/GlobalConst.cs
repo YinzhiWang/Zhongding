@@ -375,6 +375,11 @@ namespace ZhongDing.Common
             /// 列名：ClientSelect
             /// </summary>
             public static readonly string COLUMN_CLIENT_SELECT = "ClientSelect";
+
+            /// <summary>
+            /// 列名：Select
+            /// </summary>
+            public static readonly string COLUMN_SELECT = "Select";
         }
 
 
@@ -728,5 +733,14 @@ namespace ZhongDing.Common
 
         #endregion
 
+
+        public class SessionKeys
+        {
+            /// <summary>
+            /// 被选中的项
+            /// </summary>
+            public static readonly string SELECTED_ClientSaleApplication_IDS = "SELECTED_ClientSaleApplication_IDS";
+         
+        }
     }
 }

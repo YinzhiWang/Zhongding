@@ -455,6 +455,9 @@
         <AssociationConnector Association="DbModel.FK_SalarySettleDetail_UserID" />
         <EntityTypeShape EntityType="DbModel.SupplierContact" Width="1.5" PointX="1.5270191438156271" PointY="28.002520842478852" />
         <AssociationConnector Association="DbModel.FK_SupplierContact_SupplierID" />
+        <EntityTypeShape EntityType="DbModel.GuaranteeReceipt" Width="1.5" PointX="3.2460818268573295" PointY="5.1570341164046125" />
+        <AssociationConnector Association="DbModel.FK_GuaranteeLog_GuaranteeReceiptID" />
+        <AssociationConnector Association="DbModel.FK_GuaranteeReceipt_ApplicationPaymentID" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

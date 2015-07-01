@@ -166,7 +166,11 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 38 固定资产管理
         /// </summary>
-        FixedAssetsManagement = 38
+        FixedAssetsManagement = 38,
+        /// <summary>
+        /// 担保收款管理
+        /// </summary>
+        GuaranteeReceiptManagement = 39
 
     }
 }

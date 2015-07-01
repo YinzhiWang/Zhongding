@@ -173,5 +173,6 @@ namespace ZhongDing.Domain.Models
         public DbSet<SalarySettle> SalarySettle { get; set; }
         public DbSet<SalarySettleDetail> SalarySettleDetail { get; set; }
         public DbSet<SupplierContact> SupplierContact { get; set; }
+        public DbSet<GuaranteeReceipt> GuaranteeReceipt { get; set; }
     }
 }

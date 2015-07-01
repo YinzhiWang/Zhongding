@@ -123,8 +123,7 @@
                                     <li data-level="2" data-menuitemid="63" data-permissionworkflowname="大包申请单"><a href="javascript:void(0);" onclick="redirectToPage('Views/Sales/DBAppRequestManagement.aspx');">大包配送申请单</a></li>
                                     <li data-level="2" data-menuitemid="64" data-permissionworkflowname="大包配送订单"><a href="javascript:void(0);" onclick="redirectToPage('Views/Sales/DBAppManagement.aspx');">大包配送订单</a></li>
                                     <li data-level="2" data-menuitemid="65" data-permissionworkflowname="大包出库单"><a href="javascript:void(0);" onclick="redirectToPage('Views/Sales/DBStockOutManagement.aspx');">大包出库单</a></li>
-                                    <li data-level="2" data-menuitemid="66" data-permissionworkflowname="采购订单"><a href="#">担保收款</a></li>
-
+                                    <li data-level="2" data-menuitemid="66" data-permissionname="担保收款管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Sales/NeedGuaranteeReceiptAppManagement.aspx');">担保收款管理</a></li>
                                     <li data-level="2" data-menuitemid="67" data-permissionname="物流费用管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Procures/TransportFeeManagement.aspx?TransportFeeType=StockOut');">物流费用管理</a></li>
 
                                 </ul>
@@ -360,7 +359,8 @@
                     35: "供应商任务统计表",
                     36: "现金管理",
                     37: "借款管理",
-                    38: "固定资产管理"
+                    38: "固定资产管理",
+                    39: "担保收款管理"
                 };
                 var EWorkflow = {
                     1: "采购订单",

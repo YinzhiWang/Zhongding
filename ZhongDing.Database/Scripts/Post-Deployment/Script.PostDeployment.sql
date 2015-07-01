@@ -1355,3 +1355,25 @@ ALTER TABLE [dbo].[WorkflowStepStatus]
     ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep] FOREIGN KEY ([WorkflowStepID]) REFERENCES [dbo].[WorkflowStep] ([ID])
 COMMIT TRANSACTION
 ---- end --- 06/17/2015 -- 初始化工作流状态关联数据(工资结算管理) -- by Nwang
+
+
+
+---- start --- 07/01/2015 -- 初始化工作流状态关联数据(担保收款管理) -- by Nwang
+BEGIN TRANSACTION
+-- Pointer used for text / image updates. This might not be needed, but is declared here just in case
+ALTER TABLE [dbo].[ApplicationNote] DROP CONSTRAINT [FK_ApplicationNote_Workflow]
+ALTER TABLE [dbo].[ApplicationPayment] DROP CONSTRAINT [FK_ApplicationPayment_Workflow]
+ALTER TABLE [dbo].[SupplierRefundApplication] DROP CONSTRAINT [FK_SupplierRefundApplication_Workflow]
+ALTER TABLE [dbo].[WorkflowStep] DROP CONSTRAINT [FK_WorkflowStep_Workflow]
+ALTER TABLE [dbo].[UserGroupPermission] DROP CONSTRAINT [FK_UserGroupPermission_PermissionID]
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (39, N'担保收款管理', 1, 1, 1, 0, 0, 0, 0, '2015-06-30 14:16:39.780', NULL, NULL, NULL)
+SET IDENTITY_INSERT [dbo].[Workflow] ON
+INSERT INTO [dbo].[Workflow] ([ID], [WorkflowName], [IsActive], [IsDeleted]) VALUES (24, N'担保收款管理', 1, 0)
+SET IDENTITY_INSERT [dbo].[Workflow] OFF
+ALTER TABLE [dbo].[ApplicationNote] WITH NOCHECK ADD CONSTRAINT [FK_ApplicationNote_Workflow] FOREIGN KEY ([WorkflowID]) REFERENCES [dbo].[Workflow] ([ID])
+ALTER TABLE [dbo].[ApplicationPayment] WITH NOCHECK ADD CONSTRAINT [FK_ApplicationPayment_Workflow] FOREIGN KEY ([WorkflowID]) REFERENCES [dbo].[Workflow] ([ID])
+ALTER TABLE [dbo].[SupplierRefundApplication] WITH NOCHECK ADD CONSTRAINT [FK_SupplierRefundApplication_Workflow] FOREIGN KEY ([WorkflowID]) REFERENCES [dbo].[Workflow] ([ID])
+ALTER TABLE [dbo].[WorkflowStep] WITH NOCHECK ADD CONSTRAINT [FK_WorkflowStep_Workflow] FOREIGN KEY ([WorkflowID]) REFERENCES [dbo].[Workflow] ([ID])
+ALTER TABLE [dbo].[UserGroupPermission] WITH NOCHECK ADD CONSTRAINT [FK_UserGroupPermission_PermissionID] FOREIGN KEY ([PermissionID]) REFERENCES [dbo].[Permission] ([ID])
+COMMIT TRANSACTION
+---- end --- 07/01/2015 -- 初始化工作流状态关联数据(工资结算管理) -- by Nwang

@@ -10,6 +10,7 @@ using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
+using ZhongDing.Common.Extension;
 
 namespace ZhongDing.Business.Repositories
 {
@@ -134,6 +135,42 @@ namespace ZhongDing.Business.Repositories
                 {
                     whereFuncs.Add(x => x.SalesOrderApplication.IsImport == uiSearchObj.IsImport);
                 }
+
+                if (uiSearchObj.OnlyFilterID)
+                {
+                    whereFuncs.RemoveAll(x => true);
+                    if (uiSearchObj.IncludeIDs != null && uiSearchObj.IncludeIDs.Count() > 0)
+                    {
+                        whereFuncs.Add(x => uiSearchObj.IncludeIDs.Contains(x.ID));
+                    }
+                    else
+                    {
+                        totalRecords = 0;
+                        return new List<UIClientSaleApplication>();
+                    }
+                }
+
+                if (uiSearchObj.UnIncludeIDs != null && uiSearchObj.UnIncludeIDs.Count() > 0)
+                {
+                    whereFuncs.Add(x => !uiSearchObj.UnIncludeIDs.Contains(x.ID));
+                }
+                if (uiSearchObj.OnlyNotReceipted)
+                {
+                    whereFuncs.Add(x => !x.GuaranteeLog.Any(m => m.IsDeleted == false && m.IsReceipted == true));
+                }
+                if (uiSearchObj.IsGuaranteed.HasValue)
+                {
+                    whereFuncs.Add(x => x.IsGuaranteed == uiSearchObj.IsGuaranteed);
+                }
+                if (uiSearchObj.GuaranteeExpirationDateBeginDate.HasValue)
+                    whereFuncs.Add(x => x.GuaranteeExpirationDate >= uiSearchObj.GuaranteeExpirationDateBeginDate);
+
+                if (uiSearchObj.GuaranteeExpirationDateEndDate.HasValue)
+                {
+                    uiSearchObj.GuaranteeExpirationDateEndDate = uiSearchObj.GuaranteeExpirationDateEndDate.Value.AddDays(1);
+                    whereFuncs.Add(x => x.GuaranteeExpirationDate < uiSearchObj.GuaranteeExpirationDateEndDate);
+                }
+
             }
 
             query = GetList(pageIndex, pageSize, whereFuncs, GlobalConst.OrderByExpression.CREATEDON_DESC, out total);
@@ -162,7 +199,11 @@ namespace ZhongDing.Business.Repositories
                                   WorkflowStatusID = q.WorkflowStatusID,
                                   WorkflowStatus = ws.StatusName,
                                   CreatedByUserID = q.CreatedBy,
-                                  CreatedBy = tcbu == null ? string.Empty : tcbu.FullName
+                                  CreatedBy = tcbu == null ? string.Empty : tcbu.FullName,
+                                  GuaranteeExpirationDate = q.GuaranteeExpirationDate,
+                                  GuaranteeAmount = uiSearchObj.NeedGuaranteeAmount ? (soa.SalesOrderAppDetail.Where(x => x.IsDeleted == false).Any() ?
+                                  soa.SalesOrderAppDetail.Where(x => x.IsDeleted == false).Sum(x => x.TotalSalesAmount) : 0M) : 0M
+
                               }).ToList();
 
                 foreach (var uiEntity in uiEntities.Where(x => x.IsGuaranteed == true))
@@ -225,6 +266,20 @@ namespace ZhongDing.Business.Repositories
             totalRecords = total;
 
             return uiEntities;
+        }
+
+
+        public decimal GetTotalAmount(List<int> selectedIDs)
+        {
+            var query = GetList(x => selectedIDs.Contains(x.ID));
+            var query2 = from q in query
+                         join salesOrderApplication in DB.SalesOrderApplication on q.SalesOrderApplicationID equals salesOrderApplication.ID
+                         join salesOrderAppDetail in DB.SalesOrderAppDetail on salesOrderApplication.ID equals salesOrderAppDetail.SalesOrderApplicationID
+                         where salesOrderApplication.IsDeleted == false
+                         && salesOrderAppDetail.IsDeleted == false
+                         select salesOrderAppDetail.TotalSalesAmount;
+            var amount = query2.Any() ? query2.Sum() : 0M;
+            return amount;
         }
     }
 }

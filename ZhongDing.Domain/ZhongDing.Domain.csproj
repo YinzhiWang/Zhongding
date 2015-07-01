@@ -284,6 +284,9 @@
     <Compile Include="Models\GuaranteeLog.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GuaranteeReceipt.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Hospital.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -513,6 +516,7 @@
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIObjects\IDValueIntString.cs" />
     <Compile Include="UIObjects\UIAttachmentFile.cs" />
     <Compile Include="UIObjects\UIBorrowMoney.cs" />
     <Compile Include="UIObjects\UIBorrowMoneyBalance.cs" />
@@ -575,6 +579,8 @@
     <Compile Include="UIObjects\UIDropdownItem.cs" />
     <Compile Include="UIObjects\UIFactoryManagerRefundApp.cs" />
     <Compile Include="UIObjects\UIFixedAssets.cs" />
+    <Compile Include="UIObjects\UIGuaranteeLog.cs" />
+    <Compile Include="UIObjects\UIGuaranteeReceipt.cs" />
     <Compile Include="UIObjects\UIHospital.cs" />
     <Compile Include="UIObjects\UIImportErrorLog.cs" />
     <Compile Include="UIObjects\UIImportFileLog.cs" />
@@ -645,6 +651,7 @@
     <Compile Include="UISearchObjects\UISearchDBClientSettlementReport.cs" />
     <Compile Include="UISearchObjects\UISearchDCFlowSettlementReport.cs" />
     <Compile Include="UISearchObjects\UISearchFixedAssets.cs" />
+    <Compile Include="UISearchObjects\UISearchGuaranteeReceipt.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderAppDetailImportData.cs" />
     <Compile Include="UISearchObjects\UISearchClientAttachedInvoiceSettlement.cs" />
     <Compile Include="UISearchObjects\UISearchClientAttachedInvoiceSettlementDetail.cs" />
@@ -734,6 +741,7 @@
     <Compile Include="UISearchObjects\UISearchToBeOutSalesOrderDetail.cs" />
     <Compile Include="UISearchObjects\UISearchTransportCompany.cs" />
     <Compile Include="UISearchObjects\UISearchTransportFee.cs" />
+    <Compile Include="UISearchObjects\UISearchGuaranteeLog.cs" />
     <Compile Include="UISearchObjects\UISearchUser.cs" />
     <Compile Include="UISearchObjects\UISearchUserGroup.cs" />
     <Compile Include="UISearchObjects\UISearchUserGroupPermission.cs" />

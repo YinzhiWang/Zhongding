@@ -2717,6 +2717,10 @@
     <Content Include="Views\Sales\ClientSaleAppManagement.aspx" />
     <Content Include="Views\Sales\ClientSaleAppStockOutMaintenance.aspx" />
     <Content Include="Views\Sales\ClientSaleAppStockOutManagement.aspx" />
+    <Content Include="Views\Sales\Editors\GuaranteeLogManagement.aspx" />
+    <Content Include="Views\Sales\Editors\GuaranteeReceiptSettle.aspx" />
+    <Content Include="Views\Sales\GuaranteeReceiptManagement.aspx" />
+    <Content Include="Views\Sales\NeedGuaranteeReceiptAppManagement.aspx" />
     <Content Include="Views\Sales\DBAppMaintenance.aspx" />
     <Content Include="Views\Sales\DBAppManagement.aspx" />
     <Content Include="Views\Sales\DBAppRequestMaintenance.aspx" />
@@ -3934,6 +3938,34 @@
     <Compile Include="Views\Sales\ClientSaleAppStockOutManagement.aspx.designer.cs">
       <DependentUpon>ClientSaleAppStockOutManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Sales\Editors\GuaranteeLogManagement.aspx.cs">
+      <DependentUpon>GuaranteeLogManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Sales\Editors\GuaranteeLogManagement.aspx.designer.cs">
+      <DependentUpon>GuaranteeLogManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sales\Editors\GuaranteeReceiptSettle.aspx.cs">
+      <DependentUpon>GuaranteeReceiptSettle.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Sales\Editors\GuaranteeReceiptSettle.aspx.designer.cs">
+      <DependentUpon>GuaranteeReceiptSettle.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sales\GuaranteeReceiptManagement.aspx.cs">
+      <DependentUpon>GuaranteeReceiptManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Sales\GuaranteeReceiptManagement.aspx.designer.cs">
+      <DependentUpon>GuaranteeReceiptManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sales\NeedGuaranteeReceiptAppManagement.aspx.cs">
+      <DependentUpon>NeedGuaranteeReceiptAppManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Sales\NeedGuaranteeReceiptAppManagement.aspx.designer.cs">
+      <DependentUpon>NeedGuaranteeReceiptAppManagement.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Sales\DBAppMaintenance.aspx.cs">
       <DependentUpon>DBAppMaintenance.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -4119,7 +4151,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
+      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

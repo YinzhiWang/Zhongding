@@ -448,6 +448,8 @@
     <Build Include="dbo\Tables\FixedAssets.sql" />
     <Build Include="dbo\Tables\SalarySettle.sql" />
     <Build Include="dbo\Tables\SalarySettleDetail.sql" />
+    <Build Include="dbo\Tables\SupplierContact.sql" />
+    <Build Include="dbo\Tables\GuaranteeReceipt.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

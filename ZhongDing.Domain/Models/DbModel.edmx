@@ -78,6 +78,7 @@
           <EntitySet Name="FixedAssets" EntityType="DbModel.Store.FixedAssets" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="FixedAssetsType" EntityType="DbModel.Store.FixedAssetsType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GuaranteeLog" EntityType="DbModel.Store.GuaranteeLog" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="GuaranteeReceipt" EntityType="DbModel.Store.GuaranteeReceipt" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Hospital" EntityType="DbModel.Store.Hospital" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="HospitalType" EntityType="DbModel.Store.HospitalType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ImportDataType" EntityType="DbModel.Store.ImportDataType" store:Type="Tables" Schema="dbo" />
@@ -873,6 +874,14 @@
           <AssociationSet Name="FK_GuaranteeLog_ClientSaleApplication" Association="DbModel.Store.FK_GuaranteeLog_ClientSaleApplication">
             <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
             <End Role="GuaranteeLog" EntitySet="GuaranteeLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GuaranteeLog_GuaranteeReceiptID" Association="DbModel.Store.FK_GuaranteeLog_GuaranteeReceiptID">
+            <End Role="GuaranteeReceipt" EntitySet="GuaranteeReceipt" />
+            <End Role="GuaranteeLog" EntitySet="GuaranteeLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GuaranteeReceipt_ApplicationPaymentID" Association="DbModel.Store.FK_GuaranteeReceipt_ApplicationPaymentID">
+            <End Role="ApplicationPayment" EntitySet="ApplicationPayment" />
+            <End Role="GuaranteeReceipt" EntitySet="GuaranteeReceipt" />
           </AssociationSet>
           <AssociationSet Name="FK_ImportErrorLog_ImportFileLog" Association="DbModel.Store.FK_ImportErrorLog_ImportFileLog">
             <End Role="ImportFileLog" EntitySet="ImportFileLog" />
@@ -2597,11 +2606,27 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="GuaranteeReceiptID" Type="int" Nullable="false" />
           <Property Name="ClientSaleApplicationID" Type="int" Nullable="false" />
           <Property Name="GuaranteeAmount" Type="money" />
           <Property Name="Guaranteeby" Type="int" />
           <Property Name="GuaranteeExpirationDate" Type="datetime" />
           <Property Name="IsReceipted" Type="bit" Nullable="false" />
+          <Property Name="GuaranteeReceiptDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="GuaranteeReceipt">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ReceiptDate" Type="datetime" Nullable="false" />
+          <Property Name="ReceiptAmount" Type="money" Nullable="false" />
+          <Property Name="ApplicationPaymentID" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
@@ -5922,6 +5947,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_GuaranteeLog_GuaranteeReceiptID">
+          <End Role="GuaranteeReceipt" Type="DbModel.Store.GuaranteeReceipt" Multiplicity="1" />
+          <End Role="GuaranteeLog" Type="DbModel.Store.GuaranteeLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GuaranteeReceipt">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GuaranteeLog">
+              <PropertyRef Name="GuaranteeReceiptID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GuaranteeReceipt_ApplicationPaymentID">
+          <End Role="ApplicationPayment" Type="DbModel.Store.ApplicationPayment" Multiplicity="1" />
+          <End Role="GuaranteeReceipt" Type="DbModel.Store.GuaranteeReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationPayment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GuaranteeReceipt">
+              <PropertyRef Name="ApplicationPaymentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ImportErrorLog_ImportFileLog">
           <End Role="ImportFileLog" Type="DbModel.Store.ImportFileLog" Multiplicity="1" />
           <End Role="ImportErrorLog" Type="DbModel.Store.ImportErrorLog" Multiplicity="*" />
@@ -8747,6 +8796,15 @@
             <End Role="Supplier" EntitySet="Supplier" />
             <End Role="SupplierContact" EntitySet="SupplierContact" />
           </AssociationSet>
+          <EntitySet Name="GuaranteeReceipt" EntityType="DbModel.GuaranteeReceipt" />
+          <AssociationSet Name="FK_GuaranteeLog_GuaranteeReceiptID" Association="DbModel.FK_GuaranteeLog_GuaranteeReceiptID">
+            <End Role="GuaranteeReceipt" EntitySet="GuaranteeReceipt" />
+            <End Role="GuaranteeLog" EntitySet="GuaranteeLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GuaranteeReceipt_ApplicationPaymentID" Association="DbModel.FK_GuaranteeReceipt_ApplicationPaymentID">
+            <End Role="ApplicationPayment" EntitySet="ApplicationPayment" />
+            <End Role="GuaranteeReceipt" EntitySet="GuaranteeReceipt" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -11128,6 +11186,9 @@
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_GuaranteeLog_ClientSaleApplication" FromRole="GuaranteeLog" ToRole="ClientSaleApplication" />
+          <Property Type="Int32" Name="GuaranteeReceiptID" Nullable="false" />
+          <NavigationProperty Name="GuaranteeReceipt" Relationship="DbModel.FK_GuaranteeLog_GuaranteeReceiptID" FromRole="GuaranteeLog" ToRole="GuaranteeReceipt" />
+          <Property Type="DateTime" Name="GuaranteeReceiptDate" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="FK_ClientSaleAppBankAccount_BankAccount">
           <End Type="DbModel.BankAccount" Role="BankAccount" Multiplicity="1" />
@@ -14875,6 +14936,7 @@
           <NavigationProperty Name="SupplierInvoiceSettlementDetail" Relationship="DbModel.FK_SupplierInvoiceSettlementDetail_ApplicationPayment" FromRole="ApplicationPayment" ToRole="SupplierInvoiceSettlementDetail" />
           <NavigationProperty Name="SupplierInvoiceSettlementDetail1" Relationship="DbModel.FK_SupplierInvoiceSettlementDetail_CanceledApplicationPayment" FromRole="ApplicationPayment" ToRole="SupplierInvoiceSettlementDetail" />
           <NavigationProperty Name="SalarySettleDetail" Relationship="DbModel.FK_SalarySettleDetail_ApplicationPaymentID" FromRole="ApplicationPayment" ToRole="SalarySettleDetail" />
+          <NavigationProperty Name="GuaranteeReceipt" Relationship="DbModel.FK_GuaranteeReceipt_ApplicationPaymentID" FromRole="ApplicationPayment" ToRole="GuaranteeReceipt" />
         </EntityType>
         <Association Name="FK_ApplicationPayment_FromBankAccount">
           <End Type="DbModel.BankAccount" Role="BankAccount" Multiplicity="0..1" />
@@ -15372,6 +15434,46 @@
             </Principal>
             <Dependent Role="SupplierContact">
               <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="GuaranteeReceipt">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="ReceiptDate" Nullable="false" Precision="3" />
+          <Property Type="Decimal" Name="ReceiptAmount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="ApplicationPaymentID" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="GuaranteeLog" Relationship="DbModel.FK_GuaranteeLog_GuaranteeReceiptID" FromRole="GuaranteeReceipt" ToRole="GuaranteeLog" />
+          <NavigationProperty Name="ApplicationPayment" Relationship="DbModel.FK_GuaranteeReceipt_ApplicationPaymentID" FromRole="GuaranteeReceipt" ToRole="ApplicationPayment" />
+        </EntityType>
+        <Association Name="FK_GuaranteeLog_GuaranteeReceiptID">
+          <End Type="DbModel.GuaranteeReceipt" Role="GuaranteeReceipt" Multiplicity="1" />
+          <End Type="DbModel.GuaranteeLog" Role="GuaranteeLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GuaranteeReceipt">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GuaranteeLog">
+              <PropertyRef Name="GuaranteeReceiptID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GuaranteeReceipt_ApplicationPaymentID">
+          <End Type="DbModel.ApplicationPayment" Role="ApplicationPayment" Multiplicity="1" />
+          <End Type="DbModel.GuaranteeReceipt" Role="GuaranteeReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationPayment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GuaranteeReceipt">
+              <PropertyRef Name="ApplicationPaymentID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -16361,6 +16463,8 @@
           <EntitySetMapping Name="GuaranteeLog">
             <EntityTypeMapping TypeName="DbModel.GuaranteeLog">
               <MappingFragment StoreEntitySet="GuaranteeLog">
+                <ScalarProperty Name="GuaranteeReceiptDate" ColumnName="GuaranteeReceiptDate" />
+                <ScalarProperty Name="GuaranteeReceiptID" ColumnName="GuaranteeReceiptID" />
                 <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
                 <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -17924,6 +18028,21 @@
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="ContactName" ColumnName="ContactName" />
                 <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GuaranteeReceipt">
+            <EntityTypeMapping TypeName="DbModel.GuaranteeReceipt">
+              <MappingFragment StoreEntitySet="GuaranteeReceipt">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ApplicationPaymentID" ColumnName="ApplicationPaymentID" />
+                <ScalarProperty Name="ReceiptAmount" ColumnName="ReceiptAmount" />
+                <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
