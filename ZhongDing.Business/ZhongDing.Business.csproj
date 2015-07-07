@@ -88,6 +88,7 @@
     <Compile Include="IRepositories\IProcureOrderApplicationImportDataRepository.cs" />
     <Compile Include="IRepositories\IProcureOrderApplicationImportFileLogRepository.cs" />
     <Compile Include="IRepositories\IReimbursementTypeRepository.cs" />
+    <Compile Include="IRepositories\IReminderRepository.cs" />
     <Compile Include="IRepositories\ISalarySettleDetailRepository.cs" />
     <Compile Include="IRepositories\ISalarySettleRepository.cs" />
     <Compile Include="IRepositories\ISalesOrderAppDetailImportDataRepository.cs" />
@@ -236,6 +237,7 @@
     <Compile Include="Repositories\GuaranteeReceiptRepository.cs" />
     <Compile Include="Repositories\PermissionRepository.cs" />
     <Compile Include="Repositories\ReimbursementTypeRepository.cs" />
+    <Compile Include="Repositories\Reminders\ReminderRepository.cs" />
     <Compile Include="Repositories\SalarySettleDetailRepository.cs" />
     <Compile Include="Repositories\SalarySettleRepository.cs" />
     <Compile Include="Repositories\SalesOrderAppDetailImportDataRepository.cs" />

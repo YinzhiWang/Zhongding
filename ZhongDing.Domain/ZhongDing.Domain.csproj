@@ -520,6 +520,9 @@
     <Compile Include="UIObjects\UIAttachmentFile.cs" />
     <Compile Include="UIObjects\UIBorrowMoney.cs" />
     <Compile Include="UIObjects\UIBorrowMoneyBalance.cs" />
+    <Compile Include="UIObjects\UIBorrowMoneyExpiredReminder.cs" />
+    <Compile Include="UIObjects\UICautionMoneyReminder.cs" />
+    <Compile Include="UIObjects\UIClientInfoReminder.cs" />
     <Compile Include="UIObjects\UIDBClientSettlementReport.cs" />
     <Compile Include="UIObjects\UIClientAttachedInvoiceSettlement.cs" />
     <Compile Include="UIObjects\UIClientAttachedInvoiceSettlementDetail.cs" />
@@ -581,10 +584,12 @@
     <Compile Include="UIObjects\UIFixedAssets.cs" />
     <Compile Include="UIObjects\UIGuaranteeLog.cs" />
     <Compile Include="UIObjects\UIGuaranteeReceipt.cs" />
+    <Compile Include="UIObjects\UIGuaranteeReceiptExpiredReminder.cs" />
     <Compile Include="UIObjects\UIHospital.cs" />
     <Compile Include="UIObjects\UIImportErrorLog.cs" />
     <Compile Include="UIObjects\UIImportFileLog.cs" />
     <Compile Include="UIObjects\UIInventoryHistory.cs" />
+    <Compile Include="UIObjects\UIInventoryReminder.cs" />
     <Compile Include="UIObjects\UIInventorySummaryDetailReport.cs" />
     <Compile Include="UIObjects\UIInventorySummaryReport.cs" />
     <Compile Include="UIObjects\UIProcureOrderAppDetail.cs" />
@@ -598,7 +603,9 @@
     <Compile Include="UIObjects\UIProduct.cs" />
     <Compile Include="UIObjects\UIProductBasicPrice.cs" />
     <Compile Include="UIObjects\UIProductDBPolicyPrice.cs" />
+    <Compile Include="UIObjects\UIProductExpiredReminder.cs" />
     <Compile Include="UIObjects\UIProductHighPrice.cs" />
+    <Compile Include="UIObjects\UIProductInfoExpiredReminder.cs" />
     <Compile Include="UIObjects\UIProductPrice.cs" />
     <Compile Include="UIObjects\UIProductSpecification.cs" />
     <Compile Include="UIObjects\UIReimbursementType.cs" />
@@ -626,6 +633,7 @@
     <Compile Include="UIObjects\UISupplierContract.cs" />
     <Compile Include="UIObjects\UISupplierContractFile.cs" />
     <Compile Include="UIObjects\UISupplierDeduction.cs" />
+    <Compile Include="UIObjects\UISupplierInfoReminder.cs" />
     <Compile Include="UIObjects\UISupplierInvoice.cs" />
     <Compile Include="UIObjects\UISupplierInvoiceSettlement.cs" />
     <Compile Include="UIObjects\UISupplierInvoiceSettlementDetail.cs" />
@@ -645,13 +653,18 @@
     <Compile Include="UIObjects\UIWorkflowStep.cs" />
     <Compile Include="UISearchObjects\UISearchAttachmentFile.cs" />
     <Compile Include="UISearchObjects\UISearchBorrowMoney.cs" />
+    <Compile Include="UISearchObjects\UISearchBorrowMoneyExpiredReminder.cs" />
+    <Compile Include="UISearchObjects\UISearchCautionMoneyReminder.cs" />
     <Compile Include="UISearchObjects\UISearchClientCautionMoney.cs" />
     <Compile Include="UISearchObjects\UISearchClientCautionMoneyReturnApplication.cs" />
+    <Compile Include="UISearchObjects\UISearchClientInfoReminder.cs" />
     <Compile Include="UISearchObjects\UISearchClientSaleApplicationImportFileLog.cs" />
     <Compile Include="UISearchObjects\UISearchDBClientSettlementReport.cs" />
     <Compile Include="UISearchObjects\UISearchDCFlowSettlementReport.cs" />
     <Compile Include="UISearchObjects\UISearchFixedAssets.cs" />
     <Compile Include="UISearchObjects\UISearchGuaranteeReceipt.cs" />
+    <Compile Include="UISearchObjects\UISearchGuaranteeReceiptExpiredReminder.cs" />
+    <Compile Include="UISearchObjects\UISearchInventoryReminder.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderAppDetailImportData.cs" />
     <Compile Include="UISearchObjects\UISearchClientAttachedInvoiceSettlement.cs" />
     <Compile Include="UISearchObjects\UISearchClientAttachedInvoiceSettlementDetail.cs" />
@@ -712,6 +725,8 @@
     <Compile Include="UISearchObjects\UISearchProcureOrderApplicationPaymentReport.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderReport.cs" />
     <Compile Include="UISearchObjects\UISearchProduct.cs" />
+    <Compile Include="UISearchObjects\UISearchProductExpiredReminder.cs" />
+    <Compile Include="UISearchObjects\UISearchProductInfoExpiredReminder.cs" />
     <Compile Include="UISearchObjects\UISearchProductSpecification.cs" />
     <Compile Include="UISearchObjects\UISearchReimbursementType.cs" />
     <Compile Include="UISearchObjects\UISearchSalarySettle.cs" />
@@ -733,6 +748,7 @@
     <Compile Include="UISearchObjects\UISearchSupplierContract.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierContractFile.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierDeduction.cs" />
+    <Compile Include="UISearchObjects\UISearchSupplierInfoReminder.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierInvoice.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierInvoiceSettlement.cs" />
     <Compile Include="UISearchObjects\UISearchSupplierInvoiceSettlementDetail.cs" />

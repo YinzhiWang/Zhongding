@@ -63,7 +63,9 @@
                     <!-- Main Navigation -->
                     <div id="mws-navigation">
                         <ul>
-                            <li data-level="1" data-menuitemid="1"><a href="javascript:void(0);" onclick="redirectToPage('Home.aspx');" class="mws-i-24 i-home">首页</a></li>
+                            <li data-level="1" data-menuitemid="1"
+                                data-permissionnames="首页-库存提醒;首页-保证金提醒;首页-货品资料过期提醒;首页-客户资料过期提醒;首页-供应商资料过期提醒;首页-货品过期提醒;首页-借款到期提醒;首页-担保收款到期提醒"
+                                data-permissionoptionnames="View;View;View;View;View;View;View;View"><a href="javascript:void(0);" onclick="redirectToPage('Home.aspx');" class="mws-i-24 i-home">首页</a></li>
                             <li data-level="1" data-menuitemid="2"><a href="#" class="mws-i-24 i-file-cabinet">基本信息管理</a>
                                 <ul>
                                     <li data-level="2" data-menuitemid="3" data-permissionname="账套管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/CompanyManagement.aspx');">帐套管理</a></li>
@@ -360,7 +362,15 @@
                     36: "现金管理",
                     37: "借款管理",
                     38: "固定资产管理",
-                    39: "担保收款管理"
+                    39: "担保收款管理",
+                    40: "首页-库存提醒",
+                    41: "首页-保证金提醒",
+                    42: "首页-货品资料过期提醒",
+                    43: "首页-客户资料过期提醒",
+                    44: "首页-供应商资料过期提醒",
+                    45: "首页-货品过期提醒",
+                    46: "首页-借款到期提醒",
+                    47: "首页-担保收款到期提醒"
                 };
                 var EWorkflow = {
                     1: "采购订单",
@@ -523,6 +533,36 @@
                             if (checkWorkflowPermission(workflowPermissionID))
                             { }
                             else {
+                                $(this).remove();
+                            }
+                        }
+                    });
+                    $("div#mws-navigation ul li[data-level='1']").each(function (i, e) {
+                        var permissionnames = $(this).data("permissionnames");
+                        var permissionoptionnames = $(this).data("permissionoptionnames");
+                        if (permissionnames && permissionoptionnames) {
+                            var hasPermissionLi = false;
+                            var permissionnamesArray = permissionnames.split(";");
+                            var permissionoptionnamesArray = permissionoptionnames.split(";");
+                            for (var i = 0; i < permissionnamesArray.length; i++) {
+                                var permission = getPermissionID(permissionnamesArray[i]);
+                                var permissionOption = getPermissionOptionID(permissionoptionnamesArray[i]);
+                                //console.log("permission:" + permission + " permissionOption:" + permissionOption);
+                                if (permission && permissionOption) {
+                                    var hasPermission = checkPermission(permission);
+                                    //console.log("hasPermission:" + hasPermission);
+                                    if (hasPermission) {
+                                        var permissionValue = getPermissionValue(permission);
+                                        var hasPermissionOption = ((permissionValue & permissionOption) == permissionOption);
+                                        if (hasPermissionOption)
+                                        {
+                                            hasPermissionLi = true;
+                                        }
+                                    }
+                                }
+                            }
+                            if (!hasPermissionLi)
+                            {
                                 $(this).remove();
                             }
                         }

@@ -1377,3 +1377,22 @@ ALTER TABLE [dbo].[WorkflowStep] WITH NOCHECK ADD CONSTRAINT [FK_WorkflowStep_Wo
 ALTER TABLE [dbo].[UserGroupPermission] WITH NOCHECK ADD CONSTRAINT [FK_UserGroupPermission_PermissionID] FOREIGN KEY ([PermissionID]) REFERENCES [dbo].[Permission] ([ID])
 COMMIT TRANSACTION
 ---- end --- 07/01/2015 -- 初始化工作流状态关联数据(工资结算管理) -- by Nwang
+
+
+
+---- start --- 07/07/2015 -- 初始化权限(提醒) -- by Nwang
+BEGIN TRANSACTION
+ALTER TABLE [dbo].[UserGroupPermission] DROP CONSTRAINT [FK_UserGroupPermission_PermissionID]
+GO
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (40, N'首页-库存提醒', 0, 0, 0, 1, 0, 0, 0, '2015-07-02 10:51:35.047', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (41, N'首页-保证金提醒', 0, 0, 0, 1, 0, 0, 0, '2015-07-02 10:51:35.047', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (42, N'首页-货品资料过期提醒', 0, 0, 0, 1, 0, 0, 0, '2015-07-02 10:51:35.047', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (43, N'首页-客户资料过期提醒', 0, 0, 0, 1, 0, 0, 0, '2015-07-02 10:51:35.047', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (44, N'首页-供应商资料过期提醒', 0, 0, 0, 1, 0, 0, 0, '2015-07-02 10:51:35.047', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (45, N'首页-货品过期提醒', 0, 0, 0, 1, 0, 0, 0, '2015-07-02 10:51:35.047', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (46, N'首页-借款到期提醒', 0, 0, 0, 1, 0, 0, 0, '2015-07-02 10:51:35.047', NULL, NULL, NULL)
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (47, N'首页-担保收款到期提醒', 0, 0, 0, 1, 0, 0, 0, '2015-07-02 10:51:35.047', NULL, NULL, NULL)
+GO
+ALTER TABLE [dbo].[UserGroupPermission] WITH NOCHECK ADD CONSTRAINT [FK_UserGroupPermission_PermissionID] FOREIGN KEY ([PermissionID]) REFERENCES [dbo].[Permission] ([ID])
+COMMIT TRANSACTION
+---- end --- 07/07/2015 -- 初始化权限(提醒) -- by Nwang

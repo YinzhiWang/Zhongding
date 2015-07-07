@@ -17,7 +17,7 @@ namespace ZhongDing.Common
         /// 无效的Int:-1
         /// </summary>
         public static readonly int INVALID_INT = -1;
-        
+
         /// <summary>
         /// 系统母版页主标题
         /// </summary>
@@ -683,7 +683,7 @@ namespace ZhongDing.Common
             /// </summary>
             public static readonly string STOCKIN_ORDER_DATE = "入库日期";
 
-             /// <summary>
+            /// <summary>
             /// 采购订单编号
             /// </summary>
             public static readonly string PROCURE_ORDER_CODE = "采购订单编号";
@@ -703,7 +703,7 @@ namespace ZhongDing.Common
             /// </summary>
             public static readonly string LICENSE_NUMBER = "批准文号";
 
-             /// <summary>
+            /// <summary>
             /// 抵款货物
             /// </summary>
             public static readonly string MORTGAGED_PRODUCT = "抵款货物";
@@ -727,8 +727,8 @@ namespace ZhongDing.Common
             /// 商业单位
             /// </summary>
             public static readonly string CLIENT_COMPANY_NAME = "商业单位";
-         
-            
+
+
         }
 
         #endregion
@@ -740,7 +740,14 @@ namespace ZhongDing.Common
             /// 被选中的项
             /// </summary>
             public static readonly string SELECTED_ClientSaleApplication_IDS = "SELECTED_ClientSaleApplication_IDS";
-         
+
+        }
+        public class Reminder
+        {
+            /// <summary>
+            /// Default 7 Days
+            /// </summary>
+            public static int AheadDaysOfDefault = 7;
         }
     }
 }
