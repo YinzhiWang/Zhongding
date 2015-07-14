@@ -245,6 +245,24 @@ namespace ZhongDing.Web.Views.Basics.Editors
                 rfvAmount.IsValid = false;
                 rfvAmount.ErrorMessage = "金额必须大于0";
             }
+            if (rcbxReimbursementType.SelectedItem.Text == GlobalConst.REIMBURSEMENTTYPE_EVECTION)
+            {
+                if (!txtStartDate.SelectedDate.HasValue)
+                {
+                    cvStartDate.IsValid = false;
+                }
+                if (!txtEndDate.SelectedDate.HasValue)
+                {
+                    cvEndDate.IsValid = false;
+                }
+
+                if (txtStartDate.SelectedDate.HasValue && txtEndDate.SelectedDate.HasValue &&
+                    (txtEndDate.SelectedDate.Value - txtStartDate.SelectedDate.Value).Days > 60)
+                {
+                    cvEndDate.ErrorMessage = "时间间隔不能超过2个月";
+                    cvEndDate.IsValid = false;
+                }
+            }
             if (!IsValid) return;
 
             bool isSuccessSaved = false;
@@ -292,9 +310,9 @@ namespace ZhongDing.Web.Views.Basics.Editors
                                 reimbursementDetail.ReimbursementTypeChildID = rcbxReimbursementChildType.SelectedValue.ToIntOrNull();
                                 //Reset filed
                                 reimbursementDetail.Comment = comment.Text.Trim();
-                                reimbursementDetail.StartDate = sendDate;
-                                reimbursementDetail.EndDate = sendDate;
-                                reimbursementDetail.Quantity = 1;
+                                //reimbursementDetail.StartDate = sendDate;
+                                //reimbursementDetail.EndDate = sendDate;
+                                //reimbursementDetail.Quantity = 1;
                                 reimbursementDetail.Amount = amount;
                             }
                             {

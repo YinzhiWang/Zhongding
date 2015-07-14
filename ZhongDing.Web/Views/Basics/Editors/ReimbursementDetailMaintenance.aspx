@@ -57,9 +57,11 @@
                                 <div class="mws-form-item small">
                                     <telerik:RadDatePicker ID="txtStartDate" Width="200px" runat="server">
                                     </telerik:RadDatePicker>
-                                    <asp:RequiredFieldValidator ID="rfvSendDate" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="txtStartDate"
-                                        ErrorMessage="开始日期必填" Text="*" CssClass="field-validation-error">
-                                    </asp:RequiredFieldValidator>
+
+                                    <asp:CustomValidator ID="cvStartDate" runat="server" ErrorMessage="开始日期必填"
+                                        ControlToValidate="txtStartDate" ValidationGroup="vgMaintenance" Display="Dynamic"
+                                        Text="*" CssClass="field-validation-error">
+                                    </asp:CustomValidator>
                                     <telerik:RadToolTip ID="rttSendDate" runat="server" TargetControlID="txtStartDate" ShowEvent="OnMouseOver"
                                         Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
                                     </telerik:RadToolTip>
@@ -72,9 +74,10 @@
                                 <div class="mws-form-item small">
                                     <telerik:RadDatePicker ID="txtEndDate" Width="200px" runat="server">
                                     </telerik:RadDatePicker>
-                                    <asp:RequiredFieldValidator ID="rfvEndDate" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="txtEndDate"
-                                        ErrorMessage="结束日期必填" Text="*" CssClass="field-validation-error">
-                                    </asp:RequiredFieldValidator>
+                                    <asp:CustomValidator ID="cvEndDate" runat="server" ErrorMessage="结束日期必填"
+                                        ControlToValidate="txtEndDate" ValidationGroup="vgMaintenance" Display="Dynamic"
+                                        Text="*" CssClass="field-validation-error">
+                                    </asp:CustomValidator>
                                     <telerik:RadToolTip ID="rttEndDate" runat="server" TargetControlID="txtEndDate" ShowEvent="OnMouseOver"
                                         Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
                                     </telerik:RadToolTip>
@@ -89,10 +92,9 @@
                                         IncrementSettings-InterceptArrowKeys="true" IncrementSettings-InterceptMouseWheel="true"
                                         Label="" runat="server" ID="txtQuantity" Width="160px">
                                     </telerik:RadNumericTextBox>
-                                    <asp:RequiredFieldValidator ID="rfvQuantity" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="txtQuantity"
+                                    <%-- <asp:RequiredFieldValidator ID="rfvQuantity" runat="server" ValidationGroup="vgMaintenance" ControlToValidate="txtQuantity"
                                         ErrorMessage="数量必填" Text="*" CssClass="field-validation-error">
-                                    </asp:RequiredFieldValidator>
-
+                                    </asp:RequiredFieldValidator>--%>
                                 </div>
 
                             </div>

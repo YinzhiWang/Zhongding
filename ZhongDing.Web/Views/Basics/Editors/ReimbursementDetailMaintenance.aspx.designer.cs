@@ -94,13 +94,13 @@ namespace ZhongDing.Web.Views.Basics.Editors {
         protected global::Telerik.Web.UI.RadDatePicker txtStartDate;
         
         /// <summary>
-        /// rfvSendDate control.
+        /// cvStartDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvSendDate;
+        protected global::System.Web.UI.WebControls.CustomValidator cvStartDate;
         
         /// <summary>
         /// rttSendDate control.
@@ -121,13 +121,13 @@ namespace ZhongDing.Web.Views.Basics.Editors {
         protected global::Telerik.Web.UI.RadDatePicker txtEndDate;
         
         /// <summary>
-        /// rfvEndDate control.
+        /// cvEndDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvEndDate;
+        protected global::System.Web.UI.WebControls.CustomValidator cvEndDate;
         
         /// <summary>
         /// rttEndDate control.
@@ -146,15 +146,6 @@ namespace ZhongDing.Web.Views.Basics.Editors {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::Telerik.Web.UI.RadNumericTextBox txtQuantity;
-        
-        /// <summary>
-        /// rfvQuantity control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvQuantity;
         
         /// <summary>
         /// txtAmount control.
