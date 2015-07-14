@@ -11,5 +11,7 @@ namespace ZhongDing.Domain.UIObjects
         public string DepartmentName { get; set; }
 
         public DateTime ApplyDate { get; set; }
+
+        public int? DepartmentID { get; set; }
     }
 }

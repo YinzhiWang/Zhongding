@@ -76,13 +76,13 @@ namespace ZhongDing.Web.Views.Basics {
         protected global::Telerik.Web.UI.RadComboBox rcbxDepartment;
         
         /// <summary>
-        /// txtCompanyCode control.
+        /// txtApplyUser control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::Telerik.Web.UI.RadTextBox txtCompanyCode;
+        protected global::Telerik.Web.UI.RadTextBox txtApplyUser;
         
         /// <summary>
         /// rcbxWorkflowStatus control.

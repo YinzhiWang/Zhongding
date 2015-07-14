@@ -751,5 +751,6 @@ namespace ZhongDing.Common
         }
 
         public static string REIMBURSEMENTTYPE_TRANSPORTFEE = "物流费用";
+        public static string REIMBURSEMENTTYPE_EVECTION = "出差";
     }
 }

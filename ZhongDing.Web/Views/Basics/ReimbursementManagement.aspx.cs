@@ -174,11 +174,12 @@ namespace ZhongDing.Web.Views.Basics
                 //NeedStatistics = true,
                 //ClientName = txtClientName.Text.Trim(),
                 //ProductName = txtProductName.Text.Trim(),
-                //DepartmentID = rcbxDepartment.SelectedValue.ToIntOrNull()
+                DepartmentID = rcbxDepartment.SelectedValue.ToIntOrNull(),
+                ApplyUser = txtApplyUser.Text.Trim()
 
             };
-            uiSearchObj.IncludeWorkflowStatusIDs = includeWorkflowStatusIDs;
-
+            //uiSearchObj.IncludeWorkflowStatusIDs = includeWorkflowStatusIDs;
+            uiSearchObj.WorkflowStatusID = rcbxWorkflowStatus.SelectedValue.ToIntOrNull().GetValueOrDefault(0);
             int totalRecords = 0;
 
             var uiReimbursements = PageReimbursementRepository.GetUIList(uiSearchObj, rgReimbursements.CurrentPageIndex, rgReimbursements.PageSize, out totalRecords);
@@ -244,6 +245,8 @@ namespace ZhongDing.Web.Views.Basics
         {
             rdpEndDate.SelectedDate = rdpBeginDate.SelectedDate = null;
             rcbxDepartment.SelectedValue = string.Empty;
+            txtApplyUser.Text = string.Empty;
+            rcbxWorkflowStatus.SelectedValue = string.Empty;
             BindReimbursement(true);
         }
 

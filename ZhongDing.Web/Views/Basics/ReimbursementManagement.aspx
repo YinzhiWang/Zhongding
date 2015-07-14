@@ -57,7 +57,7 @@
                     <tr class="height40">
                         <th class="width70 middle-td">申请人：</th>
                         <td class="width300 middle-td">
-                            <telerik:RadTextBox runat="server" ID="txtCompanyCode" MaxLength="50"></telerik:RadTextBox>
+                            <telerik:RadTextBox runat="server" ID="txtApplyUser" MaxLength="50"></telerik:RadTextBox>
                         </td>
                         <th class="width80 middle-td">状态：</th>
                         <td class="middle-td width580">
