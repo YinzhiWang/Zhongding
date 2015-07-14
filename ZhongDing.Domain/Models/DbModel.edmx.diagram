@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="85e6c93c719943c78d71edfd0be34866" Name="Diagram1" ZoomLevel="49">
+      <Diagram DiagramId="85e6c93c719943c78d71edfd0be34866" Name="Diagram1" ZoomLevel="188">
         <EntityTypeShape EntityType="DbModel.AccountType" Width="1.5" PointX="0.75" PointY="142.75" />
         <EntityTypeShape EntityType="DbModel.aspnet_Membership" Width="1.5" PointX="3.75" PointY="95.25" />
         <EntityTypeShape EntityType="DbModel.aspnet_Roles" Width="1.5" PointX="0.75" PointY="1.375" />
@@ -458,6 +458,16 @@
         <EntityTypeShape EntityType="DbModel.GuaranteeReceipt" Width="1.5" PointX="3.2460818268573295" PointY="5.1570341164046125" />
         <AssociationConnector Association="DbModel.FK_GuaranteeLog_GuaranteeReceiptID" />
         <AssociationConnector Association="DbModel.FK_GuaranteeReceipt_ApplicationPaymentID" />
+        <EntityTypeShape EntityType="DbModel.Reimbursement" Width="1.5" PointX="7.8833797498994418" PointY="31.742898076652967" />
+        <EntityTypeShape EntityType="DbModel.ReimbursementDetail" Width="2.625" PointX="3.25" PointY="2" />
+        <EntityTypeShape EntityType="DbModel.ReimbursementDetailTransportFee" Width="1.5" PointX="2.2669430627799327" PointY="21.73606487630683" />
+        <AssociationConnector Association="DbModel.FK_Reimbursement_DepartmentID" />
+        <AssociationConnector Association="DbModel.FK_Reimbursement_WorkflowStatusID" />
+        <AssociationConnector Association="DbModel.FK_ReimbursementDetail_ReimbursementID" />
+        <AssociationConnector Association="DbModel.FK_ReimbursementDetail_ReimbursementTypeChildID" />
+        <AssociationConnector Association="DbModel.FK_ReimbursementDetail_ReimbursementTypeID" />
+        <AssociationConnector Association="DbModel.FK_ReimbursementDetailTransportFee_ReimbursementDetailID" />
+        <AssociationConnector Association="DbModel.FK_ReimbursementDetailTransportFee_TransportFeeID" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -362,6 +362,15 @@
     <Compile Include="Models\ProductSpecification.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Reimbursement.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReimbursementDetail.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ReimbursementDetailTransportFee.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ReimbursementType.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -592,6 +601,7 @@
     <Compile Include="UIObjects\UIInventoryReminder.cs" />
     <Compile Include="UIObjects\UIInventorySummaryDetailReport.cs" />
     <Compile Include="UIObjects\UIInventorySummaryReport.cs" />
+    <Compile Include="UIObjects\UIReimbursement.cs" />
     <Compile Include="UIObjects\UIProcureOrderAppDetail.cs" />
     <Compile Include="UIObjects\UIProcureOrderAppDetailImportData.cs" />
     <Compile Include="UIObjects\UIProcureOrderAppDetailReport.cs" />
@@ -608,6 +618,7 @@
     <Compile Include="UIObjects\UIProductInfoExpiredReminder.cs" />
     <Compile Include="UIObjects\UIProductPrice.cs" />
     <Compile Include="UIObjects\UIProductSpecification.cs" />
+    <Compile Include="UIObjects\UIReimbursementDetail.cs" />
     <Compile Include="UIObjects\UIReimbursementType.cs" />
     <Compile Include="UIObjects\UISalarySettle.cs" />
     <Compile Include="UIObjects\UISalarySettleDetail.cs" />
@@ -728,6 +739,8 @@
     <Compile Include="UISearchObjects\UISearchProductExpiredReminder.cs" />
     <Compile Include="UISearchObjects\UISearchProductInfoExpiredReminder.cs" />
     <Compile Include="UISearchObjects\UISearchProductSpecification.cs" />
+    <Compile Include="UISearchObjects\UISearchReimbursement.cs" />
+    <Compile Include="UISearchObjects\UISearchReimbursementDetail.cs" />
     <Compile Include="UISearchObjects\UISearchReimbursementType.cs" />
     <Compile Include="UISearchObjects\UISearchSalarySettle.cs" />
     <Compile Include="UISearchObjects\UISearchSalarySettleDetail.cs" />

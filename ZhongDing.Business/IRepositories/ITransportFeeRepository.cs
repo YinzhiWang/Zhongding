@@ -23,5 +23,7 @@ namespace ZhongDing.Business.IRepositories
         IList<UITransportFee> GetUIList(UISearchTransportFee uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
 
 
+
+        IList<UITransportFee> GetUIListReimbursementDetail(UISearchTransportFee uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
     }
 }

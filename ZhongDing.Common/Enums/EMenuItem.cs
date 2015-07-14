@@ -83,6 +83,10 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         FixedAssetsManage = 17,
         /// <summary>
+        /// 报销类型管理
+        /// </summary>
+        ReimbursementManage = 18,
+        /// <summary>
         /// 货品信息管理
         /// </summary>
         ProductInfoManage = 20,

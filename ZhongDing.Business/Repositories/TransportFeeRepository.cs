@@ -77,5 +77,108 @@ namespace ZhongDing.Business.Repositories
 
 
 
+
+
+        public IList<UITransportFee> GetUIListReimbursementDetail(Domain.UISearchObjects.UISearchTransportFee uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
+        {
+            IList<UITransportFee> uiEntitys = new List<UITransportFee>();
+            int total = 0;
+
+
+            List<Expression<Func<TransportFee, bool>>> whereFuncs = new List<Expression<Func<TransportFee, bool>>>();
+
+            if (uiSearchObj != null)
+            {
+                if (uiSearchObj.TransportFeeType > -1)
+                    whereFuncs.Add(x => x.TransportFeeType == uiSearchObj.TransportFeeType);
+                if (uiSearchObj.TransportCompanyNumber.IsNotNullOrEmpty())
+                {
+                    whereFuncs.Add(x => x.TransportCompanyNumber.Contains(uiSearchObj.TransportCompanyNumber));
+                }
+                if (uiSearchObj.TransportCompanyName.IsNotNullOrEmpty())
+                {
+                    whereFuncs.Add(x => x.TransportCompany.CompanyName.Contains(uiSearchObj.TransportCompanyName));
+                }
+            }
+
+            int sourceNotUse = 2, sourceUse = 1;//未使用的
+            var queryStockIn = from transportFee in DB.TransportFee
+                               join transportFeeStockIn in DB.TransportFeeStockIn on transportFee.ID equals transportFeeStockIn.TransportFeeID
+                               join stockIn in DB.StockIn on transportFeeStockIn.StockInID equals stockIn.ID
+                               where transportFee.IsDeleted == false
+                               && transportFeeStockIn.IsDeleted == false
+                               && stockIn.CreatedBy == uiSearchObj.UserID
+                               && !DB.ReimbursementDetailTransportFee.Where(x => x.IsDeleted == false && x.TransportFeeID == transportFee.ID).Any()
+                               group transportFee by transportFee.ID into transportFeeGroup
+                               select new
+                               {
+                                   TransportFeeID = transportFeeGroup.Key,
+                                   ReimbursementDetailTransportFeeID = 0,
+                                   ReimbursementDetailID = 0,
+                                   Comment = string.Empty
+                               };
+
+            var queryStockOut = from transportFee in DB.TransportFee
+                                join transportFeeStockOut in DB.TransportFeeStockOut on transportFee.ID equals transportFeeStockOut.TransportFeeID
+                                join stockOut in DB.StockOut on transportFeeStockOut.StockOutID equals stockOut.ID
+                                where transportFee.IsDeleted == false
+                                && transportFeeStockOut.IsDeleted == false
+                                && stockOut.CreatedBy == uiSearchObj.UserID
+                                && !DB.ReimbursementDetailTransportFee.Where(x => x.IsDeleted == false && x.TransportFeeID == transportFee.ID).Any()
+                                group transportFee by transportFee.ID into transportFeeGroup
+                                select new
+                                {
+                                    TransportFeeID = transportFeeGroup.Key,
+                                    ReimbursementDetailTransportFeeID = 0,
+                                    ReimbursementDetailID = 0,
+                                    Comment = string.Empty
+                                };
+
+
+
+            var queryAlreadyUsed = from reimbursementDetailTransportFee in DB.ReimbursementDetailTransportFee
+                                   where reimbursementDetailTransportFee.ReimbursementDetailID == uiSearchObj.ReimbursementDetailID
+                                   && reimbursementDetailTransportFee.IsDeleted == false
+                                   select new
+                                   {
+                                       TransportFeeID = reimbursementDetailTransportFee.TransportFeeID,
+                                       ReimbursementDetailTransportFeeID = reimbursementDetailTransportFee.ID,
+                                       ReimbursementDetailID = reimbursementDetailTransportFee.ReimbursementDetailID,
+                                       Comment = reimbursementDetailTransportFee.Comment
+                                   };
+
+            var queryStockInAndStockOut = queryStockIn.Union(queryStockOut).Union(queryAlreadyUsed);
+
+
+            var queryResult = from q in queryStockInAndStockOut
+                              join transportFee in DB.TransportFee on q.TransportFeeID equals transportFee.ID
+                              orderby q.ReimbursementDetailTransportFeeID descending
+                              select new UITransportFee()
+                              {
+                                  ID = transportFee.ID,
+                                  Fee = transportFee.Fee,
+                                  Remark = transportFee.Remark,
+                                  SendDate = transportFee.SendDate,
+                                  StartPlace = transportFee.StartPlace,
+                                  StartPlaceTelephone = transportFee.StartPlaceTelephone,
+                                  TransportCompanyNumber = transportFee.TransportCompanyNumber,
+                                  TransportFeeType = transportFee.TransportFeeType,
+                                  ReimbursementDetailTransportFeeID = q.ReimbursementDetailTransportFeeID,
+                                  Comment = q.Comment,
+                                  ReimbursementDetailID = q.ReimbursementDetailID
+                              };
+
+            totalRecords = total;
+
+
+            uiEntitys = queryResult.OrderByDescending(x => x.ID)
+              .Skip(pageSize * pageIndex).Take(pageSize).ToList();
+
+            foreach (var item in uiEntitys)
+            {
+                item.TransportFeeTypeText = item.TransportFeeType == (int)ETransportFeeType.StockIn ? "入库" : "出库";
+            }
+            return uiEntitys;
+        }
     }
 }

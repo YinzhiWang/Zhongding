@@ -749,5 +749,7 @@ namespace ZhongDing.Common
             /// </summary>
             public static int AheadDaysOfDefault = 7;
         }
+
+        public static string REIMBURSEMENTTYPE_TRANSPORTFEE = "物流费用";
     }
 }

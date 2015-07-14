@@ -278,7 +278,7 @@
             window.location.href = "GuaranteeReceiptManagement.aspx";
         }
         function openSettleWindow() {
-            $.showLoading();
+            
 
             var targetUrl = $.getRootPath() + "Views/Sales/Editors/GuaranteeReceiptSettle.aspx?GridClientID=" + gridClientIDs.rgEntitiesSelected;
 

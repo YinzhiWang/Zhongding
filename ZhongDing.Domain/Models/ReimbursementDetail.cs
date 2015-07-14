@@ -13,23 +13,27 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class ReimbursementType : IEntityExtendedProperty
+    public partial class ReimbursementDetail : IEntityExtendedProperty
     {
-        public ReimbursementType()
+        public ReimbursementDetail()
         {
-            this.ReimbursementDetail = new HashSet<ReimbursementDetail>();
-            this.ReimbursementDetail1 = new HashSet<ReimbursementDetail>();
+            this.ReimbursementDetailTransportFee = new HashSet<ReimbursementDetailTransportFee>();
         }
     
         public int ID { get; set; }
-        public string Name { get; set; }
+        public int ReimbursementID { get; set; }
+        public int ReimbursementTypeID { get; set; }
+        public Nullable<int> ReimbursementTypeChildID { get; set; }
+        public Nullable<System.DateTime> StartDate { get; set; }
+        public Nullable<System.DateTime> EndDate { get; set; }
+        public decimal Amount { get; set; }
+        public Nullable<int> Quantity { get; set; }
         public string Comment { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
-        public Nullable<int> ParentID { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -41,7 +45,9 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ICollection<ReimbursementDetail> ReimbursementDetail { get; set; }
-        public virtual ICollection<ReimbursementDetail> ReimbursementDetail1 { get; set; }
+        public virtual Reimbursement Reimbursement { get; set; }
+        public virtual ReimbursementType ReimbursementTypeChildObject { get; set; }
+        public virtual ReimbursementType ReimbursementTypeObject { get; set; }
+        public virtual ICollection<ReimbursementDetailTransportFee> ReimbursementDetailTransportFee { get; set; }
     }
 }

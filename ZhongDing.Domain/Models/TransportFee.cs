@@ -18,6 +18,7 @@ namespace ZhongDing.Domain.Models
         public TransportFee()
         {
             this.TransportFeeStockOut = new HashSet<TransportFeeStockOut>();
+            this.ReimbursementDetailTransportFee = new HashSet<ReimbursementDetailTransportFee>();
         }
     
         public int ID { get; set; }
@@ -51,5 +52,6 @@ namespace ZhongDing.Domain.Models
     
         public virtual TransportCompany TransportCompany { get; set; }
         public virtual ICollection<TransportFeeStockOut> TransportFeeStockOut { get; set; }
+        public virtual ICollection<ReimbursementDetailTransportFee> ReimbursementDetailTransportFee { get; set; }
     }
 }

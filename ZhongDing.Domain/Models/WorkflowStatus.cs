@@ -33,6 +33,7 @@ namespace ZhongDing.Domain.Models
             this.ClientCautionMoneyReturnApplication = new HashSet<ClientCautionMoneyReturnApplication>();
             this.ClientSaleApplication = new HashSet<ClientSaleApplication>();
             this.SalarySettle = new HashSet<SalarySettle>();
+            this.Reimbursement = new HashSet<Reimbursement>();
         }
     
         public int ID { get; set; }
@@ -66,5 +67,6 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<ClientCautionMoneyReturnApplication> ClientCautionMoneyReturnApplication { get; set; }
         public virtual ICollection<ClientSaleApplication> ClientSaleApplication { get; set; }
         public virtual ICollection<SalarySettle> SalarySettle { get; set; }
+        public virtual ICollection<Reimbursement> Reimbursement { get; set; }
     }
 }

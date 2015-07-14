@@ -87,6 +87,9 @@
     <Compile Include="IRepositories\IHospitalTypeRepository.cs" />
     <Compile Include="IRepositories\IProcureOrderApplicationImportDataRepository.cs" />
     <Compile Include="IRepositories\IProcureOrderApplicationImportFileLogRepository.cs" />
+    <Compile Include="IRepositories\IReimbursementDetailRepository.cs" />
+    <Compile Include="IRepositories\IReimbursementDetailTransportFeeRepository.cs" />
+    <Compile Include="IRepositories\IReimbursementRepository.cs" />
     <Compile Include="IRepositories\IReimbursementTypeRepository.cs" />
     <Compile Include="IRepositories\IReminderRepository.cs" />
     <Compile Include="IRepositories\ISalarySettleDetailRepository.cs" />
@@ -236,6 +239,9 @@
     <Compile Include="Repositories\GuaranteeLogRepository.cs" />
     <Compile Include="Repositories\GuaranteeReceiptRepository.cs" />
     <Compile Include="Repositories\PermissionRepository.cs" />
+    <Compile Include="Repositories\ReimbursementDetailRepository.cs" />
+    <Compile Include="Repositories\ReimbursementDetailTransportFeeRepository.cs" />
+    <Compile Include="Repositories\ReimbursementRepository.cs" />
     <Compile Include="Repositories\ReimbursementTypeRepository.cs" />
     <Compile Include="Repositories\Reminders\ReminderRepository.cs" />
     <Compile Include="Repositories\SalarySettleDetailRepository.cs" />

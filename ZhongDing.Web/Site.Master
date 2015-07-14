@@ -81,6 +81,7 @@
                                     <li data-level="2" data-menuitemid="13" data-permissionname="物流公司管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/TransportCompanyManagement.aspx');">物流公司管理</a></li>
                                     <li data-level="2" data-menuitemid="14" data-permissionname="现金管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/MoneyManagement.aspx');">现金管理</a></li>
                                     <li data-level="2" data-menuitemid="15" data-permissionname="报销类型管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/ReimbursementTypeManagement.aspx');">报销类型管理</a></li>
+                                    <li data-level="2" data-menuitemid="18" data-permissionworkflowname="费用报销管理"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/ReimbursementManagement.aspx');">费用报销管理</a></li>
                                     <li data-level="2" data-menuitemid="16" data-permissionname="借款管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/BorrowMoneyManagement.aspx');">借款管理</a></li>
                                     <li data-level="2" data-menuitemid="17" data-permissionname="固定资产管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/FixedAssetsManagement.aspx');">固定资产管理</a></li>
 
@@ -393,7 +394,8 @@
                     18: "供应商保证金申请",
                     19: "客户保证金",
                     20: "客户保证金退回申请",
-                    23: "工资结算管理"
+                    23: "工资结算管理",
+                    25: "费用报销管理"
                 };
             </script>
 
@@ -554,15 +556,13 @@
                                     if (hasPermission) {
                                         var permissionValue = getPermissionValue(permission);
                                         var hasPermissionOption = ((permissionValue & permissionOption) == permissionOption);
-                                        if (hasPermissionOption)
-                                        {
+                                        if (hasPermissionOption) {
                                             hasPermissionLi = true;
                                         }
                                     }
                                 }
                             }
-                            if (!hasPermissionLi)
-                            {
+                            if (!hasPermissionLi) {
                                 $(this).remove();
                             }
                         }
@@ -718,7 +718,7 @@
             Width="300" Height="100">
         </telerik:RadNotification>
 
-        <telerik:RadWindowManager ID="radWindowManager" VisibleStatusbar="false" Width="600" Height="400"
+        <telerik:RadWindowManager ID="radWindowManager" VisibleStatusbar="false" Width="600" Height="400"  ShowContentDuringLoad="false"
             ReloadOnShow="true" EnableShadow="true" Overlay="true" IconUrl="~/Content/icons/16/edit.png"
             runat="server" Opacity="100" Behaviors="Close,Move,Resize,Maximize" Modal="true" OnClientBeforeShow="OnClientBeforeShow">
             <AlertTemplate>

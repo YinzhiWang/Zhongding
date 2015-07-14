@@ -450,6 +450,9 @@
     <Build Include="dbo\Tables\SalarySettleDetail.sql" />
     <Build Include="dbo\Tables\SupplierContact.sql" />
     <Build Include="dbo\Tables\GuaranteeReceipt.sql" />
+    <Build Include="dbo\Tables\ReimbursementDetailTransportFee.sql" />
+    <Build Include="dbo\Tables\ReimbursementDetail.sql" />
+    <Build Include="dbo\Tables\Reimbursement.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

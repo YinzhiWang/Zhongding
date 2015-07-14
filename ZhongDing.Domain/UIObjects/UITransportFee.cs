@@ -27,5 +27,13 @@ namespace ZhongDing.Domain.UIObjects
         public int TransportFeeType { get; set; }
 
         public string CreatedByUserName { get; set; }
+
+        public int Source { get; set; }
+
+        public int? ReimbursementDetailTransportFeeID { get; set; }
+
+        public string Comment { get; set; }
+
+        public int ReimbursementDetailID { get; set; }
     }
 }

@@ -126,7 +126,13 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 担保收款管理
         /// </summary>
-        GuaranteeReceiptManagement = 24
+        GuaranteeReceiptManagement = 24,
+
+        /// <summary>
+        /// 费用报销管理 25
+        /// </summary>
+        ReimbursementManagement=25
+        
 
     }
 }

@@ -104,6 +104,9 @@
           <EntitySet Name="ProductDBPolicyPrice" EntityType="DbModel.Store.ProductDBPolicyPrice" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ProductHighPrice" EntityType="DbModel.Store.ProductHighPrice" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ProductSpecification" EntityType="DbModel.Store.ProductSpecification" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Reimbursement" EntityType="DbModel.Store.Reimbursement" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ReimbursementDetail" EntityType="DbModel.Store.ReimbursementDetail" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ReimbursementDetailTransportFee" EntityType="DbModel.Store.ReimbursementDetailTransportFee" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ReimbursementType" EntityType="DbModel.Store.ReimbursementType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Roles" EntityType="DbModel.Store.Roles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SalarySettle" EntityType="DbModel.Store.SalarySettle" store:Type="Tables" Schema="dbo" />
@@ -998,6 +1001,34 @@
           <AssociationSet Name="FK_ProductSpecification_UnitOfMeasurement" Association="DbModel.Store.FK_ProductSpecification_UnitOfMeasurement">
             <End Role="UnitOfMeasurement" EntitySet="UnitOfMeasurement" />
             <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reimbursement_DepartmentID" Association="DbModel.Store.FK_Reimbursement_DepartmentID">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Reimbursement" EntitySet="Reimbursement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reimbursement_WorkflowStatusID" Association="DbModel.Store.FK_Reimbursement_WorkflowStatusID">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="Reimbursement" EntitySet="Reimbursement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReimbursementDetail_ReimbursementID" Association="DbModel.Store.FK_ReimbursementDetail_ReimbursementID">
+            <End Role="Reimbursement" EntitySet="Reimbursement" />
+            <End Role="ReimbursementDetail" EntitySet="ReimbursementDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReimbursementDetail_ReimbursementTypeChildID" Association="DbModel.Store.FK_ReimbursementDetail_ReimbursementTypeChildID">
+            <End Role="ReimbursementType" EntitySet="ReimbursementType" />
+            <End Role="ReimbursementDetail" EntitySet="ReimbursementDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReimbursementDetail_ReimbursementTypeID" Association="DbModel.Store.FK_ReimbursementDetail_ReimbursementTypeID">
+            <End Role="ReimbursementType" EntitySet="ReimbursementType" />
+            <End Role="ReimbursementDetail" EntitySet="ReimbursementDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReimbursementDetailTransportFee_ReimbursementDetailID" Association="DbModel.Store.FK_ReimbursementDetailTransportFee_ReimbursementDetailID">
+            <End Role="ReimbursementDetail" EntitySet="ReimbursementDetail" />
+            <End Role="ReimbursementDetailTransportFee" EntitySet="ReimbursementDetailTransportFee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReimbursementDetailTransportFee_TransportFeeID" Association="DbModel.Store.FK_ReimbursementDetailTransportFee_TransportFeeID">
+            <End Role="TransportFee" EntitySet="TransportFee" />
+            <End Role="ReimbursementDetailTransportFee" EntitySet="ReimbursementDetailTransportFee" />
           </AssociationSet>
           <AssociationSet Name="FK_Roles_aspnet_Roles" Association="DbModel.Store.FK_Roles_aspnet_Roles">
             <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
@@ -2957,6 +2988,56 @@
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
           <Property Name="LicenseNumber" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Reimbursement">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentID" Type="int" />
+          <Property Name="ApplyDate" Type="datetime" Nullable="false" />
+          <Property Name="WorkflowStatusID" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="PaidBy" Type="int" />
+          <Property Name="PaidDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ReimbursementDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ReimbursementID" Type="int" Nullable="false" />
+          <Property Name="ReimbursementTypeID" Type="int" Nullable="false" />
+          <Property Name="ReimbursementTypeChildID" Type="int" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="1024" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="ReimbursementDetailTransportFee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ReimbursementDetailID" Type="int" Nullable="false" />
+          <Property Name="TransportFeeID" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
         </EntityType>
         <EntityType Name="ReimbursementType">
           <Key>
@@ -6319,6 +6400,90 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Reimbursement_DepartmentID">
+          <End Role="Department" Type="DbModel.Store.Department" Multiplicity="0..1" />
+          <End Role="Reimbursement" Type="DbModel.Store.Reimbursement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reimbursement">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reimbursement_WorkflowStatusID">
+          <End Role="WorkflowStatus" Type="DbModel.Store.WorkflowStatus" Multiplicity="1" />
+          <End Role="Reimbursement" Type="DbModel.Store.Reimbursement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reimbursement">
+              <PropertyRef Name="WorkflowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReimbursementDetail_ReimbursementID">
+          <End Role="Reimbursement" Type="DbModel.Store.Reimbursement" Multiplicity="1" />
+          <End Role="ReimbursementDetail" Type="DbModel.Store.ReimbursementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reimbursement">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReimbursementDetail">
+              <PropertyRef Name="ReimbursementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReimbursementDetail_ReimbursementTypeChildID">
+          <End Role="ReimbursementType" Type="DbModel.Store.ReimbursementType" Multiplicity="0..1" />
+          <End Role="ReimbursementDetail" Type="DbModel.Store.ReimbursementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReimbursementType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReimbursementDetail">
+              <PropertyRef Name="ReimbursementTypeChildID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReimbursementDetail_ReimbursementTypeID">
+          <End Role="ReimbursementType" Type="DbModel.Store.ReimbursementType" Multiplicity="1" />
+          <End Role="ReimbursementDetail" Type="DbModel.Store.ReimbursementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReimbursementType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReimbursementDetail">
+              <PropertyRef Name="ReimbursementTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReimbursementDetailTransportFee_ReimbursementDetailID">
+          <End Role="ReimbursementDetail" Type="DbModel.Store.ReimbursementDetail" Multiplicity="1" />
+          <End Role="ReimbursementDetailTransportFee" Type="DbModel.Store.ReimbursementDetailTransportFee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReimbursementDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReimbursementDetailTransportFee">
+              <PropertyRef Name="ReimbursementDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReimbursementDetailTransportFee_TransportFeeID">
+          <End Role="TransportFee" Type="DbModel.Store.TransportFee" Multiplicity="1" />
+          <End Role="ReimbursementDetailTransportFee" Type="DbModel.Store.ReimbursementDetailTransportFee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransportFee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReimbursementDetailTransportFee">
+              <PropertyRef Name="TransportFeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Roles_aspnet_Roles">
           <End Role="aspnet_Roles" Type="DbModel.Store.aspnet_Roles" Multiplicity="0..1" />
           <End Role="Roles" Type="DbModel.Store.Roles" Multiplicity="*" />
@@ -8805,6 +8970,37 @@
             <End Role="ApplicationPayment" EntitySet="ApplicationPayment" />
             <End Role="GuaranteeReceipt" EntitySet="GuaranteeReceipt" />
           </AssociationSet>
+          <EntitySet Name="Reimbursement" EntityType="DbModel.Reimbursement" />
+          <EntitySet Name="ReimbursementDetail" EntityType="DbModel.ReimbursementDetail" />
+          <EntitySet Name="ReimbursementDetailTransportFee" EntityType="DbModel.ReimbursementDetailTransportFee" />
+          <AssociationSet Name="FK_Reimbursement_DepartmentID" Association="DbModel.FK_Reimbursement_DepartmentID">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Reimbursement" EntitySet="Reimbursement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reimbursement_WorkflowStatusID" Association="DbModel.FK_Reimbursement_WorkflowStatusID">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="Reimbursement" EntitySet="Reimbursement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReimbursementDetail_ReimbursementID" Association="DbModel.FK_ReimbursementDetail_ReimbursementID">
+            <End Role="Reimbursement" EntitySet="Reimbursement" />
+            <End Role="ReimbursementDetail" EntitySet="ReimbursementDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReimbursementDetail_ReimbursementTypeChildID" Association="DbModel.FK_ReimbursementDetail_ReimbursementTypeChildID">
+            <End Role="ReimbursementType" EntitySet="ReimbursementType" />
+            <End Role="ReimbursementDetail" EntitySet="ReimbursementDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReimbursementDetail_ReimbursementTypeID" Association="DbModel.FK_ReimbursementDetail_ReimbursementTypeID">
+            <End Role="ReimbursementType" EntitySet="ReimbursementType" />
+            <End Role="ReimbursementDetail" EntitySet="ReimbursementDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReimbursementDetailTransportFee_ReimbursementDetailID" Association="DbModel.FK_ReimbursementDetailTransportFee_ReimbursementDetailID">
+            <End Role="ReimbursementDetail" EntitySet="ReimbursementDetail" />
+            <End Role="ReimbursementDetailTransportFee" EntitySet="ReimbursementDetailTransportFee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReimbursementDetailTransportFee_TransportFeeID" Association="DbModel.FK_ReimbursementDetailTransportFee_TransportFeeID">
+            <End Role="TransportFee" EntitySet="TransportFee" />
+            <End Role="ReimbursementDetailTransportFee" EntitySet="ReimbursementDetailTransportFee" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -9745,6 +9941,7 @@
           <NavigationProperty Name="ClientCautionMoney" Relationship="DbModel.FK_ClientCautionMoney_DepartmentID" FromRole="Department" ToRole="ClientCautionMoney" />
           <NavigationProperty Name="FixedAssets" Relationship="DbModel.FK_FixedAssets_DepartmentID" FromRole="Department" ToRole="FixedAssets" />
           <NavigationProperty Name="SalarySettle" Relationship="DbModel.FK_SalarySettle_DepartmentID" FromRole="Department" ToRole="SalarySettle" />
+          <NavigationProperty Name="Reimbursement" Relationship="DbModel.FK_Reimbursement_DepartmentID" FromRole="Department" ToRole="Reimbursement" />
         </EntityType>
         <Association Name="FK_Department_DeptDistrict">
           <End Type="DbModel.DeptDistrict" Role="DeptDistrict" Multiplicity="0..1" />
@@ -10248,6 +10445,7 @@
           <NavigationProperty Name="ClientCautionMoneyReturnApplication" Relationship="DbModel.FK_ClientCautionMoneyReturnApplication_WorkflowStatusID" FromRole="WorkflowStatus" ToRole="ClientCautionMoneyReturnApplication" />
           <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_WorkflowStatus" FromRole="WorkflowStatus" ToRole="ClientSaleApplication" />
           <NavigationProperty Name="SalarySettle" Relationship="DbModel.FK_SalarySettle_WorkflowStatusID" FromRole="WorkflowStatus" ToRole="SalarySettle" />
+          <NavigationProperty Name="Reimbursement" Relationship="DbModel.FK_Reimbursement_WorkflowStatusID" FromRole="WorkflowStatus" ToRole="Reimbursement" />
         </EntityType>
         <EntityType Name="WorkflowStepStatus">
           <Key>
@@ -11820,6 +12018,7 @@
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="TransportCompany" Relationship="DbModel.FK_TransportFee_TransportCompanyID" FromRole="TransportFee" ToRole="TransportCompany" />
           <NavigationProperty Name="TransportFeeStockOut" Relationship="DbModel.FK_TransportFeeStockOut_TransportFeeID" FromRole="TransportFee" ToRole="TransportFeeStockOut" />
+          <NavigationProperty Name="ReimbursementDetailTransportFee" Relationship="DbModel.FK_ReimbursementDetailTransportFee_TransportFeeID" FromRole="TransportFee" ToRole="ReimbursementDetailTransportFee" />
         </EntityType>
         <Association Name="FK_TransportFee_TransportCompanyID">
           <End Type="DbModel.TransportCompany" Role="TransportCompany" Multiplicity="1" />
@@ -15108,6 +15307,8 @@
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
           <Property Type="Int32" Name="ParentID" />
+          <NavigationProperty Name="ReimbursementDetail" Relationship="DbModel.FK_ReimbursementDetail_ReimbursementTypeChildID" FromRole="ReimbursementType" ToRole="ReimbursementDetail" />
+          <NavigationProperty Name="ReimbursementDetail1" Relationship="DbModel.FK_ReimbursementDetail_ReimbursementTypeID" FromRole="ReimbursementType" ToRole="ReimbursementDetail" />
         </EntityType>
         <EntityType Name="AttachmentFile">
           <Key>
@@ -15474,6 +15675,149 @@
             </Principal>
             <Dependent Role="GuaranteeReceipt">
               <PropertyRef Name="ApplicationPaymentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Reimbursement">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DepartmentID" />
+          <Property Type="DateTime" Name="ApplyDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="WorkflowStatusID" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Department" Relationship="DbModel.FK_Reimbursement_DepartmentID" FromRole="Reimbursement" ToRole="Department" />
+          <NavigationProperty Name="WorkflowStatus" Relationship="DbModel.FK_Reimbursement_WorkflowStatusID" FromRole="Reimbursement" ToRole="WorkflowStatus" />
+          <NavigationProperty Name="ReimbursementDetail" Relationship="DbModel.FK_ReimbursementDetail_ReimbursementID" FromRole="Reimbursement" ToRole="ReimbursementDetail" />
+          <Property Type="Int32" Name="PaidBy" />
+          <Property Type="DateTime" Name="PaidDate" Precision="3" />
+        </EntityType>
+        <EntityType Name="ReimbursementDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ReimbursementID" Nullable="false" />
+          <Property Type="Int32" Name="ReimbursementTypeID" Nullable="false" />
+          <Property Type="Int32" Name="ReimbursementTypeChildID" />
+          <Property Type="DateTime" Name="StartDate" Precision="3" />
+          <Property Type="DateTime" Name="EndDate" Precision="3" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="Quantity" />
+          <Property Type="String" Name="Comment" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Reimbursement" Relationship="DbModel.FK_ReimbursementDetail_ReimbursementID" FromRole="ReimbursementDetail" ToRole="Reimbursement" />
+          <NavigationProperty Name="ReimbursementTypeChildObject" Relationship="DbModel.FK_ReimbursementDetail_ReimbursementTypeChildID" FromRole="ReimbursementDetail" ToRole="ReimbursementType" />
+          <NavigationProperty Name="ReimbursementTypeObject" Relationship="DbModel.FK_ReimbursementDetail_ReimbursementTypeID" FromRole="ReimbursementDetail" ToRole="ReimbursementType" />
+          <NavigationProperty Name="ReimbursementDetailTransportFee" Relationship="DbModel.FK_ReimbursementDetailTransportFee_ReimbursementDetailID" FromRole="ReimbursementDetail" ToRole="ReimbursementDetailTransportFee" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+        </EntityType>
+        <EntityType Name="ReimbursementDetailTransportFee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ReimbursementDetailID" Nullable="false" />
+          <Property Type="Int32" Name="TransportFeeID" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="String" Name="Comment" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ReimbursementDetail" Relationship="DbModel.FK_ReimbursementDetailTransportFee_ReimbursementDetailID" FromRole="ReimbursementDetailTransportFee" ToRole="ReimbursementDetail" />
+          <NavigationProperty Name="TransportFee" Relationship="DbModel.FK_ReimbursementDetailTransportFee_TransportFeeID" FromRole="ReimbursementDetailTransportFee" ToRole="TransportFee" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+        </EntityType>
+        <Association Name="FK_Reimbursement_DepartmentID">
+          <End Type="DbModel.Department" Role="Department" Multiplicity="0..1" />
+          <End Type="DbModel.Reimbursement" Role="Reimbursement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reimbursement">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reimbursement_WorkflowStatusID">
+          <End Type="DbModel.WorkflowStatus" Role="WorkflowStatus" Multiplicity="1" />
+          <End Type="DbModel.Reimbursement" Role="Reimbursement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reimbursement">
+              <PropertyRef Name="WorkflowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReimbursementDetail_ReimbursementID">
+          <End Type="DbModel.Reimbursement" Role="Reimbursement" Multiplicity="1" />
+          <End Type="DbModel.ReimbursementDetail" Role="ReimbursementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reimbursement">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReimbursementDetail">
+              <PropertyRef Name="ReimbursementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReimbursementDetail_ReimbursementTypeChildID">
+          <End Type="DbModel.ReimbursementType" Role="ReimbursementType" Multiplicity="0..1" />
+          <End Type="DbModel.ReimbursementDetail" Role="ReimbursementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReimbursementType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReimbursementDetail">
+              <PropertyRef Name="ReimbursementTypeChildID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReimbursementDetail_ReimbursementTypeID">
+          <End Type="DbModel.ReimbursementType" Role="ReimbursementType" Multiplicity="1" />
+          <End Type="DbModel.ReimbursementDetail" Role="ReimbursementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReimbursementType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReimbursementDetail">
+              <PropertyRef Name="ReimbursementTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReimbursementDetailTransportFee_ReimbursementDetailID">
+          <End Type="DbModel.ReimbursementDetail" Role="ReimbursementDetail" Multiplicity="1" />
+          <End Type="DbModel.ReimbursementDetailTransportFee" Role="ReimbursementDetailTransportFee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReimbursementDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReimbursementDetailTransportFee">
+              <PropertyRef Name="ReimbursementDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReimbursementDetailTransportFee_TransportFeeID">
+          <End Type="DbModel.TransportFee" Role="TransportFee" Multiplicity="1" />
+          <End Type="DbModel.ReimbursementDetailTransportFee" Role="ReimbursementDetailTransportFee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransportFee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReimbursementDetailTransportFee">
+              <PropertyRef Name="TransportFeeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -18043,6 +18387,59 @@
                 <ScalarProperty Name="ApplicationPaymentID" ColumnName="ApplicationPaymentID" />
                 <ScalarProperty Name="ReceiptAmount" ColumnName="ReceiptAmount" />
                 <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reimbursement">
+            <EntityTypeMapping TypeName="DbModel.Reimbursement">
+              <MappingFragment StoreEntitySet="Reimbursement">
+                <ScalarProperty Name="PaidDate" ColumnName="PaidDate" />
+                <ScalarProperty Name="PaidBy" ColumnName="PaidBy" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="WorkflowStatusID" ColumnName="WorkflowStatusID" />
+                <ScalarProperty Name="ApplyDate" ColumnName="ApplyDate" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReimbursementDetail">
+            <EntityTypeMapping TypeName="DbModel.ReimbursementDetail">
+              <MappingFragment StoreEntitySet="ReimbursementDetail">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="ReimbursementTypeChildID" ColumnName="ReimbursementTypeChildID" />
+                <ScalarProperty Name="ReimbursementTypeID" ColumnName="ReimbursementTypeID" />
+                <ScalarProperty Name="ReimbursementID" ColumnName="ReimbursementID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReimbursementDetailTransportFee">
+            <EntityTypeMapping TypeName="DbModel.ReimbursementDetailTransportFee">
+              <MappingFragment StoreEntitySet="ReimbursementDetailTransportFee">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="TransportFeeID" ColumnName="TransportFeeID" />
+                <ScalarProperty Name="ReimbursementDetailID" ColumnName="ReimbursementDetailID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

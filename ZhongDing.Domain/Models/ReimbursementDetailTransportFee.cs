@@ -13,23 +13,18 @@ namespace ZhongDing.Domain.Models
     using System.Collections.Generic;
     
     [Serializable]
-    public partial class ReimbursementType : IEntityExtendedProperty
+    public partial class ReimbursementDetailTransportFee : IEntityExtendedProperty
     {
-        public ReimbursementType()
-        {
-            this.ReimbursementDetail = new HashSet<ReimbursementDetail>();
-            this.ReimbursementDetail1 = new HashSet<ReimbursementDetail>();
-        }
-    
         public int ID { get; set; }
-        public string Name { get; set; }
+        public int ReimbursementDetailID { get; set; }
+        public int TransportFeeID { get; set; }
+        public decimal Amount { get; set; }
         public string Comment { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
-        public Nullable<int> ParentID { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -41,7 +36,7 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
-        public virtual ICollection<ReimbursementDetail> ReimbursementDetail { get; set; }
-        public virtual ICollection<ReimbursementDetail> ReimbursementDetail1 { get; set; }
+        public virtual ReimbursementDetail ReimbursementDetail { get; set; }
+        public virtual TransportFee TransportFee { get; set; }
     }
 }

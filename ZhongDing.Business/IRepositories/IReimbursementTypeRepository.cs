@@ -8,7 +8,7 @@ using ZhongDing.Domain.UIObjects;
 
 namespace ZhongDing.Business.IRepositories
 {
-    public interface IReimbursementTypeRepository : IBaseRepository<ReimbursementType>
+    public interface IReimbursementTypeRepository : IBaseRepository<ReimbursementType>, IGenerateDropdownItems
     {
         IList<UIReimbursementType> GetUIList(Domain.UISearchObjects.UISearchReimbursementType uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
     }
