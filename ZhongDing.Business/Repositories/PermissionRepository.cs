@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZhongDing.Business.IRepositories;
+using ZhongDing.Common;
 using ZhongDing.Domain.Models;
 
 namespace ZhongDing.Business.Repositories
@@ -17,7 +18,22 @@ namespace ZhongDing.Business.Repositories
                         where userGroupUser.IsDeleted == false && userGroupPermission.IsDeleted == false && userGroupUser.UserID == userID
                         group userGroupPermission by new { userGroupPermission.PermissionID, userGroupPermission.Value } into g
                         select new { g.Key.PermissionID, g.Key.Value };
-            var permissionIDs = query.ToDictionary(x => x.PermissionID, x => x.Value);
+            var list = query.ToList();
+            Dictionary<int, int> dic = new Dictionary<int, int>();
+            list.ForEach(x =>
+            {
+                if (dic.ContainsKey(x.PermissionID))
+                {
+                    int value = dic[x.PermissionID];
+                    value = (int)PermissionManager.AddRight(PermissionManager.ConverEnum(value), PermissionManager.ConverEnum(x.Value));
+                    dic[x.PermissionID] = value;
+                }
+                else
+                {
+                    dic.Add(x.PermissionID, x.Value);
+                }
+            });
+            var permissionIDs = dic;
             return permissionIDs;
         }
     }
