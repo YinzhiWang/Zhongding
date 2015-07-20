@@ -453,6 +453,17 @@
     <Build Include="dbo\Tables\ReimbursementDetailTransportFee.sql" />
     <Build Include="dbo\Tables\ReimbursementDetail.sql" />
     <Build Include="dbo\Tables\Reimbursement.sql" />
+    <Build Include="dbo\Tables\CashFlowShippingFeeData.sql" />
+    <Build Include="dbo\Tables\CashFlowSaleIncomeData.sql" />
+    <Build Include="dbo\Tables\CashFlowRefundData.sql" />
+    <Build Include="dbo\Tables\CashFlowPurchaseAmountData.sql" />
+    <Build Include="dbo\Tables\CashFlowInvoiceIncomeData.sql" />
+    <Build Include="dbo\Tables\CashFlowInvoiceExpendData.sql" />
+    <Build Include="dbo\Tables\CashFlowHistory.sql" />
+    <Build Include="dbo\Tables\CashFlowDistributionCompanyData.sql" />
+    <Build Include="dbo\Tables\CashFlowDaBaoRefundData.sql" />
+    <Build Include="dbo\Tables\CashFlowClientRefundData.sql" />
+    <Build Include="dbo\Tables\CashFlowBaseData.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />
