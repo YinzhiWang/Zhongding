@@ -87,8 +87,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomerTask\CalculateBankAccountBalanceTask.cs" />
+    <Compile Include="CustomerTask\CashFlowReportGenerateTask.cs" />
     <Compile Include="Lib\CalculateInventoryService.cs" />
     <Compile Include="Lib\CalculateBankAccountBalanceService.cs" />
+    <Compile Include="Lib\CashFlowReportGenerateService.cs" />
     <Compile Include="Lib\DBClientSettleBonusService.cs" />
     <Compile Include="Lib\ImportDataService.cs" />
     <Compile Include="ProjectInstaller.cs">

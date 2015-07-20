@@ -1375,5 +1375,474 @@ namespace ZhongDing.Business.Repositories.Reports
         }
 
 
+
+
+        public IList<UICashFlowReport> GetCashFlowReport(UISearchCashFlowReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
+        {
+            IList<UICashFlowReport> uiEntities = new List<UICashFlowReport>();
+
+            int total = 0;
+
+            var query = from cashFlowHistory in DB.CashFlowHistory
+                        where cashFlowHistory.IsDeleted == false
+                        select new UICashFlowReport()
+                        {
+                            ID = cashFlowHistory.ID,
+                            CashFlowDate = cashFlowHistory.CashFlowDate,
+                            CashFlowFileName = cashFlowHistory.CashFlowFileName,
+                            FilePath = cashFlowHistory.FilePath,
+                        };
+            if (uiSearchObj != null)
+            {
+                if (uiSearchObj.BeginDate.HasValue)
+                {
+                    query = query.Where(x => x.CashFlowDate >= uiSearchObj.BeginDate);
+                }
+                if (uiSearchObj.EndDate.HasValue)
+                {
+                    query = query.Where(x => x.CashFlowDate <= uiSearchObj.EndDate);
+                }
+            }
+
+            total = query.Count();
+
+            uiEntities = query.OrderByDescending(x => x.ID)
+                .Skip(pageIndex * pageSize).Take(pageSize).ToList();
+
+            totalRecords = total;
+
+            return uiEntities;
+        }
+
+
+        public IList<CashFlowRowItem> GetCashFlowReportDetail(UISearchCashFlowReportDetail uiSearchObj)
+        {
+            DbModelContainer db = DB;
+            var cashFlowHistory = db.CashFlowHistory.Where(x => x.ID == uiSearchObj.CashFlowHistoryID).First();
+            DateTime cashFlowDate = cashFlowHistory.CashFlowDate;
+            DateTime start = cashFlowDate.ToFirstDayOfYearDate();
+            var cashFlowBaseDatas = db.CashFlowBaseData.Where(x => x.CashFlowDate <= cashFlowDate && x.CashFlowDate >= start).OrderBy(x => x.CashFlowDate).ToList();
+            int minMonth = cashFlowBaseDatas.First().CashFlowDate.Month;
+            int maxMonth = cashFlowBaseDatas.Last().CashFlowDate.Month;
+            List<CashFlowRowItem> excelData = new List<CashFlowRowItem>();
+            //行 第一行 列头
+            CashFlowRowItem excelRowItem = new CashFlowRowItem();
+            excelRowItem.FirstColName = "类别";
+            int month = minMonth, index = 0;
+            while (cashFlowBaseDatas.Count > index)
+            {
+                index++;
+                System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                propertyInfo.SetValue(excelRowItem, month + "月");
+                month++;
+            }
+            excelData.Add(excelRowItem);
+            //行 资金余额 （包括个人和公司账户）
+            excelRowItem = new CashFlowRowItem();
+            excelRowItem.FirstColName = "资金余额 （包括个人和公司账户）";
+            month = minMonth; index = 0;
+            while (cashFlowBaseDatas.Count > index)
+            {
+                index++;
+                System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                propertyInfo.SetValue(excelRowItem, cashFlowBaseData.MoneyBalanceAll.ToString());
+                month++;
+            }
+            excelData.Add(excelRowItem);
+            //行 个人
+            excelRowItem = new CashFlowRowItem();
+            excelRowItem.FirstColName = "个人";
+            month = minMonth; index = 0;
+            while (cashFlowBaseDatas.Count > index)
+            {
+                index++;
+                System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                propertyInfo.SetValue(excelRowItem, cashFlowBaseData.MoneyBalancePersonal.ToString());
+                month++;
+            }
+            excelData.Add(excelRowItem);
+            //行 公司
+            excelRowItem = new CashFlowRowItem();
+            excelRowItem.FirstColName = "公司";
+            month = minMonth; index = 0;
+            while (cashFlowBaseDatas.Count > index)
+            {
+                index++;
+                System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                propertyInfo.SetValue(excelRowItem, cashFlowBaseData.MoneyBalanceCompany.ToString());
+                month++;
+            }
+            excelData.Add(excelRowItem);
+            //行 收入类别
+            excelRowItem = new CashFlowRowItem();
+            excelRowItem.FirstColName = "收入类别";
+            excelData.Add(excelRowItem);
+
+            //行 销售收入
+            List<Company> companys = GetCompanys(cashFlowBaseDatas);
+            companys.ForEach(company =>
+            {
+                excelRowItem = new CashFlowRowItem();
+                excelRowItem.FirstColName = "销售收入-" + company.CompanyName;
+                month = minMonth; index = 0;
+                while (cashFlowBaseDatas.Count > index)
+                {
+                    index++;
+                    System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                    var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                    var cashFlowSaleIncomeData = cashFlowBaseData.CashFlowSaleIncomeData.FirstOrDefault(x => x.CompanyID == company.ID);
+                    if (cashFlowSaleIncomeData != null)
+                        propertyInfo.SetValue(excelRowItem, cashFlowSaleIncomeData.Amount.ToString());
+                    month++;
+                }
+                excelData.Add(excelRowItem);
+            });
+            //行 销售收入 厂家返款（高开+奖励）
+            //List<Company> companys = GetCompanys(cashFlowBaseDatas);
+            companys.ForEach(company =>
+            {
+                excelRowItem = new CashFlowRowItem();
+                excelRowItem.FirstColName = "厂家返款（高开+奖励）-" + company.CompanyName;
+                month = minMonth; index = 0;
+                while (cashFlowBaseDatas.Count > index)
+                {
+                    index++;
+                    System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                    var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                    var cashFlowRefundData = cashFlowBaseData.CashFlowRefundData.FirstOrDefault(x => x.CompanyID == company.ID);
+                    if (cashFlowRefundData != null)
+                        propertyInfo.SetValue(excelRowItem, cashFlowRefundData.Amount.ToString());
+                    month++;
+                }
+                excelData.Add(excelRowItem);
+            });
+
+            //行 销售收入 配送公司-四个配送公司	大包在本月的入账	 打包配送模式收了多少钱
+            List<DistributionCompany> distributionCompanys = GetDistributionCompanys(cashFlowBaseDatas);
+            distributionCompanys.ForEach(distributionCompany =>
+            {
+                excelRowItem = new CashFlowRowItem();
+                excelRowItem.FirstColName = "厂家返款（高开+奖励）-" + distributionCompany.Name;
+                month = minMonth; index = 0;
+                while (cashFlowBaseDatas.Count > index)
+                {
+                    index++;
+                    System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                    var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                    var cashFlowDistributionCompanyData = cashFlowBaseData.CashFlowDistributionCompanyData.FirstOrDefault(x => x.DistributionCompanyID == distributionCompany.ID);
+                    if (cashFlowDistributionCompanyData != null)
+                        propertyInfo.SetValue(excelRowItem, cashFlowDistributionCompanyData.Amount.ToString());
+                    month++;
+                }
+                excelData.Add(excelRowItem);
+            });
+            //行 挂靠回款
+            excelRowItem = new CashFlowRowItem();
+            excelRowItem.FirstColName = "挂靠回款";
+            month = minMonth; index = 0;
+            while (cashFlowBaseDatas.Count > index)
+            {
+                index++;
+                System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                propertyInfo.SetValue(excelRowItem, cashFlowBaseData.AttachedModeIncome.ToString());
+                month++;
+            }
+            excelData.Add(excelRowItem);
+            //行 保证金收入-厂家保证金
+            excelRowItem = new CashFlowRowItem();
+            excelRowItem.FirstColName = "保证金收入-厂家保证金";
+            month = minMonth; index = 0;
+            while (cashFlowBaseDatas.Count > index)
+            {
+                index++;
+                System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                propertyInfo.SetValue(excelRowItem, cashFlowBaseData.SupplierCautionMoneyIncome.ToString());
+                month++;
+            }
+            excelData.Add(excelRowItem);
+            //行 保证金收入-客户保证金
+            excelRowItem = new CashFlowRowItem();
+            excelRowItem.FirstColName = "保证金收入-客户保证金";
+            month = minMonth; index = 0;
+            while (cashFlowBaseDatas.Count > index)
+            {
+                index++;
+                System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                propertyInfo.SetValue(excelRowItem, cashFlowBaseData.ClientCautionMoneyIncome.ToString());
+                month++;
+            }
+            excelData.Add(excelRowItem);
+            //行 收回借款
+            excelRowItem = new CashFlowRowItem();
+            excelRowItem.FirstColName = "收回借款";
+            month = minMonth; index = 0;
+            while (cashFlowBaseDatas.Count > index)
+            {
+                index++;
+                System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                propertyInfo.SetValue(excelRowItem, cashFlowBaseData.BorrowMoneyIncome.ToString());
+                month++;
+            }
+            excelData.Add(excelRowItem);
+
+            //行 进项票收入-英特康
+            //List<Company> companys = GetCompanys(cashFlowBaseDatas);
+            companys.ForEach(company =>
+            {
+                excelRowItem = new CashFlowRowItem();
+                excelRowItem.FirstColName = "进项票收入-" + company.CompanyName;
+                month = minMonth; index = 0;
+                while (cashFlowBaseDatas.Count > index)
+                {
+                    index++;
+                    System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                    var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                    var cashFlowInvoiceIncomeData = cashFlowBaseData.CashFlowInvoiceIncomeData.FirstOrDefault(x => x.CompanyID == company.ID);
+                    if (cashFlowInvoiceIncomeData != null)
+                        propertyInfo.SetValue(excelRowItem, cashFlowInvoiceIncomeData.Amount.ToString());
+                    month++;
+                }
+                excelData.Add(excelRowItem);
+            });
+            //行 支出类别
+            excelRowItem = new CashFlowRowItem();
+            excelRowItem.FirstColName = "支出类别";
+            excelData.Add(excelRowItem);
+            //采购金额-万国康
+            //List<Company> companys = GetCompanys(cashFlowBaseDatas);
+            companys.ForEach(company =>
+            {
+                excelRowItem = new CashFlowRowItem();
+                excelRowItem.FirstColName = "采购金额-" + company.CompanyName;
+                month = minMonth; index = 0;
+                while (cashFlowBaseDatas.Count > index)
+                {
+                    index++;
+                    System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                    var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                    var cashFlowPurchaseAmountData = cashFlowBaseData.CashFlowPurchaseAmountData.FirstOrDefault(x => x.CompanyID == company.ID);
+                    if (cashFlowPurchaseAmountData != null)
+                        propertyInfo.SetValue(excelRowItem, cashFlowPurchaseAmountData.Amount.ToString());
+                    month++;
+                }
+                excelData.Add(excelRowItem);
+            });
+            //高开客户返款-英特康
+            //List<Company> companys = GetCompanys(cashFlowBaseDatas);
+            companys.ForEach(company =>
+            {
+                excelRowItem = new CashFlowRowItem();
+                excelRowItem.FirstColName = "高开客户返款-" + company.CompanyName;
+                month = minMonth; index = 0;
+                while (cashFlowBaseDatas.Count > index)
+                {
+                    index++;
+                    System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                    var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                    var cashFlowClientRefundData = cashFlowBaseData.CashFlowClientRefundData.FirstOrDefault(x => x.CompanyID == company.ID);
+                    if (cashFlowClientRefundData != null)
+                        propertyInfo.SetValue(excelRowItem, cashFlowClientRefundData.Amount.ToString());
+                    month++;
+                }
+                excelData.Add(excelRowItem);
+            });
+            //行 大包客户返款-四个配送公司	 	 工作流中的 大包客户提成结算 
+            excelRowItem = new CashFlowRowItem();
+            excelRowItem.FirstColName = "大包客户返款";
+            month = minMonth; index = 0;
+            while (cashFlowBaseDatas.Count > index)
+            {
+                index++;
+                System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                propertyInfo.SetValue(excelRowItem, cashFlowBaseData.DaBaoRefund.ToString());
+                month++;
+            }
+            excelData.Add(excelRowItem);
+            //行 基本工资
+            excelRowItem = new CashFlowRowItem();
+            excelRowItem.FirstColName = "基本工资";
+            month = minMonth; index = 0;
+            while (cashFlowBaseDatas.Count > index)
+            {
+                index++;
+                System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                propertyInfo.SetValue(excelRowItem, cashFlowBaseData.Salary.ToString());
+                month++;
+            }
+            excelData.Add(excelRowItem);
+            //行 业务提成
+            excelRowItem = new CashFlowRowItem();
+            excelRowItem.FirstColName = "业务提成";
+            excelData.Add(excelRowItem);
+            //行 奖金福利
+            excelRowItem = new CashFlowRowItem();
+            excelRowItem.FirstColName = "奖金福利";
+            excelData.Add(excelRowItem);
+            //行 费用报销
+            excelRowItem = new CashFlowRowItem();
+            excelRowItem.FirstColName = "费用报销";
+            month = minMonth; index = 0;
+            while (cashFlowBaseDatas.Count > index)
+            {
+                index++;
+                System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                propertyInfo.SetValue(excelRowItem, cashFlowBaseData.Reimbursement.ToString());
+                month++;
+            }
+            excelData.Add(excelRowItem);
+            //行 借款支出
+            excelRowItem = new CashFlowRowItem();
+            excelRowItem.FirstColName = "借款支出";
+            month = minMonth; index = 0;
+            while (cashFlowBaseDatas.Count > index)
+            {
+                index++;
+                System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                propertyInfo.SetValue(excelRowItem, cashFlowBaseData.BorrowMoney.ToString());
+                month++;
+            }
+            excelData.Add(excelRowItem);
+            //行 支付保证金-厂家保证金
+            excelRowItem = new CashFlowRowItem();
+            excelRowItem.FirstColName = "支付保证金-厂家保证金";
+            month = minMonth; index = 0;
+            while (cashFlowBaseDatas.Count > index)
+            {
+                index++;
+                System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                propertyInfo.SetValue(excelRowItem, cashFlowBaseData.CautionMoneyPayToSupplier.ToString());
+                month++;
+            }
+            excelData.Add(excelRowItem);
+            //行 支付保证金-退客户保证金
+            excelRowItem = new CashFlowRowItem();
+            excelRowItem.FirstColName = "支付保证金-退客户保证金";
+            month = minMonth; index = 0;
+            while (cashFlowBaseDatas.Count > index)
+            {
+                index++;
+                System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                propertyInfo.SetValue(excelRowItem, cashFlowBaseData.CautionMoneyReturnToClient.ToString());
+                month++;
+            }
+            excelData.Add(excelRowItem);
+            //销项票税支出-万国康
+            //List<Company> companys = GetCompanys(cashFlowBaseDatas);
+            companys.ForEach(company =>
+            {
+                excelRowItem = new CashFlowRowItem();
+                excelRowItem.FirstColName = "销项票税支出-" + company.CompanyName;
+                month = minMonth; index = 0;
+                while (cashFlowBaseDatas.Count > index)
+                {
+                    index++;
+                    System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                    var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                    var cashFlowInvoiceExpendData = cashFlowBaseData.CashFlowInvoiceExpendData.FirstOrDefault(x => x.CompanyID == company.ID);
+                    if (cashFlowInvoiceExpendData != null)
+                        propertyInfo.SetValue(excelRowItem, cashFlowInvoiceExpendData.Amount.ToString());
+                    month++;
+                }
+                excelData.Add(excelRowItem);
+            });
+            //行 产品促销返利
+            excelRowItem = new CashFlowRowItem();
+            excelRowItem.FirstColName = "产品促销返利";
+            excelData.Add(excelRowItem);
+            //发货费-万国康
+            //List<Company> companys = GetCompanys(cashFlowBaseDatas);
+            companys.ForEach(company =>
+            {
+                excelRowItem = new CashFlowRowItem();
+                excelRowItem.FirstColName = "发货费-" + company.CompanyName;
+                month = minMonth; index = 0;
+                while (cashFlowBaseDatas.Count > index)
+                {
+                    index++;
+                    System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                    var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                    var cashFlowShippingFeeData = cashFlowBaseData.CashFlowShippingFeeData.FirstOrDefault(x => x.CompanyID == company.ID);
+                    if (cashFlowShippingFeeData != null)
+                        propertyInfo.SetValue(excelRowItem, cashFlowShippingFeeData.Amount.ToString());
+                    month++;
+                }
+                excelData.Add(excelRowItem);
+            });
+            //行 托管配送费
+            excelRowItem = new CashFlowRowItem();
+            excelRowItem.FirstColName = "托管配送费";
+            month = minMonth; index = 0;
+            while (cashFlowBaseDatas.Count > index)
+            {
+                index++;
+                System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                propertyInfo.SetValue(excelRowItem, cashFlowBaseData.ManagedDistributionFee.ToString());
+                month++;
+            }
+            excelData.Add(excelRowItem);
+            //行 其他特殊支出
+            excelRowItem = new CashFlowRowItem();
+            excelRowItem.FirstColName = "其他特殊支出";
+            month = minMonth; index = 0;
+            while (cashFlowBaseDatas.Count > index)
+            {
+                index++;
+                System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                propertyInfo.SetValue(excelRowItem, cashFlowBaseData.Other.ToString());
+                month++;
+            }
+            excelData.Add(excelRowItem);
+            //行 厂家经理返款
+            excelRowItem = new CashFlowRowItem();
+            excelRowItem.FirstColName = "厂家经理返款";
+            month = minMonth; index = 0;
+            while (cashFlowBaseDatas.Count > index)
+            {
+                index++;
+                System.Reflection.PropertyInfo propertyInfo = excelRowItem.GetType().GetProperty("Month" + month);
+                var cashFlowBaseData = cashFlowBaseDatas.First(x => x.CashFlowDate.Month == month);
+                propertyInfo.SetValue(excelRowItem, cashFlowBaseData.FMRefund.ToString());
+                month++;
+            }
+            excelData.Add(excelRowItem);
+
+            return excelData;
+        }
+        private List<DistributionCompany> GetDistributionCompanys(List<CashFlowBaseData> cashFlowBaseDatas)
+        {
+            List<DistributionCompany> distributionCompanys = new List<DistributionCompany>();
+            var cashFlowDistributionCompanyDatas = cashFlowBaseDatas.Last().CashFlowDistributionCompanyData.OrderBy(x => x.DistributionCompanyID).ToList();
+            cashFlowDistributionCompanyDatas.ForEach(cashFlowDistributionCompanyData =>
+            {
+                distributionCompanys.Add(cashFlowDistributionCompanyData.DistributionCompany);
+            });
+            return distributionCompanys;
+        }
+
+        private List<Company> GetCompanys(List<CashFlowBaseData> cashFlowBaseDatas)
+        {
+            List<Company> companys = new List<Company>();
+            var cashFlowSaleIncomeDatas = cashFlowBaseDatas.Last().CashFlowSaleIncomeData.OrderBy(x => x.CompanyID).ToList();
+            cashFlowSaleIncomeDatas.ForEach(cashFlowSaleIncomeData =>
+            {
+                companys.Add(cashFlowSaleIncomeData.Company);
+            });
+            return companys;
+        }
     }
 }

@@ -83,6 +83,39 @@
     <Compile Include="Models\BorrowMoney.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CashFlowBaseData.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CashFlowClientRefundData.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CashFlowDaBaoRefundData.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CashFlowDistributionCompanyData.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CashFlowHistory.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CashFlowInvoiceExpendData.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CashFlowInvoiceIncomeData.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CashFlowPurchaseAmountData.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CashFlowRefundData.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CashFlowSaleIncomeData.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\CashFlowShippingFeeData.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\CautionMoneyType.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -525,11 +558,14 @@
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UIObjects\CashFlowRowItem.cs" />
     <Compile Include="UIObjects\IDValueIntString.cs" />
     <Compile Include="UIObjects\UIAttachmentFile.cs" />
     <Compile Include="UIObjects\UIBorrowMoney.cs" />
     <Compile Include="UIObjects\UIBorrowMoneyBalance.cs" />
     <Compile Include="UIObjects\UIBorrowMoneyExpiredReminder.cs" />
+    <Compile Include="UIObjects\UICashFlowHistory.cs" />
+    <Compile Include="UIObjects\UICashFlowReport.cs" />
     <Compile Include="UIObjects\UICautionMoneyReminder.cs" />
     <Compile Include="UIObjects\UIClientInfoReminder.cs" />
     <Compile Include="UIObjects\UIDBClientSettlementReport.cs" />
@@ -665,6 +701,9 @@
     <Compile Include="UISearchObjects\UISearchAttachmentFile.cs" />
     <Compile Include="UISearchObjects\UISearchBorrowMoney.cs" />
     <Compile Include="UISearchObjects\UISearchBorrowMoneyExpiredReminder.cs" />
+    <Compile Include="UISearchObjects\UISearchCashFlowHistory.cs" />
+    <Compile Include="UISearchObjects\UISearchCashFlowReport.cs" />
+    <Compile Include="UISearchObjects\UISearchCashFlowReportDetail.cs" />
     <Compile Include="UISearchObjects\UISearchCautionMoneyReminder.cs" />
     <Compile Include="UISearchObjects\UISearchClientCautionMoney.cs" />
     <Compile Include="UISearchObjects\UISearchClientCautionMoneyReturnApplication.cs" />

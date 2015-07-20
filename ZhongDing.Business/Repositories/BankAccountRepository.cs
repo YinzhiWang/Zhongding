@@ -258,5 +258,34 @@ namespace ZhongDing.Business.Repositories
 
             return uiDropdownItems;
         }
+
+        /// <summary>
+        /// 年月
+        /// </summary>
+        /// <param name="month"></param>
+        /// <returns></returns>
+        public decimal GetMoneyBalanceAll(DateTime month, EAccountType? accountType = null)
+        {
+            IApplicationPaymentRepository applicationPaymentRepository = new ApplicationPaymentRepository();
+            applicationPaymentRepository.SetDbModel(DB);
+
+            var query = GetList(x => x.OwnerTypeID == (int)EOwnerType.Company);
+            if (accountType.HasValue)
+            {
+                query = query.Where(x => x.AccountTypeID == (int)accountType);
+            }
+            var bankAccountIDs = query.Select(x => x.ID).ToList();
+            decimal balance = 0;
+            bankAccountIDs.ForEach(bankAccountID =>
+            {
+                decimal tempBalance = applicationPaymentRepository.GetRealTimeBalance(bankAccountID, month);
+                balance += tempBalance;
+            });
+            return balance;
+        }
+
+
+
+
     }
 }

@@ -1442,3 +1442,31 @@ ALTER TABLE [dbo].[WorkflowStepStatus]
     ADD CONSTRAINT [FK_WorkflowStepStatus_WorkflowStep] FOREIGN KEY ([WorkflowStepID]) REFERENCES [dbo].[WorkflowStep] ([ID])
 COMMIT TRANSACTION
 ---- end --- 07/09/2015 -- 初始化工作流状态关联数据(费用报销管理) -- by Nwang
+
+
+
+---- start --- 07/17/2015 -- 初始化(报销类型) -- by Nwang
+BEGIN TRANSACTION
+ALTER TABLE [dbo].[ReimbursementDetail] DROP CONSTRAINT [FK_ReimbursementDetail_ReimbursementTypeChildID]
+ALTER TABLE [dbo].[ReimbursementDetail] DROP CONSTRAINT [FK_ReimbursementDetail_ReimbursementTypeID]
+SET IDENTITY_INSERT [dbo].[ReimbursementType] ON
+INSERT INTO [dbo].[ReimbursementType] ([ID], [ParentID], [Name], [Comment], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (1, NULL, N'话费', N'', 0, '2015-07-18 18:53:27.217', 1, NULL, NULL)
+INSERT INTO [dbo].[ReimbursementType] ([ID], [ParentID], [Name], [Comment], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (2, NULL, N'出差', N'', 0, '2015-07-18 18:53:39.553', 1, NULL, NULL)
+INSERT INTO [dbo].[ReimbursementType] ([ID], [ParentID], [Name], [Comment], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (3, NULL, N'物流费用', N'', 0, '2015-07-18 18:53:58.853', 1, NULL, NULL)
+INSERT INTO [dbo].[ReimbursementType] ([ID], [ParentID], [Name], [Comment], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (4, NULL, N'托管配送费', N'', 0, '2015-07-18 18:55:30.523', 1, NULL, NULL)
+INSERT INTO [dbo].[ReimbursementType] ([ID], [ParentID], [Name], [Comment], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (5, NULL, N'杂项', N'', 0, '2015-07-18 18:55:30.523', 1, NULL, NULL)
+SET IDENTITY_INSERT [dbo].[ReimbursementType] OFF
+ALTER TABLE [dbo].[ReimbursementDetail] WITH NOCHECK ADD CONSTRAINT [FK_ReimbursementDetail_ReimbursementTypeChildID] FOREIGN KEY ([ReimbursementTypeChildID]) REFERENCES [dbo].[ReimbursementType] ([ID])
+ALTER TABLE [dbo].[ReimbursementDetail] WITH NOCHECK ADD CONSTRAINT [FK_ReimbursementDetail_ReimbursementTypeID] FOREIGN KEY ([ReimbursementTypeID]) REFERENCES [dbo].[ReimbursementType] ([ID])
+COMMIT TRANSACTION
+GO
+---- end --- 07/17/2015 -- 初始化(报销类型) -- by Nwang
+
+
+---- start --- 07/20/2015 -- 初始化(每月现金流量情况表) -- by Nwang
+BEGIN TRANSACTION
+ALTER TABLE [dbo].[UserGroupPermission] DROP CONSTRAINT [FK_UserGroupPermission_PermissionID]
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (48, N'每月现金流量情况表', 0, 0, 0, 1, 0, 0, 0, '2015-07-15 12:22:12.867', NULL, NULL, NULL)
+ALTER TABLE [dbo].[UserGroupPermission] WITH NOCHECK ADD CONSTRAINT [FK_UserGroupPermission_PermissionID] FOREIGN KEY ([PermissionID]) REFERENCES [dbo].[Permission] ([ID])
+COMMIT TRANSACTION
+---- end --- 07/20/2015 -- 初始化(每月现金流量情况表) -- by Nwang

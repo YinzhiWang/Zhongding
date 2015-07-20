@@ -202,6 +202,10 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 首页-担保收款到期提醒
         /// </summary>
-        GuaranteeReceiptExpiredReminder = 47
+        GuaranteeReceiptExpiredReminder = 47,
+        /// <summary>
+        /// 每月现金流量情况表
+        /// </summary>
+        CashFlowReportManagement = 48
     }
 }

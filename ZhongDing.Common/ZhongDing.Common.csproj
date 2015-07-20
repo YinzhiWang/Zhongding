@@ -109,6 +109,7 @@
     <Compile Include="Enums\EProductCategory.cs" />
     <Compile Include="Enums\EQuarter.cs" />
     <Compile Include="Enums\EReceiverType.cs" />
+    <Compile Include="Enums\EReimbursementType.cs" />
     <Compile Include="Enums\ESaleOrderType.cs" />
     <Compile Include="Enums\ESalesPlanType.cs" />
     <Compile Include="Enums\ESaleType.cs" />
@@ -120,6 +121,7 @@
     <Compile Include="Enums\LogEventType.cs" />
     <Compile Include="Enums\ETransportFeeType.cs" />
     <Compile Include="ExcelHelper.cs" />
+    <Compile Include="Extension\DateTimeExtension.cs" />
     <Compile Include="Extension\DecimalExtension.cs" />
     <Compile Include="Extension\IntExtension.cs" />
     <Compile Include="Extension\ObjectExtension.cs" />

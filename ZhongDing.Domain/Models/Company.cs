@@ -38,6 +38,14 @@ namespace ZhongDing.Domain.Models
             this.ClientAttachedInvoiceSettlement = new HashSet<ClientAttachedInvoiceSettlement>();
             this.ClientCautionMoney = new HashSet<ClientCautionMoney>();
             this.ClientSaleApplication = new HashSet<ClientSaleApplication>();
+            this.CashFlowClientRefundData = new HashSet<CashFlowClientRefundData>();
+            this.CashFlowDaBaoRefundData = new HashSet<CashFlowDaBaoRefundData>();
+            this.CashFlowInvoiceExpendData = new HashSet<CashFlowInvoiceExpendData>();
+            this.CashFlowInvoiceIncomeData = new HashSet<CashFlowInvoiceIncomeData>();
+            this.CashFlowPurchaseAmountData = new HashSet<CashFlowPurchaseAmountData>();
+            this.CashFlowRefundData = new HashSet<CashFlowRefundData>();
+            this.CashFlowSaleIncomeData = new HashSet<CashFlowSaleIncomeData>();
+            this.CashFlowShippingFeeData = new HashSet<CashFlowShippingFeeData>();
         }
     
         public int ID { get; set; }
@@ -85,5 +93,13 @@ namespace ZhongDing.Domain.Models
         public virtual ICollection<ClientAttachedInvoiceSettlement> ClientAttachedInvoiceSettlement { get; set; }
         public virtual ICollection<ClientCautionMoney> ClientCautionMoney { get; set; }
         public virtual ICollection<ClientSaleApplication> ClientSaleApplication { get; set; }
+        public virtual ICollection<CashFlowClientRefundData> CashFlowClientRefundData { get; set; }
+        public virtual ICollection<CashFlowDaBaoRefundData> CashFlowDaBaoRefundData { get; set; }
+        public virtual ICollection<CashFlowInvoiceExpendData> CashFlowInvoiceExpendData { get; set; }
+        public virtual ICollection<CashFlowInvoiceIncomeData> CashFlowInvoiceIncomeData { get; set; }
+        public virtual ICollection<CashFlowPurchaseAmountData> CashFlowPurchaseAmountData { get; set; }
+        public virtual ICollection<CashFlowRefundData> CashFlowRefundData { get; set; }
+        public virtual ICollection<CashFlowSaleIncomeData> CashFlowSaleIncomeData { get; set; }
+        public virtual ICollection<CashFlowShippingFeeData> CashFlowShippingFeeData { get; set; }
     }
 }

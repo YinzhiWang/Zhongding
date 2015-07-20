@@ -33,8 +33,10 @@ namespace ZhongDing.Common
         private static readonly string CONFIGKEY_UPLOADFILEPATH_STOCKINDATA = "UploadFilePath.StockInData";
         private static readonly string CONFIGKEY_UPLOADFILEPATH_CLIENTSALEAPPLICATIONDATA = "UploadFilePath.ClientSaleApplication";
         private static readonly string CONFIGKEY_UPLOADFILEPATH_BORROWMONEY = "UploadFilePath.BorrowMoney";
-
+        private static readonly string CONFIGKEY_UPLOADFILEPATH_CASHFLOW = "UploadFilePath.CashFlow";
         
+
+
 
 
 
@@ -75,6 +77,17 @@ namespace ZhongDing.Common
         /// 计算银行卡余额服务运行的开始时间  间隔
         /// </summary>
         private static readonly string CONFIGKEY_CALCULATEBANKACCOUNTBALANCE_SERVICE_INTERVAL = "CalculateBankAccountBalanceService.Interval";
+
+
+        /// <summary>
+        ///  每月现金流开始时间
+        /// </summary>
+        private static readonly string CONFIGKEY_CASHFLOWREPORTGENERATE_SERVICE_STARTTIME = "CashFlowReportGenerateService.StartTime";
+
+        /// <summary>
+        /// 每月现金流  间隔
+        /// </summary>
+        private static readonly string CONFIGKEY_CASHFLOWREPORTGENERATE_SERVICE_INTERVAL = "CashFlowReportGenerateService.Interval";
 
 
 
@@ -273,7 +286,7 @@ namespace ZhongDing.Common
                 return ConfigurationManager.AppSettings[CONFIGKEY_UPLOADFILEPATH_PROCUREORDERDATA];
             }
         }
-        
+
         /// <summary>
         /// 借款管理 附件
         /// </summary>
@@ -285,7 +298,7 @@ namespace ZhongDing.Common
                 return ConfigurationManager.AppSettings[CONFIGKEY_UPLOADFILEPATH_BORROWMONEY];
             }
         }
-        
+
 
         /// <summary>
         /// 入库单 导入
@@ -309,6 +322,15 @@ namespace ZhongDing.Common
                 return ConfigurationManager.AppSettings[CONFIGKEY_UPLOADFILEPATH_CLIENTSALEAPPLICATIONDATA];
             }
         }
+        public static string UploadFilePathCashFlow
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[CONFIGKEY_UPLOADFILEPATH_CASHFLOW];
+            }
+        }
+
+        
         /// <summary>
         /// 密码恢复时格式长度
         /// </summary>
@@ -490,6 +512,41 @@ namespace ZhongDing.Common
             }
         }
 
+
+        /// <summary>
+        /// 每月现金流开始时间   运行间隔
+        /// </summary>
+        public static int CashFlowReportGenerateServiceInterval
+        {
+            get
+            {
+                var sInterval = ConfigurationManager.AppSettings[CONFIGKEY_CASHFLOWREPORTGENERATE_SERVICE_INTERVAL];
+
+                int iInerval;
+                if (int.TryParse(sInterval, out iInerval))
+                    return iInerval;
+                else
+                    return GlobalConst.WIN_SERVICE_DEFAULT_INTERVAl_HOUR;
+            }
+        }
+
+        /// <summary>
+        /// 每月现金流开始时间开始时间
+        /// </summary>
+        public static DateTime CashFlowReportGenerateServiceStartTime
+        {
+            get
+            {
+                try
+                {
+                    return DateTime.Parse(ConfigurationManager.AppSettings[CONFIGKEY_CASHFLOWREPORTGENERATE_SERVICE_STARTTIME]);
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
+        }
 
         /// <summary>
         /// 导入数据服务运行的周期

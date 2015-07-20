@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
@@ -27,5 +28,10 @@ namespace ZhongDing.Business.IRepositories
         /// <param name="totalRecords">总记录数.</param>
         /// <returns>IList{UIBankAccount}.</returns>
         IList<UIBankAccount> GetUIList(UISearchBankAccount uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
+        /// <summary>
+        /// 获取所有账余额
+        /// </summary>
+        /// <returns></returns>
+        decimal GetMoneyBalanceAll(DateTime month, EAccountType? accountType = null);
     }
 }

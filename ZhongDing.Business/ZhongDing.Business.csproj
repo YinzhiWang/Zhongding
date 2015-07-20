@@ -56,6 +56,7 @@
     <Compile Include="IRepositories\IAttachmentFileRepository.cs" />
     <Compile Include="IRepositories\IBankAccountBalanceHistoryRepository.cs" />
     <Compile Include="IRepositories\IBorrowMoneyRepository.cs" />
+    <Compile Include="IRepositories\ICashFlowHistoryRepository.cs" />
     <Compile Include="IRepositories\IClientCautionMoneyRepository.cs" />
     <Compile Include="IRepositories\IClientCautionMoneyReturnApplicationRepository.cs" />
     <Compile Include="IRepositories\IClientSaleApplicationImportDataRepository.cs" />
@@ -206,6 +207,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Repositories\BorrowMoneyRepository.cs" />
+    <Compile Include="Repositories\CashFlowHistoryRepository.cs" />
     <Compile Include="Repositories\CautionMoneyTypeRepository.cs" />
     <Compile Include="Repositories\CertificateRepository.cs" />
     <Compile Include="Repositories\CertificateTypeRepository.cs" />

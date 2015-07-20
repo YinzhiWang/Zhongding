@@ -295,6 +295,11 @@ namespace ZhongDing.Common.Enums
         ProcurePlanReportManage,
 
         /// <summary>
+        /// 现金流 报表
+        /// </summary>
+        CashFlowReportManage = 117,
+
+        /// <summary>
         /// 库存汇总表
         /// </summary>
         InventorySummaryReportManage = 107,

@@ -2712,6 +2712,8 @@
     <Content Include="Views\Reminder\UserControls\CautionMoneyReminder.ascx" />
     <Content Include="Views\Reminder\UserControls\InventoryReminder.ascx" />
     <Content Include="Views\Reports\ClientSaleAppReportManagement.aspx" />
+    <Content Include="Views\Reports\CashFlowReportManagement.aspx" />
+    <Content Include="Views\Reports\CashFlowReportDetail.aspx" />
     <Content Include="Views\Reports\SupplierTaskReportManagement.aspx" />
     <Content Include="Views\Reports\DBClientSettlementReportManagement.aspx" />
     <Content Include="Views\Reports\DBClientQuarterlyAssessmentReport.aspx" />
@@ -3919,6 +3921,20 @@
     </Compile>
     <Compile Include="Views\Reports\ClientSaleAppReportManagement.aspx.designer.cs">
       <DependentUpon>ClientSaleAppReportManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\CashFlowReportManagement.aspx.cs">
+      <DependentUpon>CashFlowReportManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reports\CashFlowReportManagement.aspx.designer.cs">
+      <DependentUpon>CashFlowReportManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\CashFlowReportDetail.aspx.cs">
+      <DependentUpon>CashFlowReportDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reports\CashFlowReportDetail.aspx.designer.cs">
+      <DependentUpon>CashFlowReportDetail.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Reports\SupplierTaskReportManagement.aspx.cs">
       <DependentUpon>SupplierTaskReportManagement.aspx</DependentUpon>

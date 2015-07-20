@@ -197,6 +197,9 @@
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/DBClientSettlementReportManagement.aspx');">大包客户结算表</a></li>
                                     <li data-level="2" data-menuitemid="116" data-permissionname="供应商任务统计表" data-permissionoptionname="View">
                                         <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/SupplierTaskReportManagement.aspx');">供应商任务统计表</a></li>
+                                    <li data-level="2" data-menuitemid="117" data-permissionname="每月现金流量情况表" data-permissionoptionname="View">
+                                        <a href="javascript:void(0);" onclick="redirectToPage('Views/Reports/CashFlowReportManagement.aspx');">每月现金流量情况表</a></li>
+
 
 
                                 </ul>
@@ -371,7 +374,8 @@
                     44: "首页-供应商资料过期提醒",
                     45: "首页-货品过期提醒",
                     46: "首页-借款到期提醒",
-                    47: "首页-担保收款到期提醒"
+                    47: "首页-担保收款到期提醒",
+                    48: "每月现金流量情况表"
                 };
                 var EWorkflow = {
                     1: "采购订单",
@@ -718,7 +722,7 @@
             Width="300" Height="100">
         </telerik:RadNotification>
 
-        <telerik:RadWindowManager ID="radWindowManager" VisibleStatusbar="false" Width="600" Height="400"  ShowContentDuringLoad="false"
+        <telerik:RadWindowManager ID="radWindowManager" VisibleStatusbar="false" Width="600" Height="400" ShowContentDuringLoad="false"
             ReloadOnShow="true" EnableShadow="true" Overlay="true" IconUrl="~/Content/icons/16/edit.png"
             runat="server" Opacity="100" Behaviors="Close,Move,Resize,Maximize" Modal="true" OnClientBeforeShow="OnClientBeforeShow">
             <AlertTemplate>
