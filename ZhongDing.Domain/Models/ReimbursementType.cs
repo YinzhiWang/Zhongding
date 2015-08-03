@@ -15,6 +15,12 @@ namespace ZhongDing.Domain.Models
     [Serializable]
     public partial class ReimbursementType : IEntityExtendedProperty
     {
+        public ReimbursementType()
+        {
+            this.ReimbursementDetail = new HashSet<ReimbursementDetail>();
+            this.ReimbursementDetail1 = new HashSet<ReimbursementDetail>();
+        }
+    
         public int ID { get; set; }
         public string Name { get; set; }
         public string Comment { get; set; }
@@ -34,5 +40,8 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedOn { get { return true; } }
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
+    
+        public virtual ICollection<ReimbursementDetail> ReimbursementDetail { get; set; }
+        public virtual ICollection<ReimbursementDetail> ReimbursementDetail1 { get; set; }
     }
 }

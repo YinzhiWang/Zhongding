@@ -32,6 +32,8 @@
             this.btnImportData = new System.Windows.Forms.Button();
             this.btnClientSettleBonus = new System.Windows.Forms.Button();
             this.btn计算银行卡余额 = new System.Windows.Forms.Button();
+            this.btn权限判断测试 = new System.Windows.Forms.Button();
+            this.btn现金流计算 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnCalculateInventory
@@ -74,11 +76,33 @@
             this.btn计算银行卡余额.UseVisualStyleBackColor = true;
             this.btn计算银行卡余额.Click += new System.EventHandler(this.btn计算银行卡余额_Click);
             // 
+            // btn权限判断测试
+            // 
+            this.btn权限判断测试.Location = new System.Drawing.Point(12, 207);
+            this.btn权限判断测试.Name = "btn权限判断测试";
+            this.btn权限判断测试.Size = new System.Drawing.Size(152, 23);
+            this.btn权限判断测试.TabIndex = 3;
+            this.btn权限判断测试.Text = "权限判断测试";
+            this.btn权限判断测试.UseVisualStyleBackColor = true;
+            this.btn权限判断测试.Click += new System.EventHandler(this.btn权限判断测试_Click);
+            // 
+            // btn现金流计算
+            // 
+            this.btn现金流计算.Location = new System.Drawing.Point(12, 253);
+            this.btn现金流计算.Name = "btn现金流计算";
+            this.btn现金流计算.Size = new System.Drawing.Size(152, 23);
+            this.btn现金流计算.TabIndex = 4;
+            this.btn现金流计算.Text = "现金流计算";
+            this.btn现金流计算.UseVisualStyleBackColor = true;
+            this.btn现金流计算.Click += new System.EventHandler(this.btn现金流计算_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 283);
+            this.ClientSize = new System.Drawing.Size(439, 297);
+            this.Controls.Add(this.btn现金流计算);
+            this.Controls.Add(this.btn权限判断测试);
             this.Controls.Add(this.btn计算银行卡余额);
             this.Controls.Add(this.btnClientSettleBonus);
             this.Controls.Add(this.btnImportData);
@@ -95,6 +119,8 @@
         private System.Windows.Forms.Button btnImportData;
         private System.Windows.Forms.Button btnClientSettleBonus;
         private System.Windows.Forms.Button btn计算银行卡余额;
+        private System.Windows.Forms.Button btn权限判断测试;
+        private System.Windows.Forms.Button btn现金流计算;
     }
 }
 

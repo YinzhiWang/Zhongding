@@ -21,7 +21,8 @@ namespace ZhongDing.Common
         }
         /// <summary>        
         /// 是否有T这个值        
-        /// bool canRead = permissions.Has(PermissionTypes.Read);        
+        /// value = Create/Edit/Delete
+        /// type=需要被判断的 数据
         /// </summary>        
         /// <typeparam name="T"></typeparam>        
         /// <param name="type"></param>        
@@ -46,7 +47,7 @@ namespace ZhongDing.Common
         /// <param name="type"></param>        
         /// <param name="value"></param>        
         /// <returns></returns>        
-        public static bool IsEquals<T>(EPermissionOption type, EPermissionOption value)
+        public static bool IsEquals(EPermissionOption type, EPermissionOption value)
         {
             try
             {
@@ -65,7 +66,7 @@ namespace ZhongDing.Common
         /// <param name="type"></param>        
         /// <param name="value"></param>        
         /// <returns></returns>        
-        public static EPermissionOption AddRight<T>(EPermissionOption type, EPermissionOption value)
+        public static EPermissionOption AddRight(EPermissionOption type, EPermissionOption value)
         {
             try
             {
@@ -93,6 +94,36 @@ namespace ZhongDing.Common
             {
                 throw ex;
             }
+        }
+
+        public static string ConvertToString(EPermissionOption type)
+        {
+            StringBuilder sb = new StringBuilder();
+            if (HasRight(type, EPermissionOption.Create))
+            {
+                sb.Append("Create;");
+            }
+            if (HasRight(type, EPermissionOption.Delete))
+            {
+                sb.Append("Delete;");
+            }
+            if (HasRight(type, EPermissionOption.Edit))
+            {
+                sb.Append("Edit;");
+            }
+            if (HasRight(type, EPermissionOption.Export))
+            {
+                sb.Append("Export;");
+            }
+            if (HasRight(type, EPermissionOption.Print))
+            {
+                sb.Append("Print;");
+            }
+            if (HasRight(type, EPermissionOption.View))
+            {
+                sb.Append("View;");
+            }
+            return sb.ToString();
         }
     }
 }

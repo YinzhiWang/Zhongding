@@ -2589,6 +2589,10 @@
     <Content Include="Views\Basics\ClientInfoProductFlowManagement.aspx" />
     <Content Include="Views\Basics\BorrowMoneyMaintenance.aspx" />
     <Content Include="Views\Basics\BorrowMoneyManagement.aspx" />
+    <Content Include="Views\Basics\Editors\ReimbursementDetailMaintenance.aspx" />
+    <Content Include="Views\Basics\ReimbursementMaintenance.aspx" />
+    <Content Include="Views\Basics\ReimbursementManagement.aspx" />
+    <Content Include="Views\Basics\Editors\SupplierContactMaintain.aspx" />
     <Content Include="Views\Basics\FixedAssetsMaintenance.aspx" />
     <Content Include="Views\Basics\FixedAssetsManagement.aspx" />
     <Content Include="Views\Basics\ReimbursementTypeChildMaintenance.aspx" />
@@ -2699,7 +2703,17 @@
     <Content Include="Views\Refunds\SupplierRefundManagement.aspx" />
     <Content Include="Views\Refunds\SupplierTaskRefundMaintenance.aspx" />
     <Content Include="Views\Refunds\SupplierTaskRefundManagement.aspx" />
+    <Content Include="Views\Reminder\UserControls\ProductInfoExpiredReminder.ascx" />
+    <Content Include="Views\Reminder\UserControls\ClientInfoReminder.ascx" />
+    <Content Include="Views\Reminder\UserControls\SupplierInfoReminder.ascx" />
+    <Content Include="Views\Reminder\UserControls\ProductExpiredReminder.ascx" />
+    <Content Include="Views\Reminder\UserControls\BorrowMoneyExpiredReminder.ascx" />
+    <Content Include="Views\Reminder\UserControls\GuaranteeReceiptExpiredReminder.ascx" />
+    <Content Include="Views\Reminder\UserControls\CautionMoneyReminder.ascx" />
+    <Content Include="Views\Reminder\UserControls\InventoryReminder.ascx" />
     <Content Include="Views\Reports\ClientSaleAppReportManagement.aspx" />
+    <Content Include="Views\Reports\CashFlowReportManagement.aspx" />
+    <Content Include="Views\Reports\CashFlowReportDetail.aspx" />
     <Content Include="Views\Reports\SupplierTaskReportManagement.aspx" />
     <Content Include="Views\Reports\DBClientSettlementReportManagement.aspx" />
     <Content Include="Views\Reports\DBClientQuarterlyAssessmentReport.aspx" />
@@ -2716,6 +2730,10 @@
     <Content Include="Views\Sales\ClientSaleAppManagement.aspx" />
     <Content Include="Views\Sales\ClientSaleAppStockOutMaintenance.aspx" />
     <Content Include="Views\Sales\ClientSaleAppStockOutManagement.aspx" />
+    <Content Include="Views\Sales\Editors\GuaranteeLogManagement.aspx" />
+    <Content Include="Views\Sales\Editors\GuaranteeReceiptSettle.aspx" />
+    <Content Include="Views\Sales\GuaranteeReceiptManagement.aspx" />
+    <Content Include="Views\Sales\NeedGuaranteeReceiptAppManagement.aspx" />
     <Content Include="Views\Sales\DBAppMaintenance.aspx" />
     <Content Include="Views\Sales\DBAppManagement.aspx" />
     <Content Include="Views\Sales\DBAppRequestMaintenance.aspx" />
@@ -2846,6 +2864,9 @@
       <DependentUpon>Register.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Extensions\BaseUserControl.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
     <Compile Include="NoAccess.aspx.cs">
       <DependentUpon>NoAccess.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -3022,6 +3043,34 @@
     </Compile>
     <Compile Include="Views\Basics\BorrowMoneyManagement.aspx.designer.cs">
       <DependentUpon>BorrowMoneyManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\Editors\ReimbursementDetailMaintenance.aspx.cs">
+      <DependentUpon>ReimbursementDetailMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\Editors\ReimbursementDetailMaintenance.aspx.designer.cs">
+      <DependentUpon>ReimbursementDetailMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\ReimbursementMaintenance.aspx.cs">
+      <DependentUpon>ReimbursementMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\ReimbursementMaintenance.aspx.designer.cs">
+      <DependentUpon>ReimbursementMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\ReimbursementManagement.aspx.cs">
+      <DependentUpon>ReimbursementManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\ReimbursementManagement.aspx.designer.cs">
+      <DependentUpon>ReimbursementManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\Editors\SupplierContactMaintain.aspx.cs">
+      <DependentUpon>SupplierContactMaintain.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\Editors\SupplierContactMaintain.aspx.designer.cs">
+      <DependentUpon>SupplierContactMaintain.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Basics\FixedAssetsMaintenance.aspx.cs">
       <DependentUpon>FixedAssetsMaintenance.aspx</DependentUpon>
@@ -3807,12 +3856,85 @@
     <Compile Include="Views\Refunds\SupplierTaskRefundManagement.aspx.designer.cs">
       <DependentUpon>SupplierTaskRefundManagement.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Views\Reminder\UserControls\BaseReminder.cs">
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reminder\UserControls\ProductInfoExpiredReminder.ascx.cs">
+      <DependentUpon>ProductInfoExpiredReminder.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reminder\UserControls\ProductInfoExpiredReminder.ascx.designer.cs">
+      <DependentUpon>ProductInfoExpiredReminder.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reminder\UserControls\ClientInfoReminder.ascx.cs">
+      <DependentUpon>ClientInfoReminder.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reminder\UserControls\ClientInfoReminder.ascx.designer.cs">
+      <DependentUpon>ClientInfoReminder.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reminder\UserControls\SupplierInfoReminder.ascx.cs">
+      <DependentUpon>SupplierInfoReminder.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reminder\UserControls\SupplierInfoReminder.ascx.designer.cs">
+      <DependentUpon>SupplierInfoReminder.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reminder\UserControls\ProductExpiredReminder.ascx.cs">
+      <DependentUpon>ProductExpiredReminder.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reminder\UserControls\ProductExpiredReminder.ascx.designer.cs">
+      <DependentUpon>ProductExpiredReminder.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reminder\UserControls\BorrowMoneyExpiredReminder.ascx.cs">
+      <DependentUpon>BorrowMoneyExpiredReminder.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reminder\UserControls\BorrowMoneyExpiredReminder.ascx.designer.cs">
+      <DependentUpon>BorrowMoneyExpiredReminder.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reminder\UserControls\GuaranteeReceiptExpiredReminder.ascx.cs">
+      <DependentUpon>GuaranteeReceiptExpiredReminder.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reminder\UserControls\GuaranteeReceiptExpiredReminder.ascx.designer.cs">
+      <DependentUpon>GuaranteeReceiptExpiredReminder.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reminder\UserControls\CautionMoneyReminder.ascx.cs">
+      <DependentUpon>CautionMoneyReminder.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reminder\UserControls\CautionMoneyReminder.ascx.designer.cs">
+      <DependentUpon>CautionMoneyReminder.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reminder\UserControls\InventoryReminder.ascx.cs">
+      <DependentUpon>InventoryReminder.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reminder\UserControls\InventoryReminder.ascx.designer.cs">
+      <DependentUpon>InventoryReminder.ascx</DependentUpon>
+    </Compile>
     <Compile Include="Views\Reports\ClientSaleAppReportManagement.aspx.cs">
       <DependentUpon>ClientSaleAppReportManagement.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Views\Reports\ClientSaleAppReportManagement.aspx.designer.cs">
       <DependentUpon>ClientSaleAppReportManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\CashFlowReportManagement.aspx.cs">
+      <DependentUpon>CashFlowReportManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reports\CashFlowReportManagement.aspx.designer.cs">
+      <DependentUpon>CashFlowReportManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reports\CashFlowReportDetail.aspx.cs">
+      <DependentUpon>CashFlowReportDetail.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Reports\CashFlowReportDetail.aspx.designer.cs">
+      <DependentUpon>CashFlowReportDetail.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Reports\SupplierTaskReportManagement.aspx.cs">
       <DependentUpon>SupplierTaskReportManagement.aspx</DependentUpon>
@@ -3925,6 +4047,34 @@
     </Compile>
     <Compile Include="Views\Sales\ClientSaleAppStockOutManagement.aspx.designer.cs">
       <DependentUpon>ClientSaleAppStockOutManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sales\Editors\GuaranteeLogManagement.aspx.cs">
+      <DependentUpon>GuaranteeLogManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Sales\Editors\GuaranteeLogManagement.aspx.designer.cs">
+      <DependentUpon>GuaranteeLogManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sales\Editors\GuaranteeReceiptSettle.aspx.cs">
+      <DependentUpon>GuaranteeReceiptSettle.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Sales\Editors\GuaranteeReceiptSettle.aspx.designer.cs">
+      <DependentUpon>GuaranteeReceiptSettle.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sales\GuaranteeReceiptManagement.aspx.cs">
+      <DependentUpon>GuaranteeReceiptManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Sales\GuaranteeReceiptManagement.aspx.designer.cs">
+      <DependentUpon>GuaranteeReceiptManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Sales\NeedGuaranteeReceiptAppManagement.aspx.cs">
+      <DependentUpon>NeedGuaranteeReceiptAppManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Sales\NeedGuaranteeReceiptAppManagement.aspx.designer.cs">
+      <DependentUpon>NeedGuaranteeReceiptAppManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Sales\DBAppMaintenance.aspx.cs">
       <DependentUpon>DBAppMaintenance.aspx</DependentUpon>
@@ -4111,7 +4261,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
-      <UserProperties UseJQuerySupport="True" UseAjaxifiedTemplates="True" />
+      <UserProperties UseAjaxifiedTemplates="True" UseJQuerySupport="True" />
     </VisualStudio>
   </ProjectExtensions>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

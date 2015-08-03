@@ -39,5 +39,7 @@ namespace ZhongDing.Business.IRepositories
         IList<UIClientSaleAppPayment> GetPayments(UISearchApplicationPayment uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
 
 
+
+        decimal GetTotalAmount(List<int> selectedIDs);
     }
 }

@@ -89,5 +89,21 @@ namespace ZhongDing.Business.IRepositories
 
         IList<UISupplierTaskReport> GetSupplierTaskReport(UISearchSupplierTaskReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
         IList<UISupplierTaskReport> GetSupplierTaskReport(UISearchSupplierTaskReport uiSearchObj);
+
+        /// <summary>
+        /// 每月现金流量表
+        /// </summary>
+        /// <param name="uiSearchObj"></param>
+        /// <param name="pageIndex"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="totalRecords"></param>
+        /// <returns></returns>
+        IList<UICashFlowReport> GetCashFlowReport(UISearchCashFlowReport uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
+        /// <summary>
+        /// 获取现金流表 详情
+        /// </summary>
+        /// <param name="uiSearchObj"></param>
+        /// <returns></returns>
+        IList<CashFlowRowItem> GetCashFlowReportDetail(UISearchCashFlowReportDetail uiSearchObj);
     }
 }

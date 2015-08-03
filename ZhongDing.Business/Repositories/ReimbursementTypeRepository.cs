@@ -57,5 +57,39 @@ namespace ZhongDing.Business.Repositories
 
             return uiWarehouses;
         }
+
+        public IList<UIDropdownItem> GetDropdownItems(Domain.UISearchObjects.UISearchDropdownItem uiSearchObj = null)
+        {
+            IList<UIDropdownItem> uiDropdownItems = new List<UIDropdownItem>();
+
+            List<Expression<Func<ReimbursementType, bool>>> whereFuncs = new List<Expression<Func<ReimbursementType, bool>>>();
+
+            if (uiSearchObj != null)
+            {
+                if (uiSearchObj.IncludeItemValues != null
+                    && uiSearchObj.IncludeItemValues.Count > 0)
+                    whereFuncs.Add(x => uiSearchObj.IncludeItemValues.Contains(x.ID));
+
+                if (uiSearchObj.Extension != null)
+                {
+                    if (uiSearchObj.Extension.ParentID.BiggerThanZero())
+                    {
+                        whereFuncs.Add(x => x.ParentID == uiSearchObj.Extension.ParentID);
+                    }
+                    else
+                    {
+                        whereFuncs.Add(x => x.ParentID == null);
+                    }
+                }
+            }
+
+            uiDropdownItems = GetList(whereFuncs).Select(x => new UIDropdownItem()
+            {
+                ItemValue = x.ID,
+                ItemText = x.Name
+            }).ToList();
+
+            return uiDropdownItems;
+        }
     }
 }

@@ -172,5 +172,21 @@ namespace ZhongDing.Domain.Models
         public DbSet<StorageLocation> StorageLocation { get; set; }
         public DbSet<SalarySettle> SalarySettle { get; set; }
         public DbSet<SalarySettleDetail> SalarySettleDetail { get; set; }
+        public DbSet<SupplierContact> SupplierContact { get; set; }
+        public DbSet<GuaranteeReceipt> GuaranteeReceipt { get; set; }
+        public DbSet<Reimbursement> Reimbursement { get; set; }
+        public DbSet<ReimbursementDetail> ReimbursementDetail { get; set; }
+        public DbSet<ReimbursementDetailTransportFee> ReimbursementDetailTransportFee { get; set; }
+        public DbSet<CashFlowHistory> CashFlowHistory { get; set; }
+        public DbSet<CashFlowBaseData> CashFlowBaseData { get; set; }
+        public DbSet<CashFlowClientRefundData> CashFlowClientRefundData { get; set; }
+        public DbSet<CashFlowDaBaoRefundData> CashFlowDaBaoRefundData { get; set; }
+        public DbSet<CashFlowDistributionCompanyData> CashFlowDistributionCompanyData { get; set; }
+        public DbSet<CashFlowInvoiceExpendData> CashFlowInvoiceExpendData { get; set; }
+        public DbSet<CashFlowInvoiceIncomeData> CashFlowInvoiceIncomeData { get; set; }
+        public DbSet<CashFlowPurchaseAmountData> CashFlowPurchaseAmountData { get; set; }
+        public DbSet<CashFlowRefundData> CashFlowRefundData { get; set; }
+        public DbSet<CashFlowSaleIncomeData> CashFlowSaleIncomeData { get; set; }
+        public DbSet<CashFlowShippingFeeData> CashFlowShippingFeeData { get; set; }
     }
 }

@@ -16,6 +16,17 @@
           <EntitySet Name="BankAccount" EntityType="DbModel.Store.BankAccount" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="BankAccountBalanceHistory" EntityType="DbModel.Store.BankAccountBalanceHistory" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="BorrowMoney" EntityType="DbModel.Store.BorrowMoney" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CashFlowBaseData" EntityType="DbModel.Store.CashFlowBaseData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CashFlowClientRefundData" EntityType="DbModel.Store.CashFlowClientRefundData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CashFlowDaBaoRefundData" EntityType="DbModel.Store.CashFlowDaBaoRefundData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CashFlowDistributionCompanyData" EntityType="DbModel.Store.CashFlowDistributionCompanyData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CashFlowHistory" EntityType="DbModel.Store.CashFlowHistory" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CashFlowInvoiceExpendData" EntityType="DbModel.Store.CashFlowInvoiceExpendData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CashFlowInvoiceIncomeData" EntityType="DbModel.Store.CashFlowInvoiceIncomeData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CashFlowPurchaseAmountData" EntityType="DbModel.Store.CashFlowPurchaseAmountData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CashFlowRefundData" EntityType="DbModel.Store.CashFlowRefundData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CashFlowSaleIncomeData" EntityType="DbModel.Store.CashFlowSaleIncomeData" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="CashFlowShippingFeeData" EntityType="DbModel.Store.CashFlowShippingFeeData" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CautionMoneyType" EntityType="DbModel.Store.CautionMoneyType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Certificate" EntityType="DbModel.Store.Certificate" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CertificateType" EntityType="DbModel.Store.CertificateType" store:Type="Tables" Schema="dbo" />
@@ -78,6 +89,7 @@
           <EntitySet Name="FixedAssets" EntityType="DbModel.Store.FixedAssets" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="FixedAssetsType" EntityType="DbModel.Store.FixedAssetsType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="GuaranteeLog" EntityType="DbModel.Store.GuaranteeLog" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="GuaranteeReceipt" EntityType="DbModel.Store.GuaranteeReceipt" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Hospital" EntityType="DbModel.Store.Hospital" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="HospitalType" EntityType="DbModel.Store.HospitalType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ImportDataType" EntityType="DbModel.Store.ImportDataType" store:Type="Tables" Schema="dbo" />
@@ -103,6 +115,9 @@
           <EntitySet Name="ProductDBPolicyPrice" EntityType="DbModel.Store.ProductDBPolicyPrice" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ProductHighPrice" EntityType="DbModel.Store.ProductHighPrice" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ProductSpecification" EntityType="DbModel.Store.ProductSpecification" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Reimbursement" EntityType="DbModel.Store.Reimbursement" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ReimbursementDetail" EntityType="DbModel.Store.ReimbursementDetail" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="ReimbursementDetailTransportFee" EntityType="DbModel.Store.ReimbursementDetailTransportFee" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="ReimbursementType" EntityType="DbModel.Store.ReimbursementType" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Roles" EntityType="DbModel.Store.Roles" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SalarySettle" EntityType="DbModel.Store.SalarySettle" store:Type="Tables" Schema="dbo" />
@@ -126,6 +141,7 @@
           <EntitySet Name="SupplierCautionMoney" EntityType="DbModel.Store.SupplierCautionMoney" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierCautionMoneyDeduction" EntityType="DbModel.Store.SupplierCautionMoneyDeduction" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierCertificate" EntityType="DbModel.Store.SupplierCertificate" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="SupplierContact" EntityType="DbModel.Store.SupplierContact" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierContract" EntityType="DbModel.Store.SupplierContract" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierContractFile" EntityType="DbModel.Store.SupplierContractFile" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="SupplierDeduction" EntityType="DbModel.Store.SupplierDeduction" store:Type="Tables" Schema="dbo" />
@@ -204,6 +220,78 @@
           <AssociationSet Name="FK_BankAccountBalanceHistory_BankAccountID" Association="DbModel.Store.FK_BankAccountBalanceHistory_BankAccountID">
             <End Role="BankAccount" EntitySet="BankAccount" />
             <End Role="BankAccountBalanceHistory" EntitySet="BankAccountBalanceHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowClientRefundData_CashFlowBaseDataID" Association="DbModel.Store.FK_CashFlowClientRefundData_CashFlowBaseDataID">
+            <End Role="CashFlowBaseData" EntitySet="CashFlowBaseData" />
+            <End Role="CashFlowClientRefundData" EntitySet="CashFlowClientRefundData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowClientRefundData_CompanyID" Association="DbModel.Store.FK_CashFlowClientRefundData_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CashFlowClientRefundData" EntitySet="CashFlowClientRefundData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowDaBaoRefundData_CashFlowBaseDataID" Association="DbModel.Store.FK_CashFlowDaBaoRefundData_CashFlowBaseDataID">
+            <End Role="CashFlowBaseData" EntitySet="CashFlowBaseData" />
+            <End Role="CashFlowDaBaoRefundData" EntitySet="CashFlowDaBaoRefundData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowDaBaoRefundData_CompanyID" Association="DbModel.Store.FK_CashFlowDaBaoRefundData_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CashFlowDaBaoRefundData" EntitySet="CashFlowDaBaoRefundData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowDistributionCompanyData_CashFlowBaseDataID" Association="DbModel.Store.FK_CashFlowDistributionCompanyData_CashFlowBaseDataID">
+            <End Role="CashFlowBaseData" EntitySet="CashFlowBaseData" />
+            <End Role="CashFlowDistributionCompanyData" EntitySet="CashFlowDistributionCompanyData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowDistributionCompanyData_DistributionCompanyID" Association="DbModel.Store.FK_CashFlowDistributionCompanyData_DistributionCompanyID">
+            <End Role="DistributionCompany" EntitySet="DistributionCompany" />
+            <End Role="CashFlowDistributionCompanyData" EntitySet="CashFlowDistributionCompanyData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowInvoiceExpendData_CashFlowBaseDataID" Association="DbModel.Store.FK_CashFlowInvoiceExpendData_CashFlowBaseDataID">
+            <End Role="CashFlowBaseData" EntitySet="CashFlowBaseData" />
+            <End Role="CashFlowInvoiceExpendData" EntitySet="CashFlowInvoiceExpendData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowInvoiceExpendData_CompanyID" Association="DbModel.Store.FK_CashFlowInvoiceExpendData_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CashFlowInvoiceExpendData" EntitySet="CashFlowInvoiceExpendData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowInvoiceIncomeData_CashFlowBaseDataID" Association="DbModel.Store.FK_CashFlowInvoiceIncomeData_CashFlowBaseDataID">
+            <End Role="CashFlowBaseData" EntitySet="CashFlowBaseData" />
+            <End Role="CashFlowInvoiceIncomeData" EntitySet="CashFlowInvoiceIncomeData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowInvoiceIncomeData_CompanyID" Association="DbModel.Store.FK_CashFlowInvoiceIncomeData_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CashFlowInvoiceIncomeData" EntitySet="CashFlowInvoiceIncomeData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowPurchaseAmountData_CashFlowBaseDataID" Association="DbModel.Store.FK_CashFlowPurchaseAmountData_CashFlowBaseDataID">
+            <End Role="CashFlowBaseData" EntitySet="CashFlowBaseData" />
+            <End Role="CashFlowPurchaseAmountData" EntitySet="CashFlowPurchaseAmountData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowPurchaseAmountData_CompanyID" Association="DbModel.Store.FK_CashFlowPurchaseAmountData_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CashFlowPurchaseAmountData" EntitySet="CashFlowPurchaseAmountData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowRefundData_CashFlowBaseDataID" Association="DbModel.Store.FK_CashFlowRefundData_CashFlowBaseDataID">
+            <End Role="CashFlowBaseData" EntitySet="CashFlowBaseData" />
+            <End Role="CashFlowRefundData" EntitySet="CashFlowRefundData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowRefundData_CompanyID" Association="DbModel.Store.FK_CashFlowRefundData_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CashFlowRefundData" EntitySet="CashFlowRefundData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowSaleIncomeData_CashFlowBaseDataID" Association="DbModel.Store.FK_CashFlowSaleIncomeData_CashFlowBaseDataID">
+            <End Role="CashFlowBaseData" EntitySet="CashFlowBaseData" />
+            <End Role="CashFlowSaleIncomeData" EntitySet="CashFlowSaleIncomeData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowSaleIncomeData_CompanyID" Association="DbModel.Store.FK_CashFlowSaleIncomeData_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CashFlowSaleIncomeData" EntitySet="CashFlowSaleIncomeData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowShippingFeeData_CashFlowBaseDataID" Association="DbModel.Store.FK_CashFlowShippingFeeData_CashFlowBaseDataID">
+            <End Role="CashFlowBaseData" EntitySet="CashFlowBaseData" />
+            <End Role="CashFlowShippingFeeData" EntitySet="CashFlowShippingFeeData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowShippingFeeData_CompanyID" Association="DbModel.Store.FK_CashFlowShippingFeeData_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CashFlowShippingFeeData" EntitySet="CashFlowShippingFeeData" />
           </AssociationSet>
           <AssociationSet Name="FK_Certificate_CertificateType" Association="DbModel.Store.FK_Certificate_CertificateType">
             <End Role="CertificateType" EntitySet="CertificateType" />
@@ -873,6 +961,14 @@
             <End Role="ClientSaleApplication" EntitySet="ClientSaleApplication" />
             <End Role="GuaranteeLog" EntitySet="GuaranteeLog" />
           </AssociationSet>
+          <AssociationSet Name="FK_GuaranteeLog_GuaranteeReceiptID" Association="DbModel.Store.FK_GuaranteeLog_GuaranteeReceiptID">
+            <End Role="GuaranteeReceipt" EntitySet="GuaranteeReceipt" />
+            <End Role="GuaranteeLog" EntitySet="GuaranteeLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GuaranteeReceipt_ApplicationPaymentID" Association="DbModel.Store.FK_GuaranteeReceipt_ApplicationPaymentID">
+            <End Role="ApplicationPayment" EntitySet="ApplicationPayment" />
+            <End Role="GuaranteeReceipt" EntitySet="GuaranteeReceipt" />
+          </AssociationSet>
           <AssociationSet Name="FK_ImportErrorLog_ImportFileLog" Association="DbModel.Store.FK_ImportErrorLog_ImportFileLog">
             <End Role="ImportFileLog" EntitySet="ImportFileLog" />
             <End Role="ImportErrorLog" EntitySet="ImportErrorLog" />
@@ -988,6 +1084,34 @@
           <AssociationSet Name="FK_ProductSpecification_UnitOfMeasurement" Association="DbModel.Store.FK_ProductSpecification_UnitOfMeasurement">
             <End Role="UnitOfMeasurement" EntitySet="UnitOfMeasurement" />
             <End Role="ProductSpecification" EntitySet="ProductSpecification" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reimbursement_DepartmentID" Association="DbModel.Store.FK_Reimbursement_DepartmentID">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Reimbursement" EntitySet="Reimbursement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reimbursement_WorkflowStatusID" Association="DbModel.Store.FK_Reimbursement_WorkflowStatusID">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="Reimbursement" EntitySet="Reimbursement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReimbursementDetail_ReimbursementID" Association="DbModel.Store.FK_ReimbursementDetail_ReimbursementID">
+            <End Role="Reimbursement" EntitySet="Reimbursement" />
+            <End Role="ReimbursementDetail" EntitySet="ReimbursementDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReimbursementDetail_ReimbursementTypeChildID" Association="DbModel.Store.FK_ReimbursementDetail_ReimbursementTypeChildID">
+            <End Role="ReimbursementType" EntitySet="ReimbursementType" />
+            <End Role="ReimbursementDetail" EntitySet="ReimbursementDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReimbursementDetail_ReimbursementTypeID" Association="DbModel.Store.FK_ReimbursementDetail_ReimbursementTypeID">
+            <End Role="ReimbursementType" EntitySet="ReimbursementType" />
+            <End Role="ReimbursementDetail" EntitySet="ReimbursementDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReimbursementDetailTransportFee_ReimbursementDetailID" Association="DbModel.Store.FK_ReimbursementDetailTransportFee_ReimbursementDetailID">
+            <End Role="ReimbursementDetail" EntitySet="ReimbursementDetail" />
+            <End Role="ReimbursementDetailTransportFee" EntitySet="ReimbursementDetailTransportFee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReimbursementDetailTransportFee_TransportFeeID" Association="DbModel.Store.FK_ReimbursementDetailTransportFee_TransportFeeID">
+            <End Role="TransportFee" EntitySet="TransportFee" />
+            <End Role="ReimbursementDetailTransportFee" EntitySet="ReimbursementDetailTransportFee" />
           </AssociationSet>
           <AssociationSet Name="FK_Roles_aspnet_Roles" Association="DbModel.Store.FK_Roles_aspnet_Roles">
             <End Role="aspnet_Roles" EntitySet="aspnet_Roles" />
@@ -1180,6 +1304,10 @@
           <AssociationSet Name="FK_SupplierCertificate_Supplier" Association="DbModel.Store.FK_SupplierCertificate_Supplier">
             <End Role="Supplier" EntitySet="Supplier" />
             <End Role="SupplierCertificate" EntitySet="SupplierCertificate" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SupplierContact_SupplierID" Association="DbModel.Store.FK_SupplierContact_SupplierID">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="SupplierContact" EntitySet="SupplierContact" />
           </AssociationSet>
           <AssociationSet Name="FK_SupplierContract_Product" Association="DbModel.Store.FK_SupplierContract_Product">
             <End Role="Product" EntitySet="Product" />
@@ -1516,6 +1644,177 @@
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
           <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CashFlowBaseData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CashFlowDate" Type="datetime" Nullable="false" />
+          <Property Name="MoneyBalanceAll" Type="money" Nullable="false" />
+          <Property Name="MoneyBalancePersonal" Type="money" Nullable="false" />
+          <Property Name="MoneyBalanceCompany" Type="money" Nullable="false" />
+          <Property Name="AttachedModeIncome" Type="money" Nullable="false" />
+          <Property Name="SupplierCautionMoneyIncome" Type="money" Nullable="false" />
+          <Property Name="ClientCautionMoneyIncome" Type="money" Nullable="false" />
+          <Property Name="BorrowMoneyIncome" Type="money" Nullable="false" />
+          <Property Name="Salary" Type="money" Nullable="false" />
+          <Property Name="BusinessPercentage" Type="money" Nullable="false" />
+          <Property Name="Reward" Type="money" Nullable="false" />
+          <Property Name="Reimbursement" Type="money" Nullable="false" />
+          <Property Name="BorrowMoney" Type="money" Nullable="false" />
+          <Property Name="CautionMoneyPayToSupplier" Type="money" Nullable="false" />
+          <Property Name="CautionMoneyReturnToClient" Type="money" Nullable="false" />
+          <Property Name="ProductPromotionRebates" Type="money" Nullable="false" />
+          <Property Name="ManagedDistributionFee" Type="money" Nullable="false" />
+          <Property Name="Other" Type="money" Nullable="false" />
+          <Property Name="FMRefund" Type="money" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="DaBaoRefund" Type="money" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CashFlowClientRefundData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CashFlowBaseDataID" Type="int" Nullable="false" />
+          <Property Name="CompanyID" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="CashFlowDaBaoRefundData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CashFlowBaseDataID" Type="int" Nullable="false" />
+          <Property Name="CompanyID" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="CashFlowDistributionCompanyData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CashFlowBaseDataID" Type="int" Nullable="false" />
+          <Property Name="DistributionCompanyID" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="CashFlowHistory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CashFlowDate" Type="datetime" Nullable="false" />
+          <Property Name="CashFlowFileName" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="FilePath" Type="nvarchar" Nullable="false" MaxLength="256" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="CashFlowInvoiceExpendData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CashFlowBaseDataID" Type="int" Nullable="false" />
+          <Property Name="CompanyID" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="CashFlowInvoiceIncomeData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CashFlowBaseDataID" Type="int" Nullable="false" />
+          <Property Name="CompanyID" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="CashFlowPurchaseAmountData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CashFlowBaseDataID" Type="int" Nullable="false" />
+          <Property Name="CompanyID" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="CashFlowRefundData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CashFlowBaseDataID" Type="int" Nullable="false" />
+          <Property Name="CompanyID" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="CashFlowSaleIncomeData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CashFlowBaseDataID" Type="int" Nullable="false" />
+          <Property Name="CompanyID" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="CashFlowShippingFeeData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CashFlowBaseDataID" Type="int" Nullable="false" />
+          <Property Name="CompanyID" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
         </EntityType>
         <EntityType Name="CautionMoneyType">
           <Key>
@@ -2592,11 +2891,27 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="GuaranteeReceiptID" Type="int" Nullable="false" />
           <Property Name="ClientSaleApplicationID" Type="int" Nullable="false" />
           <Property Name="GuaranteeAmount" Type="money" />
           <Property Name="Guaranteeby" Type="int" />
           <Property Name="GuaranteeExpirationDate" Type="datetime" />
           <Property Name="IsReceipted" Type="bit" Nullable="false" />
+          <Property Name="GuaranteeReceiptDate" Type="datetime" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="GuaranteeReceipt">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ReceiptDate" Type="datetime" Nullable="false" />
+          <Property Name="ReceiptAmount" Type="money" Nullable="false" />
+          <Property Name="ApplicationPaymentID" Type="int" Nullable="false" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
@@ -2927,6 +3242,56 @@
           <Property Name="LastModifiedOn" Type="datetime" />
           <Property Name="LastModifiedBy" Type="int" />
           <Property Name="LicenseNumber" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Reimbursement">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentID" Type="int" />
+          <Property Name="ApplyDate" Type="datetime" Nullable="false" />
+          <Property Name="WorkflowStatusID" Type="int" Nullable="false" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+          <Property Name="PaidBy" Type="int" />
+          <Property Name="PaidDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ReimbursementDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ReimbursementID" Type="int" Nullable="false" />
+          <Property Name="ReimbursementTypeID" Type="int" Nullable="false" />
+          <Property Name="ReimbursementTypeChildID" Type="int" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="1024" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="ReimbursementDetailTransportFee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ReimbursementDetailID" Type="int" Nullable="false" />
+          <Property Name="TransportFeeID" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="money" Nullable="false" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="256" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
         </EntityType>
         <EntityType Name="ReimbursementType">
           <Key>
@@ -3323,6 +3688,22 @@
           <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="SupplierID" Type="int" Nullable="false" />
           <Property Name="CertificateID" Type="int" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="CreatedBy" Type="int" />
+          <Property Name="LastModifiedOn" Type="datetime" />
+          <Property Name="LastModifiedBy" Type="int" />
+        </EntityType>
+        <EntityType Name="SupplierContact">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="SupplierID" Type="int" Nullable="false" />
+          <Property Name="ContactName" Type="nvarchar" MaxLength="50" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="Address" Type="nvarchar" MaxLength="255" />
+          <Property Name="Comment" Type="nvarchar" MaxLength="255" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="CreatedOn" Type="datetime" Nullable="false" />
           <Property Name="CreatedBy" Type="int" />
@@ -3894,6 +4275,222 @@
             </Principal>
             <Dependent Role="BankAccountBalanceHistory">
               <PropertyRef Name="BankAccountID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowClientRefundData_CashFlowBaseDataID">
+          <End Role="CashFlowBaseData" Type="DbModel.Store.CashFlowBaseData" Multiplicity="1" />
+          <End Role="CashFlowClientRefundData" Type="DbModel.Store.CashFlowClientRefundData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashFlowBaseData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowClientRefundData">
+              <PropertyRef Name="CashFlowBaseDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowClientRefundData_CompanyID">
+          <End Role="Company" Type="DbModel.Store.Company" Multiplicity="1" />
+          <End Role="CashFlowClientRefundData" Type="DbModel.Store.CashFlowClientRefundData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowClientRefundData">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowDaBaoRefundData_CashFlowBaseDataID">
+          <End Role="CashFlowBaseData" Type="DbModel.Store.CashFlowBaseData" Multiplicity="1" />
+          <End Role="CashFlowDaBaoRefundData" Type="DbModel.Store.CashFlowDaBaoRefundData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashFlowBaseData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowDaBaoRefundData">
+              <PropertyRef Name="CashFlowBaseDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowDaBaoRefundData_CompanyID">
+          <End Role="Company" Type="DbModel.Store.Company" Multiplicity="1" />
+          <End Role="CashFlowDaBaoRefundData" Type="DbModel.Store.CashFlowDaBaoRefundData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowDaBaoRefundData">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowDistributionCompanyData_CashFlowBaseDataID">
+          <End Role="CashFlowBaseData" Type="DbModel.Store.CashFlowBaseData" Multiplicity="1" />
+          <End Role="CashFlowDistributionCompanyData" Type="DbModel.Store.CashFlowDistributionCompanyData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashFlowBaseData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowDistributionCompanyData">
+              <PropertyRef Name="CashFlowBaseDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowDistributionCompanyData_DistributionCompanyID">
+          <End Role="DistributionCompany" Type="DbModel.Store.DistributionCompany" Multiplicity="1" />
+          <End Role="CashFlowDistributionCompanyData" Type="DbModel.Store.CashFlowDistributionCompanyData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCompany">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowDistributionCompanyData">
+              <PropertyRef Name="DistributionCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowInvoiceExpendData_CashFlowBaseDataID">
+          <End Role="CashFlowBaseData" Type="DbModel.Store.CashFlowBaseData" Multiplicity="1" />
+          <End Role="CashFlowInvoiceExpendData" Type="DbModel.Store.CashFlowInvoiceExpendData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashFlowBaseData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowInvoiceExpendData">
+              <PropertyRef Name="CashFlowBaseDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowInvoiceExpendData_CompanyID">
+          <End Role="Company" Type="DbModel.Store.Company" Multiplicity="1" />
+          <End Role="CashFlowInvoiceExpendData" Type="DbModel.Store.CashFlowInvoiceExpendData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowInvoiceExpendData">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowInvoiceIncomeData_CashFlowBaseDataID">
+          <End Role="CashFlowBaseData" Type="DbModel.Store.CashFlowBaseData" Multiplicity="1" />
+          <End Role="CashFlowInvoiceIncomeData" Type="DbModel.Store.CashFlowInvoiceIncomeData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashFlowBaseData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowInvoiceIncomeData">
+              <PropertyRef Name="CashFlowBaseDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowInvoiceIncomeData_CompanyID">
+          <End Role="Company" Type="DbModel.Store.Company" Multiplicity="1" />
+          <End Role="CashFlowInvoiceIncomeData" Type="DbModel.Store.CashFlowInvoiceIncomeData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowInvoiceIncomeData">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowPurchaseAmountData_CashFlowBaseDataID">
+          <End Role="CashFlowBaseData" Type="DbModel.Store.CashFlowBaseData" Multiplicity="1" />
+          <End Role="CashFlowPurchaseAmountData" Type="DbModel.Store.CashFlowPurchaseAmountData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashFlowBaseData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowPurchaseAmountData">
+              <PropertyRef Name="CashFlowBaseDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowPurchaseAmountData_CompanyID">
+          <End Role="Company" Type="DbModel.Store.Company" Multiplicity="1" />
+          <End Role="CashFlowPurchaseAmountData" Type="DbModel.Store.CashFlowPurchaseAmountData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowPurchaseAmountData">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowRefundData_CashFlowBaseDataID">
+          <End Role="CashFlowBaseData" Type="DbModel.Store.CashFlowBaseData" Multiplicity="1" />
+          <End Role="CashFlowRefundData" Type="DbModel.Store.CashFlowRefundData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashFlowBaseData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowRefundData">
+              <PropertyRef Name="CashFlowBaseDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowRefundData_CompanyID">
+          <End Role="Company" Type="DbModel.Store.Company" Multiplicity="1" />
+          <End Role="CashFlowRefundData" Type="DbModel.Store.CashFlowRefundData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowRefundData">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowSaleIncomeData_CashFlowBaseDataID">
+          <End Role="CashFlowBaseData" Type="DbModel.Store.CashFlowBaseData" Multiplicity="1" />
+          <End Role="CashFlowSaleIncomeData" Type="DbModel.Store.CashFlowSaleIncomeData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashFlowBaseData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowSaleIncomeData">
+              <PropertyRef Name="CashFlowBaseDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowSaleIncomeData_CompanyID">
+          <End Role="Company" Type="DbModel.Store.Company" Multiplicity="1" />
+          <End Role="CashFlowSaleIncomeData" Type="DbModel.Store.CashFlowSaleIncomeData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowSaleIncomeData">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowShippingFeeData_CashFlowBaseDataID">
+          <End Role="CashFlowBaseData" Type="DbModel.Store.CashFlowBaseData" Multiplicity="1" />
+          <End Role="CashFlowShippingFeeData" Type="DbModel.Store.CashFlowShippingFeeData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashFlowBaseData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowShippingFeeData">
+              <PropertyRef Name="CashFlowBaseDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowShippingFeeData_CompanyID">
+          <End Role="Company" Type="DbModel.Store.Company" Multiplicity="1" />
+          <End Role="CashFlowShippingFeeData" Type="DbModel.Store.CashFlowShippingFeeData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowShippingFeeData">
+              <PropertyRef Name="CompanyID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -5901,6 +6498,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_GuaranteeLog_GuaranteeReceiptID">
+          <End Role="GuaranteeReceipt" Type="DbModel.Store.GuaranteeReceipt" Multiplicity="1" />
+          <End Role="GuaranteeLog" Type="DbModel.Store.GuaranteeLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GuaranteeReceipt">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GuaranteeLog">
+              <PropertyRef Name="GuaranteeReceiptID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GuaranteeReceipt_ApplicationPaymentID">
+          <End Role="ApplicationPayment" Type="DbModel.Store.ApplicationPayment" Multiplicity="1" />
+          <End Role="GuaranteeReceipt" Type="DbModel.Store.GuaranteeReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationPayment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GuaranteeReceipt">
+              <PropertyRef Name="ApplicationPaymentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ImportErrorLog_ImportFileLog">
           <End Role="ImportFileLog" Type="DbModel.Store.ImportFileLog" Multiplicity="1" />
           <End Role="ImportErrorLog" Type="DbModel.Store.ImportErrorLog" Multiplicity="*" />
@@ -6246,6 +6867,90 @@
             </Principal>
             <Dependent Role="ProductSpecification">
               <PropertyRef Name="UnitOfMeasurementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reimbursement_DepartmentID">
+          <End Role="Department" Type="DbModel.Store.Department" Multiplicity="0..1" />
+          <End Role="Reimbursement" Type="DbModel.Store.Reimbursement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reimbursement">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reimbursement_WorkflowStatusID">
+          <End Role="WorkflowStatus" Type="DbModel.Store.WorkflowStatus" Multiplicity="1" />
+          <End Role="Reimbursement" Type="DbModel.Store.Reimbursement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reimbursement">
+              <PropertyRef Name="WorkflowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReimbursementDetail_ReimbursementID">
+          <End Role="Reimbursement" Type="DbModel.Store.Reimbursement" Multiplicity="1" />
+          <End Role="ReimbursementDetail" Type="DbModel.Store.ReimbursementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reimbursement">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReimbursementDetail">
+              <PropertyRef Name="ReimbursementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReimbursementDetail_ReimbursementTypeChildID">
+          <End Role="ReimbursementType" Type="DbModel.Store.ReimbursementType" Multiplicity="0..1" />
+          <End Role="ReimbursementDetail" Type="DbModel.Store.ReimbursementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReimbursementType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReimbursementDetail">
+              <PropertyRef Name="ReimbursementTypeChildID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReimbursementDetail_ReimbursementTypeID">
+          <End Role="ReimbursementType" Type="DbModel.Store.ReimbursementType" Multiplicity="1" />
+          <End Role="ReimbursementDetail" Type="DbModel.Store.ReimbursementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReimbursementType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReimbursementDetail">
+              <PropertyRef Name="ReimbursementTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReimbursementDetailTransportFee_ReimbursementDetailID">
+          <End Role="ReimbursementDetail" Type="DbModel.Store.ReimbursementDetail" Multiplicity="1" />
+          <End Role="ReimbursementDetailTransportFee" Type="DbModel.Store.ReimbursementDetailTransportFee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReimbursementDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReimbursementDetailTransportFee">
+              <PropertyRef Name="ReimbursementDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReimbursementDetailTransportFee_TransportFeeID">
+          <End Role="TransportFee" Type="DbModel.Store.TransportFee" Multiplicity="1" />
+          <End Role="ReimbursementDetailTransportFee" Type="DbModel.Store.ReimbursementDetailTransportFee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransportFee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReimbursementDetailTransportFee">
+              <PropertyRef Name="TransportFeeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -6821,6 +7526,18 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="SupplierCertificate">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SupplierContact_SupplierID">
+          <End Role="Supplier" Type="DbModel.Store.Supplier" Multiplicity="1" />
+          <End Role="SupplierContact" Type="DbModel.Store.SupplierContact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierContact">
               <PropertyRef Name="SupplierID" />
             </Dependent>
           </ReferentialConstraint>
@@ -8709,6 +9426,134 @@
             <End Role="Users" EntitySet="Users" />
             <End Role="SalarySettleDetail" EntitySet="SalarySettleDetail" />
           </AssociationSet>
+          <EntitySet Name="SupplierContact" EntityType="DbModel.SupplierContact" />
+          <AssociationSet Name="FK_SupplierContact_SupplierID" Association="DbModel.FK_SupplierContact_SupplierID">
+            <End Role="Supplier" EntitySet="Supplier" />
+            <End Role="SupplierContact" EntitySet="SupplierContact" />
+          </AssociationSet>
+          <EntitySet Name="GuaranteeReceipt" EntityType="DbModel.GuaranteeReceipt" />
+          <AssociationSet Name="FK_GuaranteeLog_GuaranteeReceiptID" Association="DbModel.FK_GuaranteeLog_GuaranteeReceiptID">
+            <End Role="GuaranteeReceipt" EntitySet="GuaranteeReceipt" />
+            <End Role="GuaranteeLog" EntitySet="GuaranteeLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GuaranteeReceipt_ApplicationPaymentID" Association="DbModel.FK_GuaranteeReceipt_ApplicationPaymentID">
+            <End Role="ApplicationPayment" EntitySet="ApplicationPayment" />
+            <End Role="GuaranteeReceipt" EntitySet="GuaranteeReceipt" />
+          </AssociationSet>
+          <EntitySet Name="Reimbursement" EntityType="DbModel.Reimbursement" />
+          <EntitySet Name="ReimbursementDetail" EntityType="DbModel.ReimbursementDetail" />
+          <EntitySet Name="ReimbursementDetailTransportFee" EntityType="DbModel.ReimbursementDetailTransportFee" />
+          <AssociationSet Name="FK_Reimbursement_DepartmentID" Association="DbModel.FK_Reimbursement_DepartmentID">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Reimbursement" EntitySet="Reimbursement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reimbursement_WorkflowStatusID" Association="DbModel.FK_Reimbursement_WorkflowStatusID">
+            <End Role="WorkflowStatus" EntitySet="WorkflowStatus" />
+            <End Role="Reimbursement" EntitySet="Reimbursement" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReimbursementDetail_ReimbursementID" Association="DbModel.FK_ReimbursementDetail_ReimbursementID">
+            <End Role="Reimbursement" EntitySet="Reimbursement" />
+            <End Role="ReimbursementDetail" EntitySet="ReimbursementDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReimbursementDetail_ReimbursementTypeChildID" Association="DbModel.FK_ReimbursementDetail_ReimbursementTypeChildID">
+            <End Role="ReimbursementType" EntitySet="ReimbursementType" />
+            <End Role="ReimbursementDetail" EntitySet="ReimbursementDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReimbursementDetail_ReimbursementTypeID" Association="DbModel.FK_ReimbursementDetail_ReimbursementTypeID">
+            <End Role="ReimbursementType" EntitySet="ReimbursementType" />
+            <End Role="ReimbursementDetail" EntitySet="ReimbursementDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReimbursementDetailTransportFee_ReimbursementDetailID" Association="DbModel.FK_ReimbursementDetailTransportFee_ReimbursementDetailID">
+            <End Role="ReimbursementDetail" EntitySet="ReimbursementDetail" />
+            <End Role="ReimbursementDetailTransportFee" EntitySet="ReimbursementDetailTransportFee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReimbursementDetailTransportFee_TransportFeeID" Association="DbModel.FK_ReimbursementDetailTransportFee_TransportFeeID">
+            <End Role="TransportFee" EntitySet="TransportFee" />
+            <End Role="ReimbursementDetailTransportFee" EntitySet="ReimbursementDetailTransportFee" />
+          </AssociationSet>
+          <EntitySet Name="CashFlowHistory" EntityType="DbModel.CashFlowHistory" />
+          <EntitySet Name="CashFlowBaseData" EntityType="DbModel.CashFlowBaseData" />
+          <EntitySet Name="CashFlowClientRefundData" EntityType="DbModel.CashFlowClientRefundData" />
+          <EntitySet Name="CashFlowDaBaoRefundData" EntityType="DbModel.CashFlowDaBaoRefundData" />
+          <EntitySet Name="CashFlowDistributionCompanyData" EntityType="DbModel.CashFlowDistributionCompanyData" />
+          <EntitySet Name="CashFlowInvoiceExpendData" EntityType="DbModel.CashFlowInvoiceExpendData" />
+          <EntitySet Name="CashFlowInvoiceIncomeData" EntityType="DbModel.CashFlowInvoiceIncomeData" />
+          <EntitySet Name="CashFlowPurchaseAmountData" EntityType="DbModel.CashFlowPurchaseAmountData" />
+          <EntitySet Name="CashFlowRefundData" EntityType="DbModel.CashFlowRefundData" />
+          <EntitySet Name="CashFlowSaleIncomeData" EntityType="DbModel.CashFlowSaleIncomeData" />
+          <EntitySet Name="CashFlowShippingFeeData" EntityType="DbModel.CashFlowShippingFeeData" />
+          <AssociationSet Name="FK_CashFlowClientRefundData_CashFlowBaseDataID" Association="DbModel.FK_CashFlowClientRefundData_CashFlowBaseDataID">
+            <End Role="CashFlowBaseData" EntitySet="CashFlowBaseData" />
+            <End Role="CashFlowClientRefundData" EntitySet="CashFlowClientRefundData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowDaBaoRefundData_CashFlowBaseDataID" Association="DbModel.FK_CashFlowDaBaoRefundData_CashFlowBaseDataID">
+            <End Role="CashFlowBaseData" EntitySet="CashFlowBaseData" />
+            <End Role="CashFlowDaBaoRefundData" EntitySet="CashFlowDaBaoRefundData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowDistributionCompanyData_CashFlowBaseDataID" Association="DbModel.FK_CashFlowDistributionCompanyData_CashFlowBaseDataID">
+            <End Role="CashFlowBaseData" EntitySet="CashFlowBaseData" />
+            <End Role="CashFlowDistributionCompanyData" EntitySet="CashFlowDistributionCompanyData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowInvoiceExpendData_CashFlowBaseDataID" Association="DbModel.FK_CashFlowInvoiceExpendData_CashFlowBaseDataID">
+            <End Role="CashFlowBaseData" EntitySet="CashFlowBaseData" />
+            <End Role="CashFlowInvoiceExpendData" EntitySet="CashFlowInvoiceExpendData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowInvoiceIncomeData_CashFlowBaseDataID" Association="DbModel.FK_CashFlowInvoiceIncomeData_CashFlowBaseDataID">
+            <End Role="CashFlowBaseData" EntitySet="CashFlowBaseData" />
+            <End Role="CashFlowInvoiceIncomeData" EntitySet="CashFlowInvoiceIncomeData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowPurchaseAmountData_CashFlowBaseDataID" Association="DbModel.FK_CashFlowPurchaseAmountData_CashFlowBaseDataID">
+            <End Role="CashFlowBaseData" EntitySet="CashFlowBaseData" />
+            <End Role="CashFlowPurchaseAmountData" EntitySet="CashFlowPurchaseAmountData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowRefundData_CashFlowBaseDataID" Association="DbModel.FK_CashFlowRefundData_CashFlowBaseDataID">
+            <End Role="CashFlowBaseData" EntitySet="CashFlowBaseData" />
+            <End Role="CashFlowRefundData" EntitySet="CashFlowRefundData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowSaleIncomeData_CashFlowBaseDataID" Association="DbModel.FK_CashFlowSaleIncomeData_CashFlowBaseDataID">
+            <End Role="CashFlowBaseData" EntitySet="CashFlowBaseData" />
+            <End Role="CashFlowSaleIncomeData" EntitySet="CashFlowSaleIncomeData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowShippingFeeData_CashFlowBaseDataID" Association="DbModel.FK_CashFlowShippingFeeData_CashFlowBaseDataID">
+            <End Role="CashFlowBaseData" EntitySet="CashFlowBaseData" />
+            <End Role="CashFlowShippingFeeData" EntitySet="CashFlowShippingFeeData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowClientRefundData_CompanyID" Association="DbModel.FK_CashFlowClientRefundData_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CashFlowClientRefundData" EntitySet="CashFlowClientRefundData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowDaBaoRefundData_CompanyID" Association="DbModel.FK_CashFlowDaBaoRefundData_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CashFlowDaBaoRefundData" EntitySet="CashFlowDaBaoRefundData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowDistributionCompanyData_DistributionCompanyID" Association="DbModel.FK_CashFlowDistributionCompanyData_DistributionCompanyID">
+            <End Role="DistributionCompany" EntitySet="DistributionCompany" />
+            <End Role="CashFlowDistributionCompanyData" EntitySet="CashFlowDistributionCompanyData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowInvoiceExpendData_CompanyID" Association="DbModel.FK_CashFlowInvoiceExpendData_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CashFlowInvoiceExpendData" EntitySet="CashFlowInvoiceExpendData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowInvoiceIncomeData_CompanyID" Association="DbModel.FK_CashFlowInvoiceIncomeData_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CashFlowInvoiceIncomeData" EntitySet="CashFlowInvoiceIncomeData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowPurchaseAmountData_CompanyID" Association="DbModel.FK_CashFlowPurchaseAmountData_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CashFlowPurchaseAmountData" EntitySet="CashFlowPurchaseAmountData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowRefundData_CompanyID" Association="DbModel.FK_CashFlowRefundData_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CashFlowRefundData" EntitySet="CashFlowRefundData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowSaleIncomeData_CompanyID" Association="DbModel.FK_CashFlowSaleIncomeData_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CashFlowSaleIncomeData" EntitySet="CashFlowSaleIncomeData" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CashFlowShippingFeeData_CompanyID" Association="DbModel.FK_CashFlowShippingFeeData_CompanyID">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="CashFlowShippingFeeData" EntitySet="CashFlowShippingFeeData" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AccountType">
           <Key>
@@ -8898,6 +9743,14 @@
           <NavigationProperty Name="ClientAttachedInvoiceSettlement" Relationship="DbModel.FK_ClientAttachedInvoiceSettlement_Company" FromRole="Company" ToRole="ClientAttachedInvoiceSettlement" />
           <NavigationProperty Name="ClientCautionMoney" Relationship="DbModel.FK_ClientCautionMoney_CompanyID" FromRole="Company" ToRole="ClientCautionMoney" />
           <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_Company" FromRole="Company" ToRole="ClientSaleApplication" />
+          <NavigationProperty Name="CashFlowClientRefundData" Relationship="DbModel.FK_CashFlowClientRefundData_CompanyID" FromRole="Company" ToRole="CashFlowClientRefundData" />
+          <NavigationProperty Name="CashFlowDaBaoRefundData" Relationship="DbModel.FK_CashFlowDaBaoRefundData_CompanyID" FromRole="Company" ToRole="CashFlowDaBaoRefundData" />
+          <NavigationProperty Name="CashFlowInvoiceExpendData" Relationship="DbModel.FK_CashFlowInvoiceExpendData_CompanyID" FromRole="Company" ToRole="CashFlowInvoiceExpendData" />
+          <NavigationProperty Name="CashFlowInvoiceIncomeData" Relationship="DbModel.FK_CashFlowInvoiceIncomeData_CompanyID" FromRole="Company" ToRole="CashFlowInvoiceIncomeData" />
+          <NavigationProperty Name="CashFlowPurchaseAmountData" Relationship="DbModel.FK_CashFlowPurchaseAmountData_CompanyID" FromRole="Company" ToRole="CashFlowPurchaseAmountData" />
+          <NavigationProperty Name="CashFlowRefundData" Relationship="DbModel.FK_CashFlowRefundData_CompanyID" FromRole="Company" ToRole="CashFlowRefundData" />
+          <NavigationProperty Name="CashFlowSaleIncomeData" Relationship="DbModel.FK_CashFlowSaleIncomeData_CompanyID" FromRole="Company" ToRole="CashFlowSaleIncomeData" />
+          <NavigationProperty Name="CashFlowShippingFeeData" Relationship="DbModel.FK_CashFlowShippingFeeData_CompanyID" FromRole="Company" ToRole="CashFlowShippingFeeData" />
         </EntityType>
         <EntityType Name="OwnerType">
           <Key>
@@ -9043,6 +9896,7 @@
           <NavigationProperty Name="SupplierInvoiceSettlementDetail" Relationship="DbModel.FK_SupplierInvoiceSettlementDetail_Supplier" FromRole="Supplier" ToRole="SupplierInvoiceSettlementDetail" />
           <NavigationProperty Name="SupplierCautionMoney" Relationship="DbModel.FK_SupplierCautionMoney_SupplierID" FromRole="Supplier" ToRole="SupplierCautionMoney" />
           <NavigationProperty Name="SupplierCautionMoneyDeduction" Relationship="DbModel.FK_SupplierCautionMoneyDeduction_SupplierID" FromRole="Supplier" ToRole="SupplierCautionMoneyDeduction" />
+          <NavigationProperty Name="SupplierContact" Relationship="DbModel.FK_SupplierContact_SupplierID" FromRole="Supplier" ToRole="SupplierContact" />
         </EntityType>
         <EntityType Name="SupplierBankAccount">
           <Key>
@@ -9423,6 +10277,7 @@
           <NavigationProperty Name="DBClientInvoiceSettlement" Relationship="DbModel.FK_DBClientInvoiceSettlement_DistributionCompany" FromRole="DistributionCompany" ToRole="DBClientInvoiceSettlement" />
           <NavigationProperty Name="DCInventoryData" Relationship="DbModel.FK_DCInventoryData_DistributionCompany" FromRole="DistributionCompany" ToRole="DCInventoryData" />
           <NavigationProperty Name="DistributionCompanyProductMapping" Relationship="DbModel.FK_DistributionCompanyProductMapping_DistributionCompanyID" FromRole="DistributionCompany" ToRole="DistributionCompanyProductMapping" />
+          <NavigationProperty Name="CashFlowDistributionCompanyData" Relationship="DbModel.FK_CashFlowDistributionCompanyData_DistributionCompanyID" FromRole="DistributionCompany" ToRole="CashFlowDistributionCompanyData" />
         </EntityType>
         <EntityType Name="ClientCompanyCertificate">
           <Key>
@@ -9648,6 +10503,7 @@
           <NavigationProperty Name="ClientCautionMoney" Relationship="DbModel.FK_ClientCautionMoney_DepartmentID" FromRole="Department" ToRole="ClientCautionMoney" />
           <NavigationProperty Name="FixedAssets" Relationship="DbModel.FK_FixedAssets_DepartmentID" FromRole="Department" ToRole="FixedAssets" />
           <NavigationProperty Name="SalarySettle" Relationship="DbModel.FK_SalarySettle_DepartmentID" FromRole="Department" ToRole="SalarySettle" />
+          <NavigationProperty Name="Reimbursement" Relationship="DbModel.FK_Reimbursement_DepartmentID" FromRole="Department" ToRole="Reimbursement" />
         </EntityType>
         <Association Name="FK_Department_DeptDistrict">
           <End Type="DbModel.DeptDistrict" Role="DeptDistrict" Multiplicity="0..1" />
@@ -10151,6 +11007,7 @@
           <NavigationProperty Name="ClientCautionMoneyReturnApplication" Relationship="DbModel.FK_ClientCautionMoneyReturnApplication_WorkflowStatusID" FromRole="WorkflowStatus" ToRole="ClientCautionMoneyReturnApplication" />
           <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_ClientSaleApplication_WorkflowStatus" FromRole="WorkflowStatus" ToRole="ClientSaleApplication" />
           <NavigationProperty Name="SalarySettle" Relationship="DbModel.FK_SalarySettle_WorkflowStatusID" FromRole="WorkflowStatus" ToRole="SalarySettle" />
+          <NavigationProperty Name="Reimbursement" Relationship="DbModel.FK_Reimbursement_WorkflowStatusID" FromRole="WorkflowStatus" ToRole="Reimbursement" />
         </EntityType>
         <EntityType Name="WorkflowStepStatus">
           <Key>
@@ -11089,6 +11946,9 @@
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="ClientSaleApplication" Relationship="DbModel.FK_GuaranteeLog_ClientSaleApplication" FromRole="GuaranteeLog" ToRole="ClientSaleApplication" />
+          <Property Type="Int32" Name="GuaranteeReceiptID" Nullable="false" />
+          <NavigationProperty Name="GuaranteeReceipt" Relationship="DbModel.FK_GuaranteeLog_GuaranteeReceiptID" FromRole="GuaranteeLog" ToRole="GuaranteeReceipt" />
+          <Property Type="DateTime" Name="GuaranteeReceiptDate" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="FK_ClientSaleAppBankAccount_BankAccount">
           <End Type="DbModel.BankAccount" Role="BankAccount" Multiplicity="1" />
@@ -11720,6 +12580,7 @@
           <Property Type="Int32" Name="LastModifiedBy" />
           <NavigationProperty Name="TransportCompany" Relationship="DbModel.FK_TransportFee_TransportCompanyID" FromRole="TransportFee" ToRole="TransportCompany" />
           <NavigationProperty Name="TransportFeeStockOut" Relationship="DbModel.FK_TransportFeeStockOut_TransportFeeID" FromRole="TransportFee" ToRole="TransportFeeStockOut" />
+          <NavigationProperty Name="ReimbursementDetailTransportFee" Relationship="DbModel.FK_ReimbursementDetailTransportFee_TransportFeeID" FromRole="TransportFee" ToRole="ReimbursementDetailTransportFee" />
         </EntityType>
         <Association Name="FK_TransportFee_TransportCompanyID">
           <End Type="DbModel.TransportCompany" Role="TransportCompany" Multiplicity="1" />
@@ -14836,6 +15697,7 @@
           <NavigationProperty Name="SupplierInvoiceSettlementDetail" Relationship="DbModel.FK_SupplierInvoiceSettlementDetail_ApplicationPayment" FromRole="ApplicationPayment" ToRole="SupplierInvoiceSettlementDetail" />
           <NavigationProperty Name="SupplierInvoiceSettlementDetail1" Relationship="DbModel.FK_SupplierInvoiceSettlementDetail_CanceledApplicationPayment" FromRole="ApplicationPayment" ToRole="SupplierInvoiceSettlementDetail" />
           <NavigationProperty Name="SalarySettleDetail" Relationship="DbModel.FK_SalarySettleDetail_ApplicationPaymentID" FromRole="ApplicationPayment" ToRole="SalarySettleDetail" />
+          <NavigationProperty Name="GuaranteeReceipt" Relationship="DbModel.FK_GuaranteeReceipt_ApplicationPaymentID" FromRole="ApplicationPayment" ToRole="GuaranteeReceipt" />
         </EntityType>
         <Association Name="FK_ApplicationPayment_FromBankAccount">
           <End Type="DbModel.BankAccount" Role="BankAccount" Multiplicity="0..1" />
@@ -15007,6 +15869,8 @@
           <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
           <Property Type="Int32" Name="LastModifiedBy" />
           <Property Type="Int32" Name="ParentID" />
+          <NavigationProperty Name="ReimbursementDetail" Relationship="DbModel.FK_ReimbursementDetail_ReimbursementTypeChildID" FromRole="ReimbursementType" ToRole="ReimbursementDetail" />
+          <NavigationProperty Name="ReimbursementDetail1" Relationship="DbModel.FK_ReimbursementDetail_ReimbursementTypeID" FromRole="ReimbursementType" ToRole="ReimbursementDetail" />
         </EntityType>
         <EntityType Name="AttachmentFile">
           <Key>
@@ -15304,6 +16168,632 @@
             </Principal>
             <Dependent Role="SalarySettleDetail">
               <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SupplierContact">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="SupplierID" Nullable="false" />
+          <Property Type="String" Name="ContactName" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="PhoneNumber" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Address" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="Comment" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Supplier" Relationship="DbModel.FK_SupplierContact_SupplierID" FromRole="SupplierContact" ToRole="Supplier" />
+        </EntityType>
+        <Association Name="FK_SupplierContact_SupplierID">
+          <End Type="DbModel.Supplier" Role="Supplier" Multiplicity="1" />
+          <End Type="DbModel.SupplierContact" Role="SupplierContact" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Supplier">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="SupplierContact">
+              <PropertyRef Name="SupplierID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="GuaranteeReceipt">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="ReceiptDate" Nullable="false" Precision="3" />
+          <Property Type="Decimal" Name="ReceiptAmount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="ApplicationPaymentID" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="GuaranteeLog" Relationship="DbModel.FK_GuaranteeLog_GuaranteeReceiptID" FromRole="GuaranteeReceipt" ToRole="GuaranteeLog" />
+          <NavigationProperty Name="ApplicationPayment" Relationship="DbModel.FK_GuaranteeReceipt_ApplicationPaymentID" FromRole="GuaranteeReceipt" ToRole="ApplicationPayment" />
+        </EntityType>
+        <Association Name="FK_GuaranteeLog_GuaranteeReceiptID">
+          <End Type="DbModel.GuaranteeReceipt" Role="GuaranteeReceipt" Multiplicity="1" />
+          <End Type="DbModel.GuaranteeLog" Role="GuaranteeLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GuaranteeReceipt">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GuaranteeLog">
+              <PropertyRef Name="GuaranteeReceiptID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GuaranteeReceipt_ApplicationPaymentID">
+          <End Type="DbModel.ApplicationPayment" Role="ApplicationPayment" Multiplicity="1" />
+          <End Type="DbModel.GuaranteeReceipt" Role="GuaranteeReceipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ApplicationPayment">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="GuaranteeReceipt">
+              <PropertyRef Name="ApplicationPaymentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Reimbursement">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="DepartmentID" />
+          <Property Type="DateTime" Name="ApplyDate" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="WorkflowStatusID" Nullable="false" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="Department" Relationship="DbModel.FK_Reimbursement_DepartmentID" FromRole="Reimbursement" ToRole="Department" />
+          <NavigationProperty Name="WorkflowStatus" Relationship="DbModel.FK_Reimbursement_WorkflowStatusID" FromRole="Reimbursement" ToRole="WorkflowStatus" />
+          <NavigationProperty Name="ReimbursementDetail" Relationship="DbModel.FK_ReimbursementDetail_ReimbursementID" FromRole="Reimbursement" ToRole="ReimbursementDetail" />
+          <Property Type="Int32" Name="PaidBy" />
+          <Property Type="DateTime" Name="PaidDate" Precision="3" />
+        </EntityType>
+        <EntityType Name="ReimbursementDetail">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ReimbursementID" Nullable="false" />
+          <Property Type="Int32" Name="ReimbursementTypeID" Nullable="false" />
+          <Property Type="Int32" Name="ReimbursementTypeChildID" />
+          <Property Type="DateTime" Name="StartDate" Precision="3" />
+          <Property Type="DateTime" Name="EndDate" Precision="3" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Int32" Name="Quantity" />
+          <Property Type="String" Name="Comment" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Reimbursement" Relationship="DbModel.FK_ReimbursementDetail_ReimbursementID" FromRole="ReimbursementDetail" ToRole="Reimbursement" />
+          <NavigationProperty Name="ReimbursementTypeChildObject" Relationship="DbModel.FK_ReimbursementDetail_ReimbursementTypeChildID" FromRole="ReimbursementDetail" ToRole="ReimbursementType" />
+          <NavigationProperty Name="ReimbursementTypeObject" Relationship="DbModel.FK_ReimbursementDetail_ReimbursementTypeID" FromRole="ReimbursementDetail" ToRole="ReimbursementType" />
+          <NavigationProperty Name="ReimbursementDetailTransportFee" Relationship="DbModel.FK_ReimbursementDetailTransportFee_ReimbursementDetailID" FromRole="ReimbursementDetail" ToRole="ReimbursementDetailTransportFee" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+        </EntityType>
+        <EntityType Name="ReimbursementDetailTransportFee">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="ReimbursementDetailID" Nullable="false" />
+          <Property Type="Int32" Name="TransportFeeID" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="String" Name="Comment" MaxLength="256" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ReimbursementDetail" Relationship="DbModel.FK_ReimbursementDetailTransportFee_ReimbursementDetailID" FromRole="ReimbursementDetailTransportFee" ToRole="ReimbursementDetail" />
+          <NavigationProperty Name="TransportFee" Relationship="DbModel.FK_ReimbursementDetailTransportFee_TransportFeeID" FromRole="ReimbursementDetailTransportFee" ToRole="TransportFee" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+        </EntityType>
+        <Association Name="FK_Reimbursement_DepartmentID">
+          <End Type="DbModel.Department" Role="Department" Multiplicity="0..1" />
+          <End Type="DbModel.Reimbursement" Role="Reimbursement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reimbursement">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reimbursement_WorkflowStatusID">
+          <End Type="DbModel.WorkflowStatus" Role="WorkflowStatus" Multiplicity="1" />
+          <End Type="DbModel.Reimbursement" Role="Reimbursement" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WorkflowStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Reimbursement">
+              <PropertyRef Name="WorkflowStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReimbursementDetail_ReimbursementID">
+          <End Type="DbModel.Reimbursement" Role="Reimbursement" Multiplicity="1" />
+          <End Type="DbModel.ReimbursementDetail" Role="ReimbursementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reimbursement">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReimbursementDetail">
+              <PropertyRef Name="ReimbursementID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReimbursementDetail_ReimbursementTypeChildID">
+          <End Type="DbModel.ReimbursementType" Role="ReimbursementType" Multiplicity="0..1" />
+          <End Type="DbModel.ReimbursementDetail" Role="ReimbursementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReimbursementType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReimbursementDetail">
+              <PropertyRef Name="ReimbursementTypeChildID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReimbursementDetail_ReimbursementTypeID">
+          <End Type="DbModel.ReimbursementType" Role="ReimbursementType" Multiplicity="1" />
+          <End Type="DbModel.ReimbursementDetail" Role="ReimbursementDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReimbursementType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReimbursementDetail">
+              <PropertyRef Name="ReimbursementTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReimbursementDetailTransportFee_ReimbursementDetailID">
+          <End Type="DbModel.ReimbursementDetail" Role="ReimbursementDetail" Multiplicity="1" />
+          <End Type="DbModel.ReimbursementDetailTransportFee" Role="ReimbursementDetailTransportFee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReimbursementDetail">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReimbursementDetailTransportFee">
+              <PropertyRef Name="ReimbursementDetailID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReimbursementDetailTransportFee_TransportFeeID">
+          <End Type="DbModel.TransportFee" Role="TransportFee" Multiplicity="1" />
+          <End Type="DbModel.ReimbursementDetailTransportFee" Role="ReimbursementDetailTransportFee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TransportFee">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ReimbursementDetailTransportFee">
+              <PropertyRef Name="TransportFeeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="CashFlowHistory">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="CashFlowDate" Nullable="false" Precision="3" />
+          <Property Type="String" Name="CashFlowFileName" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="FilePath" Nullable="false" MaxLength="256" FixedLength="false" Unicode="true" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+        </EntityType>
+        <EntityType Name="CashFlowBaseData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="DateTime" Name="CashFlowDate" Nullable="false" Precision="3" />
+          <Property Type="Decimal" Name="MoneyBalanceAll" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="MoneyBalancePersonal" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="MoneyBalanceCompany" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="AttachedModeIncome" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="SupplierCautionMoneyIncome" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="ClientCautionMoneyIncome" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="BorrowMoneyIncome" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="Salary" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="BusinessPercentage" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="Reward" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="Reimbursement" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="BorrowMoney" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="CautionMoneyPayToSupplier" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="CautionMoneyReturnToClient" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="ProductPromotionRebates" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="ManagedDistributionFee" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="Other" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Decimal" Name="FMRefund" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="CashFlowClientRefundData" Relationship="DbModel.FK_CashFlowClientRefundData_CashFlowBaseDataID" FromRole="CashFlowBaseData" ToRole="CashFlowClientRefundData" />
+          <NavigationProperty Name="CashFlowDaBaoRefundData" Relationship="DbModel.FK_CashFlowDaBaoRefundData_CashFlowBaseDataID" FromRole="CashFlowBaseData" ToRole="CashFlowDaBaoRefundData" />
+          <NavigationProperty Name="CashFlowDistributionCompanyData" Relationship="DbModel.FK_CashFlowDistributionCompanyData_CashFlowBaseDataID" FromRole="CashFlowBaseData" ToRole="CashFlowDistributionCompanyData" />
+          <NavigationProperty Name="CashFlowInvoiceExpendData" Relationship="DbModel.FK_CashFlowInvoiceExpendData_CashFlowBaseDataID" FromRole="CashFlowBaseData" ToRole="CashFlowInvoiceExpendData" />
+          <NavigationProperty Name="CashFlowInvoiceIncomeData" Relationship="DbModel.FK_CashFlowInvoiceIncomeData_CashFlowBaseDataID" FromRole="CashFlowBaseData" ToRole="CashFlowInvoiceIncomeData" />
+          <NavigationProperty Name="CashFlowPurchaseAmountData" Relationship="DbModel.FK_CashFlowPurchaseAmountData_CashFlowBaseDataID" FromRole="CashFlowBaseData" ToRole="CashFlowPurchaseAmountData" />
+          <NavigationProperty Name="CashFlowRefundData" Relationship="DbModel.FK_CashFlowRefundData_CashFlowBaseDataID" FromRole="CashFlowBaseData" ToRole="CashFlowRefundData" />
+          <NavigationProperty Name="CashFlowSaleIncomeData" Relationship="DbModel.FK_CashFlowSaleIncomeData_CashFlowBaseDataID" FromRole="CashFlowBaseData" ToRole="CashFlowSaleIncomeData" />
+          <NavigationProperty Name="CashFlowShippingFeeData" Relationship="DbModel.FK_CashFlowShippingFeeData_CashFlowBaseDataID" FromRole="CashFlowBaseData" ToRole="CashFlowShippingFeeData" />
+          <Property Type="Decimal" Name="DaBaoRefund" Nullable="false" Precision="19" Scale="4" />
+        </EntityType>
+        <EntityType Name="CashFlowClientRefundData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="CashFlowBaseDataID" Nullable="false" />
+          <Property Type="Int32" Name="CompanyID" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="CashFlowBaseData" Relationship="DbModel.FK_CashFlowClientRefundData_CashFlowBaseDataID" FromRole="CashFlowClientRefundData" ToRole="CashFlowBaseData" />
+          <NavigationProperty Name="Company" Relationship="DbModel.FK_CashFlowClientRefundData_CompanyID" FromRole="CashFlowClientRefundData" ToRole="Company" />
+        </EntityType>
+        <EntityType Name="CashFlowDaBaoRefundData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="CashFlowBaseDataID" Nullable="false" />
+          <Property Type="Int32" Name="CompanyID" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="CashFlowBaseData" Relationship="DbModel.FK_CashFlowDaBaoRefundData_CashFlowBaseDataID" FromRole="CashFlowDaBaoRefundData" ToRole="CashFlowBaseData" />
+          <NavigationProperty Name="Company" Relationship="DbModel.FK_CashFlowDaBaoRefundData_CompanyID" FromRole="CashFlowDaBaoRefundData" ToRole="Company" />
+        </EntityType>
+        <EntityType Name="CashFlowDistributionCompanyData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="CashFlowBaseDataID" Nullable="false" />
+          <Property Type="Int32" Name="DistributionCompanyID" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="CashFlowBaseData" Relationship="DbModel.FK_CashFlowDistributionCompanyData_CashFlowBaseDataID" FromRole="CashFlowDistributionCompanyData" ToRole="CashFlowBaseData" />
+          <NavigationProperty Name="DistributionCompany" Relationship="DbModel.FK_CashFlowDistributionCompanyData_DistributionCompanyID" FromRole="CashFlowDistributionCompanyData" ToRole="DistributionCompany" />
+        </EntityType>
+        <EntityType Name="CashFlowInvoiceExpendData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="CashFlowBaseDataID" Nullable="false" />
+          <Property Type="Int32" Name="CompanyID" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="CashFlowBaseData" Relationship="DbModel.FK_CashFlowInvoiceExpendData_CashFlowBaseDataID" FromRole="CashFlowInvoiceExpendData" ToRole="CashFlowBaseData" />
+          <NavigationProperty Name="Company" Relationship="DbModel.FK_CashFlowInvoiceExpendData_CompanyID" FromRole="CashFlowInvoiceExpendData" ToRole="Company" />
+        </EntityType>
+        <EntityType Name="CashFlowInvoiceIncomeData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="CashFlowBaseDataID" Nullable="false" />
+          <Property Type="Int32" Name="CompanyID" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="CashFlowBaseData" Relationship="DbModel.FK_CashFlowInvoiceIncomeData_CashFlowBaseDataID" FromRole="CashFlowInvoiceIncomeData" ToRole="CashFlowBaseData" />
+          <NavigationProperty Name="Company" Relationship="DbModel.FK_CashFlowInvoiceIncomeData_CompanyID" FromRole="CashFlowInvoiceIncomeData" ToRole="Company" />
+        </EntityType>
+        <EntityType Name="CashFlowPurchaseAmountData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="CashFlowBaseDataID" Nullable="false" />
+          <Property Type="Int32" Name="CompanyID" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="CashFlowBaseData" Relationship="DbModel.FK_CashFlowPurchaseAmountData_CashFlowBaseDataID" FromRole="CashFlowPurchaseAmountData" ToRole="CashFlowBaseData" />
+          <NavigationProperty Name="Company" Relationship="DbModel.FK_CashFlowPurchaseAmountData_CompanyID" FromRole="CashFlowPurchaseAmountData" ToRole="Company" />
+        </EntityType>
+        <EntityType Name="CashFlowRefundData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="CashFlowBaseDataID" Nullable="false" />
+          <Property Type="Int32" Name="CompanyID" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="CashFlowBaseData" Relationship="DbModel.FK_CashFlowRefundData_CashFlowBaseDataID" FromRole="CashFlowRefundData" ToRole="CashFlowBaseData" />
+          <NavigationProperty Name="Company" Relationship="DbModel.FK_CashFlowRefundData_CompanyID" FromRole="CashFlowRefundData" ToRole="Company" />
+        </EntityType>
+        <EntityType Name="CashFlowSaleIncomeData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="CashFlowBaseDataID" Nullable="false" />
+          <Property Type="Int32" Name="CompanyID" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="CashFlowBaseData" Relationship="DbModel.FK_CashFlowSaleIncomeData_CashFlowBaseDataID" FromRole="CashFlowSaleIncomeData" ToRole="CashFlowBaseData" />
+          <NavigationProperty Name="Company" Relationship="DbModel.FK_CashFlowSaleIncomeData_CompanyID" FromRole="CashFlowSaleIncomeData" ToRole="Company" />
+        </EntityType>
+        <EntityType Name="CashFlowShippingFeeData">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Type="Int32" Name="ID" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="CashFlowBaseDataID" Nullable="false" />
+          <Property Type="Int32" Name="CompanyID" Nullable="false" />
+          <Property Type="Decimal" Name="Amount" Nullable="false" Precision="19" Scale="4" />
+          <Property Type="Boolean" Name="IsDeleted" Nullable="false" />
+          <Property Type="DateTime" Name="CreatedOn" Nullable="false" Precision="3" />
+          <Property Type="Int32" Name="CreatedBy" />
+          <Property Type="DateTime" Name="LastModifiedOn" Precision="3" />
+          <Property Type="Int32" Name="LastModifiedBy" />
+          <NavigationProperty Name="CashFlowBaseData" Relationship="DbModel.FK_CashFlowShippingFeeData_CashFlowBaseDataID" FromRole="CashFlowShippingFeeData" ToRole="CashFlowBaseData" />
+          <NavigationProperty Name="Company" Relationship="DbModel.FK_CashFlowShippingFeeData_CompanyID" FromRole="CashFlowShippingFeeData" ToRole="Company" />
+        </EntityType>
+        <Association Name="FK_CashFlowClientRefundData_CashFlowBaseDataID">
+          <End Type="DbModel.CashFlowBaseData" Role="CashFlowBaseData" Multiplicity="1" />
+          <End Type="DbModel.CashFlowClientRefundData" Role="CashFlowClientRefundData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashFlowBaseData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowClientRefundData">
+              <PropertyRef Name="CashFlowBaseDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowDaBaoRefundData_CashFlowBaseDataID">
+          <End Type="DbModel.CashFlowBaseData" Role="CashFlowBaseData" Multiplicity="1" />
+          <End Type="DbModel.CashFlowDaBaoRefundData" Role="CashFlowDaBaoRefundData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashFlowBaseData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowDaBaoRefundData">
+              <PropertyRef Name="CashFlowBaseDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowDistributionCompanyData_CashFlowBaseDataID">
+          <End Type="DbModel.CashFlowBaseData" Role="CashFlowBaseData" Multiplicity="1" />
+          <End Type="DbModel.CashFlowDistributionCompanyData" Role="CashFlowDistributionCompanyData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashFlowBaseData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowDistributionCompanyData">
+              <PropertyRef Name="CashFlowBaseDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowInvoiceExpendData_CashFlowBaseDataID">
+          <End Type="DbModel.CashFlowBaseData" Role="CashFlowBaseData" Multiplicity="1" />
+          <End Type="DbModel.CashFlowInvoiceExpendData" Role="CashFlowInvoiceExpendData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashFlowBaseData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowInvoiceExpendData">
+              <PropertyRef Name="CashFlowBaseDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowInvoiceIncomeData_CashFlowBaseDataID">
+          <End Type="DbModel.CashFlowBaseData" Role="CashFlowBaseData" Multiplicity="1" />
+          <End Type="DbModel.CashFlowInvoiceIncomeData" Role="CashFlowInvoiceIncomeData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashFlowBaseData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowInvoiceIncomeData">
+              <PropertyRef Name="CashFlowBaseDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowPurchaseAmountData_CashFlowBaseDataID">
+          <End Type="DbModel.CashFlowBaseData" Role="CashFlowBaseData" Multiplicity="1" />
+          <End Type="DbModel.CashFlowPurchaseAmountData" Role="CashFlowPurchaseAmountData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashFlowBaseData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowPurchaseAmountData">
+              <PropertyRef Name="CashFlowBaseDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowRefundData_CashFlowBaseDataID">
+          <End Type="DbModel.CashFlowBaseData" Role="CashFlowBaseData" Multiplicity="1" />
+          <End Type="DbModel.CashFlowRefundData" Role="CashFlowRefundData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashFlowBaseData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowRefundData">
+              <PropertyRef Name="CashFlowBaseDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowSaleIncomeData_CashFlowBaseDataID">
+          <End Type="DbModel.CashFlowBaseData" Role="CashFlowBaseData" Multiplicity="1" />
+          <End Type="DbModel.CashFlowSaleIncomeData" Role="CashFlowSaleIncomeData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashFlowBaseData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowSaleIncomeData">
+              <PropertyRef Name="CashFlowBaseDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowShippingFeeData_CashFlowBaseDataID">
+          <End Type="DbModel.CashFlowBaseData" Role="CashFlowBaseData" Multiplicity="1" />
+          <End Type="DbModel.CashFlowShippingFeeData" Role="CashFlowShippingFeeData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CashFlowBaseData">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowShippingFeeData">
+              <PropertyRef Name="CashFlowBaseDataID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowClientRefundData_CompanyID">
+          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="DbModel.CashFlowClientRefundData" Role="CashFlowClientRefundData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowClientRefundData">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowDaBaoRefundData_CompanyID">
+          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="DbModel.CashFlowDaBaoRefundData" Role="CashFlowDaBaoRefundData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowDaBaoRefundData">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowDistributionCompanyData_DistributionCompanyID">
+          <End Type="DbModel.DistributionCompany" Role="DistributionCompany" Multiplicity="1" />
+          <End Type="DbModel.CashFlowDistributionCompanyData" Role="CashFlowDistributionCompanyData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DistributionCompany">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowDistributionCompanyData">
+              <PropertyRef Name="DistributionCompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowInvoiceExpendData_CompanyID">
+          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="DbModel.CashFlowInvoiceExpendData" Role="CashFlowInvoiceExpendData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowInvoiceExpendData">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowInvoiceIncomeData_CompanyID">
+          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="DbModel.CashFlowInvoiceIncomeData" Role="CashFlowInvoiceIncomeData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowInvoiceIncomeData">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowPurchaseAmountData_CompanyID">
+          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="DbModel.CashFlowPurchaseAmountData" Role="CashFlowPurchaseAmountData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowPurchaseAmountData">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowRefundData_CompanyID">
+          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="DbModel.CashFlowRefundData" Role="CashFlowRefundData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowRefundData">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowSaleIncomeData_CompanyID">
+          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="DbModel.CashFlowSaleIncomeData" Role="CashFlowSaleIncomeData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowSaleIncomeData">
+              <PropertyRef Name="CompanyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CashFlowShippingFeeData_CompanyID">
+          <End Type="DbModel.Company" Role="Company" Multiplicity="1" />
+          <End Type="DbModel.CashFlowShippingFeeData" Role="CashFlowShippingFeeData" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CashFlowShippingFeeData">
+              <PropertyRef Name="CompanyID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -16293,6 +17783,8 @@
           <EntitySetMapping Name="GuaranteeLog">
             <EntityTypeMapping TypeName="DbModel.GuaranteeLog">
               <MappingFragment StoreEntitySet="GuaranteeLog">
+                <ScalarProperty Name="GuaranteeReceiptDate" ColumnName="GuaranteeReceiptDate" />
+                <ScalarProperty Name="GuaranteeReceiptID" ColumnName="GuaranteeReceiptID" />
                 <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
                 <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
                 <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
@@ -17839,6 +19331,273 @@
                 <ScalarProperty Name="BasicSalary" ColumnName="BasicSalary" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="SalarySettleID" ColumnName="SalarySettleID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SupplierContact">
+            <EntityTypeMapping TypeName="DbModel.SupplierContact">
+              <MappingFragment StoreEntitySet="SupplierContact">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="ContactName" ColumnName="ContactName" />
+                <ScalarProperty Name="SupplierID" ColumnName="SupplierID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GuaranteeReceipt">
+            <EntityTypeMapping TypeName="DbModel.GuaranteeReceipt">
+              <MappingFragment StoreEntitySet="GuaranteeReceipt">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="ApplicationPaymentID" ColumnName="ApplicationPaymentID" />
+                <ScalarProperty Name="ReceiptAmount" ColumnName="ReceiptAmount" />
+                <ScalarProperty Name="ReceiptDate" ColumnName="ReceiptDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Reimbursement">
+            <EntityTypeMapping TypeName="DbModel.Reimbursement">
+              <MappingFragment StoreEntitySet="Reimbursement">
+                <ScalarProperty Name="PaidDate" ColumnName="PaidDate" />
+                <ScalarProperty Name="PaidBy" ColumnName="PaidBy" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="WorkflowStatusID" ColumnName="WorkflowStatusID" />
+                <ScalarProperty Name="ApplyDate" ColumnName="ApplyDate" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReimbursementDetail">
+            <EntityTypeMapping TypeName="DbModel.ReimbursementDetail">
+              <MappingFragment StoreEntitySet="ReimbursementDetail">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="ReimbursementTypeChildID" ColumnName="ReimbursementTypeChildID" />
+                <ScalarProperty Name="ReimbursementTypeID" ColumnName="ReimbursementTypeID" />
+                <ScalarProperty Name="ReimbursementID" ColumnName="ReimbursementID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReimbursementDetailTransportFee">
+            <EntityTypeMapping TypeName="DbModel.ReimbursementDetailTransportFee">
+              <MappingFragment StoreEntitySet="ReimbursementDetailTransportFee">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="TransportFeeID" ColumnName="TransportFeeID" />
+                <ScalarProperty Name="ReimbursementDetailID" ColumnName="ReimbursementDetailID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CashFlowHistory">
+            <EntityTypeMapping TypeName="DbModel.CashFlowHistory">
+              <MappingFragment StoreEntitySet="CashFlowHistory">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="FilePath" ColumnName="FilePath" />
+                <ScalarProperty Name="CashFlowFileName" ColumnName="CashFlowFileName" />
+                <ScalarProperty Name="CashFlowDate" ColumnName="CashFlowDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CashFlowBaseData">
+            <EntityTypeMapping TypeName="DbModel.CashFlowBaseData">
+              <MappingFragment StoreEntitySet="CashFlowBaseData">
+                <ScalarProperty Name="DaBaoRefund" ColumnName="DaBaoRefund" />
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="FMRefund" ColumnName="FMRefund" />
+                <ScalarProperty Name="Other" ColumnName="Other" />
+                <ScalarProperty Name="ManagedDistributionFee" ColumnName="ManagedDistributionFee" />
+                <ScalarProperty Name="ProductPromotionRebates" ColumnName="ProductPromotionRebates" />
+                <ScalarProperty Name="CautionMoneyReturnToClient" ColumnName="CautionMoneyReturnToClient" />
+                <ScalarProperty Name="CautionMoneyPayToSupplier" ColumnName="CautionMoneyPayToSupplier" />
+                <ScalarProperty Name="BorrowMoney" ColumnName="BorrowMoney" />
+                <ScalarProperty Name="Reimbursement" ColumnName="Reimbursement" />
+                <ScalarProperty Name="Reward" ColumnName="Reward" />
+                <ScalarProperty Name="BusinessPercentage" ColumnName="BusinessPercentage" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+                <ScalarProperty Name="BorrowMoneyIncome" ColumnName="BorrowMoneyIncome" />
+                <ScalarProperty Name="ClientCautionMoneyIncome" ColumnName="ClientCautionMoneyIncome" />
+                <ScalarProperty Name="SupplierCautionMoneyIncome" ColumnName="SupplierCautionMoneyIncome" />
+                <ScalarProperty Name="AttachedModeIncome" ColumnName="AttachedModeIncome" />
+                <ScalarProperty Name="MoneyBalanceCompany" ColumnName="MoneyBalanceCompany" />
+                <ScalarProperty Name="MoneyBalancePersonal" ColumnName="MoneyBalancePersonal" />
+                <ScalarProperty Name="MoneyBalanceAll" ColumnName="MoneyBalanceAll" />
+                <ScalarProperty Name="CashFlowDate" ColumnName="CashFlowDate" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CashFlowClientRefundData">
+            <EntityTypeMapping TypeName="DbModel.CashFlowClientRefundData">
+              <MappingFragment StoreEntitySet="CashFlowClientRefundData">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="CashFlowBaseDataID" ColumnName="CashFlowBaseDataID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CashFlowDaBaoRefundData">
+            <EntityTypeMapping TypeName="DbModel.CashFlowDaBaoRefundData">
+              <MappingFragment StoreEntitySet="CashFlowDaBaoRefundData">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="CashFlowBaseDataID" ColumnName="CashFlowBaseDataID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CashFlowDistributionCompanyData">
+            <EntityTypeMapping TypeName="DbModel.CashFlowDistributionCompanyData">
+              <MappingFragment StoreEntitySet="CashFlowDistributionCompanyData">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="DistributionCompanyID" ColumnName="DistributionCompanyID" />
+                <ScalarProperty Name="CashFlowBaseDataID" ColumnName="CashFlowBaseDataID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CashFlowInvoiceExpendData">
+            <EntityTypeMapping TypeName="DbModel.CashFlowInvoiceExpendData">
+              <MappingFragment StoreEntitySet="CashFlowInvoiceExpendData">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="CashFlowBaseDataID" ColumnName="CashFlowBaseDataID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CashFlowInvoiceIncomeData">
+            <EntityTypeMapping TypeName="DbModel.CashFlowInvoiceIncomeData">
+              <MappingFragment StoreEntitySet="CashFlowInvoiceIncomeData">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="CashFlowBaseDataID" ColumnName="CashFlowBaseDataID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CashFlowPurchaseAmountData">
+            <EntityTypeMapping TypeName="DbModel.CashFlowPurchaseAmountData">
+              <MappingFragment StoreEntitySet="CashFlowPurchaseAmountData">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="CashFlowBaseDataID" ColumnName="CashFlowBaseDataID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CashFlowRefundData">
+            <EntityTypeMapping TypeName="DbModel.CashFlowRefundData">
+              <MappingFragment StoreEntitySet="CashFlowRefundData">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="CashFlowBaseDataID" ColumnName="CashFlowBaseDataID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CashFlowSaleIncomeData">
+            <EntityTypeMapping TypeName="DbModel.CashFlowSaleIncomeData">
+              <MappingFragment StoreEntitySet="CashFlowSaleIncomeData">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="CashFlowBaseDataID" ColumnName="CashFlowBaseDataID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CashFlowShippingFeeData">
+            <EntityTypeMapping TypeName="DbModel.CashFlowShippingFeeData">
+              <MappingFragment StoreEntitySet="CashFlowShippingFeeData">
+                <ScalarProperty Name="LastModifiedBy" ColumnName="LastModifiedBy" />
+                <ScalarProperty Name="LastModifiedOn" ColumnName="LastModifiedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="CashFlowBaseDataID" ColumnName="CashFlowBaseDataID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

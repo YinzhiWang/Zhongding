@@ -33,5 +33,9 @@ namespace ZhongDing.Domain.UIObjects
         /// </summary>
         public string IconUrlOfGuarantee { get; set; }
 
+
+        public DateTime? GuaranteeExpirationDate { get; set; }
+
+        public decimal GuaranteeAmount { get; set; }
     }
 }

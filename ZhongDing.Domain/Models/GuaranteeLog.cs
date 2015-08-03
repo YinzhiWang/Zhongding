@@ -26,6 +26,8 @@ namespace ZhongDing.Domain.Models
         public Nullable<int> CreatedBy { get; set; }
         public Nullable<System.DateTime> LastModifiedOn { get; set; }
         public Nullable<int> LastModifiedBy { get; set; }
+        public int GuaranteeReceiptID { get; set; }
+        public System.DateTime GuaranteeReceiptDate { get; set; }
     
     	// Implements IEntityExtendedProperty
     	public string DefaultOrderColumnName { get { return "id"; } }
@@ -38,5 +40,6 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual ClientSaleApplication ClientSaleApplication { get; set; }
+        public virtual GuaranteeReceipt GuaranteeReceipt { get; set; }
     }
 }

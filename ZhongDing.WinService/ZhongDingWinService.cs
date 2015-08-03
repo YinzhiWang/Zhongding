@@ -339,11 +339,20 @@ namespace ZhongDing.WinService
 
             serviceTaskContainer.AddServiceTask(new CalculateBankAccountBalanceTask(new ServiceTaskParameter()
             {
-                DateIntervalType = DateInterval.Month,//Timer运行ProcessInterval间隔的单位
+                DateIntervalType = DateInterval.Hour,//Timer运行ProcessInterval间隔的单位
                 InitInterval = 10 * 1000,//Timer初始化运行间隔
-                ProcessInterval = WebConfig.CalculateBankAccountBalanceServiceInterval,//1 month 这个是Timer的运行间隔 如一个月运行一次 就设置为1
+                ProcessInterval = WebConfig.CalculateBankAccountBalanceServiceInterval,//24 hour 这个是Timer的运行间隔 如一个月运行一次 就设置为1
                 ServiceTaskName = "CalculateBankAccountBalanceTask",//任务名称
                 ServiceStartTime = WebConfig.CalculateBankAccountBalanceServiceStartTime,//2015-01-13 08:00  开始时间
+            }));
+
+            serviceTaskContainer.AddServiceTask(new CashFlowReportGenerateTask(new ServiceTaskParameter()
+            {
+                DateIntervalType = DateInterval.Hour,//Timer运行ProcessInterval间隔的单位
+                InitInterval = 10 * 1000,//Timer初始化运行间隔
+                ProcessInterval = WebConfig.CashFlowReportGenerateServiceInterval,//24 hour 这个是Timer的运行间隔 如一个月运行一次 就设置为1
+                ServiceTaskName = "CashFlowReportGenerateTask",//任务名称
+                ServiceStartTime = WebConfig.CashFlowReportGenerateServiceStartTime,//2015-01-13 08:00  开始时间
             }));
             serviceTaskContainer.Start();
             /// <summary>

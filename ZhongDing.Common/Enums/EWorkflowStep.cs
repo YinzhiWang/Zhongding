@@ -361,7 +361,7 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 新增 工资结算管理
         /// </summary>
-        NewSalarySettle=71,
+        NewSalarySettle = 71,
         /// <summary>
         /// 工资结算管理 行政审核
         /// </summary>
@@ -384,5 +384,32 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         EditSalarySettle = 76,
         
+
+        /// <summary>
+        /// 新增 报销申请单
+        /// </summary>
+        NewReimbursement = 77,
+        /// <summary>
+        /// 报销申请 部门主管审核
+        /// </summary>
+        AuditReimbursementByDeptManagers = 78,
+        /// <summary>
+        /// 报销申请 财务主管审核
+        /// </summary>
+        AuditReimbursementByTreasurers = 79,
+        /// <summary>
+        /// 报销申请 领导审核
+        /// </summary>
+        AuditReimbursementByManagers = 80,
+        /// <summary>
+        /// 报销申请 出纳支付
+        /// </summary>
+        PayReimbursement = 81,
+
+        /// <summary>
+        /// 修改 报销申请
+        /// </summary>
+        EditReimbursement = 82,
+
     }
 }

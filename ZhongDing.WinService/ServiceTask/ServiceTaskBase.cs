@@ -166,6 +166,7 @@ namespace ZhongDing.WinService.ServiceTask
             catch (Exception ex)
             {
                 this.OnException(this, ex);
+                LogConsole(ex.ToString());
             }
             finally
             {
@@ -184,9 +185,9 @@ namespace ZhongDing.WinService.ServiceTask
         {
             if (IsConsole)
             {
-                Console.WriteLine(DateTime.Now.ToString() + " " + log);
+                Console.WriteLine(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " " + log);
             }
-            Debug.WriteLine(DateTime.Now.ToString() + " " + log);
+            Debug.WriteLine(DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss fff") + " " + log);
             //LogHelper.WriteLog(new LogBaseEntity() { ActionDetail = "LogConsole", Message = log });
         }
         public virtual void OnStart()
@@ -195,9 +196,15 @@ namespace ZhongDing.WinService.ServiceTask
         { }
         public virtual void OnLoadEveryTimeEnd()
         { }
+        /// <summary>
+        /// Timer 自身的首次 任务执行
+        /// </summary>
         public virtual void OnloadFirst()
         {
         }
+        /// <summary>
+        /// Timer 自身的 第二次以及 以后的任务运行
+        /// </summary>
         public virtual void OnloadSecond()
         { }
         public virtual void OnStop()

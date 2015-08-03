@@ -14,5 +14,9 @@ namespace ZhongDing.Domain.UISearchObjects
         public string TransportCompanyName { get; set; }
 
         public string TransportCompanyNumber { get; set; }
+
+        public int UserID { get; set; }
+
+        public int? ReimbursementDetailID { get; set; }
     }
 }

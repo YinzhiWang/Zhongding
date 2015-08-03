@@ -166,7 +166,46 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 38 固定资产管理
         /// </summary>
-        FixedAssetsManagement = 38
-
+        FixedAssetsManagement = 38,
+        /// <summary>
+        /// 担保收款管理
+        /// </summary>
+        GuaranteeReceiptManagement = 39,
+        /// <summary>
+        /// 首页-库存提醒
+        /// </summary>
+        InventoryReminder = 40,
+        /// <summary>
+        /// 首页-保证金提醒
+        /// </summary>
+        CautionMoneyReminder = 41,
+        /// <summary>
+        /// 首页-货品资料过期提醒
+        /// </summary>
+        ProductInfoExpiredReminder = 42,
+        /// <summary>
+        /// 首页-客户资料过期提醒
+        /// </summary>
+        ClientInfoReminder = 43,
+        /// <summary>
+        /// 首页-供应商资料过期提醒
+        /// </summary>
+        SupplierInfoReminder = 44,
+        /// <summary>
+        /// 首页-货品过期提醒
+        /// </summary>
+        ProductExpiredReminder = 45,
+        /// <summary>
+        /// 首页-借款到期提醒
+        /// </summary>
+        BorrowMoneyExpiredReminder = 46,
+        /// <summary>
+        /// 首页-担保收款到期提醒
+        /// </summary>
+        GuaranteeReceiptExpiredReminder = 47,
+        /// <summary>
+        /// 每月现金流量情况表
+        /// </summary>
+        CashFlowReportManagement = 48
     }
 }

@@ -121,7 +121,18 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 工资结算管理 23
         /// </summary>
-        SalarySettleManagement = 23
+        SalarySettleManagement = 23,
+
+        /// <summary>
+        /// 担保收款管理
+        /// </summary>
+        GuaranteeReceiptManagement = 24,
+
+        /// <summary>
+        /// 费用报销管理 25
+        /// </summary>
+        ReimbursementManagement=25
+        
 
     }
 }

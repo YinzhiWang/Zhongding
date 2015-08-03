@@ -111,5 +111,11 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         ApprovedByAdministrations = 21,
 
+        /// <summary>
+        /// 领导审核通过
+        /// </summary>
+        ApprovedByManagers=22
+        
+
     }
 }

@@ -9,6 +9,7 @@ using ZhongDing.Common;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
+using ZhongDing.Common.Extension;
 
 namespace ZhongDing.Business.Repositories
 {
@@ -209,6 +210,30 @@ namespace ZhongDing.Business.Repositories
         {
             var item = DB.Supplier.Where(x => x.IsDeleted == false && x.SupplierName == supplierName).FirstOrDefault();
             return item;
+        }
+
+
+        public IList<UISupplierContact> GetContacts(int? supplyID)
+        {
+
+            IList<UISupplierContact> uiContacts = new List<UISupplierContact>();
+
+            if (supplyID.BiggerThanZero())
+            {
+                uiContacts = (from cic in DB.SupplierContact.Where(x => x.IsDeleted == false && x.SupplierID == supplyID)
+                              select new UISupplierContact()
+                                  {
+                                      ID = cic.ID,
+                                      SupplierID = cic.SupplierID,
+                                      ContactName = cic.ContactName,
+                                      PhoneNumber = cic.PhoneNumber,
+                                      Address = cic.Address,
+                                      Comment = cic.Comment
+                                  }).ToList();
+            }
+
+            return uiContacts;
+
         }
     }
 }

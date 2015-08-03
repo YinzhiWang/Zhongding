@@ -49,5 +49,19 @@ namespace ZhongDing.WinServiceTest
             CalculateBankAccountBalanceService.ProcessWork();
         }
 
+        private void btn权限判断测试_Click(object sender, EventArgs e)
+        {
+            //4
+            var _4 = PermissionManager.ConverEnum(4);
+            var _7 = PermissionManager.ConverEnum(7);
+
+
+        }
+
+        private void btn现金流计算_Click(object sender, EventArgs e)
+        {
+            CashFlowReportGenerateService.ProcessWork();
+        }
+
     }
 }

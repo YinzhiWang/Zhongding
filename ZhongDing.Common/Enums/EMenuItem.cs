@@ -83,6 +83,10 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         FixedAssetsManage = 17,
         /// <summary>
+        /// 报销类型管理
+        /// </summary>
+        ReimbursementManage = 18,
+        /// <summary>
         /// 货品信息管理
         /// </summary>
         ProductInfoManage = 20,
@@ -177,11 +181,16 @@ namespace ZhongDing.Common.Enums
         /// 大包订单出库单管理
         /// </summary>
         DBOrderStockOutManage,
-        //担保收款
+
+        /// <summary>
+        /// //担保收款
+        /// </summary>
+        GuaranteeReceiptManage = 66,
         /// <summary>
         /// 物流费用管理  出库
         /// </summary>
         TransportFeeManage_StockOut = 67,
+
 
         /// <summary>
         /// 返款管理
@@ -284,6 +293,11 @@ namespace ZhongDing.Common.Enums
         /// 采购计划报表
         /// </summary>
         ProcurePlanReportManage,
+
+        /// <summary>
+        /// 现金流 报表
+        /// </summary>
+        CashFlowReportManage = 117,
 
         /// <summary>
         /// 库存汇总表

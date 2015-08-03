@@ -477,7 +477,7 @@ namespace ZhongDing.Web.Views.CautionMoneys
                     this.Master.BaseNotification.OnClientHidden = "redirectClientCautionMoneyMaintenancePage";
                     this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
                     this.Master.BaseNotification.AutoCloseDelay = 1000;
-                    this.Master.BaseNotification.Show("您没有权限新增客户订单");
+                    this.Master.BaseNotification.Show("您没有此权限");
                 }
             }
         }
@@ -718,7 +718,7 @@ namespace ZhongDing.Web.Views.CautionMoneys
                     //this.Master.BaseNotification.OnClientHidden = "redirectClientCautionMoneyMaintenancePage";
                     this.Master.BaseNotification.ContentIcon = GlobalConst.NotificationSettings.CONTENT_ICON_ERROR;
                     this.Master.BaseNotification.AutoCloseDelay = 1000;
-                    this.Master.BaseNotification.Show("申请退回金额不能大于未退保证金￥"+uiClientCautionMoney.NotReturnCautionMoney.ToString("f2")+"");
+                    this.Master.BaseNotification.Show("申请退回金额不能大于未退保证金￥" + uiClientCautionMoney.NotReturnCautionMoney.ToString("f2") + "");
                     return;
                 }
                 txtNotReturnCautionMoney.Value = uiClientCautionMoney.NotReturnCautionMoney.ToDoubleOrNull();

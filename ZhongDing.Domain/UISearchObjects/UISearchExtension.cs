@@ -90,6 +90,8 @@ namespace ZhongDing.Domain.UISearchObjects
         /// 保证金类别
         /// </summary>
         public int CautionMoneyTypeCategory { get; set; }
-      
+
+
+        public int? ParentID { get; set; }
     }
 }

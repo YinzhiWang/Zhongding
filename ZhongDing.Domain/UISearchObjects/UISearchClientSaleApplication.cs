@@ -16,5 +16,21 @@ namespace ZhongDing.Domain.UISearchObjects
 
 
         public bool? IsImport { get; set; }
+
+        public bool OnlyFilterID { get; set; }
+
+        public IEnumerable<int> IncludeIDs { get; set; }
+
+        public IEnumerable<int> UnIncludeIDs { get; set; }
+
+        public bool OnlyNotReceipted { get; set; }
+
+        public DateTime? GuaranteeExpirationDateBeginDate { get; set; }
+
+        public DateTime? GuaranteeExpirationDateEndDate { get; set; }
+
+        public bool NeedGuaranteeAmount { get; set; }
+
+        public bool? IsGuaranteed { get; set; }
     }
 }
