@@ -48,11 +48,11 @@ namespace ZhongDing.Domain.Models
     
         public virtual ClientCompany ClientCompany { get; set; }
         public virtual DeptMarket DeptMarket { get; set; }
-        public virtual Hospital Hospital { get; set; }
         public virtual HospitalType HospitalType { get; set; }
         public virtual ImportFileLog ImportFileLog { get; set; }
         public virtual Product Product { get; set; }
         public virtual ProductSpecification ProductSpecification1 { get; set; }
         public virtual ClientUser ClientUser { get; set; }
+        public virtual Hospital Hospital { get; set; }
     }
 }

@@ -8,6 +8,7 @@ using ZhongDing.Business.IRepositories;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
+using ZhongDing.Common.Extension;
 
 namespace ZhongDing.Business.Repositories
 {
@@ -62,6 +63,10 @@ namespace ZhongDing.Business.Repositories
 
                 if (!string.IsNullOrEmpty(uiSearchObj.HospitalName))
                     whereFuncs.Add(x => x.HospitalName.Contains(uiSearchObj.HospitalName));
+                if (uiSearchObj.HospitalCodeID.BiggerThanZero())
+                {
+                    whereFuncs.Add(x => x.HospitalCodeID == uiSearchObj.HospitalCodeID);
+                }
             }
 
             query = GetList(pageIndex, pageSize, whereFuncs, out total);

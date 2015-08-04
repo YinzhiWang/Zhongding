@@ -464,6 +464,7 @@
     <Build Include="dbo\Tables\CashFlowDaBaoRefundData.sql" />
     <Build Include="dbo\Tables\CashFlowClientRefundData.sql" />
     <Build Include="dbo\Tables\CashFlowBaseData.sql" />
+    <Build Include="dbo\Tables\HospitalCode.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\Post-Deployment\Script.PostDeployment.sql" />

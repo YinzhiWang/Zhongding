@@ -87,6 +87,10 @@ namespace ZhongDing.Common.Enums
         /// </summary>
         ReimbursementManage = 18,
         /// <summary>
+        /// 医院管理
+        /// </summary>
+        HospitalManage = 19,
+        /// <summary>
         /// 货品信息管理
         /// </summary>
         ProductInfoManage = 20,

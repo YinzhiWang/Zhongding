@@ -2589,6 +2589,9 @@
     <Content Include="Views\Basics\ClientInfoProductFlowManagement.aspx" />
     <Content Include="Views\Basics\BorrowMoneyMaintenance.aspx" />
     <Content Include="Views\Basics\BorrowMoneyManagement.aspx" />
+    <Content Include="Views\Basics\Editors\HospitalMaintenance.aspx" />
+    <Content Include="Views\Basics\HospitalCodeMaintenance.aspx" />
+    <Content Include="Views\Basics\HospitalCodeManagement.aspx" />
     <Content Include="Views\Basics\Editors\ReimbursementDetailMaintenance.aspx" />
     <Content Include="Views\Basics\ReimbursementMaintenance.aspx" />
     <Content Include="Views\Basics\ReimbursementManagement.aspx" />
@@ -3043,6 +3046,27 @@
     </Compile>
     <Compile Include="Views\Basics\BorrowMoneyManagement.aspx.designer.cs">
       <DependentUpon>BorrowMoneyManagement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\Editors\HospitalMaintenance.aspx.cs">
+      <DependentUpon>HospitalMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\Editors\HospitalMaintenance.aspx.designer.cs">
+      <DependentUpon>HospitalMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\HospitalCodeMaintenance.aspx.cs">
+      <DependentUpon>HospitalCodeMaintenance.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\HospitalCodeMaintenance.aspx.designer.cs">
+      <DependentUpon>HospitalCodeMaintenance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Basics\HospitalCodeManagement.aspx.cs">
+      <DependentUpon>HospitalCodeManagement.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Basics\HospitalCodeManagement.aspx.designer.cs">
+      <DependentUpon>HospitalCodeManagement.aspx</DependentUpon>
     </Compile>
     <Compile Include="Views\Basics\Editors\ReimbursementDetailMaintenance.aspx.cs">
       <DependentUpon>ReimbursementDetailMaintenance.aspx</DependentUpon>

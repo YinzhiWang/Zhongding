@@ -17,14 +17,15 @@ namespace ZhongDing.Domain.Models
     {
         public Hospital()
         {
+            this.ClientFlowData = new HashSet<ClientFlowData>();
+            this.DBClientBonusHospital = new HashSet<DBClientBonusHospital>();
             this.DBContractHospital = new HashSet<DBContractHospital>();
             this.DCFlowData = new HashSet<DCFlowData>();
             this.DCFlowDataDetail = new HashSet<DCFlowDataDetail>();
-            this.ClientFlowData = new HashSet<ClientFlowData>();
-            this.DBClientBonusHospital = new HashSet<DBClientBonusHospital>();
         }
     
         public int ID { get; set; }
+        public Nullable<int> HospitalCodeID { get; set; }
         public string HospitalName { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
@@ -42,10 +43,11 @@ namespace ZhongDing.Domain.Models
     	public bool HasColumnLastModifiedBy { get { return true; } }
     
     
+        public virtual ICollection<ClientFlowData> ClientFlowData { get; set; }
+        public virtual ICollection<DBClientBonusHospital> DBClientBonusHospital { get; set; }
         public virtual ICollection<DBContractHospital> DBContractHospital { get; set; }
         public virtual ICollection<DCFlowData> DCFlowData { get; set; }
         public virtual ICollection<DCFlowDataDetail> DCFlowDataDetail { get; set; }
-        public virtual ICollection<ClientFlowData> ClientFlowData { get; set; }
-        public virtual ICollection<DBClientBonusHospital> DBClientBonusHospital { get; set; }
+        public virtual HospitalCode HospitalCode { get; set; }
     }
 }

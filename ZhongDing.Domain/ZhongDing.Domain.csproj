@@ -323,6 +323,9 @@
     <Compile Include="Models\Hospital.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\HospitalCode.cs">
+      <DependentUpon>DbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\HospitalType.cs">
       <DependentUpon>DbModel.tt</DependentUpon>
     </Compile>
@@ -631,6 +634,7 @@
     <Compile Include="UIObjects\UIGuaranteeReceipt.cs" />
     <Compile Include="UIObjects\UIGuaranteeReceiptExpiredReminder.cs" />
     <Compile Include="UIObjects\UIHospital.cs" />
+    <Compile Include="UIObjects\UIHospitalCode.cs" />
     <Compile Include="UIObjects\UIImportErrorLog.cs" />
     <Compile Include="UIObjects\UIImportFileLog.cs" />
     <Compile Include="UIObjects\UIInventoryHistory.cs" />
@@ -714,6 +718,7 @@
     <Compile Include="UISearchObjects\UISearchFixedAssets.cs" />
     <Compile Include="UISearchObjects\UISearchGuaranteeReceipt.cs" />
     <Compile Include="UISearchObjects\UISearchGuaranteeReceiptExpiredReminder.cs" />
+    <Compile Include="UISearchObjects\UISearchHospitalCode.cs" />
     <Compile Include="UISearchObjects\UISearchInventoryReminder.cs" />
     <Compile Include="UISearchObjects\UISearchProcureOrderAppDetailImportData.cs" />
     <Compile Include="UISearchObjects\UISearchClientAttachedInvoiceSettlement.cs" />

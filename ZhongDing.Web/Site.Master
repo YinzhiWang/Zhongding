@@ -84,6 +84,7 @@
                                     <li data-level="2" data-menuitemid="18" data-permissionworkflowname="费用报销管理"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/ReimbursementManagement.aspx');">费用报销管理</a></li>
                                     <li data-level="2" data-menuitemid="16" data-permissionname="借款管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/BorrowMoneyManagement.aspx');">借款管理</a></li>
                                     <li data-level="2" data-menuitemid="17" data-permissionname="固定资产管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/FixedAssetsManagement.aspx');">固定资产管理</a></li>
+                                    <li data-level="2" data-menuitemid="19" data-permissionname="医院管理" data-permissionoptionname="Edit"><a href="javascript:void(0);" onclick="redirectToPage('Views/Basics/HospitalCodeManagement.aspx');">医院管理</a></li>
 
 
                                 </ul>
@@ -375,7 +376,8 @@
                     45: "首页-货品过期提醒",
                     46: "首页-借款到期提醒",
                     47: "首页-担保收款到期提醒",
-                    48: "每月现金流量情况表"
+                    48: "每月现金流量情况表",
+                    49: "医院管理"
                 };
                 var EWorkflow = {
                     1: "采购订单",

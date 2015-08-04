@@ -51,10 +51,10 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual DistributionCompany DistributionCompany { get; set; }
-        public virtual Hospital Hospital { get; set; }
         public virtual ImportFileLog ImportFileLog { get; set; }
         public virtual Product Product { get; set; }
         public virtual ProductSpecification ProductSpecification1 { get; set; }
         public virtual ICollection<DCFlowDataDetail> DCFlowDataDetail { get; set; }
+        public virtual Hospital Hospital { get; set; }
     }
 }

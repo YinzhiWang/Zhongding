@@ -1470,3 +1470,15 @@ INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete
 ALTER TABLE [dbo].[UserGroupPermission] WITH NOCHECK ADD CONSTRAINT [FK_UserGroupPermission_PermissionID] FOREIGN KEY ([PermissionID]) REFERENCES [dbo].[Permission] ([ID])
 COMMIT TRANSACTION
 ---- end --- 07/20/2015 -- 初始化(每月现金流量情况表) -- by Nwang
+
+
+
+---- start --- 08/04/2015 -- 初始化(医院管理) -- by Nwang
+BEGIN TRANSACTION
+ALTER TABLE [dbo].[UserGroupPermission] DROP CONSTRAINT [FK_UserGroupPermission_PermissionID]
+GO
+INSERT INTO [dbo].[Permission] ([ID], [Name], [HasCreate], [HasEdit], [HasDelete], [HasView], [HasPrint], [HasExport], [IsDeleted], [CreatedOn], [CreatedBy], [LastModifiedOn], [LastModifiedBy]) VALUES (49, N'医院管理', 1, 1, 1, 0, 0, 0, 0, '2015-08-04 13:14:18.157', NULL, NULL, NULL)
+GO
+ALTER TABLE [dbo].[UserGroupPermission] WITH NOCHECK ADD CONSTRAINT [FK_UserGroupPermission_PermissionID] FOREIGN KEY ([PermissionID]) REFERENCES [dbo].[Permission] ([ID])
+COMMIT TRANSACTION
+---- end --- 08/04/2015 -- 初始化(医院管理) -- by Nwang

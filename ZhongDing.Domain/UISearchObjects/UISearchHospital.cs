@@ -11,5 +11,7 @@ namespace ZhongDing.Domain.UISearchObjects
         public int DBContractID { get; set; }
 
         public string HospitalName { get; set; }
+
+        public int? HospitalCodeID { get; set; }
     }
 }

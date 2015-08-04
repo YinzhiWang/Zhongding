@@ -42,7 +42,7 @@
                         </div>
                     </div>
                     <div class="rgUserGroupPermissions">
-                        <telerik:RadGrid ID="rgUserGroupPermissions" runat="server" PageSize="10"
+                        <telerik:RadGrid ID="rgUserGroupPermissions" runat="server" PageSize="100"
                             AllowPaging="True" AllowCustomPaging="true" AllowSorting="True" AutoGenerateColumns="false"
                             MasterTableView-PagerStyle-AlwaysVisible="true" Skin="Silk" Width="99.8%" ShowHeader="true"
                             ClientSettings-ClientEvents-OnRowMouseOver="onRowMouseOver" ClientSettings-ClientEvents-OnRowMouseOut="onRowMouseOut"

@@ -66,6 +66,7 @@
     <Compile Include="IRepositories\IFixedAssetsTypeRepository.cs" />
     <Compile Include="IRepositories\IGuaranteeLogRepository.cs" />
     <Compile Include="IRepositories\IGuaranteeReceiptRepository.cs" />
+    <Compile Include="IRepositories\IHospitalCodeRepository.cs" />
     <Compile Include="IRepositories\IProcureOrderAppDetailImportDataRepository.cs" />
     <Compile Include="IRepositories\IClientAttachedInvoiceSettlementDetailRepository.cs" />
     <Compile Include="IRepositories\ICautionMoneyTypeRepository.cs" />
@@ -240,6 +241,7 @@
     <Compile Include="Repositories\FixedAssetsTypeRepository.cs" />
     <Compile Include="Repositories\GuaranteeLogRepository.cs" />
     <Compile Include="Repositories\GuaranteeReceiptRepository.cs" />
+    <Compile Include="Repositories\HospitalCodeRepository.cs" />
     <Compile Include="Repositories\PermissionRepository.cs" />
     <Compile Include="Repositories\ReimbursementDetailRepository.cs" />
     <Compile Include="Repositories\ReimbursementDetailTransportFeeRepository.cs" />

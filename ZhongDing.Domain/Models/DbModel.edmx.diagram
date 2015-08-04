@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="85e6c93c719943c78d71edfd0be34866" Name="Diagram1" ZoomLevel="106">
+      <Diagram DiagramId="85e6c93c719943c78d71edfd0be34866" Name="Diagram1" ZoomLevel="65">
         <EntityTypeShape EntityType="DbModel.AccountType" Width="1.5" PointX="0.75" PointY="142.75" />
         <EntityTypeShape EntityType="DbModel.aspnet_Membership" Width="1.5" PointX="3.75" PointY="95.25" />
         <EntityTypeShape EntityType="DbModel.aspnet_Roles" Width="1.5" PointX="0.75" PointY="1.375" />
@@ -89,8 +89,6 @@
         <AssociationConnector Association="DbModel.FK_SupplierContractFile_SupplierContract" />
         <AssociationConnector Association="DbModel.FK_SupplierTaskAssignment_SupplierContract" />
         <EntityTypeShape EntityType="DbModel.DBContractHospital" Width="1.5" PointX="21.75" PointY="170.375" />
-        <EntityTypeShape EntityType="DbModel.Hospital" Width="1.5" PointX="23.5" PointY="130.375" />
-        <AssociationConnector Association="DbModel.FK_DBContractHospital_Hospital" />
         <EntityTypeShape EntityType="DbModel.WorkflowStepUser" Width="1.5" PointX="16.5" PointY="134.125" />
         <AssociationConnector Association="DbModel.FK_WorkflowStepUser_Users" />
         <EntityTypeShape EntityType="DbModel.WorkflowStep" Width="1.5" PointX="5.25" PointY="185.625" />
@@ -213,12 +211,10 @@
         <EntityTypeShape EntityType="DbModel.DCFlowDataDetail" Width="1.5" PointX="23.75" PointY="162.125" />
         <EntityTypeShape EntityType="DbModel.ImportFileLog" Width="1.5" PointX="23.5" PointY="179.375" />
         <AssociationConnector Association="DbModel.FK_DCFlowData_DistributionCompany" />
-        <AssociationConnector Association="DbModel.FK_DCFlowData_Hospital" />
         <AssociationConnector Association="DbModel.FK_DCFlowData_ImportFileLog" />
         <AssociationConnector Association="DbModel.FK_DCFlowData_Product" />
         <AssociationConnector Association="DbModel.FK_DCFlowData_ProductSpecification" />
         <AssociationConnector Association="DbModel.FK_DCFlowDataDetail_DCFlowData" />
-        <AssociationConnector Association="DbModel.FK_DCFlowDataDetail_Hospital" />
         <AssociationConnector Association="DbModel.FK_ImportFileLog_ImportDataType" />
         <AssociationConnector Association="DbModel.FK_ImportErrorLog_ImportFileLog" />
         <AssociationConnector Association="DbModel.FK_ImportFileLog_ImportStatus" />
@@ -231,7 +227,6 @@
         <EntityTypeShape EntityType="DbModel.HospitalType" Width="1.5" PointX="11.25" PointY="180.875" />
         <AssociationConnector Association="DbModel.FK_ClientFlowData_ClientCompany" />
         <AssociationConnector Association="DbModel.FK_ClientFlowData_DeptMarket" />
-        <AssociationConnector Association="DbModel.FK_ClientFlowData_Hospital" />
         <AssociationConnector Association="DbModel.FK_ClientFlowData_HospitalType" />
         <AssociationConnector Association="DbModel.FK_ClientFlowData_ImportFileLog" />
         <AssociationConnector Association="DbModel.FK_ClientFlowData_Product" />
@@ -263,7 +258,6 @@
         <AssociationConnector Association="DbModel.FK_DBClientBonus_Product" />
         <AssociationConnector Association="DbModel.FK_DBClientBonus_ProductSpecification" />
         <AssociationConnector Association="DbModel.FK_DBClientBonusHospital_DBClientBonus" />
-        <AssociationConnector Association="DbModel.FK_DBClientBonusHospital_Hospital" />
         <AssociationConnector Association="DbModel.FK_DBContract_Department" />
         <AssociationConnector Association="DbModel.FK_DBContract_HospitalType" />
         <AssociationConnector Association="DbModel.FK_DBContract_Product" />
@@ -497,6 +491,14 @@
         <AssociationConnector Association="DbModel.FK_CashFlowRefundData_CompanyID" />
         <AssociationConnector Association="DbModel.FK_CashFlowSaleIncomeData_CompanyID" />
         <AssociationConnector Association="DbModel.FK_CashFlowShippingFeeData_CompanyID" />
+        <EntityTypeShape EntityType="DbModel.Hospital" Width="1.5" PointX="0.11921929014810327" PointY="10.174756278365271" />
+        <EntityTypeShape EntityType="DbModel.HospitalCode" Width="1.5" PointX="1.71904075039506" PointY="0.18002115198412033" />
+        <AssociationConnector Association="DbModel.FK_ClientFlowData_Hospital" />
+        <AssociationConnector Association="DbModel.FK_DBClientBonusHospital_Hospital" />
+        <AssociationConnector Association="DbModel.FK_DBContractHospital_Hospital" />
+        <AssociationConnector Association="DbModel.FK_DCFlowData_Hospital" />
+        <AssociationConnector Association="DbModel.FK_DCFlowDataDetail_Hospital" />
+        <AssociationConnector Association="DbModel.FK_Hospital_HospitalCodeID" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

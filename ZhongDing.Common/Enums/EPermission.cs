@@ -206,6 +206,10 @@ namespace ZhongDing.Common.Enums
         /// <summary>
         /// 每月现金流量情况表
         /// </summary>
-        CashFlowReportManagement = 48
+        CashFlowReportManagement = 48,
+        /// <summary>
+        /// 医院管理
+        /// </summary>
+        HospitalManagement = 49
     }
 }
