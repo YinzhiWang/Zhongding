@@ -59,7 +59,7 @@
                                         <telerik:GridBoundColumn UniqueName="ID" HeaderText="ID" DataField="ID" Visible="false">
                                             <ItemStyle HorizontalAlign="Left" Width="50" />
                                         </telerik:GridBoundColumn>
-                                        <telerik:GridBoundColumn UniqueName="HospitalName" HeaderText="医院名称" DataField="HospitalName">
+                                        <telerik:GridBoundColumn UniqueName="Code" HeaderText="医院名称" DataField="Code">
                                             <ItemStyle HorizontalAlign="Left" />
                                         </telerik:GridBoundColumn>
                                       <%--  <telerik:GridBoundColumn UniqueName="Comment" HeaderText="备注" DataField="Comment">
