@@ -17,7 +17,7 @@ namespace ZhongDing.Domain.Models
     {
         public int ID { get; set; }
         public int DBContractID { get; set; }
-        public int HospitalID { get; set; }
+        public int HospitalCodeID { get; set; }
         public bool IsDeleted { get; set; }
         public System.DateTime CreatedOn { get; set; }
         public Nullable<int> CreatedBy { get; set; }
@@ -35,6 +35,6 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual DBContract DBContract { get; set; }
-        public virtual Hospital Hospital { get; set; }
+        public virtual HospitalCode HospitalCode { get; set; }
     }
 }

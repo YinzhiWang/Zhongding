@@ -39,7 +39,7 @@ namespace ZhongDing.Business.Repositories
                               select new UIHospital()
                               {
                                   ID = q.ID,
-                                  HospitalName = q.HospitalName
+                                  Code = q.HospitalName
                               }).ToList();
             }
 
@@ -77,7 +77,7 @@ namespace ZhongDing.Business.Repositories
                               select new UIHospital()
                               {
                                   ID = q.ID,
-                                  HospitalName = q.HospitalName
+                                  Code = q.HospitalName
                               }).ToList();
             }
 

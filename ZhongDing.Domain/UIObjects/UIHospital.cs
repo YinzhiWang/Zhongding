@@ -8,6 +8,6 @@ namespace ZhongDing.Domain.UIObjects
 {
     public class UIHospital : UIBase
     {
-        public string HospitalName { get; set; }
+        public string Code { get; set; }
     }
 }

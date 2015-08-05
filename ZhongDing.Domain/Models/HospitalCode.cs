@@ -18,6 +18,7 @@ namespace ZhongDing.Domain.Models
         public HospitalCode()
         {
             this.Hospital = new HashSet<Hospital>();
+            this.DBContractHospital = new HashSet<DBContractHospital>();
         }
     
         public int ID { get; set; }
@@ -40,5 +41,6 @@ namespace ZhongDing.Domain.Models
     
     
         public virtual ICollection<Hospital> Hospital { get; set; }
+        public virtual ICollection<DBContractHospital> DBContractHospital { get; set; }
     }
 }

@@ -182,8 +182,6 @@ namespace ZhongDing.Web.Views.Basics
                 PageHospitalRepository.Save();
                 rgHospitals.Rebind();
             }
-
-           
         }
 
         protected void rgHospitals_ItemCreated(object sender, Telerik.Web.UI.GridItemEventArgs e)

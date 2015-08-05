@@ -8,7 +8,7 @@ using ZhongDing.Domain.UIObjects;
 
 namespace ZhongDing.Business.IRepositories
 {
-    public interface IHospitalCodeRepository : IBaseRepository<HospitalCode>
+    public interface IHospitalCodeRepository : IBaseRepository<HospitalCode>, IGenerateDropdownItems
     {
         IList<UIHospitalCode> GetUIList(Domain.UISearchObjects.UISearchHospitalCode uiSearchObj, int pageIndex, int pageSize, out int totalRecords);
     }

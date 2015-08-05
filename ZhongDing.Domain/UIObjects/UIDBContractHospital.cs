@@ -10,6 +10,6 @@ namespace ZhongDing.Domain.UIObjects
     {
         public int DBContractID { get; set; }
 
-        public int HospitalID { get; set; }
+        public int HospitalCodeID { get; set; }
     }
 }

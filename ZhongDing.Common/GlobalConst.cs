@@ -752,5 +752,13 @@ namespace ZhongDing.Common
 
         public static string REIMBURSEMENTTYPE_TRANSPORTFEE = "物流费用";
         public static string REIMBURSEMENTTYPE_EVECTION = "出差";
+        /// <summary>
+        /// 0 要查询出所有数据，默认设置是0  就是第一页
+        /// </summary>
+        public static int DEFAULT_QUERY_PAGE_INDEX = 0;
+        /// <summary>
+        /// 10000000 要查询出所有数据，为了方便可以查询前1000 0000的数据 绝对满足需要，数据不可能有这么多
+        /// </summary>
+        public static int DEFAULT_QUERY_PAGE_MAX_COUNT = 10000000;
     }
 }

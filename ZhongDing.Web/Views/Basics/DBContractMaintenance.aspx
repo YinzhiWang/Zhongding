@@ -228,16 +228,16 @@
                                                     </telerik:GridBoundColumn>
                                                     <telerik:GridTemplateColumn UniqueName="HospitalName" HeaderText="医院名称" DataField="HospitalName" SortExpression="HospitalName">
                                                         <ItemTemplate>
-                                                            <span><%# Eval("HospitalName") %></span>
+                                                            <span><%# Eval("Code") %></span>
                                                         </ItemTemplate>
                                                         <EditItemTemplate>
                                                             <div id="divGridCombox">
-                                                                <telerik:RadComboBox runat="server" ID="rcbxHospital" Filter="Contains" AllowCustomText="true"
+                                                                <telerik:RadComboBox runat="server" ID="rcbxHospital" Filter="Contains" 
                                                                     MarkFirstMatch="true" Height="160px" Width="50%" EmptyMessage="--请选择--"
                                                                     OnClientBlur="onClientBlur" OnClientSelectedIndexChanged="onClientSelectedChanged">
                                                                 </telerik:RadComboBox>
                                                             </div>
-                                                            <asp:RequiredFieldValidator ID="rfvHospitalName" runat="server" ErrorMessage="医院名称必填" CssClass="field-validation-error"
+                                                            <asp:RequiredFieldValidator ID="rfvHospitalName" runat="server" ErrorMessage="医院为必填，请选择" CssClass="field-validation-error"
                                                                 ControlToValidate="rcbxHospital"></asp:RequiredFieldValidator>
                                                             <asp:CustomValidator ID="cvHospitalName" runat="server" ControlToValidate="rcbxHospital" CssClass="field-validation-error"
                                                                 ErrorMessage="" OnServerValidate="cvHospitalName_ServerValidate"></asp:CustomValidator>

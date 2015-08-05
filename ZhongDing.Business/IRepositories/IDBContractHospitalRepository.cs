@@ -16,7 +16,7 @@ namespace ZhongDing.Business.IRepositories
         /// </summary>
         /// <param name="uiSearchObj">The UI search obj.</param>
         /// <returns>IList{UIDBContractHospital}.</returns>
-        IList<UIDBContractHospital> GetUIList(UISearchHospital uiSearchObj = null);
+        //IList<UIDBContractHospital> GetUIList(UISearchHospital uiSearchObj = null);
 
         /// <summary>
         /// 获取UI List，分页

@@ -8,6 +8,7 @@ using ZhongDing.Business.IRepositories;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UIObjects;
 using ZhongDing.Common.Extension;
+using ZhongDing.Domain.UISearchObjects;
 
 namespace ZhongDing.Business.Repositories
 {
@@ -56,13 +57,51 @@ namespace ZhongDing.Business.Repositories
 
                 foreach (var entity in uiEntities)
                 {
-                    entity.Names = string.Join("; ", entity.NameList);
+                    entity.Names = string.Join("；", entity.NameList);
                 }
             }
 
             totalRecords = total;
 
             return uiEntities;
+        }
+
+        public IList<UIDropdownItem> GetDropdownItems(UISearchDropdownItem uiSearchObj = null)
+        {
+            IList<UIDropdownItem> uiDropdownItems = new List<UIDropdownItem>();
+
+            List<Expression<Func<HospitalCode, bool>>> whereFuncs = new List<Expression<Func<HospitalCode, bool>>>();
+
+            if (uiSearchObj != null)
+            {
+                if (uiSearchObj.IncludeItemValues != null
+                    && uiSearchObj.IncludeItemValues.Count > 0)
+                    whereFuncs.Add(x => uiSearchObj.IncludeItemValues.Contains(x.ID));
+
+                if (uiSearchObj.ExcludeItemValues != null
+                    && uiSearchObj.ExcludeItemValues.Count > 0)
+                    whereFuncs.Add(x => !uiSearchObj.ExcludeItemValues.Contains(x.ID));
+
+                if (!string.IsNullOrEmpty(uiSearchObj.ItemText))
+                    whereFuncs.Add(x => x.Code.Contains(uiSearchObj.ItemText));
+            }
+
+            uiDropdownItems = GetList(whereFuncs).Select(x => new UIDropdownItem()
+            {
+                ItemValue = x.ID,
+                ItemText = x.Code
+            }).ToList();
+
+            foreach (var item in uiDropdownItems)
+            {
+                item.ItemText += "(" +
+
+               string.Join("；", DB.Hospital.Where(x => x.HospitalCodeID == item.ItemValue && x.IsDeleted == false).Select(x => x.HospitalName).ToList())
+
+                + ")";
+            }
+
+            return uiDropdownItems;
         }
     }
 }

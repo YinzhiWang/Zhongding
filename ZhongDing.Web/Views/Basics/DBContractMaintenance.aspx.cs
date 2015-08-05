@@ -13,6 +13,7 @@ using ZhongDing.Common.Enums;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UIObjects;
 using ZhongDing.Domain.UISearchObjects;
+using ZhongDing.Common.Extension;
 
 namespace ZhongDing.Web.Views.Basics
 {
@@ -82,15 +83,15 @@ namespace ZhongDing.Web.Views.Basics
             }
         }
 
-        private IHospitalRepository _PageHospitalRepository;
-        private IHospitalRepository PageHospitalRepository
+        private IHospitalCodeRepository _PageHospitalCodeRepository;
+        private IHospitalCodeRepository PageHospitalCodeRepository
         {
             get
             {
-                if (_PageHospitalRepository == null)
-                    _PageHospitalRepository = new HospitalRepository();
+                if (_PageHospitalCodeRepository == null)
+                    _PageHospitalCodeRepository = new HospitalCodeRepository();
 
-                return _PageHospitalRepository;
+                return _PageHospitalCodeRepository;
             }
         }
 
@@ -127,7 +128,7 @@ namespace ZhongDing.Web.Views.Basics
 
             if (!IsPostBack)
             {
-              
+
                 BindClientUsers();
 
                 BindDepartments();
@@ -469,10 +470,10 @@ namespace ZhongDing.Web.Views.Basics
                     {
                         uiSearchObj.ExcludeItemValues = this.CurrentEntity
                             .DBContractHospital.Where(x => x.IsDeleted == false && x.ID != id)
-                            .Select(x => x.HospitalID).ToList();
+                            .Select(x => x.HospitalCodeID).ToList();
                     }
 
-                    var hospitals = PageHospitalRepository.GetDropdownItems(uiSearchObj);
+                    var hospitals = PageHospitalCodeRepository.GetDropdownItems(uiSearchObj);
                     rcbxHospital.DataSource = hospitals;
                     rcbxHospital.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
                     rcbxHospital.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
@@ -481,7 +482,7 @@ namespace ZhongDing.Web.Views.Basics
                     if (e.Item.ItemIndex >= 0)
                     {
                         var uiEntity = (UIDBContractHospital)gridDataItem.DataItem;
-                        rcbxHospital.SelectedValue = uiEntity.HospitalID.ToString();
+                        rcbxHospital.SelectedValue = uiEntity.HospitalCodeID.ToString();
                     }
                 }
             }
@@ -516,13 +517,13 @@ namespace ZhongDing.Web.Views.Basics
                     {
                         int hospitalID;
                         if (int.TryParse(rcbxHospital.SelectedValue, out hospitalID))
-                            dBContractHospital.HospitalID = hospitalID;
+                            dBContractHospital.HospitalCodeID = hospitalID;
                     }
-                    else
-                    {
-                        Hospital hospital = new Hospital { HospitalName = hdnCurrentEditHospitalName.Value.Trim() };
-                        dBContractHospital.Hospital = hospital;
-                    }
+                    //else
+                    //{
+                    //    HospitalCode hospitalCode = new HospitalCode { HospitalName = hdnCurrentEditHospitalName.Value.Trim() };
+                    //    dBContractHospital.HospitalCode = hospitalCode;
+                    //}
 
                     this.CurrentEntity.DBContractHospital.Add(dBContractHospital);
 
@@ -553,13 +554,13 @@ namespace ZhongDing.Web.Views.Basics
                     {
                         int hospitalID;
                         if (int.TryParse(rcbxHospital.SelectedValue, out hospitalID))
-                            dBContractHospital.HospitalID = hospitalID;
+                            dBContractHospital.HospitalCodeID = hospitalID;
                     }
-                    else
-                    {
-                        Hospital hospital = new Hospital { HospitalName = hdnCurrentEditHospitalName.Value.Trim() };
-                        dBContractHospital.Hospital = hospital;
-                    }
+                    //else
+                    //{
+                    //    Hospital hospital = new Hospital { HospitalName = hdnCurrentEditHospitalName.Value.Trim() };
+                    //    dBContractHospital.Hospital = hospital;
+                    //}
 
                     PageDBContractHospitalRepository.Save();
                 }
@@ -569,14 +570,11 @@ namespace ZhongDing.Web.Views.Basics
         protected void rgHospitals_DeleteCommand(object sender, Telerik.Web.UI.GridCommandEventArgs e)
         {
             var editableItem = ((GridEditableItem)e.Item);
-            String sid = editableItem.GetDataKeyValue("ID").ToString();
-
-            int id = 0;
-            if (int.TryParse(sid, out id))
+            var id = editableItem.GetDataKeyValue("ID").ToIntOrNull();
+            if (id.BiggerThanZero())
             {
-                PageHospitalRepository.DeleteByID(id);
-                PageHospitalRepository.Save();
-
+                PageDBContractHospitalRepository.DeleteByID(id);
+                PageDBContractHospitalRepository.Save();
                 rgHospitals.Rebind();
             }
         }
@@ -595,7 +593,7 @@ namespace ZhongDing.Web.Views.Basics
                         if (PageDBContractHospitalRepository.GetList(x => x.DBContract != null
                             && x.DBContract.ProductID == CurrentEntity.ProductID
                             && x.DBContract.ProductSpecificationID == CurrentEntity.ProductSpecificationID
-                            && x.DBContract.DBContractHospital.Any(y => y.HospitalID == curEditHospitalID)).Count() > 0)
+                            && x.DBContract.DBContractHospital.Any(y => y.HospitalCodeID == curEditHospitalID)).Count() > 0)
                         {
                             if (cvHospitalName != null)
                                 cvHospitalName.ErrorMessage = "同一种货品和规格已关联过该医院，请重新选择";
@@ -605,15 +603,21 @@ namespace ZhongDing.Web.Views.Basics
                 }
                 else
                 {
-                    if (!string.IsNullOrEmpty(hdnCurrentEditHospitalName.Value))
+                    //if (!string.IsNullOrEmpty(hdnCurrentEditHospitalName.Value))
+                    //{
+                    //    if (PageHospitalRepository.GetList(x => x.HospitalName.ToLower()
+                    //        .Equals(args.Value.Trim().ToLower())).Count() > 0)
+                    //    {
+                    //        if (cvHospitalName != null)
+                    //            cvHospitalName.ErrorMessage = "医院名称已存在，请重新选择或输入";
+                    //        args.IsValid = false;
+                    //    }
+                    //}
+                    if (!hdnCurrentEditHospitalName.Value.ToIntOrNull().BiggerThanZero())
                     {
-                        if (PageHospitalRepository.GetList(x => x.HospitalName.ToLower()
-                            .Equals(args.Value.Trim().ToLower())).Count() > 0)
-                        {
-                            if (cvHospitalName != null)
-                                cvHospitalName.ErrorMessage = "医院名称已存在，请重新选择或输入";
-                            args.IsValid = false;
-                        }
+                        if (cvHospitalName != null)
+                            cvHospitalName.ErrorMessage = "医院为必填，请选择";
+                        args.IsValid = false;
                     }
                 }
             }

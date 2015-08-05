@@ -88,7 +88,6 @@
         <AssociationConnector Association="DbModel.FK_SupplierContract_Supplier" />
         <AssociationConnector Association="DbModel.FK_SupplierContractFile_SupplierContract" />
         <AssociationConnector Association="DbModel.FK_SupplierTaskAssignment_SupplierContract" />
-        <EntityTypeShape EntityType="DbModel.DBContractHospital" Width="1.5" PointX="21.75" PointY="170.375" />
         <EntityTypeShape EntityType="DbModel.WorkflowStepUser" Width="1.5" PointX="16.5" PointY="134.125" />
         <AssociationConnector Association="DbModel.FK_WorkflowStepUser_Users" />
         <EntityTypeShape EntityType="DbModel.WorkflowStep" Width="1.5" PointX="5.25" PointY="185.625" />
@@ -263,7 +262,6 @@
         <AssociationConnector Association="DbModel.FK_DBContract_Product" />
         <AssociationConnector Association="DbModel.FK_DBContract_ProductSpecification" />
         <AssociationConnector Association="DbModel.FK_DBContract_Users" />
-        <AssociationConnector Association="DbModel.FK_DBContractHospital_DBContract" />
         <AssociationConnector Association="DbModel.FK_DCFlowDataDetail_DBContract" />
         <EntityTypeShape EntityType="DbModel.ClientInvoiceDetail" Width="1.5" PointX="23" PointY="134.5" />
         <AssociationConnector Association="DbModel.FK_ClientInvoiceDetail_StockOutDetailID" />
@@ -495,10 +493,12 @@
         <EntityTypeShape EntityType="DbModel.HospitalCode" Width="1.5" PointX="1.71904075039506" PointY="0.18002115198412033" />
         <AssociationConnector Association="DbModel.FK_ClientFlowData_Hospital" />
         <AssociationConnector Association="DbModel.FK_DBClientBonusHospital_Hospital" />
-        <AssociationConnector Association="DbModel.FK_DBContractHospital_Hospital" />
         <AssociationConnector Association="DbModel.FK_DCFlowData_Hospital" />
         <AssociationConnector Association="DbModel.FK_DCFlowDataDetail_Hospital" />
         <AssociationConnector Association="DbModel.FK_Hospital_HospitalCodeID" />
+        <EntityTypeShape EntityType="DbModel.DBContractHospital" Width="1.5" PointX="0.38121384027470545" PointY="19.103392073467091" />
+        <AssociationConnector Association="DbModel.FK_DBContractHospital_DBContract" />
+        <AssociationConnector Association="DbModel.FK_DBContractHospital_HospitalCodeID" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

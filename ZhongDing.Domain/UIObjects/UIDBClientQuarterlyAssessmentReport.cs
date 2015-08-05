@@ -33,5 +33,9 @@ namespace ZhongDing.Domain.UIObjects
         public decimal RewardRate { get; set; }
 
         public decimal RewardAmount { get; set; }
+
+        public int HospitalCodeID { get; set; }
+
+        public string HospitalCode { get; set; }
     }
 }

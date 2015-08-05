@@ -18,9 +18,9 @@ namespace ZhongDing.Domain.Models
         public DBContract()
         {
             this.DBClientBonus = new HashSet<DBClientBonus>();
-            this.DBContractHospital = new HashSet<DBContractHospital>();
             this.DCFlowDataDetail = new HashSet<DCFlowDataDetail>();
             this.DBContractTaskAssignment = new HashSet<DBContractTaskAssignment>();
+            this.DBContractHospital = new HashSet<DBContractHospital>();
         }
     
         public int ID { get; set; }
@@ -58,9 +58,9 @@ namespace ZhongDing.Domain.Models
         public virtual Product Product { get; set; }
         public virtual ProductSpecification ProductSpecification { get; set; }
         public virtual Users Users { get; set; }
-        public virtual ICollection<DBContractHospital> DBContractHospital { get; set; }
         public virtual ICollection<DCFlowDataDetail> DCFlowDataDetail { get; set; }
         public virtual ClientUser ClientUser { get; set; }
         public virtual ICollection<DBContractTaskAssignment> DBContractTaskAssignment { get; set; }
+        public virtual ICollection<DBContractHospital> DBContractHospital { get; set; }
     }
 }

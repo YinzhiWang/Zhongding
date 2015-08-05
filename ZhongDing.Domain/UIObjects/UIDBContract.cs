@@ -17,7 +17,7 @@ namespace ZhongDing.Domain.UIObjects
         public string InChargeUser { get; set; }
         public bool? IsTempContract { get; set; }
         public DateTime? ContractExpDate { get; set; }
-        public IEnumerable<int> HospitalIDs { get; set; }
+        public IEnumerable<int> HospitalCodeIDs { get; set; }
         public string HospitalNames { get; set; }
     }
 }

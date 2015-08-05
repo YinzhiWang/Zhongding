@@ -13,43 +13,43 @@ namespace ZhongDing.Business.Repositories
 {
     public class DBContractHospitalRepository : BaseRepository<DBContractHospital>, IDBContractHospitalRepository
     {
-        public IList<UIDBContractHospital> GetUIList(UISearchHospital uiSearchObj = null)
-        {
-            IList<UIDBContractHospital> uiEntities = new List<UIDBContractHospital>();
+        //public IList<UIDBContractHospital> GetUIList(UISearchHospital uiSearchObj = null)
+        //{
+        //    IList<UIDBContractHospital> uiEntities = new List<UIDBContractHospital>();
 
-            IQueryable<DBContractHospital> query = null;
+        //    IQueryable<DBContractHospital> query = null;
 
-            List<Expression<Func<DBContractHospital, bool>>> whereFuncs = new List<Expression<Func<DBContractHospital, bool>>>();
+        //    List<Expression<Func<DBContractHospital, bool>>> whereFuncs = new List<Expression<Func<DBContractHospital, bool>>>();
 
-            if (uiSearchObj != null)
-            {
-                if (uiSearchObj.ID > 0)
-                    whereFuncs.Add(x => x.ID.Equals(uiSearchObj.ID));
+        //    if (uiSearchObj != null)
+        //    {
+        //        if (uiSearchObj.ID > 0)
+        //            whereFuncs.Add(x => x.ID.Equals(uiSearchObj.ID));
 
-                if (uiSearchObj.DBContractID > 0)
-                    whereFuncs.Add(x => x.DBContractID.Equals(uiSearchObj.DBContractID));
+        //        if (uiSearchObj.DBContractID > 0)
+        //            whereFuncs.Add(x => x.DBContractID.Equals(uiSearchObj.DBContractID));
 
-                if (!string.IsNullOrEmpty(uiSearchObj.HospitalName))
-                    whereFuncs.Add(x => x.Hospital != null && x.Hospital.HospitalName.Contains(uiSearchObj.HospitalName));
-            }
+        //        if (!string.IsNullOrEmpty(uiSearchObj.HospitalName))
+        //            whereFuncs.Add(x => x.Hospital != null && x.Hospital.HospitalName.Contains(uiSearchObj.HospitalName));
+        //    }
 
-            query = GetList(whereFuncs);
+        //    query = GetList(whereFuncs);
 
-            if (query != null)
-            {
-                uiEntities = (from q in query
-                              join h in DB.Hospital on q.HospitalID equals h.ID
-                              select new UIDBContractHospital()
-                              {
-                                  ID = q.ID,
-                                  DBContractID = q.DBContractID,
-                                  HospitalID = q.HospitalID,
-                                  HospitalName = h.HospitalName
-                              }).ToList();
-            }
+        //    if (query != null)
+        //    {
+        //        uiEntities = (from q in query
+        //                      join h in DB.Hospital on q.HospitalID equals h.ID
+        //                      select new UIDBContractHospital()
+        //                      {
+        //                          ID = q.ID,
+        //                          DBContractID = q.DBContractID,
+        //                          HospitalID = q.HospitalID,
+        //                          HospitalName = h.HospitalName
+        //                      }).ToList();
+        //    }
 
-            return uiEntities;
-        }
+        //    return uiEntities;
+        //}
 
         public IList<UIDBContractHospital> GetUIList(UISearchHospital uiSearchObj, int pageIndex, int pageSize, out int totalRecords)
         {
@@ -69,8 +69,8 @@ namespace ZhongDing.Business.Repositories
                 if (uiSearchObj.DBContractID > 0)
                     whereFuncs.Add(x => x.DBContractID.Equals(uiSearchObj.DBContractID));
 
-                if (!string.IsNullOrEmpty(uiSearchObj.HospitalName))
-                    whereFuncs.Add(x => x.Hospital != null && x.Hospital.HospitalName.Contains(uiSearchObj.HospitalName));
+                //if (!string.IsNullOrEmpty(uiSearchObj.HospitalName))
+                //    whereFuncs.Add(x => x.Hospital != null && x.Hospital.HospitalName.Contains(uiSearchObj.HospitalName));
             }
 
             query = GetList(pageIndex, pageSize, whereFuncs, out total);
@@ -78,14 +78,21 @@ namespace ZhongDing.Business.Repositories
             if (query != null)
             {
                 uiEntities = (from q in query
-                              join h in DB.Hospital on q.HospitalID equals h.ID
+                              join h in DB.HospitalCode on q.HospitalCodeID equals h.ID
                               select new UIDBContractHospital()
                               {
                                   ID = q.ID,
                                   DBContractID = q.DBContractID,
-                                  HospitalID = q.HospitalID,
-                                  HospitalName = h.HospitalName
+                                  HospitalCodeID = q.HospitalCodeID,
+                                  Code = h.Code
                               }).ToList();
+
+                foreach (var item in uiEntities)
+                {
+                    item.Code += "(" +
+                        string.Join("；", DB.Hospital.Where(x => x.HospitalCodeID == item.HospitalCodeID && x.IsDeleted == false).Select(x => x.HospitalName).ToList())
+                        + ")";
+                }
             }
 
             totalRecords = total;

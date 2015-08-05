@@ -273,7 +273,7 @@ namespace ZhongDing.Business.Repositories.Imports
                                             {
                                                 dBContract = DBContractRepository.GetList(x =>
                                                     x.ProductID == product.ID && x.ProductSpecificationID == productSpecification.ID
-                                                    && x.DBContractHospital.Any(y => y.HospitalID == hospital.ID)).FirstOrDefault();
+                                                    && x.DBContractHospital.Any(y => y.HospitalCodeID == hospital.HospitalCodeID)).FirstOrDefault();
 
                                                 if (dBContract != null)
                                                     isMatchedContract = true;

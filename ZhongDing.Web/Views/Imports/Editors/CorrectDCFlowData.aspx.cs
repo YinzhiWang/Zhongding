@@ -172,6 +172,7 @@ namespace ZhongDing.Web.Views.Imports.Editors
                 var oldDCFlowData = this.CurrentOwnerEntity;
 
                 int hospitalID = int.Parse(rcbxHospital.SelectedValue);
+                Hospital hospital = PageHospitalRepository.GetByID(hospitalID);
                 string productCode = txtProductCode.Text.Trim();
                 string productName = txtProductName.Text.Trim();
                 string specification = txtSpecification.Text.Trim();
@@ -193,7 +194,7 @@ namespace ZhongDing.Web.Views.Imports.Editors
                     {
                         DBContract dBContract = PageDBContractRepository.GetList(x =>
                             x.ProductID == product.ID && x.ProductSpecificationID == productSpecification.ID
-                            && x.DBContractHospital.Any(y => y.HospitalID == hospitalID)).FirstOrDefault();
+                            && x.DBContractHospital.Any(y => y.HospitalCodeID == hospital.HospitalCodeID)).FirstOrDefault();
 
                         if (dBContract != null)
                         {

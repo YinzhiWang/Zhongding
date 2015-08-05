@@ -185,7 +185,7 @@ namespace ZhongDing.Web.Views.Imports.Editors
                                         DBContract dBContract = PageDBContractRepository.GetList(x =>
                                                x.ProductID == CurrentOwnerEntity.ProductID
                                                && x.ProductSpecificationID == CurrentOwnerEntity.ProductSpecificationID
-                                               && x.DBContractHospital.Any(y => y.HospitalID == hospital.ID)).FirstOrDefault();
+                                               && x.DBContractHospital.Any(y => y.HospitalCodeID == hospital.HospitalCodeID)).FirstOrDefault();
 
                                         if (dBContract != null)
                                         {
