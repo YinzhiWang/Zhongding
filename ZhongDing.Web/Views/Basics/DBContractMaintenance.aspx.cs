@@ -478,13 +478,15 @@ namespace ZhongDing.Web.Views.Basics
                     rcbxHospital.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
                     rcbxHospital.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
                     rcbxHospital.DataBind();
-
+                    rcbxHospital.Items.Insert(0, new RadComboBoxItem("", ""));
                     if (e.Item.ItemIndex >= 0)
                     {
                         var uiEntity = (UIDBContractHospital)gridDataItem.DataItem;
                         rcbxHospital.SelectedValue = uiEntity.HospitalCodeID.ToString();
                     }
                 }
+                if (e.Item.ItemIndex == -1)
+                    hdnCurrentEditHospitalID.Value = "-1";
             }
         }
 
@@ -613,7 +615,7 @@ namespace ZhongDing.Web.Views.Basics
                     //        args.IsValid = false;
                     //    }
                     //}
-                    if (!hdnCurrentEditHospitalName.Value.ToIntOrNull().BiggerThanZero())
+                    if (!hdnCurrentEditHospitalID.Value.ToIntOrNull().BiggerThanZero())
                     {
                         if (cvHospitalName != null)
                             cvHospitalName.ErrorMessage = "医院为必填，请选择";
