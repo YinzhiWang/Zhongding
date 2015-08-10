@@ -44,6 +44,11 @@ namespace ZhongDing.Business.Repositories
                 {
                     whereFuncs.Add(x => x.SettleDate <= uiSearchObj.EndDate);
                 }
+
+                if (uiSearchObj.IncludeWorkflowStatusIDs != null)
+                {
+                    whereFuncs.Add(x => uiSearchObj.IncludeWorkflowStatusIDs.Contains(x.WorkflowStatusID));
+                }
             }
 
             query = GetList(pageIndex, pageSize, whereFuncs, out total);

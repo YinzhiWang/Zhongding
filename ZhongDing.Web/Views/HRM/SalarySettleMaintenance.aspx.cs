@@ -304,8 +304,9 @@ namespace ZhongDing.Web.Views.HRM
                             if (this.CanAccessUserIDs.Contains(CurrentUser.UserID))
                                 ShowAuditControls(true);
                             else
+                            {
                                 ShowAuditControls(false);
-
+                            }
                             #endregion
                             break;
 
@@ -476,7 +477,7 @@ namespace ZhongDing.Web.Views.HRM
         {
             divAudit.Visible = isShow;
             //divAppPayments.Visible = isShow;
-            divAuditAll.Visible = isShow;
+            //divAuditAll.Visible = isShow;
             btnAudit.Visible = isShow;
             btnReturn.Visible = isShow;
         }
