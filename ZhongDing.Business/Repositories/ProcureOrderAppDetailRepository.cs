@@ -124,7 +124,8 @@ namespace ZhongDing.Business.Repositories
                                   ProcureCount = q.ProcureCount,
                                   ProcurePrice = q.ProcurePrice,
                                   TotalAmount = q.TotalAmount,
-                                  TaxAmount = q.TaxAmount
+                                  TaxAmount = q.TaxAmount,
+                                  NumberOfPackages = (decimal)q.ProcureCount / (decimal)(ps.NumberInLargePackage.HasValue ? ps.NumberInLargePackage.Value : 1)
                               }).ToList();
             }
 
@@ -332,29 +333,29 @@ namespace ZhongDing.Business.Repositories
             if (query != null)
             {
                 var queryResult = (from q in query
-                              join procureOrderApplication in DB.ProcureOrderApplication on q.ProcureOrderApplicationID equals procureOrderApplication.ID
-                              join w in DB.Warehouse on q.WarehouseID equals w.ID
-                              join p in DB.Product on q.ProductID equals p.ID
-                              join ps in DB.ProductSpecification on q.ProductSpecificationID equals ps.ID
-                              join um in DB.UnitOfMeasurement on ps.UnitOfMeasurementID equals um.ID into tempUM
-                              from tum in tempUM.DefaultIfEmpty()
-                              select new UIProcureOrderAppDetail()
-                              {
-                                  ID = q.ID,
-                                  Warehouse = w.Name,
-                                  ProductName = p.ProductName,
-                                  Specification = ps.Specification,
-                                  LicenseNumber = ps.LicenseNumber,
-                                  UnitOfMeasurement = tum == null ? string.Empty : tum.UnitName,
-                                  ProcureCount = q.ProcureCount,
-                                  ProcurePrice = q.ProcurePrice,
-                                  TotalAmount = q.TotalAmount,
-                                  SupplierInvoiceDetailTotalAmount = DB.SupplierInvoiceDetail.Any(x => x.IsDeleted == false && x.ProcureOrderAppDetailID == q.ID) ?
-                                  DB.SupplierInvoiceDetail.Where(x => x.IsDeleted == false && x.ProcureOrderAppDetailID == q.ID).Sum(x => x.Amount) : 0,
-                                  TaxAmount = q.TaxAmount,
-                                  ProcureOrderApplicationOrderCode = procureOrderApplication.OrderCode,
-                                  ProcureOrderApplicationOrderDate = procureOrderApplication.OrderDate
-                              }).Where(x => x.SupplierInvoiceDetailTotalAmount < x.TaxAmount);
+                                   join procureOrderApplication in DB.ProcureOrderApplication on q.ProcureOrderApplicationID equals procureOrderApplication.ID
+                                   join w in DB.Warehouse on q.WarehouseID equals w.ID
+                                   join p in DB.Product on q.ProductID equals p.ID
+                                   join ps in DB.ProductSpecification on q.ProductSpecificationID equals ps.ID
+                                   join um in DB.UnitOfMeasurement on ps.UnitOfMeasurementID equals um.ID into tempUM
+                                   from tum in tempUM.DefaultIfEmpty()
+                                   select new UIProcureOrderAppDetail()
+                                   {
+                                       ID = q.ID,
+                                       Warehouse = w.Name,
+                                       ProductName = p.ProductName,
+                                       Specification = ps.Specification,
+                                       LicenseNumber = ps.LicenseNumber,
+                                       UnitOfMeasurement = tum == null ? string.Empty : tum.UnitName,
+                                       ProcureCount = q.ProcureCount,
+                                       ProcurePrice = q.ProcurePrice,
+                                       TotalAmount = q.TotalAmount,
+                                       SupplierInvoiceDetailTotalAmount = DB.SupplierInvoiceDetail.Any(x => x.IsDeleted == false && x.ProcureOrderAppDetailID == q.ID) ?
+                                       DB.SupplierInvoiceDetail.Where(x => x.IsDeleted == false && x.ProcureOrderAppDetailID == q.ID).Sum(x => x.Amount) : 0,
+                                       TaxAmount = q.TaxAmount,
+                                       ProcureOrderApplicationOrderCode = procureOrderApplication.OrderCode,
+                                       ProcureOrderApplicationOrderDate = procureOrderApplication.OrderDate
+                                   }).Where(x => x.SupplierInvoiceDetailTotalAmount < x.TaxAmount);
 
                 total = queryResult.Count();
                 uiEntities = queryResult.OrderByDescending(x => x.ID)
