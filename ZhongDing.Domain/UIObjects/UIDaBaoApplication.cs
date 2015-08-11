@@ -16,5 +16,7 @@ namespace ZhongDing.Domain.UIObjects
 
         public string DistributionCompany { get; set; }
 
+
+        public int? DaBaoApplicationID { get; set; }
     }
 }

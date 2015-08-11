@@ -12,8 +12,18 @@
             <telerik:AjaxSetting AjaxControlID="rcbxProduct">
                 <UpdatedControls>
                     <telerik:AjaxUpdatedControl ControlID="divProductSpecifications" LoadingPanelID="loadingPanel" />
+                     <telerik:AjaxUpdatedControl ControlID="divProductSalesPrice" LoadingPanelID="loadingPanel" />
+                    
                 </UpdatedControls>
             </telerik:AjaxSetting>
+            <telerik:AjaxSetting AjaxControlID="ddlProductSpecification">
+                <UpdatedControls>
+                    <telerik:AjaxUpdatedControl ControlID="divProductSpecifications" LoadingPanelID="loadingPanel" />
+                      <telerik:AjaxUpdatedControl ControlID="divProductSalesPrice" LoadingPanelID="loadingPanel" />
+                    
+                </UpdatedControls>
+            </telerik:AjaxSetting>
+
         </AjaxSettings>
     </telerik:RadAjaxManager>
 
@@ -51,7 +61,8 @@
                     <div class="mws-form-row">
                         <label>货品规格</label>
                         <div class="mws-form-item small" runat="server" id="divProductSpecifications">
-                            <telerik:RadDropDownList runat="server" ID="ddlProductSpecification" DefaultMessage="--请选择--">
+                            <telerik:RadDropDownList runat="server" ID="ddlProductSpecification" DefaultMessage="--请选择--" OnSelectedIndexChanged="ddlProductSpecification_SelectedIndexChanged"
+                                AutoPostBack="true">
                             </telerik:RadDropDownList>
                             <telerik:RadToolTip ID="rttProductSpecification" runat="server" TargetControlID="ddlProductSpecification" ShowEvent="OnClick"
                                 Position="MiddleRight" RelativeTo="Element" Text="该项是必填项" AutoCloseDelay="0">
@@ -68,7 +79,7 @@
                     <div class="mws-form-row">
                         <div class="float-left width50-percent">
                             <label>单价</label>
-                            <div class="mws-form-item small">
+                            <div class="mws-form-item small"  runat="server" id="divProductSalesPrice">
                                 <telerik:RadNumericTextBox runat="server" ID="txtSalesPrice" CssClass="mws-textinput" Type="Currency" ShowSpinButtons="true"
                                     NumberFormat-DecimalDigits="2" NumberFormat-GroupSeparator="" MinValue="0" MaxValue="999999999"
                                     MaxLength="10" ClientEvents-OnValueChanged="onPriceValueChanged">

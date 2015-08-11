@@ -141,8 +141,9 @@ namespace ZhongDing.Business.Repositories
                                   WorkflowStatus = ws.StatusName,
                                   CreatedOn = q.CreatedOn,
                                   CreatedBy = tcu == null ? string.Empty : tcu.FullName,
-                                  CreatedByUserID = q.CreatedBy
-
+                                  CreatedByUserID = q.CreatedBy,
+                                  OrderCode = q.DaBaoApplication != null ? q.DaBaoApplication.SalesOrderApplication.OrderCode : "",
+                                  DaBaoApplicationID = q.DaBaoApplicationID
                               }).ToList();
             }
 

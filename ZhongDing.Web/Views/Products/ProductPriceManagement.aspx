@@ -555,7 +555,7 @@
                 var returnValue = "价格信息还没有保存";
 
                 if ($telerik.isIE)
-                    returnValue+=", 确定要离开此页吗？"
+                    returnValue += ", 确定要离开此页吗？"
 
                 window.event.returnValue = returnValue;
             }

@@ -103,6 +103,15 @@ namespace ZhongDing.Web.Views.Sales.Editors {
         protected global::System.Web.UI.WebControls.RequiredFieldValidator rfvProductSpecification;
         
         /// <summary>
+        /// divProductSalesPrice control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divProductSalesPrice;
+        
+        /// <summary>
         /// txtSalesPrice control.
         /// </summary>
         /// <remarks>

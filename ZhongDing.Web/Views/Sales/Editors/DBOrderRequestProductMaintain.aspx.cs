@@ -10,6 +10,7 @@ using ZhongDing.Business.Repositories;
 using ZhongDing.Common;
 using ZhongDing.Domain.Models;
 using ZhongDing.Domain.UISearchObjects;
+using ZhongDing.Common.Extension;
 
 namespace ZhongDing.Web.Views.Sales.Editors
 {
@@ -61,6 +62,18 @@ namespace ZhongDing.Web.Views.Sales.Editors
                     _PageProductRepository = new ProductRepository();
 
                 return _PageProductRepository;
+            }
+        }
+
+        private IProductDBPolicyPriceRepository _PageProductDBPolicyPriceRepository;
+        private IProductDBPolicyPriceRepository PageProductDBPolicyPriceRepository
+        {
+            get
+            {
+                if (_PageProductDBPolicyPriceRepository == null)
+                    _PageProductDBPolicyPriceRepository = new ProductDBPolicyPriceRepository();
+
+                return _PageProductDBPolicyPriceRepository;
             }
         }
 
@@ -139,6 +152,31 @@ namespace ZhongDing.Web.Views.Sales.Editors
                 ddlProductSpecification.DataTextField = GlobalConst.DEFAULT_DROPDOWN_DATATEXTFIELD;
                 ddlProductSpecification.DataValueField = GlobalConst.DEFAULT_DROPDOWN_DATAVALUEFIELD;
                 ddlProductSpecification.DataBind();
+
+                SetSalesPriceDefaultValue();
+            }
+        }
+
+
+        protected void ddlProductSpecification_SelectedIndexChanged(object sender, DropDownListEventArgs e)
+        {
+            SetSalesPriceDefaultValue();
+        }
+
+        private void SetSalesPriceDefaultValue()
+        {
+            if (rcbxProduct.SelectedValue.ToIntOrNull().BiggerThanZero() && ddlProductSpecification.SelectedValue.ToIntOrNull().BiggerThanZero())
+            {
+                int productID = rcbxProduct.SelectedValue.ToInt();
+                int productSpecificationID = ddlProductSpecification.SelectedValue.ToInt();
+                var productDBPolicyPrice = PageProductDBPolicyPriceRepository.GetList(x => x.ProductID == productID
+                    && x.ProductSpecificationID == productSpecificationID).FirstOrDefault();
+
+                if (productDBPolicyPrice != null && productDBPolicyPrice.BidPrice.HasValue && productDBPolicyPrice.FeeRatio.HasValue)
+                {
+                    decimal defaultPrice = productDBPolicyPrice.BidPrice.Value - productDBPolicyPrice.FeeRatio.Value.ToDecimal() * productDBPolicyPrice.BidPrice.Value;
+                    txtSalesPrice.Value = defaultPrice.ToDouble();
+                }
             }
         }
 
@@ -224,6 +262,7 @@ namespace ZhongDing.Web.Views.Sales.Editors
                 }
             }
         }
+
 
     }
 }

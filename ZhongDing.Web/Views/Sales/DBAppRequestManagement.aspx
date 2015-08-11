@@ -96,6 +96,16 @@
                             <telerik:GridBoundColumn UniqueName="WorkflowStatus" HeaderText="状态" DataField="WorkflowStatus">
                                 <ItemStyle HorizontalAlign="Left" Width="15%" />
                             </telerik:GridBoundColumn>
+                            <telerik:GridTemplateColumn UniqueName="OrderCode" HeaderText="配送订单号">
+                                <HeaderStyle HorizontalAlign="Center" Width="15%" />
+                                <ItemStyle HorizontalAlign="Center" />
+                                <ItemTemplate>
+
+                                    <a href="javascript:void(0);" onclick="redirectToApplicationMaintenancePage(<%#DataBinder.Eval(Container.DataItem,"DaBaoApplicationID")%>)">
+                                        <%#DataBinder.Eval(Container.DataItem,"OrderCode")%>
+                                    </a>
+                                </ItemTemplate>
+                            </telerik:GridTemplateColumn>
                             <telerik:GridTemplateColumn UniqueName="Edit">
                                 <HeaderStyle HorizontalAlign="Center" Width="15%" />
                                 <ItemStyle HorizontalAlign="Center" />
@@ -158,6 +168,9 @@
         function redirectToMaintenancePage(id) {
             $.showLoading();
             window.location.href = "DBAppRequestMaintenance.aspx?EntityID=" + id;
+        }
+        function redirectToApplicationMaintenancePage(id) {
+            window.open("DBAppMaintenance.aspx?EntityID=" + id, "_blank");
         }
     </script>
 </asp:Content>
