@@ -589,8 +589,7 @@ namespace ZhongDing.Web.Views.Procures
                                 .Select(x => x.BankAccountID.HasValue ? x.BankAccountID.Value : GlobalConst.INVALID_INT)
                                 .ToList();
 
-                            if (includeItemValues.Count > 0)
-                                uiSearchObj.IncludeItemValues = includeItemValues;
+                            uiSearchObj.IncludeItemValues = includeItemValues;
                         }
                     }
 
