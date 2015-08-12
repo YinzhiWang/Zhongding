@@ -169,6 +169,8 @@ namespace ZhongDing.Business.Repositories
                                     break;
                             }
                         }
+                        whereFuncs.Add(x => x.DepartmentID == uiSearchObj.Extension.DepartmentID);
+
                     }
 
                     if (uiSearchObj.Extension.ProductCategoryID > 0)
